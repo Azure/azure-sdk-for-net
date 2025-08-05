@@ -15,16 +15,16 @@ using Azure.ResourceManager.HealthDataAIServices;
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
     /// <summary> The response of a PrivateLinkResource list operation. </summary>
-    internal partial class PrivateLinkResourceListResult : IJsonModel<PrivateLinkResourceListResult>
+    internal partial class HealthDataAIServicesPrivateLinkResourceListResult : IJsonModel<HealthDataAIServicesPrivateLinkResourceListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceListResult"/> for deserialization. </summary>
-        internal PrivateLinkResourceListResult()
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal HealthDataAIServicesPrivateLinkResourceListResult()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HealthDataAIServicesPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthDataAIServicesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkResourceListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthDataAIServicesPrivateLinkResourceListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PrivateLinkResource item in Value)
+            foreach (HealthDataAIServicesPrivateLinkResource item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -71,40 +71,40 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkResourceListResult IJsonModel<PrivateLinkResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HealthDataAIServicesPrivateLinkResourceListResult IJsonModel<HealthDataAIServicesPrivateLinkResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateLinkResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HealthDataAIServicesPrivateLinkResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthDataAIServicesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkResourceListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthDataAIServicesPrivateLinkResourceListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateLinkResourceListResult(document.RootElement, options);
+            return DeserializeHealthDataAIServicesPrivateLinkResourceListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateLinkResourceListResult DeserializePrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static HealthDataAIServicesPrivateLinkResourceListResult DeserializeHealthDataAIServicesPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<PrivateLinkResource> value = default;
+            IList<HealthDataAIServicesPrivateLinkResource> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PrivateLinkResource> array = new List<PrivateLinkResource>();
+                    List<HealthDataAIServicesPrivateLinkResource> array = new List<HealthDataAIServicesPrivateLinkResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResource.DeserializePrivateLinkResource(item, options));
+                        array.Add(HealthDataAIServicesPrivateLinkResource.DeserializeHealthDataAIServicesPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -123,55 +123,55 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HealthDataAIServicesPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HealthDataAIServicesPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthDataAIServicesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthDataAIServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthDataAIServicesPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkResourceListResult IPersistableModel<PrivateLinkResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HealthDataAIServicesPrivateLinkResourceListResult IPersistableModel<HealthDataAIServicesPrivateLinkResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateLinkResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HealthDataAIServicesPrivateLinkResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthDataAIServicesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializePrivateLinkResourceListResult(document.RootElement, options);
+                        return DeserializeHealthDataAIServicesPrivateLinkResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthDataAIServicesPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HealthDataAIServicesPrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkResourceListResult"/> from. </param>
-        internal static PrivateLinkResourceListResult FromResponse(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="HealthDataAIServicesPrivateLinkResourceListResult"/> from. </param>
+        internal static HealthDataAIServicesPrivateLinkResourceListResult FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializePrivateLinkResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHealthDataAIServicesPrivateLinkResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

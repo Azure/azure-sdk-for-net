@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 
 namespace Azure.ResourceManager.HealthDataAIServices
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <returns> An enumerable of pages containing converted items of type U. </returns>
         public override async IAsyncEnumerable<Page<U>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            await foreach (Page<T> page in _source.AsPages(continuationToken, pageSizeHint))
+            await foreach (Page<T> page in _source.AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
             {
                 List<U> convertedItems = new List<U>();
                 foreach (T item in page.Values)

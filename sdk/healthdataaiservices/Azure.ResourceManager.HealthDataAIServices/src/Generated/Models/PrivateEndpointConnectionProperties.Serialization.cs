@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             }
             IReadOnlyList<string> groupIds = default;
             PrivateEndpoint privateEndpoint = default;
-            PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             PrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(prop.Value, options);
+                    privateLinkServiceConnectionState = HealthDataAIServicesPrivateLinkServiceConnectionState.DeserializeHealthDataAIServicesPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

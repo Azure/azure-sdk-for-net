@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     yield break;
                 }
-                PrivateLinkResourceListResult responseWithType = PrivateLinkResourceListResult.FromResponse(response);
+                HealthDataAIServicesPrivateLinkResourceListResult responseWithType = HealthDataAIServicesPrivateLinkResourceListResult.FromResponse(response);
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in responseWithType.Value)
                 {

@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <returns> A new <see cref="Models.DeidServiceProperties"/> instance for mocking. </returns>
-        public static DeidServiceProperties DeidServiceProperties(HealthDataAIServicesProvisioningState? provisioningState = default, string serviceUri = default, IEnumerable<PrivateEndpointConnection> privateEndpointConnections = default, HealthDataAIServicesPublicNetworkAccess? publicNetworkAccess = default)
+        public static DeidServiceProperties DeidServiceProperties(HealthDataAIServicesProvisioningState? provisioningState = default, string serviceUri = default, IEnumerable<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = default, HealthDataAIServicesPublicNetworkAccess? publicNetworkAccess = default)
         {
-            privateEndpointConnections ??= new ChangeTrackingList<PrivateEndpointConnection>();
+            privateEndpointConnections ??= new ChangeTrackingList<HealthDataAIServicesPrivateEndpointConnection>();
 
             return new DeidServiceProperties(provisioningState, serviceUri, privateEndpointConnections.ToList(), publicNetworkAccess, additionalBinaryDataProperties: null);
         }
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnection"/> instance for mocking. </returns>
-        public static PrivateEndpointConnection PrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        /// <returns> A new <see cref="Models.HealthDataAIServicesPrivateEndpointConnection"/> instance for mocking. </returns>
+        public static HealthDataAIServicesPrivateEndpointConnection HealthDataAIServicesPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
         {
-            return new PrivateEndpointConnection(
+            return new HealthDataAIServicesPrivateEndpointConnection(
                 id,
                 name,
                 resourceType,
@@ -76,26 +76,26 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         }
 
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="id"> The resource identifier of the private endpoint. </param>
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier id = default, PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, PrivateEndpointConnectionProvisioningState? provisioningState = default)
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, PrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties(groupIds.ToList(), id is null ? default : new PrivateEndpoint(id, new Dictionary<string, BinaryData>()), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, new Dictionary<string, BinaryData>()), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Updatable managed service identity. </param>
-        /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
+        /// <param name="propertiesPublicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <returns> A new <see cref="Models.DeidServicePatch"/> instance for mocking. </returns>
-        public static DeidServicePatch DeidServicePatch(IDictionary<string, string> tags = default, ManagedServiceIdentityUpdate identity = default, HealthDataAIServicesPublicNetworkAccess? publicNetworkAccess = default)
+        public static DeidServicePatch DeidServicePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, HealthDataAIServicesPublicNetworkAccess? propertiesPublicNetworkAccess = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeidServicePatch(tags, identity, publicNetworkAccess is null ? default : new DeidPropertiesUpdate(publicNetworkAccess, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new DeidServicePatch(tags, identity, propertiesPublicNetworkAccess is null ? default : new DeidPropertiesUpdate(propertiesPublicNetworkAccess, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The template for adding optional properties. </summary>

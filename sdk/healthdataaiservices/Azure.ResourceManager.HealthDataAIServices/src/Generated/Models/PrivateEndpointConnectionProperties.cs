@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
-        public PrivateEndpointConnectionProperties(PrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        public PrivateEndpointConnectionProperties(HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
             Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
@@ -51,25 +51,17 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public HealthDataAIServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public PrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
-        public ResourceIdentifier Id
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {
                 return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-            }
-            set
-            {
-                if (PrivateEndpoint is null)
-                {
-                    PrivateEndpoint = new PrivateEndpoint();
-                }
-                PrivateEndpoint.Id = value;
             }
         }
     }

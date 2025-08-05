@@ -14,7 +14,7 @@ using Azure.ResourceManager.HealthDataAIServices.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices
 {
-    internal partial class PrivateLinksGetByDeidServiceCollectionResultOfT : Pageable<PrivateLinkResource>
+    internal partial class PrivateLinksGetByDeidServiceCollectionResultOfT : Pageable<HealthDataAIServicesPrivateLinkResource>
     {
         private readonly PrivateLinks _client;
         private readonly Guid _subscriptionId;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateLinksGetByDeidServiceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PrivateLinkResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<HealthDataAIServicesPrivateLinkResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     yield break;
                 }
-                PrivateLinkResourceListResult responseWithType = PrivateLinkResourceListResult.FromResponse(response);
+                HealthDataAIServicesPrivateLinkResourceListResult responseWithType = HealthDataAIServicesPrivateLinkResourceListResult.FromResponse(response);
                 nextPage = responseWithType.NextLink;
-                yield return Page<PrivateLinkResource>.FromValues((IReadOnlyList<PrivateLinkResource>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HealthDataAIServicesPrivateLinkResource>.FromValues((IReadOnlyList<HealthDataAIServicesPrivateLinkResource>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }

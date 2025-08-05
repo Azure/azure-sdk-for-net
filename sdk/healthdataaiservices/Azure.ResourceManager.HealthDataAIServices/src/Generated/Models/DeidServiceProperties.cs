@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <summary> Initializes a new instance of <see cref="DeidServiceProperties"/>. </summary>
         public DeidServiceProperties()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<HealthDataAIServicesPrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidServiceProperties"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidServiceProperties(HealthDataAIServicesProvisioningState? provisioningState, string serviceUri, IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections, HealthDataAIServicesPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidServiceProperties(HealthDataAIServicesProvisioningState? provisioningState, string serviceUri, IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections, HealthDataAIServicesPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ServiceUri = serviceUri;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         public string ServiceUri { get; }
 
         /// <summary> List of private endpoint connections. </summary>
-        public IReadOnlyList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> PrivateEndpointConnections { get; }
 
         /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
         public HealthDataAIServicesPublicNetworkAccess? PublicNetworkAccess { get; set; }

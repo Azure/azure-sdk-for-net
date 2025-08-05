@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DeidServiceResource"/> object. </returns>
+        [ForwardsClientCalls]
         public static DeidServiceResource GetDeidServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceResource"/> object. </returns>
+        [ForwardsClientCalls]
         public static HealthDataAIServicesPrivateEndpointConnectionResourceResource GetHealthDataAIServicesPrivateEndpointConnectionResourceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -59,6 +61,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DeidServices and their operations over a DeidServiceResource. </returns>
+        [ForwardsClientCalls]
         public static DeidServiceCollection GetDeidServices(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -72,6 +75,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deidServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deidServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
         public static Response<DeidServiceResource> GetDeidService(this ResourceGroupResource resourceGroupResource, string deidServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -86,6 +90,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deidServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deidServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DeidServiceResource>> GetDeidServiceAsync(this ResourceGroupResource resourceGroupResource, string deidServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (PrivateEndpointConnection item in PrivateEndpointConnections)
+                foreach (HealthDataAIServicesPrivateEndpointConnection item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             }
             HealthDataAIServicesProvisioningState? provisioningState = default;
             string serviceUri = default;
-            IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections = default;
+            IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = default;
             HealthDataAIServicesPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    List<PrivateEndpointConnection> array = new List<PrivateEndpointConnection>();
+                    List<HealthDataAIServicesPrivateEndpointConnection> array = new List<HealthDataAIServicesPrivateEndpointConnection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnection.DeserializePrivateEndpointConnection(item, options));
+                        array.Add(HealthDataAIServicesPrivateEndpointConnection.DeserializeHealthDataAIServicesPrivateEndpointConnection(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeidServiceProperties(provisioningState, serviceUri, privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnection>(), publicNetworkAccess, additionalBinaryDataProperties);
+            return new DeidServiceProperties(provisioningState, serviceUri, privateEndpointConnections ?? new ChangeTrackingList<HealthDataAIServicesPrivateEndpointConnection>(), publicNetworkAccess, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

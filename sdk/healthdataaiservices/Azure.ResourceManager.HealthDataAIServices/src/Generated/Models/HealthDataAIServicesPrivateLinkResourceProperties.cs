@@ -12,24 +12,24 @@ using Azure.ResourceManager.HealthDataAIServices;
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    internal partial class PrivateLinkResourceProperties
+    internal partial class HealthDataAIServicesPrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceProperties"/>. </summary>
-        internal PrivateLinkResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateLinkResourceProperties"/>. </summary>
+        internal HealthDataAIServicesPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthDataAIServicesPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

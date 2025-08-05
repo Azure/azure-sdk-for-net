@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-    public partial class PrivateLinkServiceConnectionState
+    public partial class HealthDataAIServicesPrivateLinkServiceConnectionState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnectionState"/>. </summary>
-        public PrivateLinkServiceConnectionState()
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateLinkServiceConnectionState"/>. </summary>
+        public HealthDataAIServicesPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnectionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkServiceConnectionState(PrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthDataAIServicesPrivateLinkServiceConnectionState(PrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Description = description;

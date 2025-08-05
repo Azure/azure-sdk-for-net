@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HealthDataAIServices;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<ManagedServiceIdentityUpdate>(Identity, options);
+                writer.WriteObjectValue<ManagedServiceIdentity>(Identity, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ManagedServiceIdentityUpdate identity = default;
+            ManagedServiceIdentity identity = default;
             DeidPropertiesUpdate properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentityUpdate.DeserializeManagedServiceIdentityUpdate(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(BinaryData.FromString(prop.Value.GetRawText()), options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.HealthDataAIServices;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="identity"> Updatable managed service identity. </param>
         /// <param name="properties"> RP-specific properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentityUpdate identity, DeidPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DeidPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         internal DeidPropertiesUpdate Properties { get; set; }
 
         /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
-        public HealthDataAIServicesPublicNetworkAccess? PublicNetworkAccess
+        public HealthDataAIServicesPublicNetworkAccess? PropertiesPublicNetworkAccess
         {
             get
             {

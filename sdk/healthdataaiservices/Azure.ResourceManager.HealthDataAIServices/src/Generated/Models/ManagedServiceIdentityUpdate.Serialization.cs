@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.HealthDataAIServices;
 using Azure.ResourceManager.Models;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    JsonSerializer.Serialize(item.Value);
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(ModelSerializationExtensions.WireOptions);
                 }
                 writer.WriteEndObject();
             }
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.Deserialize<UserAssignedIdentity>());
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop0.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHealthDataAIServicesContext.Default));
                         }
                     }
                     userAssignedIdentities = dictionary;

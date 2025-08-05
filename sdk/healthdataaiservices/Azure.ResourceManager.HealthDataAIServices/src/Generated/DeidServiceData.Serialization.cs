@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(ModelSerializationExtensions.WireOptions);
             }
         }
 
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         continue;
                     }
-                    systemData = prop.Value.Deserialize<SystemData>();
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHealthDataAIServicesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         continue;
                     }
-                    identity = prop.Value.Deserialize<ManagedServiceIdentity>();
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHealthDataAIServicesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
