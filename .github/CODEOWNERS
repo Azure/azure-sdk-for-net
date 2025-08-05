@@ -78,7 +78,9 @@
 # ServiceLabel: %Extensions
 # AzureSdkOwners:                                                  @jsquire
 
-# ######## Services ########
+####################
+# Client SDKs
+####################
 
 # ServiceLabel: %AAD
 # ServiceOwners:                                                   @adamedx
@@ -930,7 +932,9 @@
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
 
-# ######## Management Plane ########
+####################
+# Management Plane
+####################
 
 # PRLabel: %Mgmt
 /**/*Management*/                                                  @ArcturusZhang @ArthurMa1978
@@ -1158,7 +1162,6 @@
 
 # ServiceLabel: %Weights & Biases %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
-
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
