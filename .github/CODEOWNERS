@@ -671,6 +671,12 @@
 # PRLabel: %Mixed Reality
 /sdk/objectanchors/                                                @crtreasu @rgarcia
 
+# PRLabel: %purestorage
+/sdk/testpath/                                     @ReilleyMilne @shirelmr
+
+# ServiceLabel: %purestorage
+# ServiceOwners: @ReilleyMilne @shirelmr
+
 # PRLabel: %Remote Rendering
 /sdk/remoterendering/                                              @FlorianBorn71 @MichaelZp0 @ChristopherManthei
 
