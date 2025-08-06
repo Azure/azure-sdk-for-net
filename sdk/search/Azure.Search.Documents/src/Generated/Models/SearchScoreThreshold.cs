@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The results of the vector query will filter based on the '@search.score' value. Note this is the @search.score returned as part of the search response. The threshold direction will be chosen for higher @search.score. </summary>
@@ -20,11 +23,17 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of <see cref="SearchScoreThreshold"/>. </summary>
         /// <param name="kind"> The kind of threshold used to filter vector queries. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The threshold will filter based on the '@search.score' value. Note this is the @search.score returned as part of the search response. The threshold direction will be chosen for higher @search.score. </param>
-        internal SearchScoreThreshold(VectorThresholdKind kind, double value) : base(kind)
+        internal SearchScoreThreshold(VectorThresholdKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value) : base(kind, serializedAdditionalRawData)
         {
             Value = value;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchScoreThreshold"/> for deserialization. </summary>
+        internal SearchScoreThreshold()
+        {
         }
 
         /// <summary> The threshold will filter based on the '@search.score' value. Note this is the @search.score returned as part of the search response. The threshold direction will be chosen for higher @search.score. </summary>

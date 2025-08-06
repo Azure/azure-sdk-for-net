@@ -1,4 +1,4 @@
-# Azure.Provisioning.OperationalInsights client library for .NET
+# Azure Provisioning OperationalInsights client library for .NET
 
 Azure.Provisioning.OperationalInsights simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,27 @@ dotnet add package Azure.Provisioning.OperationalInsights
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create A Log Analytics Workspace
+
+This example demonstrates how to create a Log Analytics workspace with system-assigned managed identity and per-GB pricing tier.
+
+```C# Snippet:OperationalInsightsWorkspaceBasic
+Infrastructure infra = new();
+
+OperationalInsightsWorkspace workspace =
+    new(nameof(workspace))
+    {
+        Sku = new OperationalInsightsWorkspaceSku
+        {
+            Name = OperationalInsightsWorkspaceSkuName.PerGB2018
+        },
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+    };
+infra.Add(workspace);
+```
 
 ## Troubleshooting
 

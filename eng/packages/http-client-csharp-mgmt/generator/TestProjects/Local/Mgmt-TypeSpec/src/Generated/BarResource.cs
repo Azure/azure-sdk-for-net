@@ -46,8 +46,8 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BarResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string barApiVersion);
+            _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion);
             ValidateResourceId(id);
         }

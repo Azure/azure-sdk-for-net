@@ -53,14 +53,6 @@ namespace MgmtTypeSpec
             {
                 return Properties is null ? default : Properties.IsEnabled;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BarSettingsProperties();
-                }
-                Properties.IsEnabled = value;
-            }
         }
     }
 }

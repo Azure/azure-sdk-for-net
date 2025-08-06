@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -416,78 +416,6 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Response<ManagedInstanceResource> GetManagedInstance(string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetManagedInstances().Get(managedInstanceName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SqlServerTrustGroupResources in the ResourceGroupResource. </summary>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <returns> An object representing collection of SqlServerTrustGroupResources and their operations over a SqlServerTrustGroupResource. </returns>
-        public virtual SqlServerTrustGroupCollection GetSqlServerTrustGroups(AzureLocation locationName)
-        {
-            return new SqlServerTrustGroupCollection(Client, Id, locationName);
-        }
-
-        /// <summary>
-        /// Gets a server trust group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerTrustGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerTrustGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerTrustGroupResource>> GetSqlServerTrustGroupAsync(AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlServerTrustGroups(locationName).GetAsync(serverTrustGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a server trust group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerTrustGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerTrustGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SqlServerTrustGroupResource> GetSqlServerTrustGroup(AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetSqlServerTrustGroups(locationName).Get(serverTrustGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
@@ -510,7 +438,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -542,7 +470,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -559,6 +487,78 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Response<SqlServerResource> GetSqlServer(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetSqlServers().Get(serverName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlServerTrustGroupResources in the ResourceGroupResource. </summary>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <returns> An object representing collection of SqlServerTrustGroupResources and their operations over a SqlServerTrustGroupResource. </returns>
+        public virtual SqlServerTrustGroupCollection GetSqlServerTrustGroups(AzureLocation locationName)
+        {
+            return new SqlServerTrustGroupCollection(Client, Id, locationName);
+        }
+
+        /// <summary>
+        /// Gets a server trust group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerTrustGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerTrustGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlServerTrustGroupResource>> GetSqlServerTrustGroupAsync(AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlServerTrustGroups(locationName).GetAsync(serverTrustGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server trust group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerTrustGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerTrustGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverTrustGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerTrustGroupResource> GetSqlServerTrustGroup(AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlServerTrustGroups(locationName).Get(serverTrustGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

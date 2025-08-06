@@ -123,10 +123,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="something"> something. </param>
+        /// <param name="zooSomething"> something. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.ZooData"/> instance for mocking. </returns>
-        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, string something = default, ExtendedLocation extendedLocation = default)
+        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, string zooSomething = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -138,18 +138,18 @@ namespace MgmtTypeSpec.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                something is null ? default : new ZooProperties(something, new Dictionary<string, BinaryData>()),
+                zooSomething is null ? default : new ZooProperties(zooSomething, new Dictionary<string, BinaryData>()),
                 extendedLocation);
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="something"> something. </param>
+        /// <param name="zooUpdateSomething"> something. </param>
         /// <returns> A new <see cref="Models.ZooPatch"/> instance for mocking. </returns>
-        public static ZooPatch ZooPatch(IDictionary<string, string> tags = default, string something = default)
+        public static ZooPatch ZooPatch(IDictionary<string, string> tags = default, string zooUpdateSomething = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ZooPatch(tags, something is null ? default : new ZooUpdateProperties(something, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>

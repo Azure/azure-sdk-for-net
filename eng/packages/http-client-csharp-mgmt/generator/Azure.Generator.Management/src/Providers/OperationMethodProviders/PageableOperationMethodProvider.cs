@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using System;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -23,50 +22,70 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly TypeProvider _enclosingType;
         private readonly RequestPathPattern _contextualPath;
         private readonly RestClientInfo _restClientInfo;
-        private readonly InputServiceMethod _method;
+        private readonly InputPagingServiceMethod _method;
         private readonly MethodProvider _convenienceMethod;
         private readonly bool _isAsync;
         private readonly CSharpType _itemType;
+        private readonly CSharpType _actualItemType;
+        private ResourceClientProvider? _itemResourceClient;
         private readonly ResourceOperationKind _methodKind;
+        private readonly MethodSignature _signature;
+        private readonly MethodBodyStatement[] _bodyStatements;
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
             RestClientInfo restClientInfo,
-            InputServiceMethod method,
-            MethodProvider convenienceMethod,
+            InputPagingServiceMethod method,
             bool isAsync,
-            CSharpType itemType,
             ResourceOperationKind methodKind)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
             _restClientInfo = restClientInfo;
             _method = method;
-            _convenienceMethod = convenienceMethod;
+            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
             _isAsync = isAsync;
-            _itemType = itemType;
+            _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
+            InitializeTypeInfo(
+                _itemType,
+                ref _actualItemType!,
+                ref _itemResourceClient
+            );
             _methodKind = methodKind;
+            _signature = CreateSignature();
+            _bodyStatements = BuildBodyStatements();
+        }
+
+        private static void InitializeTypeInfo(
+            CSharpType itemType,
+            ref CSharpType actualItemType,
+            ref ResourceClientProvider? resourceClient
+            )
+        {
+            actualItemType = itemType;
+            if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
+            {
+                actualItemType = resourceClient.Type;
+            }
         }
 
         public static implicit operator MethodProvider(PageableOperationMethodProvider pageableOperationMethodProvider)
         {
             return new MethodProvider(
-                pageableOperationMethodProvider.CreateSignature(),
-                pageableOperationMethodProvider.BuildBodyStatements(),
+                pageableOperationMethodProvider._signature,
+                pageableOperationMethodProvider._bodyStatements,
                 pageableOperationMethodProvider._enclosingType);
         }
 
         protected MethodSignature CreateSignature()
         {
-            var actualItemType = IsResourceDataType(_itemType) ? GetResourceClientProvider().Type : _itemType;
-
             var returnType = _isAsync
-                ? new CSharpType(typeof(AsyncPageable<>), actualItemType)
-                : new CSharpType(typeof(Pageable<>), actualItemType);
+                ? new CSharpType(typeof(AsyncPageable<>), _actualItemType)
+                : new CSharpType(typeof(Pageable<>), _actualItemType);
             var methodName = _methodKind == ResourceOperationKind.List
                 ? (_isAsync ? "GetAllAsync" : "GetAll")
-                : (_isAsync ? $"{_convenienceMethod.Signature.Name}Async" : _convenienceMethod.Signature.Name);
+                : _convenienceMethod.Signature.Name;
 
             return new MethodSignature(
                 methodName,
@@ -95,12 +114,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 _restClientInfo.RestClientField,
             };
-            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _convenienceMethod.Signature.Parameters));
+            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
 
             // Handle ResourceData type conversion if needed
-            if (IsResourceDataType(_itemType))
+            if (_itemResourceClient != null)
             {
-                statements.Add(BuildResourceDataConversionStatement(collectionResultOfT, arguments));
+                statements.Add(BuildResourceDataConversionStatement(collectionResultOfT, _itemResourceClient.Type, arguments));
             }
             else
             {
@@ -110,21 +129,17 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return statements.ToArray();
         }
 
-        private MethodBodyStatement BuildResourceDataConversionStatement(CSharpType sourcePageable, List<ValueExpression> arguments)
+        private MethodBodyStatement BuildResourceDataConversionStatement(CSharpType sourcePageable, CSharpType typeOfResource, List<ValueExpression> arguments)
         {
-            // Get the resource client provider to access the resource type
-            var resourceClientProvider = GetResourceClientProvider();
-            var resourceType = resourceClientProvider.Type;
-
             // Create PageableWrapper instance to convert from ResourceData to Resource
             var pageableWrapperType = _isAsync ? ManagementClientGenerator.Instance.OutputLibrary.AsyncPageableWrapper : ManagementClientGenerator.Instance.OutputLibrary.PageableWrapper;
 
             // Create the concrete wrapper type with proper generic parameters
             // Since pageableWrapperType.Type represents the constructed generic type, we need to use it directly
-            var concreteWrapperType = pageableWrapperType.Type.MakeGenericType([_itemType, resourceType]);
+            var concreteWrapperType = pageableWrapperType.Type.MakeGenericType([_itemType, typeOfResource]);
 
             // Create converter function: data => new ResourceType(Client, data)
-            var converterFunc = CreateConverterFunction(_itemType, resourceType);
+            var converterFunc = CreateConverterFunction(_itemType, typeOfResource);
 
             var wrapperArguments = new List<ValueExpression>
             {
@@ -133,30 +148,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             return Return(New.Instance(concreteWrapperType, wrapperArguments));
-        }
-
-        private bool IsResourceDataType(CSharpType itemType)
-        {
-            try
-            {
-                var resourceClientProvider = GetResourceClientProvider();
-                return itemType.Equals(resourceClientProvider.ResourceData.Type);
-            }
-            catch (InvalidOperationException)
-            {
-                // If we can't get a ResourceClientProvider, then this is not a ResourceData type
-                return false;
-            }
-        }
-
-        private ResourceClientProvider GetResourceClientProvider()
-        {
-            return _enclosingType switch
-            {
-                ResourceClientProvider rcp => rcp,
-                ResourceCollectionClientProvider rccp => rccp.Resource, // Return the Resource property
-                _ => throw new InvalidOperationException($"Expected ResourceClientProvider or ResourceCollectionClientProvider, but got: {_enclosingType.GetType()}")
-            };
         }
 
         private ValueExpression CreateConverterFunction(CSharpType fromType, CSharpType toType)
