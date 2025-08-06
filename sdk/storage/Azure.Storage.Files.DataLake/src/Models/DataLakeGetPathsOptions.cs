@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Optional parameters for <see cref="DataLakeFileSystemClient.GetPathsAsync(DataLakeGetPathsOptions, System.Threading.CancellationToken)"/>.
+    /// Optional parameters for <see cref="DataLakeFileSystemClient.GetPathsAsync(DataLakeGetPathsOptions, System.Threading.CancellationToken)"/>
+    /// and <see cref="DataLakeDirectoryClient.GetPathsAsync(DataLakeGetPathsOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
     public class DataLakeGetPathsOptions
     {
         /// <summary>
         /// Filters results to paths within the specified directory.
+        /// Not applicable for <see cref="DataLakeDirectoryClient.GetPathsAsync(DataLakeGetPathsOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
         public string Path { get; set; }
 
