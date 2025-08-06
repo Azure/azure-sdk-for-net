@@ -48,12 +48,12 @@ internal class SpanDictionary<TValue> : IEnumerable<KeyValuePair<byte[], TValue>
             return false;
         }
 
-        var hashCode = ComputeHashCode(key);
+        var hashCode = JsonPathEqualityComparer.GetHashCode(key);
         var bucketIndex = GetBucket((uint)hashCode);
 
         for (int i = _buckets[bucketIndex]; i >= 0; i = _entries[i].Next)
         {
-            if (_entries[i].HashCode == hashCode && key.SequenceEqual(_entries[i].Key))
+            if (_entries[i].HashCode == hashCode && JsonPathEqualityComparer.Equals(key, _entries[i].Key))
             {
                 entryIndex = i;
                 return true;
@@ -158,7 +158,7 @@ internal class SpanDictionary<TValue> : IEnumerable<KeyValuePair<byte[], TValue>
             Resize();
         }
 
-        var hashCode = ComputeHashCode(key);
+        var hashCode = JsonPathEqualityComparer.GetHashCode(key);
         var bucketIndex = GetBucket((uint)hashCode);
 
         _entries[_count] = new Entry
@@ -195,25 +195,6 @@ internal class SpanDictionary<TValue> : IEnumerable<KeyValuePair<byte[], TValue>
         for (int i = 0; i < array.Length; i++)
         {
             array[i] = value;
-        }
-#endif
-    }
-
-    private static int ComputeHashCode(ReadOnlySpan<byte> span)
-    {
-#if NET8_0_OR_GREATER
-        var hash = new HashCode();
-        hash.AddBytes(span);
-        return hash.ToHashCode();
-#else
-        unchecked
-        {
-            int hash = 17;
-            for (int i = 0; i < span.Length; i++)
-            {
-                hash = hash * 31 + span[i];
-            }
-            return hash;
         }
 #endif
     }

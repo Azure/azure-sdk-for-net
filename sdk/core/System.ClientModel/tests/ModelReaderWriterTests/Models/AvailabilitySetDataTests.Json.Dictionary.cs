@@ -22,9 +22,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set("$.newDictionary.key2"u8, "{\"x\":\"value2\"}"u8);
 
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary['key1']"u8).ToArray());
-            //TODO do we need to normalize retrieving using a different syntax than inserting?
-            //Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary.key1"u8).ToArray());
-            //Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary['key2']"u8).ToArray());
+            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary.key1"u8).ToArray());
+            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary['key2']"u8).ToArray());
             Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary.key2"u8).ToArray());
 
             var data = WriteModifiedModel(model, "newDictionary", "{\"key1\":{\"x\":\"value1\"},\"key2\":{\"x\":\"value2\"}}");

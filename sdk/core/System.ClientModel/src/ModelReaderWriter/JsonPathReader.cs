@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace System.ClientModel.Primitives;
@@ -30,8 +31,18 @@ internal readonly ref struct JsonPathToken
 
 internal ref struct JsonPathReader
 {
+    private const byte DollarSign = 36;   // '$'
+    private const byte Dot = 46;          // '.'
+    private const byte OpenBracket = 91;  // '['
+    private const byte CloseBracket = 93; // ']'
+    private const byte SingleQuote = 39;  // '\''
+    private const byte DoubleQuote = 34;  // '"'
+    private const byte Zero = 48;         // '0'
+    private const byte Nine = 57;         // '9'
+
     private readonly ReadOnlySpan<byte> _jsonPath;
     private int _consumed;
+    private int _length;
 
     public JsonPathToken Current { get; private set; }
 
@@ -42,6 +53,7 @@ internal ref struct JsonPathReader
     {
         _jsonPath = jsonPath;
         _consumed = 0;
+        _length = jsonPath.Length;
     }
 
     public bool Read()
@@ -49,9 +61,9 @@ internal ref struct JsonPathReader
         if (Current.TokenType == JsonPathTokenType.End)
             return false;
 
-        if (_consumed >= _jsonPath.Length)
+        if (_consumed >= _length)
         {
-            Current = new JsonPathToken(JsonPathTokenType.End, _jsonPath.Length - 1);
+            Current = new JsonPathToken(JsonPathTokenType.End, _length - 1);
             return true;
         }
 
@@ -59,42 +71,44 @@ internal ref struct JsonPathReader
 
         switch (current)
         {
-            case (byte)'$':
+            case DollarSign:
                 Current = new JsonPathToken(JsonPathTokenType.Root, _consumed++, _jsonPath.Slice(_consumed - 1, 1));
                 return true;
 
-            case (byte)'.':
+            case Dot:
                 Current = new JsonPathToken(JsonPathTokenType.PropertySeparator, _consumed++);
                 return true;
 
-            case (byte)'[':
+            case OpenBracket:
                 // if the next byte is '\'', or '"', it's a quoted string, otherwise it's an array start
-                if (_consumed + 1 < _jsonPath.Length && (_jsonPath[_consumed + 1] == '\'' || _jsonPath[_consumed + 1] == '"'))
+                if (_consumed + 1 >= _length)
+                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or array index after '['");
+
+                var next = _jsonPath[_consumed + 1];
+                if (next == SingleQuote || next == DoubleQuote)
                 {
                     Current = new JsonPathToken(JsonPathTokenType.PropertySeparator, _consumed++);
                     return true;
                 }
-                if (_consumed + 1 < _jsonPath.Length && IsDigit(_jsonPath[_consumed + 1]))
-                {
-                    _consumed++; // Skip '['
-                    Current = ReadNumber();
-                    if (_consumed < _jsonPath.Length && _jsonPath[_consumed] == ']')
-                    {
-                        _consumed++; // Skip closing bracket
-                        return true;
-                    }
-                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after number");
-                }
-                throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or array index after '['");
 
-            case (byte)'\'' or (byte)'"':
+                if (!IsDigit(next))
+                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or array index after '['");
+
+                _consumed++; // Skip '['
+                Current = ReadNumber();
+                if (_consumed >= _length || _jsonPath[_consumed] != CloseBracket)
+                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after number");
+
+                _consumed++; // Skip closing bracket
+                return true;
+
+            case SingleQuote or DoubleQuote:
                 Current = ReadQuotedString();
-                if (_consumed < _jsonPath.Length && _jsonPath[_consumed] == ']')
-                {
-                    _consumed++; // Skip closing bracket
-                    return true;
-                }
-                throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after quoted string");
+                if (_consumed >= _length || _jsonPath[_consumed] != CloseBracket)
+                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after quoted string");
+
+                _consumed++; // Skip closing bracket
+                return true;
 
             default:
                 // Read a property name
@@ -132,44 +146,46 @@ internal ref struct JsonPathReader
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private JsonPathToken ReadQuotedString()
     {
-        byte quote = _jsonPath[_consumed];
-        int start = ++_consumed; // Skip opening quote
+        var localJsonPath = _jsonPath;
+        byte quote = localJsonPath[_consumed];
+        int initial = ++_consumed; // Skip opening quote
 
-        while (_consumed < _jsonPath.Length && _jsonPath[_consumed] != quote)
+        while (_consumed < _length && localJsonPath[_consumed] != quote)
             _consumed++;
 
-        if (_consumed >= _jsonPath.Length)
+        if (_consumed >= _length)
             throw new FormatException("Unterminated quoted string in JsonPath");
 
-        var value = _jsonPath.Slice(start, _consumed - start);
+        var value = localJsonPath.Slice(initial, _consumed - initial);
         _consumed++; // Skip closing quote
-        return new JsonPathToken(JsonPathTokenType.Property, start, value);
+        return new JsonPathToken(JsonPathTokenType.Property, initial, value);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private JsonPathToken ReadNumber()
     {
-        int start = _consumed;
-        while (_consumed < _jsonPath.Length && IsDigit(_jsonPath[_consumed]))
+        var localJsonPath = _jsonPath;
+        int initial = _consumed;
+        while (_consumed < _length && IsDigit(localJsonPath[_consumed]))
             _consumed++;
 
-        return new JsonPathToken(JsonPathTokenType.ArrayIndex, start, _jsonPath.Slice(start, _consumed - start));
+        return new JsonPathToken(JsonPathTokenType.ArrayIndex, initial, localJsonPath.Slice(initial, _consumed - initial));
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private JsonPathToken ReadProperty()
     {
-        int start = _consumed;
-        while (_consumed < _jsonPath.Length &&
-               _jsonPath[_consumed] != (byte)'.' &&
-               _jsonPath[_consumed] != (byte)'[' &&
-               _jsonPath[_consumed] != (byte)']')
-        {
+        var localJsonPath = _jsonPath;
+        int initial = _consumed;
+        while (_consumed < _length && localJsonPath[_consumed] is not Dot and not OpenBracket and not CloseBracket)
             _consumed++;
-        }
 
-        return new JsonPathToken(JsonPathTokenType.Property, start, _jsonPath.Slice(start, _consumed - start));
+        return new JsonPathToken(JsonPathTokenType.Property, initial, localJsonPath.Slice(initial, _consumed - initial));
     }
 
-    private static bool IsDigit(byte b) => b >= (byte)'0' && b <= (byte)'9';
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool IsDigit(byte b) => b >= Zero && b <= Nine;
 }
