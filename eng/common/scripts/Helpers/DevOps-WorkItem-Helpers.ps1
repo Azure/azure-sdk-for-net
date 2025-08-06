@@ -1015,3 +1015,66 @@ function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $Pipeli
     Write-Host "[$($workItem.id)]$LanguageDisplayName - $pkgName($versionMajorMinor) - Updated"
     return $true
 }
+
+
+function Get-LanguageDevOpsName
+{
+    param([string]$LanguageShort)
+
+    switch ($LanguageShort.ToLower()) 
+    {
+        "net" { return "Dotnet" }
+        "js" { return "JavaScript" }
+        "java" { return "Java" }
+        "go" { return "Go" }
+        "python" { return "Python" }
+        "rust" { return "Rust" }
+        "cpp" { return "Cpp" }
+        "c" { return "C" }
+        default { return $null }
+    }
+}
+
+function Get-ReleasePlanForPullRequest($prLink)
+{
+  $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
+  if (!$devopsFieldLanguage)
+  {
+    Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
+    return $null
+  }
+
+  $prFieldName = "SDKPullRequestFor$($devopsFieldLanguage)"
+  $releaseStatusField = "ReleaseStatusFor$($devopsFieldLanguage)"
+  $fields = @()
+  $fields += "System.ID"
+  $fields += "System.State"
+  $fields += "System.AssignedTo"
+  $fields += "System.Parent"
+  $fields += "System.Tags"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [$prFieldName] = '${prLink}'"
+  $query += " AND [$releaseStatusField] <> 'Released'"
+  $query += " AND [System.State] NOT IN ('Finished', 'Abandoned')"
+  $workItems = Invoke-Query $fields $query
+  return $workItems
+}
+
+function Update-ReleaseStatusInReleasePlan($releasePlanWorkItemId, $status, $version)
+{  
+  $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
+  if (!$devopsFieldLanguage)
+  {
+    Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
+    return $null
+  }
+
+  $fields = @()
+  $fields += "`"ReleaseStatusFor$($devopsFieldLanguage)=$status`""
+  $fields += "`"ReleasedVersionFor$($devopsFieldLanguage)=$version`""
+
+  Write-Host "Updating Release Plan [$releasePlanWorkItemId] with status [$status] for language [$LanguageShort]."
+  $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
+  Write-Host "Updated release status for [$LanguageShort] in Release Plan [$releasePlanWorkItemId]"
+}
