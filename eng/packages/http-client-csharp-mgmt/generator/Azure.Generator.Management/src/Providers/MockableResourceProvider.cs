@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
@@ -166,7 +167,12 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        // TODO -- when we have the ability to get parent resources, we might move this to a more generic place and make it a helper method.
+        private MethodProvider BuildNonResourceMethod(InputServiceMethod method, bool isAsync) => method switch
+        {
+            InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, ContextualPath, null!, pagingMethod, null!, isAsync, null!, default),
+            _ => new ResourceOperationMethodProvider(this, ContextualPath, null!, method, null!, isAsync)
+        };
+
         private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
         {
             var segments = resourceType.Split('/');
