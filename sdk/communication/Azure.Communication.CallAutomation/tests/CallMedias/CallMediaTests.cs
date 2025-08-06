@@ -1047,7 +1047,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                        },
                        SummarizationOptions = new SummarizationOptions()
                        {
-                           EnableEndCallSummary = true,
+                           IsEndCallSummaryEnabled = true,
                            Locale="en-US"
                        },
                        IsSentimentAnalysisEnabled = true,
@@ -1116,7 +1116,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                            },
                            SummarizationOptions = new SummarizationOptions()
                            {
-                               EnableEndCallSummary = false,
+                               IsEndCallSummaryEnabled = false,
                                Locale = "en-US"
                            },
                            IsSentimentAnalysisEnabled = true
@@ -1132,7 +1132,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.SummarizeCall(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = new Uri("https://test"), SummarizationOptions = new SummarizationOptions(){ Locale="en-US", EnableEndCallSummary = true } })
+                   callMedia => callMedia.SummarizeCall(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = new Uri("https://test"), SummarizationOptions = new SummarizationOptions(){ Locale="en-US", IsEndCallSummaryEnabled = true } })
                 }
             };
         }
@@ -1143,7 +1143,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.SummarizeCallAsync(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = new Uri("https://test"), SummarizationOptions = new SummarizationOptions(){ Locale="en-US", EnableEndCallSummary = true } })
+                   callMedia => callMedia.SummarizeCallAsync(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = new Uri("https://test"), SummarizationOptions = new SummarizationOptions(){ Locale="en-US", IsEndCallSummaryEnabled = true } })
                 }
             };
         }

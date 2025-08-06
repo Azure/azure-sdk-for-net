@@ -1316,7 +1316,7 @@ namespace Azure.Communication.CallAutomation
                     request.SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId;
                     request.PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType);
                     request.EnableSentimentAnalysis = options.IsSentimentAnalysisEnabled;
-                    request.SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale);
+                    request.SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.IsEndCallSummaryEnabled, options.SummarizationOptions.Locale);
 
                     if (options.Locales != null && options.Locales.Any())
                     {
@@ -1358,7 +1358,7 @@ namespace Azure.Communication.CallAutomation
                     request.SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId;
                     request.PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType);
                     request.EnableSentimentAnalysis = options.IsSentimentAnalysisEnabled;
-                    request.SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale);
+                    request.SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.IsEndCallSummaryEnabled, options.SummarizationOptions.Locale);
 
                     if (options.Locales != null && options.Locales.Any())
                     {
@@ -1476,7 +1476,7 @@ namespace Azure.Communication.CallAutomation
                     options.OperationCallbackUri?.AbsoluteUri,
                     options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType),
                     options.IsSentimentAnalysisEnabled,
-                    options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
+                    options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.IsEndCallSummaryEnabled, options.SummarizationOptions.Locale)
                     );
 
                 return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
@@ -1536,7 +1536,7 @@ namespace Azure.Communication.CallAutomation
                     options.OperationCallbackUri?.AbsoluteUri,
                     options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType),
                     options.IsSentimentAnalysisEnabled,
-                    options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
+                    options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.IsEndCallSummaryEnabled, options.SummarizationOptions.Locale)
                     );
 
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
@@ -1563,7 +1563,7 @@ namespace Azure.Communication.CallAutomation
                 var request = options == default ? new SummarizeCallRequestInternal() : new SummarizeCallRequestInternal(
                     operationContext: options.OperationContext,
                     operationCallbackUri: options.OperationCallbackUri?.AbsoluteUri,
-                    summarizationOptions: options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions?.EnableEndCallSummary, options.SummarizationOptions?.Locale)
+                    summarizationOptions: options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions?.IsEndCallSummaryEnabled, options.SummarizationOptions?.Locale)
                 );
 
                 return CallMediaRestClient.SummarizeCall(CallConnectionId,
@@ -1593,7 +1593,7 @@ namespace Azure.Communication.CallAutomation
                     operationContext: options.OperationContext,
                     operationCallbackUri: options.OperationCallbackUri?.AbsoluteUri,
                     summarizationOptions: options.SummarizationOptions == null ? null :
-                    new SummarizationOptionsInternal(options.SummarizationOptions?.EnableEndCallSummary, options.SummarizationOptions?.Locale)
+                    new SummarizationOptionsInternal(options.SummarizationOptions?.IsEndCallSummaryEnabled, options.SummarizationOptions?.Locale)
                 );
 
                 return await CallMediaRestClient.SummarizeCallAsync(CallConnectionId,

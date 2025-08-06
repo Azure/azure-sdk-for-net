@@ -1594,7 +1594,7 @@ namespace Azure.Communication.CallAutomation
     public partial class SummarizationOptions
     {
         public SummarizationOptions() { }
-        public bool? EnableEndCallSummary { get { throw null; } set { } }
+        public bool? IsEndCallSummaryEnabled { get { throw null; } set { } }
         public string Locale { get { throw null; } set { } }
     }
     public partial class SummarizeCallOptions
@@ -1626,7 +1626,7 @@ namespace Azure.Communication.CallAutomation
         public string PhoneNumber { get { throw null; } set { } }
         public string RecordId { get { throw null; } set { } }
         public string ScreenPopUrl { get { throw null; } set { } }
-        public bool AddAdditionalCallerInformation(string key, string value) { throw null; }
+        public bool TryAddAdditionalCallerInformation(string key, string value) { throw null; }
     }
     public partial class TeamsPhoneSourceDetails
     {
@@ -1635,7 +1635,7 @@ namespace Azure.Communication.CallAutomation
         public string Language { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Source { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
-        public bool AddIntendedTargets(string key, Azure.Communication.CommunicationIdentifier target) { throw null; }
+        public bool TryAddIntendedTargets(string key, Azure.Communication.CommunicationIdentifier target) { throw null; }
     }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {

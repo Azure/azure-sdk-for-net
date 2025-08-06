@@ -58,16 +58,21 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="key">The key for the intended target.</param>
         /// <param name="target">The communication identifier for the intended target.</param>
-        /// <returns>True if the item was added, false if the dictionary already contains 10 items.</returns>
-        public bool AddIntendedTargets(string key, CommunicationIdentifier target)
+        /// <returns>True if the item was added, false if the dictionary already contains the key.</returns>
+        public bool TryAddIntendedTargets(string key, CommunicationIdentifier target)
         {
             if (IntendedTargets.Count >= 10)
             {
                 return false;
             }
 
-            IntendedTargets[key] = target;
-            return true;
+            if (!IntendedTargets.ContainsKey(key))
+            {
+                IntendedTargets.Add(key, target);
+                return true;
+            }
+
+            return false;
         }
     }
 }

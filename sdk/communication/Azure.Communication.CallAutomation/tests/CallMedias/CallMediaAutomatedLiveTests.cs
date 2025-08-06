@@ -2648,7 +2648,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         SummarizationOptions = new SummarizationOptions()
                         {
                             Locale = "en-CA",
-                            EnableEndCallSummary = true,
+                            IsEndCallSummaryEnabled = true,
                         },
                         Locales = new List<string>() { "en-CA" }
                     };
@@ -2724,7 +2724,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         SummarizationOptions = new SummarizationOptions()
                         {
                             Locale = "en-CA",
-                            EnableEndCallSummary = false,
+                            IsEndCallSummaryEnabled = false,
                         },
                         Locales = new List<string>() { "en-CA" }
                     };

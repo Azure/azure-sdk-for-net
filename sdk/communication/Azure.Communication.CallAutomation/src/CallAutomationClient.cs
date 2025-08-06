@@ -776,7 +776,7 @@ namespace Azure.Communication.CallAutomation
                 EnableIntermediateResults = configuration.EnableIntermediateResults,
                 PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.IsEnabled, configuration.PiiRedactionOptions.RedactionType),
                 EnableSentimentAnalysis = configuration.IsSentimentAnalysisEnabled,
-                SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.EnableEndCallSummary, configuration.SummarizationOptions.Locale)
+                SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.IsEndCallSummaryEnabled, configuration.SummarizationOptions.Locale)
             };
 
             if (configuration.Locales != null && configuration.Locales.Any())

@@ -65,21 +65,23 @@ namespace Azure.Communication.CallAutomation
         public IDictionary<string, string> AdditionalCallerInformation { get; }
 
         /// <summary>
-        /// Adds a key-value pair to the AdditionalCallerInformation dictionary.
-        /// Will not add entries beyond the maximum limit of 10 items.
+        /// Adds a key-value pair to the <see cref="AdditionalCallerInformation"/> dictionary.
+        /// If the key does not already exist the pair is added.
         /// </summary>
-        /// <param name="key">The key for the caller information.</param>
-        /// <param name="value">The value for the caller information.</param>
-        /// <returns>True if the item was added, false if the dictionary already contains 10 items.</returns>
-        public bool AddAdditionalCallerInformation(string key, string value)
+        /// <param name="key">The key for the caller information to add.</param>
+        /// <param name="value">The value associated with the specified key.</param>
+        /// <returns>
+        /// True if the item was added; false if the dictionary already contains the key.
+        /// </returns>
+        public bool TryAddAdditionalCallerInformation(string key, string value)
         {
-            if (AdditionalCallerInformation.Count >= 10)
+            if (!AdditionalCallerInformation.ContainsKey(key))
             {
-                return false;
+                AdditionalCallerInformation.Add(key, value);
+                return true;
             }
 
-            AdditionalCallerInformation[key] = value;
-            return true;
+            return false;
         }
     }
 }
