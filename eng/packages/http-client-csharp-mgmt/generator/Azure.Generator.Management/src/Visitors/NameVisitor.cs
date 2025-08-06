@@ -74,7 +74,6 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (TryTransformUrlToUri(model.Name, out var newName))
         {
-            UpdateConstructors(type, newName);
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
         }
@@ -82,7 +81,6 @@ internal class NameVisitor : ScmLibraryVisitor
         if (_knownTypes.Contains(model.Name))
         {
             newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
-            UpdateConstructors(type, newName);
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
         }
@@ -90,7 +88,6 @@ internal class NameVisitor : ScmLibraryVisitor
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
         {
             newName = $"{enclosingResourceName}Patch";
-            UpdateConstructors(type, newName);
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
 
@@ -101,16 +98,6 @@ internal class NameVisitor : ScmLibraryVisitor
             }
         }
         return base.PreVisitModel(model, type);
-    }
-
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    private static void UpdateConstructors(ModelProvider type, string newName)
-    {
-        foreach (var constructor in type.Constructors)
-        {
-            // Update the constructor name to match the model name
-            constructor.Signature.Update(name: newName);
-        }
     }
 
     // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved

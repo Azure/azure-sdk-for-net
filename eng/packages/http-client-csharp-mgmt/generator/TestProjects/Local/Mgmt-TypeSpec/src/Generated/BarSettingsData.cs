@@ -47,7 +47,7 @@ namespace MgmtTypeSpec
         public IList<string> StringArray { get; }
 
         /// <summary> enabled. </summary>
-        public bool? PropertiesIsEnabled
+        public bool? IsEnabled
         {
             get
             {
