@@ -13,12 +13,6 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        //var benchMark = new JsonPathEqualityComparerBenchmarks();
-        //for (int i = 0; i < 1000000; i++)
-        //{
-        //    benchMark.AreEqual_Comparer();
-        //}
-
         // To see the list of benchmarks that can be run
         // dotnet run -c Release --framework net6.0 --list flat
 
