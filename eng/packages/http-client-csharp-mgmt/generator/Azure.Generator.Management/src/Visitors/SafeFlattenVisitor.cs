@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -40,22 +41,22 @@ namespace Azure.Generator.Management.Visitors
                     var propertyTypeProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(propertyModelType)!;
                     if (propertyTypeProvider.Properties.Count == 1)
                     {
-                        var singleProperty = propertyTypeProvider.Properties.Single();
+                        var innerProperty = propertyTypeProvider.Properties.Single();
 
                         // make the current property internal
-                        var internalProperty = type!.Properties.Single(p => p.Type.AreNamesEqual(propertyTypeProvider.Type)); // type equal not working here, so we use AreNamesEqual
-                        internalizedProperties.Add(internalProperty);
+                        var immediateParentProperty = type!.Properties.Single(p => p.Type.AreNamesEqual(propertyTypeProvider.Type)); // type equal not working here, so we use AreNamesEqual
+                        internalizedProperties.Add(immediateParentProperty);
 
                         // flatten the single property to public and associate it with the internal property
-                        var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = GetFlags(property.IsReadOnly, singleProperty, propertyTypeProvider, propertyTypeProvider);
-                        var flattenPropertyName = $"{internalProperty.Name}{singleProperty.Name}"; // TODO: handle name conflicts
+                        var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = GetFlags(property.IsReadOnly, innerProperty, propertyTypeProvider, propertyTypeProvider);
+                        var flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, immediateParentProperty); // TODO: handle name conflicts
                         var flattenPropertyBody = new MethodPropertyBody(
-                            BuildGetter(includeGetterNullCheck, internalProperty, propertyTypeProvider, singleProperty),
-                            isFlattenedPropertyReadOnly ? null : BuildSetter(includeSetterNullCheck, propertyTypeProvider, internalProperty, singleProperty)
+                            BuildGetter(includeGetterNullCheck, immediateParentProperty, propertyTypeProvider, innerProperty),
+                            isFlattenedPropertyReadOnly ? null : BuildSetter(includeSetterNullCheck, propertyTypeProvider, immediateParentProperty, innerProperty)
                         );
-                        var flattenedProperty = new PropertyProvider(singleProperty.Description, singleProperty.Modifiers, singleProperty.Type, flattenPropertyName, flattenPropertyBody, type, singleProperty.ExplicitInterface, singleProperty.WireInfo, singleProperty.Attributes);
+                        var flattenedProperty = new PropertyProvider(innerProperty.Description, innerProperty.Modifiers, innerProperty.Type, flattenPropertyName, flattenPropertyBody, type, innerProperty.ExplicitInterface, innerProperty.WireInfo, innerProperty.Attributes);
                         flattenedProperties.Add(flattenedProperty);
-                        flattenedPropertyMap.Add(internalProperty.Type, flattenedProperty);
+                        flattenedPropertyMap.Add(immediateParentProperty.Type, flattenedProperty);
                     }
                 }
             }
