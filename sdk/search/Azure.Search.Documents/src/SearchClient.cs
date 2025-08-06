@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
@@ -1536,48 +1537,21 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken = default)
         {
-            Debug.Assert(options != null);
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
-            scope.Start();
-            try
-            {
-                using HttpMessage message = Protocol.CreateSearchPostRequest(options, querySourceAuthorization);
-                if (async)
+            return await SearchInternal<T>(
+                querySourceAuthorization,
+                options,
+                operationName,
+                async,
+                cancellationToken,
+                (Stream stream, bool async) =>
                 {
-                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                    return SearchResults<T>.DeserializeAsync(
+                        stream,
+                        Serializer,
+                        async,
+                        cancellationToken);
                 }
-                else
-                {
-                    _pipeline.Send(message, cancellationToken);
-                }
-                switch (message.Response.Status)
-                {
-                    case 200:
-                    case 206:
-                        {
-                            // Deserialize the results
-                            SearchResults<T> results = await SearchResults<T>.DeserializeAsync(
-                                message.Response.ContentStream,
-                                Serializer,
-                                async,
-                                cancellationToken)
-                                .ConfigureAwait(false);
-
-                            // Cache the client and raw response so we can abstract
-                            // away server-side paging
-                            results.ConfigurePaging(this, message.Response);
-
-                            return Response.FromValue(results, message.Response);
-                        }
-                    default:
-                        throw new RequestFailedException(message.Response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            ).ConfigureAwait(false);
         }
 
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
@@ -1587,6 +1561,32 @@ namespace Azure.Search.Documents
             string operationName,
             bool async,
             CancellationToken cancellationToken = default)
+        {
+            return await SearchInternal<T>(
+                querySourceAuthorization,
+                options,
+                operationName,
+                async,
+                cancellationToken,
+                (Stream stream, bool async) =>
+                {
+                    return SearchResults<T>.DeserializeAsync(
+                        stream,
+                        typeInfo,
+                        Serializer,
+                        async,
+                        cancellationToken);
+                }
+            ).ConfigureAwait(false);
+        }
+
+        private async Task<Response<SearchResults<T>>> SearchInternal<T>(
+            string querySourceAuthorization,
+            SearchOptions options,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken,
+            Func<Stream, bool, Task<SearchResults<T>>> deserializeResult)
         {
             Debug.Assert(options != null);
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
@@ -1608,13 +1608,12 @@ namespace Azure.Search.Documents
                     case 206:
                         {
                             // Deserialize the results
-                            SearchResults<T> results = await SearchResults<T>.DeserializeAsync(
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                            SearchResults<T> results = await deserializeResult(
                                 message.Response.ContentStream,
-                                typeInfo,
-                                Serializer,
-                                async,
-                                cancellationToken)
+                                async)
                                 .ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
                             // Cache the client and raw response so we can abstract
                             // away server-side paging

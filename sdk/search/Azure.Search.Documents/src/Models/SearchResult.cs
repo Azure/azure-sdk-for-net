@@ -89,55 +89,7 @@ namespace Azure.Search.Documents.Models
         #pragma warning restore CS1572
         {
             Debug.Assert(options != null);
-            SearchResult<T> result = new SearchResult<T>();
-            result.SemanticSearch = new SemanticSearchResult();
-            foreach (JsonProperty prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals(Constants.SearchScoreKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    result.Score = prop.Value.GetDouble();
-                }
-                else if (prop.NameEquals(Constants.SearchHighlightsKeyJson.EncodedUtf8Bytes))
-                {
-                    result.Highlights = new Dictionary<string, IList<string>>();
-                    foreach (JsonProperty highlight in prop.Value.EnumerateObject())
-                    {
-                        // Add the highlight values
-                        List<string> values = new List<string>();
-                        result.Highlights[highlight.Name] = values;
-                        foreach (JsonElement highlightValue in highlight.Value.EnumerateArray())
-                        {
-                            values.Add(highlightValue.GetString());
-                        }
-                    }
-                }
-                else if (prop.NameEquals(Constants.SearchRerankerScoreKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    result.SemanticSearch.RerankerScore = prop.Value.GetDouble();
-                }
-                else if (prop.NameEquals(Constants.SearchRerankerBoostedScoreKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    result.SemanticSearch.RerankerBoostedScore = prop.Value.GetDouble();
-                }
-                else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    List<QueryCaptionResult> captionResults = new List<QueryCaptionResult>();
-                    foreach (JsonElement captionValue in prop.Value.EnumerateArray())
-                    {
-                        captionResults.Add(QueryCaptionResult.DeserializeQueryCaptionResult(captionValue));
-                    }
-                    result.SemanticSearch.Captions = captionResults;
-                }
-                else if (prop.NameEquals(Constants.SearchDocumentDebugInfoKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    result.DocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value);
-                }
-            }
+            SearchResult<T> result = DeserializeEnvelope(element);
 
             // Deserialize the model
             if (serializer != null)
@@ -190,6 +142,36 @@ namespace Azure.Search.Documents.Models
 #pragma warning restore CS1572
         {
             Debug.Assert(typeInfo != null);
+            SearchResult<T> result = DeserializeEnvelope(element);
+            // Deserialize the model
+            if (serializer != null)
+            {
+                using Stream stream = element.ToStream();
+                T document = async ?
+                    (T)await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false) :
+                    (T)serializer.Deserialize(stream, typeof(T), cancellationToken);
+                result.Document = document;
+            }
+            else
+            {
+                T document;
+                if (async)
+                {
+                    using Stream stream = element.ToStream();
+                    document = await JsonSerializer.DeserializeAsync<T>(stream, typeInfo, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    document = JsonSerializer.Deserialize<T>(element.GetRawText(), typeInfo);
+                }
+                result.Document = document;
+            }
+
+            return result;
+        }
+
+        private static SearchResult<T> DeserializeEnvelope(JsonElement element)
+        {
             SearchResult<T> result = new SearchResult<T>();
             result.SemanticSearch = new SemanticSearchResult();
             foreach (JsonProperty prop in element.EnumerateObject())
@@ -238,30 +220,6 @@ namespace Azure.Search.Documents.Models
                 {
                     result.DocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value);
                 }
-            }
-
-            // Deserialize the model
-            if (serializer != null)
-            {
-                using Stream stream = element.ToStream();
-                T document = async ?
-                    (T)await serializer.DeserializeAsync(stream, typeof(T), cancellationToken).ConfigureAwait(false) :
-                    (T)serializer.Deserialize(stream, typeof(T), cancellationToken);
-                result.Document = document;
-            }
-            else
-            {
-                T document;
-                if (async)
-                {
-                    using Stream stream = element.ToStream();
-                    document = await JsonSerializer.DeserializeAsync<T>(stream, typeInfo, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    document = JsonSerializer.Deserialize<T>(element.GetRawText(), typeInfo);
-                }
-                result.Document = document;
             }
 
             return result;
