@@ -42,8 +42,8 @@ namespace Azure.Generator.Management.Tests.Common
                 ],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
             decorators.Add(BuildResourceMetadata(responseModel, client, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [
-                new ResourceMethod(getCrossLanguageDefinitionId, ResourceOperationKind.Get),
-                new ResourceMethod(createCrossLanguageDefinitionId, ResourceOperationKind.Create)
+                new ResourceMethod(ResourceOperationKind.Get, getCrossLanguageDefinitionId),
+                new ResourceMethod(ResourceOperationKind.Create, createCrossLanguageDefinitionId)
             ], "ResponseType"));
             return (client, [responseModel]);
         }
