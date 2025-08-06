@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Extensions;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
@@ -57,7 +58,7 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 //need to depluralize the last word and check
-                if (i == nameWords.Length - 1 && parentWordsHash.Contains(lastWord.ToSingular(false)))
+                if (i == nameWords.Length - 1 && parentWordsHash.Contains(lastWord.Pluralize()))
                     return innerProperty.Name;
             }
 
