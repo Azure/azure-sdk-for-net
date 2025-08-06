@@ -176,10 +176,10 @@
 # AzureSdkOwners:                                                  @christothes @KrzysztofCwalina
 
 # PRLabel: %Azure Stack
-/sdk/azurestack*/                                                  @sarathys @bganapa @rakku-ms
+/sdk/azurestack*/                                                  @bganapa @rakku-ms
 
 # ServiceLabel: %Azure Stack
-# ServiceOwners:                                                   @sarathys @bganapa @rakku-ms
+# ServiceOwners:                                                   @bganapa @rakku-ms
 
 # PRLabel: %Batch
 /sdk/batch/                                                        @wiboris @dpwatrous @wanghoppe @skapur12 @cRui861
@@ -569,10 +569,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @Azure/azure-sdk-write-keyvault
+/sdk/keyvault/                                                     @cheathamb36 @chen-karen @jackrichins @vickm
 
 # ServiceLabel: %KeyVault
-# ServiceOwners:                                                   @cheathamb36 @chen-karen @Azure/azure-sdk-write-keyvault
+# ServiceOwners:                                                   @cheathamb36 @chen-karen @jackrichins @vickm
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
