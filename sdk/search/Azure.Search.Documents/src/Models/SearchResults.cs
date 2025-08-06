@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -92,9 +94,24 @@ namespace Azure.Search.Documents.Models
         private SearchClient _pagingClient;
 
         /// <summary>
+        /// Metadata about the type to deserialize.
+        /// This is only used when deserializing using the APIs that take type info.
+        /// </summary>
+        private JsonTypeInfo<T> _typeInfo;
+
+        /// <summary>
         /// Initializes a new instance of the SearchResults class.
         /// </summary>
+        [RequiresUnreferencedCode("Uses reflection-based serialization which is not compatible with trimming")]
         internal SearchResults() { }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchResults class with type info.
+        /// </summary>
+        internal SearchResults(JsonTypeInfo<T> typeInfo)
+        {
+            _typeInfo = typeInfo;
+        }
 
         /// <summary>
         /// Get all of the <see cref="SearchResult{T}"/>s synchronously.
@@ -143,16 +160,38 @@ namespace Azure.Search.Documents.Models
             SearchResults<T> next = null;
             if (_pagingClient != null && NextOptions != null)
             {
-                next = async ?
-                    await _pagingClient.SearchAsync<T>(
-                        NextOptions.SearchText,
-                        NextOptions,
-                        cancellationToken)
-                        .ConfigureAwait(false) :
-                    _pagingClient.Search<T>(
-                        NextOptions.SearchText,
-                        NextOptions,
-                        cancellationToken);
+                if (_typeInfo != null)
+                {
+                    next = async ?
+                        await _pagingClient.SearchAsync<T>(
+                            NextOptions.SearchText,
+                            _typeInfo,
+                            NextOptions,
+                            cancellationToken)
+                            .ConfigureAwait(false) :
+                        _pagingClient.Search<T>(
+                            NextOptions.SearchText,
+                            _typeInfo,
+                            NextOptions,
+                            cancellationToken);
+                }
+                else
+                {
+                    if (!JsonSerialization.IsReflectionEnabled)
+                    {
+                        throw new InvalidOperationException("Reflection-based serialization has been disabled in the app configuration.");
+                    }
+                    next = async ?
+                        await _pagingClient.SearchAsync<T>(
+                            NextOptions.SearchText,
+                            NextOptions,
+                            cancellationToken)
+                            .ConfigureAwait(false) :
+                        _pagingClient.Search<T>(
+                            NextOptions.SearchText,
+                            NextOptions,
+                            cancellationToken);
+                }
             }
             return next;
         }
@@ -172,6 +211,7 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>Deserialized SearchResults.</returns>
+        [RequiresUnreferencedCode("Uses reflection-based serialization which is not compatible with trimming")]
         internal static async Task<SearchResults<T>> DeserializeAsync(
             Stream json,
             ObjectSerializer serializer,
@@ -313,6 +353,171 @@ namespace Azure.Search.Documents.Models
                             element,
                             serializer,
                             defaultSerializerOptions,
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                        results.Values.Add(result);
+                    }
+                }
+            }
+            return results;
+        }
+
+        /// <summary>
+        /// Deserialize the SearchResults.
+        /// </summary>
+        /// <param name="json">A JSON stream.</param>
+        /// <param name="typeInfo">Metadata about the type to deserialize.</param>
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>Deserialized SearchResults.</returns>
+        internal static async Task<SearchResults<T>> DeserializeAsync(
+            Stream json,
+            JsonTypeInfo<T> typeInfo,
+            ObjectSerializer serializer,
+            bool async,
+            CancellationToken cancellationToken)
+#pragma warning restore CS1572
+        {
+            // Parse the JSON
+            using JsonDocument doc = async ?
+                await JsonDocument.ParseAsync(json, cancellationToken: cancellationToken).ConfigureAwait(false) :
+                JsonDocument.Parse(json);
+
+            SearchResults<T> results = new SearchResults<T>(typeInfo);
+            results.SemanticSearch = new SemanticSearchResults();
+            foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
+            {
+                if (prop.NameEquals(Constants.ODataCountKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.TotalCount = prop.Value.GetInt64();
+                }
+                else if (prop.NameEquals(Constants.SearchCoverageKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.Coverage = prop.Value.GetDouble();
+                }
+                else if (prop.NameEquals(Constants.SearchFacetsKeyJson.EncodedUtf8Bytes))
+                {
+                    results.Facets = new Dictionary<string, IList<FacetResult>>();
+                    foreach (JsonProperty facetObject in prop.Value.EnumerateObject())
+                    {
+                        // Get the values of the facet
+                        List<FacetResult> facets = new List<FacetResult>();
+                        foreach (JsonElement facetValue in facetObject.Value.EnumerateArray())
+                        {
+                            Dictionary<string, object> facetValues = new Dictionary<string, object>();
+                            IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
+                            long? facetCount = null;
+                            double? facetSum = null;
+                            foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
+                            {
+                                if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetCount = facetProperty.Value.GetInt64();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals(Constants.SumKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetSum = facetProperty.Value.GetDouble();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals(Constants.FacetsKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
+                                    foreach (var property0 in facetProperty.Value.EnumerateObject())
+                                    {
+                                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                                        {
+                                            dictionary.Add(property0.Name, null);
+                                        }
+                                        else
+                                        {
+                                            List<FacetResult> array = new List<FacetResult>();
+                                            foreach (var item in property0.Value.EnumerateArray())
+                                            {
+                                                array.Add(FacetResult.DeserializeFacetResult(item));
+                                            }
+                                            dictionary.Add(property0.Name, array);
+                                        }
+                                    }
+                                    searchFacets = dictionary;
+                                    continue;
+                                }
+                                else
+                                {
+                                    object value = facetProperty.Value.GetSearchObject();
+                                    facetValues[facetProperty.Name] = value;
+                                }
+                            }
+                            facets.Add(new FacetResult(facetCount, facetSum, searchFacets, facetValues));
+                        }
+                        // Add the facet to the results
+                        results.Facets[facetObject.Name] = facets;
+                    }
+                }
+                else if (prop.NameEquals(Constants.ODataNextLinkKeyJson.EncodedUtf8Bytes))
+                {
+                    results.NextUri = new Uri(prop.Value.GetString());
+                }
+                else if (prop.NameEquals(Constants.SearchNextPageKeyJson.EncodedUtf8Bytes))
+                {
+                    results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
+                }
+                else if (prop.NameEquals(Constants.SearchSemanticErrorReasonKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.SemanticSearch.ErrorReason = new SemanticErrorReason(prop.Value.GetString());
+                }
+                else if (prop.NameEquals(Constants.SearchSemanticSearchResultsTypeKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.SemanticSearch.ResultsType = new SemanticSearchResultsType(prop.Value.GetString());
+                }
+                else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    List<QueryAnswerResult> answerResults = new List<QueryAnswerResult>();
+                    foreach (JsonElement answerValue in prop.Value.EnumerateArray())
+                    {
+                        answerResults.Add(QueryAnswerResult.DeserializeQueryAnswerResult(answerValue));
+                    }
+                    results.SemanticSearch.Answers = answerResults;
+                }
+                if (prop.NameEquals(Constants.SearchSemanticQueryRewritesResultTypeKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.SemanticSearch.SemanticQueryRewritesResultType = new SemanticQueryRewritesResultType(prop.Value.GetString());
+                }
+                if (prop.NameEquals(Constants.SearchDebugKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.DebugInfo = DebugInfo.DeserializeDebugInfo(prop.Value);
+                }
+                else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
+                {
+                    foreach (JsonElement element in prop.Value.EnumerateArray())
+                    {
+                        SearchResult<T> result = await SearchResult<T>.DeserializeAsync(
+                            element,
+                            serializer,
+                            typeInfo,
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);

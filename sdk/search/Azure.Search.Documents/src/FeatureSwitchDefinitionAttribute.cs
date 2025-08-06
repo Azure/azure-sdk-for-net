@@ -1,0 +1,38 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#if !NET9_0_OR_GREATER
+
+namespace System.Diagnostics.CodeAnalysis
+{
+    /// <summary>
+    /// Indicates that the specified public static boolean get-only property
+    /// corresponds to the feature switch specified by name.
+    /// </summary>
+    /// <remarks>
+    /// IL rewriters and compilers can use this to substitute the return value
+    /// of the specified property with the value of the feature switch.
+    /// </remarks>
+    [AttributeUsage(AttributeTargets.Property, Inherited = false)]
+    internal sealed class FeatureSwitchDefinitionAttribute : Attribute
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FeatureSwitchDefinitionAttribute"/> class
+        /// with the specified feature switch name.
+        /// </summary>
+        /// <param name="switchName">
+        /// The name of the feature switch that provides the value for the specified property.
+        /// </param>
+        public FeatureSwitchDefinitionAttribute(string switchName)
+        {
+            SwitchName = switchName;
+        }
+
+        /// <summary>
+        /// The name of the feature switch that provides the value for the specified property.
+        /// </summary>
+        public string SwitchName { get; }
+    }
+}
+
+#endif // !NET9_0_OR_GREATER
