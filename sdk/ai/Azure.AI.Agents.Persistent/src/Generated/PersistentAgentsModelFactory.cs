@@ -456,6 +456,59 @@ namespace Azure.AI.Agents.Persistent
             return new RunStepDeepResearchToolCallDetails(input, output, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepActivityDetails"/>. </summary>
+        /// <param name="activities"> A list of tool call details for this run step. </param>
+        /// <returns> A new <see cref="Persistent.RunStepActivityDetails"/> instance for mocking. </returns>
+        public static RunStepActivityDetails RunStepActivityDetails(IEnumerable<RunStepDetailsActivity> activities = null)
+        {
+            activities ??= new List<RunStepDetailsActivity>();
+
+            return new RunStepActivityDetails(RunStepType.Activity, serializedAdditionalRawData: null, activities?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDetailsActivity"/>. </summary>
+        /// <param name="id"> The activity ID. </param>
+        /// <param name="serverLabel"> Server label. </param>
+        /// <param name="tools"> The supported function list. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDetailsActivity"/> instance for mocking. </returns>
+        public static RunStepDetailsActivity RunStepDetailsActivity(string id = null, string serverLabel = null, IReadOnlyDictionary<string, ActivityFunctionDefinition> tools = null)
+        {
+            tools ??= new Dictionary<string, ActivityFunctionDefinition>();
+
+            return new RunStepDetailsActivity(id, serverLabel, tools, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ActivityFunctionDefinition"/>. </summary>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        /// <returns> A new <see cref="Persistent.ActivityFunctionDefinition"/> instance for mocking. </returns>
+        public static ActivityFunctionDefinition ActivityFunctionDefinition(string description = null, ActivityFunctionParameters parameters = null)
+        {
+            return new ActivityFunctionDefinition(description, parameters, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ActivityFunctionParameters"/>. </summary>
+        /// <param name="type"> The parameter type, it is always object. </param>
+        /// <param name="properties"> The dictionary of function arguments. </param>
+        /// <param name="required"> The list of the required parameters. </param>
+        /// <returns> A new <see cref="Persistent.ActivityFunctionParameters"/> instance for mocking. </returns>
+        public static ActivityFunctionParameters ActivityFunctionParameters(ActivityFunctionParametersType type = default, IReadOnlyDictionary<string, FunctionArgument> properties = null, IEnumerable<string> required = null)
+        {
+            properties ??= new Dictionary<string, FunctionArgument>();
+            required ??= new List<string>();
+
+            return new ActivityFunctionParameters(type, properties, required?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.FunctionArgument"/>. </summary>
+        /// <param name="type"> The type of an argument. </param>
+        /// <param name="description"> The argument description. </param>
+        /// <returns> A new <see cref="Persistent.FunctionArgument"/> instance for mocking. </returns>
+        public static FunctionArgument FunctionArgument(string type = null, string description = null)
+        {
+            return new FunctionArgument(type, description, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepError"/>. </summary>
         /// <param name="code"> The error code for this error. </param>
         /// <param name="message"> The human-readable text associated with this error. </param>

@@ -13,6 +13,8 @@ namespace Azure.AI.Agents.Persistent
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ActivityFunctionDefinition))]
+    [ModelReaderWriterBuildable(typeof(ActivityFunctionParameters))]
     [ModelReaderWriterBuildable(typeof(AISearchIndexResource))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolDefinition))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolResource))]
@@ -46,6 +48,7 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(FileSearchToolDefinition))]
     [ModelReaderWriterBuildable(typeof(FileSearchToolDefinitionDetails))]
     [ModelReaderWriterBuildable(typeof(FileSearchToolResource))]
+    [ModelReaderWriterBuildable(typeof(FunctionArgument))]
     [ModelReaderWriterBuildable(typeof(FunctionToolDefinition))]
     [ModelReaderWriterBuildable(typeof(IncompleteRunDetails))]
     [ModelReaderWriterBuildable(typeof(InternalAgentDeletionStatus))]
@@ -125,6 +128,7 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(RunCompletionUsage))]
     [ModelReaderWriterBuildable(typeof(RunError))]
     [ModelReaderWriterBuildable(typeof(RunStep))]
+    [ModelReaderWriterBuildable(typeof(RunStepActivityDetails))]
     [ModelReaderWriterBuildable(typeof(RunStepAzureAISearchToolCall))]
     [ModelReaderWriterBuildable(typeof(RunStepBingCustomSearchToolCall))]
     [ModelReaderWriterBuildable(typeof(RunStepBingGroundingToolCall))]
@@ -160,6 +164,7 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(RunStepDeltaToolCall))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaToolCallObject))]
     [ModelReaderWriterBuildable(typeof(RunStepDetails))]
+    [ModelReaderWriterBuildable(typeof(RunStepDetailsActivity))]
     [ModelReaderWriterBuildable(typeof(RunStepError))]
     [ModelReaderWriterBuildable(typeof(RunStepFileSearchToolCall))]
     [ModelReaderWriterBuildable(typeof(RunStepFileSearchToolCallResult))]

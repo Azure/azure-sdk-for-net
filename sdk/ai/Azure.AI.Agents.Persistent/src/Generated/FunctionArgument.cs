@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary>
-    /// An abstract representation of the details for a run step.
-    /// Please note <see cref="RunStepDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="RunStepActivityDetails"/>, <see cref="RunStepMessageCreationDetails"/> and <see cref="RunStepToolCallDetails"/>.
-    /// </summary>
-    public abstract partial class RunStepDetails
+    /// <summary> The function argument and description. </summary>
+    public partial class FunctionArgument
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,37 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDetails"/>. </summary>
-        protected RunStepDetails()
+        /// <summary> Initializes a new instance of <see cref="FunctionArgument"/>. </summary>
+        /// <param name="type"> The type of an argument. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
+        internal FunctionArgument(string type)
         {
+            Argument.AssertNotNull(type, nameof(type));
+
+            Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDetails"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <summary> Initializes a new instance of <see cref="FunctionArgument"/>. </summary>
+        /// <param name="type"> The type of an argument. </param>
+        /// <param name="description"> The argument description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDetails(RunStepType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FunctionArgument(string type, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal RunStepType Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="FunctionArgument"/> for deserialization. </summary>
+        internal FunctionArgument()
+        {
+        }
+
+        /// <summary> The type of an argument. </summary>
+        public string Type { get; }
+        /// <summary> The argument description. </summary>
+        public string Description { get; }
     }
 }

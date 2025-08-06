@@ -8,7 +8,13 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOIN
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
 var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
-PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
+// Enable experimantal headers (needed only to list activity steps).
+PersistentAgentsAdministrationClientOptions headerOptions = new();
+CustomHeadersPolicy experimentalFeaturesHeader = new();
+experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
+headerOptions.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
+//
+PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options: headerOptions);
 ```
 
 2. We will create the MCP tool definition and configure allowed tools.
@@ -84,7 +90,40 @@ CreateRunStreamingOptions options = new()
 };
 ```
 
-5 Start the streaming update loop. When asked, we will approve using tool.
+5. To simplify the code we will use `PrintActivityStep` to display functions called and along with their parameters.
+
+```C# Snippet:AgentsMCPStreaming_PrintActivityStep
+private static void PrintActivityStep(RunStep step)
+{
+    if (step.StepDetails is RunStepActivityDetails activityDetails)
+    {
+        foreach (RunStepDetailsActivity activity in activityDetails.Activities)
+        {
+            foreach (KeyValuePair<string, ActivityFunctionDefinition> activityFunction in activity.Tools)
+            {
+                Console.WriteLine($"The function {activityFunction.Key} with description \"{activityFunction.Value.Description}\" will be called.");
+                if (activityFunction.Value.Parameters.Properties.Count > 0)
+                {
+                    Console.WriteLine("Function parameters:");
+                    foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
+                    {
+                        Console.WriteLine($"\t{arg.Key}");
+                        Console.WriteLine($"\t\t Type: {arg.Value.Type}");
+                        if (!string.IsNullOrEmpty(arg.Value.Description))
+                            Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("This function has no parameters");
+                }
+            }
+        }
+    }
+}
+```
+
+6. Start the streaming update loop. When asked, we will approve using tool.
 
 Synchronous sample:
 ```C# Snippet:AgentsMCPStreaming_UpdateCycle
@@ -112,6 +151,10 @@ do
         else if (streamingUpdate is MessageContentUpdate contentUpdate)
         {
             Console.Write(contentUpdate.Text);
+        }
+        else if (streamingUpdate is RunStepUpdate runStepUpdate)
+        {
+            PrintActivityStep(runStepUpdate.Value);
         }
         else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
         {
@@ -157,6 +200,10 @@ do
         else if (streamingUpdate is MessageContentUpdate contentUpdate)
         {
             Console.Write(contentUpdate.Text);
+        }
+        else if (streamingUpdate is RunStepUpdate runStepUpdate)
+        {
+            PrintActivityStep(runStepUpdate.Value);
         }
         else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
         {
