@@ -104,7 +104,7 @@ namespace Azure.Generator.Management.Snippets
             VariableExpression contextVariable,
             CSharpType responseGenericType,
             bool isAsync,
-            out VariableExpression responseVariable)
+            out ScopedApi<Response> responseVariable)
         {
             var statements = new List<MethodBodyStatement>();
             var pipelineInvoke = isAsync ? "ProcessMessageAsync" : "ProcessMessage";
@@ -124,7 +124,8 @@ namespace Azure.Generator.Management.Snippets
                 Static(typeof(Response)).Invoke(
                     nameof(Response.FromValue),
                     [Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]), resultVariable]),
-                out responseVariable);
+                out var responseVar);
+            responseVariable = responseVar.As<Response>();
             statements.Add(responseDeclaration);
 
             return statements;
@@ -134,7 +135,7 @@ namespace Azure.Generator.Management.Snippets
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             bool isAsync,
-            out VariableExpression responseVariable)
+            out ScopedApi<Response> responseVariable)
         {
             var statements = new List<MethodBodyStatement>();
             var pipelineInvoke = isAsync ? "ProcessMessageAsync" : "ProcessMessage";
@@ -144,7 +145,8 @@ namespace Azure.Generator.Management.Snippets
                 "response",
                 typeof(Response),
                 This.Property("Pipeline").Invoke(pipelineInvoke, [messageVariable, contextVariable], null, isAsync),
-                out responseVariable);
+                out var responseVar);
+            responseVariable = responseVar.As<Response>();
             statements.Add(responseDeclaration);
 
             return statements;

@@ -123,7 +123,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(searchOptions);
+            content.JsonWriter.WriteObjectValue(searchOptions, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -311,7 +311,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(suggestOptions);
+            content.JsonWriter.WriteObjectValue(suggestOptions, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -386,7 +386,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batch);
+            content.JsonWriter.WriteObjectValue(batch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }
@@ -463,7 +463,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(autocompleteOptions);
+            content.JsonWriter.WriteObjectValue(autocompleteOptions, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             return message;
         }

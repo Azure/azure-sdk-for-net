@@ -216,11 +216,12 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new List<MethodBodyStatement>();
 
+            bodyStatements.Add(thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
+
             // Initialize all client diagnostics and rest client fields
             foreach (var (inputClient, clientInfo) in _clientInfos)
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate());
-                bodyStatements.Add(thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
                 bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), apiVersion)).Terminate());
             }
 
@@ -326,18 +327,19 @@ namespace Azure.Generator.Management.Providers
                     continue;
                 }
 
+                var isFakeLro = ResourceHelpers.ShouldMakeLro(methodKind);
+
                 // Get the appropriate rest client for this specific method
                 var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(method, _clientInfos);
 
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
+                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
 
                 if (method is InputPagingServiceMethod)
                 {
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
                     var itemType = convenienceMethod.Signature.ReturnType!.UnWrap();
                     operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, itemType, methodKind));
-
-                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
                     operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, itemType, methodKind));
 
                     continue;
@@ -351,17 +353,15 @@ namespace Azure.Generator.Management.Providers
                     updateMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, convenienceMethod, false);
                     operationMethods.Add(updateMethodProvider);
 
-                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
                     var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, asyncConvenienceMethod, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName));
-                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName, forceLro: isFakeLro));
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName, forceLro: isFakeLro));
                 }
             }
 

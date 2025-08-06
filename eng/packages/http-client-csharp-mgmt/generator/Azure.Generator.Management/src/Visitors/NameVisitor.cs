@@ -6,19 +6,23 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
 internal class NameVisitor : ScmLibraryVisitor
 {
     private const string ResourceTypeName = "ResourceType";
-    private static readonly HashSet<string> _knownModels = new HashSet<string>()
+    private static readonly HashSet<string> _knownTypes = new HashSet<string>()
         {
             "Sku",
             "SkuName",
@@ -45,6 +49,21 @@ internal class NameVisitor : ScmLibraryVisitor
     private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
     private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
+    protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
+    {
+        if (type is null)
+        {
+            return null;
+        }
+
+        if (_knownTypes.Contains(enumType.Name))
+        {
+            var newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{enumType.Name}";
+            type.Update(name: newName);
+        }
+        return base.PreVisitEnum(enumType, type);
+    }
+
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
         var inputLibrary = ManagementClientGenerator.Instance.InputLibrary;
@@ -60,7 +79,7 @@ internal class NameVisitor : ScmLibraryVisitor
             type.Update(name: newName);
         }
 
-        if (_knownModels.Contains(model.Name))
+        if (_knownTypes.Contains(model.Name))
         {
             newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
             UpdateConstructors(type, newName);
@@ -167,6 +186,39 @@ internal class NameVisitor : ScmLibraryVisitor
         }
 
         return base.VisitMethod(method);
+    }
+
+    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
+    protected override MethodBodyStatement? VisitExpressionStatement(ExpressionStatement statement, MethodProvider method)
+    {
+        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition
+            && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName)
+            && method.Signature.Name == "JsonModelCreateCore"
+            && statement.Expression is KeywordExpression keyword && keyword.Keyword == "return"
+            && keyword.Expression is InvokeMethodExpression invokeMethod)
+        {
+            invokeMethod.Update(methodName: newName);
+        }
+        return base.VisitExpressionStatement(statement, method);
+    }
+
+    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
+    protected override SwitchCaseStatement? VisitSwitchCaseStatement(SwitchCaseStatement statement, MethodProvider method)
+    {
+        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition
+            && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName)
+            && method.Signature.Name == "PersistableModelCreateCore")
+        {
+            if (statement.Statement.AsStatement().FirstOrDefault() is UsingScopeStatement usingScopeStatement
+                && usingScopeStatement.Body.AsStatement().FirstOrDefault() is ExpressionStatement expression
+                && expression.Expression is KeywordExpression keywordExpression
+                && keywordExpression.Keyword == "return"
+                && keywordExpression.Expression is InvokeMethodExpression invokeMethod)
+            {
+                invokeMethod.Update(methodName: newName);
+            }
+        }
+        return base.VisitSwitchCaseStatement(statement, method);
     }
 
     private bool TryTransformUrlToUri(string name, [MaybeNullWhen(false)] out string newName)

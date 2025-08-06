@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a distance scoring function. </summary>
     public partial class DistanceScoringParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DistanceScoringParameters"/>. </summary>
         /// <param name="referencePointParameter"> The name of the parameter passed in search queries to specify the reference location. </param>
         /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
@@ -22,6 +55,22 @@ namespace Azure.Search.Documents.Indexes.Models
 
             ReferencePointParameter = referencePointParameter;
             BoostingDistance = boostingDistance;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DistanceScoringParameters"/>. </summary>
+        /// <param name="referencePointParameter"> The name of the parameter passed in search queries to specify the reference location. </param>
+        /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DistanceScoringParameters(string referencePointParameter, double boostingDistance, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ReferencePointParameter = referencePointParameter;
+            BoostingDistance = boostingDistance;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DistanceScoringParameters"/> for deserialization. </summary>
+        internal DistanceScoringParameters()
+        {
         }
 
         /// <summary> The name of the parameter passed in search queries to specify the reference location. </summary>
