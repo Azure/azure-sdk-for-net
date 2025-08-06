@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>Deserialized SearchResults.</returns>
-        [RequiresUnreferencedCode("Uses reflection-based serialization which is not compatible with trimming")]
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         internal static async Task<SearchResult<T>> DeserializeAsync(
             JsonElement element,
             ObjectSerializer serializer,

@@ -1042,7 +1042,7 @@ namespace Azure.Search.Documents
         /// method.
         /// </para>
         /// </remarks>
-        [RequiresUnreferencedCode("Uses reflection-based serialization which is not compatible with trimming")]
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         public virtual Response<SearchResults<T>> Search<T>(
             string searchText,
             SearchOptions options = null,
@@ -1164,7 +1164,7 @@ namespace Azure.Search.Documents
         /// the <see cref="AsyncPageable{T}.AsPages(string, int?)"/> method.
         /// </para>
         /// </remarks>
-        [RequiresUnreferencedCode("Uses reflection-based serialization which is not compatible with trimming")]
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         public async virtual Task<Response<SearchResults<T>>> SearchAsync<T>(
             string searchText,
             SearchOptions options = null,
@@ -1476,7 +1476,7 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
         }
 
-        [RequiresUnreferencedCode("Uses reflection-based serialization which is not compatible with trimming")]
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             string searchText,
             string querySourceAuthorization,
@@ -1529,7 +1529,7 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
         }
 
-        [RequiresUnreferencedCode("Uses reflection-based serialization which is not compatible with trimming")]
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             string querySourceAuthorization,
             SearchOptions options,

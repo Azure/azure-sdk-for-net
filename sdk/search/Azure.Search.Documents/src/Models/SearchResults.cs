@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Initializes a new instance of the SearchResults class.
         /// </summary>
-        [RequiresUnreferencedCode("Uses reflection-based serialization which is not compatible with trimming")]
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         internal SearchResults() { }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>Deserialized SearchResults.</returns>
-        [RequiresUnreferencedCode("Uses reflection-based serialization which is not compatible with trimming")]
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         internal static async Task<SearchResults<T>> DeserializeAsync(
             Stream json,
             ObjectSerializer serializer,

@@ -26,6 +26,8 @@ namespace Azure.Search.Documents
         [FeatureSwitchDefinition("Azure.Search.Documents.JsonSerialization.IsReflectionEnabled")]
         public static bool IsReflectionEnabled => AppContext.TryGetSwitch("Azure.Search.Documents.JsonSerialization.IsReflectionEnabled", out bool isEnabled) ? isEnabled : true;
 
+        internal const string TrimWarning = "Uses reflection-based serialization which is not compatible with trimming.";
+
         /// <summary>
         /// We serialize dates with the round-trip format.
         /// </summary>
