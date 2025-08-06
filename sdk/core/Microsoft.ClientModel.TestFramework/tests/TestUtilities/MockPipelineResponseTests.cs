@@ -1,13 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System.IO;
 using System.Text;
-
 namespace Microsoft.ClientModel.TestFramework.Tests;
-
 public class MockPipelineResponseTests
 {
     [Test]
@@ -16,11 +13,9 @@ public class MockPipelineResponseTests
         MockPipelineResponse mockResponse = new();
         mockResponse.SetIsError(true);
         Assert.IsTrue(mockResponse.IsError);
-
         mockResponse.SetIsError(false);
         Assert.IsFalse(mockResponse.IsError);
     }
-
     [Test]
     public void CanAddHeader()
     {
@@ -32,7 +27,6 @@ public class MockPipelineResponseTests
         Assert.IsTrue(mockResponse.Headers.TryGetValue("X-Custom-Header", out value));
         Assert.AreEqual("CustomValue", value);
     }
-
     [Test]
     public void CanSetByteContent()
     {
@@ -47,7 +41,6 @@ public class MockPipelineResponseTests
             Assert.AreEqual("Hello, World!", result);
         }
     }
-
     [Test]
     public void CanSetStringContent()
     {
@@ -62,7 +55,6 @@ public class MockPipelineResponseTests
             Assert.AreEqual("Hello, World!", result);
         }
     }
-
     [Test]
     public void Constructor_WithStatusAndReasonPhrase_SetsPropertiesCorrectly()
     {
@@ -72,7 +64,6 @@ public class MockPipelineResponseTests
         Assert.IsFalse(response.IsError);
         Assert.IsFalse(response.IsDisposed);
     }
-
     [Test]
     public void Constructor_WithDefaultValues_SetsDefaultProperties()
     {
@@ -82,7 +73,6 @@ public class MockPipelineResponseTests
         Assert.IsFalse(response.IsError);
         Assert.IsFalse(response.IsDisposed);
     }
-
     [Test]
     public void WithHeader_ChainedCalls_AddsAllHeaders()
     {
@@ -92,68 +82,53 @@ public class MockPipelineResponseTests
             .WithHeader("X-Custom", "custom-value");
         Assert.IsTrue(response.Headers.TryGetValue("Content-Type", out var contentType));
         Assert.AreEqual("application/json", contentType);
-
         Assert.IsTrue(response.Headers.TryGetValue("Cache-Control", out var cacheControl));
         Assert.AreEqual("no-cache", cacheControl);
-
         Assert.IsTrue(response.Headers.TryGetValue("X-Custom", out var custom));
         Assert.AreEqual("custom-value", custom);
     }
-
     [Test]
     public void WithContent_ChainedWithHeaders_SetsContentAndHeaders()
     {
         var response = new MockPipelineResponse(201, "Created")
             .WithContent("response body")
             .WithHeader("Location", "/api/resource/123");
-
         Assert.AreEqual(201, response.Status);
         Assert.AreEqual("Created", response.ReasonPhrase);
         Assert.AreEqual("response body", response.Content.ToString());
         Assert.IsTrue(response.Headers.TryGetValue("Location", out var location));
         Assert.AreEqual("/api/resource/123", location);
     }
-
     [Test]
     public void ContentStream_WithNullContent_ReturnsEmptyStream()
     {
         var response = new MockPipelineResponse();
-
         var contentStream = response.ContentStream;
-
         Assert.IsNotNull(contentStream);
         Assert.AreEqual(0, contentStream.Length);
     }
-
     [Test]
     public void Content_WithNullContentStream_ReturnsEmptyBinaryData()
     {
         var response = new MockPipelineResponse();
-
         var content = response.Content;
-
         Assert.IsNotNull(content);
         Assert.AreEqual(0, content.ToArray().Length);
     }
-
     [Test]
     public void ContentStream_SettingToNull_HandlesGracefully()
     {
         var response = new MockPipelineResponse().WithContent("initial content");
-
         response.ContentStream = null;
-
         Assert.IsNotNull(response.ContentStream);
         Assert.AreEqual(0, response.ContentStream.Length);
     }
-
     [Test]
     public void ContentStream_SettingCustomStream_UpdatesContent()
     {
         var response = new MockPipelineResponse();
         var customContent = "custom stream content";
         var customStream = new MemoryStream(Encoding.UTF8.GetBytes(customContent));
-
         response.ContentStream = customStream;
         var resultStream = response.ContentStream;
         resultStream.Position = 0;
@@ -161,7 +136,6 @@ public class MockPipelineResponseTests
         var result = reader.ReadToEnd();
         Assert.AreEqual(customContent, result);
     }
-
     [Test]
     public void Dispose_SetsIsDisposedToTrue()
     {
@@ -169,7 +143,6 @@ public class MockPipelineResponseTests
         response.Dispose();
         Assert.IsTrue(response.IsDisposed);
     }
-
     [Test]
     public void Dispose_MultipleCallsDoNotThrow()
     {
@@ -179,7 +152,6 @@ public class MockPipelineResponseTests
         Assert.DoesNotThrow(() => response.Dispose());
         Assert.IsTrue(response.IsDisposed);
     }
-
     [Test]
     public void Dispose_WithContent_BuffersContentBeforeDisposal()
     {
@@ -188,59 +160,46 @@ public class MockPipelineResponseTests
         Assert.IsTrue(response.IsDisposed);
         Assert.AreEqual("disposable content", response.Content.ToString());
     }
-
     [Test]
     public void WithContent_EmptyString_SetsEmptyContent()
     {
         var response = new MockPipelineResponse().WithContent("");
-
         Assert.AreEqual("", response.Content.ToString());
         Assert.IsNotNull(response.ContentStream);
         Assert.AreEqual(0, response.ContentStream.Length);
     }
-
     [Test]
     public void WithContent_EmptyByteArray_SetsEmptyContent()
     {
         var response = new MockPipelineResponse().WithContent(new byte[0]);
-
         Assert.AreEqual(0, response.Content.ToArray().Length);
         Assert.IsNotNull(response.ContentStream);
         Assert.AreEqual(0, response.ContentStream.Length);
     }
-
     [Test]
     public void WithContent_LargeContent_HandlesCorrectly()
     {
         var largeContent = new string('x', 10000);
-
         var response = new MockPipelineResponse().WithContent(largeContent);
-
         Assert.AreEqual(largeContent, response.Content.ToString());
         Assert.AreEqual(10000, response.Content.ToArray().Length);
     }
-
     [Test]
     public void SetIsError_AffectsIsErrorProperty()
     {
         var response = new MockPipelineResponse();
-
         Assert.IsFalse(response.IsError);
-
         response.SetIsError(true);
         Assert.IsTrue(response.IsError);
-
         response.SetIsError(false);
         Assert.IsFalse(response.IsError);
     }
-
     [Test]
     public void Response_InheritsFromPipelineResponse()
     {
         var response = new MockPipelineResponse();
         Assert.IsInstanceOf<System.ClientModel.Primitives.PipelineResponse>(response);
     }
-
     [Test]
     public void Headers_ReturnsConsistentInstance()
     {
@@ -249,7 +208,6 @@ public class MockPipelineResponseTests
         var headers2 = response.Headers;
         Assert.AreSame(headers1, headers2);
     }
-
     [Test]
     public void WithContent_JsonContent_HandlesJsonCorrectly()
     {

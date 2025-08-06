@@ -1,13 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
-
 namespace Microsoft.ClientModel.TestFramework.Tests.TestProxy;
-
 [TestFixture]
 public class TestProxyProcessTests
 {
@@ -27,48 +24,41 @@ public class TestProxyProcessTests
     public void Constructor_CreatesInstanceSuccessfully()
     {
         TestProxyProcess proxyProcess = null;
-        
-        Assert.DoesNotThrow(() => proxyProcess = new TestProxyProcess());
+        Assert.DoesNotThrow(() => proxyProcess = TestProxyProcess.Start());
         Assert.IsNotNull(proxyProcess);
     }
 
     [Test]
     public void ProxyPortHttp_IsAccessible()
     {
-        var proxyProcess = new TestProxyProcess();
-        
+        var proxyProcess = TestProxyProcess.Start();
         Assert.DoesNotThrow(() => _ = proxyProcess.ProxyPortHttp);
     }
 
     [Test]
     public void ProxyPortHttps_IsAccessible()
     {
-        var proxyProcess = new TestProxyProcess();
-        
+        var proxyProcess = TestProxyProcess.Start();
         Assert.DoesNotThrow(() => _ = proxyProcess.ProxyPortHttps);
     }
 
     [Test]
     public void Client_IsAccessible()
     {
-        var proxyProcess = new TestProxyProcess();
-        
+        var proxyProcess = TestProxyProcess.Start();
         Assert.DoesNotThrow(() => _ = proxyProcess.Client);
     }
 
     [Test]
     public void ProxyPorts_AreEitherNullOrValidPortNumbers()
     {
-        var proxyProcess = new TestProxyProcess();
-        
+        var proxyProcess = TestProxyProcess.Start();
         var httpPort = proxyProcess.ProxyPortHttp;
         var httpsPort = proxyProcess.ProxyPortHttps;
-        
         if (httpPort.HasValue)
         {
             Assert.IsTrue(httpPort.Value > 0 && httpPort.Value <= 65535, "HTTP port should be in valid range");
         }
-        
         if (httpsPort.HasValue)
         {
             Assert.IsTrue(httpsPort.Value > 0 && httpsPort.Value <= 65535, "HTTPS port should be in valid range");
@@ -78,11 +68,9 @@ public class TestProxyProcessTests
     [Test]
     public void ProxyPorts_AreDifferentWhenBothAssigned()
     {
-        var proxyProcess = new TestProxyProcess();
-        
+        var proxyProcess = TestProxyProcess.Start();
         var httpPort = proxyProcess.ProxyPortHttp;
         var httpsPort = proxyProcess.ProxyPortHttps;
-        
         if (httpPort.HasValue && httpsPort.HasValue)
         {
             Assert.AreNotEqual(httpPort.Value, httpsPort.Value, "HTTP and HTTPS ports should be different");
@@ -92,57 +80,17 @@ public class TestProxyProcessTests
     [Test]
     public void TestProxyProcess_CanCreateMultipleInstances()
     {
-        var process1 = new TestProxyProcess();
-        var process2 = new TestProxyProcess();
-        
+        var process1 = TestProxyProcess.Start();
+        var process2 = TestProxyProcess.Start();
         Assert.IsNotNull(process1);
         Assert.IsNotNull(process2);
         Assert.AreNotSame(process1, process2);
     }
 
     [Test]
-    public void TestProxyProcess_ImplementsIDisposable()
-    {
-        var proxyProcess = new TestProxyProcess();
-        
-        Assert.IsInstanceOf<IDisposable>(proxyProcess);
-    }
-
-    [Test]
-    public void Dispose_CanBeCalledSafely()
-    {
-        var proxyProcess = new TestProxyProcess();
-        
-        Assert.DoesNotThrow(() => proxyProcess.Dispose());
-    }
-
-    [Test]
-    public void Dispose_CanBeCalledMultipleTimes()
-    {
-        var proxyProcess = new TestProxyProcess();
-        
-        Assert.DoesNotThrow(() =>
-        {
-            proxyProcess.Dispose();
-            proxyProcess.Dispose();
-        });
-    }
-
-    [Test]
-    public void TestProxyProcess_WithUsingStatement_DisposesCorrectly()
-    {
-        Assert.DoesNotThrow(() =>
-        {
-            using var proxyProcess = new TestProxyProcess();
-            // Using statement should dispose automatically
-        });
-    }
-
-    [Test]
     public async Task TestProxyProcess_CanHandleAsyncOperations()
     {
-        using var proxyProcess = new TestProxyProcess();
-        
+        var proxyProcess = TestProxyProcess.Start();
         // Basic test that the process can be used in async context
         await Task.Run(() =>
         {
@@ -154,8 +102,7 @@ public class TestProxyProcessTests
     [Test]
     public void TestProxyProcess_HasInternalClient()
     {
-        using var proxyProcess = new TestProxyProcess();
-        
+        var proxyProcess = TestProxyProcess.Start();
         var client = proxyProcess.Client;
         Assert.IsNotNull(client);
     }
@@ -163,24 +110,20 @@ public class TestProxyProcessTests
     [Test]
     public void TestProxyProcess_ClientConsistentAcrossAccess()
     {
-        using var proxyProcess = new TestProxyProcess();
-        
+        var proxyProcess = TestProxyProcess.Start();
         var client1 = proxyProcess.Client;
         var client2 = proxyProcess.Client;
-        
         Assert.AreSame(client1, client2, "Client property should return the same instance");
     }
 
     [Test]
     public void TestProxyProcess_PortsConsistentAcrossAccess()
     {
-        using var proxyProcess = new TestProxyProcess();
-        
+        var proxyProcess = TestProxyProcess.Start();
         var httpPort1 = proxyProcess.ProxyPortHttp;
         var httpPort2 = proxyProcess.ProxyPortHttp;
         var httpsPort1 = proxyProcess.ProxyPortHttps;
         var httpsPort2 = proxyProcess.ProxyPortHttps;
-        
         Assert.AreEqual(httpPort1, httpPort2, "HTTP port should be consistent");
         Assert.AreEqual(httpsPort1, httpsPort2, "HTTPS port should be consistent");
     }

@@ -1,15 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text;
-
 namespace Microsoft.ClientModel.TestFramework.Tests;
-
 [TestFixture]
 public class MockPipelineRequestTests
 {
@@ -17,13 +14,11 @@ public class MockPipelineRequestTests
     public void DefaultConstructor_SetsDefaultValues()
     {
         var request = new MockPipelineRequest();
-
         Assert.AreEqual("GET", request.Method);
         Assert.AreEqual("https://www.example.com/", request.Uri?.ToString());
         Assert.IsNull(request.Content);
         Assert.IsNotNull(request.Headers);
     }
-
     [Test]
     public void Method_CanBeSetAndRetrieved()
     {
@@ -31,7 +26,6 @@ public class MockPipelineRequestTests
         request.Method = "POST";
         Assert.AreEqual("POST", request.Method);
     }
-
     [Test]
     public void Method_CanBeSetToAllHttpMethods()
     {
@@ -43,7 +37,6 @@ public class MockPipelineRequestTests
             Assert.AreEqual(method, request.Method);
         }
     }
-
     [Test]
     public void Uri_CanBeSetAndRetrieved()
     {
@@ -53,7 +46,6 @@ public class MockPipelineRequestTests
         Assert.AreEqual(testUri, request.Uri);
         Assert.AreEqual("https://api.example.com/v1/resource", request.Uri.ToString());
     }
-
     [Test]
     public void Uri_CanBeSetToNull()
     {
@@ -63,7 +55,6 @@ public class MockPipelineRequestTests
         request.Uri = null;
         Assert.IsNull(request.Uri);
     }
-
     [Test]
     public void Content_CanBeSetAndRetrieved()
     {
@@ -72,7 +63,6 @@ public class MockPipelineRequestTests
         request.Content = content;
         Assert.AreSame(content, request.Content);
     }
-
     [Test]
     public void Content_CanBeSetToNull()
     {
@@ -82,7 +72,6 @@ public class MockPipelineRequestTests
         request.Content = null;
         Assert.IsNull(request.Content);
     }
-
     [Test]
     public void Content_WithJsonData_IsSetCorrectly()
     {
@@ -92,14 +81,12 @@ public class MockPipelineRequestTests
         request.Content = content;
         Assert.IsNotNull(request.Content);
     }
-
     [Test]
     public void Headers_ReturnsNonNullInstance()
     {
         var request = new MockPipelineRequest();
         Assert.IsNotNull(request.Headers);
     }
-
     [Test]
     public void Headers_CanAddAndRetrieveValues()
     {
@@ -111,7 +98,6 @@ public class MockPipelineRequestTests
         Assert.IsTrue(request.Headers.TryGetValue("Authorization", out var auth));
         Assert.AreEqual("Bearer token123", auth);
     }
-
     [Test]
     public void Headers_PersistAcrossRequests()
     {
@@ -122,14 +108,12 @@ public class MockPipelineRequestTests
         Assert.IsTrue(retrievedHeaders.TryGetValue("X-Custom-Header", out var value));
         Assert.AreEqual("custom-value", value);
     }
-
     [Test]
     public void Dispose_DoesNotThrow()
     {
         var request = new MockPipelineRequest();
         Assert.DoesNotThrow(() => request.Dispose());
     }
-
     [Test]
     public void Dispose_CanBeCalledMultipleTimes()
     {
@@ -138,14 +122,12 @@ public class MockPipelineRequestTests
         Assert.DoesNotThrow(() => request.Dispose());
         Assert.DoesNotThrow(() => request.Dispose());
     }
-
     [Test]
     public void Request_InheritsFromPipelineRequest()
     {
         var request = new MockPipelineRequest();
         Assert.IsInstanceOf<PipelineRequest>(request);
     }
-
     [Test]
     public void Request_CanBeUsedPolymorphically()
     {
@@ -155,7 +137,6 @@ public class MockPipelineRequestTests
         Assert.AreEqual("PUT", request.Method);
         Assert.AreEqual("https://polymorphic.example.com/", request.Uri.ToString());
     }
-
     [Test]
     public void Request_WithComplexUri_HandlesCorrectly()
     {
@@ -170,7 +151,6 @@ public class MockPipelineRequestTests
         Assert.AreEqual("?include=profile&format=json", request.Uri.Query);
         Assert.AreEqual("#section", request.Uri.Fragment);
     }
-
     [Test]
     public void Request_SupportsMethodChaining()
     {
@@ -180,14 +160,12 @@ public class MockPipelineRequestTests
         request.Uri = new Uri("https://chain.example.com");
         request.Content = content;
         request.Headers.Add("X-Test", "chained");
-
         Assert.AreEqual("POST", request.Method);
         Assert.AreEqual("https://chain.example.com/", request.Uri.ToString());
         Assert.AreSame(content, request.Content);
         Assert.IsTrue(request.Headers.TryGetValue("X-Test", out var headerValue));
         Assert.AreEqual("chained", headerValue);
     }
-
     [Test]
     public void Request_HandlesEmptyStringMethod()
     {
@@ -195,7 +173,6 @@ public class MockPipelineRequestTests
         request.Method = "";
         Assert.AreEqual("", request.Method);
     }
-
     [Test]
     public void Request_HandlesNullMethod()
     {

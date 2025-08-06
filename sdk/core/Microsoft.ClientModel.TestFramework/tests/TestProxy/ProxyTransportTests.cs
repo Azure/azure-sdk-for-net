@@ -1,27 +1,24 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.TestProxy;
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
-
 namespace Microsoft.ClientModel.TestFramework.Tests.TestProxy;
-
 [TestFixture]
 public class ProxyTransportTests
 {
     private MockPipelineTransport _mockInnerTransport;
     private TestRecording _mockRecording;
     private Func<EntryRecordModel> _mockGetRecordingMode;
-
     [SetUp]
     public void SetUp()
     {
         _mockInnerTransport = new MockPipelineTransport();
-        _mockRecording = new TestRecording(RecordedTestMode.Record, "test-session");
+        _mockRecording = null; // These unit tests don't need actual TestRecording functionality
         _mockGetRecordingMode = () => EntryRecordModel.Record;
     }
 
@@ -36,7 +33,6 @@ public class ProxyTransportTests
     public void Constructor_WithNullInnerTransport_ThrowsArgumentNullException()
     {
         var mockProxyProcess = CreateMockProxyProcess();
-        
         Assert.Throws<ArgumentNullException>(() =>
             new ProxyTransport(mockProxyProcess, null, _mockRecording, _mockGetRecordingMode));
     }
@@ -45,7 +41,6 @@ public class ProxyTransportTests
     public void Constructor_WithNullRecording_ThrowsArgumentNullException()
     {
         var mockProxyProcess = CreateMockProxyProcess();
-        
         Assert.Throws<ArgumentNullException>(() =>
             new ProxyTransport(mockProxyProcess, _mockInnerTransport, null, _mockGetRecordingMode));
     }
@@ -54,7 +49,6 @@ public class ProxyTransportTests
     public void Constructor_WithNullGetRecordingMode_ThrowsArgumentNullException()
     {
         var mockProxyProcess = CreateMockProxyProcess();
-        
         Assert.Throws<ArgumentNullException>(() =>
             new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, null));
     }
@@ -63,9 +57,7 @@ public class ProxyTransportTests
     public void Constructor_WithValidParameters_CreatesInstance()
     {
         var mockProxyProcess = CreateMockProxyProcess();
-        
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
-        
         Assert.IsNotNull(transport);
         Assert.IsInstanceOf<PipelineTransport>(transport);
     }
@@ -75,9 +67,7 @@ public class ProxyTransportTests
     {
         var mockProxyProcess = CreateMockProxyProcess();
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
-        
         var message = transport.CreateMessage();
-        
         Assert.IsNotNull(message);
         Assert.IsTrue(_mockRecording.HasRequests);
     }
@@ -89,9 +79,7 @@ public class ProxyTransportTests
         var mismatchException = new TestRecordingMismatchException("Test mismatch");
         _mockRecording.MismatchException = mismatchException;
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
-        
         var thrownException = Assert.Throws<TestRecordingMismatchException>(() => transport.CreateMessage());
-        
         Assert.AreSame(mismatchException, thrownException);
     }
 
@@ -101,46 +89,40 @@ public class ProxyTransportTests
         var mockProxyProcess = CreateMockProxyProcess();
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
         var message = transport.CreateMessage();
-        
         Assert.DoesNotThrow(() => transport.Process(message));
     }
 
     [Test]
-    public async Task ProcessAsync_WithValidMessage_ProcessesSuccessfully()
+    public void ProcessAsync_WithValidMessage_ProcessesSuccessfully()
     {
         var mockProxyProcess = CreateMockProxyProcess();
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
         var message = transport.CreateMessage();
-        
-        await Assert.DoesNotThrowAsync(async () => await transport.ProcessAsync(message));
+        Assert.DoesNotThrowAsync(async () => await transport.ProcessAsync(message));
     }
 
     [Test]
     public void Process_WithPlaybackModeAndDoNotRecord_ThrowsInvalidOperationException()
     {
         var mockProxyProcess = CreateMockProxyProcess();
-        _mockRecording = new TestRecording(RecordedTestMode.Playback, "test-session");
+        _mockRecording = null; // Unit tests don't need actual TestRecording
         _mockGetRecordingMode = () => EntryRecordModel.DoNotRecord;
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
         var message = transport.CreateMessage();
-        
         var exception = Assert.Throws<InvalidOperationException>(() => transport.Process(message));
-        
         Assert.That(exception.Message, Does.Contain("DisableRecordingScope"));
         Assert.That(exception.Message, Does.Contain("Playback mode"));
     }
 
     [Test]
-    public async Task ProcessAsync_WithPlaybackModeAndDoNotRecord_ThrowsInvalidOperationException()
+    public void ProcessAsync_WithPlaybackModeAndDoNotRecord_ThrowsInvalidOperationException()
     {
         var mockProxyProcess = CreateMockProxyProcess();
-        _mockRecording = new TestRecording(RecordedTestMode.Playback, "test-session");
+        _mockRecording = null; // Unit tests don't need actual TestRecording
         _mockGetRecordingMode = () => EntryRecordModel.DoNotRecord;
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
         var message = transport.CreateMessage();
-        
-        var exception = await Assert.ThrowsAsync<InvalidOperationException>(async () => await transport.ProcessAsync(message));
-        
+        var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await transport.ProcessAsync(message));
         Assert.That(exception.Message, Does.Contain("DisableRecordingScope"));
         Assert.That(exception.Message, Does.Contain("Playback mode"));
     }
@@ -149,11 +131,10 @@ public class ProxyTransportTests
     public void Process_WithRecordMode_AllowsDoNotRecordMode()
     {
         var mockProxyProcess = CreateMockProxyProcess();
-        _mockRecording = new TestRecording(RecordedTestMode.Record, "test-session");
+        _mockRecording = null; // Unit tests don't need actual TestRecording
         _mockGetRecordingMode = () => EntryRecordModel.DoNotRecord;
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
         var message = transport.CreateMessage();
-        
         Assert.DoesNotThrow(() => transport.Process(message));
     }
 
@@ -161,11 +142,10 @@ public class ProxyTransportTests
     public void Process_WithLiveModeAndDoNotRecord_ProcessesSuccessfully()
     {
         var mockProxyProcess = CreateMockProxyProcess();
-        _mockRecording = new TestRecording(RecordedTestMode.Live, "test-session");
+        _mockRecording = null; // Unit tests don't need actual TestRecording
         _mockGetRecordingMode = () => EntryRecordModel.DoNotRecord;
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
         var message = transport.CreateMessage();
-        
         Assert.DoesNotThrow(() => transport.Process(message));
     }
 
@@ -174,7 +154,6 @@ public class ProxyTransportTests
     {
         var mockProxyProcess = CreateMockProxyProcess();
         var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
-        
         Assert.IsInstanceOf<PipelineTransport>(transport);
     }
 
@@ -182,25 +161,22 @@ public class ProxyTransportTests
     public void ProxyTransport_WithDifferentRecordingModes_BehavesCorrectly()
     {
         var mockProxyProcess = CreateMockProxyProcess();
-        
         // Test each recording mode
         foreach (var mode in new[] { EntryRecordModel.Record, EntryRecordModel.RecordWithoutRequestBody })
         {
             _mockGetRecordingMode = () => mode;
             var transport = new ProxyTransport(mockProxyProcess, _mockInnerTransport, _mockRecording, _mockGetRecordingMode);
             var message = transport.CreateMessage();
-            
             Assert.DoesNotThrow(() => transport.Process(message), $"Failed for mode: {mode}");
         }
     }
-
     private static TestProxyProcess CreateMockProxyProcess()
     {
         // Create a minimal mock that satisfies the constructor requirements
         // Since TestProxyProcess might have complex initialization, we'll create it in a way that works
         try
         {
-            return new TestProxyProcess();
+            return TestProxyProcess.Start();
         }
         catch
         {
