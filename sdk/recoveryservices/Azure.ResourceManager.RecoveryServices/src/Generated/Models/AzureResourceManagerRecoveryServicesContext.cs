@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.RecoveryServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AssociatedIdentity))]
     [ModelReaderWriterBuildable(typeof(AzureMonitorAlertSettings))]
     [ModelReaderWriterBuildable(typeof(CapabilitiesProperties))]
     [ModelReaderWriterBuildable(typeof(CapabilitiesResult))]
@@ -44,13 +45,12 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultData))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultExtendedInfoData))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultExtendedInfoResource))]
-    [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultListResult))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultPatch))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultProperties))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultResource))]
     [ModelReaderWriterBuildable(typeof(ReplicationJobSummary))]
     [ModelReaderWriterBuildable(typeof(ReplicationUsage))]
-    [ModelReaderWriterBuildable(typeof(ReplicationUsageListResult))]
+    [ModelReaderWriterBuildable(typeof(ReplicationUsageList))]
     [ModelReaderWriterBuildable(typeof(ResourceCapabilities))]
     [ModelReaderWriterBuildable(typeof(ResourceCapabilitiesBase))]
     [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAadDetails))]
@@ -58,11 +58,13 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(ResourceCertificateDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreSettings))]
+    [ModelReaderWriterBuildable(typeof(SourceScanConfiguration))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownResourceCertificateDetails))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultCertificateResult))]
+    [ModelReaderWriterBuildable(typeof(VaultList))]
     [ModelReaderWriterBuildable(typeof(VaultMonitoringSettings))]
     [ModelReaderWriterBuildable(typeof(VaultMonitoringSummary))]
     [ModelReaderWriterBuildable(typeof(VaultPropertiesEncryption))]
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(VaultPropertiesRedundancySettings))]
     [ModelReaderWriterBuildable(typeof(VaultUpgradeDetails))]
     [ModelReaderWriterBuildable(typeof(VaultUsage))]
-    [ModelReaderWriterBuildable(typeof(VaultUsageListResult))]
+    [ModelReaderWriterBuildable(typeof(VaultUsageList))]
     [ModelReaderWriterBuildable(typeof(VaultUsageNameInfo))]
     public partial class AzureResourceManagerRecoveryServicesContext : ModelReaderWriterContext
     {
