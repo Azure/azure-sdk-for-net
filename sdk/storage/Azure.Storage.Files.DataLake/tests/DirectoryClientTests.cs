@@ -5678,7 +5678,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directory.CreateAsync();
 
             List<string> names = new List<string>();
-            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true
+            };
+
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(options))
             {
                 names.Add(pathItem.Name);
             }
@@ -5697,8 +5703,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient file = test.FileSystem.GetDirectoryClient(directoryName);
             await file.CreateAsync();
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true
+            };
+
             List<string> names = new List<string>();
-            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(options))
             {
                 names.Add(pathItem.Name);
             }
@@ -5721,8 +5732,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             await subdirectory.CreateAsync();
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true
+            };
+
             List<string> names = new List<string>();
-            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(options))
             {
                 names.Add(pathItem.Name);
             }
@@ -5745,8 +5761,13 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             await subdirectory.CreateAsync();
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true
+            };
+
             List<string> names = new List<string>();
-            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(options))
             {
                 names.Add(pathItem.Name);
             }
@@ -5779,8 +5800,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<PathInfo> createResponse = await subDirectory.CreateAsync();
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true
+            };
+
             List<PathItem> pathItems = new List<PathItem>();
-            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(options))
             {
                 pathItems.Add(pathItem);
             }
@@ -5825,8 +5851,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<PathInfo> createResponse = await file.CreateAsync();
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true
+            };
+
             List<PathItem> pathItems = new List<PathItem>();
-            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(recursive: true))
+            await foreach (PathItem pathItem in test.FileSystem.GetPathsAsync(options))
             {
                 pathItems.Add(pathItem);
             }
@@ -5943,9 +5974,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             await SetUpDirectoryForListing(directory);
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true
+            };
+
             // Act
-            AsyncPageable<PathItem> response = directory.GetPathsAsync(
-                recursive: true);
+            AsyncPageable<PathItem> response = directory.GetPathsAsync(options);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
@@ -5970,9 +6005,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             await SetUpDirectoryForListing(directory);
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                UserPrincipalName = true
+            };
+
             // Act
-            AsyncPageable<PathItem> response = directory.GetPathsAsync(
-                userPrincipalName: true);
+            AsyncPageable<PathItem> response = directory.GetPathsAsync(options);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert

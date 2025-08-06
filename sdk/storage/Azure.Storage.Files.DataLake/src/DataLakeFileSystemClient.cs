@@ -1763,10 +1763,10 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default) =>
             new GetPathsAsyncCollection(
                 this,
-                options.Path,
-                options.Recursive,
-                options.UserPrincipalName,
-                options.BeginFrom,
+                options?.Path,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                options?.BeginFrom,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
                 .ToSyncCollection(cancellationToken);
 
@@ -1801,10 +1801,10 @@ namespace Azure.Storage.Files.DataLake
             DataLakeGetPathsOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetPathsAsyncCollection(this,
-                options.Path,
-                options.Recursive,
-                options.UserPrincipalName,
-                beginFrom: options.BeginFrom,
+                options?.Path,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                options?.BeginFrom,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
 

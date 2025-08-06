@@ -2938,9 +2938,9 @@ namespace Azure.Storage.Files.DataLake
             new GetPathsAsyncCollection(
                 FileSystemClient,
                 Path,
-                options.Recursive,
-                options.UserPrincipalName,
-                options.BeginFrom,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                options?.BeginFrom,
                 $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
             .ToSyncCollection(cancellationToken);
 
@@ -2976,9 +2976,9 @@ namespace Azure.Storage.Files.DataLake
             new GetPathsAsyncCollection(
                 FileSystemClient,
                 Path,
-                options.Recursive,
-                options.UserPrincipalName,
-                options.BeginFrom,
+                options?.Recursive,
+                options?.UserPrincipalName,
+                options?.BeginFrom,
                 $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
 
