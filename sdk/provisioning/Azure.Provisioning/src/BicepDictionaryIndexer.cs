@@ -33,12 +33,12 @@ internal class BicepDictionaryIndexer<T> : BicepValue<T>
 
     internal string Key { get; }
 
-    public override BicepExpression Compile()
+    private protected override BicepExpression CompileCore()
     {
         if (_kind == BicepValueKind.Unset)
         {
             throw new KeyNotFoundException($"Key '{Key}' is out of range on {_self?.GetReference(false)}.");
         }
-        return base.Compile();
+        return base.CompileCore();
     }
 }

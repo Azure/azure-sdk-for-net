@@ -32,12 +32,12 @@ internal class BicepListIndexer<T> : BicepValue<T>
 
     internal int Index { get; }
 
-    public override BicepExpression Compile()
+    private protected override BicepExpression CompileCore()
     {
         if (_kind == BicepValueKind.Unset)
         {
             throw new ArgumentOutOfRangeException(nameof(Index), $"Index '{Index}' is out of range on {_self?.GetReference(false)}.");
         }
-        return base.Compile();
+        return base.CompileCore();
     }
 }

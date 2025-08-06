@@ -75,7 +75,7 @@ namespace Azure.Provisioning
         public virtual bool IsEmpty { get { throw null; } }
         void Azure.Provisioning.IBicepValue.Assign(Azure.Provisioning.IBicepValue source) { }
         void Azure.Provisioning.IBicepValue.SetReadOnly() { }
-        public virtual Azure.Provisioning.Expressions.BicepExpression Compile() { throw null; }
+        public Azure.Provisioning.Expressions.BicepExpression Compile() { throw null; }
         public static explicit operator Azure.Provisioning.Expressions.BicepExpression (Azure.Provisioning.BicepValue value) { throw null; }
         public override string ToString() { throw null; }
     }
