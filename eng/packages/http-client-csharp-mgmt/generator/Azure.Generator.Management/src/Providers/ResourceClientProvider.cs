@@ -335,12 +335,11 @@ namespace Azure.Generator.Management.Providers
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
                 var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
 
-                if (method is InputPagingServiceMethod)
+                if (method is InputPagingServiceMethod pagingMethod)
                 {
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
-                    var itemType = convenienceMethod.Signature.ReturnType!.UnWrap();
-                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, itemType, methodKind));
-                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, itemType, methodKind));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingMethod, false, methodKind));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingMethod, true, methodKind));
 
                     continue;
                 }
@@ -350,18 +349,18 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, convenienceMethod, false);
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, false);
                     operationMethods.Add(updateMethodProvider);
 
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, asyncConvenienceMethod, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName, forceLro: isFakeLro));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName, forceLro: isFakeLro));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
                 }
             }
 
