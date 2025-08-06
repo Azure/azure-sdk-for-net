@@ -78,7 +78,9 @@
 # ServiceLabel: %Extensions
 # AzureSdkOwners:                                                  @jsquire
 
-# ######## Services ########
+####################
+# Client Libraries
+####################
 
 # PRLabel: %AI Model Inference %AI Projects
 /sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @jhakulin @nick863
@@ -932,13 +934,24 @@
 # ServiceLabel: %Web Apps
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp
 
-# ######## Management Plane ########
+####################
+# Management Libraries
+####################
 
 # PRLabel: %Mgmt
 /**/*Management*/                                                  @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Mgmt
 /**/Azure.ResourceManager*/                                        @ArcturusZhang @ArthurMa1978
+
+# -----------------------------------------------------------------
+# IMPORTANT NOTE:
+#   This block acts as a catch-all, assigning Arthur triage for
+#   all management issues not specifically owned by a partner
+#   team.  Any management packages owned by partner teams must
+#   blocks defined AFTER this one.  Matching takes place from
+#   bottom-to-top and will stop after the first match.
+# -----------------------------------------------------------------
 
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
@@ -1193,4 +1206,3 @@
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
-
