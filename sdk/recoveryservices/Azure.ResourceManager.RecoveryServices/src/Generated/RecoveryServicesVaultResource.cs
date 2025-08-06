@@ -38,8 +38,6 @@ namespace Azure.ResourceManager.RecoveryServices
 
         private readonly ClientDiagnostics _recoveryServicesVaultVaultsClientDiagnostics;
         private readonly VaultsRestOperations _recoveryServicesVaultVaultsRestClient;
-        private readonly ClientDiagnostics _recoveryServicesClientClientDiagnostics;
-        private readonly RecoveryServicesRestOperations _recoveryServicesClientRestClient;
         private readonly ClientDiagnostics _vaultCertificatesClientDiagnostics;
         private readonly VaultCertificatesRestOperations _vaultCertificatesRestClient;
         private readonly ClientDiagnostics _registeredIdentitiesClientDiagnostics;
@@ -75,8 +73,6 @@ namespace Azure.ResourceManager.RecoveryServices
             _recoveryServicesVaultVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string recoveryServicesVaultVaultsApiVersion);
             _recoveryServicesVaultVaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesVaultVaultsApiVersion);
-            _recoveryServicesClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _recoveryServicesClientRestClient = new RecoveryServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _vaultCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _vaultCertificatesRestClient = new VaultCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _registeredIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -437,162 +433,6 @@ namespace Azure.ResourceManager.RecoveryServices
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operation status for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/operationStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_GetOperationStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationResource>> GetOperationStatusRecoveryServicesClientAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _recoveryServicesClientClientDiagnostics.CreateScope("RecoveryServicesVaultResource.GetOperationStatusRecoveryServicesClient");
-            scope.Start();
-            try
-            {
-                var response = await _recoveryServicesClientRestClient.GetOperationStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operation status for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/operationStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_GetOperationStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationResource> GetOperationStatusRecoveryServicesClient(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _recoveryServicesClientClientDiagnostics.CreateScope("RecoveryServicesVaultResource.GetOperationStatusRecoveryServicesClient");
-            scope.Start();
-            try
-            {
-                var response = _recoveryServicesClientRestClient.GetOperationStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operation result for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_GetOperationResult</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The name of the Vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<RecoveryServicesVaultResource>> GetOperationResultRecoveryServicesClientAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _recoveryServicesClientClientDiagnostics.CreateScope("RecoveryServicesVaultResource.GetOperationResultRecoveryServicesClient");
-            scope.Start();
-            try
-            {
-                var response = await _recoveryServicesClientRestClient.GetOperationResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operation result for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vault_GetOperationResult</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The name of the Vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<RecoveryServicesVaultResource> GetOperationResultRecoveryServicesClient(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _recoveryServicesClientClientDiagnostics.CreateScope("RecoveryServicesVaultResource.GetOperationResultRecoveryServicesClient");
-            scope.Start();
-            try
-            {
-                var response = _recoveryServicesClientRestClient.GetOperationResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
-                return Response.FromValue(new RecoveryServicesVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

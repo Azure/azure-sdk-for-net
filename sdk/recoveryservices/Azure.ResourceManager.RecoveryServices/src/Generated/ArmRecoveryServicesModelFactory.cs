@@ -17,23 +17,28 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRecoveryServicesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.OperationResource"/>. </summary>
-        /// <param name="endOn"> End time of the operation. </param>
-        /// <param name="error"> Required if status == failed or status == canceled. This is the OData v4 error format, used by the RPC and will go into the v2.2 Azure REST API guidelines. </param>
-        /// <param name="id"> It should match what is used to GET the operation result. </param>
-        /// <param name="name"> It must match the last segment of the "id" field, and will typically be a GUID / system generated value. </param>
-        /// <param name="status"> The status of the operation. (InProgress/Success/Failed/Cancelled). </param>
-        /// <param name="startOn"> Start time of the operation. </param>
-        /// <returns> A new <see cref="Models.OperationResource"/> instance for mocking. </returns>
-        public static OperationResource OperationResource(DateTimeOffset? endOn = null, ResponseError error = null, string id = null, string name = null, string status = null, DateTimeOffset? startOn = null)
+        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesPrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupId"> e.g. f9ad6492-33d4-4690-9999-6bfd52a0d081 (Backup) or f9ad6492-33d4-4690-9999-6bfd52a0d082 (SiteRecovery). </param>
+        /// <param name="requiredMembers"> [backup-ecs1, backup-prot1, backup-prot1b, backup-prot1c, backup-id1]. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static RecoveryServicesPrivateLinkResourceData RecoveryServicesPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
-            return new OperationResource(
-                endOn,
-                error,
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+
+            return new RecoveryServicesPrivateLinkResourceData(
                 id,
                 name,
-                status,
-                startOn,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -208,65 +213,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState = null, RecoveryServicesSoftDeleteSettings softDeleteSettings = null, MultiUserAuthorization? multiUserAuthorization = null, SourceScanConfiguration sourceScanConfiguration = null)
         {
             return new RecoveryServicesSecuritySettings(immutabilityState != null ? new ImmutabilitySettings(immutabilityState, serializedAdditionalRawData: null) : null, softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClientDiscoveryValueForSingleApi"/>. </summary>
-        /// <param name="name"> Name of the Operation. </param>
-        /// <param name="display"> Contains the localized display information for this particular operation. </param>
-        /// <param name="origin"> The intended executor of the operation;governs the display of the operation in the RBAC UX and the audit logs UX. </param>
-        /// <param name="logSpecifications"> ShoeBox properties for the given operation. </param>
-        /// <returns> A new <see cref="Models.ClientDiscoveryValueForSingleApi"/> instance for mocking. </returns>
-        public static ClientDiscoveryValueForSingleApi ClientDiscoveryValueForSingleApi(string name = null, ClientDiscoveryDisplay display = null, string origin = null, IEnumerable<ClientDiscoveryForLogSpecification> logSpecifications = null)
-        {
-            logSpecifications ??= new List<ClientDiscoveryForLogSpecification>();
-
-            return new ClientDiscoveryValueForSingleApi(name, display, origin, logSpecifications != null ? new ClientDiscoveryForProperties(new ClientDiscoveryForServiceSpecification(logSpecifications?.ToList(), serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClientDiscoveryDisplay"/>. </summary>
-        /// <param name="provider"> Name of the provider for display purposes. </param>
-        /// <param name="resource"> ResourceType for which this Operation can be performed. </param>
-        /// <param name="operation"> Operations Name itself. </param>
-        /// <param name="description"> Description of the operation having details of what operation is about. </param>
-        /// <returns> A new <see cref="Models.ClientDiscoveryDisplay"/> instance for mocking. </returns>
-        public static ClientDiscoveryDisplay ClientDiscoveryDisplay(string provider = null, string resource = null, string operation = null, string description = null)
-        {
-            return new ClientDiscoveryDisplay(provider, resource, operation, description, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClientDiscoveryForLogSpecification"/>. </summary>
-        /// <param name="name"> Name of the log. </param>
-        /// <param name="displayName"> Localized display name. </param>
-        /// <param name="blobDuration"> Blobs created in customer storage account per hour. </param>
-        /// <returns> A new <see cref="Models.ClientDiscoveryForLogSpecification"/> instance for mocking. </returns>
-        public static ClientDiscoveryForLogSpecification ClientDiscoveryForLogSpecification(string name = null, string displayName = null, string blobDuration = null)
-        {
-            return new ClientDiscoveryForLogSpecification(name, displayName, blobDuration, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> e.g. f9ad6492-33d4-4690-9999-6bfd52a0d081 (Backup) or f9ad6492-33d4-4690-9999-6bfd52a0d082 (SiteRecovery). </param>
-        /// <param name="requiredMembers"> [backup-ecs1, backup-prot1, backup-prot1b, backup-prot1c, backup-id1]. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static RecoveryServicesPrivateLinkResourceData RecoveryServicesPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new RecoveryServicesPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesVaultPatch"/>. </summary>

@@ -10,8 +10,6 @@ namespace Azure.ResourceManager.RecoveryServices
     {
         public static Azure.Response<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi> GetOperations(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi> GetOperationsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult> GetRecoveryServiceCapabilities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -152,10 +150,6 @@ namespace Azure.ResourceManager.RecoveryServices
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRegisteredIdentityAsync(string identityName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> GetOperationResultRecoveryServicesClient(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource>> GetOperationResultRecoveryServicesClientAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.Models.OperationResource> GetOperationStatusRecoveryServicesClient(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.OperationResource>> GetOperationStatusRecoveryServicesClientAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResource> GetRecoveryServicesPrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResource>> GetRecoveryServicesPrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResourceCollection GetRecoveryServicesPrivateLinkResources() { throw null; }
@@ -207,21 +201,11 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> GetRecoveryServicesVaults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MockableRecoveryServicesTenantResource : Azure.ResourceManager.ArmResource
-    {
-        protected MockableRecoveryServicesTenantResource() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi> GetOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi> GetOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public static partial class ArmRecoveryServicesModelFactory
     {
-        public static Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay ClientDiscoveryDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification ClientDiscoveryForLogSpecification(string name = null, string displayName = null, string blobDuration = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi ClientDiscoveryValueForSingleApi(string name = null, Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay display = null, string origin = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification> logSpecifications = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServices.Models.OperationResource OperationResource(System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResponseError error = null, string id = null, string name = null, string status = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult RecoveryServicesNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection RecoveryServicesPrivateEndpointConnection(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType> groupIds = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionVaultProperties RecoveryServicesPrivateEndpointConnectionVaultProperties(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
@@ -336,47 +320,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         Azure.ResourceManager.RecoveryServices.Models.ClassicAlertSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClassicAlertSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClassicAlertSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClassicAlertSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ClientDiscoveryDisplay : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay>
-    {
-        internal ClientDiscoveryDisplay() { }
-        public string Description { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ClientDiscoveryForLogSpecification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification>
-    {
-        internal ClientDiscoveryForLogSpecification() { }
-        public string BlobDuration { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public string Name { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ClientDiscoveryValueForSingleApi : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi>
-    {
-        internal ClientDiscoveryValueForSingleApi() { }
-        public Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay Display { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification> LogSpecifications { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Origin { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CmkKekIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CmkKekIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.CmkKekIdentity>
     {
@@ -542,22 +485,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization left, Azure.ResourceManager.RecoveryServices.Models.MultiUserAuthorization right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class OperationResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.OperationResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.OperationResource>
-    {
-        internal OperationResource() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResponseError Error { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public string Status { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.OperationResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.OperationResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.OperationResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RecoveryServices.Models.OperationResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.OperationResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.OperationResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.OperationResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RawCertificateData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.RawCertificateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.RawCertificateData>
     {

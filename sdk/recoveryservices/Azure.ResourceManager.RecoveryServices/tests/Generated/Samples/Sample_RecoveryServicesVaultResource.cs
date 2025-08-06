@@ -474,64 +474,6 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetOperationStatusRecoveryServicesClient_GetOperationStatus()
-        {
-            // Generated from example definition: 2025-02-01/GetOperationStatus.json
-            // this example is just showing the usage of "Vault_GetOperationStatus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RecoveryServicesVaultResource created on azure
-            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
-            string resourceGroupName = "HelloWorld";
-            string vaultName = "swaggerExample";
-            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
-
-            // invoke the operation
-            string operationId = "YWUzNDFkMzQtZmM5OS00MmUyLWEzNDMtZGJkMDIxZjlmZjgzOzdmYzBiMzhmLTc2NmItNDM5NS05OWQ1LTVmOGEzNzg4MWQzNA==";
-            OperationResource result = await recoveryServicesVault.GetOperationStatusRecoveryServicesClientAsync(operationId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetOperationResultRecoveryServicesClient_GetOperationResult()
-        {
-            // Generated from example definition: 2025-02-01/GetOperationResult.json
-            // this example is just showing the usage of "Vault_GetOperationResult" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RecoveryServicesVaultResource created on azure
-            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
-            string resourceGroupName = "HelloWorld";
-            string vaultName = "swaggerExample";
-            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
-
-            // invoke the operation
-            string operationId = "YWUzNDFkMzQtZmM5OS00MmUyLWEzNDMtZGJkMDIxZjlmZjgzOzdmYzBiMzhmLTc2NmItNDM5NS05OWQ1LTVmOGEzNzg4MWQzNA==";
-            RecoveryServicesVaultResource result = await recoveryServicesVault.GetOperationResultRecoveryServicesClientAsync(operationId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            RecoveryServicesVaultData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateVaultCertificate_DownloadVaultCredentialFile()
         {
             // Generated from example definition: 2025-02-01/PUTVaultCred.json
