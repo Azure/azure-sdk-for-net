@@ -1157,6 +1157,28 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task GetPathsAsync_BeginFrom()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            await SetUpFileSystemForListing(test.FileSystem);
+
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true,
+                BeginFrom = "foo"
+            };
+
+            // Act
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
+            IList<PathItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, paths.Count);
+        }
+
+        [RecordedTest]
         public async Task GetPropertiesAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
