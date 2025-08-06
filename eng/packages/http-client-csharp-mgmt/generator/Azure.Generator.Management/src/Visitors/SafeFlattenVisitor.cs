@@ -47,7 +47,7 @@ namespace Azure.Generator.Management.Visitors
                         internalizedProperties.Add(internalSingleProperty);
 
                         // flatten the single property to public and associate it with the internal property
-                        var flattenPropertyName = $"{internalSingleProperty.Name}{singleProperty.Name}"; // TODO: handle name conflicts
+                        var flattenPropertyName = $"{internalSingleProperty.Type.Name}{singleProperty.Name}"; // TODO: handle name conflicts
                         var checkNullExpression = This.Property(internalSingleProperty.Name).Is(Null);
                         MethodBodyStatement setter = new List<MethodBodyStatement>
                             {
