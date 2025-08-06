@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Grant type is expected to be refresh_token. </summary>
-    internal enum TokenGrantType
+    public enum TokenGrantType
     {
         /// <summary> refresh_token. </summary>
         RefreshToken,
