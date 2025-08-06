@@ -1253,7 +1253,6 @@
       "filename": "**/sdk/recoveryservices/**/*.cs",
       "words": [
         "bcdr",
-        "Bcdr"
       ]
     },
     {

@@ -20,8 +20,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="standardTierStorageRedundancy"> The storage redundancy setting of a vault. </param>
         /// <param name="crossRegionRestore"> Flag to show if Cross Region Restore is enabled on the Vault or not. </param>
         /// <returns> A new <see cref="Models.VaultPropertiesRedundancySettings"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is manually added because VaultPropertiesRedundancySettings has a public constructor and is not automatically included in the generated ModelFactory. Use direct instantiation instead.", false)]
+        [System.ComponentModel.Description("Manually provided factory method because VaultPropertiesRedundancySettings has public constructor with settable properties")]
         public static VaultPropertiesRedundancySettings VaultPropertiesRedundancySettings(StandardTierStorageRedundancy? standardTierStorageRedundancy = null, CrossRegionRestore? crossRegionRestore = null)
         {
             return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore, serializedAdditionalRawData: null);
