@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<RecoveryServicesVaultResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, RecoveryServicesVaultData data, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, vaultName, data, cancellationToken);
+        public virtual ArmOperation<RecoveryServicesVaultResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, RecoveryServicesVaultData data, CancellationToken cancellationToken)
+            => CreateOrUpdate(waitUntil, vaultName, data, null, cancellationToken);
     }
 }
