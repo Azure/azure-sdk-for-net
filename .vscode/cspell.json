@@ -1250,6 +1250,13 @@
       ]
     },
     {
+      "filename": "**/sdk/recoveryservices/**/*.cs",
+      "words": [
+        "bcdr",
+        "Bcdr"
+      ]
+    },
+    {
       "filename": "**/sdk/recoveryservices-backup/**/*.cs",
       "words": [
         "xsmb",
