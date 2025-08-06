@@ -52,7 +52,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="contextualPath">The contextual path of the enclosing type. </param>
         /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
         /// <param name="method">The input service method that we are building from. </param>
-        /// <param name="convenienceMethod">The corresponding convenience method provided by the generator framework. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
         /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
@@ -62,7 +61,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             RequestPathPattern contextualPath,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
-            MethodProvider convenienceMethod,
             bool isAsync,
             string? methodName = null,
             FormattableString? description = null,
@@ -72,15 +70,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _contextualPath = contextualPath;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
-            _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
+            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             InitializeLroFlags(
                 _serviceMethod,
                 forceLro: forceLro,
                 ref _isLongRunningOperation,
                 ref _isFakeLongRunningOperation);
-            _methodName = methodName ?? convenienceMethod.Signature.Name;
-            _description = description ?? convenienceMethod.Signature.Description;
+            _methodName = methodName ?? _convenienceMethod.Signature.Name;
+            _description = description ?? _convenienceMethod.Signature.Description;
             InitializeTypeInfo(
                 _serviceMethod,
                 ref _originalBodyType,
