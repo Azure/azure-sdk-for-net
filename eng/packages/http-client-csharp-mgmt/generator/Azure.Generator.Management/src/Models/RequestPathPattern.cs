@@ -31,26 +31,16 @@ namespace Azure.Generator.Management.Models
         public static readonly RequestPathPattern Subscription = new("/subscriptions/{subscriptionId}");
         public static readonly RequestPathPattern Tenant = new(string.Empty);
 
-        public static RequestPathPattern GetFromCoreType(CSharpType armCoreType)
+        public static RequestPathPattern GetFromScope(ResourceScope scope)
         {
-            if (armCoreType.FrameworkType == typeof(SubscriptionResource))
+            return scope switch
             {
-                return Subscription;
-            }
-            else if (armCoreType.FrameworkType == typeof(ResourceGroupResource))
-            {
-                return ResourceGroup;
-            }
-            else if (armCoreType.FrameworkType == typeof(ManagementGroupResource))
-            {
-                return ManagementGroup;
-            }
-            else if (armCoreType.FrameworkType == typeof(TenantResource))
-            {
-                return Tenant;
-            }
-
-            throw new InvalidOperationException($"Unhandled type {armCoreType.Name}");
+                ResourceScope.ResourceGroup => ResourceGroup,
+                ResourceScope.Subscription => Subscription,
+                ResourceScope.ManagementGroup => ManagementGroup,
+                ResourceScope.Tenant => Tenant,
+                _ => throw new InvalidOperationException($"Unhandled scope {scope}"),
+            };
         }
 
         private string _path;

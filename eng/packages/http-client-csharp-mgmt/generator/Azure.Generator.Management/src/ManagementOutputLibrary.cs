@@ -5,12 +5,9 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -95,45 +92,51 @@ namespace Azure.Generator.Management
             return resources;
         }
 
-        private static readonly IReadOnlyDictionary<ResourceScope, Type> _scopeToTypes = new Dictionary<ResourceScope, Type>
-        {
-            [ResourceScope.ResourceGroup] = typeof(ResourceGroupResource),
-            [ResourceScope.Subscription] = typeof(SubscriptionResource),
-            [ResourceScope.Tenant] = typeof(TenantResource),
-            [ResourceScope.ManagementGroup] = typeof(ManagementGroupResource),
-        };
-
-        private IReadOnlyList<TypeProvider> BuildExtensions(IReadOnlyList<ResourceClientProvider> resources)
+        private IReadOnlyList<TypeProvider> BuildExtensions()
         {
             // walk through all resources to figure out their scopes
-            var scopeCandidates = new Dictionary<ResourceScope, List<ResourceClientProvider>>
+            var resourcesPerScope = new Dictionary<ResourceScope, List<ResourceClientProvider>>
             {
                 [ResourceScope.ResourceGroup] = [],
                 [ResourceScope.Subscription] = [],
                 [ResourceScope.Tenant] = [],
                 [ResourceScope.ManagementGroup] = [],
             };
-            foreach (var resource in resources)
+            foreach (var resource in ResourceClients)
             {
                 if (resource.ParentResourceIdPattern is null)
                 {
-                    scopeCandidates[resource.ResourceScope].Add(resource);
+                    resourcesPerScope[resource.ResourceScope].Add(resource);
+                }
+            }
+            var methodsPerScope = new Dictionary<ResourceScope, List<InputServiceMethod>>
+            {
+                [ResourceScope.ResourceGroup] = [],
+                [ResourceScope.Subscription] = [],
+                [ResourceScope.Tenant] = [],
+                [ResourceScope.ManagementGroup] = [],
+            };
+            foreach (var methodMetadata in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethodMetadatas)
+            {
+                if (methodMetadata.CarrierResource == null) // this has no been picked up by a resource
+                {
+                    methodsPerScope[methodMetadata.OperationScope].Add(methodMetadata.Method);
                 }
             }
 
-            var mockableArmClientResource = new MockableArmClientProvider(typeof(ArmClient), resources);
-            var mockableResources = new List<MockableResourceProvider>(scopeCandidates.Count)
+            var mockableArmClientResource = new MockableArmClientProvider(ResourceClients);
+            var mockableResources = new List<MockableResourceProvider>(resourcesPerScope.Count)
             {
                 // add the arm client mockable resource
                 mockableArmClientResource
             };
             ManagementClientGenerator.Instance.AddTypeToKeep(mockableArmClientResource.Name);
 
-            foreach (var (scope, candidates) in scopeCandidates)
+            foreach (var (scope, candidates) in resourcesPerScope)
             {
                 if (candidates.Count > 0)
                 {
-                    var mockableExtension = new MockableResourceProvider(_scopeToTypes[scope], candidates, []);
+                    var mockableExtension = new MockableResourceProvider(scope, candidates, methodsPerScope[scope]);
                     mockableResources.Add(mockableExtension);
                     ManagementClientGenerator.Instance.AddTypeToKeep(mockableExtension.Name);
                 }
@@ -162,11 +165,9 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            //var methodMap = BuildManagementMethodMap();
-            _ = ManagementClientGenerator.Instance.InputLibrary.NonResourceMethodMetadatas; // Ensure models are loaded
             var resources = ResourceClients;
             var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
-            var extensions = BuildExtensions(resources);
+            var extensions = BuildExtensions();
 
             return [
                 .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),

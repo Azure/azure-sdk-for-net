@@ -24,13 +24,17 @@ namespace Azure.Generator.Management.Providers
         private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
         private protected readonly IReadOnlyList<InputServiceMethod> _methods;
 
-        // TODO -- in the future we need to update this to include the operations this mockable resource should include.
-        public MockableResourceProvider(CSharpType armCoreType, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<InputServiceMethod> methods)
+        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<InputServiceMethod> methods)
+            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, methods)
         {
-            ArmCoreType = armCoreType;
+        }
+
+        private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<InputServiceMethod> methods)
+        {
             _resources = resources;
             _methods = methods;
-            ContextualPath = RequestPathPattern.GetFromCoreType(armCoreType);
+            ArmCoreType = armCoreType;
+            ContextualPath = contextualPath;
         }
 
         internal CSharpType ArmCoreType { get; }
@@ -76,6 +80,12 @@ namespace Azure.Generator.Management.Providers
             {
                 methods.AddRange(BuildMethodsForResource(resource));
             }
+
+            foreach (var method in _methods)
+            {
+                // add the method provider one by one.
+            }
+
             return [.. methods];
         }
 

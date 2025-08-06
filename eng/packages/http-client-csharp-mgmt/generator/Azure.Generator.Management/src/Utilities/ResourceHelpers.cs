@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using System;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -47,5 +51,14 @@ namespace Azure.Generator.Management.Utilities
             return operationKind == ResourceOperationKind.Create
                 || operationKind == ResourceOperationKind.Delete;
         }
+
+        public static CSharpType GetArmCoreTypeFromScope(ResourceScope scope) => scope switch
+        {
+            ResourceScope.ResourceGroup => typeof(ResourceGroupResource),
+            ResourceScope.Subscription => typeof(SubscriptionResource),
+            ResourceScope.Tenant => typeof(TenantResource),
+            ResourceScope.ManagementGroup => typeof(ManagementGroupResource),
+            _ => throw new InvalidOperationException($"Unhandled scope {scope}"),
+        };
     }
 }
