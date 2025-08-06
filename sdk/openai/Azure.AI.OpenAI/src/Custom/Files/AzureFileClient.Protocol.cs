@@ -111,7 +111,7 @@ internal partial class AzureFileClient : OpenAIFileClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateListFilesRequest(string purpose, RequestOptions options)
+    internal override PipelineMessage CreateGetFilesRequest(string purpose, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
             .WithPath("files")

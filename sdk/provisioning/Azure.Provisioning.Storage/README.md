@@ -1,4 +1,4 @@
-# Azure Provisioning client library for .NET
+# Azure Provisioning Storage client library for .NET
 
 Azure.Provisioning.Storage simplifies declarative resource provisioning in .NET for Azure Storage.
 
@@ -21,6 +21,25 @@ dotnet add package Azure.Provisioning.Storage
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a Basic Storage Account
+
+This example demonstrates how to create a storage account with recommended security settings and hierarchical namespace enabled for Azure Data Lake Storage Gen2.
+
+```C# Snippet:StorageAccountBasic
+Infrastructure infra = new();
+
+StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2023_01_01)
+{
+    Kind = StorageKind.StorageV2,
+    Sku = { Name = StorageSkuName.StandardLrs },
+    IsHnsEnabled = true,
+    AllowBlobPublicAccess = false
+};
+infra.Add(storage);
+```
 
 ## Troubleshooting
 

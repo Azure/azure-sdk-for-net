@@ -22,6 +22,7 @@ namespace MgmtTypeSpec
         /// <summary> Initializes a new instance of <see cref="BarSettingsData"/>. </summary>
         public BarSettingsData()
         {
+            StringArray = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsData"/>. </summary>
@@ -31,29 +32,26 @@ namespace MgmtTypeSpec
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal BarSettingsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="stringArray"></param>
+        internal BarSettingsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            StringArray = stringArray;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal BarSettingsProperties Properties { get; set; }
 
+        /// <summary> Gets the StringArray. </summary>
+        public IList<string> StringArray { get; }
+
         /// <summary> enabled. </summary>
-        public bool? IsEnabled
+        public bool? PropertiesIsEnabled
         {
             get
             {
                 return Properties is null ? default : Properties.IsEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BarSettingsProperties();
-                }
-                Properties.IsEnabled = value;
             }
         }
     }

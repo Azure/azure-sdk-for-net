@@ -1,4 +1,7 @@
-#!/bin/env pwsh
+#!/usr/bin/env pwsh
+
+#Requires -Version 7.0
+#Requires -PSEdition Core
 
 param(
     [string]$FileName = 'Azure.Sdk.Tools.Cli',
@@ -9,21 +12,13 @@ param(
     [string]$RunDirectory = (Resolve-Path (Join-Path $PSScriptRoot .. .. ..)),
     [switch]$Run,
     [switch]$UpdateVsCodeConfig,
-    [switch]$Clean
+    [switch]$UpdatePathInProfile
 )
 
 $ErrorActionPreference = "Stop"
-
-if (-not $InstallDirectory)
-{
-    $homeDir = if ($env:HOME) { $env:HOME } else { $env:USERPROFILE }
-    $InstallDirectory = (Join-Path $homeDir ".azure-sdk-mcp" "azsdk")
-}
 . (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
 
-if ($Clean) {
-    Clear-Directory -Path $InstallDirectory
-}
+$toolInstallDirectory = $InstallDirectory ? $InstallDirectory : (Get-CommonInstallDirectory)
 
 if ($UpdateVsCodeConfig) {
     $vscodeConfigPath = Join-Path $PSScriptRoot ".." ".." ".." ".vscode" "mcp.json"
@@ -54,13 +49,33 @@ if ($UpdateVsCodeConfig) {
     $vscodeConfig | ConvertTo-Json -Depth 10 | Set-Content -Path $vscodeConfigPath -Force
 }
 
-$exe = Install-Standalone-Tool `
+# Install to a temp directory first so we don't dump out all the other
+# release zip contents to one of the users bin directories.
+$tmp = $env:TEMP ? $env:TEMP : [System.IO.Path]::GetTempPath()
+$guid = [System.Guid]::NewGuid()
+$tempInstallDirectory = Join-Path $tmp "azsdk-install-$($guid)"
+$tempExe = Install-Standalone-Tool `
     -Version $Version `
     -FileName $FileName `
     -Package $Package `
-    -Directory $InstallDirectory `
+    -Directory $tempInstallDirectory `
     -Repository $Repository
 
+if (-not (Test-Path $toolInstallDirectory)) {
+    New-Item -ItemType Directory -Path $toolInstallDirectory -Force | Out-Null
+}
+$exeName = Split-Path $tempExe -Leaf
+$exeDestination = Join-Path $toolInstallDirectory $exeName
+Copy-Item -Path $tempExe -Destination $exeDestination -Force
+
+Write-Host "Package $package is installed at $exeDestination"
+if (!$UpdatePathInProfile) {
+    Write-Warning "To add the tool to PATH for new shell sessions, re-run with -UpdatePathInProfile to modify the shell profile file."
+} else {
+    Add-InstallDirectoryToPathInProfile -InstallDirectory $toolInstallDirectory
+    Write-Warning "'$exeName' will be available in PATH for new shell sessions."
+}
+
 if ($Run) {
-    Start-Process -WorkingDirectory $RunDirectory -FilePath $exe -ArgumentList 'start' -NoNewWindow -Wait
+    Start-Process -WorkingDirectory $RunDirectory -FilePath $exeDestination -ArgumentList 'start' -NoNewWindow -Wait
 }

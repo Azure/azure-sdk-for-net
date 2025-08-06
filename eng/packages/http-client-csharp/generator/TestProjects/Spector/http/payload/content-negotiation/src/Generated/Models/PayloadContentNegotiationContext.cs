@@ -6,9 +6,11 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Payload.ContentNegotiation._DifferentBody;
 
 namespace Payload.ContentNegotiation
 {
+    [ModelReaderWriterBuildable(typeof(PngImageAsJson))]
     public partial class PayloadContentNegotiationContext : ModelReaderWriterContext
     {
     }

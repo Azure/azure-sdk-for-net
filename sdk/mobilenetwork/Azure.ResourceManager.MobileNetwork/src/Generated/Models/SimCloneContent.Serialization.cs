@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(TargetSimGroupId))
             {
                 writer.WritePropertyName("targetSimGroupId"u8);
-                JsonSerializer.Serialize(writer, TargetSimGroupId);
+                ((IJsonModel<SubResource>)TargetSimGroupId).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Sims))
             {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    targetSimGroupId = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    targetSimGroupId = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sims"u8))

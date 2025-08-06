@@ -36,6 +36,10 @@ namespace _Type._Enum.Extensible
         /// <param name="value"> The value. </param>
         public static implicit operator DaysOfWeekExtensibleEnum(string value) => throw null;
 
+        /// <summary> Converts a string to a <see cref="DaysOfWeekExtensibleEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DaysOfWeekExtensibleEnum?(string value) => throw null;
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 

@@ -147,6 +147,25 @@ namespace Azure.Communication.CallAutomation
                 resultInformation);
         }
 
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.StartRecordingFailed"/>. </summary>
+        /// <param name="recordingId"> The call recording Id. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.StartRecordingFailed"/> instance for mocking. </returns>
+        public static StartRecordingFailed StartRecordingFailed(string recordingId = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new StartRecordingFailed(
+                recordingId,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>
         /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>

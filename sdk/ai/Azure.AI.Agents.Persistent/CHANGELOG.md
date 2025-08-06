@@ -1,16 +1,40 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
-- Expose the `GetVectorStoreFileBatchFiles` and `GetVectorStoreFileBatchFilesAsync` methods.
+- Implemented streaming scenario for MCP tool.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed the deserialization issue, when agent service returns the customized lists of trusted and requiring authentication MCP tools.
+
 ### Other Changes
+
+### Sample updates
+
+- Added the streaming sample for Bing grounding.
+
+## 1.2.0-beta.1 (2025-07-25)
+
+### Bugs Fixed
+
+- Fixed the [issue](https://github.com/Azure/azure-sdk-for-net/issues/51342) with ignoring `after` parameter when getting pageable lists.
+
+## 1.1.0-beta.4 (2025-07-11)
+
+### Features Added
+
+- Added support for Deep Research.
+- Added support for MCP.
+
+### Sample updates
+
+- Added sample for Deep Research.
+- Expose the `GetVectorStoreFileBatchFiles` and `GetVectorStoreFileBatchFilesAsync` methods.
 
 ## 1.1.0-beta.3 (2025-06-27)
 

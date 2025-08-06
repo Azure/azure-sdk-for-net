@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceDiskRestorePoint))
             {
                 writer.WritePropertyName("sourceDiskRestorePoint"u8);
-                JsonSerializer.Serialize(writer, SourceDiskRestorePoint);
+                ((IJsonModel<WritableSubResource>)SourceDiskRestorePoint).Write(writer, options);
             }
         }
 
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sourceDiskRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    sourceDiskRestorePoint = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -46,10 +46,13 @@ interface Bars {
 @parentResource(Bar)
 model BarSettings is ProxyResource<BarSettingsProperties> {
   ...ResourceNameParameter<BarSettings, SegmentName = "settings">;
+
+  stringArray?: string[];
 }
 
 model BarSettingsProperties {
   /** enabled */
+  @visibility(Lifecycle.Read)
   isEnabled?: boolean;
 }
 

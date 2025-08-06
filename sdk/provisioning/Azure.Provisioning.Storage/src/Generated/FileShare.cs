@@ -359,6 +359,7 @@ public partial class FileShare : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _accessTier = DefineProperty<FileShareAccessTier>("AccessTier", ["properties", "accessTier"]);
         _enabledProtocol = DefineProperty<FileShareEnabledProtocol>("EnabledProtocol", ["properties", "enabledProtocols"]);
