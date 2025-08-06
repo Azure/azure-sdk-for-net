@@ -182,6 +182,13 @@ public class BicepValueReferenceExtensionsTests
         var resource = new TestResource("test");
         resource.Models.Add(new TestModel() { Name = "model1" });
         var validIndexer = resource.Models[0];
+
+        var item = validIndexer.Value!;
+        Assert.IsNotNull(item);
+        var name = item.Name;
+
+        Assert.AreEqual("'model1'", name.ToString());
+        Assert.AreEqual("test.models[0].name", name.ToBicepExpression().ToString());
     }
 
     [Test]
