@@ -8,89 +8,74 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="ChaosTargetMetadataResource"/> and their operations.
-    /// Each <see cref="ChaosTargetMetadataResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="ChaosTargetMetadataCollection"/> instance call the GetChaosTargetMetadata method from an instance of <see cref="SubscriptionResource"/>.
-    /// </summary>
+    /// <summary></summary>
     public partial class ChaosTargetMetadataCollection : ArmCollection, IEnumerable<ChaosTargetMetadataResource>, IAsyncEnumerable<ChaosTargetMetadataResource>
     {
-        private readonly ClientDiagnostics _chaosTargetMetadataTargetTypesClientDiagnostics;
-        private readonly TargetTypesRestOperations _chaosTargetMetadataTargetTypesRestClient;
-        private readonly AzureLocation _location;
+        private readonly ClientDiagnostics _targetTypesClientDiagnostics;
+        private readonly TargetTypes _targetTypesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosTargetMetadataCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ChaosTargetMetadataCollection for mocking. </summary>
         protected ChaosTargetMetadataCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosTargetMetadataCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosTargetMetadataCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        internal ChaosTargetMetadataCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal ChaosTargetMetadataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _location = location;
-            _chaosTargetMetadataTargetTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosTargetMetadataResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ChaosTargetMetadataResource.ResourceType, out string chaosTargetMetadataTargetTypesApiVersion);
-            _chaosTargetMetadataTargetTypesRestClient = new TargetTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosTargetMetadataTargetTypesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ChaosTargetMetadataResource.ResourceType, out string chaosTargetMetadataApiVersion);
+            _targetTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosTargetMetadataResource.ResourceType.Namespace, Diagnostics);
+            _targetTypesRestClient = new TargetTypes(_targetTypesClientDiagnostics, Pipeline, Endpoint, chaosTargetMetadataApiVersion);
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get a Target Type resources for given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a Target Type resources for given location. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual async Task<Response<ChaosTargetMetadataResource>> GetAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ChaosTargetMetadataResource>> GetAsync(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Get");
+            using DiagnosticScope scope = _targetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.GetAsync");
             scope.Start();
             try
             {
-                var response = await _chaosTargetMetadataTargetTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, targetTypeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosTargetMetadataData> response = Response.FromValue(ChaosTargetMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosTargetMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,42 +85,31 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Get a Target Type resources for given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a Target Type resources for given location. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual Response<ChaosTargetMetadataResource> Get(string targetTypeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ChaosTargetMetadataResource> Get(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Get");
+            using DiagnosticScope scope = _targetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Get");
             scope.Start();
             try
             {
-                var response = _chaosTargetMetadataTargetTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, targetTypeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosTargetMetadataData> response = Response.FromValue(ChaosTargetMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosTargetMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,102 +119,53 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Get a list of Target Type resources for given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetType_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a list of Target Type resources for given location. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ChaosTargetMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ChaosTargetMetadataResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ChaosTargetMetadataResource> GetAllAsync(AzureLocation location, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetMetadataTargetTypesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetMetadataTargetTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetMetadataResource(Client, ChaosTargetMetadataData.DeserializeChaosTargetMetadataData(e)), _chaosTargetMetadataTargetTypesClientDiagnostics, Pipeline, "ChaosTargetMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAsyncCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
         }
 
-        /// <summary>
-        /// Get a list of Target Type resources for given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetType_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a list of Target Type resources for given location. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ChaosTargetMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ChaosTargetMetadataResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ChaosTargetMetadataResource> GetAll(AzureLocation location, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetMetadataTargetTypesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetMetadataTargetTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetMetadataResource(Client, ChaosTargetMetadataData.DeserializeChaosTargetMetadataData(e)), _chaosTargetMetadataTargetTypesClientDiagnostics, Pipeline, "ChaosTargetMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Exists");
+            using DiagnosticScope scope = _targetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.ExistsAsync");
             scope.Start();
             try
             {
-                var response = await _chaosTargetMetadataTargetTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, targetTypeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosTargetMetadataData> response = Response.FromValue(ChaosTargetMetadataData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -250,40 +175,27 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual Response<bool> Exists(string targetTypeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Exists");
+            using DiagnosticScope scope = _targetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Exists");
             scope.Start();
             try
             {
-                var response = _chaosTargetMetadataTargetTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, targetTypeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosTargetMetadataData> response = Response.FromValue(ChaosTargetMetadataData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,42 +205,31 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ChaosTargetMetadataResource>> GetIfExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ChaosTargetMetadataResource>> GetIfExistsAsync(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.GetIfExists");
+            using DiagnosticScope scope = _targetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                var response = await _chaosTargetMetadataTargetTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, targetTypeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosTargetMetadataData> response = Response.FromValue(ChaosTargetMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ChaosTargetMetadataResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosTargetMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,42 +239,31 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetMetadataResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual NullableResponse<ChaosTargetMetadataResource> GetIfExists(string targetTypeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ChaosTargetMetadataResource> GetIfExists(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.GetIfExists");
+            using DiagnosticScope scope = _targetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _chaosTargetMetadataTargetTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, targetTypeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosTargetMetadataData> response = Response.FromValue(ChaosTargetMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ChaosTargetMetadataResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosTargetMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -385,17 +275,18 @@ namespace Azure.ResourceManager.Chaos
 
         IEnumerator<ChaosTargetMetadataResource> IEnumerable<ChaosTargetMetadataResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ChaosTargetMetadataResource> IAsyncEnumerable<ChaosTargetMetadataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return this.GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

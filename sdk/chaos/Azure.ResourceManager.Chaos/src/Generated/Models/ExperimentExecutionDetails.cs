@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents the execution details of an Experiment. </summary>
-    public partial class ExperimentExecutionDetails : ResourceData
+    public partial class ExperimentExecutionDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetails"/>. </summary>
         internal ExperimentExecutionDetails()
@@ -53,44 +22,30 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The status of the execution. </param>
-        /// <param name="startedOn"> String that represents the start date time. </param>
-        /// <param name="stoppedOn"> String that represents the stop date time. </param>
-        /// <param name="failureReason"> The reason why the execution failed. </param>
-        /// <param name="lastActionOn"> String that represents the last action date time. </param>
-        /// <param name="runInformation"> The information of the experiment run. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, ExperimentExecutionDetailsPropertiesRunInformation runInformation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="type"> String of the resource type. </param>
+        /// <param name="id"> String of the fully qualified resource ID. </param>
+        /// <param name="name"> String of the resource name. </param>
+        /// <param name="properties"> The properties of the experiment execution details. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentExecutionDetails(string @type, string id, string name, ExperimentExecutionDetailsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Status = status;
-            StartedOn = startedOn;
-            StoppedOn = stoppedOn;
-            FailureReason = failureReason;
-            LastActionOn = lastActionOn;
-            RunInformation = runInformation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            Id = id;
+            Name = name;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The status of the execution. </summary>
-        public string Status { get; }
-        /// <summary> String that represents the start date time. </summary>
-        public DateTimeOffset? StartedOn { get; }
-        /// <summary> String that represents the stop date time. </summary>
-        public DateTimeOffset? StoppedOn { get; }
-        /// <summary> The reason why the execution failed. </summary>
-        public string FailureReason { get; }
-        /// <summary> String that represents the last action date time. </summary>
-        public DateTimeOffset? LastActionOn { get; }
-        /// <summary> The information of the experiment run. </summary>
-        internal ExperimentExecutionDetailsPropertiesRunInformation RunInformation { get; }
-        /// <summary> The steps of the experiment run. </summary>
-        public IReadOnlyList<ChaosExperimentRunStepStatus> RunInformationSteps
-        {
-            get => RunInformation?.Steps;
-        }
+        /// <summary> String of the resource type. </summary>
+        public string Type { get; }
+
+        /// <summary> String of the fully qualified resource ID. </summary>
+        public string Id { get; }
+
+        /// <summary> String of the resource name. </summary>
+        public string Name { get; }
+
+        /// <summary> The properties of the experiment execution details. </summary>
+        public ExperimentExecutionDetailsProperties Properties { get; }
     }
 }

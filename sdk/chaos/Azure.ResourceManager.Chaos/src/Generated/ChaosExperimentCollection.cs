@@ -8,90 +8,82 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="ChaosExperimentResource"/> and their operations.
-    /// Each <see cref="ChaosExperimentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ChaosExperimentCollection"/> instance call the GetChaosExperiments method from an instance of <see cref="ResourceGroupResource"/>.
-    /// </summary>
+    /// <summary></summary>
     public partial class ChaosExperimentCollection : ArmCollection, IEnumerable<ChaosExperimentResource>, IAsyncEnumerable<ChaosExperimentResource>
     {
-        private readonly ClientDiagnostics _chaosExperimentExperimentsClientDiagnostics;
-        private readonly ExperimentsRestOperations _chaosExperimentExperimentsRestClient;
+        private readonly ClientDiagnostics _experimentsClientDiagnostics;
+        private readonly Experiments _experimentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosExperimentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ChaosExperimentCollection for mocking. </summary>
         protected ChaosExperimentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosExperimentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosExperimentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ChaosExperimentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _chaosExperimentExperimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosExperimentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ChaosExperimentResource.ResourceType, out string chaosExperimentExperimentsApiVersion);
-            _chaosExperimentExperimentsRestClient = new ExperimentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosExperimentExperimentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ChaosExperimentResource.ResourceType, out string chaosExperimentApiVersion);
+            _experimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosExperimentResource.ResourceType.Namespace, Diagnostics);
+            _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Endpoint, chaosExperimentApiVersion);
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Create or update a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create or update a Experiment resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="data"> Experiment resource to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ChaosExperimentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string experimentName, ChaosExperimentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.CreateOrUpdateAsync");
             scope.Start();
             try
             {
-                var response = await _chaosExperimentExperimentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ChaosArmOperation<ChaosExperimentResource>(new ChaosExperimentOperationSource(Client), _chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, ChaosExperimentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ChaosArmOperation<ChaosExperimentResource> operation = new ChaosArmOperation<ChaosExperimentResource>(
+                    new ChaosExperimentOperationSource(Client),
+                    _experimentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -101,46 +93,39 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Create or update a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create or update a Experiment resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="data"> Experiment resource to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ChaosExperimentResource> CreateOrUpdate(WaitUntil waitUntil, string experimentName, ChaosExperimentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _chaosExperimentExperimentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data, cancellationToken);
-                var operation = new ChaosArmOperation<ChaosExperimentResource>(new ChaosExperimentOperationSource(Client), _chaosExperimentExperimentsClientDiagnostics, Pipeline, _chaosExperimentExperimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, experimentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, ChaosExperimentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ChaosArmOperation<ChaosExperimentResource> operation = new ChaosArmOperation<ChaosExperimentResource>(
+                    new ChaosExperimentOperationSource(Client),
+                    _experimentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,42 +135,30 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Get a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a Experiment resource. </summary>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ChaosExperimentResource>> GetAsync(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Get");
+            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.GetAsync");
             scope.Start();
             try
             {
-                var response = await _chaosExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _experimentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosExperimentData> response = Response.FromValue(ChaosExperimentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,42 +168,30 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Get a Experiment resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a Experiment resource. </summary>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ChaosExperimentResource> Get(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Get");
+            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Get");
             scope.Start();
             try
             {
-                var response = _chaosExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _experimentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosExperimentData> response = Response.FromValue(ChaosExperimentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,104 +201,64 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Get a list of Experiment resources in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a list of Experiment resources in a resource group. </summary>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ChaosExperimentResource> GetAllAsync(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ChaosExperimentResource> GetAllAsync(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExperimentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExperimentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentResource(Client, ChaosExperimentData.DeserializeChaosExperimentData(e)), _chaosExperimentExperimentsClientDiagnostics, Pipeline, "ChaosExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetAsyncCollectionResultOfT(
+                _experimentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                running,
+                continuationToken,
+                context), data => new ChaosExperimentResource(Client, data));
         }
 
-        /// <summary>
-        /// Get a list of Experiment resources in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a list of Experiment resources in a resource group. </summary>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ChaosExperimentResource> GetAll(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ChaosExperimentResource> GetAll(bool? running = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosExperimentExperimentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosExperimentExperimentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, running, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentResource(Client, ChaosExperimentData.DeserializeChaosExperimentData(e)), _chaosExperimentExperimentsClientDiagnostics, Pipeline, "ChaosExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetCollectionResultOfT(
+                _experimentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                running,
+                continuationToken,
+                context), data => new ChaosExperimentResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Exists");
+            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.ExistsAsync");
             scope.Start();
             try
             {
-                var response = await _chaosExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _experimentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosExperimentData> response = Response.FromValue(ChaosExperimentData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,40 +268,26 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Exists");
+            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _chaosExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _experimentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosExperimentData> response = Response.FromValue(ChaosExperimentData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,42 +297,30 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ChaosExperimentResource>> GetIfExistsAsync(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.GetIfExists");
+            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
-                var response = await _chaosExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _experimentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ChaosExperimentData> response = Response.FromValue(ChaosExperimentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ChaosExperimentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,42 +330,30 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ChaosExperimentResource> GetIfExists(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.GetIfExists");
+            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _chaosExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, experimentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _experimentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ChaosExperimentData> response = Response.FromValue(ChaosExperimentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ChaosExperimentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ChaosExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,9 +373,10 @@ namespace Azure.ResourceManager.Chaos
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ChaosExperimentResource> IAsyncEnumerable<ChaosExperimentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return this.GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
