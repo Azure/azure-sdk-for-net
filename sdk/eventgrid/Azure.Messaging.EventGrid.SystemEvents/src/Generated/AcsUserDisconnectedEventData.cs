@@ -13,60 +13,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.UserDisconnected event. </summary>
     public partial class AcsUserDisconnectedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsUserDisconnectedEventData"/>. </summary>
         /// <param name="userCommunicationIdentifier"> The communication identifier of the user who was disconnected. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userCommunicationIdentifier"/> is null. </exception>
         internal AcsUserDisconnectedEventData(CommunicationIdentifierModel userCommunicationIdentifier)
         {
-            Argument.AssertNotNull(userCommunicationIdentifier, nameof(userCommunicationIdentifier));
-
             UserCommunicationIdentifier = userCommunicationIdentifier;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsUserDisconnectedEventData"/>. </summary>
         /// <param name="userCommunicationIdentifier"> The communication identifier of the user who was disconnected. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsUserDisconnectedEventData(CommunicationIdentifierModel userCommunicationIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsUserDisconnectedEventData(CommunicationIdentifierModel userCommunicationIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserCommunicationIdentifier = userCommunicationIdentifier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsUserDisconnectedEventData"/> for deserialization. </summary>
-        internal AcsUserDisconnectedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The communication identifier of the user who was disconnected. </summary>
