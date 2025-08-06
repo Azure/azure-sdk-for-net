@@ -122,8 +122,8 @@
 # PRLabel: %Batch
 /sdk/batch/                                                        @wiboris @dpwatrous @wanghoppe @skapur12 @cRui861
 
-# ServiceLabel: %Batch
-# ServiceOwners:                                                   @wiboris @dpwatrous
+# ServiceLabel: %Batch %BatchAI
+# ServiceOwners:                                                   @wiboris @dpwatrous @matthchr
 
 # PRLabel: %Azure Projects
 /sdk/cloudmachine/                                                 @christothes @KrzysztofCwalina
@@ -170,46 +170,16 @@
 # PRLabel: %Cognitive - Face
 /sdk/cognitiveservices/Vision.Face/                                @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
-# PRLabel: %Communication
-/sdk/communication/                                                @acsdevx-msft
+# PRLabel: %Communication %Communication - Call Automation %Communication - Calling Server %Communication - Chat %Communication - Common %Communication - Identity %Communication - Phone Numbers %Communication - Programmable Connectivity %Communication - Short Codes %Communication - SMS %Communication - Rooms
+/sdk/communication/                                                @acsdevx-msft @juntuchen-msft @minwoolee-msft @fhaghbin-msft @v-dharmarajv @LuChen-Microsoft @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft @Arazan @whisper6284 @danielortega-msft @sofiar-msft @Azure/azure-sdk-write-communication @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft @besh2014 @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
 
 # ServiceLabel: %Communication
 # ServiceOwners:                                                   @Azure/azure-sdk-write-communication
 
-# PRLabel: %Communication - Call Automation
-/sdk/communication/Azure.Communication.CallAutomation/             @juntuchen-msft @minwoolee-msft @fhaghbin-msft @v-dharmarajv
-
-# PRLabel: %Communication - Calling Server
-/sdk/communication/Azure.Communication.CallingServer/              @minwoolee-msft
-
-# PRLabel: %Communication - Chat
-/sdk/communication/Azure.Communication.Chat/                       @LuChen-Microsoft
-
-# PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/                     @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
-
-# PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
-
-# PRLabel: %Communication - Phone Numbers
-/sdk/communication/Azure.Communication.PhoneNumbers/               @Arazan @whisper6284 @danielortega-msft @sofiar-msft
-
-# PRLabel: %Communication - Programmable Connectivity
-/sdk/communication/Azure.Communication.ProgrammableConnectivity/   @Azure/azure-sdk-write-communication
-
-# PRLabel: %Communication - Rooms
-/sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
-
-# PRLabel: %Communication - Short Codes
-/sdk/communication/Azure.Communication.ShortCodes/                 @Arazan @whisper6284 @danielortega-msft @sofiar-msft
-
-# PRLabel: %Communication - SMS
-/sdk/communication/Azure.Communication.Sms/                        @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft @besh2014
-
 # PRLabel: %Compute
 /sdk/compute/                                                      @dkulkarni-ms @haagha @MS-syh2qs @grizzlytheodore @TravisCragg-MSFT @melina5656
 
-# ServiceLabel: %Compute
+# ServiceLabel: %Compute %Compute - Extensions %Compute - Images %Compute - Managed Disks %Compute - RDFE %Compute - VM %Compute - VMSS
 # ServiceOwners:                                                   @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @sandeepraichura @hilaryw29 @MsGabsta @ushnaarshadkhan
 
 # PRLabel: %Confidential Ledger
@@ -363,7 +333,7 @@
 # PRLabel: %Monitor
 /sdk/monitor/*                                                     @Azure/azure-sdk-write-monitor-data-plane
 
-# PRLabel: %Monitor
+# PRLabel: %Monitor %Monitor - Query
 /sdk/monitor/Azure.Monitor.Ingestion/                              @Azure/azure-sdk-write-monitor-data-plane
 
 # ServiceLabel: %Monitor
@@ -389,12 +359,6 @@
 
 # ServiceLabel: %Monitor - Distro
 # ServiceOwners:                                                   @rajkumar-rangaraj
-
-# PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @Azure/azure-sdk-write-monitor-data-plane
-
-# ServiceLabel: %Monitor - Query
-# ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA @ToddKingMSFT
 
 # PRLabel: %Network
 /sdk/network*/                                                     @aznetsuppgithub
@@ -490,13 +454,10 @@
 /sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft
+/sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft @ankushbindlish2 @anpint
 
 # ServiceLabel: %Storage
 # ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft
-
-# PRLabel: %Storage
-/sdk/storagesync/                                                  @ankushbindlish2 @anpint
 
 # PRLabel: %Synapse
 /sdk/synapse/                                                      @yanjungao718
@@ -610,9 +571,6 @@
 # ServiceLabel: %Azure Data Explorer
 # ServiceOwners:                                                   @ilayrn @orhasban @zoharHenMicrosoft @Aviv-Yaniv
 
-# ServiceLabel: %BatchAI
-# ServiceOwners:                                                   @matthchr
-
 # ServiceLabel: %Billing
 # ServiceOwners:                                                   @amberbhargava @ramaganesan-rg @anand-rengasamy
 
@@ -639,24 +597,6 @@
 
 # ServiceLabel: %Commerce
 # ServiceOwners:                                                   @ms-premp @qiaozha
-
-# ServiceLabel: %Compute - Extensions
-# ServiceOwners:                                                   @MsGabsta @TravisCragg-MSFT
-
-# ServiceLabel: %Compute - Images
-# ServiceOwners:                                                   @TravisCragg-MSFT @sandeepraichura
-
-# ServiceLabel: %Compute - Managed Disks
-# ServiceOwners:                                                   @TravisCragg-MSFT @ushnaarshadkhan
-
-# ServiceLabel: %Compute - RDFE
-# ServiceOwners:                                                   @Drewm3 @TravisCragg-MSFT
-
-# ServiceLabel: %Compute - VM
-# ServiceOwners:                                                   @Drewm3 @TravisCragg-MSFT
-
-# ServiceLabel: %Compute - VMSS
-# ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # ServiceLabel: %Connected Kubernetes
 # ServiceOwners:                                                   @akashkeshari
@@ -812,6 +752,9 @@
 # ServiceLabel: %Monitor - ApplicationInsights
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
+# ServiceLabel: %Monitor - Query
+# ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA @ToddKingMSFT
+
 # ServiceLabel: %MySQL
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
 
@@ -949,6 +892,12 @@
 # ServiceLabel: %API Center %Mgmt
 # ServiceOwners:                                                   @alexyaang
 
+# PRLabel: %Arize AI
+/sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @aggarwalsw
+
+# ServiceLabel: %Arize AI %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
+
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
 
@@ -961,14 +910,19 @@
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
 
+# PRLabel: %Network - CDN
+/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92 @rahuls-microsoft @ArthurMa1978
+/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92 @rahuls-microsoft
 
 # ServiceLabel: %Compute - Fleet %Mgmt
 # ServiceOwners:                                                   @sahilarora92 @rahuls-microsoft
+
+/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @ArthurMa1978
 
 # PRLabel: %Database Watcher
 /sdk/databasewatcher/Azure.ResourceManager.*/                      @ArthurMa1978
@@ -982,6 +936,12 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
+# PRLabel: %Network - DNS Private Resolver
+/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
+
+# ServiceLabel: %Network - DNS Private Resolver %Mgmt
+# ServiceOwners:                                                   @jamesvoongms @jotrivet
+
 # PRLabel: %Durable Task Scheduler %Mgmt
 /sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @philliphoff @cgillum
 
@@ -994,23 +954,44 @@
 # ServiceLabel: %Elastic %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Network - Front Door %Network - Mobile %New Relic
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @vipray-ms
+# PRLabel: %Network - Front Door
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Grafana %Hardware Security Modules
-/sdk/grafana/Azure.ResourceManager.*/                              @qingquanzhao @emmeliaAra
+# PRLabel: %Grafana
+/sdk/grafana/Azure.ResourceManager.*/                              @qingquanzhao
 
 # ServiceLabel: %Grafana %Mgmt
 # ServiceOwners:                                                   @qingquanzhao
 
-# PRLabel: %HybridConnectivity %LambdaTest HyperExecute
-/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @PriyankaHariharan @apmehrotra @aggarwalsw
+# PRLabel: %Hardware Security Modules
+/sdk/hardwaresecuritymodules/Azure.ResourceManager.*/              @emmeliaAra
+
+# ServiceLabel: %Hardware Security Modules %Mgmt
+# ServiceOwners:                                                   @emmeliaAra
+
+# PRLabel: %HybridConnectivity
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @PriyankaHariharan @apmehrotra
 
 # ServiceLabel: %HybridConnectivity %Mgmt
 # ServiceOwners:                                                   @PriyankaHariharan @apmehrotra
+
+# PRLabel: %LambdaTest HyperExecute
+/sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @aggarwalsw
+
+# ServiceLabel: %LambdaTest HyperExecute %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
+
+# PRLabel: %Migration Assessment
+/sdk/migrationassessment/Azure.ResourceManager.*/                  @srilipta-swain
+
+# ServiceLabel: %Migration Assessment %Mgmt
+# ServiceOwners:                                                   @srilipta-swain
+
+# PRLabel: %Network - Mobile
+/sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Monitor
 /sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296
@@ -1018,50 +999,89 @@
 # ServiceLabel: %Monitor
 # ServiceOwners:                                                   @thomasp98296
 
-# PRLabel: %Neon Postgres %Network - CDN %Network - DNS Private Resolver
-/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978 @alluri02 @jamesvoongms @jotrivet
+# PRLabel: %Neon Postgres
+/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978 @alluri02
 
 # ServiceLabel: %Neon Postgres %Mgmt
 # ServiceOwners:                                                   @alluri02
 
-# PRLabel: %Nginx %Operator Nexus - Network Cloud
-/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @Azure/azure-sdk-write-networkcloud
+# PRLabel: %Operator Nexus - Network Cloud
+/sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
+
+# ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
+# ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
+
+# PRLabel: %New Relic
+/sdk/newrelicobservability/Azure.ResourceManager.*/                @vipray-ms
+
+# ServiceLabel: %New Relic %Mgmt
+# ServiceOwners:                                                   @vipray-ms
+
+# PRLabel: %Nginx
+/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh
 
 # ServiceLabel: %Nginx %Mgmt
 # ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh
 
-# PRLabel: %Oracle %Pinecone
-/sdk/oracle/Azure.ResourceManager.*/                               @ArthurMa1978 @aggarwalsw
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @ArthurMa1978
 
 # ServiceLabel: %Oracle %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Planetary Computer %PureStorage
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @ArthurMa1978 @deepakmauryams
+# PRLabel: %Pinecone
+/sdk/pineconevectordb/Azure.ResourceManager.*/                     @aggarwalsw
+
+# ServiceLabel: %Pinecone %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
+
+# PRLabel: %Planetary Computer
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @ArthurMa1978
 
 # ServiceLabel: %Planetary Computer %Mgmt
 # ServiceOwners:                                                   @shaktichetan23
 
-# PRLabel: %Quota %Recovery Services Backup
-/sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft @Daya-Patil
+# PRLabel: %PureStorage
+/sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams
+
+# ServiceLabel: %PureStorage %Mgmt
+# ServiceOwners:                                                   @deepakmauryams
+
+# PRLabel: %Quota
+/sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
 
 # ServiceLabel: %Quota %Mgmt
 # ServiceOwners:                                                   @tejasm-microsoft
 
-# PRLabel: %ARM %Arize AI
-/sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners @aggarwalsw
+# PRLabel: %Recovery Services Backup
+/sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
+
+# ServiceLabel: %Recovery Services Backup %Mgmt
+# ServiceOwners:                                                   @Daya-Patil
+
+# PRLabel: %ARM
+/sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
 
 # ServiceLabel: %ARM %Mgmt
 # ServiceOwners:                                                   @Azure/arm-sdk-owners
 
-# PRLabel: %Secret Store Extension %Self Help %Service Fabric
-/sdk/secretsstoreextension/Azure.ResourceManager.*/                @cjoprey @locomotiveviaduct @ArcturusZhang @ArthurMa1978 @QingChenmsft @vaishnavk @juhacket
+# PRLabel: %Secret Store Extension
+/sdk/secretsstoreextension/Azure.ResourceManager.*/                @cjoprey @locomotiveviaduct
 
 # ServiceLabel: %Secret Store Extension %Mgmt
 # ServiceOwners:                                                   @cjoprey @locomotiveviaduct
 
-# PRLabel: %SiteManager %Migration Assessment
-/sdk/sitemanager/Azure.ResourceManager.*/                          @bsomeshekar @srilipta-swain
+# PRLabel: %Self Help
+/sdk/selfhelp/Azure.ResourceManager.*/                             @ArcturusZhang @ArthurMa1978
+
+# PRLabel: %Service Fabric
+/sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket
+
+# ServiceLabel: %Service Fabric
+# ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
+
+# PRLabel: %SiteManager
+/sdk/sitemanager/Azure.ResourceManager.*/                          @bsomeshekar
 
 # ServiceLabel: %SiteManager %Mgmt
 # ServiceOwners:                                                   @bsomeshekar
@@ -1072,41 +1092,8 @@
 # ServiceLabel: %Weights & Biases %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
 
-# ServiceLabel: %Arize AI %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
-
 # ServiceLabel: %Container Orchestrator Runtime
 # ServiceOwners:                                                   @ArthurMa1978
-
-# ServiceLabel: %Hardware Security Modules %Mgmt
-# ServiceOwners:                                                   @emmeliaAra
-
-# ServiceLabel: %LambdaTest HyperExecute %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
-
-# ServiceLabel: %Migration Assessment %Mgmt
-# ServiceOwners:                                                   @srilipta-swain
-
-# ServiceLabel: %Network - DNS Private Resolver %Mgmt
-# ServiceOwners:                                                   @jamesvoongms @jotrivet
-
-# ServiceLabel: %New Relic %Mgmt
-# ServiceOwners:                                                   @vipray-ms
-
-# ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
-# ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
-
-# ServiceLabel: %Pinecone %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
-
-# ServiceLabel: %PureStorage %Mgmt
-# ServiceOwners:                                                   @deepakmauryams
-
-# ServiceLabel: %Recovery Services Backup %Mgmt
-# ServiceOwners:                                                   @Daya-Patil
-
-# ServiceLabel: %Service Fabric
-# ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
