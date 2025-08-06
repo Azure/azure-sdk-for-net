@@ -177,8 +177,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("speechRecognitionModelEndpointId", transcriptionMetadata.SpeechRecognitionModelEndpointId);
             Assert.IsTrue(transcriptionMetadata.Locales.Contains("en-us"));
             Assert.IsTrue(transcriptionMetadata.Locales.Contains("hi-in"));
-            Assert.AreEqual(true, transcriptionMetadata.EnableSentimentAnalysis);
-            Assert.True(transcriptionMetadata.PiiRedactionOptions.Enable);
+            Assert.AreEqual(true, transcriptionMetadata.IsSentimentAnalysisEnabled);
+            Assert.True(transcriptionMetadata.PiiRedactionOptions.IsEnabled);
             Assert.AreEqual("maskWithCharacter", transcriptionMetadata.PiiRedactionOptions.RedactionType.ToString());
         }
 

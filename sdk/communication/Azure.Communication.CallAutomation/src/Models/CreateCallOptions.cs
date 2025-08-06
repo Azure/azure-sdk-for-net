@@ -58,6 +58,6 @@ namespace Azure.Communication.CallAutomation
         public MicrosoftTeamsAppIdentifier TeamsAppSource { get; set; }
 
         /// <summary> Enables loopback audio functionality for the call. </summary>
-        public bool? EnableLoopbackAudio { get; set; }
+        public bool? IsLoopbackAudioEnabled { get; set; }
     }
 }

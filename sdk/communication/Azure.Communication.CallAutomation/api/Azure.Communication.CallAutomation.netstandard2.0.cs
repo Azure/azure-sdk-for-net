@@ -50,8 +50,8 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CommunicationUserIdentifier AnsweredBy { get { throw null; } set { } }
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
-        public bool? EnableLoopbackAudio { get { throw null; } set { } }
         public string IncomingCallContext { get { throw null; } }
+        public bool? IsLoopbackAudioEnabled { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
@@ -449,11 +449,11 @@ namespace Azure.Communication.CallAutomation
     public abstract partial class CallMediaRecognizeOptions
     {
         protected CallMediaRecognizeOptions(Azure.Communication.CallAutomation.RecognizeInputType inputType, Azure.Communication.CommunicationIdentifier targetParticipant) { }
-        public bool? EnableSentimentAnalysis { get { throw null; } set { } }
         public System.TimeSpan InitialSilenceTimeout { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecognizeInputType InputType { get { throw null; } }
         public bool InterruptCallMediaOperation { get { throw null; } set { } }
         public bool InterruptPrompt { get { throw null; } set { } }
+        public bool? IsSentimentAnalysisEnabled { get { throw null; } set { } }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.CallAutomation.PlaySource> PlayPrompts { get { throw null; } set { } }
@@ -612,7 +612,7 @@ namespace Azure.Communication.CallAutomation
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallLocator CallLocator { get { throw null; } }
-        public bool? EnableLoopbackAudio { get { throw null; } set { } }
+        public bool? IsLoopbackAudioEnabled { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
@@ -689,7 +689,7 @@ namespace Azure.Communication.CallAutomation
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallInvite CallInvite { get { throw null; } }
-        public bool? EnableLoopbackAudio { get { throw null; } set { } }
+        public bool? IsLoopbackAudioEnabled { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.MicrosoftTeamsAppIdentifier TeamsAppSource { get { throw null; } set { } }
@@ -708,7 +708,7 @@ namespace Azure.Communication.CallAutomation
         public CreateGroupCallOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri) { }
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
-        public bool? EnableLoopbackAudio { get { throw null; } set { } }
+        public bool? IsLoopbackAudioEnabled { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
@@ -1071,7 +1071,7 @@ namespace Azure.Communication.CallAutomation
     public partial class PiiRedactionOptions
     {
         public PiiRedactionOptions() { }
-        public bool? Enable { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RedactionType? RedactionType { get { throw null; } set { } }
     }
     public partial class PlayCanceled : Azure.Communication.CallAutomation.CallAutomationEventBase
@@ -1531,7 +1531,7 @@ namespace Azure.Communication.CallAutomation
     public partial class StartTranscriptionOptions
     {
         public StartTranscriptionOptions() { }
-        public bool? EnableSentimentAnalysis { get { throw null; } set { } }
+        public bool? IsSentimentAnalysisEnabled { get { throw null; } set { } }
         public string Locale { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Locales { get { throw null; } set { } }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
@@ -1679,7 +1679,7 @@ namespace Azure.Communication.CallAutomation
         internal TranscriptionMetadata() { }
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
-        public bool? EnableSentimentAnalysis { get { throw null; } }
+        public bool? IsSentimentAnalysisEnabled { get { throw null; } }
         public string Locale { get { throw null; } }
         public System.Collections.Generic.IList<string> Locales { get { throw null; } }
         public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } }
@@ -1691,7 +1691,7 @@ namespace Azure.Communication.CallAutomation
         public TranscriptionOptions(Azure.Communication.CallAutomation.StreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
         public TranscriptionOptions(string locale, Azure.Communication.CallAutomation.StreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
         public bool? EnableIntermediateResults { get { throw null; } set { } }
-        public bool? EnableSentimentAnalysis { get { throw null; } set { } }
+        public bool? IsSentimentAnalysisEnabled { get { throw null; } set { } }
         public string Locale { get { throw null; } }
         public System.Collections.Generic.IList<string> Locales { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } set { } }
@@ -1865,7 +1865,7 @@ namespace Azure.Communication.CallAutomation
     public partial class UpdateTranscriptionOptions
     {
         public UpdateTranscriptionOptions(string locale) { }
-        public bool? EnableSentimentAnalysis { get { throw null; } set { } }
+        public bool? IsSentimentAnalysisEnabled { get { throw null; } set { } }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } set { } }

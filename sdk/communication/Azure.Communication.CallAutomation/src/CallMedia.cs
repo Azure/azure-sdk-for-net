@@ -817,7 +817,7 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeChoiceOptions.EnableSentimentAnalysis;
+                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeChoiceOptions.IsSentimentAnalysisEnabled;
 
                 if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechModelEndpointId))
                 {
@@ -862,7 +862,7 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeSpeechOptions.EnableSentimentAnalysis;
+                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeSpeechOptions.IsSentimentAnalysisEnabled;
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechModelEndpointId))
                 {
@@ -915,7 +915,7 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeSpeechOrDtmfOptions.EnableSentimentAnalysis;
+                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeSpeechOrDtmfOptions.IsSentimentAnalysisEnabled;
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechModelEndpointId))
                 {
@@ -1314,8 +1314,8 @@ namespace Azure.Communication.CallAutomation
                     request.OperationContext = options.OperationContext;
                     request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
                     request.SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId;
-                    request.PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.Enable, options.PiiRedactionOptions.RedactionType);
-                    request.EnableSentimentAnalysis = options.EnableSentimentAnalysis;
+                    request.PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType);
+                    request.EnableSentimentAnalysis = options.IsSentimentAnalysisEnabled;
                     request.SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale);
 
                     if (options.Locales != null && options.Locales.Any())
@@ -1356,8 +1356,8 @@ namespace Azure.Communication.CallAutomation
                     request.OperationContext = options.OperationContext;
                     request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
                     request.SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId;
-                    request.PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.Enable, options.PiiRedactionOptions.RedactionType);
-                    request.EnableSentimentAnalysis = options.EnableSentimentAnalysis;
+                    request.PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType);
+                    request.EnableSentimentAnalysis = options.IsSentimentAnalysisEnabled;
                     request.SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale);
 
                     if (options.Locales != null && options.Locales.Any())
@@ -1474,8 +1474,8 @@ namespace Azure.Communication.CallAutomation
                     options.SpeechRecognitionModelEndpointId,
                     options.OperationContext,
                     options.OperationCallbackUri?.AbsoluteUri,
-                    options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.Enable, options.PiiRedactionOptions.RedactionType),
-                    options.EnableSentimentAnalysis,
+                    options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType),
+                    options.IsSentimentAnalysisEnabled,
                     options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
                     );
 
@@ -1534,8 +1534,8 @@ namespace Azure.Communication.CallAutomation
                     options.SpeechRecognitionModelEndpointId,
                     options.OperationContext,
                     options.OperationCallbackUri?.AbsoluteUri,
-                    options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.Enable, options.PiiRedactionOptions.RedactionType),
-                    options.EnableSentimentAnalysis,
+                    options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.IsEnabled, options.PiiRedactionOptions.RedactionType),
+                    options.IsSentimentAnalysisEnabled,
                     options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
                     );
 

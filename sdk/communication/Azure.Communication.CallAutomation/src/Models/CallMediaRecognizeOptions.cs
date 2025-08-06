@@ -72,7 +72,7 @@ namespace Azure.Communication.CallAutomation
         public IList<string> SpeechLanguages { get; set; }
 
         /// <summary> Gets or sets a value indicating if sentiment analysis should be used. </summary>
-        public bool? EnableSentimentAnalysis { get; set; }
+        public bool? IsSentimentAnalysisEnabled { get; set; }
 
         /// <summary> Endpoint where the speech custom model was deployed. </summary>
         public string SpeechModelEndpointId { get; set; }

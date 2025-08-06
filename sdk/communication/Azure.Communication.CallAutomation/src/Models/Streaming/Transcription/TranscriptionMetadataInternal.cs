@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation
         /// Gets or sets a value indicating if sentiment analysis should be used
         /// </summary>
         [JsonPropertyName("enableSentimentAnalysis")]
-        public bool? EnableSentimentAnalysis { get; set; }
+        public bool? IsSentimentAnalysisEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets Options for Pii redaction

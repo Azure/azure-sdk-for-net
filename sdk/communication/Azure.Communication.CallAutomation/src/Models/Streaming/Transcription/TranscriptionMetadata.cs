@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
             CallConnectionId = transcriptionMetadataInternal.CallConnectionId;
             CorrelationId = transcriptionMetadataInternal.CorrelationId;
             SpeechRecognitionModelEndpointId = transcriptionMetadataInternal.SpeechRecognitionModelEndpointId;
-            EnableSentimentAnalysis = transcriptionMetadataInternal.EnableSentimentAnalysis;
+            IsSentimentAnalysisEnabled = transcriptionMetadataInternal.IsSentimentAnalysisEnabled;
             PiiRedactionOptions = ConvertToPiiRedactionOptions(transcriptionMetadataInternal.PiiRedactionOptions);
         }
         /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Gets or sets a value indicating if sentiment analysis should be used
         /// </summary>
-        public bool? EnableSentimentAnalysis { get; }
+        public bool? IsSentimentAnalysisEnabled { get; }
 
         /// <summary>
         /// Gets or sets Options for Pii redaction
@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
 
-            return new PiiRedactionOptions() { Enable = piiRedactionOptions.Enable, RedactionType = piiRedactionOptions.RedactionType };
+            return new PiiRedactionOptions() { IsEnabled = piiRedactionOptions.Enable, RedactionType = piiRedactionOptions.RedactionType };
         }
     }
 }

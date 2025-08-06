@@ -227,7 +227,7 @@ namespace Azure.Communication.CallAutomation
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
-            request.EnableLoopbackAudio = options.EnableLoopbackAudio;
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -694,7 +694,7 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
-            request.EnableLoopbackAudio = options.EnableLoopbackAudio;
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -721,7 +721,7 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
-            request.EnableLoopbackAudio = options.EnableLoopbackAudio;
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -738,7 +738,7 @@ namespace Azure.Communication.CallAutomation
                 CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
             };
 
-            connectRequest.EnableLoopbackAudio = options.EnableLoopbackAudio;
+            connectRequest.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return connectRequest;
         }
@@ -774,8 +774,8 @@ namespace Azure.Communication.CallAutomation
                 TransportUrl = configuration.TransportUri?.AbsoluteUri,
                 TransportType = configuration.TranscriptionTransport,
                 EnableIntermediateResults = configuration.EnableIntermediateResults,
-                PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.Enable, configuration.PiiRedactionOptions.RedactionType),
-                EnableSentimentAnalysis = configuration.EnableSentimentAnalysis,
+                PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.IsEnabled, configuration.PiiRedactionOptions.RedactionType),
+                EnableSentimentAnalysis = configuration.IsSentimentAnalysisEnabled,
                 SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.EnableEndCallSummary, configuration.SummarizationOptions.Locale)
             };
 

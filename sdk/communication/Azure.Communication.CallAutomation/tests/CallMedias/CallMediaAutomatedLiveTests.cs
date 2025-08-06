@@ -2639,10 +2639,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     {
                         TransportUri = new Uri(TestEnvironment.TransportUrl),
                         StartTranscription = false,
-                        EnableSentimentAnalysis = true,
+                        IsSentimentAnalysisEnabled = true,
                         PiiRedactionOptions = new PiiRedactionOptions()
                         {
-                            Enable = true,
+                            IsEnabled = true,
                             RedactionType = RedactionType.MaskWithCharacter
                         },
                         SummarizationOptions = new SummarizationOptions()
@@ -2715,10 +2715,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     {
                         TransportUri = new Uri(TestEnvironment.TransportUrl),
                         StartTranscription = false,
-                        EnableSentimentAnalysis = true,
+                        IsSentimentAnalysisEnabled = true,
                         PiiRedactionOptions = new PiiRedactionOptions()
                         {
-                            Enable = true,
+                            IsEnabled = true,
                             RedactionType = RedactionType.MaskWithCharacter
                         },
                         SummarizationOptions = new SummarizationOptions()

@@ -114,7 +114,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             },
             SpeechLanguage = "en-US",
             SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
-            EnableSentimentAnalysis = true,
+            IsSentimentAnalysisEnabled = true,
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
@@ -150,7 +150,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             },
             SpeechLanguage = "en-US",
             SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
-            EnableSentimentAnalysis = true,
+            IsSentimentAnalysisEnabled = true,
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
@@ -187,7 +187,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             },
             SpeechLanguage = "en-US",
             SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
-            EnableSentimentAnalysis = true,
+            IsSentimentAnalysisEnabled = true,
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
@@ -1042,7 +1042,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                        OperationContext = "OperationContext",
                        PiiRedactionOptions = new PiiRedactionOptions()
                        {
-                           Enable = true,
+                           IsEnabled = true,
                            RedactionType = RedactionType.MaskWithCharacter
                        },
                        SummarizationOptions = new SummarizationOptions()
@@ -1050,7 +1050,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                            EnableEndCallSummary = true,
                            Locale="en-US"
                        },
-                       EnableSentimentAnalysis = true,
+                       IsSentimentAnalysisEnabled = true,
                        Locales = new List<string>() { "en-US", "fr-FR" },
                    })
                 }
@@ -1111,7 +1111,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                            SpeechRecognitionModelEndpointId = "customEndpoint",
                            PiiRedactionOptions = new PiiRedactionOptions()
                            {
-                               Enable = true,
+                               IsEnabled = true,
                                RedactionType = RedactionType.MaskWithCharacter
                            },
                            SummarizationOptions = new SummarizationOptions()
@@ -1119,7 +1119,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                                EnableEndCallSummary = false,
                                Locale = "en-US"
                            },
-                           EnableSentimentAnalysis = true
+                           IsSentimentAnalysisEnabled = true
                        }
                    )
                 }
