@@ -1017,10 +1017,8 @@ function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $Pipeli
 }
 
 
-function Get-LanguageDevOpsName
+function Get-LanguageDevOpsName($LanguageShort)
 {
-    param([string]$LanguageShort)
-
     switch ($LanguageShort.ToLower()) 
     {
         "net" { return "Dotnet" }
@@ -1037,44 +1035,44 @@ function Get-LanguageDevOpsName
 
 function Get-ReleasePlanForPullRequest($prLink)
 {
-  $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
-  if (!$devopsFieldLanguage)
-  {
-    Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
-    return $null
-  }
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
+        return $null
+    }
 
-  $prFieldName = "SDKPullRequestFor$($devopsFieldLanguage)"
-  $releaseStatusField = "ReleaseStatusFor$($devopsFieldLanguage)"
-  $fields = @()
-  $fields += "System.ID"
-  $fields += "System.State"
-  $fields += "System.AssignedTo"
-  $fields += "System.Parent"
-  $fields += "System.Tags"
+    $prFieldName = "SDKPullRequestFor$($devopsFieldLanguage)"
+    $releaseStatusField = "ReleaseStatusFor$($devopsFieldLanguage)"
+    $fields = @()
+    $fields += "System.ID"
+    $fields += "System.State"
+    $fields += "System.AssignedTo"
+    $fields += "System.Parent"
+    $fields += "System.Tags"
 
-  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
-  $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [$prFieldName] = '${prLink}'"
-  $query += " AND [$releaseStatusField] <> 'Released'"
-  $query += " AND [System.State] NOT IN ('Finished', 'Abandoned')"
-  $workItems = Invoke-Query $fields $query
-  return $workItems
+    $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+    $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [$prFieldName] = '${prLink}'"
+    $query += " AND [$releaseStatusField] <> 'Released'"
+    $query += " AND [System.State] NOT IN ('Finished', 'Abandoned')"
+    $workItems = Invoke-Query $fields $query
+    return $workItems
 }
 
 function Update-ReleaseStatusInReleasePlan($releasePlanWorkItemId, $status, $version)
 {  
-  $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
-  if (!$devopsFieldLanguage)
-  {
-    Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
-    return $null
-  }
+    $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
+    if (!$devopsFieldLanguage)
+    {
+        Write-Host "Unsupported language to check release plans, language [$LanguageShort]"
+        return $null
+    }
 
-  $fields = @()
-  $fields += "`"ReleaseStatusFor$($devopsFieldLanguage)=$status`""
-  $fields += "`"ReleasedVersionFor$($devopsFieldLanguage)=$version`""
+    $fields = @()
+    $fields += "`"ReleaseStatusFor$($devopsFieldLanguage)=$status`""
+    $fields += "`"ReleasedVersionFor$($devopsFieldLanguage)=$version`""
 
-  Write-Host "Updating Release Plan [$releasePlanWorkItemId] with status [$status] for language [$LanguageShort]."
-  $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
-  Write-Host "Updated release status for [$LanguageShort] in Release Plan [$releasePlanWorkItemId]"
+    Write-Host "Updating Release Plan [$releasePlanWorkItemId] with status [$status] for language [$LanguageShort]."
+    $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
+    Write-Host "Updated release status for [$LanguageShort] in Release Plan [$releasePlanWorkItemId]"
 }
