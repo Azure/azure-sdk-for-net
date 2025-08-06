@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            State? state = default;
-            AssociatedIdentity sourceScanIdentity = default;
+            RecoveryServicesSourceScanState? state = default;
+            RecoveryServicesAssociatedIdentity sourceScanIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    state = new State(property.Value.GetString());
+                    state = new RecoveryServicesSourceScanState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceScanIdentity"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    sourceScanIdentity = AssociatedIdentity.DeserializeAssociatedIdentity(property.Value, options);
+                    sourceScanIdentity = RecoveryServicesAssociatedIdentity.DeserializeRecoveryServicesAssociatedIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

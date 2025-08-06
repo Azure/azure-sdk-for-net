@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             VaultPropertiesRedundancySettings redundancySettings = default;
             RecoveryServicesSecuritySettings securitySettings = default;
             SecureScoreLevel? secureScore = default;
-            BCDRSecurityLevel? bcdrSecurityLevel = default;
+            BcdrSecurityLevel? bcdrSecurityLevel = default;
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    bcdrSecurityLevel = new BCDRSecurityLevel(property.Value.GetString());
+                    bcdrSecurityLevel = new BcdrSecurityLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceGuardOperationRequests"u8))

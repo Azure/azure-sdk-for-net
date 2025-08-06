@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             RecoveryServicesSoftDeleteState? softDeleteState = default;
             int? softDeleteRetentionPeriodInDays = default;
-            EnhancedSecurityState? enhancedSecurityState = default;
+            RecoveryServicesEnhancedSecurityState? enhancedSecurityState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    enhancedSecurityState = new EnhancedSecurityState(property.Value.GetString());
+                    enhancedSecurityState = new RecoveryServicesEnhancedSecurityState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

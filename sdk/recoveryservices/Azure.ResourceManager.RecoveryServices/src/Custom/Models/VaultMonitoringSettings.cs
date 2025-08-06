@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             set
             {
                 if (AzureMonitorAlertSettings is null)
-                    AzureMonitorAlertSettings = new AzureMonitorAlertSettings();
+                    AzureMonitorAlertSettings = new RecoveryServicesAzureMonitorAlertSettings();
                 AzureMonitorAlertSettings.AlertsForAllJobFailures = value;
             }
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             set
             {
                 if (ClassicAlertSettings is null)
-                    ClassicAlertSettings = new ClassicAlertSettings();
+                    ClassicAlertSettings = new RecoveryServicesClassicAlertSettings();
                 ClassicAlertSettings.AlertsForCriticalOperations = value;
             }
         }

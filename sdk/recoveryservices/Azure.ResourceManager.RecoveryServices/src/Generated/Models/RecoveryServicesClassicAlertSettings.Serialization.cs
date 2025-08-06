@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ClassicAlertSettings : IUtf8JsonSerializable, IJsonModel<ClassicAlertSettings>
+    public partial class RecoveryServicesClassicAlertSettings : IUtf8JsonSerializable, IJsonModel<RecoveryServicesClassicAlertSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassicAlertSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesClassicAlertSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ClassicAlertSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecoveryServicesClassicAlertSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesClassicAlertSettings)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(AlertsForCriticalOperations))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        ClassicAlertSettings IJsonModel<ClassicAlertSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RecoveryServicesClassicAlertSettings IJsonModel<RecoveryServicesClassicAlertSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesClassicAlertSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClassicAlertSettings(document.RootElement, options);
+            return DeserializeRecoveryServicesClassicAlertSettings(document.RootElement, options);
         }
 
-        internal static ClassicAlertSettings DeserializeClassicAlertSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RecoveryServicesClassicAlertSettings DeserializeRecoveryServicesClassicAlertSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClassicAlertSettings(alertsForCriticalOperations, emailNotificationsForSiteRecovery, serializedAdditionalRawData);
+            return new RecoveryServicesClassicAlertSettings(alertsForCriticalOperations, emailNotificationsForSiteRecovery, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClassicAlertSettings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RecoveryServicesClassicAlertSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesClassicAlertSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ClassicAlertSettings IPersistableModel<ClassicAlertSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RecoveryServicesClassicAlertSettings IPersistableModel<RecoveryServicesClassicAlertSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeClassicAlertSettings(document.RootElement, options);
+                        return DeserializeRecoveryServicesClassicAlertSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesClassicAlertSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClassicAlertSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecoveryServicesClassicAlertSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

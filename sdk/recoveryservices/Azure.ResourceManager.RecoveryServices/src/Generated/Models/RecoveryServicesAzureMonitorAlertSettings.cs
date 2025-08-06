@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Settings for Azure Monitor based alerts. </summary>
-    public partial class AzureMonitorAlertSettings
+    public partial class RecoveryServicesAzureMonitorAlertSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureMonitorAlertSettings"/>. </summary>
-        public AzureMonitorAlertSettings()
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesAzureMonitorAlertSettings"/>. </summary>
+        public RecoveryServicesAzureMonitorAlertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureMonitorAlertSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesAzureMonitorAlertSettings"/>. </summary>
         /// <param name="alertsForAllJobFailures"></param>
         /// <param name="alertsForAllReplicationIssues"></param>
         /// <param name="alertsForAllFailoverIssues"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures, RecoveryServicesAlertsState? alertsForAllReplicationIssues, RecoveryServicesAlertsState? alertsForAllFailoverIssues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecoveryServicesAzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures, RecoveryServicesAlertsState? alertsForAllReplicationIssues, RecoveryServicesAlertsState? alertsForAllFailoverIssues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertsForAllJobFailures = alertsForAllJobFailures;
             AlertsForAllReplicationIssues = alertsForAllReplicationIssues;

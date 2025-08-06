@@ -16,12 +16,9 @@ namespace Azure.ResourceManager.RecoveryServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AssociatedIdentity))]
-    [ModelReaderWriterBuildable(typeof(AzureMonitorAlertSettings))]
     [ModelReaderWriterBuildable(typeof(CapabilitiesProperties))]
     [ModelReaderWriterBuildable(typeof(CapabilitiesResult))]
     [ModelReaderWriterBuildable(typeof(CapabilitiesResultProperties))]
-    [ModelReaderWriterBuildable(typeof(ClassicAlertSettings))]
     [ModelReaderWriterBuildable(typeof(CmkKekIdentity))]
     [ModelReaderWriterBuildable(typeof(CmkKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(CrossSubscriptionRestoreSettings))]
@@ -31,7 +28,10 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(RawCertificateData))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesAssociatedIdentity))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesAzureMonitorAlertSettings))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesCertificateContent))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesClassicAlertSettings))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesPrivateEndpointConnection))]

@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Security levels of Recovery Services Vault for business continuity and disaster recovery. </summary>
-    public readonly partial struct BCDRSecurityLevel : IEquatable<BCDRSecurityLevel>
+    public readonly partial struct BcdrSecurityLevel : IEquatable<BcdrSecurityLevel>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="BCDRSecurityLevel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BcdrSecurityLevel"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BCDRSecurityLevel(string value)
+        public BcdrSecurityLevel(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -28,25 +28,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         private const string ExcellentValue = "Excellent";
 
         /// <summary> Poor. </summary>
-        public static BCDRSecurityLevel Poor { get; } = new BCDRSecurityLevel(PoorValue);
+        public static BcdrSecurityLevel Poor { get; } = new BcdrSecurityLevel(PoorValue);
         /// <summary> Fair. </summary>
-        public static BCDRSecurityLevel Fair { get; } = new BCDRSecurityLevel(FairValue);
+        public static BcdrSecurityLevel Fair { get; } = new BcdrSecurityLevel(FairValue);
         /// <summary> Good. </summary>
-        public static BCDRSecurityLevel Good { get; } = new BCDRSecurityLevel(GoodValue);
+        public static BcdrSecurityLevel Good { get; } = new BcdrSecurityLevel(GoodValue);
         /// <summary> Excellent. </summary>
-        public static BCDRSecurityLevel Excellent { get; } = new BCDRSecurityLevel(ExcellentValue);
-        /// <summary> Determines if two <see cref="BCDRSecurityLevel"/> values are the same. </summary>
-        public static bool operator ==(BCDRSecurityLevel left, BCDRSecurityLevel right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="BCDRSecurityLevel"/> values are not the same. </summary>
-        public static bool operator !=(BCDRSecurityLevel left, BCDRSecurityLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BCDRSecurityLevel"/>. </summary>
-        public static implicit operator BCDRSecurityLevel(string value) => new BCDRSecurityLevel(value);
+        public static BcdrSecurityLevel Excellent { get; } = new BcdrSecurityLevel(ExcellentValue);
+        /// <summary> Determines if two <see cref="BcdrSecurityLevel"/> values are the same. </summary>
+        public static bool operator ==(BcdrSecurityLevel left, BcdrSecurityLevel right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="BcdrSecurityLevel"/> values are not the same. </summary>
+        public static bool operator !=(BcdrSecurityLevel left, BcdrSecurityLevel right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BcdrSecurityLevel"/>. </summary>
+        public static implicit operator BcdrSecurityLevel(string value) => new BcdrSecurityLevel(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BCDRSecurityLevel other && Equals(other);
+        public override bool Equals(object obj) => obj is BcdrSecurityLevel other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(BCDRSecurityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BcdrSecurityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

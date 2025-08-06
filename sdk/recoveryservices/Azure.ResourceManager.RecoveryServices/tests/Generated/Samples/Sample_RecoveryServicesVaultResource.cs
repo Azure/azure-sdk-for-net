@@ -248,13 +248,13 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                 {
                     MonitoringSettings = new VaultMonitoringSettings
                     {
-                        AzureMonitorAlertSettings = new AzureMonitorAlertSettings
+                        AzureMonitorAlertSettings = new RecoveryServicesAzureMonitorAlertSettings
                         {
                             AlertsForAllJobFailures = RecoveryServicesAlertsState.Enabled,
                             AlertsForAllReplicationIssues = RecoveryServicesAlertsState.Enabled,
                             AlertsForAllFailoverIssues = RecoveryServicesAlertsState.Disabled,
                         },
-                        ClassicAlertSettings = new ClassicAlertSettings
+                        ClassicAlertSettings = new RecoveryServicesClassicAlertSettings
                         {
                             AlertsForCriticalOperations = RecoveryServicesAlertsState.Disabled,
                             EmailNotificationsForSiteRecovery = RecoveryServicesAlertsState.Enabled,
@@ -347,10 +347,10 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                     {
                         SourceScanConfiguration = new SourceScanConfiguration
                         {
-                            State = State.Enabled,
-                            SourceScanIdentity = new AssociatedIdentity
+                            State = RecoveryServicesSourceScanState.Enabled,
+                            SourceScanIdentity = new RecoveryServicesAssociatedIdentity
                             {
-                                OperationIdentityType = IdentityType.UserAssigned,
+                                OperationIdentityType = RecoveryServicesIdentityType.UserAssigned,
                                 UserAssignedIdentity = "/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi",
                             },
                         },

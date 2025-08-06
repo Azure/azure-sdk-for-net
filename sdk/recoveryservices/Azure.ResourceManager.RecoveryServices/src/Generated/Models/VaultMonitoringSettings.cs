@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="azureMonitorAlertSettings"> Settings for Azure Monitor based alerts. </param>
         /// <param name="classicAlertSettings"> Settings for classic alerts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VaultMonitoringSettings(AzureMonitorAlertSettings azureMonitorAlertSettings, ClassicAlertSettings classicAlertSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VaultMonitoringSettings(RecoveryServicesAzureMonitorAlertSettings azureMonitorAlertSettings, RecoveryServicesClassicAlertSettings classicAlertSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureMonitorAlertSettings = azureMonitorAlertSettings;
             ClassicAlertSettings = classicAlertSettings;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Settings for Azure Monitor based alerts. </summary>
-        public AzureMonitorAlertSettings AzureMonitorAlertSettings { get; set; }
+        public RecoveryServicesAzureMonitorAlertSettings AzureMonitorAlertSettings { get; set; }
         /// <summary> Settings for classic alerts. </summary>
-        public ClassicAlertSettings ClassicAlertSettings { get; set; }
+        public RecoveryServicesClassicAlertSettings ClassicAlertSettings { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="state"></param>
         /// <param name="sourceScanIdentity"> Identity details to be used for an operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceScanConfiguration(State? state, AssociatedIdentity sourceScanIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SourceScanConfiguration(RecoveryServicesSourceScanState? state, RecoveryServicesAssociatedIdentity sourceScanIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             SourceScanIdentity = sourceScanIdentity;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Gets or sets the state. </summary>
-        public State? State { get; set; }
+        public RecoveryServicesSourceScanState? State { get; set; }
         /// <summary> Identity details to be used for an operation. </summary>
-        public AssociatedIdentity SourceScanIdentity { get; set; }
+        public RecoveryServicesAssociatedIdentity SourceScanIdentity { get; set; }
     }
 }

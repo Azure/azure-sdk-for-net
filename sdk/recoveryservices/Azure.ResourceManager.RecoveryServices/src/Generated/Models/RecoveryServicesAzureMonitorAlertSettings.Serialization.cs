@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class AzureMonitorAlertSettings : IUtf8JsonSerializable, IJsonModel<AzureMonitorAlertSettings>
+    public partial class RecoveryServicesAzureMonitorAlertSettings : IUtf8JsonSerializable, IJsonModel<RecoveryServicesAzureMonitorAlertSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMonitorAlertSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesAzureMonitorAlertSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AzureMonitorAlertSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecoveryServicesAzureMonitorAlertSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesAzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesAzureMonitorAlertSettings)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(AlertsForAllJobFailures))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        AzureMonitorAlertSettings IJsonModel<AzureMonitorAlertSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RecoveryServicesAzureMonitorAlertSettings IJsonModel<RecoveryServicesAzureMonitorAlertSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesAzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesAzureMonitorAlertSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureMonitorAlertSettings(document.RootElement, options);
+            return DeserializeRecoveryServicesAzureMonitorAlertSettings(document.RootElement, options);
         }
 
-        internal static AzureMonitorAlertSettings DeserializeAzureMonitorAlertSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RecoveryServicesAzureMonitorAlertSettings DeserializeRecoveryServicesAzureMonitorAlertSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -126,38 +126,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureMonitorAlertSettings(alertsForAllJobFailures, alertsForAllReplicationIssues, alertsForAllFailoverIssues, serializedAdditionalRawData);
+            return new RecoveryServicesAzureMonitorAlertSettings(alertsForAllJobFailures, alertsForAllReplicationIssues, alertsForAllFailoverIssues, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureMonitorAlertSettings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RecoveryServicesAzureMonitorAlertSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesAzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesAzureMonitorAlertSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureMonitorAlertSettings IPersistableModel<AzureMonitorAlertSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RecoveryServicesAzureMonitorAlertSettings IPersistableModel<RecoveryServicesAzureMonitorAlertSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesAzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureMonitorAlertSettings(document.RootElement, options);
+                        return DeserializeRecoveryServicesAzureMonitorAlertSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesAzureMonitorAlertSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureMonitorAlertSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecoveryServicesAzureMonitorAlertSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

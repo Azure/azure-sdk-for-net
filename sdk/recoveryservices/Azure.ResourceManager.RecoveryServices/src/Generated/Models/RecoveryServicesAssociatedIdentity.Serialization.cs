@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class AssociatedIdentity : IUtf8JsonSerializable, IJsonModel<AssociatedIdentity>
+    public partial class RecoveryServicesAssociatedIdentity : IUtf8JsonSerializable, IJsonModel<RecoveryServicesAssociatedIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssociatedIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesAssociatedIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AssociatedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecoveryServicesAssociatedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssociatedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesAssociatedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociatedIdentity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesAssociatedIdentity)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(OperationIdentityType))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        AssociatedIdentity IJsonModel<AssociatedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RecoveryServicesAssociatedIdentity IJsonModel<RecoveryServicesAssociatedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssociatedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesAssociatedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociatedIdentity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesAssociatedIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssociatedIdentity(document.RootElement, options);
+            return DeserializeRecoveryServicesAssociatedIdentity(document.RootElement, options);
         }
 
-        internal static AssociatedIdentity DeserializeAssociatedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RecoveryServicesAssociatedIdentity DeserializeRecoveryServicesAssociatedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            IdentityType? operationIdentityType = default;
+            RecoveryServicesIdentityType? operationIdentityType = default;
             string userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    operationIdentityType = new IdentityType(property.Value.GetString());
+                    operationIdentityType = new RecoveryServicesIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentity"u8))
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssociatedIdentity(operationIdentityType, userAssignedIdentity, serializedAdditionalRawData);
+            return new RecoveryServicesAssociatedIdentity(operationIdentityType, userAssignedIdentity, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AssociatedIdentity>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RecoveryServicesAssociatedIdentity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssociatedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesAssociatedIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AssociatedIdentity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesAssociatedIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AssociatedIdentity IPersistableModel<AssociatedIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RecoveryServicesAssociatedIdentity IPersistableModel<RecoveryServicesAssociatedIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssociatedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesAssociatedIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAssociatedIdentity(document.RootElement, options);
+                        return DeserializeRecoveryServicesAssociatedIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssociatedIdentity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesAssociatedIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AssociatedIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecoveryServicesAssociatedIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

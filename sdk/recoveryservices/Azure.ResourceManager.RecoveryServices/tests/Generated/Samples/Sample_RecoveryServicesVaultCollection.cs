@@ -210,13 +210,13 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                     PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
                     MonitoringSettings = new VaultMonitoringSettings
                     {
-                        AzureMonitorAlertSettings = new AzureMonitorAlertSettings
+                        AzureMonitorAlertSettings = new RecoveryServicesAzureMonitorAlertSettings
                         {
                             AlertsForAllJobFailures = RecoveryServicesAlertsState.Enabled,
                             AlertsForAllReplicationIssues = RecoveryServicesAlertsState.Enabled,
                             AlertsForAllFailoverIssues = RecoveryServicesAlertsState.Disabled,
                         },
-                        ClassicAlertSettings = new ClassicAlertSettings
+                        ClassicAlertSettings = new RecoveryServicesClassicAlertSettings
                         {
                             AlertsForCriticalOperations = RecoveryServicesAlertsState.Disabled,
                             EmailNotificationsForSiteRecovery = RecoveryServicesAlertsState.Enabled,
@@ -317,10 +317,10 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                     {
                         SourceScanConfiguration = new SourceScanConfiguration
                         {
-                            State = State.Enabled,
-                            SourceScanIdentity = new AssociatedIdentity
+                            State = RecoveryServicesSourceScanState.Enabled,
+                            SourceScanIdentity = new RecoveryServicesAssociatedIdentity
                             {
-                                OperationIdentityType = IdentityType.SystemAssigned,
+                                OperationIdentityType = RecoveryServicesIdentityType.SystemAssigned,
                             },
                         },
                     },

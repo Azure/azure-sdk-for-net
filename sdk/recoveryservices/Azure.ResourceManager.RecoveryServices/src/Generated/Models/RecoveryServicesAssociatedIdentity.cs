@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Settings for classic alerts. </summary>
-    public partial class ClassicAlertSettings
+    /// <summary> Identity details to be used for an operation. </summary>
+    public partial class RecoveryServicesAssociatedIdentity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClassicAlertSettings"/>. </summary>
-        public ClassicAlertSettings()
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesAssociatedIdentity"/>. </summary>
+        public RecoveryServicesAssociatedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClassicAlertSettings"/>. </summary>
-        /// <param name="alertsForCriticalOperations"></param>
-        /// <param name="emailNotificationsForSiteRecovery"></param>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesAssociatedIdentity"/>. </summary>
+        /// <param name="operationIdentityType"> Identity type that should be used for an operation. </param>
+        /// <param name="userAssignedIdentity"> User assigned identity to be used for an operation if operationIdentityType is UserAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations, RecoveryServicesAlertsState? emailNotificationsForSiteRecovery, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecoveryServicesAssociatedIdentity(RecoveryServicesIdentityType? operationIdentityType, string userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AlertsForCriticalOperations = alertsForCriticalOperations;
-            EmailNotificationsForSiteRecovery = emailNotificationsForSiteRecovery;
+            OperationIdentityType = operationIdentityType;
+            UserAssignedIdentity = userAssignedIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the alerts for critical operations. </summary>
-        public RecoveryServicesAlertsState? AlertsForCriticalOperations { get; set; }
-        /// <summary> Gets or sets the email notifications for site recovery. </summary>
-        public RecoveryServicesAlertsState? EmailNotificationsForSiteRecovery { get; set; }
+        /// <summary> Identity type that should be used for an operation. </summary>
+        public RecoveryServicesIdentityType? OperationIdentityType { get; set; }
+        /// <summary> User assigned identity to be used for an operation if operationIdentityType is UserAssigned. </summary>
+        public string UserAssignedIdentity { get; set; }
     }
 }
