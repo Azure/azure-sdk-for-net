@@ -35,8 +35,8 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BarCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", BarResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BarResource.ResourceType, out string barApiVersion);
+            _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", BarResource.ResourceType.Namespace, Diagnostics);
             _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion);
             ValidateResourceId(id);
         }
@@ -70,8 +70,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, BarData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<BarResource> operation = new MgmtTypeSpecArmOperation<BarResource>(
@@ -113,8 +112,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, BarData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<BarResource> operation = new MgmtTypeSpecArmOperation<BarResource>(
@@ -153,8 +151,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
@@ -187,8 +184,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
@@ -209,14 +205,22 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<BarResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> List Bar resources by Foo. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<BarResource> GetAll(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BarData, BarResource>(new BarsGetCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
@@ -235,8 +239,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
@@ -265,8 +268,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
@@ -295,8 +297,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
@@ -329,8 +330,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);

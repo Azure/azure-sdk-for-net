@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskOutput"/>. </summary>
         internal InstallOciDriverTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskOutput"/>. </summary>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstallOciDriverTaskOutput(IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InstallOciDriverTaskOutput(IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationErrors = validationErrors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Validation errors. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

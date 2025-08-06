@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Generator.Management
@@ -23,11 +24,16 @@ namespace Azure.Generator.Management
         internal ManagementLongRunningOperationProvider ArmOperation => _armOperation ??= new ManagementLongRunningOperationProvider(false);
 
         private ManagementLongRunningOperationProvider? _genericArmOperation;
-        internal ManagementLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
+        internal ManagementLongRunningOperationProvider ArmOperationOfT => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
 
-        // TODO: replace this with CSharpType to TypeProvider mapping
-        private HashSet<CSharpType>? _resourceTypes;
-        private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
+        private PageableWrapperProvider? _pageableWrapper;
+        internal PageableWrapperProvider PageableWrapper => _pageableWrapper ??= new PageableWrapperProvider(false);
+
+        private PageableWrapperProvider? _asyncPageableWrapper;
+        internal PageableWrapperProvider AsyncPageableWrapper => _asyncPageableWrapper ??= new PageableWrapperProvider(true);
+
+        private IReadOnlyList<ResourceClientProvider>? _resourceClients;
+        internal IReadOnlyList<ResourceClientProvider> ResourceClients => _resourceClients ??= BuildResources();
 
         // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
         private HashSet<CSharpType>? _modelFactoryModels;
@@ -77,24 +83,6 @@ namespace Azure.Generator.Management
         }
 
         internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
-
-        private HashSet<CSharpType> BuildResourceModels()
-        {
-            var resourceTypes = new HashSet<CSharpType>();
-
-            foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
-            {
-                if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
-                {
-                    var modelProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model);
-                    if (modelProvider is not null)
-                    {
-                        resourceTypes.Add(modelProvider.Type);
-                    }
-                }
-            }
-            return resourceTypes;
-        }
 
         private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
@@ -173,20 +161,30 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var resources = BuildResources();
+            var resources = ResourceClients;
             var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
             var extensions = BuildExtensions(resources);
+
             return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 ArmOperation,
-                GenericArmOperation,
+                ArmOperationOfT,
                 .. resources,
                 .. collections,
                 .. extensions,
+                PageableWrapper,
+                AsyncPageableWrapper,
                 .. resources.Select(r => r.Source),
                 .. resources.SelectMany(r => r.SerializationProviders)];
         }
 
-        internal bool IsResourceModelType(CSharpType type) => ResourceTypes.Contains(type);
+        internal bool IsResourceModelType(CSharpType type) => TryGetResourceClientProvider(type, out _);
+
+        private IReadOnlyDictionary<CSharpType, ResourceClientProvider>? _resourceDataTypes;
+        internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
+        {
+            _resourceDataTypes ??= ResourceClients.ToDictionary(r => r.ResourceData.Type, r => r);
+            return _resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider);
+        }
     }
 }

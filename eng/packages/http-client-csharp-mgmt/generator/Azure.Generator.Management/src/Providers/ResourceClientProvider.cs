@@ -134,6 +134,7 @@ namespace Azure.Generator.Management.Providers
             }
             fields.Add(_dataField);
             fields.Add(_resourceTypeField);
+
             return fields.ToArray();
         }
 
@@ -215,11 +216,12 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new List<MethodBodyStatement>();
 
+            bodyStatements.Add(thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
+
             // Initialize all client diagnostics and rest client fields
             foreach (var (inputClient, clientInfo) in _clientInfos)
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate());
-                bodyStatements.Add(thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
                 bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), apiVersion)).Terminate());
             }
 
@@ -310,7 +312,7 @@ namespace Azure.Generator.Management.Providers
 
         internal string ResourceTypeValue => _resourceMetadata.ResourceType;
 
-        protected override CSharpType? GetBaseType() => typeof(ArmResource);
+        protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 
         protected override MethodProvider[] BuildMethods()
         {
@@ -319,20 +321,27 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var (methodKind, method) in _resourceServiceMethods)
             {
-                // Get the appropriate rest client for this specific method
-                var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(method, _clientInfos);
-
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
-                // exclude the List operations for resource, they will be in ResourceCollection
-                var returnType = convenienceMethod.Signature.ReturnType!;
-                if ((returnType.IsFrameworkType && returnType.IsList) || (method is InputPagingServiceMethod pagingMethod && pagingMethod.PagingMetadata.ItemPropertySegments.Any() == true))
+                // exclude the List operations for resource and Create operations for non-singleton resources (they will be in ResourceCollection)
+                if (methodKind == ResourceOperationKind.List || (!IsSingleton && methodKind == ResourceOperationKind.Create))
                 {
                     continue;
                 }
 
-                // Skip Create operations for non-singleton resources
-                if (!IsSingleton && methodKind == ResourceOperationKind.Create)
+                var isFakeLro = ResourceHelpers.ShouldMakeLro(methodKind);
+
+                // Get the appropriate rest client for this specific method
+                var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(method, _clientInfos);
+
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
+                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+
+                if (method is InputPagingServiceMethod)
                 {
+                    // Use PageableOperationMethodProvider for InputPagingServiceMethod
+                    var itemType = convenienceMethod.Signature.ReturnType!.UnWrap();
+                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, itemType, methodKind));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, itemType, methodKind));
+
                     continue;
                 }
 
@@ -344,17 +353,15 @@ namespace Azure.Generator.Management.Providers
                     updateMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, convenienceMethod, false);
                     operationMethods.Add(updateMethodProvider);
 
-                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
                     var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, asyncConvenienceMethod, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName));
-                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName, forceLro: isFakeLro));
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName, forceLro: isFakeLro));
                 }
             }
 

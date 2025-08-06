@@ -2,22 +2,23 @@
 
 ## Summary
 
-- Total libraries: 402
-- Management Plane (Swagger): 172
-- Management Plane (TSP-Old): 42
+- Total libraries: 404
+- Management Plane (Swagger): 170
+- Management Plane (TSP-Old): 45
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Data Plane (Swagger): 114
 - Data Plane (TSP-Old): 29
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 5
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 6
 - No generator: 40
 
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 5
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 6
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
+| appconfiguration | Azure.Data.AppConfiguration | sdk/appconfiguration/Azure.Data.AppConfiguration |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces |
 | healthdataaiservices | Azure.Health.Deidentification | sdk/healthdataaiservices/Azure.Health.Deidentification |
 | keyvault | Azure.Security.KeyVault.Administration | sdk/keyvault/Azure.Security.KeyVault.Administration |
@@ -69,7 +70,6 @@ Total: 114
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | agrifood | Azure.Verticals.AgriFood.Farming | sdk/agrifood/Azure.Verticals.AgriFood.Farming |
-| appconfiguration | Azure.Data.AppConfiguration | sdk/appconfiguration/Azure.Data.AppConfiguration |
 | attestation | Azure.Security.Attestation | sdk/attestation/Azure.Security.Attestation |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering | sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering |
 | cognitiveservices | AnomalyDetector | sdk/cognitiveservices/AnomalyDetector |
@@ -148,6 +148,7 @@ Total: 114
 | provisioning | Azure.Provisioning.OperationalInsights | sdk/provisioning/Azure.Provisioning.OperationalInsights |
 | provisioning | Azure.Provisioning.PostgreSql | sdk/provisioning/Azure.Provisioning.PostgreSql |
 | provisioning | Azure.Provisioning.Redis | sdk/provisioning/Azure.Provisioning.Redis |
+| provisioning | Azure.Provisioning.RedisEnterprise | sdk/provisioning/Azure.Provisioning.RedisEnterprise |
 | provisioning | Azure.Provisioning.Search | sdk/provisioning/Azure.Provisioning.Search |
 | provisioning | Azure.Provisioning.ServiceBus | sdk/provisioning/Azure.Provisioning.ServiceBus |
 | provisioning | Azure.Provisioning.SignalR | sdk/provisioning/Azure.Provisioning.SignalR |
@@ -186,7 +187,7 @@ Total: 114
 
 ## Management Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 42
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 45
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -203,11 +204,13 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | sdk/databasewatcher/Azure.ResourceManager.DatabaseWatcher |
 | dellstorage | Azure.ResourceManager.Dell.Storage | sdk/dellstorage/Azure.ResourceManager.Dell.Storage |
 | dependencymap | Azure.ResourceManager.DependencyMap | sdk/dependencymap/Azure.ResourceManager.DependencyMap |
+| deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices |
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry |
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | sdk/devopsinfrastructure/Azure.ResourceManager.DevOpsInfrastructure |
 | durabletask | Azure.ResourceManager.DurableTask | sdk/durabletask/Azure.ResourceManager.DurableTask |
 | fabric | Azure.ResourceManager.Fabric | sdk/fabric/Azure.ResourceManager.Fabric |
 | grafana | Azure.ResourceManager.Grafana | sdk/grafana/Azure.ResourceManager.Grafana |
+| hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity | sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement |
@@ -219,6 +222,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | sdk/onlineexperimentation/Azure.ResourceManager.OnlineExperimentation |
 | oracle | Azure.ResourceManager.OracleDatabase | sdk/oracle/Azure.ResourceManager.OracleDatabase |
 | pineconevectordb | Azure.ResourceManager.PineconeVectorDB | sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB |
+| planetarycomputer | Azure.ResourceManager.PlanetaryComputer | sdk/planetarycomputer/Azure.ResourceManager.PlanetaryComputer |
 | playwrighttesting | Azure.ResourceManager.PlaywrightTesting | sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock |
@@ -236,7 +240,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 ## Management Plane Libraries using Swagger
 
-Total: 172
+Total: 170
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -292,7 +296,6 @@ Total: 172
 | defendereasm | Azure.ResourceManager.DefenderEasm | sdk/defendereasm/Azure.ResourceManager.DefenderEasm |
 | desktopvirtualization | Azure.ResourceManager.DesktopVirtualization | sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization |
 | devcenter | Azure.ResourceManager.DevCenter | sdk/devcenter/Azure.ResourceManager.DevCenter |
-| deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices |
 | deviceupdate | Azure.ResourceManager.DeviceUpdate | sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate |
 | devspaces | Azure.ResourceManager.DevSpaces | sdk/devspaces/Azure.ResourceManager.DevSpaces |
 | devtestlabs | Azure.ResourceManager.DevTestLabs | sdk/devtestlabs/Azure.ResourceManager.DevTestLabs |
@@ -312,7 +315,6 @@ Total: 172
 | frontdoor | Azure.ResourceManager.FrontDoor | sdk/frontdoor/Azure.ResourceManager.FrontDoor |
 | graphservices | Azure.ResourceManager.GraphServices | sdk/graphservices/Azure.ResourceManager.GraphServices |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration | sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration |
-| hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules |
 | hdinsight | Azure.ResourceManager.HDInsight | sdk/hdinsight/Azure.ResourceManager.HDInsight |
 | hdinsightcontainers | Azure.ResourceManager.HDInsight.Containers | sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers |
 | healthbot | Azure.ResourceManager.HealthBot | sdk/healthbot/Azure.ResourceManager.HealthBot |

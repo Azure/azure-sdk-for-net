@@ -44,8 +44,8 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BarSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _barSettingsOperationsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string barSettingsApiVersion);
+            _barSettingsOperationsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _barSettingsOperationsRestClient = new BarSettingsOperations(_barSettingsOperationsClientDiagnostics, Pipeline, Endpoint, barSettingsApiVersion);
             ValidateResourceId(id);
         }
@@ -103,8 +103,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<BarSettingsResource> operation = new MgmtTypeSpecArmOperation<BarSettingsResource>(
@@ -143,8 +142,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<BarSettingsResource> operation = new MgmtTypeSpecArmOperation<BarSettingsResource>(
@@ -178,8 +176,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BarSettingsData> response = Response.FromValue(BarSettingsData.FromResponse(result), result);
@@ -207,8 +204,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BarSettingsData> response = Response.FromValue(BarSettingsData.FromResponse(result), result);

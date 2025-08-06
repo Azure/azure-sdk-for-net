@@ -14,6 +14,38 @@ namespace Azure.Search.Documents.Agents.Models
     /// <summary> The input contract for the retrieval request. </summary>
     public partial class KnowledgeAgentRetrievalRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentRetrievalRequest"/>. </summary>
         /// <param name="messages"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
@@ -28,10 +60,17 @@ namespace Azure.Search.Documents.Agents.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentRetrievalRequest"/>. </summary>
         /// <param name="messages"></param>
         /// <param name="targetIndexParams"></param>
-        internal KnowledgeAgentRetrievalRequest(IList<KnowledgeAgentMessage> messages, IList<KnowledgeAgentIndexParams> targetIndexParams)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeAgentRetrievalRequest(IList<KnowledgeAgentMessage> messages, IList<KnowledgeAgentIndexParams> targetIndexParams, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
             TargetIndexParams = targetIndexParams;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentRetrievalRequest"/> for deserialization. </summary>
+        internal KnowledgeAgentRetrievalRequest()
+        {
         }
 
         /// <summary> Gets the messages. </summary>
