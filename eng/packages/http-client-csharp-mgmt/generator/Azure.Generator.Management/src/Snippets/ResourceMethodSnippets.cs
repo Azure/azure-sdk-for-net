@@ -57,7 +57,6 @@ namespace Azure.Generator.Management.Snippets
             return statements;
         }
 
-        // TODO: The generated code has format issue https://github.com/microsoft/typespec/issues/7283
         public static MethodBodyStatement CreateRequestContext(
             ParameterProvider cancellationTokenParam,
             out VariableExpression contextVariable)
@@ -67,11 +66,6 @@ namespace Azure.Generator.Management.Snippets
                 { Identifier(nameof(RequestContext.CancellationToken)), cancellationTokenParam }
             };
 
-            //        RequestContext context = new RequestContext
-            //        {
-            //            CancellationToken = cancellationToken
-            //        }
-            //        ;
             return Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), requestContextParams), out contextVariable);
         }
 
