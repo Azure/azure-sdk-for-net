@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -12,5 +13,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Quantity of the product. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? Count { get; }
+
+        /// <summary> list of device details. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyList<EdgeOrderProductDeviceDetails> DeviceDetails { get; }
     }
 }

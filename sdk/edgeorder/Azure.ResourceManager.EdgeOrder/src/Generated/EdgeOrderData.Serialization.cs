@@ -40,10 +40,20 @@ namespace Azure.ResourceManager.EdgeOrder
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OrderItemIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemIds))
             {
                 writer.WritePropertyName("orderItemIds"u8);
-                writer.WriteStringValue(OrderItemIds);
+                writer.WriteStartArray();
+                foreach (var item in OrderItemIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
@@ -92,7 +102,7 @@ namespace Azure.ResourceManager.EdgeOrder
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ResourceIdentifier orderItemIds = default;
+            IReadOnlyList<ResourceIdentifier> orderItemIds = default;
             EdgeOrderStageDetails currentStage = default;
             IReadOnlyList<EdgeOrderStageDetails> orderStageHistory = default;
             OrderMode? orderMode = default;
@@ -139,7 +149,19 @@ namespace Azure.ResourceManager.EdgeOrder
                             {
                                 continue;
                             }
-                            orderItemIds = new ResourceIdentifier(property0.Value.GetString());
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
+                            }
+                            orderItemIds = array;
                             continue;
                         }
                         if (property0.NameEquals("currentStage"u8))
@@ -188,7 +210,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 name,
                 type,
                 systemData,
-                orderItemIds,
+                orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 currentStage,
                 orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
                 orderMode,

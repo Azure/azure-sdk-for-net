@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="deletionStatus"> Describes whether the order item is deletable or not. </param>
         /// <param name="returnReason"> Return reason. </param>
         /// <param name="returnStatus"> Describes whether the order item is returnable or not. </param>
-        /// <param name="managementRpDetailsList"> List of parent RP details supported for configuration. </param>
+        /// <param name="managementRPDetailsList"> List of parent RP details supported for configuration. </param>
         /// <param name="error"> Top level error for the job. </param>
         /// <returns> A new <see cref="Models.EdgeOrderItemDetails"/> instance for mocking. </returns>
-        public static EdgeOrderItemDetails EdgeOrderItemDetails(ProductDetails productDetails = null, OrderItemType orderItemType = default, OrderMode? orderItemMode = null, string siteId = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderItemStageHistory = null, OrderItemPreferences preferences = null, ForwardShippingDetails forwardShippingDetails = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<string> notificationEmailList = null, string cancellationReason = null, OrderItemCancellationStatus? cancellationStatus = null, EdgeOrderActionStatus? deletionStatus = null, string returnReason = null, OrderItemReturnStatus? returnStatus = null, IEnumerable<ResourceProviderDetails> managementRpDetailsList = null, ResponseError error = null)
+        public static EdgeOrderItemDetails EdgeOrderItemDetails(ProductDetails productDetails = null, OrderItemType orderItemType = default, OrderMode? orderItemMode = null, string siteId = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderItemStageHistory = null, OrderItemPreferences preferences = null, ForwardShippingDetails forwardShippingDetails = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<string> notificationEmailList = null, string cancellationReason = null, OrderItemCancellationStatus? cancellationStatus = null, EdgeOrderActionStatus? deletionStatus = null, string returnReason = null, OrderItemReturnStatus? returnStatus = null, IEnumerable<ResourceProviderDetails> managementRPDetailsList = null, ResponseError error = null)
         {
             orderItemStageHistory ??= new List<EdgeOrderStageDetails>();
             notificationEmailList ??= new List<string>();
-            managementRpDetailsList ??= new List<ResourceProviderDetails>();
+            managementRPDetailsList ??= new List<ResourceProviderDetails>();
 
             return new EdgeOrderItemDetails(
                 productDetails,
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 deletionStatus,
                 returnReason,
                 returnStatus,
-                managementRpDetailsList?.ToList(),
+                managementRPDetailsList?.ToList(),
                 error,
                 serializedAdditionalRawData: null);
         }
@@ -352,8 +352,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="orderStageHistory"> Order status history. </param>
         /// <param name="orderMode"> Order mode. </param>
         /// <returns> A new <see cref="EdgeOrder.EdgeOrderData"/> instance for mocking. </returns>
-        public static EdgeOrderData EdgeOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier orderItemIds = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderStageHistory = null, OrderMode? orderMode = null)
+        public static EdgeOrderData EdgeOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ResourceIdentifier> orderItemIds = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderStageHistory = null, OrderMode? orderMode = null)
         {
+            orderItemIds ??= new List<ResourceIdentifier>();
             orderStageHistory ??= new List<EdgeOrderStageDetails>();
 
             return new EdgeOrderData(
@@ -361,7 +362,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 name,
                 resourceType,
                 systemData,
-                orderItemIds,
+                orderItemIds?.ToList(),
                 currentStage,
                 orderStageHistory?.ToList(),
                 orderMode,
@@ -752,6 +753,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static ConfigurationFilters ConfigurationFilters(HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperty)
         {
             return ConfigurationFilters(hierarchyInformation: hierarchyInformation, filterableProperty: filterableProperty, childConfigurationFilter: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.EdgeOrder.EdgeOrderData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="orderItemIds"> List of order item ARM Ids which are part of an order. </param>
+        /// <param name="currentStage"> Order current status. </param>
+        /// <param name="orderStageHistory"> Order status history. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.EdgeOrder.EdgeOrderData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeOrderData EdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<ResourceIdentifier> orderItemIds, EdgeOrderStageDetails currentStage, IEnumerable<EdgeOrderStageDetails> orderStageHistory)
+        {
+            return EdgeOrderData(id: id, name: name, resourceType: resourceType, systemData: systemData, orderItemIds: orderItemIds, currentStage: currentStage, orderStageHistory: orderStageHistory, orderMode: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.EdgeOrder.EdgeOrderItemData" />. </summary>

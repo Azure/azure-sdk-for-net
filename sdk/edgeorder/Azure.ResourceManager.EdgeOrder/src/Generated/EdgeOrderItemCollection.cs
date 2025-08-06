@@ -491,20 +491,5 @@ namespace Azure.ResourceManager.EdgeOrder
                 throw;
             }
         }
-
-        IEnumerator<EdgeOrderItemResource> IEnumerable<EdgeOrderItemResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<EdgeOrderItemResource> IAsyncEnumerable<EdgeOrderItemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
     }
 }

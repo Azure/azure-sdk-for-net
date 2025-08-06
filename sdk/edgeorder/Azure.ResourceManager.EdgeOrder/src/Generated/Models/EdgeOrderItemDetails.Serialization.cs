@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("returnStatus"u8);
                 writer.WriteStringValue(ReturnStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRpDetailsList))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
             {
                 writer.WritePropertyName("managementRpDetailsList"u8);
                 writer.WriteStartArray();
-                foreach (var item in ManagementRpDetailsList)
+                foreach (var item in ManagementRPDetailsList)
                 {
                     writer.WriteObjectValue(item, options);
                 }

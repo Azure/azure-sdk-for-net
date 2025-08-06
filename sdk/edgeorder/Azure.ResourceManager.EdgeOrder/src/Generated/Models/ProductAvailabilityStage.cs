@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         private const string AvailableValue = "Available";
         private const string PreviewValue = "Preview";
-        private const string SignupValue = "Signup";
+        private const string SignUpValue = "Signup";
         private const string DiscoverableValue = "Discoverable";
         private const string ComingSoonValue = "ComingSoon";
         private const string UnavailableValue = "Unavailable";
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Product is in preview. </summary>
         public static ProductAvailabilityStage Preview { get; } = new ProductAvailabilityStage(PreviewValue);
         /// <summary> Product is available only on signup. </summary>
-        public static ProductAvailabilityStage Signup { get; } = new ProductAvailabilityStage(SignupValue);
+        public static ProductAvailabilityStage SignUp { get; } = new ProductAvailabilityStage(SignUpValue);
         /// <summary> Product is not available in our service but can be discovered from other sources. </summary>
         public static ProductAvailabilityStage Discoverable { get; } = new ProductAvailabilityStage(DiscoverableValue);
         /// <summary> Product is coming soon. </summary>
