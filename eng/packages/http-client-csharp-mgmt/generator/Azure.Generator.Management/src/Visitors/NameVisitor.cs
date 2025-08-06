@@ -22,7 +22,7 @@ namespace Azure.Generator.Management.Visitors;
 internal class NameVisitor : ScmLibraryVisitor
 {
     private const string ResourceTypeName = "ResourceType";
-    private static readonly HashSet<string> _knownModels = new HashSet<string>()
+    private static readonly HashSet<string> _knownTypes = new HashSet<string>()
         {
             "Sku",
             "SkuName",
@@ -49,6 +49,21 @@ internal class NameVisitor : ScmLibraryVisitor
     private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
     private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
+    protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
+    {
+        if (type is null)
+        {
+            return null;
+        }
+
+        if (_knownTypes.Contains(enumType.Name))
+        {
+            var newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{enumType.Name}";
+            type.Update(name: newName);
+        }
+        return base.PreVisitEnum(enumType, type);
+    }
+
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
         var inputLibrary = ManagementClientGenerator.Instance.InputLibrary;
@@ -64,7 +79,7 @@ internal class NameVisitor : ScmLibraryVisitor
             type.Update(name: newName);
         }
 
-        if (_knownModels.Contains(model.Name))
+        if (_knownTypes.Contains(model.Name))
         {
             newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
             UpdateConstructors(type, newName);
