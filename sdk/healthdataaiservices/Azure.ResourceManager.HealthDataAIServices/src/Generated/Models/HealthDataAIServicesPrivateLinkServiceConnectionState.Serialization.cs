@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 return null;
             }
-            PrivateEndpointServiceConnectionStatus? status = default;
+            HealthDataAIServicesPrivateEndpointServiceConnectionStatus? status = default;
             string description = default;
             string actionsRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    status = new PrivateEndpointServiceConnectionStatus(prop.Value.GetString());
+                    status = new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

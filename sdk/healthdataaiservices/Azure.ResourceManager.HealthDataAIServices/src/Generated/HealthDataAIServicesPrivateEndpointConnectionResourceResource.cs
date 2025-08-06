@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthDataAIServicesPrivateEndpointConnectionResourceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string healthDataAIServicesPrivateEndpointConnectionResourceApiVersion);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
             _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, healthDataAIServicesPrivateEndpointConnectionResourceApiVersion);
             ValidateResourceId(id);
         }

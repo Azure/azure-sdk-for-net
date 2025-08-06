@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthDataAIServicesPrivateLinkServiceConnectionState(PrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthDataAIServicesPrivateLinkServiceConnectionState(HealthDataAIServicesPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Description = description;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        public PrivateEndpointServiceConnectionStatus? Status { get; set; }
+        public HealthDataAIServicesPrivateEndpointServiceConnectionStatus? Status { get; set; }
 
         /// <summary> The reason for approval/rejection of the connection. </summary>
         public string Description { get; set; }

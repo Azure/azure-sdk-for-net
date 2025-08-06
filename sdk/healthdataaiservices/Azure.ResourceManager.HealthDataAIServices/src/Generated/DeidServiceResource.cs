@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeidServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string deidServiceApiVersion);
+            _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
             _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion);
             ValidateResourceId(id);
         }

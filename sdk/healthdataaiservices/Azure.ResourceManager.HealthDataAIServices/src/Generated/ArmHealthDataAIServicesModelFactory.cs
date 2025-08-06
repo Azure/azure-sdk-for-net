@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, PrivateEndpointConnectionProvisioningState? provisioningState = default)
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, HealthDataAIServicesPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 

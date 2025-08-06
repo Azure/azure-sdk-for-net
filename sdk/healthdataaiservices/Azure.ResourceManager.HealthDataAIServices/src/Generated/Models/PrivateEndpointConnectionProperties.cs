@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, HealthDataAIServicesPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         public HealthDataAIServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public PrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public HealthDataAIServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
         public ResourceIdentifier PrivateEndpointId
