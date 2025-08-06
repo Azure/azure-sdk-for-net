@@ -167,11 +167,12 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        private MethodProvider BuildNonResourceMethod(InputServiceMethod method, bool isAsync) => method switch
-        {
-            InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, ContextualPath, null!, pagingMethod, null!, isAsync, null!, default),
-            _ => new ResourceOperationMethodProvider(this, ContextualPath, null!, method, null!, isAsync)
-        };
+        // TODO -- need to figure out how the restClientInfo goes on this class first
+        //private MethodProvider BuildNonResourceMethod(InputServiceMethod method, bool isAsync) => method switch
+        //{
+        //    InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, ContextualPath, null!, pagingMethod, null!, isAsync, null!, default),
+        //    _ => new ResourceOperationMethodProvider(this, ContextualPath, )
+        //};
 
         private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
         {

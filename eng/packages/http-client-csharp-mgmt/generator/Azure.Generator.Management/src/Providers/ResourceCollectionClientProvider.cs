@@ -282,10 +282,11 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildGetAllMethod(InputServiceMethod getAll, bool isAsync)
         {
             var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(getAll, _clientInfos);
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync);
             return getAll switch
             {
-                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingGetAll, isAsync, ResourceOperationKind.List),
-                _ => new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, getAll, isAsync, ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync))
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingGetAll, isAsync, methodName: methodName),
+                _ => new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, getAll, isAsync, methodName: methodName)
             };
         }
 

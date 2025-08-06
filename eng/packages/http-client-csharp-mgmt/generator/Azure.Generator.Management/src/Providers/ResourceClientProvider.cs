@@ -338,8 +338,8 @@ namespace Azure.Generator.Management.Providers
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
-                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingMethod, false, methodKind));
-                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingMethod, true, methodKind));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true)));
 
                     continue;
                 }
