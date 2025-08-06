@@ -115,6 +115,76 @@ public class BicepValueReferenceExtensionsTests
     }
 
     [Test]
+    public void ValidateModelListProperty_Empty()
+    {
+        var resource = new TestResource("test");
+        Assert.AreEqual("[]", resource.Models.ToString());
+        Assert.AreEqual("test.models", resource.Models.ToBicepExpression().ToString());
+
+        resource.Models = new BicepList<TestModel>();
+        Assert.AreEqual("[]", resource.Models.ToString());
+        Assert.AreEqual("test.models", resource.Models.ToBicepExpression().ToString());
+    }
+
+    [Test]
+    public void ValidateModelListProperty_WithValues()
+    {
+        var resource = new TestResource("test");
+        resource.Models.Add(new TestModel() { Name = "model1" });
+        resource.Models.Add(new TestModel() { Name = "model2" });
+        Assert.AreEqual("""
+            [
+              {
+                name: 'model1'
+              }
+              {
+                name: 'model2'
+              }
+            ]
+            """, resource.Models.ToString());
+        Assert.AreEqual("test.models", resource.Models.ToBicepExpression().ToString());
+    }
+
+    [Test]
+    public void ValidateModelListProperty_Indexer()
+    {
+        var resource = new TestResource("test");
+        resource.Models.Add(new TestModel() { Name = "model1" });
+        var validIndexer = resource.Models[0];
+        Assert.AreEqual("""
+            {
+              name: 'model1'
+            }
+            """, validIndexer.ToString());
+        TestModel? model = validIndexer.Value;
+        Assert.IsNotNull(model);
+        Assert.AreEqual("'model1'", model!.Name.ToString());
+        Assert.AreEqual("test.models[0]", validIndexer.ToBicepExpression().ToString());
+
+        // change the name
+        model!.Name = "updatedModel1";
+        Assert.AreEqual("""
+            {
+              name: 'updatedModel1'
+            }
+            """, validIndexer.ToString());
+
+        var invalidIndexer = resource.Models[1]; // out-of-range
+        var invalidModel = invalidIndexer.Value; // this does not throw but returns a null value
+        Assert.IsNull(invalidModel);
+        Assert.Throws<ArgumentOutOfRangeException>(() => invalidIndexer.ToString());
+        Assert.AreEqual("test.models[1]", invalidIndexer.ToBicepExpression().ToString());
+    }
+
+    [Test]
+    public void ValidateModelListProperty_ItemModelProperties()
+    {
+        var resource = new TestResource("test");
+        resource.Models.Add(new TestModel() { Name = "model1" });
+        var validIndexer = resource.Models[0];
+    }
+
+    [Test]
     public void ValidateOutputListProperty_Empty()
     {
         var resource = new TestResource("test");
@@ -526,6 +596,13 @@ public class BicepValueReferenceExtensionsTests
             get { Initialize(); return _outputDictionary!; }
         }
 
+        private BicepList<TestModel>? _models;
+        public BicepList<TestModel> Models
+        {
+            get { Initialize(); return _models!; }
+            set { Initialize(); AssignOrReplace(ref _models, value); }
+        }
+
         private TestProperties? _properties;
         public TestProperties Properties
         {
@@ -540,6 +617,7 @@ public class BicepValueReferenceExtensionsTests
             _withoutValue = DefineProperty<string>("WithoutValue", ["withoutValue"]);
             _list = DefineListProperty<string>("List", ["list"]);
             _outputList = DefineListProperty<string>("OutputList", ["outputList"], isOutput: true);
+            _models = DefineListProperty<TestModel>("Models", ["models"]);
             _dictionary = DefineDictionaryProperty<string>("Dictionary", ["dictionary"]);
             _outputDictionary = DefineDictionaryProperty<string>("OutputDictionary", ["outputDictionary"], isOutput: true);
             _properties = DefineModelProperty<TestProperties>("Properties", ["properties"]);
@@ -595,6 +673,21 @@ public class BicepValueReferenceExtensionsTests
             _outputList = DefineListProperty<string>("OutputList", ["outputList"], isOutput: true);
             _dictionary = DefineDictionaryProperty<string>("Dictionary", ["dictionary"]);
             _outputDictionary = DefineDictionaryProperty<string>("OutputDictionary", ["outputDictionary"], isOutput: true);
+        }
+    }
+
+    private class TestModel : ProvisionableConstruct
+    {
+        private BicepValue<string>? _name;
+        public BicepValue<string> Name
+        {
+            get { Initialize(); return _name!; }
+            set { Initialize(); _name!.Assign(value); }
+        }
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _name = DefineProperty<string>("Name", ["name"]);
         }
     }
 }
