@@ -85,7 +85,6 @@ function Get-MergedPullRequests()
                 Write-Host "Merged pull request: $prLink"
             }
         }
-        break
     }
     return $pullRequests
 }
