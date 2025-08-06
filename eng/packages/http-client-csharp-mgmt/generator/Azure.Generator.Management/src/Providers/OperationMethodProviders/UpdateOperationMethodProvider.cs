@@ -3,7 +3,6 @@
 
 using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
@@ -11,8 +10,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         ResourceClientProvider resource,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
-        MethodProvider convenienceMethod,
-        bool isAsync) : ResourceOperationMethodProvider(resource, resource.ContextualPath, restClientInfo, method, convenienceMethod, isAsync, methodName: isAsync ? "UpdateAsync" : "Update")
+        bool isAsync) : ResourceOperationMethodProvider(resource, resource.ContextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update")
     {
     }
 }
