@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsCallingEventProperties : IUtf8JsonSerializable, IJsonModel<AcsCallingEventProperties>
+    /// <summary> Schema of common properties of all calling events. </summary>
+    public partial class AcsCallingEventProperties : IJsonModel<AcsCallingEventProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsCallingEventProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AcsCallingEventProperties"/> for deserialization. </summary>
+        internal AcsCallingEventProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsCallingEventProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsCallingEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsCallingEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsCallingEventProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("startedBy"u8);
             writer.WriteObjectValue(StartedBy, options);
             writer.WritePropertyName("serverCallId"u8);
@@ -60,15 +64,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("isRoomsCall"u8);
                 writer.WriteBooleanValue(IsRoomsCall.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,109 +81,115 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsCallingEventProperties IJsonModel<AcsCallingEventProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsCallingEventProperties IJsonModel<AcsCallingEventProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsCallingEventProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsCallingEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsCallingEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsCallingEventProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAcsCallingEventProperties(document.RootElement, options);
         }
 
-        internal static AcsCallingEventProperties DeserializeAcsCallingEventProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AcsCallingEventProperties DeserializeAcsCallingEventProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AcsCallParticipantProperties startedBy = default;
             string serverCallId = default;
-            AcsCallGroupProperties group = default;
+            AcsCallGroupProperties @group = default;
             AcsCallRoomProperties room = default;
             bool? isTwoParty = default;
             string correlationId = default;
             bool? isRoomsCall = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("startedBy"u8))
+                if (prop.NameEquals("startedBy"u8))
                 {
-                    startedBy = AcsCallParticipantProperties.DeserializeAcsCallParticipantProperties(property.Value, options);
+                    startedBy = AcsCallParticipantProperties.DeserializeAcsCallParticipantProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("serverCallId"u8))
+                if (prop.NameEquals("serverCallId"u8))
                 {
-                    serverCallId = property.Value.GetString();
+                    serverCallId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("group"u8))
+                if (prop.NameEquals("group"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    group = AcsCallGroupProperties.DeserializeAcsCallGroupProperties(property.Value, options);
+                    @group = AcsCallGroupProperties.DeserializeAcsCallGroupProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("room"u8))
+                if (prop.NameEquals("room"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    room = AcsCallRoomProperties.DeserializeAcsCallRoomProperties(property.Value, options);
+                    room = AcsCallRoomProperties.DeserializeAcsCallRoomProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("isTwoParty"u8))
+                if (prop.NameEquals("isTwoParty"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isTwoParty = property.Value.GetBoolean();
+                    isTwoParty = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("correlationId"u8))
+                if (prop.NameEquals("correlationId"u8))
                 {
-                    correlationId = property.Value.GetString();
+                    correlationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isRoomsCall"u8))
+                if (prop.NameEquals("isRoomsCall"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isRoomsCall = property.Value.GetBoolean();
+                    isRoomsCall = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AcsCallingEventProperties(
                 startedBy,
                 serverCallId,
-                group,
+                @group,
                 room,
                 isTwoParty,
                 correlationId,
                 isRoomsCall,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AcsCallingEventProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsCallingEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsCallingEventProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsCallingEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -189,15 +199,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsCallingEventProperties IPersistableModel<AcsCallingEventProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsCallingEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsCallingEventProperties IPersistableModel<AcsCallingEventProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsCallingEventProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsCallingEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsCallingEventProperties(document.RootElement, options);
                     }
                 default:
@@ -205,22 +220,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsCallingEventProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsCallingEventProperties FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAcsCallingEventProperties(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }
