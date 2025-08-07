@@ -67,7 +67,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="provisioningState"></param>
         /// <param name="metaDataMetaDatas"> Gets the MetaDatas. </param>
         /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
-        public static FooSettingsProperties FooSettingsProperties(bool? accessControlEnabled = default, ResourceProvisioningState? provisioningState = default, IList<string> metaDataMetaDatas)
+        public static FooSettingsProperties FooSettingsProperties(bool? accessControlEnabled = default, ResourceProvisioningState? provisioningState = default, IList<string> metaDataMetaDatas = default)
         {
             return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDataMetaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDataMetaDatas, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
