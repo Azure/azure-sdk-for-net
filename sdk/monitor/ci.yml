@@ -54,4 +54,4 @@ extends:
     - ArtifactName: Azure.Monitor.Ingestion
       ExpectedWarningsFilepath: None
     - ArtifactName: Azure.Monitor.Query
-      ExpectedWarningsFilepath: Azure.Monitor.Query/tests/compatibility/ExpectedAOTWarnings.txt
+      ExpectedWarningsFilepath: None

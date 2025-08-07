@@ -171,12 +171,15 @@ namespace Azure.Monitor.Query
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = null)
         {
             switch (value)
             {
                 case null:
                     writer.WriteNullValue();
+                    break;
+                case IJsonModel<T> jsonModel:
+                    jsonModel.Write(writer, options ?? WireOptions);
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);
@@ -232,7 +235,7 @@ namespace Azure.Monitor.Query
                     foreach (var pair in enumerable)
                     {
                         writer.WritePropertyName(pair.Key);
-                        writer.WriteObjectValue<object>(pair.Value);
+                        writer.WriteObjectValue<object>(pair.Value, options);
                     }
                     writer.WriteEndObject();
                     break;
@@ -240,7 +243,7 @@ namespace Azure.Monitor.Query
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {
-                        writer.WriteObjectValue<object>(item);
+                        writer.WriteObjectValue<object>(item, options);
                     }
                     writer.WriteEndArray();
                     break;
@@ -252,9 +255,9 @@ namespace Azure.Monitor.Query
             }
         }
 
-        public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
         {
-            writer.WriteObjectValue<object>(value);
+            writer.WriteObjectValue<object>(value, options);
         }
 
         internal static bool IsSentinelValue(BinaryData value)

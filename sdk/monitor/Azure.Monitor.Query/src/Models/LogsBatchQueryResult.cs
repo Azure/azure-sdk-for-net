@@ -72,7 +72,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new LogsBatchQueryResult(tables, statistics, render, error);
+            return new LogsBatchQueryResult(tables, statistics, render, error, serializedAdditionalRawData: null);
         }
     }
 }

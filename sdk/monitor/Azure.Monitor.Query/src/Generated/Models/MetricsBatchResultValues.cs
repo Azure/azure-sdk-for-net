@@ -14,6 +14,38 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The MetricResultsResponseValuesItem. </summary>
     internal partial class MetricsBatchResultValues
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/>. </summary>
         /// <param name="starttime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endtime"> The end time, in datetime format, for which the data was retrieved. </param>
@@ -41,7 +73,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="resourceregion"> The region of the resource been queried for metrics. </param>
         /// <param name="resourceid"> The resource that has been queried for metrics. </param>
         /// <param name="value"> The value of the collection. </param>
-        internal MetricsBatchResultValues(string starttime, string endtime, string interval, string @namespace, string resourceregion, string resourceid, IReadOnlyList<MetricResult> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricsBatchResultValues(string starttime, string endtime, string interval, string @namespace, string resourceregion, string resourceid, IReadOnlyList<MetricResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Starttime = starttime;
             Endtime = endtime;
@@ -50,6 +83,12 @@ namespace Azure.Monitor.Query.Models
             Resourceregion = resourceregion;
             Resourceid = resourceid;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/> for deserialization. </summary>
+        internal MetricsBatchResultValues()
+        {
         }
 
         /// <summary> The start time, in datetime format, for which the data was retrieved. </summary>

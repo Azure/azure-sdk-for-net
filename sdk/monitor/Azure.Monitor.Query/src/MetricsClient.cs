@@ -144,7 +144,7 @@ namespace Azure.Monitor.Query
             string endTime = null;
             IEnumerable<string> rollUpBy = null;
 
-            ResourceIdList resourceIdList = new ResourceIdList(resourceIds.ToList());
+            ResourceIdList resourceIdList = new ResourceIdList(resourceIds.ToList(), serializedAdditionalRawData: null);
 
             if (options != null)
             {
