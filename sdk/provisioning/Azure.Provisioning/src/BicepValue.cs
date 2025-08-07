@@ -135,4 +135,18 @@ public abstract class BicepValue : IBicepValue
         value._kind == BicepValueKind.Expression ?
             value._expression :
             value._self?.GetReference();
+
+    public BicepExpression ToBicepExpression() => ToBicepExpressionCore();
+
+    private protected virtual BicepExpression ToBicepExpressionCore()
+    {
+        if (_self is not null)
+        {
+            return _self.GetReference();
+        }
+        else
+        {
+            return Compile();
+        }
+    }
 }

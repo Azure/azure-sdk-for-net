@@ -77,6 +77,7 @@ namespace Azure.Provisioning
         void Azure.Provisioning.IBicepValue.SetReadOnly() { }
         public Azure.Provisioning.Expressions.BicepExpression Compile() { throw null; }
         public static explicit operator Azure.Provisioning.Expressions.BicepExpression (Azure.Provisioning.BicepValue value) { throw null; }
+        public Azure.Provisioning.Expressions.BicepExpression ToBicepExpression() { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class BicepValueExtensions
@@ -631,11 +632,6 @@ namespace Azure.Provisioning.Expressions
         public Azure.Provisioning.Expressions.BicepStringBuilder Append(string text) { throw null; }
         public Azure.Provisioning.BicepValue<string> Build() { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<string> (Azure.Provisioning.Expressions.BicepStringBuilder value) { throw null; }
-    }
-    public static partial class BicepValueReferenceExtensions
-    {
-        public static Azure.Provisioning.Expressions.BicepExpression ToBicepExpression(this Azure.Provisioning.IBicepValue value) { throw null; }
-        public static Azure.Provisioning.Expressions.BicepExpression ToBicepExpression<T>(this Azure.Provisioning.BicepValue<T> value) { throw null; }
     }
     public enum BinaryBicepOperator
     {

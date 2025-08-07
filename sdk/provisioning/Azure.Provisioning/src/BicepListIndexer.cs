@@ -13,31 +13,35 @@ namespace Azure.Provisioning;
 /// <typeparam name="T">type of the value.</typeparam>
 internal class BicepListIndexer<T> : BicepValue<T>
 {
+    private readonly int _index;
     internal BicepListIndexer(BicepValueReference? self, int index) : base(self)
     {
-        Index = index;
+        _index = index;
     }
 
     internal BicepListIndexer(BicepValueReference? self, int index, T literal)
         : base(self, literal)
     {
-        Index = index;
+        _index = index;
     }
 
     internal BicepListIndexer(BicepValueReference? self, int index, BicepExpression expression)
         : base(self, expression)
     {
-        Index = index;
+        _index = index;
     }
-
-    internal int Index { get; }
 
     private protected override BicepExpression CompileCore()
     {
         if (_kind == BicepValueKind.Unset)
         {
-            throw new ArgumentOutOfRangeException(nameof(Index), $"Index '{Index}' is out of range on {_self?.GetReference(false)}.");
+            throw new ArgumentOutOfRangeException(nameof(_index), $"Index '{_index}' is out of range on {_self?.GetReference(false)}.");
         }
         return base.CompileCore();
+    }
+
+    private protected override BicepExpression ToBicepExpressionCore()
+    {
+        return BicepSyntax.Index(_self!.GetReference(), new IntLiteralExpression(_index));
     }
 }
