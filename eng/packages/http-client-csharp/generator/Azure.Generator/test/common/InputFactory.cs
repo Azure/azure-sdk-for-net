@@ -39,10 +39,11 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
+            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Int32(string name, int value)
+            public static InputEnumTypeValue Int32(string name, int value, InputEnumType enumType)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, "", $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, "", $"{name} description", enumType);
             }
 
             /// <summary>
@@ -50,10 +51,11 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
+            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Float32(string name, float value)
+            public static InputEnumTypeValue Float32(string name, float value, InputEnumType enumType)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, "", $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, "", $"{name} description", enumType);
             }
 
             /// <summary>
@@ -61,10 +63,11 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
+            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue String(string name, string value)
+            public static InputEnumTypeValue String(string name, string value, InputEnumType enumType)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, "", $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, "", $"{name} description", enumType);
             }
         }
 
@@ -552,5 +555,52 @@ namespace Azure.Generator.Tests.Common
                 new InputNextLink(null, [nextLinkName], nextLinkLocation, reinjectedParameters),
                 null);
         }
+
+        public static InputEnumType StringEnum(
+            string name,
+            IEnumerable<(string Name, string Value)> values,
+            string access = "public",
+            InputModelTypeUsage usage = InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+            bool isExtensible = false,
+            string clientNamespace = "Sample.Models")
+        {
+            var enumValues = new List<InputEnumTypeValue>();
+            var enumType = Enum(
+                name,
+                InputPrimitiveType.String,
+                enumValues,
+                access: access,
+                usage: usage,
+                isExtensible: isExtensible,
+                clientNamespace: clientNamespace);
+
+            foreach (var (valueName, value) in values)
+            {
+                enumValues.Add(EnumMember.String(valueName, value, enumType));
+            }
+
+            return enumType;
+        }
+
+        private static InputEnumType Enum(
+            string name,
+            InputPrimitiveType underlyingType,
+            IReadOnlyList<InputEnumTypeValue> values,
+            string access = "public",
+            InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input,
+            bool isExtensible = false,
+            string clientNamespace = "Sample.Models")
+            => new InputEnumType(
+                name,
+                clientNamespace,
+                name,
+                access,
+                null,
+                "",
+                $"{name} description",
+                usage,
+                underlyingType,
+                values,
+                isExtensible);
     }
 }

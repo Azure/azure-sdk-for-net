@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Unknown version of VectorThreshold. </summary>
@@ -12,9 +15,15 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVectorThreshold"/>. </summary>
         /// <param name="kind"> The kind of threshold used to filter vector queries. </param>
-        internal UnknownVectorThreshold(VectorThresholdKind kind) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownVectorThreshold(VectorThresholdKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownVectorThreshold"/> for deserialization. </summary>
+        internal UnknownVectorThreshold()
+        {
         }
     }
 }
