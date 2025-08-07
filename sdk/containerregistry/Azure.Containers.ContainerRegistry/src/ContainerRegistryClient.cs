@@ -292,7 +292,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Exchanges an Azure Active Directory access token for an Azure Container Registry refresh token.
         /// </summary>
-        /// <param name="grantType">The grant type for the token exchange.</param>
         /// <param name="service">The name of the registry service.</param>
         /// <param name="tenant">The tenant ID (optional).</param>
         /// <param name="refreshToken">The refresh token (optional).</param>
@@ -303,7 +302,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException">Thrown when <paramref name="service"/> is empty.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<AcrRefreshToken>> ExchangeAadAccessTokenForAcrRefreshTokenAsync(
-            PostContentSchemaGrantType grantType,
             string service,
             string tenant = null,
             string refreshToken = null,
@@ -316,7 +314,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _acrAuthClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(grantType, service, tenant, refreshToken, accessToken, cancellationToken).ConfigureAwait(false);
+                return await _acrAuthClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(PostContentSchemaGrantType.AccessToken, service, tenant, refreshToken, accessToken, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -328,7 +326,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Exchanges an Azure Active Directory access token for an Azure Container Registry refresh token.
         /// </summary>
-        /// <param name="grantType">The grant type for the token exchange.</param>
         /// <param name="service">The name of the registry service.</param>
         /// <param name="tenant">The tenant ID (optional).</param>
         /// <param name="refreshToken">The refresh token (optional).</param>
@@ -339,7 +336,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException">Thrown when <paramref name="service"/> is empty.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<AcrRefreshToken> ExchangeAadAccessTokenForAcrRefreshToken(
-            PostContentSchemaGrantType grantType,
             string service,
             string tenant = null,
             string refreshToken = null,
@@ -352,7 +348,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _acrAuthClient.ExchangeAadAccessTokenForAcrRefreshToken(grantType, service, tenant, refreshToken, accessToken, cancellationToken);
+                return _acrAuthClient.ExchangeAadAccessTokenForAcrRefreshToken(PostContentSchemaGrantType.AccessToken, service, tenant, refreshToken, accessToken, cancellationToken);
             }
             catch (Exception e)
             {
@@ -367,7 +363,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="service">The name of the registry service.</param>
         /// <param name="scope">The scope for the access token.</param>
         /// <param name="refreshToken">The ACR refresh token.</param>
-        /// <param name="grantType">The grant type for the token exchange.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the ACR access token response.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is null.</exception>
@@ -377,7 +372,6 @@ namespace Azure.Containers.ContainerRegistry
             string service,
             string scope,
             string refreshToken,
-            TokenGrantType grantType,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(service, nameof(service));
@@ -388,7 +382,7 @@ namespace Azure.Containers.ContainerRegistry
             scope_diagnostic.Start();
             try
             {
-                return await _acrAuthClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, refreshToken, grantType, cancellationToken).ConfigureAwait(false);
+                return await _acrAuthClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, refreshToken, TokenGrantType.RefreshToken, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -403,7 +397,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="service">The name of the registry service.</param>
         /// <param name="scope">The scope for the access token.</param>
         /// <param name="refreshToken">The ACR refresh token.</param>
-        /// <param name="grantType">The grant type for the token exchange.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>The ACR access token response.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is null.</exception>
@@ -413,7 +406,6 @@ namespace Azure.Containers.ContainerRegistry
             string service,
             string scope,
             string refreshToken,
-            TokenGrantType grantType,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(service, nameof(service));
@@ -424,7 +416,7 @@ namespace Azure.Containers.ContainerRegistry
             scope_diagnostic.Start();
             try
             {
-                return _acrAuthClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, refreshToken, grantType, cancellationToken);
+                return _acrAuthClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, refreshToken, TokenGrantType.RefreshToken, cancellationToken);
             }
             catch (Exception e)
             {
