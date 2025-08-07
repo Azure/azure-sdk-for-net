@@ -19,23 +19,23 @@ namespace Azure.Communication.CallAutomation
         /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="message"> Detail message that describes the current result. </param>
-        /// <param name="sipCode">
-        /// Sip code from SBC. This can be helpful to troubleshoot PSTN call if this result was unexpected.
+        /// <param name="sipDetails">
+        /// Sip response from SBC. This can be helpful to troubleshoot PSTN call if this result was unexpected.
         /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
         /// Do not solely rely on this information for troubleshooting, as it may not always be available.
         /// </param>
-        /// <param name="q850Cause">
-        /// Q850 cause code from SBC. This can be helpful to troubleshoot call issues if this result was unexpected.
+        /// <param name="q850Details">
+        /// Q850 cause from SBC. This can be helpful to troubleshoot call issues if this result was unexpected.
         /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
         /// Do not solely rely on this information for troubleshooting, as it may not always be available.
         /// </param>
-        internal ResultInformation(int? code, int? subCode, string message, SipDiagnosticInfo sipCode, SipDiagnosticInfo q850Cause)
+        internal ResultInformation(int? code, int? subCode, string message, SipDiagnosticInfo sipDetails, SipDiagnosticInfo q850Details)
         {
             Code = code;
             SubCode = subCode;
             Message = message;
-            SipCode = sipCode;
-            Q850Cause = q850Cause;
+            SipDetails = sipDetails;
+            Q850Details = q850Details;
         }
 
         /// <summary> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </summary>
@@ -45,16 +45,16 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Detail message that describes the current result. </summary>
         public string Message { get; }
         /// <summary>
-        /// Sip code from SBC. This can be helpful to troubleshoot PSTN call if this result was unexpected.
+        /// Sip response from SBC. This can be helpful to troubleshoot PSTN call if this result was unexpected.
         /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
         /// Do not solely rely on this information for troubleshooting, as it may not always be available.
         /// </summary>
-        public SipDiagnosticInfo SipCode { get; }
+        public SipDiagnosticInfo SipDetails { get; }
         /// <summary>
-        /// Q850 cause code from SBC. This can be helpful to troubleshoot call issues if this result was unexpected.
+        /// Q850 cause from SBC. This can be helpful to troubleshoot call issues if this result was unexpected.
         /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
         /// Do not solely rely on this information for troubleshooting, as it may not always be available.
         /// </summary>
-        public SipDiagnosticInfo Q850Cause { get; }
+        public SipDiagnosticInfo Q850Details { get; }
     }
 }

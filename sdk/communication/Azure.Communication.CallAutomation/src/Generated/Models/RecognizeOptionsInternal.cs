@@ -30,10 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="initialSilenceTimeoutInSeconds"> Time to wait for first input after prompt (if any). </param>
         /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
         /// <param name="speechLanguage"> Speech language to be recognized, If not set default is en-US. </param>
-        /// <param name="speechLanguages">
-        /// List of locales for Language Identification.
-        /// Supports upto 4 locales in the format: ["en-us", "fr-fr", "hi-in"] etc.
-        /// </param>
+        /// <param name="speechLanguages"> Speech languages for language identification and recognition. Example: ["en-us", "fr-fr", "hi-in"] etc.. </param>
         /// <param name="enableSentimentAnalysis"> Value indicating if sentiment analysis should be used. </param>
         /// <param name="speechRecognitionModelEndpointId"> Endpoint where the custom model was deployed. </param>
         /// <param name="dtmfOptions"> Defines configurations for DTMF. </param>
@@ -61,10 +58,7 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
         public string SpeechLanguage { get; set; }
-        /// <summary>
-        /// List of locales for Language Identification.
-        /// Supports upto 4 locales in the format: ["en-us", "fr-fr", "hi-in"] etc.
-        /// </summary>
+        /// <summary> Speech languages for language identification and recognition. Example: ["en-us", "fr-fr", "hi-in"] etc.. </summary>
         public IList<string> SpeechLanguages { get; }
         /// <summary> Value indicating if sentiment analysis should be used. </summary>
         public bool? EnableSentimentAnalysis { get; set; }
