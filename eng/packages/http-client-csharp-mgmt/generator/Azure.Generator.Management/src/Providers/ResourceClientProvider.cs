@@ -92,6 +92,7 @@ namespace Azure.Generator.Management.Providers
         internal ModelProvider ResourceData { get; }
         internal string ResourceName { get; }
         // TODO -- we should not need to expose this.
+        // Instead, if some method needs more method, we should prepare them and pass it in as an argument
         internal IEnumerable<ResourceMethod> ResourceServiceMethods => _resourceServiceMethods;
 
         internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
