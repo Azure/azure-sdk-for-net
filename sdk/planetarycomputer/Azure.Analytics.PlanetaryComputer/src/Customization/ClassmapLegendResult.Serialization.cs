@@ -148,13 +148,5 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ClassmapLegendResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ClassmapLegendResult"/> from. </param>
-        public static explicit operator ClassmapLegendResult(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeClassmapLegendResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

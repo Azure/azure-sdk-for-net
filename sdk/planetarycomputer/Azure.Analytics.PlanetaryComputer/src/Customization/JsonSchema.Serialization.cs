@@ -120,13 +120,5 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JsonSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="JsonSchema"/> from. </param>
-        public static explicit operator JsonSchema(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeJsonSchema(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
