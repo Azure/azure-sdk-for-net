@@ -52,15 +52,13 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StorageTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string storageTaskApiVersion);
+            _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
             _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion);
             _storageTasksReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string storageTaskApiVersion0);
-            _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion0);
+            _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion);
             _storageTaskAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string storageTaskApiVersion1);
-            _storageTaskAssignmentRestClient = new StorageTaskAssignment(_storageTaskAssignmentClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion1);
+            _storageTaskAssignmentRestClient = new StorageTaskAssignment(_storageTaskAssignmentClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion);
             ValidateResourceId(id);
         }
 
@@ -156,7 +154,7 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Update a StorageTask. </summary>
+        /// <summary> Update storage task properties. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The parameters to provide to update the storage task resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,7 +193,7 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Update a StorageTask. </summary>
+        /// <summary> Update storage task properties. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The parameters to provide to update the storage task resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -316,7 +314,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTasksReportsAsyncAsync(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTasksReportsAsync(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -353,7 +351,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <summary> Lists Resource IDs of the Storage Task Assignments associated with this Storage Task. </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<SubResource> GetStorageTaskAssignmentsAsyncAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubResource> GetStorageTaskAssignmentsAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

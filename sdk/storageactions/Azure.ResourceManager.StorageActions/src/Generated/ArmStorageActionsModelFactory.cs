@@ -65,15 +65,6 @@ namespace Azure.ResourceManager.StorageActions.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="if"> The if block of storage task operation. </param>
-        /// <param name="elseOperations"> List of operations to execute in the else block. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elseOperations"/> is null. </exception>
-        /// <returns> A new <see cref="Models.StorageTaskAction"/> instance for mocking. </returns>
-        public static StorageTaskAction StorageTaskAction(StorageTaskIfCondition @if = default, IList<StorageTaskOperationInfo> elseOperations)
-        {
-            return new StorageTaskAction(@if, elseOperations is null ? default : new StorageTaskElseCondition(elseOperations, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The if block of storage task operation. </summary>
         /// <param name="condition"> Condition predicate to evaluate each object. See https://aka.ms/storagetaskconditions for valid properties and operators. </param>
         /// <param name="operations"> List of operations to execute when the condition predicate satisfies. </param>
