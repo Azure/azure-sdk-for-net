@@ -629,10 +629,10 @@
 # ServiceOwners:                                                   @naiteeks @bennage @giakas
 
 # PRLabel: %Microsoft Playwright Testing
-/sdk/playwrighttesting/                                            @Sid200026 @puagarwa @ShreyaAnand
+/sdk/playwrighttesting/                                            @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Microsoft Playwright Testing
-# ServiceOwners:                                                   @Sid200026 @puagarwa @ShreyaAnand
+# ServiceOwners:                                                   @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Migrate
 # ServiceOwners:                                                   @shijojoy
