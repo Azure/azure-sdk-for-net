@@ -32,7 +32,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(BarData))]
     [ModelReaderWriterBuildable(typeof(BarProperties))]
     [ModelReaderWriterBuildable(typeof(BarListResult))]
-    [ModelReaderWriterBuildable(typeof(BarSettingsData))]
+    [ModelReaderWriterBuildable(typeof(BarSettingsResourceData))]
     [ModelReaderWriterBuildable(typeof(BarSettingsProperties))]
     [ModelReaderWriterBuildable(typeof(ZooData))]
     [ModelReaderWriterBuildable(typeof(ZooProperties))]

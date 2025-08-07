@@ -4165,9 +4165,9 @@
     {
       "$id": "370",
       "kind": "model",
-      "name": "BarSettings",
+      "name": "BarSettingsResource",
       "namespace": "MgmtTypeSpec",
-      "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettings",
+      "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettingsResource",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "Concrete proxy resource types can be created by aliasing this type using a specific property type.",
       "decorators": [
@@ -4205,7 +4205,7 @@
             "resourceScope": "ResourceGroup",
             "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
             "singletonResourceName": "current",
-            "resourceName": "BarSettings"
+            "resourceName": "BarSettingsResource"
           }
         }
       ],
@@ -4260,7 +4260,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettings.properties",
+          "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettingsResource.properties",
           "serializationOptions": {
             "json": {
               "name": "properties"
@@ -4272,7 +4272,7 @@
           "kind": "path",
           "name": "name",
           "serializedName": "name",
-          "doc": "The name of the BarSettings",
+          "doc": "The name of the BarSettingsResource",
           "type": {
             "$id": "378",
             "kind": "string",
@@ -4283,7 +4283,7 @@
           "optional": false,
           "readOnly": true,
           "decorators": [],
-          "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettings.name",
+          "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettingsResource.name",
           "explode": false,
           "style": "simple",
           "allowReserved": false,
@@ -4302,7 +4302,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettings.stringArray",
+          "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettingsResource.stringArray",
           "serializationOptions": {
             "json": {
               "name": "stringArray"
@@ -9865,12 +9865,12 @@
               "apiVersions": [
                 "2024-05-01"
               ],
-              "doc": "Create a BarSettings",
+              "doc": "Create a BarSettingsResource",
               "operation": {
                 "$id": "774",
                 "name": "createOrUpdate",
-                "resourceName": "BarSettings",
-                "doc": "Create a BarSettings",
+                "resourceName": "BarSettingsResource",
+                "doc": "Create a BarSettingsResource",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10273,12 +10273,12 @@
               "apiVersions": [
                 "2024-05-01"
               ],
-              "doc": "Get a BarSettings",
+              "doc": "Get a BarSettingsResource",
               "operation": {
                 "$id": "802",
                 "name": "get",
-                "resourceName": "BarSettings",
-                "doc": "Get a BarSettings",
+                "resourceName": "BarSettingsResource",
+                "doc": "Get a BarSettingsResource",
                 "accessibility": "public",
                 "parameters": [
                   {
