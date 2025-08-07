@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Resolved memory leak issue with `CancellationTokenSource` in `TransferOperation` that could occur when the transfer was created.
 
 ### Other Changes
 
