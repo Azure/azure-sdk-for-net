@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(EdgeOrderItemPatch))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderItemResource))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderItemReturnContent))]
-    [ModelReaderWriterBuildable(typeof(EdgeOrderOkResponseResult))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderProduct))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderProductBillingMeterDetails))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderProductCostInformation))]

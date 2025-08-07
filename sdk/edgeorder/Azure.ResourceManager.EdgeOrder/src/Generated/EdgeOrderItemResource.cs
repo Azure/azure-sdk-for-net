@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="content"> Return order item details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeOrderOkResponseResult>> ReturnAsync(WaitUntil waitUntil, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReturnAsync(WaitUntil waitUntil, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -468,9 +468,9 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _edgeOrderItemOrderItemResourcesRestClient.ReturnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<EdgeOrderOkResponseResult>(new EdgeOrderOkResponseResultOperationSource(), _edgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, _edgeOrderItemOrderItemResourcesRestClient.CreateReturnRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation(_edgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, _edgeOrderItemOrderItemResourcesRestClient.CreateReturnRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="content"> Return order item details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EdgeOrderOkResponseResult> Return(WaitUntil waitUntil, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Return(WaitUntil waitUntil, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -514,9 +514,9 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _edgeOrderItemOrderItemResourcesRestClient.Return(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new EdgeOrderArmOperation<EdgeOrderOkResponseResult>(new EdgeOrderOkResponseResultOperationSource(), _edgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, _edgeOrderItemOrderItemResourcesRestClient.CreateReturnRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation(_edgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, _edgeOrderItemOrderItemResourcesRestClient.CreateReturnRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

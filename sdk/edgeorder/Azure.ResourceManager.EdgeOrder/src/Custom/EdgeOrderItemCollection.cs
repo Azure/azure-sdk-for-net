@@ -15,6 +15,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 
+[assembly: CodeGenSuppressType(nameof(IEnumerator))]
+[assembly: CodeGenSuppressType(nameof(IEnumerator<Azure.ResourceManager.EdgeOrder.EdgeOrderItemResource>))]
+[assembly: CodeGenSuppressType(nameof(IAsyncEnumerator<Azure.ResourceManager.EdgeOrder.EdgeOrderItemResource>))]
 namespace Azure.ResourceManager.EdgeOrder
 {
     public partial class EdgeOrderItemCollection
