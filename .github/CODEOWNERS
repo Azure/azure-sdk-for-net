@@ -760,6 +760,18 @@
 # ServiceLabel: %OpenAI
 # ServiceOwners:                                                   @jpalvarezl @trrwilson
 
+# PRLabel: %Image Analysis
+/sdk/vision/Azure.AI.Vision.ImageAnalysis/                         @rhurey @dargilco
+
+# ServiceLabel: %Image Analysis
+# ServiceOwners:                                                   @rhurey @dargilco
+
+# PRLabel: %Microsoft Playwright Testing
+/sdk/playwrighttesting/                                            @puagarwa @ShreyaAnand
+
+# ServiceLabel: %Microsoft Playwright Testing
+# ServiceOwners:                                                   @puagarwa @ShreyaAnand
+
 # ServiceLabel: %Policy
 # ServiceOwners:                                                   @aperezcloud @kenieva
 
