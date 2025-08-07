@@ -78,7 +78,7 @@ internal partial class AzureFileClient : OpenAIFileClient
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
-    internal override PipelineMessage CreateCreateFileRequest(BinaryContent content, string contentType, RequestOptions options)
+    internal override PipelineMessage CreateUploadFileRequest(BinaryContent content, string contentType, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("POST")
             .WithPath("files")
@@ -103,7 +103,7 @@ internal partial class AzureFileClient : OpenAIFileClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateRetrieveFileRequest(string fileId, RequestOptions options)
+    internal override PipelineMessage CreateGetFileRequest(string fileId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
             .WithPath("files", fileId)
