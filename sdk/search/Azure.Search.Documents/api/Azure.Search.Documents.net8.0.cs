@@ -5726,7 +5726,7 @@ namespace Azure.Search.Documents.Models
         public override System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SearchResult<T>> Values { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
     }
-    public partial class SearchResults<T>
+    public abstract partial class SearchResults<T>
     {
         internal SearchResults() { }
         public double? Coverage { get { throw null; } }

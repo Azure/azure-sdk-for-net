@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// Response containing search results from an index.
     /// </summary>
-    public class SearchResults<T>
+    public abstract class SearchResults<T>
     {
         /// <summary>
         /// The total count of results found by the search operation, or null
@@ -91,27 +91,9 @@ namespace Azure.Search.Documents.Models
         /// The SearchClient used to fetch the next page of results.  This is
         /// only used when paging.
         /// </summary>
-        private SearchClient _pagingClient;
+        private protected SearchClient _pagingClient;
 
-        /// <summary>
-        /// Metadata about the type to deserialize.
-        /// This is only used when deserializing using the APIs that take type info.
-        /// </summary>
-        private JsonTypeInfo<T> _typeInfo;
-
-        /// <summary>
-        /// Initializes a new instance of the SearchResults class.
-        /// </summary>
-        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
-        internal SearchResults() { }
-
-        /// <summary>
-        /// Initializes a new instance of the SearchResults class with type info.
-        /// </summary>
-        internal SearchResults(JsonTypeInfo<T> typeInfo)
-        {
-            _typeInfo = typeInfo;
-        }
+        private protected SearchResults() { }
 
         /// <summary>
         /// Get all of the <see cref="SearchResult{T}"/>s synchronously.
@@ -155,46 +137,7 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>The next page of SearchResults.</returns>
-        internal async Task<SearchResults<T>> GetNextPageAsync(bool async, CancellationToken cancellationToken)
-        {
-            SearchResults<T> next = null;
-            if (_pagingClient != null && NextOptions != null)
-            {
-                if (_typeInfo != null)
-                {
-                    next = async ?
-                        await _pagingClient.SearchAsync<T>(
-                            NextOptions.SearchText,
-                            _typeInfo,
-                            NextOptions,
-                            cancellationToken)
-                            .ConfigureAwait(false) :
-                        _pagingClient.Search<T>(
-                            NextOptions.SearchText,
-                            _typeInfo,
-                            NextOptions,
-                            cancellationToken);
-                }
-                else
-                {
-                    if (!JsonSerialization.IsReflectionEnabled)
-                    {
-                        throw new InvalidOperationException("Reflection-based serialization has been disabled in the app configuration.");
-                    }
-                    next = async ?
-                        await _pagingClient.SearchAsync<T>(
-                            NextOptions.SearchText,
-                            NextOptions,
-                            cancellationToken)
-                            .ConfigureAwait(false) :
-                        _pagingClient.Search<T>(
-                            NextOptions.SearchText,
-                            NextOptions,
-                            cancellationToken);
-                }
-            }
-            return next;
-        }
+        internal abstract Task<SearchResults<T>> GetNextPageAsync(bool async, CancellationToken cancellationToken);
 
         #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
@@ -226,7 +169,7 @@ namespace Azure.Search.Documents.Models
 
             JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
 
-            SearchResults<T> results = new SearchResults<T>();
+            SearchResults<T> results = new SearchResultsWithReflection<T>();
             await DeserializeEnvelope(doc, async, results, (JsonElement element, bool async) =>
             {
                 return SearchResult<T>.DeserializeAsync(
@@ -267,7 +210,7 @@ namespace Azure.Search.Documents.Models
                 await JsonDocument.ParseAsync(json, cancellationToken: cancellationToken).ConfigureAwait(false) :
                 JsonDocument.Parse(json);
 
-            SearchResults<T> results = new SearchResults<T>(typeInfo);
+            SearchResults<T> results = new SearchResultsWithTypeInfo<T>(typeInfo);
             await DeserializeEnvelope(doc, async, results, (JsonElement element, bool async) =>
             {
                 return SearchResult<T>.DeserializeAsync(
@@ -598,7 +541,7 @@ namespace Azure.Search.Documents.Models
             double? coverage,
             Response rawResponse)
         {
-            var results = new SearchResults<T>()
+            var results = new SearchResultsWithReflection<T>()
             {
                 TotalCount = totalCount,
                 Coverage = coverage,
@@ -630,7 +573,7 @@ namespace Azure.Search.Documents.Models
             Response rawResponse,
             SemanticSearchResults semanticSearch)
         {
-            var results = new SearchResults<T>()
+            var results = new SearchResultsWithReflection<T>()
             {
                 TotalCount = totalCount,
                 Coverage = coverage,
@@ -664,7 +607,7 @@ namespace Azure.Search.Documents.Models
             SemanticSearchResults semanticSearch,
             DebugInfo debugInfo)
         {
-            var results = new SearchResults<T>()
+            var results = new SearchResultsWithReflection<T>()
             {
                 TotalCount = totalCount,
                 Coverage = coverage,
