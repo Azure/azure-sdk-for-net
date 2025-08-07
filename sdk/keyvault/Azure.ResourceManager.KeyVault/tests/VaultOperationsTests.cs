@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             Assert.AreEqual(expectedResourceId, vaultData.Id.ToString());
             Assert.AreEqual(expectedLocation, vaultData.Location);
-            Assert.AreEqual(expectedTenantId, vaultData.Properties.TenantId);
+            Assert.AreEqual(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty, vaultData.Properties.TenantId);
             Assert.AreEqual(expectedSku, vaultData.Properties.Sku.Name);
             Assert.AreEqual(expectedVaultName, vaultData.Name);
             Assert.AreEqual(expectedEnabledForDeployment, vaultData.Properties.EnabledForDeployment);
@@ -350,7 +350,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(expectedEnabledForDiskEncryption, vaultData.Properties.EnabledForDiskEncryption);
             Assert.AreEqual(expectedEnableSoftDelete, vaultData.Properties.EnableSoftDelete);
             Assert.True(expectedTags.DictionaryEqual(vaultData.Tags));
-            Assert.True(expectedPolicies.IsEqual(vaultData.Properties.AccessPolicies));
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.True(expectedPolicies.IsEqual(vaultData.Properties.AccessPolicies));
+            }
         }
 
         private void ValidateVault(

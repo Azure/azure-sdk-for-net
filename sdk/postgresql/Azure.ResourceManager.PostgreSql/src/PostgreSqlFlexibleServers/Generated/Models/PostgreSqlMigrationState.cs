@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
+        private const string ValidationFailedValue = "ValidationFailed";
+        private const string CleaningUpValue = "CleaningUp";
 
         /// <summary> InProgress. </summary>
         public static PostgreSqlMigrationState InProgress { get; } = new PostgreSqlMigrationState(InProgressValue);
@@ -38,11 +40,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlMigrationState Failed { get; } = new PostgreSqlMigrationState(FailedValue);
         /// <summary> Succeeded. </summary>
         public static PostgreSqlMigrationState Succeeded { get; } = new PostgreSqlMigrationState(SucceededValue);
+        /// <summary> ValidationFailed. </summary>
+        public static PostgreSqlMigrationState ValidationFailed { get; } = new PostgreSqlMigrationState(ValidationFailedValue);
+        /// <summary> CleaningUp. </summary>
+        public static PostgreSqlMigrationState CleaningUp { get; } = new PostgreSqlMigrationState(CleaningUpValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationState left, PostgreSqlMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationState"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlMigrationState left, PostgreSqlMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationState"/>. </summary>
         public static implicit operator PostgreSqlMigrationState(string value) => new PostgreSqlMigrationState(value);
 
         /// <inheritdoc />
@@ -53,7 +59,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

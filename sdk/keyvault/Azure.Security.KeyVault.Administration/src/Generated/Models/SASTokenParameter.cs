@@ -6,29 +6,46 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> The SASTokenParameter. </summary>
     internal partial class SASTokenParameter
     {
-        /// <summary> Initializes a new instance of SASTokenParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="SASTokenParameter"/>. </summary>
         /// <param name="storageResourceUri"> Azure Blob storage container Uri. </param>
-        /// <param name="token"> The SAS token pointing to an Azure Blob storage container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageResourceUri"/> or <paramref name="token"/> is null. </exception>
-        public SASTokenParameter(string storageResourceUri, string token)
+        /// <exception cref="ArgumentNullException"> <paramref name="storageResourceUri"/> is null. </exception>
+        public SASTokenParameter(string storageResourceUri)
         {
             Argument.AssertNotNull(storageResourceUri, nameof(storageResourceUri));
-            Argument.AssertNotNull(token, nameof(token));
 
             StorageResourceUri = storageResourceUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SASTokenParameter"/>. </summary>
+        /// <param name="storageResourceUri"> Azure Blob storage container Uri. </param>
+        /// <param name="token"> The SAS token pointing to an Azure Blob storage container. </param>
+        /// <param name="useManagedIdentity"> Indicates which authentication method should be used. If set to true, Managed HSM will use the configured user-assigned managed identity to authenticate with Azure Storage. Otherwise, a SAS token has to be specified. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SASTokenParameter(string storageResourceUri, string token, bool? useManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            StorageResourceUri = storageResourceUri;
             Token = token;
+            UseManagedIdentity = useManagedIdentity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure Blob storage container Uri. </summary>
         public string StorageResourceUri { get; }
+
         /// <summary> The SAS token pointing to an Azure Blob storage container. </summary>
-        public string Token { get; }
+        public string Token { get; set; }
+
+        /// <summary> Indicates which authentication method should be used. If set to true, Managed HSM will use the configured user-assigned managed identity to authenticate with Azure Storage. Otherwise, a SAS token has to be specified. </summary>
+        public bool? UseManagedIdentity { get; set; }
     }
 }

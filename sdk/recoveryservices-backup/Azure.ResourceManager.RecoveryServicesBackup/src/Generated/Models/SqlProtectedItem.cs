@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure SQL workload-specific backup item. </summary>
     public partial class SqlProtectedItem : BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of SqlProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlProtectedItem"/>. </summary>
         public SqlProtectedItem()
         {
             ProtectedItemType = "Microsoft.Sql/servers/databases";
         }
 
-        /// <summary> Initializes a new instance of SqlProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
@@ -38,11 +38,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
-        /// <param name="softDeleteRetentionPeriod"> Soft delete retention period in days. </param>
+        /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="protectedItemDataId"> Internal ID of a backup item. Used by Azure SQL Backup engine to contact Recovery Services. </param>
         /// <param name="protectionState"> Backup state of the backed up item. </param>
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
-        internal SqlProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string protectedItemDataId, ProtectedItemState? protectionState, SqlProtectedItemExtendedInfo extendedInfo) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
+        internal SqlProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, IDictionary<string, BinaryData> serializedAdditionalRawData, string protectedItemDataId, ProtectedItemState? protectionState, SqlProtectedItemExtendedInfo extendedInfo) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData)
         {
             ProtectedItemDataId = protectedItemDataId;
             ProtectionState = protectionState;

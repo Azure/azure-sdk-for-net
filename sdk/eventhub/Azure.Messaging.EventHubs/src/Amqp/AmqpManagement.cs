@@ -75,6 +75,12 @@ namespace Azure.Messaging.EventHubs
             public static MapKey PartitionIdentifiers { get; } = new MapKey("partition_ids");
 
             /// <summary>
+            ///   The message property that identifies whether this Event Hub has geo-replication enabled.
+            /// </summary>
+            ///
+            public static MapKey GeoReplicationFactor { get; } = new MapKey("georeplication_factor");
+
+            /// <summary>
             ///   The message property that identifies the beginning sequence number in a partition.
             /// </summary>
             ///

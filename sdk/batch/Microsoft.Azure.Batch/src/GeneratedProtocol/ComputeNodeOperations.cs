@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Batch.Protocol
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -1360,8 +1359,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </summary>
         /// <remarks>
         /// You can reinstall the operating system on a Compute Node only if it is in
-        /// an idle or running state. This API can be invoked only on Pools created
-        /// with the cloud service configuration property.
+        /// an idle or running state.
         /// </remarks>
         /// <param name='poolId'>
         /// The ID of the Pool that contains the Compute Node.
@@ -2119,14 +2117,512 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
+        /// Starts the specified Compute Node.
+        /// </summary>
+        /// <remarks>
+        /// You can start a Compute Node only if it has been deallocated
+        /// </remarks>
+        /// <param name='poolId'>
+        /// The ID of the Pool that contains the Compute Node.
+        /// </param>
+        /// <param name='nodeId'>
+        /// The ID of the Compute Node that you want to start.
+        /// </param>
+        /// <param name='computeNodeStartOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationHeaderResponse<ComputeNodeStartHeaders>> StartWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeStartOptions computeNodeStartOptions = default(ComputeNodeStartOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
+            if (poolId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
+            }
+            if (nodeId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nodeId");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            int? timeout = default(int?);
+            if (computeNodeStartOptions != null)
+            {
+                timeout = computeNodeStartOptions.Timeout;
+            }
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (computeNodeStartOptions != null)
+            {
+                clientRequestId = computeNodeStartOptions.ClientRequestId;
+            }
+            bool? returnClientRequestId = default(bool?);
+            if (computeNodeStartOptions != null)
+            {
+                returnClientRequestId = computeNodeStartOptions.ReturnClientRequestId;
+            }
+            System.DateTime? ocpDate = default(System.DateTime?);
+            if (computeNodeStartOptions != null)
+            {
+                ocpDate = computeNodeStartOptions.OcpDate;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("poolId", poolId);
+                tracingParameters.Add("nodeId", nodeId);
+                tracingParameters.Add("timeout", timeout);
+                tracingParameters.Add("clientRequestId", clientRequestId);
+                tracingParameters.Add("returnClientRequestId", returnClientRequestId);
+                tracingParameters.Add("ocpDate", ocpDate);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Start", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/start";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
+            _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
+            _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (timeout != null)
+            {
+                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+            if (clientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
+            }
+            if (returnClientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("return-client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("return-client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
+            }
+            if (ocpDate != null)
+            {
+                if (_httpRequest.Headers.Contains("ocp-date"))
+                {
+                    _httpRequest.Headers.Remove("ocp-date");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 202)
+            {
+                var ex = new BatchErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationHeaderResponse<ComputeNodeStartHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ComputeNodeStartHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Deallocates the specified Compute Node.
+        /// </summary>
+        /// <remarks>
+        /// You can deallocate a Compute Node only if it is in an idle or running
+        /// state.
+        /// </remarks>
+        /// <param name='poolId'>
+        /// The ID of the Pool that contains the Compute Node.
+        /// </param>
+        /// <param name='nodeId'>
+        /// The ID of the Compute Node that you want to deallocate.
+        /// </param>
+        /// <param name='nodeDeallocateOption'>
+        /// When to deallocate the Compute Node and what to do with currently running
+        /// Tasks. The default value is requeue. Possible values include: 'requeue',
+        /// 'terminate', 'taskCompletion', 'retainedData'
+        /// </param>
+        /// <param name='computeNodeDeallocateOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationHeaderResponse<ComputeNodeDeallocateHeaders>> DeallocateWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeDeallocateOption? nodeDeallocateOption = default(ComputeNodeDeallocateOption?), ComputeNodeDeallocateOptions computeNodeDeallocateOptions = default(ComputeNodeDeallocateOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
+            if (poolId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
+            }
+            if (nodeId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nodeId");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            int? timeout = default(int?);
+            if (computeNodeDeallocateOptions != null)
+            {
+                timeout = computeNodeDeallocateOptions.Timeout;
+            }
+            System.Guid? clientRequestId = default(System.Guid?);
+            if (computeNodeDeallocateOptions != null)
+            {
+                clientRequestId = computeNodeDeallocateOptions.ClientRequestId;
+            }
+            bool? returnClientRequestId = default(bool?);
+            if (computeNodeDeallocateOptions != null)
+            {
+                returnClientRequestId = computeNodeDeallocateOptions.ReturnClientRequestId;
+            }
+            System.DateTime? ocpDate = default(System.DateTime?);
+            if (computeNodeDeallocateOptions != null)
+            {
+                ocpDate = computeNodeDeallocateOptions.OcpDate;
+            }
+            NodeDeallocateParameter nodeDeallocateParameter = default(NodeDeallocateParameter);
+            if (nodeDeallocateOption != null)
+            {
+                nodeDeallocateParameter = new NodeDeallocateParameter();
+                nodeDeallocateParameter.NodeDeallocateOption = nodeDeallocateOption;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("poolId", poolId);
+                tracingParameters.Add("nodeId", nodeId);
+                tracingParameters.Add("timeout", timeout);
+                tracingParameters.Add("clientRequestId", clientRequestId);
+                tracingParameters.Add("returnClientRequestId", returnClientRequestId);
+                tracingParameters.Add("ocpDate", ocpDate);
+                tracingParameters.Add("nodeDeallocateParameter", nodeDeallocateParameter);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Deallocate", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/deallocate";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
+            _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
+            _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (timeout != null)
+            {
+                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+            if (clientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
+            }
+            if (returnClientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("return-client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("return-client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
+            }
+            if (ocpDate != null)
+            {
+                if (_httpRequest.Headers.Contains("ocp-date"))
+                {
+                    _httpRequest.Headers.Remove("ocp-date");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(nodeDeallocateParameter != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(nodeDeallocateParameter, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; odata=minimalmetadata; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 202)
+            {
+                var ex = new BatchErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationHeaderResponse<ComputeNodeDeallocateHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ComputeNodeDeallocateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Gets the settings required for remote login to a Compute Node.
         /// </summary>
         /// <remarks>
         /// Before you can remotely login to a Compute Node using the remote login
-        /// settings, you must create a user Account on the Compute Node. This API can
-        /// be invoked only on Pools created with the virtual machine configuration
-        /// property. For Pools created with a cloud service configuration, see the
-        /// GetRemoteDesktop API.
+        /// settings, you must create a user Account on the Compute Node.
         /// </remarks>
         /// <param name='poolId'>
         /// The ID of the Pool that contains the Compute Node.
@@ -2367,259 +2863,6 @@ namespace Microsoft.Azure.Batch.Protocol
             try
             {
                 _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ComputeNodeGetRemoteLoginSettingsHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Gets the Remote Desktop Protocol file for the specified Compute Node.
-        /// </summary>
-        /// <remarks>
-        /// Before you can access a Compute Node by using the RDP file, you must create
-        /// a user Account on the Compute Node. This API can only be invoked on Pools
-        /// created with a cloud service configuration. For Pools created with a
-        /// virtual machine configuration, see the GetRemoteLoginSettings API.
-        /// </remarks>
-        /// <param name='poolId'>
-        /// The ID of the Pool that contains the Compute Node.
-        /// </param>
-        /// <param name='nodeId'>
-        /// The ID of the Compute Node for which you want to get the Remote Desktop
-        /// Protocol file.
-        /// </param>
-        /// <param name='computeNodeGetRemoteDesktopOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="BatchErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<Stream,ComputeNodeGetRemoteDesktopHeaders>> GetRemoteDesktopWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.BatchUrl == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
-            }
-            if (poolId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
-            }
-            if (nodeId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nodeId");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            int? timeout = default(int?);
-            if (computeNodeGetRemoteDesktopOptions != null)
-            {
-                timeout = computeNodeGetRemoteDesktopOptions.Timeout;
-            }
-            System.Guid? clientRequestId = default(System.Guid?);
-            if (computeNodeGetRemoteDesktopOptions != null)
-            {
-                clientRequestId = computeNodeGetRemoteDesktopOptions.ClientRequestId;
-            }
-            bool? returnClientRequestId = default(bool?);
-            if (computeNodeGetRemoteDesktopOptions != null)
-            {
-                returnClientRequestId = computeNodeGetRemoteDesktopOptions.ReturnClientRequestId;
-            }
-            System.DateTime? ocpDate = default(System.DateTime?);
-            if (computeNodeGetRemoteDesktopOptions != null)
-            {
-                ocpDate = computeNodeGetRemoteDesktopOptions.OcpDate;
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("poolId", poolId);
-                tracingParameters.Add("nodeId", nodeId);
-                tracingParameters.Add("timeout", timeout);
-                tracingParameters.Add("clientRequestId", clientRequestId);
-                tracingParameters.Add("returnClientRequestId", returnClientRequestId);
-                tracingParameters.Add("ocpDate", ocpDate);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetRemoteDesktop", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/rdp";
-            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
-            _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
-            _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (timeout != null)
-            {
-                _queryParameters.Add(string.Format("timeout={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, Client.SerializationSettings).Trim('"'))));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-            if (clientRequestId != null)
-            {
-                if (_httpRequest.Headers.Contains("client-request-id"))
-                {
-                    _httpRequest.Headers.Remove("client-request-id");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", SafeJsonConvert.SerializeObject(clientRequestId, Client.SerializationSettings).Trim('"'));
-            }
-            if (returnClientRequestId != null)
-            {
-                if (_httpRequest.Headers.Contains("return-client-request-id"))
-                {
-                    _httpRequest.Headers.Remove("return-client-request-id");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, Client.SerializationSettings).Trim('"'));
-            }
-            if (ocpDate != null)
-            {
-                if (_httpRequest.Headers.Contains("ocp-date"))
-                {
-                    _httpRequest.Headers.Remove("ocp-date");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new BatchErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    BatchError _errorBody =  SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<Stream,ComputeNodeGetRemoteDesktopHeaders>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _result.Body = await _httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ComputeNodeGetRemoteDesktopHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {

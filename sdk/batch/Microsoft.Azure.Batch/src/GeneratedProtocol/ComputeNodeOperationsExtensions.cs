@@ -13,7 +13,6 @@ namespace Microsoft.Azure.Batch.Protocol
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -327,8 +326,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </summary>
             /// <remarks>
             /// You can reinstall the operating system on a Compute Node only if it is in
-            /// an idle or running state. This API can be invoked only on Pools created
-            /// with the cloud service configuration property.
+            /// an idle or running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -357,8 +355,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </summary>
             /// <remarks>
             /// You can reinstall the operating system on a Compute Node only if it is in
-            /// an idle or running state. This API can be invoked only on Pools created
-            /// with the cloud service configuration property.
+            /// an idle or running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -507,14 +504,127 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
+            /// Starts the specified Compute Node.
+            /// </summary>
+            /// <remarks>
+            /// You can start a Compute Node only if it has been deallocated
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='poolId'>
+            /// The ID of the Pool that contains the Compute Node.
+            /// </param>
+            /// <param name='nodeId'>
+            /// The ID of the Compute Node that you want to start.
+            /// </param>
+            /// <param name='computeNodeStartOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static ComputeNodeStartHeaders Start(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeStartOptions computeNodeStartOptions = default(ComputeNodeStartOptions))
+            {
+                return operations.StartAsync(poolId, nodeId, computeNodeStartOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts the specified Compute Node.
+            /// </summary>
+            /// <remarks>
+            /// You can start a Compute Node only if it has been deallocated
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='poolId'>
+            /// The ID of the Pool that contains the Compute Node.
+            /// </param>
+            /// <param name='nodeId'>
+            /// The ID of the Compute Node that you want to start.
+            /// </param>
+            /// <param name='computeNodeStartOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ComputeNodeStartHeaders> StartAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeStartOptions computeNodeStartOptions = default(ComputeNodeStartOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartWithHttpMessagesAsync(poolId, nodeId, computeNodeStartOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Deallocates the specified Compute Node.
+            /// </summary>
+            /// <remarks>
+            /// You can deallocate a Compute Node only if it is in an idle or running
+            /// state.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='poolId'>
+            /// The ID of the Pool that contains the Compute Node.
+            /// </param>
+            /// <param name='nodeId'>
+            /// The ID of the Compute Node that you want to deallocate.
+            /// </param>
+            /// <param name='nodeDeallocateOption'>
+            /// When to deallocate the Compute Node and what to do with currently running
+            /// Tasks. The default value is requeue. Possible values include: 'requeue',
+            /// 'terminate', 'taskCompletion', 'retainedData'
+            /// </param>
+            /// <param name='computeNodeDeallocateOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static ComputeNodeDeallocateHeaders Deallocate(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeDeallocateOption? nodeDeallocateOption = default(ComputeNodeDeallocateOption?), ComputeNodeDeallocateOptions computeNodeDeallocateOptions = default(ComputeNodeDeallocateOptions))
+            {
+                return operations.DeallocateAsync(poolId, nodeId, nodeDeallocateOption, computeNodeDeallocateOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deallocates the specified Compute Node.
+            /// </summary>
+            /// <remarks>
+            /// You can deallocate a Compute Node only if it is in an idle or running
+            /// state.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='poolId'>
+            /// The ID of the Pool that contains the Compute Node.
+            /// </param>
+            /// <param name='nodeId'>
+            /// The ID of the Compute Node that you want to deallocate.
+            /// </param>
+            /// <param name='nodeDeallocateOption'>
+            /// When to deallocate the Compute Node and what to do with currently running
+            /// Tasks. The default value is requeue. Possible values include: 'requeue',
+            /// 'terminate', 'taskCompletion', 'retainedData'
+            /// </param>
+            /// <param name='computeNodeDeallocateOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ComputeNodeDeallocateHeaders> DeallocateAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeDeallocateOption? nodeDeallocateOption = default(ComputeNodeDeallocateOption?), ComputeNodeDeallocateOptions computeNodeDeallocateOptions = default(ComputeNodeDeallocateOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeallocateWithHttpMessagesAsync(poolId, nodeId, nodeDeallocateOption, computeNodeDeallocateOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
             /// Gets the settings required for remote login to a Compute Node.
             /// </summary>
             /// <remarks>
             /// Before you can remotely login to a Compute Node using the remote login
-            /// settings, you must create a user Account on the Compute Node. This API can
-            /// be invoked only on Pools created with the virtual machine configuration
-            /// property. For Pools created with a cloud service configuration, see the
-            /// GetRemoteDesktop API.
+            /// settings, you must create a user Account on the Compute Node.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -538,10 +648,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </summary>
             /// <remarks>
             /// Before you can remotely login to a Compute Node using the remote login
-            /// settings, you must create a user Account on the Compute Node. This API can
-            /// be invoked only on Pools created with the virtual machine configuration
-            /// property. For Pools created with a cloud service configuration, see the
-            /// GetRemoteDesktop API.
+            /// settings, you must create a user Account on the Compute Node.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -564,65 +671,6 @@ namespace Microsoft.Azure.Batch.Protocol
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Remote Desktop Protocol file for the specified Compute Node.
-            /// </summary>
-            /// <remarks>
-            /// Before you can access a Compute Node by using the RDP file, you must create
-            /// a user Account on the Compute Node. This API can only be invoked on Pools
-            /// created with a cloud service configuration. For Pools created with a
-            /// virtual machine configuration, see the GetRemoteLoginSettings API.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='poolId'>
-            /// The ID of the Pool that contains the Compute Node.
-            /// </param>
-            /// <param name='nodeId'>
-            /// The ID of the Compute Node for which you want to get the Remote Desktop
-            /// Protocol file.
-            /// </param>
-            /// <param name='computeNodeGetRemoteDesktopOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static Stream GetRemoteDesktop(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions))
-            {
-                return operations.GetRemoteDesktopAsync(poolId, nodeId, computeNodeGetRemoteDesktopOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the Remote Desktop Protocol file for the specified Compute Node.
-            /// </summary>
-            /// <remarks>
-            /// Before you can access a Compute Node by using the RDP file, you must create
-            /// a user Account on the Compute Node. This API can only be invoked on Pools
-            /// created with a cloud service configuration. For Pools created with a
-            /// virtual machine configuration, see the GetRemoteLoginSettings API.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='poolId'>
-            /// The ID of the Pool that contains the Compute Node.
-            /// </param>
-            /// <param name='nodeId'>
-            /// The ID of the Compute Node for which you want to get the Remote Desktop
-            /// Protocol file.
-            /// </param>
-            /// <param name='computeNodeGetRemoteDesktopOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Stream> GetRemoteDesktopAsync(this IComputeNodeOperations operations, string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                var _result = await operations.GetRemoteDesktopWithHttpMessagesAsync(poolId, nodeId, computeNodeGetRemoteDesktopOptions, null, cancellationToken).ConfigureAwait(false);
-                _result.Request.Dispose();
-                return _result.Body;
             }
 
             /// <summary>

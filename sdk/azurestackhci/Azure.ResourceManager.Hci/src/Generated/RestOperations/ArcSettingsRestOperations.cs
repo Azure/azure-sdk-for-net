@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Hci.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.Hci
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByClusterRequestUri(string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string clusterName)
@@ -59,7 +73,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Get ArcSetting resources of HCI Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArcSettingList.DeserializeArcSettingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -88,7 +102,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Get ArcSetting resources of HCI Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -107,13 +121,29 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArcSettingList.DeserializeArcSettingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
@@ -139,7 +169,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Get ArcSetting resource details of HCI Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -160,7 +190,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArcSettingData.DeserializeArcSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -172,7 +202,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Get ArcSetting resource details of HCI Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -193,7 +223,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArcSettingData.DeserializeArcSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,6 +232,22 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingData data)
@@ -224,14 +270,14 @@ namespace Azure.ResourceManager.Hci
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create ArcSetting for HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -254,7 +300,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArcSettingData.DeserializeArcSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -264,7 +310,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Create ArcSetting for HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -287,13 +333,29 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArcSettingData.DeserializeArcSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, ArcSettingPatch patch)
@@ -316,14 +378,14 @@ namespace Azure.ResourceManager.Hci
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update ArcSettings for HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -346,7 +408,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArcSettingData.DeserializeArcSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -356,7 +418,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Update ArcSettings for HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -379,13 +441,29 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArcSettingData.DeserializeArcSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
@@ -411,7 +489,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Delete ArcSetting resource details of HCI Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -439,7 +517,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Delete ArcSetting resource details of HCI Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -466,6 +544,23 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        internal RequestUriBuilder CreateGeneratePasswordRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendPath("/generatePassword", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGeneratePasswordRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
         {
             var message = _pipeline.CreateMessage();
@@ -490,7 +585,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Generate password for arc settings. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -511,7 +606,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcPasswordCredential value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArcPasswordCredential.DeserializeArcPasswordCredential(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -521,7 +616,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Generate password for arc settings. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -542,13 +637,30 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcPasswordCredential value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArcPasswordCredential.DeserializeArcPasswordCredential(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateIdentityRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendPath("/createArcIdentity", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateIdentityRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
@@ -575,7 +687,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Create Aad identity for arc settings. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -602,7 +714,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Create Aad identity for arc settings. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -628,6 +740,210 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        internal RequestUriBuilder CreateConsentAndInstallDefaultExtensionsRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendPath("/consentAndInstallDefaultExtensions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateConsentAndInstallDefaultExtensionsRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendPath("/consentAndInstallDefaultExtensions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Add consent time for default extensions and initiate extensions installation. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterName"> The name of the cluster. </param>
+        /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ArcSettingData>> ConsentAndInstallDefaultExtensionsAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+
+            using var message = CreateConsentAndInstallDefaultExtensionsRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ArcSettingData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ArcSettingData.DeserializeArcSettingData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Add consent time for default extensions and initiate extensions installation. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterName"> The name of the cluster. </param>
+        /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ArcSettingData> ConsentAndInstallDefaultExtensions(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+
+            using var message = CreateConsentAndInstallDefaultExtensionsRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ArcSettingData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ArcSettingData.DeserializeArcSettingData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateInitializeDisableProcessRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendPath("/initializeDisableProcess", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateInitializeDisableProcessRequest(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/arcSettings/", false);
+            uri.AppendPath(arcSettingName, true);
+            uri.AppendPath("/initializeDisableProcess", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Initializes ARC Disable process on the cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterName"> The name of the cluster. </param>
+        /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> InitializeDisableProcessAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+
+            using var message = CreateInitializeDisableProcessRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Initializes ARC Disable process on the cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterName"> The name of the cluster. </param>
+        /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response InitializeDisableProcess(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+
+            using var message = CreateInitializeDisableProcessRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByClusterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
@@ -644,7 +960,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Get ArcSetting resources of HCI Cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -664,7 +980,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ArcSettingList.DeserializeArcSettingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,7 +991,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Get ArcSetting resources of HCI Cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -695,7 +1011,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         ArcSettingList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ArcSettingList.DeserializeArcSettingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

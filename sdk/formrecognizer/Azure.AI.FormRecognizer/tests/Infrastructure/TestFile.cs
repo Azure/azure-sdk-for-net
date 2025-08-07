@@ -4,13 +4,13 @@
 namespace Azure.AI.FormRecognizer.Tests
 {
     /// <summary>
-    /// A static class that lumps together the filenames of all forms to be used for tests.
-    /// A single constant string must be added to this class for each new form added to the
+    /// A static class that lumps together the filenames of all documents to be used for tests.
+    /// A single constant string must be added to this class for each new document added to the
     /// test assets folder.
     /// </summary>
     public static class TestFile
     {
-        /// <summary>A single-page blank form.</summary>
+        /// <summary>A single-page blank document.</summary>
         public const string Blank = "blank.pdf";
 
         /// <summary>A driver's license.</summary>

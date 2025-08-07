@@ -19,13 +19,47 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class StaticSiteBuildData : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteBuildData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildData"/>. </summary>
         public StaticSiteBuildData()
         {
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
+            LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackendInfo>();
+            DatabaseConnections = new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteBuildData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,8 +72,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="lastUpdatedOn"> When this build was updated. </param>
         /// <param name="status"> The status of the static site build. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
+        /// <param name="linkedBackends"> Backends linked to the static side build. </param>
+        /// <param name="databaseConnections"> Database connections for the static site build. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BuildId = buildId;
             SourceBranch = sourceBranch;
@@ -49,26 +86,44 @@ namespace Azure.ResourceManager.AppService
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
             UserProvidedFunctionApps = userProvidedFunctionApps;
+            LinkedBackends = linkedBackends;
+            DatabaseConnections = databaseConnections;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An identifier for the static site build. </summary>
+        [WirePath("properties.buildId")]
         public string BuildId { get; }
         /// <summary> The source branch. </summary>
+        [WirePath("properties.sourceBranch")]
         public string SourceBranch { get; }
         /// <summary> The title of a pull request that a static site build is related to. </summary>
+        [WirePath("properties.pullRequestTitle")]
         public string PullRequestTitle { get; }
         /// <summary> The hostname for a static site build. </summary>
+        [WirePath("properties.hostname")]
         public string Hostname { get; }
         /// <summary> When this build was created. </summary>
+        [WirePath("properties.createdTimeUtc")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> When this build was updated. </summary>
+        [WirePath("properties.lastUpdatedOn")]
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The status of the static site build. </summary>
+        [WirePath("properties.status")]
         public StaticSiteBuildStatus? Status { get; }
         /// <summary> User provided function apps registered with the static site build. </summary>
+        [WirePath("properties.userProvidedFunctionApps")]
         public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get; }
+        /// <summary> Backends linked to the static side build. </summary>
+        [WirePath("properties.linkedBackends")]
+        public IReadOnlyList<StaticSiteLinkedBackendInfo> LinkedBackends { get; }
+        /// <summary> Database connections for the static site build. </summary>
+        [WirePath("properties.databaseConnections")]
+        public IReadOnlyList<StaticSiteDatabaseConnectionOverview> DatabaseConnections { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

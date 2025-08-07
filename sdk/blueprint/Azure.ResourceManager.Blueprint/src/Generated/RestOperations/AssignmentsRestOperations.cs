@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Blueprint.Models;
@@ -37,6 +36,18 @@ namespace Azure.ResourceManager.Blueprint
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceScope, string assignmentName, AssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments/", false);
+            uri.AppendPath(assignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string resourceScope, string assignmentName, AssignmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -53,7 +64,7 @@ namespace Azure.ResourceManager.Blueprint
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -79,7 +90,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 201:
                     {
                         AssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,13 +119,25 @@ namespace Azure.ResourceManager.Blueprint
                 case 201:
                     {
                         AssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceScope, string assignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments/", false);
+            uri.AppendPath(assignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceScope, string assignmentName)
@@ -153,7 +176,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -182,7 +205,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,6 +214,22 @@ namespace Azure.ResourceManager.Blueprint
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceScope, string assignmentName, AssignmentDeleteBehavior? deleteBehavior)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments/", false);
+            uri.AppendPath(assignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (deleteBehavior != null)
+            {
+                uri.AppendQuery("deleteBehavior", deleteBehavior.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string resourceScope, string assignmentName, AssignmentDeleteBehavior? deleteBehavior)
@@ -234,7 +273,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 202:
                     {
                         AssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -264,7 +303,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 202:
                     {
                         AssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentData.DeserializeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -273,6 +312,19 @@ namespace Azure.ResourceManager.Blueprint
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateWhoIsBlueprintRequestUri(string resourceScope, string assignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments/", false);
+            uri.AppendPath(assignmentName, true);
+            uri.AppendPath("/whoIsBlueprint", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateWhoIsBlueprintRequest(string resourceScope, string assignmentName)
@@ -312,7 +364,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         WhoIsBlueprintContract value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WhoIsBlueprintContract.DeserializeWhoIsBlueprintContract(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -339,13 +391,24 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         WhoIsBlueprintContract value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WhoIsBlueprintContract.DeserializeWhoIsBlueprintContract(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceScope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Blueprint/blueprintAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceScope)
@@ -380,7 +443,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentList.DeserializeAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -404,13 +467,21 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentList.DeserializeAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceScope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceScope)
@@ -444,7 +515,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentList.DeserializeAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -470,7 +541,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentList.DeserializeAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -1,0 +1,3251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateOrUpdateAsync(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrUpdateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+            ["description"] = null,
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CustomAttributes =
+        {
+            ["custAttr1"] = "attr1",
+            ["custAttr2"] = "attr2"
+        },
+    },
+};
+Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body);
+]]></code>
+This sample shows how to call CreateOrUpdateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+            ["description"] = null,
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+        Contacts =
+        {
+            ["Expert"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
+        },
+    },
+};
+Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body);
+]]></code>
+This sample shows how to call CreateOrUpdateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+            ["description"] = null,
+            ["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>"),
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        CustomAttributes =
+        {
+            ["microsoft_isDescriptionRichText"] = "true"
+        },
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+    },
+};
+Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body);
+]]></code>
+This sample shows how to call CreateOrUpdateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+            ["description"] = null,
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+        Contacts =
+        {
+            ["Expert"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
+        },
+    },
+};
+Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body);
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdate(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrUpdate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+            ["description"] = null,
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CustomAttributes =
+        {
+            ["custAttr1"] = "attr1",
+            ["custAttr2"] = "attr2"
+        },
+    },
+};
+Response<EntityMutationResult> response = client.CreateOrUpdate(body);
+]]></code>
+This sample shows how to call CreateOrUpdate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+            ["description"] = null,
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+        Contacts =
+        {
+            ["Expert"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
+        },
+    },
+};
+Response<EntityMutationResult> response = client.CreateOrUpdate(body);
+]]></code>
+This sample shows how to call CreateOrUpdate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+            ["description"] = null,
+            ["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>"),
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        CustomAttributes =
+        {
+            ["microsoft_isDescriptionRichText"] = "true"
+        },
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+    },
+};
+Response<EntityMutationResult> response = client.CreateOrUpdate(body);
+]]></code>
+This sample shows how to call CreateOrUpdate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+            ["description"] = null,
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+        Contacts =
+        {
+            ["Expert"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
+        },
+    },
+};
+Response<EntityMutationResult> response = client.CreateOrUpdate(body);
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateAsync(RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entity = new
+    {
+        typeName = "azure_storage_account",
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            modifiedTime = 0,
+            createTime = 0,
+            qualifiedName = "https://exampleaccount.core.windows.net",
+            name = "ExampleStorageAccount",
+        },
+        customAttributes = new
+        {
+            custAttr1 = "attr1",
+            custAttr2 = "attr2",
+        },
+    },
+});
+Response response = await client.CreateOrUpdateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entity = new
+    {
+        typeName = "azure_storage_account",
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            modifiedTime = 0,
+            createTime = 0,
+            qualifiedName = "https://exampleaccount.core.windows.net",
+            name = "ExampleStorageAccount",
+        },
+        contacts = new
+        {
+            Expert = new object[]
+            {
+                new
+                {
+                    id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    info = "Example Expert Info",
+                }
+            },
+            Owner = new object[]
+            {
+                new
+                {
+                    id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    info = "Example Owner Info",
+                }
+            },
+        },
+        status = "ACTIVE",
+        createdBy = "ExampleCreator",
+        updatedBy = "ExampleUpdator",
+        version = 0L,
+    },
+});
+Response response = await client.CreateOrUpdateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entity = new
+    {
+        typeName = "azure_storage_account",
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            modifiedTime = 0,
+            createTime = 0,
+            qualifiedName = "https://exampleaccount.core.windows.net",
+            name = "ExampleStorageAccount",
+            userDescription = "<div><b>testing</b></div>",
+        },
+        customAttributes = new
+        {
+            microsoft_isDescriptionRichText = "true",
+        },
+        status = "ACTIVE",
+        createdBy = "ExampleCreator",
+        updatedBy = "ExampleUpdator",
+        version = 0L,
+    },
+});
+Response response = await client.CreateOrUpdateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entity = new
+    {
+        typeName = "azure_storage_account",
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            modifiedTime = 0,
+            createTime = 0,
+            qualifiedName = "exampleaccount",
+            name = "ExampleStorageAccount",
+        },
+        contacts = new
+        {
+            Expert = new object[]
+            {
+                new
+                {
+                    id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    info = "Example Expert Info",
+                }
+            },
+            Owner = new object[]
+            {
+                new
+                {
+                    id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    info = "Example Owner Info",
+                }
+            },
+        },
+        status = "ACTIVE",
+        createdBy = "ExampleCreator",
+        updatedBy = "ExampleUpdator",
+        version = 0L,
+    },
+});
+Response response = await client.CreateOrUpdateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdate(RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entity = new
+    {
+        typeName = "azure_storage_account",
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            modifiedTime = 0,
+            createTime = 0,
+            qualifiedName = "https://exampleaccount.core.windows.net",
+            name = "ExampleStorageAccount",
+        },
+        customAttributes = new
+        {
+            custAttr1 = "attr1",
+            custAttr2 = "attr2",
+        },
+    },
+});
+Response response = client.CreateOrUpdate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entity = new
+    {
+        typeName = "azure_storage_account",
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            modifiedTime = 0,
+            createTime = 0,
+            qualifiedName = "https://exampleaccount.core.windows.net",
+            name = "ExampleStorageAccount",
+        },
+        contacts = new
+        {
+            Expert = new object[]
+            {
+                new
+                {
+                    id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    info = "Example Expert Info",
+                }
+            },
+            Owner = new object[]
+            {
+                new
+                {
+                    id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    info = "Example Owner Info",
+                }
+            },
+        },
+        status = "ACTIVE",
+        createdBy = "ExampleCreator",
+        updatedBy = "ExampleUpdator",
+        version = 0L,
+    },
+});
+Response response = client.CreateOrUpdate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entity = new
+    {
+        typeName = "azure_storage_account",
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            modifiedTime = 0,
+            createTime = 0,
+            qualifiedName = "https://exampleaccount.core.windows.net",
+            name = "ExampleStorageAccount",
+            userDescription = "<div><b>testing</b></div>",
+        },
+        customAttributes = new
+        {
+            microsoft_isDescriptionRichText = "true",
+        },
+        status = "ACTIVE",
+        createdBy = "ExampleCreator",
+        updatedBy = "ExampleUpdator",
+        version = 0L,
+    },
+});
+Response response = client.CreateOrUpdate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entity = new
+    {
+        typeName = "azure_storage_account",
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            modifiedTime = 0,
+            createTime = 0,
+            qualifiedName = "exampleaccount",
+            name = "ExampleStorageAccount",
+        },
+        contacts = new
+        {
+            Expert = new object[]
+            {
+                new
+                {
+                    id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    info = "Example Expert Info",
+                }
+            },
+            Owner = new object[]
+            {
+                new
+                {
+                    id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    info = "Example Owner Info",
+                }
+            },
+        },
+        status = "ACTIVE",
+        createdBy = "ExampleCreator",
+        updatedBy = "ExampleUpdator",
+        version = 0L,
+    },
+});
+Response response = client.CreateOrUpdate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetByIdsAsync(IEnumerable{string},bool?,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetByIdsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntitiesWithExtInfo> response = await client.GetByIdsAsync(new string[] { "784c0f2f-afd2-e26b-f9cb-984f6c2c5021", "b4ebc8be-cef4-860a-bee9-28cc34cb5caa" });
+]]></code></example>
+    </member>
+    <member name="GetByIds(IEnumerable{string},bool?,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetByIds.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntitiesWithExtInfo> response = client.GetByIds(new string[] { "784c0f2f-afd2-e26b-f9cb-984f6c2c5021", "b4ebc8be-cef4-860a-bee9-28cc34cb5caa" });
+]]></code></example>
+    </member>
+    <member name="GetByIdsAsync(IEnumerable{string},bool?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetByIdsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.GetByIdsAsync(new string[] { "784c0f2f-afd2-e26b-f9cb-984f6c2c5021", "b4ebc8be-cef4-860a-bee9-28cc34cb5caa" }, true, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetByIds(IEnumerable{string},bool?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetByIds and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.GetByIds(new string[] { "784c0f2f-afd2-e26b-f9cb-984f6c2c5021", "b4ebc8be-cef4-860a-bee9-28cc34cb5caa" }, true, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)">
+      <example>
+This sample shows how to call BatchCreateOrUpdateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
+{
+    ReferredEntities = { },
+    Entities = {new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount1"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1"),
+            ["description"] = null,
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+        Contacts =
+        {
+            ["Expert"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
+        },
+    }, new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount2"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount2"),
+            ["description"] = BinaryData.FromObjectAsJson("Example Description"),
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+        Contacts =
+        {
+            ["Expert"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
+        },
+    }},
+};
+Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(body);
+]]></code></example>
+    </member>
+    <member name="BatchCreateOrUpdate(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)">
+      <example>
+This sample shows how to call BatchCreateOrUpdate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
+{
+    ReferredEntities = { },
+    Entities = {new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount1"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1"),
+            ["description"] = null,
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+        Contacts =
+        {
+            ["Expert"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
+        },
+    }, new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount2"),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount2"),
+            ["description"] = BinaryData.FromObjectAsJson("Example Description"),
+            ["publicAccessLevel"] = null
+        },
+        TypeName = "azure_storage_account",
+        CreatedBy = "ExampleCreator",
+        Status = EntityStatus.Active,
+        UpdatedBy = "ExampleUpdator",
+        Version = 0L,
+        Contacts =
+        {
+            ["Expert"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Expert Info",
+                }
+            },
+            ["Owner"] = new ContactInfo[]
+            {
+                new ContactInfo
+                {
+                    Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                    Info = "Example Owner Info",
+                }
+            }
+        },
+    }},
+};
+Response<EntityMutationResult> response = client.BatchCreateOrUpdate(body);
+]]></code></example>
+    </member>
+    <member name="BatchCreateOrUpdateAsync(RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call BatchCreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entities = new object[]
+    {
+        new
+        {
+            typeName = "azure_storage_account",
+            attributes = new
+            {
+                owner = "ExampleOwner",
+                modifiedTime = 0,
+                createTime = 0,
+                qualifiedName = "exampleaccount1",
+                name = "ExampleStorageAccount1",
+            },
+            contacts = new
+            {
+                Expert = new object[]
+                {
+                    new
+                    {
+                        id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                        info = "Example Expert Info",
+                    }
+                },
+                Owner = new object[]
+                {
+                    new
+                    {
+                        id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                        info = "Example Owner Info",
+                    }
+                },
+            },
+            status = "ACTIVE",
+            createdBy = "ExampleCreator",
+            updatedBy = "ExampleUpdator",
+            version = 0L,
+        },
+        new
+        {
+            typeName = "azure_storage_account",
+            attributes = new
+            {
+                owner = "ExampleOwner",
+                modifiedTime = 0,
+                createTime = 0,
+                qualifiedName = "exampleaccount2",
+                name = "ExampleStorageAccount2",
+                description = "Example Description",
+            },
+            contacts = new
+            {
+                Expert = new object[]
+                {
+                    new
+                    {
+                        id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                        info = "Example Expert Info",
+                    }
+                },
+                Owner = new object[]
+                {
+                    new
+                    {
+                        id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                        info = "Example Owner Info",
+                    }
+                },
+            },
+            status = "ACTIVE",
+            createdBy = "ExampleCreator",
+            updatedBy = "ExampleUpdator",
+            version = 0L,
+        }
+    },
+});
+Response response = await client.BatchCreateOrUpdateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchCreateOrUpdate(RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call BatchCreateOrUpdate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    referredEntities = new object(),
+    entities = new object[]
+    {
+        new
+        {
+            typeName = "azure_storage_account",
+            attributes = new
+            {
+                owner = "ExampleOwner",
+                modifiedTime = 0,
+                createTime = 0,
+                qualifiedName = "exampleaccount1",
+                name = "ExampleStorageAccount1",
+            },
+            contacts = new
+            {
+                Expert = new object[]
+                {
+                    new
+                    {
+                        id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                        info = "Example Expert Info",
+                    }
+                },
+                Owner = new object[]
+                {
+                    new
+                    {
+                        id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                        info = "Example Owner Info",
+                    }
+                },
+            },
+            status = "ACTIVE",
+            createdBy = "ExampleCreator",
+            updatedBy = "ExampleUpdator",
+            version = 0L,
+        },
+        new
+        {
+            typeName = "azure_storage_account",
+            attributes = new
+            {
+                owner = "ExampleOwner",
+                modifiedTime = 0,
+                createTime = 0,
+                qualifiedName = "exampleaccount2",
+                name = "ExampleStorageAccount2",
+                description = "Example Description",
+            },
+            contacts = new
+            {
+                Expert = new object[]
+                {
+                    new
+                    {
+                        id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                        info = "Example Expert Info",
+                    }
+                },
+                Owner = new object[]
+                {
+                    new
+                    {
+                        id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
+                        info = "Example Owner Info",
+                    }
+                },
+            },
+            status = "ACTIVE",
+            createdBy = "ExampleCreator",
+            updatedBy = "ExampleUpdator",
+            version = 0L,
+        }
+    },
+});
+Response response = client.BatchCreateOrUpdate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchDeleteAsync(IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call BatchDeleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<EntityMutationResult> response = await client.BatchDeleteAsync(new string[] { "18e06957-e265-967a-07f1-e14e2ab8940f", "cc0730ba-9b30-41f0-6953-559d17626d2b" });
+]]></code></example>
+    </member>
+    <member name="BatchDelete(IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call BatchDelete.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<EntityMutationResult> response = client.BatchDelete(new string[] { "18e06957-e265-967a-07f1-e14e2ab8940f", "cc0730ba-9b30-41f0-6953-559d17626d2b" });
+]]></code></example>
+    </member>
+    <member name="BatchDeleteAsync(IEnumerable{string},RequestContext)">
+      <example>
+This sample shows how to call BatchDeleteAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.BatchDeleteAsync(new string[] { "18e06957-e265-967a-07f1-e14e2ab8940f", "cc0730ba-9b30-41f0-6953-559d17626d2b" }, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchDelete(IEnumerable{string},RequestContext)">
+      <example>
+This sample shows how to call BatchDelete and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.BatchDelete(new string[] { "18e06957-e265-967a-07f1-e14e2ab8940f", "cc0730ba-9b30-41f0-6953-559d17626d2b" }, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)">
+      <example>
+This sample shows how to call AddClassificationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+ClassificationAssociateConfig body = new ClassificationAssociateConfig
+{
+    Classification = new AtlasClassification
+    {
+        Attributes = { },
+        TypeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+        ValidityPeriods = { },
+    },
+    EntityGuids = { "784c0f2f-afd2-e26b-f9cb-984f6c2c5021", "b4ebc8be-cef4-860a-bee9-28cc34cb5caa" },
+};
+Response response = await client.AddClassificationAsync(body);
+]]></code></example>
+    </member>
+    <member name="AddClassification(ClassificationAssociateConfig,CancellationToken)">
+      <example>
+This sample shows how to call AddClassification.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+ClassificationAssociateConfig body = new ClassificationAssociateConfig
+{
+    Classification = new AtlasClassification
+    {
+        Attributes = { },
+        TypeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+        ValidityPeriods = { },
+    },
+    EntityGuids = { "784c0f2f-afd2-e26b-f9cb-984f6c2c5021", "b4ebc8be-cef4-860a-bee9-28cc34cb5caa" },
+};
+Response response = client.AddClassification(body);
+]]></code></example>
+    </member>
+    <member name="AddClassificationAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddClassificationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    classification = new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+        attributes = new object(),
+        validityPeriods = Array.Empty<object>(),
+    },
+    entityGuids = new object[]
+    {
+        "784c0f2f-afd2-e26b-f9cb-984f6c2c5021",
+        "b4ebc8be-cef4-860a-bee9-28cc34cb5caa"
+    },
+});
+Response response = await client.AddClassificationAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddClassification(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddClassification.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    classification = new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+        attributes = new object(),
+        validityPeriods = Array.Empty<object>(),
+    },
+    entityGuids = new object[]
+    {
+        "784c0f2f-afd2-e26b-f9cb-984f6c2c5021",
+        "b4ebc8be-cef4-860a-bee9-28cc34cb5caa"
+    },
+});
+Response response = client.AddClassification(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetEntityAsync(string,bool?,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetEntityAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntityWithExtInfo> response = await client.GetEntityAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+]]></code></example>
+    </member>
+    <member name="GetEntity(string,bool?,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetEntity.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntityWithExtInfo> response = client.GetEntity("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+]]></code></example>
+    </member>
+    <member name="GetEntityAsync(string,bool?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetEntityAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.GetEntityAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetEntity(string,bool?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetEntity and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.GetEntity("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAttributeByIdAsync(string,string,BinaryData,CancellationToken)">
+      <example>
+This sample shows how to call UpdateAttributeByIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<EntityMutationResult> response = await client.UpdateAttributeByIdAsync("394d9a03-912e-483b-bbd2-bedee1a69798", "ExampleName", BinaryData.FromObjectAsJson("ExampleNewName"));
+]]></code></example>
+    </member>
+    <member name="UpdateAttributeById(string,string,BinaryData,CancellationToken)">
+      <example>
+This sample shows how to call UpdateAttributeById.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<EntityMutationResult> response = client.UpdateAttributeById("394d9a03-912e-483b-bbd2-bedee1a69798", "ExampleName", BinaryData.FromObjectAsJson("ExampleNewName"));
+]]></code></example>
+    </member>
+    <member name="UpdateAttributeByIdAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAttributeByIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create("ExampleNewName");
+Response response = await client.UpdateAttributeByIdAsync("394d9a03-912e-483b-bbd2-bedee1a69798", "ExampleName", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAttributeById(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAttributeById and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create("ExampleNewName");
+Response response = client.UpdateAttributeById("394d9a03-912e-483b-bbd2-bedee1a69798", "ExampleName", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<EntityMutationResult> response = await client.DeleteAsync("fd279eb4-f6c3-1b0b-ad67-e4f8abd2972f");
+]]></code></example>
+    </member>
+    <member name="Delete(string,CancellationToken)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<EntityMutationResult> response = client.Delete("fd279eb4-f6c3-1b0b-ad67-e4f8abd2972f");
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.DeleteAsync("fd279eb4-f6c3-1b0b-ad67-e4f8abd2972f", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Delete(string,RequestContext)">
+      <example>
+This sample shows how to call Delete and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.Delete("fd279eb4-f6c3-1b0b-ad67-e4f8abd2972f", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetClassificationAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassificationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasClassification> response = await client.GetClassificationAsync("9347abc5-7b86-4b82-a1e2-ad77c7c3cac3", "MICROSOFT.PERSONAL.DATE_OF_BIRTH");
+]]></code></example>
+    </member>
+    <member name="GetClassification(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassification.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasClassification> response = client.GetClassification("9347abc5-7b86-4b82-a1e2-ad77c7c3cac3", "MICROSOFT.PERSONAL.DATE_OF_BIRTH");
+]]></code></example>
+    </member>
+    <member name="GetClassificationAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetClassificationAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.GetClassificationAsync("9347abc5-7b86-4b82-a1e2-ad77c7c3cac3", "MICROSOFT.PERSONAL.DATE_OF_BIRTH", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetClassification(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetClassification and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.GetClassification("9347abc5-7b86-4b82-a1e2-ad77c7c3cac3", "MICROSOFT.PERSONAL.DATE_OF_BIRTH", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="RemoveClassificationAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call RemoveClassificationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.RemoveClassificationAsync("cc0730ba-9b30-41f0-6953-559d17626d2b", "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RemoveClassification(string,string,RequestContext)">
+      <example>
+This sample shows how to call RemoveClassification.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.RemoveClassification("cc0730ba-9b30-41f0-6953-559d17626d2b", "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetClassificationsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassificationsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasClassifications> response = await client.GetClassificationsAsync("67d26de6-771d-1a2d-cb2b-dec4dbd2a9bd");
+]]></code></example>
+    </member>
+    <member name="GetClassifications(string,CancellationToken)">
+      <example>
+This sample shows how to call GetClassifications.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasClassifications> response = client.GetClassifications("67d26de6-771d-1a2d-cb2b-dec4dbd2a9bd");
+]]></code></example>
+    </member>
+    <member name="GetClassificationsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetClassificationsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.GetClassificationsAsync("67d26de6-771d-1a2d-cb2b-dec4dbd2a9bd", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetClassifications(string,RequestContext)">
+      <example>
+This sample shows how to call GetClassifications and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.GetClassifications("67d26de6-771d-1a2d-cb2b-dec4dbd2a9bd", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="AddClassificationsAsync(string,IEnumerable{AtlasClassification},CancellationToken)">
+      <example>
+This sample shows how to call AddClassificationsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.AddClassificationsAsync("cc0730ba-9b30-41f0-6953-559d17626d2b", new AtlasClassification[]
+{
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+        EntityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
+    },
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+        EntityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="AddClassifications(string,IEnumerable{AtlasClassification},CancellationToken)">
+      <example>
+This sample shows how to call AddClassifications.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.AddClassifications("cc0730ba-9b30-41f0-6953-559d17626d2b", new AtlasClassification[]
+{
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+        EntityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
+    },
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+        EntityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="AddClassificationsAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddClassificationsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+        entityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
+    },
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+        entityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
+    }
+});
+Response response = await client.AddClassificationsAsync("cc0730ba-9b30-41f0-6953-559d17626d2b", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddClassifications(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddClassifications.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+        entityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
+    },
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+        entityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
+    }
+});
+Response response = client.AddClassifications("cc0730ba-9b30-41f0-6953-559d17626d2b", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="UpdateClassificationsAsync(string,IEnumerable{AtlasClassification},CancellationToken)">
+      <example>
+This sample shows how to call UpdateClassificationsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.UpdateClassificationsAsync("45dd4404-e897-b7e2-ca3c-f6e6b11b4f24", new AtlasClassification[]
+{
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+        EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
+    },
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.US_BANK_ACCOUNT_NUMBER",
+        EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="UpdateClassifications(string,IEnumerable{AtlasClassification},CancellationToken)">
+      <example>
+This sample shows how to call UpdateClassifications.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.UpdateClassifications("45dd4404-e897-b7e2-ca3c-f6e6b11b4f24", new AtlasClassification[]
+{
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+        EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
+    },
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.US_BANK_ACCOUNT_NUMBER",
+        EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="UpdateClassificationsAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateClassificationsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+        entityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
+    },
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US_BANK_ACCOUNT_NUMBER",
+        entityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
+    }
+});
+Response response = await client.UpdateClassificationsAsync("45dd4404-e897-b7e2-ca3c-f6e6b11b4f24", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="UpdateClassifications(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateClassifications.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+        entityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
+    },
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US_BANK_ACCOUNT_NUMBER",
+        entityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
+    }
+});
+Response response = client.UpdateClassifications("45dd4404-e897-b7e2-ca3c-f6e6b11b4f24", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetByUniqueAttributeAsync(string,bool?,bool?,string,CancellationToken)">
+      <example>
+This sample shows how to call GetByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntityWithExtInfo> response = await client.GetByUniqueAttributeAsync("azure_storage_account");
+]]></code></example>
+    </member>
+    <member name="GetByUniqueAttribute(string,bool?,bool?,string,CancellationToken)">
+      <example>
+This sample shows how to call GetByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntityWithExtInfo> response = client.GetByUniqueAttribute("azure_storage_account");
+]]></code></example>
+    </member>
+    <member name="GetByUniqueAttributeAsync(string,bool?,bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetByUniqueAttributeAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.GetByUniqueAttributeAsync("azure_storage_account", true, null, "https://exampleaccount.core.windows.net", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetByUniqueAttribute(string,bool?,bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetByUniqueAttribute and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.GetByUniqueAttribute("azure_storage_account", true, null, "https://exampleaccount.core.windows.net", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateByUniqueAttributeAsync(string,AtlasEntityWithExtInfo,string,CancellationToken)">
+      <example>
+This sample shows how to call UpdateByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleNewName")
+        },
+        TypeName = "azure_storage_account",
+        LastModifiedTS = "1",
+        CreateTime = default,
+        CreatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
+        Guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
+        RelationshipAttributes =
+        {
+            ["services"] = BinaryData.FromObjectAsJson(Array.Empty<object>()),
+            ["meanings"] = BinaryData.FromObjectAsJson(Array.Empty<object>())
+        },
+        Status = EntityStatus.Active,
+        UpdateTime = default,
+        UpdatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
+        Version = 0L,
+    },
+};
+Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("azure_storage_account", body);
+]]></code></example>
+    </member>
+    <member name="UpdateByUniqueAttribute(string,AtlasEntityWithExtInfo,string,CancellationToken)">
+      <example>
+This sample shows how to call UpdateByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+{
+    ReferredEntities = { },
+    Entity = new AtlasEntity
+    {
+        Attributes =
+        {
+            ["owner"] = BinaryData.FromObjectAsJson("ExampleOwner"),
+            ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
+            ["createTime"] = BinaryData.FromObjectAsJson(0),
+            ["name"] = BinaryData.FromObjectAsJson("ExampleNewName")
+        },
+        TypeName = "azure_storage_account",
+        LastModifiedTS = "1",
+        CreateTime = default,
+        CreatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
+        Guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
+        RelationshipAttributes =
+        {
+            ["services"] = BinaryData.FromObjectAsJson(Array.Empty<object>()),
+            ["meanings"] = BinaryData.FromObjectAsJson(Array.Empty<object>())
+        },
+        Status = EntityStatus.Active,
+        UpdateTime = default,
+        UpdatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
+        Version = 0L,
+    },
+};
+Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("azure_storage_account", body);
+]]></code></example>
+    </member>
+    <member name="UpdateByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call UpdateByUniqueAttributeAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    entity = new
+    {
+        createdBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
+        guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
+        relationshipAttributes = new
+        {
+            services = Array.Empty<object>(),
+            meanings = Array.Empty<object>(),
+        },
+        status = "ACTIVE",
+        updatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
+        lastModifiedTS = "1",
+        version = 0L,
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            qualifiedName = "https://exampleaccount.core.windows.net",
+            createTime = 0,
+            name = "ExampleNewName",
+        },
+        typeName = "azure_storage_account",
+    },
+    referredEntities = new object(),
+});
+Response response = await client.UpdateByUniqueAttributeAsync("azure_storage_account", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateByUniqueAttribute(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call UpdateByUniqueAttribute and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    entity = new
+    {
+        createdBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
+        guid = "dc507ccf-0c57-4165-9327-f37b0d13fda0",
+        relationshipAttributes = new
+        {
+            services = Array.Empty<object>(),
+            meanings = Array.Empty<object>(),
+        },
+        status = "ACTIVE",
+        updatedBy = "8c062c84-5d25-449f-a990-9d8ab70b8ec7",
+        lastModifiedTS = "1",
+        version = 0L,
+        attributes = new
+        {
+            owner = "ExampleOwner",
+            qualifiedName = "https://exampleaccount.core.windows.net",
+            createTime = 0,
+            name = "ExampleNewName",
+        },
+        typeName = "azure_storage_account",
+    },
+    referredEntities = new object(),
+});
+Response response = client.UpdateByUniqueAttribute("azure_storage_account", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteByUniqueAttributeAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call DeleteByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<EntityMutationResult> response = await client.DeleteByUniqueAttributeAsync("azure_storage_account");
+]]></code></example>
+    </member>
+    <member name="DeleteByUniqueAttribute(string,string,CancellationToken)">
+      <example>
+This sample shows how to call DeleteByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<EntityMutationResult> response = client.DeleteByUniqueAttribute("azure_storage_account");
+]]></code></example>
+    </member>
+    <member name="DeleteByUniqueAttributeAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteByUniqueAttributeAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.DeleteByUniqueAttributeAsync("azure_storage_account", "https://exampleaccount.core.windows.net", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteByUniqueAttribute(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteByUniqueAttribute and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.DeleteByUniqueAttribute("azure_storage_account", "https://exampleaccount.core.windows.net", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="RemoveClassificationByUniqueAttributeAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call RemoveClassificationByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.RemoveClassificationByUniqueAttributeAsync("column", "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RemoveClassificationByUniqueAttribute(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call RemoveClassificationByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.RemoveClassificationByUniqueAttribute("column", "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddClassificationsByUniqueAttributeAsync(string,IEnumerable{AtlasClassification},string,CancellationToken)">
+      <example>
+This sample shows how to call AddClassificationsByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.AddClassificationsByUniqueAttributeAsync("azure_storage_account", new AtlasClassification[]
+{
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+    },
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="AddClassificationsByUniqueAttribute(string,IEnumerable{AtlasClassification},string,CancellationToken)">
+      <example>
+This sample shows how to call AddClassificationsByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.AddClassificationsByUniqueAttribute("azure_storage_account", new AtlasClassification[]
+{
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+    },
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="AddClassificationsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call AddClassificationsByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+    },
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+    }
+});
+Response response = await client.AddClassificationsByUniqueAttributeAsync("azure_storage_account", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddClassificationsByUniqueAttribute(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call AddClassificationsByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+    },
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+    }
+});
+Response response = client.AddClassificationsByUniqueAttribute("azure_storage_account", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="UpdateClassificationsUniqueByAttributeAsync(string,IEnumerable{AtlasClassification},string,CancellationToken)">
+      <example>
+This sample shows how to call UpdateClassificationsUniqueByAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.UpdateClassificationsUniqueByAttributeAsync("azure_storage_account", new AtlasClassification[]
+{
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+    },
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="UpdateClassificationsUniqueByAttribute(string,IEnumerable{AtlasClassification},string,CancellationToken)">
+      <example>
+This sample shows how to call UpdateClassificationsUniqueByAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.UpdateClassificationsUniqueByAttribute("azure_storage_account", new AtlasClassification[]
+{
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+    },
+    new AtlasClassification
+    {
+        TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+    }
+});
+]]></code></example>
+    </member>
+    <member name="UpdateClassificationsUniqueByAttributeAsync(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call UpdateClassificationsUniqueByAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+    },
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+    }
+});
+Response response = await client.UpdateClassificationsUniqueByAttributeAsync("azure_storage_account", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="UpdateClassificationsUniqueByAttribute(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call UpdateClassificationsUniqueByAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.US.ABA_ROUTING_NUMBER",
+    },
+    new
+    {
+        typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
+    }
+});
+Response response = client.UpdateClassificationsUniqueByAttribute("azure_storage_account", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="BatchSetClassificationsAsync(AtlasEntityHeaders,CancellationToken)">
+      <example>
+This sample shows how to call BatchSetClassificationsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+AtlasEntityHeaders body = new AtlasEntityHeaders
+{
+    GuidHeaderMap =
+    {
+        ["9fb74c11-ac48-4650-95bc-760665c5bd92"] = new AtlasEntityHeader
+        {
+            Attributes =
+            {
+                ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount1.core.windows.net")
+            },
+            TypeName = "azure_storage_account",
+            Classifications = {new AtlasClassification
+            {
+                TypeName = "MICROSOFT.PERSONAL.EMAIL",
+            }},
+        },
+        ["7fcc43ab-55ea-45d4-9971-ce0443cb10bb"] = new AtlasEntityHeader
+        {
+            Attributes =
+            {
+                ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount2.core.windows.net")
+            },
+            TypeName = "azure_storage_account",
+            Classifications = {new AtlasClassification
+            {
+                TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
+            }},
+        }
+    },
+};
+Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(body);
+]]></code></example>
+    </member>
+    <member name="BatchSetClassifications(AtlasEntityHeaders,CancellationToken)">
+      <example>
+This sample shows how to call BatchSetClassifications.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+AtlasEntityHeaders body = new AtlasEntityHeaders
+{
+    GuidHeaderMap =
+    {
+        ["9fb74c11-ac48-4650-95bc-760665c5bd92"] = new AtlasEntityHeader
+        {
+            Attributes =
+            {
+                ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount1.core.windows.net")
+            },
+            TypeName = "azure_storage_account",
+            Classifications = {new AtlasClassification
+            {
+                TypeName = "MICROSOFT.PERSONAL.EMAIL",
+            }},
+        },
+        ["7fcc43ab-55ea-45d4-9971-ce0443cb10bb"] = new AtlasEntityHeader
+        {
+            Attributes =
+            {
+                ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount2.core.windows.net")
+            },
+            TypeName = "azure_storage_account",
+            Classifications = {new AtlasClassification
+            {
+                TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
+            }},
+        }
+    },
+};
+Response<IReadOnlyList<string>> response = client.BatchSetClassifications(body);
+]]></code></example>
+    </member>
+    <member name="BatchSetClassificationsAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BatchSetClassificationsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    guidHeaderMap = new Dictionary<string, object>
+    {
+        ["9fb74c11-ac48-4650-95bc-760665c5bd92"] = new
+        {
+            attributes = new
+            {
+                qualifiedName = "https://exampleaccount1.core.windows.net",
+            },
+            typeName = "azure_storage_account",
+            classifications = new object[]
+            {
+                new
+                {
+                    typeName = "MICROSOFT.PERSONAL.EMAIL",
+                }
+            },
+        },
+        ["7fcc43ab-55ea-45d4-9971-ce0443cb10bb"] = new
+        {
+            attributes = new
+            {
+                qualifiedName = "https://exampleaccount2.core.windows.net",
+            },
+            typeName = "azure_storage_account",
+            classifications = new object[]
+            {
+                new
+                {
+                    typeName = "MICROSOFT.PERSONAL.IPADDRESS",
+                }
+            },
+        }
+    },
+});
+Response response = await client.BatchSetClassificationsAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+    <member name="BatchSetClassifications(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call BatchSetClassifications and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    guidHeaderMap = new Dictionary<string, object>
+    {
+        ["9fb74c11-ac48-4650-95bc-760665c5bd92"] = new
+        {
+            attributes = new
+            {
+                qualifiedName = "https://exampleaccount1.core.windows.net",
+            },
+            typeName = "azure_storage_account",
+            classifications = new object[]
+            {
+                new
+                {
+                    typeName = "MICROSOFT.PERSONAL.EMAIL",
+                }
+            },
+        },
+        ["7fcc43ab-55ea-45d4-9971-ce0443cb10bb"] = new
+        {
+            attributes = new
+            {
+                qualifiedName = "https://exampleaccount2.core.windows.net",
+            },
+            typeName = "azure_storage_account",
+            classifications = new object[]
+            {
+                new
+                {
+                    typeName = "MICROSOFT.PERSONAL.IPADDRESS",
+                }
+            },
+        }
+    },
+});
+Response response = client.BatchSetClassifications(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+    <member name="BatchGetByUniqueAttributesAsync(string,bool?,bool?,string,CancellationToken)">
+      <example>
+This sample shows how to call BatchGetByUniqueAttributesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntitiesWithExtInfo> response = await client.BatchGetByUniqueAttributesAsync("azure_storage_account");
+]]></code></example>
+    </member>
+    <member name="BatchGetByUniqueAttributes(string,bool?,bool?,string,CancellationToken)">
+      <example>
+This sample shows how to call BatchGetByUniqueAttributes.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntitiesWithExtInfo> response = client.BatchGetByUniqueAttributes("azure_storage_account");
+]]></code></example>
+    </member>
+    <member name="BatchGetByUniqueAttributesAsync(string,bool?,bool?,string,RequestContext)">
+      <example>
+This sample shows how to call BatchGetByUniqueAttributesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.BatchGetByUniqueAttributesAsync("azure_storage_account", true, null, "adl://exampleaccount.azuredatalakestore.net/123/1/DP_TFS/CBT/Extensions/DTTP.targets#:xml/Project/PropertyGroup/ExampleName1", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="BatchGetByUniqueAttributes(string,bool?,bool?,string,RequestContext)">
+      <example>
+This sample shows how to call BatchGetByUniqueAttributes and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.BatchGetByUniqueAttributes("azure_storage_account", true, null, "adl://exampleaccount.azuredatalakestore.net/123/1/DP_TFS/CBT/Extensions/DTTP.targets#:xml/Project/PropertyGroup/ExampleName1", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetHeaderAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetHeaderAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntityHeader> response = await client.GetHeaderAsync("9fb74c11-ac48-4650-95bc-760665c5bd92");
+]]></code></example>
+    </member>
+    <member name="GetHeader(string,CancellationToken)">
+      <example>
+This sample shows how to call GetHeader.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<AtlasEntityHeader> response = client.GetHeader("9fb74c11-ac48-4650-95bc-760665c5bd92");
+]]></code></example>
+    </member>
+    <member name="GetHeaderAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetHeaderAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.GetHeaderAsync("9fb74c11-ac48-4650-95bc-760665c5bd92", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetHeader(string,RequestContext)">
+      <example>
+This sample shows how to call GetHeader and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.GetHeader("9fb74c11-ac48-4650-95bc-760665c5bd92", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="RemoveBusinessMetadataAsync(string,IDictionary{string,IDictionary{string,BinaryData}},CancellationToken)">
+      <example>
+This sample shows how to call RemoveBusinessMetadataAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.RemoveBusinessMetadataAsync("02c373fe-2823-4be3-97fa-55180a9faa06", new Dictionary<string, IDictionary<string, BinaryData>>
+{
+    ["myBizMetadata1"] = new Dictionary<string, BinaryData>
+    {
+        ["bizAttr1"] = BinaryData.FromObjectAsJson("myBizMetaData1.bizAttr1")
+    }
+});
+]]></code></example>
+    </member>
+    <member name="RemoveBusinessMetadata(string,IDictionary{string,IDictionary{string,BinaryData}},CancellationToken)">
+      <example>
+This sample shows how to call RemoveBusinessMetadata.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.RemoveBusinessMetadata("02c373fe-2823-4be3-97fa-55180a9faa06", new Dictionary<string, IDictionary<string, BinaryData>>
+{
+    ["myBizMetadata1"] = new Dictionary<string, BinaryData>
+    {
+        ["bizAttr1"] = BinaryData.FromObjectAsJson("myBizMetaData1.bizAttr1")
+    }
+});
+]]></code></example>
+    </member>
+    <member name="RemoveBusinessMetadataAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RemoveBusinessMetadataAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    myBizMetadata1 = new
+    {
+        bizAttr1 = "myBizMetaData1.bizAttr1",
+    },
+});
+Response response = await client.RemoveBusinessMetadataAsync("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RemoveBusinessMetadata(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RemoveBusinessMetadata.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    myBizMetadata1 = new
+    {
+        bizAttr1 = "myBizMetaData1.bizAttr1",
+    },
+});
+Response response = client.RemoveBusinessMetadata("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddOrUpdateBusinessMetadataAsync(string,IDictionary{string,IDictionary{string,BinaryData}},bool?,CancellationToken)">
+      <example>
+This sample shows how to call AddOrUpdateBusinessMetadataAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.AddOrUpdateBusinessMetadataAsync("02c373fe-2823-4be3-97fa-55180a9faa06", new Dictionary<string, IDictionary<string, BinaryData>>
+{
+    ["myBizMetadata1"] = new Dictionary<string, BinaryData>
+    {
+        ["bizAttr1"] = BinaryData.FromObjectAsJson("myBizMetaData1.bizAttr1")
+    }
+});
+]]></code></example>
+    </member>
+    <member name="AddOrUpdateBusinessMetadata(string,IDictionary{string,IDictionary{string,BinaryData}},bool?,CancellationToken)">
+      <example>
+This sample shows how to call AddOrUpdateBusinessMetadata.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.AddOrUpdateBusinessMetadata("02c373fe-2823-4be3-97fa-55180a9faa06", new Dictionary<string, IDictionary<string, BinaryData>>
+{
+    ["myBizMetadata1"] = new Dictionary<string, BinaryData>
+    {
+        ["bizAttr1"] = BinaryData.FromObjectAsJson("myBizMetaData1.bizAttr1")
+    }
+});
+]]></code></example>
+    </member>
+    <member name="AddOrUpdateBusinessMetadataAsync(string,RequestContent,bool?,RequestContext)">
+      <example>
+This sample shows how to call AddOrUpdateBusinessMetadataAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    myBizMetadata1 = new
+    {
+        bizAttr1 = "myBizMetaData1.bizAttr1",
+    },
+});
+Response response = await client.AddOrUpdateBusinessMetadataAsync("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddOrUpdateBusinessMetadata(string,RequestContent,bool?,RequestContext)">
+      <example>
+This sample shows how to call AddOrUpdateBusinessMetadata.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    myBizMetadata1 = new
+    {
+        bizAttr1 = "myBizMetaData1.bizAttr1",
+    },
+});
+Response response = client.AddOrUpdateBusinessMetadata("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RemoveBusinessMetadataAttributesAsync(string,string,IDictionary{string,BinaryData},CancellationToken)">
+      <example>
+This sample shows how to call RemoveBusinessMetadataAttributesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.RemoveBusinessMetadataAttributesAsync("02c373fe-2823-4be3-97fa-55180a9faa06", "myBizMetaData1", new Dictionary<string, BinaryData>
+{
+    ["bizAttr1"] = BinaryData.FromObjectAsJson("bizAttr1")
+});
+]]></code></example>
+    </member>
+    <member name="RemoveBusinessMetadataAttributes(string,string,IDictionary{string,BinaryData},CancellationToken)">
+      <example>
+This sample shows how to call RemoveBusinessMetadataAttributes.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.RemoveBusinessMetadataAttributes("02c373fe-2823-4be3-97fa-55180a9faa06", "myBizMetaData1", new Dictionary<string, BinaryData>
+{
+    ["bizAttr1"] = BinaryData.FromObjectAsJson("bizAttr1")
+});
+]]></code></example>
+    </member>
+    <member name="RemoveBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RemoveBusinessMetadataAttributesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    bizAttr1 = "bizAttr1",
+});
+Response response = await client.RemoveBusinessMetadataAttributesAsync("02c373fe-2823-4be3-97fa-55180a9faa06", "myBizMetaData1", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RemoveBusinessMetadataAttributes(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RemoveBusinessMetadataAttributes.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    bizAttr1 = "bizAttr1",
+});
+Response response = client.RemoveBusinessMetadataAttributes("02c373fe-2823-4be3-97fa-55180a9faa06", "myBizMetaData1", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddOrUpdateBusinessMetadataAttributesAsync(string,string,IDictionary{string,BinaryData},CancellationToken)">
+      <example>
+This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("02c373fe-2823-4be3-97fa-55180a9faa06", "myBizMetaData1", new Dictionary<string, BinaryData>
+{
+    ["bizAttr1"] = BinaryData.FromObjectAsJson("bizAttr1")
+});
+]]></code></example>
+    </member>
+    <member name="AddOrUpdateBusinessMetadataAttributes(string,string,IDictionary{string,BinaryData},CancellationToken)">
+      <example>
+This sample shows how to call AddOrUpdateBusinessMetadataAttributes.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.AddOrUpdateBusinessMetadataAttributes("02c373fe-2823-4be3-97fa-55180a9faa06", "myBizMetaData1", new Dictionary<string, BinaryData>
+{
+    ["bizAttr1"] = BinaryData.FromObjectAsJson("bizAttr1")
+});
+]]></code></example>
+    </member>
+    <member name="AddOrUpdateBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    bizAttr1 = "bizAttr1",
+});
+Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("02c373fe-2823-4be3-97fa-55180a9faa06", "myBizMetaData1", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddOrUpdateBusinessMetadataAttributes(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddOrUpdateBusinessMetadataAttributes.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    bizAttr1 = "bizAttr1",
+});
+Response response = client.AddOrUpdateBusinessMetadataAttributes("02c373fe-2823-4be3-97fa-55180a9faa06", "myBizMetaData1", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataTemplateAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetBusinessMetadataTemplateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<BinaryData> response = await client.GetBusinessMetadataTemplateAsync();
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataTemplate(CancellationToken)">
+      <example>
+This sample shows how to call GetBusinessMetadataTemplate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response<BinaryData> response = client.GetBusinessMetadataTemplate();
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataTemplateAsync(RequestContext)">
+      <example>
+This sample shows how to call GetBusinessMetadataTemplateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.GetBusinessMetadataTemplateAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetBusinessMetadataTemplate(RequestContext)">
+      <example>
+This sample shows how to call GetBusinessMetadataTemplate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.GetBusinessMetadataTemplate(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)">
+      <example>
+This sample shows how to call ImportBusinessMetadataAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+BusinessMetadataOptions body = null;
+Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(body);
+]]></code></example>
+    </member>
+    <member name="ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)">
+      <example>
+This sample shows how to call ImportBusinessMetadata.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+BusinessMetadataOptions body = null;
+Response<BulkImportResult> response = client.ImportBusinessMetadata(body);
+]]></code></example>
+    </member>
+    <member name="ImportBusinessMetadataAsync(RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call ImportBusinessMetadataAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = null;
+Response response = await client.ImportBusinessMetadataAsync(content, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="ImportBusinessMetadata(RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call ImportBusinessMetadata and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = null;
+Response response = client.ImportBusinessMetadata(content, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="RemoveLabelsAsync(string,IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call RemoveLabelsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.RemoveLabelsAsync("02c373fe-2823-4be3-97fa-55180a9faa06");
+]]></code></example>
+    </member>
+    <member name="RemoveLabels(string,IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call RemoveLabels.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.RemoveLabels("02c373fe-2823-4be3-97fa-55180a9faa06");
+]]></code></example>
+    </member>
+    <member name="RemoveLabelsAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RemoveLabelsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1",
+    "label2"
+});
+Response response = await client.RemoveLabelsAsync("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RemoveLabels(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RemoveLabels.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1",
+    "label2"
+});
+Response response = client.RemoveLabels("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="SetLabelsAsync(string,IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call SetLabelsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.SetLabelsAsync("02c373fe-2823-4be3-97fa-55180a9faa06");
+]]></code></example>
+    </member>
+    <member name="SetLabels(string,IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call SetLabels.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.SetLabels("02c373fe-2823-4be3-97fa-55180a9faa06");
+]]></code></example>
+    </member>
+    <member name="SetLabelsAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SetLabelsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1",
+    "label2"
+});
+Response response = await client.SetLabelsAsync("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="SetLabels(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SetLabels.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1",
+    "label2"
+});
+Response response = client.SetLabels("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddLabelAsync(string,IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call AddLabelAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.AddLabelAsync("02c373fe-2823-4be3-97fa-55180a9faa06");
+]]></code></example>
+    </member>
+    <member name="AddLabel(string,IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call AddLabel.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.AddLabel("02c373fe-2823-4be3-97fa-55180a9faa06");
+]]></code></example>
+    </member>
+    <member name="AddLabelAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddLabelAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1",
+    "label2"
+});
+Response response = await client.AddLabelAsync("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddLabel(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddLabel.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1",
+    "label2"
+});
+Response response = client.AddLabel("02c373fe-2823-4be3-97fa-55180a9faa06", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RemoveLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)">
+      <example>
+This sample shows how to call RemoveLabelsByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.RemoveLabelsByUniqueAttributeAsync("Asset");
+]]></code></example>
+    </member>
+    <member name="RemoveLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)">
+      <example>
+This sample shows how to call RemoveLabelsByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.RemoveLabelsByUniqueAttribute("Asset");
+]]></code></example>
+    </member>
+    <member name="RemoveLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call RemoveLabelsByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1"
+});
+Response response = await client.RemoveLabelsByUniqueAttributeAsync("Asset", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RemoveLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call RemoveLabelsByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1"
+});
+Response response = client.RemoveLabelsByUniqueAttribute("Asset", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="SetLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)">
+      <example>
+This sample shows how to call SetLabelsByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.SetLabelsByUniqueAttributeAsync("Asset");
+]]></code></example>
+    </member>
+    <member name="SetLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)">
+      <example>
+This sample shows how to call SetLabelsByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.SetLabelsByUniqueAttribute("Asset");
+]]></code></example>
+    </member>
+    <member name="SetLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call SetLabelsByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1",
+    "label2"
+});
+Response response = await client.SetLabelsByUniqueAttributeAsync("Asset", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="SetLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call SetLabelsByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label1",
+    "label2"
+});
+Response response = client.SetLabelsByUniqueAttribute("Asset", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)">
+      <example>
+This sample shows how to call AddLabelsByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = await client.AddLabelsByUniqueAttributeAsync("Asset");
+]]></code></example>
+    </member>
+    <member name="AddLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)">
+      <example>
+This sample shows how to call AddLabelsByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+Response response = client.AddLabelsByUniqueAttribute("Asset");
+]]></code></example>
+    </member>
+    <member name="AddLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call AddLabelsByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label3"
+});
+Response response = await client.AddLabelsByUniqueAttributeAsync("Asset", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="AddLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call AddLabelsByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    "label3"
+});
+Response response = client.AddLabelsByUniqueAttribute("Asset", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)">
+      <example>
+This sample shows how to call MoveEntitiesToCollectionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+MoveEntitiesConfig body = new MoveEntitiesConfig
+{
+    EntityGuids = { "321493e3-3fb7-4b3e-9df7-3b69154174c2", "b2f9c306-cf65-4bb0-878e-cfaafde156b1" },
+};
+Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("ExampleNewCollection", body);
+]]></code></example>
+    </member>
+    <member name="MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)">
+      <example>
+This sample shows how to call MoveEntitiesToCollection.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+MoveEntitiesConfig body = new MoveEntitiesConfig
+{
+    EntityGuids = { "321493e3-3fb7-4b3e-9df7-3b69154174c2", "b2f9c306-cf65-4bb0-878e-cfaafde156b1" },
+};
+Response<EntityMutationResult> response = client.MoveEntitiesToCollection("ExampleNewCollection", body);
+]]></code></example>
+    </member>
+    <member name="MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call MoveEntitiesToCollectionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    entityGuids = new object[]
+    {
+        "321493e3-3fb7-4b3e-9df7-3b69154174c2",
+        "b2f9c306-cf65-4bb0-878e-cfaafde156b1"
+    },
+});
+Response response = await client.MoveEntitiesToCollectionAsync("ExampleNewCollection", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="MoveEntitiesToCollection(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call MoveEntitiesToCollection and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    entityGuids = new object[]
+    {
+        "321493e3-3fb7-4b3e-9df7-3b69154174c2",
+        "b2f9c306-cf65-4bb0-878e-cfaafde156b1"
+    },
+});
+Response response = client.MoveEntitiesToCollection("ExampleNewCollection", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

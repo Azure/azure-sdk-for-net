@@ -1,5 +1,9 @@
 # Guidance to write samples for data plane
-Samples are where developers could start to learn a library. You should generate samples scaffold by running the quick start [Autorest Tool](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Autorest_DataPlane_Quickstart.md#create-starter-package) when you generate SDK form Open API specification (swagger), or [TypeSepc Tool](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKPackage_Setup.md) when you generate SDK from TypeSpec. Different scenarios should be separated by different files. The samples should match the structure containing the following key features:
+
+Samples are where developers start to learn a library. For general information about samples, see the [Samples guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples).
+
+The samples should match the structure containing the following key features:
+
 ```
 ├── ...
 ├── samples
@@ -20,7 +24,9 @@ Samples are where developers could start to learn a library. You should generate
 │   └── ...
 └── ...
 ```
+
 All the `Sample{number}_{Scenario}Async.*` files contain the corresponding async scenarios. You could merge it into its corresponding sync scenario files `Sample{number}_{Scenario}.*`. If you keep the structure same as above, you should declare the async class and its corresponding sync class as partial class. E.g.,
+
 ```C#
 // Sample1_HelloWorld.cs
 public partial class Sample1_HelloWorld : SampleBase<SampleTestEnvironent>
@@ -47,6 +53,10 @@ public partial class Sample1_HelloWorld
   }
 }
 ```
+
+## Snippets
+
+All samples in the Azure SDK for .NET repository are required to use snippets when demonstrating code.  Snippets allow us to verify that the code in our samples and READMEs is always up to date and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorld.cs#L21) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md#get-secret). Please refer to [Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
 
 ## Folder `samples`
 This folder is developer's starting point. With samples of different scenarios, developer could quickly learn without digging into the in-depth technology. It should be located at subdirectory of main library directory. 

@@ -78,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(ActivityStatusCode.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeUrlFull, httpUrl);
             activity.SetTag(SemanticConventions.AttributeServerAddress, "www.foo.bar");
@@ -94,7 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("www.foo.bar", remoteDependencyData.Target);
             Assert.Equal("200", remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
-            Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
+            Assert.Equal(activity.Status != ActivityStatusCode.Error, remoteDependencyData.Success);
             Assert.True(remoteDependencyData.Properties.Count == 0);
             Assert.True(remoteDependencyData.Measurements.Count == 0);
         }
@@ -135,7 +135,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             activity.Stop();
 
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(ActivityStatusCode.Ok);
             activity.SetTag(SemanticConventions.AttributeMessagingSystem, "servicebus");
             activity.SetTag(SemanticConventions.AttributeServerAddress, "my.servicebus.windows.net");
             activity.SetTag(SemanticConventions.AttributeMessagingDestinationName, "queueName");
@@ -150,7 +150,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Null(remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal("my.servicebus.windows.net/queueName", remoteDependencyData.Target);
-            Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
+            Assert.Equal(activity.Status != ActivityStatusCode.Error, remoteDependencyData.Success);
             Assert.True(remoteDependencyData.Properties.Count == 0);
             Assert.True(remoteDependencyData.Measurements.Count == 0);
         }

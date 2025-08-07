@@ -110,7 +110,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
 
         public static ReadOnlySequence<byte> GetConnectedPayload(string connectionId = null, string userId = null) => GetPayload(new { type = "system", @event = "connected", userId = userId ?? "user", connectionId = connectionId ?? "connection", reconnectionToken = "rec" });
         public static ReadOnlySequence<byte> GetDisconnectedPayload(string reason = null) => GetPayload(new { type = "system", @event = "disconnected", message = reason ?? "reason" });
-        public static ReadOnlySequence<byte> GetGroupMessagePayload(ulong sequenceId) => GetPayload(new
+        public static ReadOnlySequence<byte> GetGroupMessagePayload(long sequenceId) => GetPayload(new
         {
             sequenceId = sequenceId,
             type = "message",
@@ -120,7 +120,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             data = "textdata",
             fromUserId = "user"
         });
-        public static ReadOnlySequence<byte> GetServerMessagePayload(ulong sequenceId) => GetPayload(new
+        public static ReadOnlySequence<byte> GetServerMessagePayload(long sequenceId) => GetPayload(new
         {
             sequenceId = sequenceId,
             type = "message",
@@ -128,7 +128,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             dataType = "text",
             data = "textdata"
         });
-        public static ReadOnlySequence<byte> GetAckMessagePayload(ulong ackId, string error) => GetPayload(new
+        public static ReadOnlySequence<byte> GetAckMessagePayload(long ackId, string error) => GetPayload(new
         {
             type = "ack",
             ackId = ackId,

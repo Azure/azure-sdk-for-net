@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetModelInfoAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetModelInfoAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
+
+Response<ModelInfo> response = await client.GetModelInfoAsync();
+]]></code>
+This sample shows how to call GetModelInfoAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
+
+Response<ModelInfo> response = await client.GetModelInfoAsync();
+]]></code></example>
+    </member>
+    <member name="GetModelInfo(CancellationToken)">
+      <example>
+This sample shows how to call GetModelInfo.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
+
+Response<ModelInfo> response = client.GetModelInfo();
+]]></code>
+This sample shows how to call GetModelInfo.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
+
+Response<ModelInfo> response = client.GetModelInfo();
+]]></code></example>
+    </member>
+    <member name="GetModelInfoAsync(RequestContext)">
+      <example>
+This sample shows how to call GetModelInfoAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
+
+Response response = await client.GetModelInfoAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("model_name").ToString());
+Console.WriteLine(result.GetProperty("model_type").ToString());
+Console.WriteLine(result.GetProperty("model_provider_name").ToString());
+]]></code>
+This sample shows how to call GetModelInfoAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
+
+Response response = await client.GetModelInfoAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("model_name").ToString());
+Console.WriteLine(result.GetProperty("model_type").ToString());
+Console.WriteLine(result.GetProperty("model_provider_name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetModelInfo(RequestContext)">
+      <example>
+This sample shows how to call GetModelInfo and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
+
+Response response = client.GetModelInfo(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("model_name").ToString());
+Console.WriteLine(result.GetProperty("model_type").ToString());
+Console.WriteLine(result.GetProperty("model_provider_name").ToString());
+]]></code>
+This sample shows how to call GetModelInfo and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
+
+Response response = client.GetModelInfo(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("model_name").ToString());
+Console.WriteLine(result.GetProperty("model_type").ToString());
+Console.WriteLine(result.GetProperty("model_provider_name").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

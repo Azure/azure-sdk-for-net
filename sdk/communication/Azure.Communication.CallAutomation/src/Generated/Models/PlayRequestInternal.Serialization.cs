@@ -15,17 +15,27 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("playSourceInfo"u8);
-            writer.WriteObjectValue(PlaySourceInfo);
+            writer.WritePropertyName("playSources"u8);
+            writer.WriteStartArray();
+            foreach (var item in PlaySources)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
             if (Optional.IsCollectionDefined(PlayTo))
             {
                 writer.WritePropertyName("playTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlayTo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommunicationIdentifierModel>(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(InterruptCallMediaOperation))
+            {
+                writer.WritePropertyName("interruptCallMediaOperation"u8);
+                writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             if (Optional.IsDefined(PlayOptions))
             {
@@ -37,7 +47,20 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
+            if (Optional.IsDefined(OperationCallbackUri))
+            {
+                writer.WritePropertyName("operationCallbackUri"u8);
+                writer.WriteStringValue(OperationCallbackUri);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

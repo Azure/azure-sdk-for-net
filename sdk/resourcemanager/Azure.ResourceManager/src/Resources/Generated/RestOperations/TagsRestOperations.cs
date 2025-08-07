@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.Resources
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteValueRequestUri(string subscriptionId, string tagName, string tagValue)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames/", false);
+            uri.AppendPath(tagName, true);
+            uri.AppendPath("/tagValues/", false);
+            uri.AppendPath(tagValue, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteValueRequest(string subscriptionId, string tagName, string tagValue)
@@ -107,6 +120,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateValueRequestUri(string subscriptionId, string tagName, string tagValue)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames/", false);
+            uri.AppendPath(tagName, true);
+            uri.AppendPath("/tagValues/", false);
+            uri.AppendPath(tagValue, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateValueRequest(string subscriptionId, string tagName, string tagValue)
         {
             var message = _pipeline.CreateMessage();
@@ -148,7 +175,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PredefinedTagValue value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredefinedTagValue.DeserializePredefinedTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -178,13 +205,25 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PredefinedTagValue value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredefinedTagValue.DeserializePredefinedTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string tagName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames/", false);
+            uri.AppendPath(tagName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string tagName)
@@ -224,7 +263,7 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PredefinedTag value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredefinedTag.DeserializePredefinedTag(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -252,13 +291,25 @@ namespace Azure.ResourceManager.Resources
                 case 201:
                     {
                         PredefinedTag value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredefinedTag.DeserializePredefinedTag(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string tagName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames/", false);
+            uri.AppendPath(tagName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string tagName)
@@ -325,6 +376,17 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -358,7 +420,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PredefinedTagsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredefinedTagsListResult.DeserializePredefinedTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,13 +445,24 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PredefinedTagsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredefinedTagsListResult.DeserializePredefinedTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateAtScopeRequestUri(string scope, TagResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagResourceData data)
@@ -407,7 +480,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -415,7 +488,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="data"> The <see cref="TagResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, TagResourceData data, CancellationToken cancellationToken = default)
@@ -437,7 +510,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="data"> The <see cref="TagResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
         public Response CreateOrUpdateAtScope(string scope, TagResourceData data, CancellationToken cancellationToken = default)
@@ -457,6 +530,17 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateUpdateAtScopeRequestUri(string scope, TagResourcePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateAtScopeRequest(string scope, TagResourcePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -472,7 +556,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -480,7 +564,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The 'replace' option replaces the entire set of existing tags with a new set. The 'merge' option allows adding tags with new names and updating the values of tags with existing names. The 'delete' option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="patch"> The TagResourcePatch to use. </param>
+        /// <param name="patch"> The <see cref="TagResourcePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
         public async Task<Response> UpdateAtScopeAsync(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)
@@ -502,7 +586,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The 'replace' option replaces the entire set of existing tags with a new set. The 'merge' option allows adding tags with new names and updating the values of tags with existing names. The 'delete' option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="patch"> The TagResourcePatch to use. </param>
+        /// <param name="patch"> The <see cref="TagResourcePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
         public Response UpdateAtScope(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)
@@ -520,6 +604,17 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAtScopeRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAtScopeRequest(string scope)
@@ -554,7 +649,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TagResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TagResourceData.DeserializeTagResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -580,7 +675,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         TagResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TagResourceData.DeserializeTagResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -589,6 +684,17 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAtScopeRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAtScopeRequest(string scope)
@@ -648,6 +754,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -680,7 +794,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PredefinedTagsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PredefinedTagsListResult.DeserializePredefinedTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -707,7 +821,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         PredefinedTagsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PredefinedTagsListResult.DeserializePredefinedTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

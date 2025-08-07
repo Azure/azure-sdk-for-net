@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},string,RequestContext)">
+      <example>
+This sample shows how to call GetWorkflowTasksAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowTasksClient client = new WorkflowTasksClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetWorkflowTasksAsync(null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("workflowRunId").ToString());
+    Console.WriteLine(result.GetProperty("workflowId").ToString());
+    Console.WriteLine(result.GetProperty("requestor").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
+}
+]]></code>
+This sample shows how to call GetWorkflowTasksAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowTasksClient client = new WorkflowTasksClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, new string[] { "<requestors>" }, new string[] { "<assignees>" }, "<workflowNameKeyword>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("title").ToString());
+    Console.WriteLine(result.GetProperty("workflowRunId").ToString());
+    Console.WriteLine(result.GetProperty("workflowId").ToString());
+    Console.WriteLine(result.GetProperty("requestor").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("payload").ToString());
+    Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("lastRemindTime").ToString());
+    Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("nextRemindTime").ToString());
+    Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("reminderSettings").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("lastExpiryNotificationTime").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("nextExpiryNotificationTime").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expiryTime").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("expireAfter").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},string,RequestContext)">
+      <example>
+This sample shows how to call GetWorkflowTasks and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowTasksClient client = new WorkflowTasksClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetWorkflowTasks(null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("workflowRunId").ToString());
+    Console.WriteLine(result.GetProperty("workflowId").ToString());
+    Console.WriteLine(result.GetProperty("requestor").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
+}
+]]></code>
+This sample shows how to call GetWorkflowTasks with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowTasksClient client = new WorkflowTasksClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, new string[] { "<requestors>" }, new string[] { "<assignees>" }, "<workflowNameKeyword>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("title").ToString());
+    Console.WriteLine(result.GetProperty("workflowRunId").ToString());
+    Console.WriteLine(result.GetProperty("workflowId").ToString());
+    Console.WriteLine(result.GetProperty("requestor").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("targetValue").ToString());
+    Console.WriteLine(result.GetProperty("payload").GetProperty("payload").ToString());
+    Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("lastRemindTime").ToString());
+    Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("nextRemindTime").ToString());
+    Console.WriteLine(result.GetProperty("reminderInfo").GetProperty("reminderSettings").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("lastExpiryNotificationTime").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("nextExpiryNotificationTime").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expiryTime").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("expireAfter").ToString());
+    Console.WriteLine(result.GetProperty("expiryInfo").GetProperty("expirySettings").GetProperty("notifyOnExpiration")[0].ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

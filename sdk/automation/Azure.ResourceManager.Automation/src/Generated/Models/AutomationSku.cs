@@ -5,27 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The account SKU. </summary>
     public partial class AutomationSku
     {
-        /// <summary> Initializes a new instance of AutomationSku. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSku"/>. </summary>
         /// <param name="name"> Gets or sets the SKU name of the account. </param>
         public AutomationSku(AutomationSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of AutomationSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSku"/>. </summary>
         /// <param name="name"> Gets or sets the SKU name of the account. </param>
         /// <param name="family"> Gets or sets the SKU family. </param>
         /// <param name="capacity"> Gets or sets the SKU capacity. </param>
-        internal AutomationSku(AutomationSkuName name, string family, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationSku(AutomationSkuName name, string family, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Family = family;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSku"/> for deserialization. </summary>
+        internal AutomationSku()
+        {
         }
 
         /// <summary> Gets or sets the SKU name of the account. </summary>

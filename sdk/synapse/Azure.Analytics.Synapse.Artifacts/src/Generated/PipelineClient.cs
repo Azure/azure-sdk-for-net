@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Initializes a new instance of PipelineClient. </summary>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public PipelineClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Initializes a new instance of PipelineClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         internal PipelineClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists pipelines. </summary>
@@ -159,7 +159,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a pipeline. </summary>

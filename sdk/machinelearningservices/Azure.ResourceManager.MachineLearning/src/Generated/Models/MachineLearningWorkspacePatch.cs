@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -14,27 +14,107 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The parameters for updating a machine learning workspace. </summary>
     public partial class MachineLearningWorkspacePatch
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspacePatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePatch"/>. </summary>
         public MachineLearningWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePatch"/>. </summary>
+        /// <param name="tags"> The resource tags for the machine learning workspace. </param>
+        /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="description"> The description of this workspace. </param>
+        /// <param name="friendlyName"> The friendly name for this workspace. </param>
+        /// <param name="imageBuildCompute"> The compute name for image build. </param>
+        /// <param name="serviceManagedResourcesSettings"> The service managed resource settings. </param>
+        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
+        /// <param name="serverlessComputeSettings"> Settings for serverless compute created in the workspace. </param>
+        /// <param name="publicNetworkAccessType"> Whether requests from Public Network are allowed. </param>
+        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
+        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
+        /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
+        /// <param name="managedNetwork"> Managed Network settings for a machine learning workspace. </param>
+        /// <param name="enableDataIsolation"></param>
+        /// <param name="v1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
+        /// <param name="encryption"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspacePatch(IDictionary<string, string> tags, MachineLearningSku sku, ManagedServiceIdentity identity, string description, string friendlyName, string imageBuildCompute, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, ServerlessComputeSettings serverlessComputeSettings, PublicNetworkAccess? publicNetworkAccessType, string applicationInsights, string containerRegistry, FeatureStoreSettings featureStoreSettings, ManagedNetworkSettings managedNetwork, bool? enableDataIsolation, bool? v1LegacyMode, EncryptionUpdateProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Sku = sku;
+            Identity = identity;
+            Description = description;
+            FriendlyName = friendlyName;
+            ImageBuildCompute = imageBuildCompute;
+            ServiceManagedResourcesSettings = serviceManagedResourcesSettings;
+            PrimaryUserAssignedIdentity = primaryUserAssignedIdentity;
+            ServerlessComputeSettings = serverlessComputeSettings;
+            PublicNetworkAccessType = publicNetworkAccessType;
+            ApplicationInsights = applicationInsights;
+            ContainerRegistry = containerRegistry;
+            FeatureStoreSettings = featureStoreSettings;
+            ManagedNetwork = managedNetwork;
+            EnableDataIsolation = enableDataIsolation;
+            V1LegacyMode = v1LegacyMode;
+            Encryption = encryption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> The resource tags for the machine learning workspace. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
+        [WirePath("sku")]
         public MachineLearningSku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The description of this workspace. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The friendly name for this workspace. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> The compute name for image build. </summary>
+        [WirePath("properties.imageBuildCompute")]
         public string ImageBuildCompute { get; set; }
         /// <summary> The service managed resource settings. </summary>
         internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
         /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
         public int? CosmosDbCollectionsThroughput
         {
             get => ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
@@ -47,12 +127,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
+        [WirePath("properties.primaryUserAssignedIdentity")]
         public string PrimaryUserAssignedIdentity { get; set; }
+        /// <summary> Settings for serverless compute created in the workspace. </summary>
+        [WirePath("properties.serverlessComputeSettings")]
+        public ServerlessComputeSettings ServerlessComputeSettings { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
-        public MachineLearningPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        [WirePath("properties.publicNetworkAccess")]
+        public PublicNetworkAccess? PublicNetworkAccessType { get; set; }
         /// <summary> ARM id of the application insights associated with this workspace. </summary>
+        [WirePath("properties.applicationInsights")]
         public string ApplicationInsights { get; set; }
         /// <summary> ARM id of the container registry associated with this workspace. </summary>
+        [WirePath("properties.containerRegistry")]
         public string ContainerRegistry { get; set; }
+        /// <summary> Settings for feature store type workspace. </summary>
+        [WirePath("properties.featureStoreSettings")]
+        public FeatureStoreSettings FeatureStoreSettings { get; set; }
+        /// <summary> Managed Network settings for a machine learning workspace. </summary>
+        [WirePath("properties.managedNetwork")]
+        public ManagedNetworkSettings ManagedNetwork { get; set; }
+        /// <summary> Gets or sets the enable data isolation. </summary>
+        [WirePath("properties.enableDataIsolation")]
+        public bool? EnableDataIsolation { get; set; }
+        /// <summary> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </summary>
+        [WirePath("properties.v1LegacyMode")]
+        public bool? V1LegacyMode { get; set; }
+        /// <summary> Gets or sets the encryption. </summary>
+        internal EncryptionUpdateProperties Encryption { get; set; }
+        /// <summary> Gets or sets the key identifier. </summary>
+        [WirePath("properties.encryption.keyVaultProperties.keyIdentifier")]
+        public string KeyIdentifier
+        {
+            get => Encryption is null ? default : Encryption.KeyIdentifier;
+            set => Encryption = new EncryptionUpdateProperties(value);
+        }
     }
 }

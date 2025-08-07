@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudClusterMetricsConfigurationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudClusterMetricsConfigurationData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
@@ -34,13 +66,14 @@ namespace Azure.ResourceManager.NetworkCloud
             EnabledMetrics = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudClusterMetricsConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="etag"> Resource ETag. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
         /// <param name="detailedStatus"> The more detailed status of the metrics configuration. </param>
@@ -48,8 +81,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="disabledMetrics"> The list of metrics that are available for the cluster but disabled at the moment. </param>
         /// <param name="enabledMetrics"> The list of metric names that have been chosen to be enabled in addition to the core set of enabled metrics. </param>
         /// <param name="provisioningState"> The provisioning state of the metrics configuration. </param>
-        internal NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, long collectionInterval, ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> disabledMetrics, IList<string> enabledMetrics, ClusterMetricsConfigurationProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long collectionInterval, ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> disabledMetrics, IList<string> enabledMetrics, ClusterMetricsConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            ETag = etag;
             ExtendedLocation = extendedLocation;
             CollectionInterval = collectionInterval;
             DetailedStatus = detailedStatus;
@@ -57,8 +92,16 @@ namespace Azure.ResourceManager.NetworkCloud
             DisabledMetrics = disabledMetrics;
             EnabledMetrics = enabledMetrics;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationData"/> for deserialization. </summary>
+        internal NetworkCloudClusterMetricsConfigurationData()
+        {
+        }
+
+        /// <summary> Resource ETag. </summary>
+        public ETag? ETag { get; }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The interval in minutes by which metrics will be collected. </summary>

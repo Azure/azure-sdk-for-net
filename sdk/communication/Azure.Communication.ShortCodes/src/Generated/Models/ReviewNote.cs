@@ -12,12 +12,12 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> Holds a note about a Program Brief that has gone thru stages of review process. </summary>
     public partial class ReviewNote
     {
-        /// <summary> Initializes a new instance of ReviewNote. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReviewNote"/>. </summary>
         public ReviewNote()
         {
         }
 
-        /// <summary> Initializes a new instance of ReviewNote. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReviewNote"/>. </summary>
         /// <param name="message"> Note related to a Program Brief that may imply changes needed from the client. </param>
         /// <param name="date"> Date and time when the note was added to the Program Brief. </param>
         internal ReviewNote(string message, DateTimeOffset? date)

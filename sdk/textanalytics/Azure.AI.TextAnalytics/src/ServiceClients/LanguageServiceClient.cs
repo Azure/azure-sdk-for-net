@@ -75,7 +75,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -110,7 +109,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -265,7 +263,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -304,7 +301,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -454,7 +450,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -497,7 +492,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -820,7 +814,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -859,7 +852,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -1012,7 +1004,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -1048,7 +1039,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -1188,7 +1178,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try
@@ -1229,7 +1218,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
-            scope.AddAttribute("document", document);
             scope.Start();
 
             try

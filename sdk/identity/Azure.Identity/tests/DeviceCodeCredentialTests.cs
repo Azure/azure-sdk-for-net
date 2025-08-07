@@ -59,19 +59,31 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            expectedCode = Guid.NewGuid().ToString();
+            expectedCode = "some-code-created in DeviceCodeCredentialTests.GetTokenCredential";
             var options = new DeviceCodeCredentialOptions
             {
-                Transport = config.Transport,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            if (config.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = config.AuthenticationRecord;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new DeviceCodeCredential((code, _) =>
             {
                 return Task.CompletedTask;
-            }, config.TenantId, ClientId, options, pipeline, null));
+            }, config.TenantId, ClientId, options, pipeline, config.MockPublicMsalClient));
         }
 
         [SetUp]
@@ -85,7 +97,7 @@ namespace Azure.Identity.Tests
         {
             var options = new DeviceCodeCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
             var cred = InstrumentClient(
                 new DeviceCodeCredential((code, _) => VerifyDeviceCode(code, expectedCode), TenantId, ClientId, options, null, mockPublicMsalClient));
 

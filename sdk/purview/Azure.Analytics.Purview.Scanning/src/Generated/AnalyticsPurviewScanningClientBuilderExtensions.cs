@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Analytics.Purview.Scanning;
 using Azure.Core.Extensions;
 
@@ -26,7 +27,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewClassificationRuleClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="classificationRuleName"> The String to use. </param>
+        /// <param name="classificationRuleName"> The <see cref="string"/> to use. </param>
         public static IAzureClientBuilder<PurviewClassificationRuleClient, PurviewScanningServiceClientOptions> AddPurviewClassificationRuleClient<TBuilder>(this TBuilder builder, Uri endpoint, string classificationRuleName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
@@ -36,7 +37,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewDataSourceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="dataSourceName"> The String to use. </param>
+        /// <param name="dataSourceName"> The <see cref="string"/> to use. </param>
         public static IAzureClientBuilder<PurviewDataSourceClient, PurviewScanningServiceClientOptions> AddPurviewDataSourceClient<TBuilder>(this TBuilder builder, Uri endpoint, string dataSourceName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
@@ -46,8 +47,8 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewScanClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="dataSourceName"> The String to use. </param>
-        /// <param name="scanName"> The String to use. </param>
+        /// <param name="dataSourceName"> The <see cref="string"/> to use. </param>
+        /// <param name="scanName"> The <see cref="string"/> to use. </param>
         public static IAzureClientBuilder<PurviewScanClient, PurviewScanningServiceClientOptions> AddPurviewScanClient<TBuilder>(this TBuilder builder, Uri endpoint, string dataSourceName, string scanName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
@@ -57,6 +58,8 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewScanningServiceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<PurviewScanningServiceClient, PurviewScanningServiceClientOptions> AddPurviewScanningServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
@@ -65,6 +68,8 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewClassificationRuleClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<PurviewClassificationRuleClient, PurviewScanningServiceClientOptions> AddPurviewClassificationRuleClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
@@ -73,6 +78,8 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewDataSourceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<PurviewDataSourceClient, PurviewScanningServiceClientOptions> AddPurviewDataSourceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
@@ -81,6 +88,8 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewScanClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<PurviewScanClient, PurviewScanningServiceClientOptions> AddPurviewScanClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {

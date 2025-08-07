@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
@@ -32,11 +34,13 @@ namespace Azure.Communication.CallAutomation
         /// The minimum value is 1 second.
         /// The maximum value is 180 seconds.
         /// </summary>
+
         public int? InvitationTimeoutInSeconds { get; set; }
 
         /// <summary>
-        /// The callback URI override for this transfer call request.
+        /// The callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
-        public string CallbackUriOverride { get; set; }
+        public Uri OperationCallbackUri { get; set; }
     }
 }

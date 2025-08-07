@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagedServices.Models;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.ManagedServices
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string registrationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/registrationDefinitions/", false);
+            uri.AppendPath(registrationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string registrationId)
@@ -73,7 +84,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,7 +113,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,6 +122,18 @@ namespace Azure.ResourceManager.ManagedServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string registrationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/registrationDefinitions/", false);
+            uri.AppendPath(registrationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string scope, string registrationId)
@@ -177,6 +200,18 @@ namespace Azure.ResourceManager.ManagedServices
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string registrationId, ManagedServicesRegistrationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/registrationDefinitions/", false);
+            uri.AppendPath(registrationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string registrationId, ManagedServicesRegistrationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -193,7 +228,7 @@ namespace Azure.ResourceManager.ManagedServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -249,6 +284,21 @@ namespace Azure.ResourceManager.ManagedServices
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/registrationDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -286,7 +336,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedServicesRegistrationListResult.DeserializeManagedServicesRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,13 +361,21 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedServicesRegistrationListResult.DeserializeManagedServicesRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string filter)
@@ -352,7 +410,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedServicesRegistrationListResult.DeserializeManagedServicesRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -379,7 +437,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesRegistrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedServicesRegistrationListResult.DeserializeManagedServicesRegistrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

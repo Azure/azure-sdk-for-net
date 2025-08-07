@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiSchemaTests : ApiManagementManagementTestBase
     {
         public ApiSchemaTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
-            var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
+            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 DisplayName = newApiName,
                 Description = newApiDescription,
                 Path = newApiPath,
-                ServiceUri = new Uri(newApiServiceUrl),
+                ServiceLink = newApiServiceUrl,
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http },
                 SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract()
                 {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(newApiName, apiGetResponse.Data.DisplayName);
             Assert.AreEqual(newApiDescription, apiGetResponse.Data.Description);
             Assert.AreEqual(newApiPath, apiGetResponse.Data.Path);
-            Assert.AreEqual(newApiServiceUrl, apiGetResponse.Data.ServiceUri.ToString());
+            Assert.AreEqual(newApiServiceUrl, apiGetResponse.Data.ServiceLink);
             Assert.AreEqual(subscriptionKeyParametersHeader, apiGetResponse.Data.SubscriptionKeyParameterNames.Header);
             Assert.AreEqual(subscriptionKeyQueryStringParamName, apiGetResponse.Data.SubscriptionKeyParameterNames.Query);
             Assert.AreEqual(2, apiGetResponse.Data.Protocols.Count);

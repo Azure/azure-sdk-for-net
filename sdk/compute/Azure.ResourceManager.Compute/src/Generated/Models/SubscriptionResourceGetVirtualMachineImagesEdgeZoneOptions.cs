@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions. </summary>
     public partial class SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions
     {
-        /// <summary> Initializes a new instance of SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions. </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions"/>. </summary>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
@@ -37,7 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             Version = version;
         }
 
-        /// <summary> The name of a supported Azure region. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions()
+        {
+        }
+
+        /// <summary> The name of Azure region. </summary>
         public AzureLocation Location { get; }
         /// <summary> The name of the edge zone. </summary>
         public string EdgeZone { get; }

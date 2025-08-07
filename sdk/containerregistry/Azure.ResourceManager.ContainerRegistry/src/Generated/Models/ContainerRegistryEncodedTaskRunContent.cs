@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters for a quick task run request. </summary>
     public partial class ContainerRegistryEncodedTaskRunContent : ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskRunContent"/>. </summary>
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encodedTaskContent"/> or <paramref name="platform"/> is null. </exception>
@@ -29,11 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RunRequestType = "EncodedTaskRunRequest";
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskRunContent"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <param name="encodedValuesContent"> Base64 encoded value of the parameters/values file content. </param>
         /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
         /// </param>
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        internal ContainerRegistryEncodedTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values, int? timeoutInSeconds, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryCredentials credentials) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate)
+        internal ContainerRegistryEncodedTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values, int? timeoutInSeconds, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryCredentials credentials) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData)
         {
             EncodedTaskContent = encodedTaskContent;
             EncodedValuesContent = encodedValuesContent;
@@ -58,19 +58,30 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RunRequestType = runRequestType ?? "EncodedTaskRunRequest";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskRunContent"/> for deserialization. </summary>
+        internal ContainerRegistryEncodedTaskRunContent()
+        {
+        }
+
         /// <summary> Base64 encoded value of the template/definition file content. </summary>
+        [WirePath("encodedTaskContent")]
         public string EncodedTaskContent { get; set; }
         /// <summary> Base64 encoded value of the parameters/values file content. </summary>
+        [WirePath("encodedValuesContent")]
         public string EncodedValuesContent { get; set; }
         /// <summary> The collection of overridable values that can be passed when running a task. </summary>
+        [WirePath("values")]
         public IList<ContainerRegistryTaskOverridableValue> Values { get; }
         /// <summary> Run timeout in seconds. </summary>
+        [WirePath("timeout")]
         public int? TimeoutInSeconds { get; set; }
         /// <summary> The platform properties against which the run has to happen. </summary>
+        [WirePath("platform")]
         public ContainerRegistryPlatformProperties Platform { get; set; }
         /// <summary> The machine configuration of the run agent. </summary>
         internal ContainerRegistryAgentProperties AgentConfiguration { get; set; }
         /// <summary> The CPU configuration in terms of number of cores required for the run. </summary>
+        [WirePath("agentConfiguration.cpu")]
         public int? AgentCpu
         {
             get => AgentConfiguration is null ? default : AgentConfiguration.Cpu;
@@ -86,8 +97,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// The URL(absolute or relative) of the source context. It can be an URL to a tar or git repository.
         /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
         /// </summary>
+        [WirePath("sourceLocation")]
         public string SourceLocation { get; set; }
         /// <summary> The properties that describes a set of credentials that will be used when this run is invoked. </summary>
+        [WirePath("credentials")]
         public ContainerRegistryCredentials Credentials { get; set; }
     }
 }

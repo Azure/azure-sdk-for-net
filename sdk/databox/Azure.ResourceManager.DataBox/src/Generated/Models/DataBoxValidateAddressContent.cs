@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> The requirements to validate customer address where the device needs to be shipped. </summary>
     public partial class DataBoxValidateAddressContent : DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of DataBoxValidateAddressContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/>. </summary>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shippingAddress"/> is null. </exception>
@@ -26,11 +26,34 @@ namespace Azure.ResourceManager.DataBox.Models
             ValidationType = DataBoxValidationInputDiscriminator.ValidateAddress;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/>. </summary>
+        /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
+        /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
+        internal DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType, TransportPreferences transportPreferences, DeviceModelName? model) : base(validationType, serializedAdditionalRawData)
+        {
+            ShippingAddress = shippingAddress;
+            DeviceType = deviceType;
+            TransportPreferences = transportPreferences;
+            Model = model;
+            ValidationType = validationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/> for deserialization. </summary>
+        internal DataBoxValidateAddressContent()
+        {
+        }
+
         /// <summary> Shipping address of the customer. </summary>
         public DataBoxShippingAddress ShippingAddress { get; }
         /// <summary> Device type to be used for the job. </summary>
         public DataBoxSkuName DeviceType { get; }
         /// <summary> Preferences related to the shipment logistics of the sku. </summary>
         public TransportPreferences TransportPreferences { get; set; }
+        /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
+        public DeviceModelName? Model { get; set; }
     }
 }

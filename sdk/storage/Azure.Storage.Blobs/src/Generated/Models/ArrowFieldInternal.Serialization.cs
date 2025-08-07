@@ -7,6 +7,7 @@
 
 using System.Xml;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -18,19 +19,19 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Type");
             writer.WriteValue(Type);
             writer.WriteEndElement();
-            if (Optional.IsDefined(Name))
+            if (Common.Optional.IsDefined(Name))
             {
                 writer.WriteStartElement("Name");
                 writer.WriteValue(Name);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Precision))
+            if (Common.Optional.IsDefined(Precision))
             {
                 writer.WriteStartElement("Precision");
                 writer.WriteValue(Precision.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Scale))
+            if (Common.Optional.IsDefined(Scale))
             {
                 writer.WriteStartElement("Scale");
                 writer.WriteValue(Scale.Value);

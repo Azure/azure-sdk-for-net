@@ -22,7 +22,52 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class TaskContainerSettings : ITransportObjectProvider<Models.TaskContainerSettings>, IPropertyMetadata
     {
+        private class PropertyContainer : PropertyCollection
+        {
+            public readonly PropertyAccessor<IList<ContainerHostBatchBindMountEntry>> ContainerHostBatchBindMountsProperty;
+            public readonly PropertyAccessor<string> ContainerRunOptionsProperty;
+            public readonly PropertyAccessor<string> ImageNameProperty;
+            public readonly PropertyAccessor<ContainerRegistry> RegistryProperty;
+            public readonly PropertyAccessor<Common.ContainerWorkingDirectory?> WorkingDirectoryProperty;
+
+            public PropertyContainer() : base(BindingState.Unbound)
+            {
+                this.ContainerHostBatchBindMountsProperty = this.CreatePropertyAccessor<IList<ContainerHostBatchBindMountEntry>>(nameof(ContainerHostBatchBindMounts), BindingAccess.Read | BindingAccess.Write);
+                this.ContainerRunOptionsProperty = this.CreatePropertyAccessor<string>(nameof(ContainerRunOptions), BindingAccess.Read | BindingAccess.Write);
+                this.ImageNameProperty = this.CreatePropertyAccessor<string>(nameof(ImageName), BindingAccess.Read | BindingAccess.Write);
+                this.RegistryProperty = this.CreatePropertyAccessor<ContainerRegistry>(nameof(Registry), BindingAccess.Read | BindingAccess.Write);
+                this.WorkingDirectoryProperty = this.CreatePropertyAccessor<Common.ContainerWorkingDirectory?>(nameof(WorkingDirectory), BindingAccess.Read | BindingAccess.Write);
+            }
+
+            public PropertyContainer(Models.TaskContainerSettings protocolObject) : base(BindingState.Bound)
+            {
+                this.ContainerHostBatchBindMountsProperty = this.CreatePropertyAccessor(
+                    ContainerHostBatchBindMountEntry.ConvertFromProtocolCollectionAndFreeze(protocolObject.ContainerHostBatchBindMounts),
+                    nameof(ContainerHostBatchBindMounts),
+                    BindingAccess.Read);
+                this.ContainerRunOptionsProperty = this.CreatePropertyAccessor(
+                    protocolObject.ContainerRunOptions,
+                    nameof(ContainerRunOptions),
+                    BindingAccess.Read);
+                this.ImageNameProperty = this.CreatePropertyAccessor(
+                    protocolObject.ImageName,
+                    nameof(ImageName),
+                    BindingAccess.Read);
+                this.RegistryProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Registry, o => new ContainerRegistry(o).Freeze()),
+                    nameof(Registry),
+                    BindingAccess.Read);
+                this.WorkingDirectoryProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Models.ContainerWorkingDirectory, Common.ContainerWorkingDirectory>(protocolObject.WorkingDirectory),
+                    nameof(WorkingDirectory),
+                    BindingAccess.Read);
+            }
+        }
+
+        private readonly PropertyContainer propertyContainer;
+
         #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskContainerSettings"/> class.
         /// </summary>
@@ -30,29 +75,54 @@ namespace Microsoft.Azure.Batch
         /// <param name='containerRunOptions'>Additional options to the container create command.</param>
         /// <param name='registry'>The private registry which contains the container image.</param>
         /// <param name='workingDirectory'>The location of the container task working directory.</param>
+        /// <param name='containerHostBatchBindMounts'>Gets or sets the paths you want to mounted to container task.</param>
         public TaskContainerSettings(
             string imageName,
             string containerRunOptions = default(string),
             ContainerRegistry registry = default(ContainerRegistry),
-            Common.ContainerWorkingDirectory? workingDirectory = default(Common.ContainerWorkingDirectory?))
+            Common.ContainerWorkingDirectory? workingDirectory = default(Common.ContainerWorkingDirectory?),
+            IList<ContainerHostBatchBindMountEntry> containerHostBatchBindMounts = default(IList<ContainerHostBatchBindMountEntry>))
         {
+            this.propertyContainer = new PropertyContainer();
             this.ImageName = imageName;
             this.ContainerRunOptions = containerRunOptions;
             this.Registry = registry;
             this.WorkingDirectory = workingDirectory;
+            this.ContainerHostBatchBindMounts = containerHostBatchBindMounts;
+        }
+
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="TaskContainerSettings"/> class.
+        /// </summary>
+        protected TaskContainerSettings()
+        {
+            this.propertyContainer = new PropertyContainer();
         }
 
         internal TaskContainerSettings(Models.TaskContainerSettings protocolObject)
         {
-            this.ContainerRunOptions = protocolObject.ContainerRunOptions;
-            this.ImageName = protocolObject.ImageName;
-            this.Registry = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Registry, o => new ContainerRegistry(o).Freeze());
-            this.WorkingDirectory = UtilitiesInternal.MapNullableEnum<Models.ContainerWorkingDirectory, Common.ContainerWorkingDirectory>(protocolObject.WorkingDirectory);
+            this.propertyContainer = new PropertyContainer(protocolObject);
         }
 
         #endregion Constructors
 
         #region TaskContainerSettings
+
+        /// <summary>
+        /// Gets or sets gets or sets the paths you want to mounted to container task.
+        /// </summary>
+        /// <remarks>
+        /// If this array is null or be not present, container task will mount entire temporary disk drive in windows (or 
+        /// AZ_BATCH_NODE_ROOT_DIR in Linux). It won't' mount any data paths into container if this array is set as empty.
+        /// </remarks>
+        public IList<ContainerHostBatchBindMountEntry> ContainerHostBatchBindMounts
+        {
+            get { return this.propertyContainer.ContainerHostBatchBindMountsProperty.Value; }
+            set
+            {
+                this.propertyContainer.ContainerHostBatchBindMountsProperty.Value = ConcurrentChangeTrackedModifiableList<ContainerHostBatchBindMountEntry>.TransformEnumerableToConcurrentModifiableList(value);
+            }
+        }
 
         /// <summary>
         /// Gets additional options to the container create command.
@@ -61,7 +131,11 @@ namespace Microsoft.Azure.Batch
         /// These additional options are supplied as arguments to the "docker create" command, in addition to those controlled 
         /// by the Batch Service.
         /// </remarks>
-        public string ContainerRunOptions { get; }
+        public string ContainerRunOptions
+        {
+            get { return this.propertyContainer.ContainerRunOptionsProperty.Value; }
+            private set { this.propertyContainer.ContainerRunOptionsProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets the image to use to create the container in which the task will run.
@@ -70,7 +144,11 @@ namespace Microsoft.Azure.Batch
         /// This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the 
         /// image name, the tag ":latest" is used as a default.
         /// </remarks>
-        public string ImageName { get; }
+        public string ImageName
+        {
+            get { return this.propertyContainer.ImageNameProperty.Value; }
+            private set { this.propertyContainer.ImageNameProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets the private registry which contains the container image.
@@ -78,7 +156,11 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// This setting can be omitted if was already provided at pool creation.
         /// </remarks>
-        public ContainerRegistry Registry { get; }
+        public ContainerRegistry Registry
+        {
+            get { return this.propertyContainer.RegistryProperty.Value; }
+            private set { this.propertyContainer.RegistryProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets the location of the container task working directory.
@@ -86,7 +168,11 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// If not specified, the default is <see cref="Common.ContainerWorkingDirectory.TaskWorkingDirectory"/>.
         /// </remarks>
-        public Common.ContainerWorkingDirectory? WorkingDirectory { get; }
+        public Common.ContainerWorkingDirectory? WorkingDirectory
+        {
+            get { return this.propertyContainer.WorkingDirectoryProperty.Value; }
+            private set { this.propertyContainer.WorkingDirectoryProperty.Value = value; }
+        }
 
         #endregion // TaskContainerSettings
 
@@ -94,23 +180,18 @@ namespace Microsoft.Azure.Batch
 
         bool IModifiable.HasBeenModified
         {
-            //This class is compile time readonly so it cannot have been modified
-            get { return false; }
+            get { return this.propertyContainer.HasBeenModified; }
         }
 
         bool IReadOnly.IsReadOnly
         {
-            get { return true; }
-            set
-            {
-                // This class is compile time readonly already
-            }
+            get { return this.propertyContainer.IsReadOnly; }
+            set { this.propertyContainer.IsReadOnly = value; }
         }
 
-        #endregion // IPropertyMetadata
+        #endregion //IPropertyMetadata
 
         #region Internal/private methods
-
         /// <summary>
         /// Return a protocol object of the requested type.
         /// </summary>
@@ -119,6 +200,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.TaskContainerSettings result = new Models.TaskContainerSettings()
             {
+                ContainerHostBatchBindMounts = UtilitiesInternal.ConvertToProtocolCollection(this.ContainerHostBatchBindMounts),
                 ContainerRunOptions = this.ContainerRunOptions,
                 ImageName = this.ImageName,
                 Registry = UtilitiesInternal.CreateObjectWithNullCheck(this.Registry, (o) => o.GetTransportObject()),

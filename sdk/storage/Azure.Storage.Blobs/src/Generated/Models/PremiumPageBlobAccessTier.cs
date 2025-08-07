@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The PremiumPageBlobAccessTier. </summary>
-    internal readonly partial struct PremiumPageBlobAccessTier : IEquatable<PremiumPageBlobAccessTier>
+    public readonly partial struct PremiumPageBlobAccessTier : IEquatable<PremiumPageBlobAccessTier>
     {
         private readonly string _value;
 
@@ -60,7 +60,7 @@ namespace Azure.Storage.Blobs.Models
         public static bool operator ==(PremiumPageBlobAccessTier left, PremiumPageBlobAccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PremiumPageBlobAccessTier"/> values are not the same. </summary>
         public static bool operator !=(PremiumPageBlobAccessTier left, PremiumPageBlobAccessTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PremiumPageBlobAccessTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PremiumPageBlobAccessTier"/>. </summary>
         public static implicit operator PremiumPageBlobAccessTier(string value) => new PremiumPageBlobAccessTier(value);
 
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

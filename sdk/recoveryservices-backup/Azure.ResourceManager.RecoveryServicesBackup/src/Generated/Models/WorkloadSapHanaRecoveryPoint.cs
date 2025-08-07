@@ -13,20 +13,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> SAPHana specific recoverypoint, specifically encapsulates full/diff recoverypoints. </summary>
     public partial class WorkloadSapHanaRecoveryPoint : WorkloadRecoveryPoint
     {
-        /// <summary> Initializes a new instance of WorkloadSapHanaRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaRecoveryPoint"/>. </summary>
         public WorkloadSapHanaRecoveryPoint()
         {
             ObjectType = "AzureWorkloadSAPHanaRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSapHanaRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
         /// <param name="restorePointType"> Type of restore point. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        internal WorkloadSapHanaRecoveryPoint(string objectType, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
+        internal WorkloadSapHanaRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, serializedAdditionalRawData, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
         {
             ObjectType = objectType ?? "AzureWorkloadSAPHanaRecoveryPoint";
         }

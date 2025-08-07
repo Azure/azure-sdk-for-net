@@ -6,47 +6,109 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the information necessary to perform export database operation. </summary>
     public partial class DatabaseExportDefinition
     {
-        /// <summary> Initializes a new instance of DatabaseExportDefinition. </summary>
-        /// <param name="storageKeyType"> Storage key type. </param>
-        /// <param name="storageKey"> Storage key. </param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseExportDefinition"/>. </summary>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
+        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        /// <param name="administratorLogin"> Administrator login name. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/>, <paramref name="storageUri"/>, <paramref name="administratorLogin"/> or <paramref name="administratorLoginPassword"/> is null. </exception>
-        public DatabaseExportDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword)
+        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/>, <paramref name="storageUri"/> or <paramref name="administratorLogin"/> is null. </exception>
+        public DatabaseExportDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin)
         {
             Argument.AssertNotNull(storageKey, nameof(storageKey));
             Argument.AssertNotNull(storageUri, nameof(storageUri));
             Argument.AssertNotNull(administratorLogin, nameof(administratorLogin));
-            Argument.AssertNotNull(administratorLoginPassword, nameof(administratorLoginPassword));
 
             StorageKeyType = storageKeyType;
             StorageKey = storageKey;
             StorageUri = storageUri;
             AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
         }
 
-        /// <summary> Storage key type. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseExportDefinition"/>. </summary>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
+        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="storageUri"> Storage Uri. </param>
+        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
+        /// <param name="authenticationType"> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </param>
+        /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseExportDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, NetworkIsolationSettings networkIsolation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StorageKeyType = storageKeyType;
+            StorageKey = storageKey;
+            StorageUri = storageUri;
+            AdministratorLogin = administratorLogin;
+            AdministratorLoginPassword = administratorLoginPassword;
+            AuthenticationType = authenticationType;
+            NetworkIsolation = networkIsolation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseExportDefinition"/> for deserialization. </summary>
+        internal DatabaseExportDefinition()
+        {
+        }
+
+        /// <summary> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </summary>
+        [WirePath("storageKeyType")]
         public StorageKeyType StorageKeyType { get; }
-        /// <summary> Storage key. </summary>
+        /// <summary> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
+        [WirePath("storageKey")]
         public string StorageKey { get; }
         /// <summary> Storage Uri. </summary>
+        [WirePath("storageUri")]
         public Uri StorageUri { get; }
-        /// <summary> Administrator login name. </summary>
+        /// <summary> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
+        [WirePath("administratorLogin")]
         public string AdministratorLogin { get; }
-        /// <summary> Administrator login password. </summary>
-        public string AdministratorLoginPassword { get; }
-        /// <summary> Authentication type. </summary>
+        /// <summary> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </summary>
+        [WirePath("administratorLoginPassword")]
+        public string AdministratorLoginPassword { get; set; }
+        /// <summary> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </summary>
+        [WirePath("authenticationType")]
         public string AuthenticationType { get; set; }
         /// <summary> Optional resource information to enable network isolation for request. </summary>
+        [WirePath("networkIsolation")]
         public NetworkIsolationSettings NetworkIsolation { get; set; }
     }
 }

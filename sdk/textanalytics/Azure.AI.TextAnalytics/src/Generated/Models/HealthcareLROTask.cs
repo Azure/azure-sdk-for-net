@@ -10,13 +10,13 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The HealthcareLROTask. </summary>
     internal partial class HealthcareLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of HealthcareLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareLROTask"/>. </summary>
         public HealthcareLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.Healthcare;
         }
 
-        /// <summary> Initializes a new instance of HealthcareLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Healthcare task. </param>

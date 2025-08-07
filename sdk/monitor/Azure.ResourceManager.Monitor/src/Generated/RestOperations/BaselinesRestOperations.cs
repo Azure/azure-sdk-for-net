@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -35,6 +34,49 @@ namespace Azure.ResourceManager.Monitor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri, string metricnames, string metricnamespace, string timespan, TimeSpan? interval, string aggregation, string sensitivities, string filter, MonitorResultType? resultType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/metricBaselines", false);
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (sensitivities != null)
+            {
+                uri.AppendQuery("sensitivities", sensitivities, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToSerialString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceUri, string metricnames, string metricnamespace, string timespan, TimeSpan? interval, string aggregation, string sensitivities, string filter, MonitorResultType? resultType)
@@ -89,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> **Lists the metric baseline values for a resource**. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
@@ -109,7 +151,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MetricBaselinesResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricBaselinesResponse.DeserializeMetricBaselinesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> **Lists the metric baseline values for a resource**. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
@@ -141,7 +183,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MetricBaselinesResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricBaselinesResponse.DeserializeMetricBaselinesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

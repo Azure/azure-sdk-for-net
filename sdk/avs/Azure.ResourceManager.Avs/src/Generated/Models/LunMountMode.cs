@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Mode that describes whether the LUN has to be mounted as a datastore or attached as a LUN. </summary>
+    /// <summary> mount option. </summary>
     public readonly partial struct LunMountMode : IEquatable<LunMountMode>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string MountValue = "MOUNT";
         private const string AttachValue = "ATTACH";
 
-        /// <summary> MOUNT. </summary>
+        /// <summary> is mount. </summary>
         public static LunMountMode Mount { get; } = new LunMountMode(MountValue);
-        /// <summary> ATTACH. </summary>
+        /// <summary> is attach. </summary>
         public static LunMountMode Attach { get; } = new LunMountMode(AttachValue);
         /// <summary> Determines if two <see cref="LunMountMode"/> values are the same. </summary>
         public static bool operator ==(LunMountMode left, LunMountMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LunMountMode"/> values are not the same. </summary>
         public static bool operator !=(LunMountMode left, LunMountMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LunMountMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LunMountMode"/>. </summary>
         public static implicit operator LunMountMode(string value) => new LunMountMode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

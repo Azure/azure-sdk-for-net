@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Voice
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.VoiceServices.Tests", "tests\Azure.ResourceManager.VoiceServices.Tests.csproj", "{75EEC25D-13CE-4A24-A314-D4F835EA5706}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.VoiceServices.Samples", "samples\Azure.ResourceManager.VoiceServices.Samples.csproj", "{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{75EEC25D-13CE-4A24-A314-D4F835EA5706}.Release|x64.Build.0 = Release|Any CPU
 		{75EEC25D-13CE-4A24-A314-D4F835EA5706}.Release|x86.ActiveCfg = Release|Any CPU
 		{75EEC25D-13CE-4A24-A314-D4F835EA5706}.Release|x86.Build.0 = Release|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Debug|x64.Build.0 = Debug|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Debug|x86.Build.0 = Debug|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Release|x64.ActiveCfg = Release|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Release|x64.Build.0 = Release|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Release|x86.ActiveCfg = Release|Any CPU
-		{18F152D5-2ECB-43E8-ADFC-EC3EA3F68843}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -143,6 +143,20 @@ namespace Azure.Messaging.ServiceBus.Core
             CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Deletes up to <paramref name="messageCount"/> number of messages from the entity. Only messages that
+        /// were added to the queue prior to <paramref name="beforeEnqueueTimeUtc"/> will be deleted. The actual number
+        /// of deleted messages may be less if there are fewer eligible messages in the entity.
+        /// </summary>
+        /// <param name="messageCount">The desired number of messages to delete.</param>
+        /// <param name="beforeEnqueueTimeUtc">A <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The number of messages that were deleted.</returns>
+        public abstract Task<int> DeleteMessagesAsync(
+            int messageCount,
+            DateTimeOffset beforeEnqueueTimeUtc,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///

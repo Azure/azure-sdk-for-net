@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -17,14 +18,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusProcessMessages
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-                await using var client = CreateClient();
+                await using ServiceBusClient client = CreateClient();
 #endif
 
                 // create the sender
@@ -42,10 +42,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 #region Snippet:ServiceBusConfigureProcessor
                 // create the options to use for configuring the processor
-                var options = new ServiceBusProcessorOptions
+                ServiceBusProcessorOptions options = new()
                 {
                     // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
-                    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+                    // Set AutoCompleteMessages to false to [settle messages](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
                     // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
                     AutoCompleteMessages = false,
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the file share configuration where the transport directory fileshare already exists, and user wishes to mount the fileshare as a part of the create infra flow. </summary>
     public partial class MountFileShareConfiguration : FileShareConfiguration
     {
-        /// <summary> Initializes a new instance of MountFileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MountFileShareConfiguration"/>. </summary>
         /// <param name="fileShareId"> The fileshare resource ID. </param>
         /// <param name="privateEndpointId"> The private endpoint resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileShareId"/> or <paramref name="privateEndpointId"/> is null. </exception>
@@ -27,15 +28,21 @@ namespace Azure.ResourceManager.Workloads.Models
             ConfigurationType = ConfigurationType.Mount;
         }
 
-        /// <summary> Initializes a new instance of MountFileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MountFileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileShareId"> The fileshare resource ID. </param>
         /// <param name="privateEndpointId"> The private endpoint resource ID. </param>
-        internal MountFileShareConfiguration(ConfigurationType configurationType, ResourceIdentifier fileShareId, ResourceIdentifier privateEndpointId) : base(configurationType)
+        internal MountFileShareConfiguration(ConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fileShareId, ResourceIdentifier privateEndpointId) : base(configurationType, serializedAdditionalRawData)
         {
             FileShareId = fileShareId;
             PrivateEndpointId = privateEndpointId;
             ConfigurationType = configurationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MountFileShareConfiguration"/> for deserialization. </summary>
+        internal MountFileShareConfiguration()
+        {
         }
 
         /// <summary> The fileshare resource ID. </summary>

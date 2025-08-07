@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
 {
     public partial class Sample_AppPlatformBuildServiceAgentPoolResource
     {
-        // BuildServiceAgentPool_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BuildServiceAgentPoolGet()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildServiceAgentPool_Get.json
@@ -51,9 +48,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BuildServiceAgentPool_UpdatePut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BuildServiceAgentPoolUpdatePut()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildServiceAgentPool_UpdatePut.json
@@ -75,11 +71,11 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformBuildServiceAgentPoolResource appPlatformBuildServiceAgentPool = client.GetAppPlatformBuildServiceAgentPoolResource(appPlatformBuildServiceAgentPoolResourceId);
 
             // invoke the operation
-            AppPlatformBuildServiceAgentPoolData data = new AppPlatformBuildServiceAgentPoolData()
+            AppPlatformBuildServiceAgentPoolData data = new AppPlatformBuildServiceAgentPoolData
             {
-                Properties = new AppPlatformBuildServiceAgentPoolProperties()
+                Properties = new AppPlatformBuildServiceAgentPoolProperties
                 {
-                    PoolSize = new BuildServiceAgentPoolSizeProperties()
+                    PoolSize = new BuildServiceAgentPoolSizeProperties
                     {
                         Name = "S3",
                     },

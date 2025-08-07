@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
+using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.Functions.Worker
 {
@@ -36,13 +37,14 @@ namespace Microsoft.Azure.Functions.Worker
         /// The connection states.
         /// </summary>
         [JsonPropertyName("states")]
-        public IReadOnlyDictionary<string, BinaryData> ConnectionStates { get; set; }
+        [JsonConverter(typeof(ConnectionStatesConverter))]
+        public IReadOnlyDictionary<string, BinaryData> ConnectionStates => _states;
 
         /// <summary>
         /// Message.
         /// </summary>
         [JsonPropertyName("data")]
-        [JsonConverter(typeof(BinaryDataJsonConverter))]
+        [JsonConverter(typeof(System.BinaryDataJsonConverter))]
         public BinaryData Data { get; set; }
 
         /// <summary>

@@ -5,19 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RequestBodyMatchCondition : IUtf8JsonSerializable
+    public partial class RequestBodyMatchCondition : IUtf8JsonSerializable, IJsonModel<RequestBodyMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestBodyMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RequestBodyMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(ConditionType.ToString());
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestBodyMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestBodyMatchCondition)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(RequestBodyOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
@@ -45,27 +62,37 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
         }
 
-        internal static RequestBodyMatchCondition DeserializeRequestBodyMatchCondition(JsonElement element)
+        RequestBodyMatchCondition IJsonModel<RequestBodyMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestBodyMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestBodyMatchCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRequestBodyMatchCondition(document.RootElement, options);
+        }
+
+        internal static RequestBodyMatchCondition DeserializeRequestBodyMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RequestBodyMatchConditionType typeName = default;
             RequestBodyOperator @operator = default;
-            Optional<bool> negateCondition = default;
-            Optional<IList<string>> matchValues = default;
-            Optional<IList<PreTransformCategory>> transforms = default;
+            bool? negateCondition = default;
+            IList<string> matchValues = default;
+            IList<PreTransformCategory> transforms = default;
+            DeliveryRuleConditionParametersType typeName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"u8))
-                {
-                    typeName = new RequestBodyMatchConditionType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("operator"u8))
                 {
                     @operator = new RequestBodyOperator(property.Value.GetString());
@@ -108,8 +135,55 @@ namespace Azure.ResourceManager.Cdn.Models
                     transforms = array;
                     continue;
                 }
+                if (property.NameEquals("typeName"u8))
+                {
+                    typeName = new DeliveryRuleConditionParametersType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RequestBodyMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RequestBodyMatchCondition(
+                typeName,
+                serializedAdditionalRawData,
+                @operator,
+                negateCondition,
+                matchValues ?? new ChangeTrackingList<string>(),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>());
         }
+
+        BinaryData IPersistableModel<RequestBodyMatchCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestBodyMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RequestBodyMatchCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RequestBodyMatchCondition IPersistableModel<RequestBodyMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestBodyMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeRequestBodyMatchCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RequestBodyMatchCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RequestBodyMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

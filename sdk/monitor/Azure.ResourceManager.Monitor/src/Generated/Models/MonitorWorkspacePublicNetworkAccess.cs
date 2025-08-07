@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Gets or sets allow or disallow public network access to workspace. </summary>
+    /// <summary> State of the public network access. </summary>
     public readonly partial struct MonitorWorkspacePublicNetworkAccess : IEquatable<MonitorWorkspacePublicNetworkAccess>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> The public network access is enabled. </summary>
         public static MonitorWorkspacePublicNetworkAccess Enabled { get; } = new MonitorWorkspacePublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> The public network access is disabled. </summary>
         public static MonitorWorkspacePublicNetworkAccess Disabled { get; } = new MonitorWorkspacePublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="MonitorWorkspacePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(MonitorWorkspacePublicNetworkAccess left, MonitorWorkspacePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorWorkspacePublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(MonitorWorkspacePublicNetworkAccess left, MonitorWorkspacePublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorWorkspacePublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorWorkspacePublicNetworkAccess"/>. </summary>
         public static implicit operator MonitorWorkspacePublicNetworkAccess(string value) => new MonitorWorkspacePublicNetworkAccess(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

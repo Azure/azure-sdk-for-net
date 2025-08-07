@@ -33,9 +33,21 @@ extends:
     Artifacts:
     - name: Azure.Security.KeyVault.Administration
       safeName: AzureSecurityKeyVaultAdministration
+      triggeringPaths:
+      - Azure.Security.Keyvault.Shared
     - name: Azure.Security.KeyVault.Certificates
       safeName: AzureSecurityKeyVaultCertificates
+      triggeringPaths:
+      - Azure.Security.Keyvault.Shared
     - name: Azure.Security.KeyVault.Keys
       safeName: AzureSecurityKeyVaultKeys
+      triggeringPaths:
+      - Azure.Security.Keyvault.Shared
     - name: Azure.Security.KeyVault.Secrets
       safeName: AzureSecurityKeyVaultSecrets
+      triggeringPaths:
+      - Azure.Security.Keyvault.Shared
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Security.KeyVault.Secrets
+      ExpectedWarningsFilepath: None

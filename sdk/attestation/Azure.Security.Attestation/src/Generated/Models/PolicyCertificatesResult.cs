@@ -10,7 +10,7 @@ namespace Azure.Security.Attestation
     /// <summary> The result of a call to retrieve policy certificates. </summary>
     internal partial class PolicyCertificatesResult
     {
-        /// <summary> Initializes a new instance of PolicyCertificatesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyCertificatesResult"/>. </summary>
         /// <param name="internalPolicyCertificates"> SHA256 Hash of the binary representation certificate which was added or removed. </param>
         internal PolicyCertificatesResult(JsonWebKeySet internalPolicyCertificates)
         {

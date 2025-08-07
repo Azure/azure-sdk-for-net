@@ -25,11 +25,14 @@ namespace Azure.ResourceManager.AppService.Models
         private const string Tls1_0Value = "1.0";
         private const string Tls1_1Value = "1.1";
         private const string Tls1_2Value = "1.2";
+        private const string One3Value = "1.3";
+        /// <summary> 1.3. </summary>
+        public static AppServiceSupportedTlsVersion One3 { get; } = new AppServiceSupportedTlsVersion(One3Value);
         /// <summary> Determines if two <see cref="AppServiceSupportedTlsVersion"/> values are the same. </summary>
         public static bool operator ==(AppServiceSupportedTlsVersion left, AppServiceSupportedTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceSupportedTlsVersion"/> values are not the same. </summary>
         public static bool operator !=(AppServiceSupportedTlsVersion left, AppServiceSupportedTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppServiceSupportedTlsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceSupportedTlsVersion"/>. </summary>
         public static implicit operator AppServiceSupportedTlsVersion(string value) => new AppServiceSupportedTlsVersion(value);
 
         /// <inheritdoc />
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

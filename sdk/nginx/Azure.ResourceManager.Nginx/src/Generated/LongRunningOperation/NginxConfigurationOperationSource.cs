@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Nginx
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Nginx
 
         NginxConfigurationResource IOperationSource<NginxConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NginxConfigurationData.DeserializeNginxConfigurationData(document.RootElement);
+            var data = ModelReaderWriter.Read<NginxConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
             return new NginxConfigurationResource(_client, data);
         }
 
         async ValueTask<NginxConfigurationResource> IOperationSource<NginxConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NginxConfigurationData.DeserializeNginxConfigurationData(document.RootElement);
-            return new NginxConfigurationResource(_client, data);
+            var data = ModelReaderWriter.Read<NginxConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
+            return await Task.FromResult(new NginxConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

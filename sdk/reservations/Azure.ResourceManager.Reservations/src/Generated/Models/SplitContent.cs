@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,53 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The request for reservation split. </summary>
     public partial class SplitContent
     {
-        /// <summary> Initializes a new instance of SplitContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SplitContent"/>. </summary>
         public SplitContent()
         {
             Quantities = new ChangeTrackingList<int>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SplitContent"/>. </summary>
+        /// <param name="quantities"> List of the quantities in the new reservations to create. </param>
+        /// <param name="reservationId"> Resource id of the reservation to be split. Format of the resource id should be /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SplitContent(IList<int> quantities, ResourceIdentifier reservationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Quantities = quantities;
+            ReservationId = reservationId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of the quantities in the new reservations to create. </summary>

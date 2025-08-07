@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Grafana.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Connection waiting for approval or rejection. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Pending { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary> Connection approved. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Approved { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary> Connection Rejected. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Rejected { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(GrafanaPrivateEndpointServiceConnectionStatus left, GrafanaPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(GrafanaPrivateEndpointServiceConnectionStatus left, GrafanaPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator GrafanaPrivateEndpointServiceConnectionStatus(string value) => new GrafanaPrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

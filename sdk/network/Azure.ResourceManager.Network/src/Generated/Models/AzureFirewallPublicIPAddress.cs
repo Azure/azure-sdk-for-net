@@ -5,21 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Public IP Address associated with azure firewall. </summary>
     public partial class AzureFirewallPublicIPAddress
     {
-        /// <summary> Initializes a new instance of AzureFirewallPublicIPAddress. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPublicIPAddress"/>. </summary>
         public AzureFirewallPublicIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallPublicIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPublicIPAddress"/>. </summary>
         /// <param name="address"> Public IP Address value. </param>
-        internal AzureFirewallPublicIPAddress(string address)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallPublicIPAddress(string address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Public IP Address value. </summary>

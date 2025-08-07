@@ -29,6 +29,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Batch.FileStaging.csproj" />
+    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.1" />
   </ItemGroup>
   
   <ItemGroup>

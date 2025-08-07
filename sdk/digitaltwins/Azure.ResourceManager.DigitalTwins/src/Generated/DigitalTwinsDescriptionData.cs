@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.DigitalTwins
     /// </summary>
     public partial class DigitalTwinsDescriptionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DigitalTwinsDescriptionData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +72,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="privateEndpointConnections"> The private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Public network access for the DigitalTwinsInstance. </param>
         /// <param name="identity"> The managed identity for the DigitalTwinsInstance. </param>
-        internal DigitalTwinsDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, DigitalTwinsProvisioningState? provisioningState, string hostName, IList<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections, DigitalTwinsPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, DigitalTwinsProvisioningState? provisioningState, string hostName, IList<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections, DigitalTwinsPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -49,6 +82,12 @@ namespace Azure.ResourceManager.DigitalTwins
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionData"/> for deserialization. </summary>
+        internal DigitalTwinsDescriptionData()
+        {
         }
 
         /// <summary> Time when DigitalTwinsInstance was created. </summary>

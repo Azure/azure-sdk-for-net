@@ -20,8 +20,6 @@ $(RepoRoot)sdk\communication\Azure.Communication.Chat\tests\Azure.Communication.
 $(RepoRoot)sdk\communication\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj
 $(RepoRoot)sdk\communication\Azure.Communication.Email\tests\Azure.Communication.Email.Tests.csproj
 $(RepoRoot)sdk\communication\Azure.Communication.Identity\tests\Azure.Communication.Identity.Tests.csproj
-$(RepoRoot)sdk\communication\Azure.Communication.MediaComposition\tests\Azure.Communication.MediaComposition.Tests.csproj
-$(RepoRoot)sdk\communication\Azure.Communication.NetworkTraversal\tests\Azure.Communication.NetworkTraversal.Tests.csproj
 $(RepoRoot)sdk\communication\Azure.Communication.PhoneNumbers\tests\Azure.Communication.PhoneNumbers.Tests.csproj
 $(RepoRoot)sdk\communication\Azure.Communication.ShortCodes\tests\Azure.Communication.ShortCodes.Tests.csproj
 $(RepoRoot)sdk\communication\Azure.Communication.Sms\tests\Azure.Communication.Sms.Tests.csproj
@@ -40,6 +38,7 @@ $(RepoRoot)sdk\core\Azure.Core.Experimental\tests\Azure.Core.Experimental.Tests.
 $(RepoRoot)sdk\core\Azure.Core.Experimental\tests\perf\Azure.Core.Experimental.Performance.csproj
 $(RepoRoot)sdk\core\Azure.Core.TestFramework\tests\Azure.Core.TestFramework.Tests.csproj
 $(RepoRoot)sdk\core\Azure.Core\tests\Azure.Core.Tests.csproj
+$(RepoRoot)sdk\core\Azure.Core\tests\public\Azure.Core.Tests.Public.csproj
 $(RepoRoot)sdk\core\Microsoft.Azure.Core.NewtonsoftJson\tests\Microsoft.Azure.Core.NewtonsoftJson.Tests.csproj
 $(RepoRoot)sdk\core\Microsoft.Azure.Core.Spatial.NewtonsoftJson\tests\Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.csproj
 $(RepoRoot)sdk\core\Microsoft.Azure.Core.Spatial\tests\Microsoft.Azure.Core.Spatial.Tests.csproj

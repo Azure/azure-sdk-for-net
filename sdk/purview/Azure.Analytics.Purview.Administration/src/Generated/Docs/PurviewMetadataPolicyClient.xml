@@ -2,81 +2,84 @@
 <doc>
   <members>
     <member name="UpdateMetadataPolicyAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UpdateMetadataPolicyAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call UpdateMetadataPolicyAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-var data = new {};
-
-Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+using RequestContent content = null;
+Response response = await client.UpdateMetadataPolicyAsync("<policyId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call UpdateMetadataPolicyAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call UpdateMetadataPolicyAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     name = "<name>",
     id = "<id>",
     version = 1234,
-    properties = new {
+    properties = new
+    {
         description = "<description>",
-        decisionRules = new[] {
-            new {
+        decisionRules = new object[]
+        {
+            new
+            {
                 effect = "Deny",
-                dnfCondition = new[] {
-                    new[] {
-                        new {
+                dnfCondition = new object[]
+                {
+                    new object[]
+                    {
+                        new
+                        {
                             attributeName = "<attributeName>",
                             attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new[] {
-                                "<String>"
+                            attributeValueIncludedIn = new object[]
+                            {
+                                "<attributeValueIncludedIn>"
                             },
                             attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new[] {
-                                "<String>"
+                            attributeValueExcludedIn = new object[]
+                            {
+                                "<attributeValueExcludedIn>"
                             },
                         }
                     }
                 },
             }
         },
-        attributeRules = new[] {
-            new {
+        attributeRules = new object[]
+        {
+            new
+            {
                 id = "<id>",
                 name = "<name>",
-                dnfCondition = new[] {
-                    new[] {
-                        new {
-                            attributeName = "<attributeName>",
-                            attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new[] {
-                                "<String>"
-                            },
-                            attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new[] {
-                                "<String>"
-                            },
-                        }
+                dnfCondition = new object[]
+                {
+                    new object[]
+                    {
+                        null
                     }
                 },
             }
         },
-        collection = new {
+        collection = new
+        {
+            type = "<type>",
             referenceName = "<referenceName>",
         },
         parentCollectionName = "<parentCollectionName>",
     },
-};
-
-Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+});
+Response response = await client.UpdateMetadataPolicyAsync("<policyId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -101,85 +104,87 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")
 Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="UpdateMetadataPolicy(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UpdateMetadataPolicy with required parameters and parse the result.
+      <example>
+This sample shows how to call UpdateMetadataPolicy and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-var data = new {};
-
-Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+using RequestContent content = null;
+Response response = client.UpdateMetadataPolicy("<policyId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call UpdateMetadataPolicy with all parameters and request content, and how to parse the result.
+This sample shows how to call UpdateMetadataPolicy with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     name = "<name>",
     id = "<id>",
     version = 1234,
-    properties = new {
+    properties = new
+    {
         description = "<description>",
-        decisionRules = new[] {
-            new {
+        decisionRules = new object[]
+        {
+            new
+            {
                 effect = "Deny",
-                dnfCondition = new[] {
-                    new[] {
-                        new {
+                dnfCondition = new object[]
+                {
+                    new object[]
+                    {
+                        new
+                        {
                             attributeName = "<attributeName>",
                             attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new[] {
-                                "<String>"
+                            attributeValueIncludedIn = new object[]
+                            {
+                                "<attributeValueIncludedIn>"
                             },
                             attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new[] {
-                                "<String>"
+                            attributeValueExcludedIn = new object[]
+                            {
+                                "<attributeValueExcludedIn>"
                             },
                         }
                     }
                 },
             }
         },
-        attributeRules = new[] {
-            new {
+        attributeRules = new object[]
+        {
+            new
+            {
                 id = "<id>",
                 name = "<name>",
-                dnfCondition = new[] {
-                    new[] {
-                        new {
-                            attributeName = "<attributeName>",
-                            attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new[] {
-                                "<String>"
-                            },
-                            attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new[] {
-                                "<String>"
-                            },
-                        }
+                dnfCondition = new object[]
+                {
+                    new object[]
+                    {
+                        null
                     }
                 },
             }
         },
-        collection = new {
+        collection = new
+        {
+            type = "<type>",
             referenceName = "<referenceName>",
         },
         parentCollectionName = "<parentCollectionName>",
     },
-};
-
-Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+});
+Response response = client.UpdateMetadataPolicy("<policyId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -204,18 +209,28 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")
 Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetMetadataPolicyAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetMetadataPolicyAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetMetadataPolicyAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-Response response = await client.GetMetadataPolicyAsync("<policyId>", new RequestContext());
+Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetMetadataPolicyAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
+
+Response response = await client.GetMetadataPolicyAsync("<policyId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -240,18 +255,28 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")
 Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetMetadataPolicy(string,RequestContext)">
-<example>
-This sample shows how to call GetMetadataPolicy with required parameters and parse the result.
+      <example>
+This sample shows how to call GetMetadataPolicy and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
-Response response = client.GetMetadataPolicy("<policyId>", new RequestContext());
+Response response = client.GetMetadataPolicy("<policyId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetMetadataPolicy with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
+
+Response response = client.GetMetadataPolicy("<policyId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -276,36 +301,103 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")
 Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetMetadataPoliciesAsync(RequestContext)">
-<example>
-This sample shows how to call GetMetadataPoliciesAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetMetadataPoliciesAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
-await foreach (var item in client.GetMetadataPoliciesAsync(new RequestContext()))
+await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
 {
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
-</example>
+This sample shows how to call GetMetadataPoliciesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
+
+await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
+}
+]]></code></example>
     </member>
     <member name="GetMetadataPolicies(RequestContext)">
-<example>
-This sample shows how to call GetMetadataPolicies with required parameters and parse the result.
+      <example>
+This sample shows how to call GetMetadataPolicies and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
-foreach (var item in client.GetMetadataPolicies(new RequestContext()))
+foreach (BinaryData item in client.GetMetadataPolicies(null))
 {
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
-</example>
+This sample shows how to call GetMetadataPolicies with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
+
+foreach (BinaryData item in client.GetMetadataPolicies(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("version").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
+}
+]]></code></example>
     </member>
   </members>
 </doc>

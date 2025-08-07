@@ -41,10 +41,6 @@ namespace Azure.Storage.Test
         public string FileServiceSecondaryEndpoint { get; private set; }
         public string QueueServiceSecondaryEndpoint { get; private set; }
         public string TableServiceSecondaryEndpoint { get; private set; }
-        public string ActiveDirectoryApplicationId { get; private set; }
-        public string ActiveDirectoryApplicationSecret { get; private set; }
-        public string ActiveDirectoryTenantId { get; private set; }
-        public string ActiveDirectoryAuthEndpoint { get; private set; }
         public TenantType TenantType { get; private set; }
         public string ConnectionString { get; private set; }
         public string EncryptionScope { get; private set; }
@@ -103,12 +99,6 @@ namespace Azure.Storage.Test
                 config.FileServiceSecondaryEndpoint,
                 config.QueueServiceSecondaryEndpoint,
                 config.TableServiceSecondaryEndpoint,
-                config.ActiveDirectoryApplicationId,
-                !sanitize ?
-                    config.ActiveDirectoryApplicationSecret :
-                    SanitizeValue,
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryAuthEndpoint,
                 config.TenantType.ToString(),
                 !sanitize ?
                     config.ConnectionString :
@@ -158,15 +148,11 @@ namespace Azure.Storage.Test
                 FileServiceSecondaryEndpoint = values[12],
                 QueueServiceSecondaryEndpoint = values[13],
                 TableServiceSecondaryEndpoint = values[14],
-                ActiveDirectoryApplicationId = values[15],
-                ActiveDirectoryApplicationSecret = values[16],
-                ActiveDirectoryTenantId = values[17],
-                ActiveDirectoryAuthEndpoint = values[18],
-                TenantType = ParseTenantType(values[19]),
-                ConnectionString = values[20],
-                EncryptionScope = values[21],
-                ResourceGroupName = values[22],
-                SubscriptionId = values[23]
+                TenantType = ParseTenantType(values[15]),
+                ConnectionString = values[16],
+                EncryptionScope = values[17],
+                ResourceGroupName = values[18],
+                SubscriptionId = values[19]
             };
         }
 
@@ -197,10 +183,6 @@ namespace Azure.Storage.Test
                 FileSecurePortOverride = Get("FileSecurePortOverride"),
                 QueueSecurePortOverride = Get("QueueSecurePortOverride"),
                 TableSecurePortOverride = Get("TableSecurePortOverride"),
-                ActiveDirectoryApplicationId = Get("ActiveDirectoryApplicationId"),
-                ActiveDirectoryApplicationSecret = Get("ActiveDirectoryApplicationSecret"),
-                ActiveDirectoryTenantId = Get("ActiveDirectoryTenantId"),
-                ActiveDirectoryAuthEndpoint = Get("ActiveDirectoryAuthEndpoint"),
                 ConnectionString = Get("ConnectionString"),
                 EncryptionScope = Get("EncryptionScope"),
                 ResourceGroupName = Get("ResourceGroupName"),

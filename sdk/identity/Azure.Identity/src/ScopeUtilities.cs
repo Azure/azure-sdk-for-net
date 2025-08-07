@@ -2,11 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
@@ -15,7 +11,7 @@ namespace Azure.Identity
         private const string DefaultSuffix = "/.default";
         private const string ScopePattern = "^[0-9a-zA-Z-_.:/]+$";
 
-        private const string InvalidScopeMessage = "The specified scope is not in expected format. Only alphanumeric characters, '.', '-', ':', '_', and '/' are allowed";
+        internal const string InvalidScopeMessage = "The specified scope is not in expected format. Only alphanumeric characters, '.', '-', ':', '_', and '/' are allowed";
         private static readonly Regex scopeRegex = new Regex(ScopePattern);
 
         public static string ScopesToResource(string[] scopes)
@@ -36,11 +32,6 @@ namespace Azure.Identity
             }
 
             return scopes[0].Remove(scopes[0].LastIndexOf(DefaultSuffix, StringComparison.Ordinal));
-        }
-
-        public static string[] ResourceToScopes(string resource)
-        {
-            return new string[] { resource + "/.default" };
         }
 
         public static void ValidateScope(string scope)

@@ -16,5 +16,10 @@ namespace Azure.Data.Tables
             => AppContextSwitchHelper.GetConfigValue(
                 TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnDeleteEntitySwitchName,
                 TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnDeleteEntityEnvVar);
+
+        public static bool DisableThrowOnStringComparisonFilter
+            => AppContextSwitchHelper.GetConfigValue(
+                TableConstants.CompatSwitches.DisableThrowOnStringComparisonFilterSwitchName,
+                TableConstants.CompatSwitches.DisableThrowOnStringComparisonFilterEnvVar);
     }
 }

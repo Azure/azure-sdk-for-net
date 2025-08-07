@@ -10,23 +10,25 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.VoiceServices.Models;
 
 namespace Azure.ResourceManager.VoiceServices
 {
     /// <summary>
     /// A Class representing a VoiceServicesTestLine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VoiceServicesTestLineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVoiceServicesTestLineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VoiceServicesCommunicationsGatewayResource" /> using the GetVoiceServicesTestLine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VoiceServicesTestLineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVoiceServicesTestLineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VoiceServicesCommunicationsGatewayResource"/> using the GetVoiceServicesTestLine method.
     /// </summary>
     public partial class VoiceServicesTestLineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VoiceServicesTestLineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="communicationsGatewayName"> The communicationsGatewayName. </param>
+        /// <param name="testLineName"> The testLineName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}/testLines/{testLineName}";
@@ -37,12 +39,15 @@ namespace Azure.ResourceManager.VoiceServices
         private readonly TestLinesRestOperations _voiceServicesTestLineTestLinesRestClient;
         private readonly VoiceServicesTestLineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.VoiceServices/communicationsGateways/testLines";
+
         /// <summary> Initializes a new instance of the <see cref="VoiceServicesTestLineResource"/> class for mocking. </summary>
         protected VoiceServicesTestLineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VoiceServicesTestLineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VoiceServicesTestLineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VoiceServicesTestLineResource(ArmClient client, VoiceServicesTestLineData data) : this(client, data.Id)
@@ -63,9 +68,6 @@ namespace Azure.ResourceManager.VoiceServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.VoiceServices/communicationsGateways/testLines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +101,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +141,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +180,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TestLines_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,6 +223,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -230,6 +264,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TestLines_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,6 +307,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
@@ -298,6 +348,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -353,6 +411,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -407,6 +473,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -456,6 +530,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -504,6 +586,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -556,6 +646,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

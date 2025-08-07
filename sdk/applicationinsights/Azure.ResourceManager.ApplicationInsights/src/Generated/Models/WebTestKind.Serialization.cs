@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static string ToSerialString(this WebTestKind value) => value switch
         {
             WebTestKind.Ping => "ping",
-            WebTestKind.Multistep => "multistep",
+            WebTestKind.MultiStep => "multistep",
             WebTestKind.Standard => "standard",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebTestKind value.")
         };
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static WebTestKind ToWebTestKind(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ping")) return WebTestKind.Ping;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "multistep")) return WebTestKind.Multistep;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "multistep")) return WebTestKind.MultiStep;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard")) return WebTestKind.Standard;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebTestKind value.");
         }

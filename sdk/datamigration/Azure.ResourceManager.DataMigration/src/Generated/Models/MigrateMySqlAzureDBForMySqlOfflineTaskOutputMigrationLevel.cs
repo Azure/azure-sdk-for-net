@@ -7,23 +7,23 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel. </summary>
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel : MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>. </summary>
         internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel()
         {
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="durationInSeconds"> Duration of task execution in seconds. </param>
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        /// <param name="lastStorageUpdate"> Last time the storage was updated. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, long? durationInSeconds, MigrationStatus? status, string statusMessage, string message, string databases, string databaseSummary, MigrationReportResult migrationReportResult, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> exceptionsAndWarnings, DateTimeOffset? lastStorageUpdate) : base(id, resultType)
+        /// <param name="lastStorageUpdatedOn"> Last time the storage was updated. </param>
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, long? durationInSeconds, DataMigrationStatus? status, string statusMessage, string message, string databases, string databaseSummary, MigrationReportResult migrationReportResult, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings, DateTimeOffset? lastStorageUpdatedOn) : base(id, resultType, serializedAdditionalRawData)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetServerVersion = targetServerVersion;
             TargetServerBrandVersion = targetServerBrandVersion;
             ExceptionsAndWarnings = exceptionsAndWarnings;
-            LastStorageUpdate = lastStorageUpdate;
+            LastStorageUpdatedOn = lastStorageUpdatedOn;
             ResultType = resultType ?? "MigrationLevelOutput";
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Duration of task execution in seconds. </summary>
         public long? DurationInSeconds { get; }
         /// <summary> Current status of migration. </summary>
-        public MigrationStatus? Status { get; }
+        public DataMigrationStatus? Status { get; }
         /// <summary> Migration status message. </summary>
         public string StatusMessage { get; }
         /// <summary> Migration progress message. </summary>
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Target server brand version. </summary>
         public string TargetServerBrandVersion { get; }
         /// <summary> Migration exceptions and warnings. </summary>
-        public IReadOnlyList<ReportableException> ExceptionsAndWarnings { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
         /// <summary> Last time the storage was updated. </summary>
-        public DateTimeOffset? LastStorageUpdate { get; }
+        public DateTimeOffset? LastStorageUpdatedOn { get; }
     }
 }

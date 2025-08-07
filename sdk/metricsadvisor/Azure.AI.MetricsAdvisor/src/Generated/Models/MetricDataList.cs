@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricDataList. </summary>
     internal partial class MetricDataList
     {
-        /// <summary> Initializes a new instance of MetricDataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDataList"/>. </summary>
         internal MetricDataList()
         {
             Value = new ChangeTrackingList<MetricSeriesData>();
         }
 
-        /// <summary> Initializes a new instance of MetricDataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDataList"/>. </summary>
         /// <param name="value"></param>
         internal MetricDataList(IReadOnlyList<MetricSeriesData> value)
         {

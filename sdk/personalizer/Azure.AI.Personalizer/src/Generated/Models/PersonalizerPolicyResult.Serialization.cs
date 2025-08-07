@@ -15,11 +15,11 @@ namespace Azure.AI.Personalizer
     {
         internal static PersonalizerPolicyResult DeserializePersonalizerPolicyResult(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> arguments = default;
-            Optional<PersonalizerPolicySource> policySource = default;
-            Optional<IReadOnlyList<PersonalizerPolicyResultSummary>> summary = default;
-            Optional<PersonalizerPolicyResultSummary> totalSummary = default;
+            string name = default;
+            string arguments = default;
+            PersonalizerPolicySource? policySource = default;
+            IReadOnlyList<PersonalizerPolicyResultSummary> summary = default;
+            PersonalizerPolicyResultSummary totalSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -68,7 +68,7 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerPolicyResult(name.Value, arguments.Value, Optional.ToNullable(policySource), Optional.ToList(summary), totalSummary.Value);
+            return new PersonalizerPolicyResult(name, arguments, policySource, summary ?? new ChangeTrackingList<PersonalizerPolicyResultSummary>(), totalSummary);
         }
     }
 }

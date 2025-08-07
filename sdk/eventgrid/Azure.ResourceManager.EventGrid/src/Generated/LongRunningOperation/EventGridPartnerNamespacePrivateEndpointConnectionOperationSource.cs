@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.EventGrid
 
         EventGridPartnerNamespacePrivateEndpointConnectionResource IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return new EventGridPartnerNamespacePrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<EventGridPartnerNamespacePrivateEndpointConnectionResource> IOperationSource<EventGridPartnerNamespacePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(document.RootElement);
-            return new EventGridPartnerNamespacePrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            return await Task.FromResult(new EventGridPartnerNamespacePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

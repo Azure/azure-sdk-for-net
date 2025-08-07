@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for Sybase data source. </summary>
-    public partial class SybaseLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class SybaseLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SybaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SybaseLinkedService"/>. </summary>
         /// <param name="server"> Server name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
@@ -29,8 +28,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Sybase";
         }
 
-        /// <summary> Initializes a new instance of SybaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SybaseLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SybaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> schema, SybaseAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SybaseLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> schema, SybaseAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             Database = database;
@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Sybase";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SybaseLinkedService"/> for deserialization. </summary>
+        internal SybaseLinkedService()
+        {
         }
 
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
@@ -66,37 +71,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for authentication. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        public DataFactorySecret Password { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
     }
 }

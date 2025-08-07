@@ -66,7 +66,7 @@
                 displayName: displayName,
                 startTask: startTask);
 
-            CloudPool pool = batchClient.PoolOperations.CreatePool(id, "Woo", new CloudServiceConfiguration("4"));
+            CloudPool pool = batchClient.PoolOperations.CreatePool(id, "Woo", new VirtualMachineConfiguration(imageReference: new ImageReference(), nodeAgentSkuId: "df"));
 
             await pool.CommitAsync(additionalBehaviors: InterceptorFactory.CreateAddPoolRequestInterceptor());
 
@@ -74,7 +74,7 @@
 
             Assert.Equal(id, pool.Id);
             Assert.Equal(displayName, pool.DisplayName);
-            Assert.Null(pool.CloudServiceConfiguration);
+            Assert.Null(pool.VirtualMachineConfiguration);
             Assert.NotNull(pool.StartTask);
             Assert.Equal(startTask.CommandLine, pool.StartTask.CommandLine);
         }

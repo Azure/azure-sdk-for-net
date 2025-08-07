@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -35,6 +34,26 @@ namespace Azure.ResourceManager.Monitor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/autoscalesettings/", false);
+            uri.AppendPath(autoscaleSettingName, true);
+            uri.AppendPath("/predictiveMetrics", false);
+            uri.AppendQuery("timespan", timespan, true);
+            uri.AppendQuery("interval", interval, "P", true);
+            uri.AppendQuery("metricNamespace", metricNamespace, true);
+            uri.AppendQuery("metricName", metricName, true);
+            uri.AppendQuery("aggregation", aggregation, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation)
@@ -92,7 +111,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingPredicativeResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutoscaleSettingPredicativeResult.DeserializeAutoscaleSettingPredicativeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -130,7 +149,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         AutoscaleSettingPredicativeResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutoscaleSettingPredicativeResult.DeserializeAutoscaleSettingPredicativeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

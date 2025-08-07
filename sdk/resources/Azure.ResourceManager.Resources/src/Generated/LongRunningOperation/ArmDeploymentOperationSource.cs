@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Resources
 
         ArmDeploymentResource IOperationSource<ArmDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ArmDeploymentData.DeserializeArmDeploymentData(document.RootElement);
+            var data = ModelReaderWriter.Read<ArmDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return new ArmDeploymentResource(_client, data);
         }
 
         async ValueTask<ArmDeploymentResource> IOperationSource<ArmDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ArmDeploymentData.DeserializeArmDeploymentData(document.RootElement);
-            return new ArmDeploymentResource(_client, data);
+            var data = ModelReaderWriter.Read<ArmDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
+            return await Task.FromResult(new ArmDeploymentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

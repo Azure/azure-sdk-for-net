@@ -5,14 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     /// <summary> The Key Vault update information used for user managed key rotation. </summary>
     internal partial class UpdateKeyVaultMetaInfo
     {
-        /// <summary> Initializes a new instance of UpdateKeyVaultMetaInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateKeyVaultMetaInfo"/>. </summary>
         public UpdateKeyVaultMetaInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateKeyVaultMetaInfo"/>. </summary>
+        /// <param name="encryptionKeyVersion"> The version of the user managed encryption key to update through a key rotation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateKeyVaultMetaInfo(string encryptionKeyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EncryptionKeyVersion = encryptionKeyVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The version of the user managed encryption key to update through a key rotation. </summary>

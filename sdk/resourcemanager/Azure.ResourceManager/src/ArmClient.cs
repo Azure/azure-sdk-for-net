@@ -102,7 +102,8 @@ namespace Azure.ResourceManager
         {
             if (_canUseTagResource == null)
             {
-                var tagRp = await GetDefaultSubscription(cancellationToken).GetResourceProviderAsync(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var defaultSubscription = await GetDefaultSubscriptionAsync(cancellationToken).ConfigureAwait(false);
+                var tagRp = await defaultSubscription.GetResourceProviderAsync(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken).ConfigureAwait(false);
                 _canUseTagResource = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
             }
             return _canUseTagResource.Value;
@@ -296,6 +297,20 @@ namespace Azure.ResourceManager
             where T : ArmResource
         {
             return resourceFactory();
+        }
+
+        private readonly ConcurrentDictionary<Type, object> _clientCache = new ConcurrentDictionary<Type, object>();
+
+        /// <summary>
+        /// Gets a cached client to use for extension methods.
+        /// </summary>
+        /// <typeparam name="T"> The type of client to get. </typeparam>
+        /// <param name="clientFactory"> The constructor factory for the client. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T GetCachedClient<T>(Func<ArmClient, T> clientFactory)
+            where T : class
+        {
+            return _clientCache.GetOrAdd(typeof(T), (type) => { return clientFactory(this); }) as T;
         }
     }
 }

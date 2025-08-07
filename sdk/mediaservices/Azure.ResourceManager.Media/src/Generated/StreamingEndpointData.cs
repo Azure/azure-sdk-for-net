@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class StreamingEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StreamingEndpointData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StreamingEndpointData(AzureLocation location) : base(location)
         {
             CustomHostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +82,8 @@ namespace Azure.ResourceManager.Media
         /// <param name="freeTrialEndOn"> The free trial expiration time. </param>
         /// <param name="createdOn"> The exact time the streaming endpoint was created. </param>
         /// <param name="lastModifiedOn"> The exact time the streaming endpoint was last modified. </param>
-        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StreamingEndpointCurrentSku sku, string description, int? scaleUnits, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? isCdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StreamingEndpointCurrentSku sku, string description, int? scaleUnits, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? isCdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Description = description;
@@ -69,6 +102,12 @@ namespace Azure.ResourceManager.Media
             FreeTrialEndOn = freeTrialEndOn;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointData"/> for deserialization. </summary>
+        internal StreamingEndpointData()
+        {
         }
 
         /// <summary> The streaming endpoint sku. </summary>

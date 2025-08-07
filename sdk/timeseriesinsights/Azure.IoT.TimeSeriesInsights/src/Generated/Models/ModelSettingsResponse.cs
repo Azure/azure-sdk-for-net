@@ -10,12 +10,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Response containing full time series model settings which include model name, Time Series ID properties and default type ID. </summary>
     internal partial class ModelSettingsResponse
     {
-        /// <summary> Initializes a new instance of ModelSettingsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelSettingsResponse"/>. </summary>
         internal ModelSettingsResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ModelSettingsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelSettingsResponse"/>. </summary>
         /// <param name="modelSettings"> Model settings including model name, Time Series ID properties and default type ID. </param>
         internal ModelSettingsResponse(TimeSeriesModelSettings modelSettings)
         {

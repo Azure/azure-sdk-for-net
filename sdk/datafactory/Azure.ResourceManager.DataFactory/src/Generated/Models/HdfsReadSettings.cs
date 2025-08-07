@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> HDFS read settings. </summary>
     public partial class HdfsReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of HdfsReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsReadSettings"/>. </summary>
         public HdfsReadSettings()
         {
             StoreReadSettingsType = "HdfsReadSettings";
         }
 
-        /// <summary> Initializes a new instance of HdfsReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsReadSettings"/>. </summary>
         /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>

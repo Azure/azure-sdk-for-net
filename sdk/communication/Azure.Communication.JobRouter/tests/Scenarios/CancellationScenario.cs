@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
@@ -39,6 +36,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Name = "test",
                 });
+            AddForCleanup(new Task(async () => await administrationClient.DeleteQueueAsync(queueResponse.Value.Id)));
 
             var jobId = $"JobId-{IdPrefix}-{nameof(CancellationScenario)}";
             var createJob = await client.CreateJobAsync(
@@ -49,7 +47,6 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Priority = 1,
                 });
-            AddForCleanup(new Task(async () => await client.CancelJobAsync(new CancelJobOptions(jobId))));
             AddForCleanup(new Task(async () => await client.DeleteJobAsync(jobId)));
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),

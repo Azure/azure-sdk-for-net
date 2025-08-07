@@ -29,14 +29,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .Build();
 
             var doubleCounter = meter.CreateCounter<double>("TestDoubleCounter");
-            doubleCounter.Add(123.45);
+            doubleCounter.Add(123.45, new("tag0", null), new("tag1", "value1"), new("tag2", new[] { 1, 2, 3 }), new("tag3", new object?[] { null, null }));
             provider.ForceFlush();
 
-            var metricResource = new AzureMonitorResource()
-            {
-                RoleName = "testRoleName",
-                RoleInstance = "testRoleInstance"
-            };
+            var metricResource = new AzureMonitorResource(
+                roleName: "testRoleName",
+                roleInstance: "testRoleInstance",
+                serviceVersion: null,
+                monitorBaseData: null);
             var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(new Batch<Metric>(metrics.ToArray(), 1), metricResource, "00000000-0000-0000-0000-000000000000");
             Assert.Single(telemetryItems);
             Assert.Equal("MetricData", telemetryItems[0].Data.BaseType);
@@ -49,6 +49,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("TestDoubleCounter", metricsData.Metrics.First().Name);
             Assert.Equal(123.45, metricsData.Metrics.First().Value);
             Assert.Null(metricsData.Metrics.First().DataPointType);
+
+            Assert.Equal(3, metricsData.Properties.Count);
+            Assert.Contains(metricsData.Properties, kvp => kvp.Key == "tag1" && kvp.Value == "value1");
+            Assert.Contains(metricsData.Properties, kvp => kvp.Key == "tag2" && kvp.Value == "1,2,3");
+            Assert.Contains(metricsData.Properties, kvp => kvp.Key == "tag3" && kvp.Value == string.Empty);
         }
     }
 }

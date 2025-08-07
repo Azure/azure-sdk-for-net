@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
@@ -13,12 +14,44 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The BillingBenefitsPurchaseContent. </summary>
     public partial class BillingBenefitsPurchaseContent
     {
-        /// <summary> Initializes a new instance of BillingBenefitsPurchaseContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsPurchaseContent"/>. </summary>
         public BillingBenefitsPurchaseContent()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsPurchaseContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsPurchaseContent"/>. </summary>
         /// <param name="sku"> The SKU to be applied for this resource. </param>
         /// <param name="displayName"> Friendly name of the savings plan. </param>
         /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="effectOn"> DateTime of the savings plan starts providing benefit from. </param>
         /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
-        internal BillingBenefitsPurchaseContent(BillingBenefitsSku sku, string displayName, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsCommitment commitment, DateTimeOffset? effectOn, bool? isRenewed, BillingBenefitsAppliedScopeProperties appliedScopeProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsPurchaseContent(BillingBenefitsSku sku, string displayName, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsCommitment commitment, DateTimeOffset? effectOn, bool? isRenewed, BillingBenefitsAppliedScopeProperties appliedScopeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -41,6 +75,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             EffectOn = effectOn;
             IsRenewed = isRenewed;
             AppliedScopeProperties = appliedScopeProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SKU to be applied for this resource. </summary>

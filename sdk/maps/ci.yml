@@ -44,3 +44,5 @@ extends:
       safeName: AzureMapsSearch
     - name: Azure.Maps.Geolocation
       safeName: AzureMapsGeolocation
+    - name: Azure.Maps.TimeZones
+      safeName: AzureMapsTimeZones

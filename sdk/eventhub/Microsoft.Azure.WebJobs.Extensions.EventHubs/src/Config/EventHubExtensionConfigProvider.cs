@@ -9,6 +9,7 @@ using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Configuration;
@@ -28,19 +29,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private readonly IConverterManager _converterManager;
         private readonly IWebJobsExtensionConfiguration<EventHubExtensionConfigProvider> _configuration;
         private readonly EventHubClientFactory _clientFactory;
+        private readonly IDrainModeManager _drainModeManager;
 
         public EventHubExtensionConfigProvider(
             IOptions<EventHubOptions> options,
             ILoggerFactory loggerFactory,
             IConverterManager converterManager,
             IWebJobsExtensionConfiguration<EventHubExtensionConfigProvider> configuration,
-            EventHubClientFactory clientFactory)
+            EventHubClientFactory clientFactory,
+            IDrainModeManager drainModeManager)
         {
             _options = options;
             _loggerFactory = loggerFactory;
             _converterManager = converterManager;
             _configuration = configuration;
             _clientFactory = clientFactory;
+            _drainModeManager = drainModeManager;
         }
 
         internal Action<ExceptionReceivedEventArgs> ExceptionHandler { get; set; }
@@ -71,7 +75,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 .AddOpenConverter<OpenType.Poco, EventData>(ConvertPocoToEventData);
 
             // register our trigger binding provider
-            var triggerBindingProvider = new EventHubTriggerAttributeBindingProvider(_converterManager, _options, _loggerFactory, _clientFactory);
+            var triggerBindingProvider = new EventHubTriggerAttributeBindingProvider(
+                _converterManager,
+                _options,
+                _loggerFactory,
+                _clientFactory,
+                _drainModeManager);
             context.AddBindingRule<EventHubTriggerAttribute>()
                 .BindToTrigger(triggerBindingProvider);
 

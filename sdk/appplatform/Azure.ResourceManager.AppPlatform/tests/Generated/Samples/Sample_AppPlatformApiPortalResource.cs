@@ -7,20 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
 {
     public partial class Sample_AppPlatformApiPortalResource
     {
-        // ApiPortals_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiPortalsGet()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/ApiPortals_Get.json
@@ -50,59 +47,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiPortals_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiPortalsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/ApiPortals_CreateOrUpdate.json
-            // this example is just showing the usage of "ApiPortals_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AppPlatformApiPortalResource created on azure
-            // for more information of creating AppPlatformApiPortalResource, please refer to the document of AppPlatformApiPortalResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string serviceName = "myservice";
-            string apiPortalName = "default";
-            ResourceIdentifier appPlatformApiPortalResourceId = AppPlatformApiPortalResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiPortalName);
-            AppPlatformApiPortalResource appPlatformApiPortal = client.GetAppPlatformApiPortalResource(appPlatformApiPortalResourceId);
-
-            // invoke the operation
-            AppPlatformApiPortalData data = new AppPlatformApiPortalData()
-            {
-                Properties = new AppPlatformApiPortalProperties()
-                {
-                    IsPublic = true,
-                    GatewayIds =
-{
-new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/gateways/default")
-},
-                },
-                Sku = new AppPlatformSku()
-                {
-                    Name = "E0",
-                    Tier = "Enterprise",
-                    Capacity = 2,
-                },
-            };
-            ArmOperation<AppPlatformApiPortalResource> lro = await appPlatformApiPortal.UpdateAsync(WaitUntil.Completed, data);
-            AppPlatformApiPortalResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AppPlatformApiPortalData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiPortals_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiPortalsDelete()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/ApiPortals_Delete.json
@@ -125,12 +71,57 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             // invoke the operation
             await appPlatformApiPortal.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiPortals_ValidateDomain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiPortalsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/ApiPortals_CreateOrUpdate.json
+            // this example is just showing the usage of "ApiPortals_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AppPlatformApiPortalResource created on azure
+            // for more information of creating AppPlatformApiPortalResource, please refer to the document of AppPlatformApiPortalResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string serviceName = "myservice";
+            string apiPortalName = "default";
+            ResourceIdentifier appPlatformApiPortalResourceId = AppPlatformApiPortalResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiPortalName);
+            AppPlatformApiPortalResource appPlatformApiPortal = client.GetAppPlatformApiPortalResource(appPlatformApiPortalResourceId);
+
+            // invoke the operation
+            AppPlatformApiPortalData data = new AppPlatformApiPortalData
+            {
+                Properties = new AppPlatformApiPortalProperties
+                {
+                    IsPublic = true,
+                    GatewayIds = { new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/gateways/default") },
+                },
+                Sku = new AppPlatformSku
+                {
+                    Name = "E0",
+                    Tier = "Enterprise",
+                    Capacity = 2,
+                },
+            };
+            ArmOperation<AppPlatformApiPortalResource> lro = await appPlatformApiPortal.UpdateAsync(WaitUntil.Completed, data);
+            AppPlatformApiPortalResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AppPlatformApiPortalData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateDomain_ApiPortalsValidateDomain()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/ApiPortals_ValidateDomain.json

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Maps.Search", "src\Azure.Maps.Search.csproj", "{03B3AF31-48B9-46A6-A58D-62025C2F017F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Maps.Search.Tests", "tests\Azure.Maps.Search.Tests.csproj", "{ADCB2CA7-74C6-4BF1-A50F-DA87F9B7170C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03B3AF31-48B9-46A6-A58D-62025C2F017F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B3AF31-48B9-46A6-A58D-62025C2F017F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B3AF31-48B9-46A6-A58D-62025C2F017F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B3AF31-48B9-46A6-A58D-62025C2F017F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADCB2CA7-74C6-4BF1-A50F-DA87F9B7170C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADCB2CA7-74C6-4BF1-A50F-DA87F9B7170C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADCB2CA7-74C6-4BF1-A50F-DA87F9B7170C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADCB2CA7-74C6-4BF1-A50F-DA87F9B7170C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {241883FC-C7D6-43A7-920D-10675851C3C7}
+	EndGlobalSection
+EndGlobal

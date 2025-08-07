@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Storage.Common;
 
 #pragma warning disable SA1402  // File may only contain a single type
 

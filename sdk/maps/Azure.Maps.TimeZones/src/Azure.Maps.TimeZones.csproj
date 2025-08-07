@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Maps Time Zone SDK</Description>
+    <AssemblyTitle>Azure Maps Azure.Maps.TimeZones</AssemblyTitle>
+    <Version>1.0.0-beta.2</Version>
+    <PackageTags>Azure;Azure Maps;Maps;Azure.Maps.TimeZones</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>
+      $(NoWarn);
+      AZC0012;
+      AZC0035; <!-- Missing model factory methods.  #51229-->
+    </NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Maps -->
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\MapsSasCredentialPolicy.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="C:\azure-sdk-for-net\eng/images/azureicon.png" />
+  </ItemGroup>
+
+</Project>

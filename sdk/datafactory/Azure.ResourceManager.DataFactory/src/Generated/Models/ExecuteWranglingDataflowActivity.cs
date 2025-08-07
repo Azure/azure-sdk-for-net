@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Execute power query activity. </summary>
-    public partial class ExecuteWranglingDataflowActivity : DataFactoryActivity
+    public partial class ExecuteWranglingDataflowActivity : PipelineActivity
     {
-        /// <summary> Initializes a new instance of ExecuteWranglingDataflowActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataFlow"> Data flow reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataFlow"/> is null. </exception>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "ExecuteWranglingDataflow";
         }
 
-        /// <summary> Initializes a new instance of ExecuteWranglingDataflowActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -43,6 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataFlow"> Data flow reference. </param>
         /// <param name="staging"> Staging info for execute data flow activity. </param>
         /// <param name="integrationRuntime"> The integration runtime reference. </param>
+        /// <param name="continuationSettings"> Continuation settings for execute data flow activity. </param>
         /// <param name="compute"> Compute properties for data flow activity. </param>
         /// <param name="traceLevel"> Trace level setting used for data flow monitoring output. Supported values are: 'coarse', 'fine', and 'none'. Type: string (or Expression with resultType string). </param>
         /// <param name="continueOnError"> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </param>
@@ -50,12 +50,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sourceStagingConcurrency"> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sinks"> (Deprecated. Please use Queries). List of Power Query activity sinks mapped to a queryName. </param>
         /// <param name="queries"> List of mapping for Power Query mashup query to sink dataset(s). </param>
-        internal ExecuteWranglingDataflowActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ActivityPolicy policy, DataFlowReference dataFlow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, DataFactoryElement<string> traceLevel, DataFactoryElement<bool> continueOnError, DataFactoryElement<bool> runConcurrently, DataFactoryElement<int> sourceStagingConcurrency, IDictionary<string, PowerQuerySink> sinks, IList<PowerQuerySinkMapping> queries) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal ExecuteWranglingDataflowActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, PipelineActivityPolicy policy, DataFlowReference dataFlow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ContinuationSettingsReference continuationSettings, ExecuteDataFlowActivityComputeType compute, DataFactoryElement<string> traceLevel, DataFactoryElement<bool> continueOnError, DataFactoryElement<bool> runConcurrently, DataFactoryElement<int> sourceStagingConcurrency, IDictionary<string, PowerQuerySink> sinks, IList<PowerQuerySinkMapping> queries) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Policy = policy;
             DataFlow = dataFlow;
             Staging = staging;
             IntegrationRuntime = integrationRuntime;
+            ContinuationSettings = continuationSettings;
             Compute = compute;
             TraceLevel = traceLevel;
             ContinueOnError = continueOnError;
@@ -66,16 +67,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "ExecuteWranglingDataflow";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/> for deserialization. </summary>
+        internal ExecuteWranglingDataflowActivity()
+        {
+        }
+
         /// <summary> Activity policy. </summary>
-        public ActivityPolicy Policy { get; set; }
+        public PipelineActivityPolicy Policy { get; set; }
         /// <summary> Data flow reference. </summary>
         public DataFlowReference DataFlow { get; set; }
         /// <summary> Staging info for execute data flow activity. </summary>
         public DataFlowStagingInfo Staging { get; set; }
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference IntegrationRuntime { get; set; }
+        /// <summary> Continuation settings for execute data flow activity. </summary>
+        public ContinuationSettingsReference ContinuationSettings { get; set; }
         /// <summary> Compute properties for data flow activity. </summary>
-        public ExecuteDataFlowActivityTypePropertiesCompute Compute { get; set; }
+        public ExecuteDataFlowActivityComputeType Compute { get; set; }
         /// <summary> Trace level setting used for data flow monitoring output. Supported values are: 'coarse', 'fine', and 'none'. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TraceLevel { get; set; }
         /// <summary> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </summary>

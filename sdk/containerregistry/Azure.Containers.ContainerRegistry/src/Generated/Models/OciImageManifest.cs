@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
     public partial class OciImageManifest
     {
-        /// <summary> Initializes a new instance of OciImageManifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciImageManifest"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         public OciImageManifest(int schemaVersion)
         {
@@ -21,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
             SchemaVersion = schemaVersion;
         }
 
-        /// <summary> Initializes a new instance of OciImageManifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciImageManifest"/>. </summary>
         /// <param name="configuration"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>

@@ -1,7 +1,0 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
-  <PropertyGroup>
-    <AzureApiTag>Resources_2021-04-01;Authorization_2020-05-01;SubscriptionClient_2021-01-01;Resources_2020-10-01;Features_2021-07-01;ManagementLinkClient_2016-09-01;Resources_2016-09-01;Authorization_2016-09-01;Authorization_2020-09-01;Authorization_2020-07-01-preview;Management_2020-09-01;Management_2020-07-01-preview;PolicyClient_2021-06-01;Management_2020-10-01;ResourceManagementClient_2020-10-01;Resources_2020-01-01;SubscriptionClient_2020-01-01;Resources_2021-05-01;Resources_2021-04-01;</AzureApiTag>
-    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
-  </PropertyGroup>
-</Project>

@@ -81,16 +81,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// The default value is currentuser. This property is applicable only
-        /// for Pools configured with Windows Compute Nodes (that is, created
-        /// with cloudServiceConfiguration, or with virtualMachineConfiguration
-        /// using a Windows Image reference). For Linux Compute Nodes, the
-        /// Certificates are stored in a directory inside the Task working
-        /// directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is
-        /// supplied to the Task to query for this location. For Certificates
-        /// with visibility of 'remoteUser', a 'certs' directory is created in
-        /// the user's home directory (e.g., /home/{user-name}/certs) and
-        /// Certificates are placed in that directory. Possible values include:
-        /// 'currentUser', 'localMachine'
+        /// for Pools configured with Windows Compute Nodes. For Linux Compute
+        /// Nodes, the Certificates are stored in a directory inside the Task
+        /// working directory and an environment variable
+        /// AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this
+        /// location. For Certificates with visibility of 'remoteUser', a
+        /// 'certs' directory is created in the user's home directory (e.g.,
+        /// /home/{user-name}/certs) and Certificates are placed in that
+        /// directory. Possible values include: 'currentUser', 'localMachine'
         /// </remarks>
         [JsonProperty(PropertyName = "storeLocation")]
         public CertificateStoreLocation? StoreLocation { get; set; }
@@ -101,11 +99,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This property is applicable only for Pools configured with Windows
-        /// Compute Nodes (that is, created with cloudServiceConfiguration, or
-        /// with virtualMachineConfiguration using a Windows Image reference).
-        /// Common store names include: My, Root, CA, Trust, Disallowed,
-        /// TrustedPeople, TrustedPublisher, AuthRoot, AddressBook, but any
-        /// custom store name can also be used. The default value is My.
+        /// Compute Nodes. Common store names include: My, Root, CA, Trust,
+        /// Disallowed, TrustedPeople, TrustedPublisher, AuthRoot, AddressBook,
+        /// but any custom store name can also be used. The default value is
+        /// My.
         /// </remarks>
         [JsonProperty(PropertyName = "storeName")]
         public string StoreName { get; set; }

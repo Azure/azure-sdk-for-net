@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.FrontDoor
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.FrontDoor
 
         FrontDoorExperimentResource IOperationSource<FrontDoorExperimentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = FrontDoorExperimentData.DeserializeFrontDoorExperimentData(document.RootElement);
+            var data = ModelReaderWriter.Read<FrontDoorExperimentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
             return new FrontDoorExperimentResource(_client, data);
         }
 
         async ValueTask<FrontDoorExperimentResource> IOperationSource<FrontDoorExperimentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = FrontDoorExperimentData.DeserializeFrontDoorExperimentData(document.RootElement);
-            return new FrontDoorExperimentResource(_client, data);
+            var data = ModelReaderWriter.Read<FrontDoorExperimentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
+            return await Task.FromResult(new FrontDoorExperimentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

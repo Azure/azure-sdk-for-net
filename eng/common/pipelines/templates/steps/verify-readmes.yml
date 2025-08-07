@@ -1,0 +1,51 @@
+parameters:
+- name: PackagePropertiesFolder
+  type: string
+- name: RepoRoot
+  type: string
+  default: $(Build.SourcesDirectory)
+- name: SettingsPath
+  type: string
+  default: '$(Build.SourcesDirectory)/eng/.docsettings.yml'
+- name: DocWardenVersion
+  type: string
+  default: ''
+- name: Condition
+  type: string
+  default: succeeded()
+- name: IncludeIndirect
+  type: boolean
+  default: true
+
+steps:
+- pwsh: |
+    $includeIndirect = $${{ parameters.IncludeIndirect }}
+    $packageProperties = Get-ChildItem -Recurse "${{ parameters.PackagePropertiesFolder }}" *.json
+    $paths = @()
+
+    if (-not $includeIndirect) {
+      $packageProperties = $packageProperties | Where-Object { (Get-Content -Raw $_ | ConvertFrom-Json).IncludedForValidation -eq $false }
+    }
+
+    foreach($propertiesFile in $packageProperties) {
+      $PackageProp = Get-Content -Path $propertiesFile | ConvertFrom-Json
+
+      $paths += (Join-Path "$(Build.SourcesDirectory)" $PackageProp.DirectoryPath)
+    }
+
+    $scanPaths = $paths -join ","
+    Write-Host "##vso[task.setvariable variable=ScanPathArgument;]$scanPaths"
+  displayName: Populate Scan Paths
+  condition: ${{ parameters.Condition }}
+
+- task: PowerShell@2
+  displayName: "Verify Readmes"
+  condition: ${{ parameters.Condition }}
+  inputs:
+    filePath: "eng/common/scripts/Verify-Readme.ps1"
+    arguments: >
+      -DocWardenVersion '${{ parameters.DocWardenVersion }}'
+      -ScanPaths '$(ScanPathArgument)'
+      -RepoRoot ${{ parameters.RepoRoot }}
+      -SettingsPath ${{ parameters.SettingsPath }}
+    pwsh: true

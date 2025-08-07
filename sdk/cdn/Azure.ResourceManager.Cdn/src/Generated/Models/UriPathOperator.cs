@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: UrlPathOperator
+    /// </summary>
     public readonly partial struct UriPathOperator : IEquatable<UriPathOperator>
     {
         private readonly string _value;
@@ -34,33 +37,66 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string WildcardValue = "Wildcard";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: UrlPathOperator.Any
+        /// </summary>
         public static UriPathOperator Any { get; } = new UriPathOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: UrlPathOperator.Equal
+        /// </summary>
         public static UriPathOperator Equal { get; } = new UriPathOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: UrlPathOperator.Contains
+        /// </summary>
         public static UriPathOperator Contains { get; } = new UriPathOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: UrlPathOperator.BeginsWith
+        /// </summary>
         public static UriPathOperator BeginsWith { get; } = new UriPathOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: UrlPathOperator.EndsWith
+        /// </summary>
         public static UriPathOperator EndsWith { get; } = new UriPathOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: UrlPathOperator.LessThan
+        /// </summary>
         public static UriPathOperator LessThan { get; } = new UriPathOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: UrlPathOperator.LessThanOrEqual
+        /// </summary>
         public static UriPathOperator LessThanOrEqual { get; } = new UriPathOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: UrlPathOperator.GreaterThan
+        /// </summary>
         public static UriPathOperator GreaterThan { get; } = new UriPathOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: UrlPathOperator.GreaterThanOrEqual
+        /// </summary>
         public static UriPathOperator GreaterThanOrEqual { get; } = new UriPathOperator(GreaterThanOrEqualValue);
-        /// <summary> Wildcard. </summary>
+        /// <summary>
+        /// Wildcard
+        /// Serialized Name: UrlPathOperator.Wildcard
+        /// </summary>
         public static UriPathOperator Wildcard { get; } = new UriPathOperator(WildcardValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: UrlPathOperator.RegEx
+        /// </summary>
         public static UriPathOperator RegEx { get; } = new UriPathOperator(RegExValue);
         /// <summary> Determines if two <see cref="UriPathOperator"/> values are the same. </summary>
         public static bool operator ==(UriPathOperator left, UriPathOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriPathOperator"/> values are not the same. </summary>
         public static bool operator !=(UriPathOperator left, UriPathOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UriPathOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UriPathOperator"/>. </summary>
         public static implicit operator UriPathOperator(string value) => new UriPathOperator(value);
 
         /// <inheritdoc />
@@ -71,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

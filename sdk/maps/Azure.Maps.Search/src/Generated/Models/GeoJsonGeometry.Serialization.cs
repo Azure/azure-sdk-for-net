@@ -5,21 +5,14 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonGeometry : IUtf8JsonSerializable
+    internal partial class GeoJsonGeometry
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonGeometry DeserializeGeoJsonGeometry(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -39,16 +32,39 @@ namespace Azure.Maps.Search.Models
                     case "Polygon": return GeoJsonPolygon.DeserializeGeoJsonPolygon(element);
                 }
             }
-            GeoJsonObjectType type = default;
+            GeoJsonObjectType type = "GeoJsonGeometry";
+            IReadOnlyList<double> bbox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = new GeoJsonObjectType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("bbox"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    bbox = array;
                     continue;
                 }
             }
-            return new GeoJsonGeometry(type);
+            return new GeoJsonGeometry(type, bbox ?? new ChangeTrackingList<double>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GeoJsonGeometry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGeoJsonGeometry(document.RootElement);
         }
     }
 }

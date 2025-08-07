@@ -7,18 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Workload specific recovery point, specifically encapsulates full/diff recovery point
     /// Please note <see cref="WorkloadRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/> and <see cref="WorkloadSqlRecoveryPoint"/>.
+    /// The available derived classes include <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="WorkloadSapAseRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/> and <see cref="WorkloadSqlRecoveryPoint"/>.
     /// </summary>
     public partial class WorkloadRecoveryPoint : BackupGenericRecoveryPoint
     {
-        /// <summary> Initializes a new instance of WorkloadRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadRecoveryPoint"/>. </summary>
         public WorkloadRecoveryPoint()
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
@@ -26,14 +25,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "AzureWorkloadRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of WorkloadRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
         /// <param name="restorePointType"> Type of restore point. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        internal WorkloadRecoveryPoint(string objectType, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
+        internal WorkloadRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, serializedAdditionalRawData)
         {
             RecoveryPointCreatedOn = recoveryPointCreatedOn;
             RestorePointType = restorePointType;

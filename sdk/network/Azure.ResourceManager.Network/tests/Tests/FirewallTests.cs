@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
                 Location = AzureLocation.WestUS2,
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.20.0.0/16", }
                 },

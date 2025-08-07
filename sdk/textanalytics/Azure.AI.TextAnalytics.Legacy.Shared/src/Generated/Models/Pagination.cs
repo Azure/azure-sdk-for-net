@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The Pagination. </summary>
     internal partial class Pagination
     {
-        /// <summary> Initializes a new instance of Pagination. </summary>
+        /// <summary> Initializes a new instance of <see cref="Pagination"/>. </summary>
         internal Pagination()
         {
         }
 
-        /// <summary> Initializes a new instance of Pagination. </summary>
+        /// <summary> Initializes a new instance of <see cref="Pagination"/>. </summary>
         /// <param name="nextLink"></param>
         internal Pagination(string nextLink)
         {

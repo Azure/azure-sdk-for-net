@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -13,12 +14,44 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration machine run model. </summary>
     public partial class SoftwareUpdateConfigurationMachineRun
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationMachineRun. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationMachineRun"/>. </summary>
         internal SoftwareUpdateConfigurationMachineRun()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationMachineRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationMachineRun"/>. </summary>
         /// <param name="name"> Name of the software update configuration machine run. </param>
         /// <param name="id"> Resource Id of the software update configuration machine run. </param>
         /// <param name="targetComputerId"> name of the updated computer. </param>
@@ -37,7 +70,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
         /// <param name="lastModifiedBy"> lastModifiedBy property, which only appears in the response. </param>
         /// <param name="error"> Details of provisioning error. </param>
-        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
@@ -57,6 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the software update configuration machine run. </summary>

@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -46,7 +44,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // create backup queue
             string backupJobQueueId = "job-queue-2";
 
-            Response<Models.RouterQueue> backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<RouterQueue> backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: backupJobQueueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -63,27 +61,24 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 Priority = 10,
                 WorkerSelectors =
                 {
-                    new RouterWorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
+                    new RouterWorkerSelector("ExceptionTriggered", LabelOperator.Equal, new RouterValue(true))
                 }
             };
 
             Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
                 exceptionPolicyId: exceptionPolicyId,
-                exceptionRules: new Dictionary<string, ExceptionRule>()
+                exceptionRules: new List<ExceptionRule>()
                 {
-                    ["QueueLengthExceptionTrigger"] = new ExceptionRule(
+                    new ExceptionRule(id: "QueueLengthExceptionTrigger",
                         trigger: trigger,
-                        actions: new Dictionary<string, ExceptionAction?>()
-                        {
-                            ["ManualReclassifyExceptionAction"] = action,
-                        })
+                        actions: new List<ExceptionAction> { action })
                 }));
 
             // create primary queue
 
             string activeJobQueueId = "active-job-queue";
 
-            Response<Models.RouterQueue> activeJobQueue = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> activeJobQueue = await routerAdministrationClient.CreateQueueAsync(
                 options: new CreateQueueOptions(queueId: activeJobQueueId, distributionPolicyId: distributionPolicyId) { ExceptionPolicyId = exceptionPolicyId });
 
             // create 10 jobs to fill in primary queue

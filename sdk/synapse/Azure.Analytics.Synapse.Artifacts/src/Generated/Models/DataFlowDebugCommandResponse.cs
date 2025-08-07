@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Response body structure of data flow result for data preview, statistics or expression preview. </summary>
     public partial class DataFlowDebugCommandResponse
     {
-        /// <summary> Initializes a new instance of DataFlowDebugCommandResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandResponse"/>. </summary>
         internal DataFlowDebugCommandResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugCommandResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandResponse"/>. </summary>
         /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
         /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
         internal DataFlowDebugCommandResponse(string status, string data)

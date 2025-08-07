@@ -12,12 +12,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The RecordingStateChangedEvent. </summary>
     public partial class CallRecordingStateChanged
     {
-        /// <summary> Initializes a new instance of CallRecordingStateChanged. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallRecordingStateChanged"/>. </summary>
         internal CallRecordingStateChanged()
         {
         }
 
-        /// <summary> Initializes a new instance of CallRecordingStateChanged. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallRecordingStateChanged"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>

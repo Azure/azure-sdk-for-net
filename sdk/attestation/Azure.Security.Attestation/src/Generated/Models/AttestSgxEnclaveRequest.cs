@@ -12,9 +12,22 @@ namespace Azure.Security.Attestation
     /// <summary> Attestation request for Intel SGX enclaves. </summary>
     internal partial class AttestSgxEnclaveRequest
     {
-        /// <summary> Initializes a new instance of AttestSgxEnclaveRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestSgxEnclaveRequest"/>. </summary>
         public AttestSgxEnclaveRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AttestSgxEnclaveRequest"/>. </summary>
+        /// <param name="quote"> Quote of the enclave to be attested. </param>
+        /// <param name="runtimeData"> Runtime data provided by the enclave at the time of quote generation. The MAA will verify that the first 32 bytes of the report_data field of the quote contains the SHA256 hash of the decoded "data" field of the runtime data. </param>
+        /// <param name="initTimeData"> Initialization data provided when the enclave is created. MAA will verify that the init data was known to the enclave. Note that InitTimeData is invalid for CoffeeLake processors. </param>
+        /// <param name="draftPolicyForAttestation"> Attest against the provided draft policy. Note that the resulting token cannot be validated. </param>
+        internal AttestSgxEnclaveRequest(byte[] quote, RuntimeData runtimeData, InitTimeData initTimeData, string draftPolicyForAttestation)
+        {
+            Quote = quote;
+            RuntimeData = runtimeData;
+            InitTimeData = initTimeData;
+            DraftPolicyForAttestation = draftPolicyForAttestation;
         }
 
         /// <summary> Quote of the enclave to be attested. </summary>

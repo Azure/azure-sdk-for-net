@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Git integration settings. </summary>
     public partial class WorkspaceRepositoryConfiguration
     {
-        /// <summary> Initializes a new instance of WorkspaceRepositoryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceRepositoryConfiguration"/>. </summary>
         public WorkspaceRepositoryConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceRepositoryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceRepositoryConfiguration"/>. </summary>
         /// <param name="type"> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </param>
         /// <param name="hostName"> GitHub Enterprise host name. For example: https://github.mydomain.com. </param>
         /// <param name="accountName"> Account name. </param>

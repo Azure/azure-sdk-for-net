@@ -9,23 +9,26 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a GeoBackupPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GeoBackupPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGeoBackupPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetGeoBackupPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GeoBackupPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGeoBackupPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetGeoBackupPolicy method.
     /// </summary>
     public partial class GeoBackupPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GeoBackupPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="geoBackupPolicyName"> The geoBackupPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, GeoBackupPolicyName geoBackupPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/geoBackupPolicies/{geoBackupPolicyName}";
@@ -36,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly GeoBackupPoliciesRestOperations _geoBackupPolicyRestClient;
         private readonly GeoBackupPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/geoBackupPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="GeoBackupPolicyResource"/> class for mocking. </summary>
         protected GeoBackupPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GeoBackupPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GeoBackupPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GeoBackupPolicyResource(ArmClient client, GeoBackupPolicyData data) : this(client, data.Id)
@@ -62,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/geoBackupPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a geo backup policy.
+        /// Gets a Geo backup policy for the given database resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -97,6 +100,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GeoBackupPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GeoBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +131,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a geo backup policy.
+        /// Gets a Geo backup policy for the given database resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -129,6 +140,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GeoBackupPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GeoBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates a database geo backup policy.
+        /// Create or update a database default Geo backup policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -161,6 +180,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GeoBackupPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GeoBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +204,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _geoBackupPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<GeoBackupPolicyResource>(Response.FromValue(new GeoBackupPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _geoBackupPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<GeoBackupPolicyResource>(Response.FromValue(new GeoBackupPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -190,7 +219,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates a database geo backup policy.
+        /// Create or update a database default Geo backup policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -199,6 +228,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GeoBackupPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GeoBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,7 +252,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _geoBackupPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<GeoBackupPolicyResource>(Response.FromValue(new GeoBackupPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _geoBackupPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<GeoBackupPolicyResource>(Response.FromValue(new GeoBackupPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Dynatrace
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Dynatrace
 
         DynatraceTagRuleResource IOperationSource<DynatraceTagRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<DynatraceTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
             return new DynatraceTagRuleResource(_client, data);
         }
 
         async ValueTask<DynatraceTagRuleResource> IOperationSource<DynatraceTagRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement);
-            return new DynatraceTagRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<DynatraceTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
+            return await Task.FromResult(new DynatraceTagRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

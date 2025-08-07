@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(AgentUpgradeBlockedReason left, AgentUpgradeBlockedReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentUpgradeBlockedReason"/> values are not the same. </summary>
         public static bool operator !=(AgentUpgradeBlockedReason left, AgentUpgradeBlockedReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AgentUpgradeBlockedReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentUpgradeBlockedReason"/>. </summary>
         public static implicit operator AgentUpgradeBlockedReason(string value) => new AgentUpgradeBlockedReason(value);
 
         /// <inheritdoc />
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

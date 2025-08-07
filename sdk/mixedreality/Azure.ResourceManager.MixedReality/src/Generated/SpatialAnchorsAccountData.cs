@@ -19,13 +19,45 @@ namespace Azure.ResourceManager.MixedReality
     /// </summary>
     public partial class SpatialAnchorsAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SpatialAnchorsAccountData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnchorsAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SpatialAnchorsAccountData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnchorsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnchorsAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +71,8 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="storageAccountName"> The name of the storage account associated with this accountId. </param>
         /// <param name="accountId"> unique id of certain account. </param>
         /// <param name="accountDomain"> Correspond domain name of certain Spatial Anchors Account. </param>
-        internal SpatialAnchorsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ManagedServiceIdentity plan, MixedRealitySku sku, MixedRealitySku kind, string storageAccountName, Guid? accountId, string accountDomain) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpatialAnchorsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ManagedServiceIdentity plan, MixedRealitySku sku, MixedRealitySku kind, string storageAccountName, Guid? accountId, string accountDomain, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Plan = plan;
@@ -48,6 +81,12 @@ namespace Azure.ResourceManager.MixedReality
             StorageAccountName = storageAccountName;
             AccountId = accountId;
             AccountDomain = accountDomain;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnchorsAccountData"/> for deserialization. </summary>
+        internal SpatialAnchorsAccountData()
+        {
         }
 
         /// <summary> The identity associated with this account. Current supported identity types: SystemAssigned. </summary>

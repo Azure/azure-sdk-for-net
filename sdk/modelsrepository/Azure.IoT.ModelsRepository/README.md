@@ -91,4 +91,4 @@ For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or conta
 [thread_safety_guideline]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety
 [json_ld_reference]: https://json-ld.org
 [dtdlv2_reference]: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md
-[eventsourcelistener_reference]: https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet
+[eventsourcelistener_reference]: https://learn.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet

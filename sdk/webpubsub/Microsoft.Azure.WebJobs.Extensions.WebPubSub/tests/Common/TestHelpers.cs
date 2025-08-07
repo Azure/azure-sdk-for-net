@@ -7,6 +7,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using Azure.Messaging.WebPubSub;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebJobs.Host.Config;
@@ -90,7 +91,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             string httpMethod = "Post",
             string[] origin = null,
             string userId = "testuser",
-            byte[] payload = null)
+            byte[] payload = null,
+            string[] subProtocols = null,
+            WebPubSubClientProtocol clientProtocol = WebPubSubClientProtocol.Default)
         {
             var context = new HttpRequestMessage()
             {
@@ -108,6 +111,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             if (userId != null)
             {
                 context.Headers.Add(Constants.Headers.CloudEvents.UserId, userId);
+            }
+
+            if (subProtocols != null)
+            {
+                context.Headers.Add(Constants.Headers.CloudEvents.Subprotocol, subProtocols);
+            }
+
+            if (clientProtocol == WebPubSubClientProtocol.Mqtt)
+            {
+                context.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
+                if (type != WebPubSubEventType.System || eventName != "connect")
+                {
+                    context.Headers.Add(Constants.Headers.CloudEvents.MqttSessionId, "sessionId");
+                }
             }
 
             if (payload != null)

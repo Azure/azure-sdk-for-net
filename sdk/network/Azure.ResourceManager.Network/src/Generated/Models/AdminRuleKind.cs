@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(AdminRuleKind left, AdminRuleKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdminRuleKind"/> values are not the same. </summary>
         public static bool operator !=(AdminRuleKind left, AdminRuleKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AdminRuleKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AdminRuleKind"/>. </summary>
         public static implicit operator AdminRuleKind(string value) => new AdminRuleKind(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -31,10 +31,10 @@ namespace Azure.Messaging.WebPubSub.Clients
 
         /// <summary>
         /// Get or set the retry options for message-related client operations, including
-        /// <see cref="WebPubSubClient.JoinGroupAsync(string, ulong?, System.Threading.CancellationToken)"/>,
-        /// <see cref="WebPubSubClient.LeaveGroupAsync(string, ulong?, System.Threading.CancellationToken)"/>,
-        /// <see cref="WebPubSubClient.SendToGroupAsync(string, BinaryData, WebPubSubDataType, ulong?, bool, bool, System.Threading.CancellationToken)"/>,
-        /// <see cref="WebPubSubClient.SendEventAsync(string, BinaryData, WebPubSubDataType, ulong?, bool, System.Threading.CancellationToken)"/>.
+        /// <see cref="WebPubSubClient.JoinGroupAsync(string, long?, System.Threading.CancellationToken)"/>,
+        /// <see cref="WebPubSubClient.LeaveGroupAsync(string, long?, System.Threading.CancellationToken)"/>,
+        /// <see cref="WebPubSubClient.SendToGroupAsync(string, BinaryData, WebPubSubDataType, long?, bool, bool, System.Threading.CancellationToken)"/>,
+        /// <see cref="WebPubSubClient.SendEventAsync(string, BinaryData, WebPubSubDataType, long?, bool, System.Threading.CancellationToken)"/>.
         /// </summary>
         public RetryOptions MessageRetryOptions { get; }
 

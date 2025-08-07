@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The state of the cluster provisioning. </summary>
+    /// <summary> Cluster provisioning state. </summary>
     public readonly partial struct AvsPrivateCloudClusterProvisioningState : IEquatable<AvsPrivateCloudClusterProvisioningState>
     {
         private readonly string _value;
@@ -24,28 +24,28 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string CancelledValue = "Cancelled";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static AvsPrivateCloudClusterProvisioningState Succeeded { get; } = new AvsPrivateCloudClusterProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static AvsPrivateCloudClusterProvisioningState Failed { get; } = new AvsPrivateCloudClusterProvisioningState(FailedValue);
-        /// <summary> Cancelled. </summary>
-        public static AvsPrivateCloudClusterProvisioningState Cancelled { get; } = new AvsPrivateCloudClusterProvisioningState(CancelledValue);
-        /// <summary> Deleting. </summary>
-        public static AvsPrivateCloudClusterProvisioningState Deleting { get; } = new AvsPrivateCloudClusterProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static AvsPrivateCloudClusterProvisioningState Updating { get; } = new AvsPrivateCloudClusterProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static AvsPrivateCloudClusterProvisioningState Canceled { get; } = new AvsPrivateCloudClusterProvisioningState(CanceledValue);
+        /// <summary> is cancelled. </summary>
+        public static AvsPrivateCloudClusterProvisioningState Cancelled { get; } = new AvsPrivateCloudClusterProvisioningState(CancelledValue);
+        /// <summary> is deleting. </summary>
+        public static AvsPrivateCloudClusterProvisioningState Deleting { get; } = new AvsPrivateCloudClusterProvisioningState(DeletingValue);
+        /// <summary> is updating. </summary>
+        public static AvsPrivateCloudClusterProvisioningState Updating { get; } = new AvsPrivateCloudClusterProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="AvsPrivateCloudClusterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AvsPrivateCloudClusterProvisioningState left, AvsPrivateCloudClusterProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsPrivateCloudClusterProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AvsPrivateCloudClusterProvisioningState left, AvsPrivateCloudClusterProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsPrivateCloudClusterProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsPrivateCloudClusterProvisioningState"/>. </summary>
         public static implicit operator AvsPrivateCloudClusterProvisioningState(string value) => new AvsPrivateCloudClusterProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

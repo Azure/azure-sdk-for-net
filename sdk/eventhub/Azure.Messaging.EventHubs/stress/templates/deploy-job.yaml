@@ -1,47 +1,14 @@
-{{- include "stress.deploy-job-template.from-job" (list . "stress.event-hubs-net") -}}
+{{- include "stress-test-addons.deploy-job-template.from-pod" (list . "stress.event-hubs-net") -}}
 {{- define "stress.event-hubs-net" -}}
+metadata:
+  labels:
+    testName: "net-eh-stress-{{ lower .Stress.scenarioName }}"
+    testInstance: "eventhubs-{{ lower .Stress.scenarioName }}-{{ .Release.Name }}-{{ .Release.Revision }}"
 spec:
-  {{ if eq .Stress.scenarioName "EventProd" }}
-  completions: 2
-  parallelism: 2
-  {{ end }}
-  {{ if eq .Stress.scenarioName "BuffProd" }}
-  completions: 2
-  parallelism: 2
-  {{ end }}
-  {{ if eq .Stress.scenarioName "Processor" }}
-  completions: 3
-  parallelism: 3
-  {{ end }}
-  {{ if eq .Stress.scenarioName "Consumer" }}
-  completions: 2
-  parallelism: 2
-  {{ end }}
-  completionMode: Indexed
-  template:
-    metadata:
-      labels:
-        testName: "net-eh-stress-{{ lower .Stress.scenarioName }}"
-        testInstance: "eventhubs-{{ lower .Stress.scenarioName }}-{{ .Release.Name }}-{{ .Release.Revision }}"
-    spec:
-      containers:
-        - name: role
-          image: {{ .Stress.imageTag }}
-          command: ['dotnet', "Azure.Messaging.EventHubs.Stress.dll", "--test", "{{ .Stress.scenarioName }}", "--role", "$(JOB_COMPLETION_INDEX)"]
-          imagePullPolicy: Always
-          {{- include "stress-test-addons.container-env" . | nindent 10 }}
-{{- end -}}
-
-{{- define "stress.deploy-job-template.from-job" -}}
-{{- $global := index . 0 -}}
-{{- $jobOverrideDefinition := index . 1 -}}
-# Configmap template that adds the stress test ARM template for mounting
-{{- include "stress-test-addons.deploy-configmap" $global }}
-{{- range (default (list "stress") $global.Values.scenarios) }}
----
-{{ $jobCtx := fromYaml (include "stress-test-addons.util.mergeStressContext" (list $global . )) }}
-{{- $jobOverride := fromYaml (include $jobOverrideDefinition $jobCtx) -}}
-{{- $tpl := fromYaml (include "stress-test-addons.deploy-job-template.tpl" $jobCtx) -}}
-{{- toYaml (merge $jobOverride $tpl) -}}
-{{- end }}
+  containers:
+    - name: role
+      image: {{ .Stress.imageTag }}
+      command: ['dotnet', "Azure.Messaging.EventHubs.Stress.dll", "--test", "{{ .Stress.scenarioName }}", "--role", "$(JOB_COMPLETION_INDEX)"]
+      imagePullPolicy: Always
+      {{- include "stress-test-addons.container-env" . | nindent 6 }}
 {{- end -}}

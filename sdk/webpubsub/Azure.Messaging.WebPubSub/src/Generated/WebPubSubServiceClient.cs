@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -32,6 +32,72 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Initializes a new instance of WebPubSubServiceClient for mocking. </summary>
         protected WebPubSubServiceClient()
         {
+        }
+
+        /// <summary>
+        /// [Protocol Method] Add filtered connections to multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AddConnectionsToGroupsAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionsToGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddConnectionsToGroupsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Add filtered connections to multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response AddConnectionsToGroups(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionsToGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddConnectionsToGroupsRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -112,17 +178,17 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="group"> Groups that the connection will join when it connects. </param>
+        /// <param name="clientType"> The type of client. Case-insensitive. If not set, it's "Default". For Web PubSub for Socket.IO, only the default value is supported. For Web PubSub, the valid values are 'Default' and 'MQTT'. Allowed values: "Default" | "MQTT". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImplAsync(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)']/*" />
-        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
+        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, string clientType = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, context);
+                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, clientType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -146,17 +212,83 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="group"> Groups that the connection will join when it connects. </param>
+        /// <param name="clientType"> The type of client. Case-insensitive. If not set, it's "Default". For Web PubSub for Socket.IO, only the default value is supported. For Web PubSub, the valid values are 'Default' and 'MQTT'. Allowed values: "Default" | "MQTT". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImpl(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)']/*" />
-        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
+        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, string clientType = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, context);
+                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, clientType, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Remove filtered connections from multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> RemoveConnectionsFromGroupsAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionsFromGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionsFromGroupsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Remove filtered connections from multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response RemoveConnectionsFromGroups(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionsFromGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionsFromGroupsRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -328,7 +460,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='ConnectionExistsImplAsync(string,RequestContext)']/*" />
         internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -363,7 +494,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='ConnectionExistsImpl(string,RequestContext)']/*" />
         internal virtual Response ConnectionExistsImpl(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -544,7 +674,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GroupExistsImplAsync(string,RequestContext)']/*" />
         internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -579,7 +708,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GroupExistsImpl(string,RequestContext)']/*" />
         internal virtual Response GroupExistsImpl(string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -918,7 +1046,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RevokePermissionAsync(string,string,string,RequestContext)']/*" />
         internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -956,7 +1083,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RevokePermission(string,string,string,RequestContext)']/*" />
         internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -994,7 +1120,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CheckPermissionAsync(string,string,string,RequestContext)']/*" />
         internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -1032,7 +1157,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CheckPermission(string,string,string,RequestContext)']/*" />
         internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -1070,7 +1194,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GrantPermissionAsync(string,string,string,RequestContext)']/*" />
         internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -1108,7 +1231,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GrantPermission(string,string,string,RequestContext)']/*" />
         internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -1144,7 +1266,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='UserExistsImplAsync(string,RequestContext)']/*" />
         internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1179,7 +1300,6 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='UserExistsImpl(string,RequestContext)']/*" />
         internal virtual Response UserExistsImpl(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1420,6 +1540,80 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        /// <summary>
+        /// [Protocol Method] List connections in a group.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="group"> Target group name, whose length should be greater than 0 and less than 1025. </param>
+        /// <param name="maxpagesize"> The maximum number of connections to include in a single response. It should be between 1 and 200. </param>
+        /// <param name="maxCount"> The maximum number of connections to return. If the value is not set, then all the connections in a group are returned. </param>
+        /// <param name="continuationToken"> A token that allows the client to retrieve the next page of results. This parameter is provided by the service in the response of a previous request when there are additional results to be fetched. Clients should include the continuationToken in the next request to receive the subsequent page of data. If this parameter is omitted, the server will return the first page of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        internal virtual AsyncPageable<BinaryData> GetConnectionsInGroupsAsync(string group, int? maxpagesize = null, int? maxCount = null, string continuationToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsInGroupsRequest(group, pageSizeHint, maxCount, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsInGroupsNextPageRequest(nextLink, group, pageSizeHint, maxCount, continuationToken, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WebPubSubServiceClient.GetConnectionsInGroups", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List connections in a group.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="group"> Target group name, whose length should be greater than 0 and less than 1025. </param>
+        /// <param name="maxpagesize"> The maximum number of connections to include in a single response. It should be between 1 and 200. </param>
+        /// <param name="maxCount"> The maximum number of connections to return. If the value is not set, then all the connections in a group are returned. </param>
+        /// <param name="continuationToken"> A token that allows the client to retrieve the next page of results. This parameter is provided by the service in the response of a previous request when there are additional results to be fetched. Clients should include the continuationToken in the next request to receive the subsequent page of data. If this parameter is omitted, the server will return the first page of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        internal virtual Pageable<BinaryData> GetConnectionsInGroups(string group, int? maxpagesize = null, int? maxCount = null, string continuationToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsInGroupsRequest(group, pageSizeHint, maxCount, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsInGroupsNextPageRequest(nextLink, group, pageSizeHint, maxCount, continuationToken, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WebPubSubServiceClient.GetConnectionsInGroups", "value", "nextLink", maxpagesize, context);
+        }
+
+        internal HttpMessage CreateAddConnectionsToGroupsRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:addToGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateCloseAllConnectionsRequest(IEnumerable<string> excluded, string reason, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1430,7 +1624,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:closeConnections", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1447,7 +1641,7 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, IEnumerable<string> group, RequestContext context)
+        internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, IEnumerable<string> group, string clientType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1461,7 +1655,7 @@ namespace Azure.Messaging.WebPubSub
             {
                 uri.AppendQuery("userId", userId, true);
             }
-            if (role != null && Optional.IsCollectionDefined(role))
+            if (role != null && !(role is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in role)
                 {
@@ -1473,15 +1667,37 @@ namespace Azure.Messaging.WebPubSub
                 uri.AppendQuery("minutesToExpire", minutesToExpire.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (group != null && Optional.IsCollectionDefined(group))
+            if (group != null && !(group is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in group)
                 {
                     uri.AppendQuery("group", param, true);
                 }
             }
+            if (clientType != null)
+            {
+                uri.AppendQuery("clientType", clientType, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveConnectionsFromGroupsRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:removeFromGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
@@ -1495,7 +1711,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(_hub, true);
             uri.AppendPath("/:send", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1617,7 +1833,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/:closeConnections", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1646,7 +1862,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/:send", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1662,6 +1878,36 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetConnectionsInGroupsRequest(string group, int? maxpagesize, int? maxCount, string continuationToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
+            uri.AppendPath("/connections", false);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1799,7 +2045,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/:closeConnections", false);
-            if (excluded != null && Optional.IsCollectionDefined(excluded))
+            if (excluded != null && !(excluded is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excluded)
                 {
@@ -1896,10 +2142,23 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        internal HttpMessage CreateGetConnectionsInGroupsNextPageRequest(string nextLink, string group, int? maxpagesize, int? maxCount, string continuationToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200404;

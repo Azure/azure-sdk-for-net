@@ -96,11 +96,17 @@ namespace Azure.Communication
             _scheduledProactiveRefreshing = ScheduleProactiveRefreshing(dueTime);
         }
 
-        public AccessToken GetValue(CancellationToken cancellationToken)
-            => GetValueAsync(async: false, IsCurrentTokenExpiryingSoon, cancellationToken: cancellationToken).EnsureCompleted();
+        public AccessToken GetValue(CancellationToken cancellationToken, Func<bool>? shouldRefresh = null)
+        {
+            shouldRefresh ??= IsCurrentTokenExpiryingSoon;
+            return GetValueAsync(async: false, shouldRefresh, cancellationToken: cancellationToken).EnsureCompleted();
+        }
 
-        public ValueTask<AccessToken> GetValueAsync(CancellationToken cancellationToken)
-            => GetValueAsync(async: true, IsCurrentTokenExpiryingSoon, cancellationToken: cancellationToken);
+        public ValueTask<AccessToken> GetValueAsync(CancellationToken cancellationToken, Func<bool>? shouldRefresh = null)
+        {
+            shouldRefresh ??= IsCurrentTokenExpiryingSoon;
+            return GetValueAsync(async: true, shouldRefresh ??= IsCurrentTokenExpiryingSoon, cancellationToken: cancellationToken);
+        }
 
         private async ValueTask<AccessToken> GetValueAsync(bool async, Func<bool> shouldRefresh, CancellationToken cancellationToken)
         {
@@ -210,7 +216,7 @@ namespace Azure.Communication
             public void Dispose()
                 => _timer.Dispose();
 
-            private void OnTimerTick(object _)
+            private void OnTimerTick(object? _)
             {
                 try
                 {

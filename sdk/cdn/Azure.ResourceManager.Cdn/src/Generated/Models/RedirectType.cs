@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The redirect type the rule will use when redirecting traffic. </summary>
+    /// <summary>
+    /// The redirect type the rule will use when redirecting traffic.
+    /// Serialized Name: RedirectType
+    /// </summary>
     public readonly partial struct RedirectType : IEquatable<RedirectType>
     {
         private readonly string _value;
@@ -27,19 +30,31 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string TemporaryRedirectValue = "TemporaryRedirect";
         private const string PermanentRedirectValue = "PermanentRedirect";
 
-        /// <summary> Moved. </summary>
+        /// <summary>
+        /// Moved
+        /// Serialized Name: RedirectType.Moved
+        /// </summary>
         public static RedirectType Moved { get; } = new RedirectType(MovedValue);
-        /// <summary> Found. </summary>
+        /// <summary>
+        /// Found
+        /// Serialized Name: RedirectType.Found
+        /// </summary>
         public static RedirectType Found { get; } = new RedirectType(FoundValue);
-        /// <summary> TemporaryRedirect. </summary>
+        /// <summary>
+        /// TemporaryRedirect
+        /// Serialized Name: RedirectType.TemporaryRedirect
+        /// </summary>
         public static RedirectType TemporaryRedirect { get; } = new RedirectType(TemporaryRedirectValue);
-        /// <summary> PermanentRedirect. </summary>
+        /// <summary>
+        /// PermanentRedirect
+        /// Serialized Name: RedirectType.PermanentRedirect
+        /// </summary>
         public static RedirectType PermanentRedirect { get; } = new RedirectType(PermanentRedirectValue);
         /// <summary> Determines if two <see cref="RedirectType"/> values are the same. </summary>
         public static bool operator ==(RedirectType left, RedirectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedirectType"/> values are not the same. </summary>
         public static bool operator !=(RedirectType left, RedirectType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedirectType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedirectType"/>. </summary>
         public static implicit operator RedirectType(string value) => new RedirectType(value);
 
         /// <inheritdoc />
@@ -50,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

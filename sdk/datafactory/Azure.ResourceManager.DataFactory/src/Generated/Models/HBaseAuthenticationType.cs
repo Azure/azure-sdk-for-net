@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(HBaseAuthenticationType left, HBaseAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HBaseAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(HBaseAuthenticationType left, HBaseAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HBaseAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HBaseAuthenticationType"/>. </summary>
         public static implicit operator HBaseAuthenticationType(string value) => new HBaseAuthenticationType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

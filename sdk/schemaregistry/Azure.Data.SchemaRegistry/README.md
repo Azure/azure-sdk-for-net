@@ -16,6 +16,7 @@ dotnet add package Azure.Data.SchemaRegistry
 
 * An [Azure subscription][azure_sub]
 * An [Event Hubs namespace][event_hubs_namespace]
+* A [Schema Group][create_schema_group] of the correct serialization type
 
 If you need to [create an Event Hubs namespace][create_event_hubs_namespace], you can use the Azure Portal or [Azure PowerShell][azure_powershell].
 
@@ -31,7 +32,7 @@ In order to interact with the Azure Schema Registry service, you'll need to crea
 
 #### Get credentials
 
-To acquire authenticated credentials and start interacting with Azure resources, please see the [quickstart guide here][quickstart_guide].
+To acquire authenticated credentials and start interacting with Azure resources, please see the [getting started with Azure Identity guide][quickstart_guide].
 
 #### Get Event Hubs namespace hostname
 
@@ -166,14 +167,13 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
-
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
-[azure_powershell]: https://docs.microsoft.com/powershell/azure/
-[create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
-[quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md
+[event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-about
+[create_schema_group]: https://learn.microsoft.com/azure/event-hubs/create-schema-registry#create-a-schema-group
+[azure_powershell]: https://learn.microsoft.com/powershell/azure/
+[create_event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
+[quickstart_guide]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
 [schema_properties]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaProperties.cs

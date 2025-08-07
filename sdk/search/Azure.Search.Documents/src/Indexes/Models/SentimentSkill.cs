@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -30,6 +31,19 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             _skillVersion = skillVersion;
             ODataType = skillVersion.ToString();
+        }
+
+        /// <summary> Initializes a new instance of SentimentSkill. </summary>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public SentimentSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(outputs, nameof(outputs));
+
+            ODataType = "#Microsoft.Skills.Text.SentimentSkill";
         }
 
         /// <summary> A value indicating which language code to use. Default is <see cref="SentimentSkillLanguage.En"/>. </summary>

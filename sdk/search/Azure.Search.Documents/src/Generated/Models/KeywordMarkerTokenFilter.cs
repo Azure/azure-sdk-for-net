@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Marks terms as keywords. This token filter is implemented using Apache Lucene. </summary>
     public partial class KeywordMarkerTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of KeywordMarkerTokenFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeywordMarkerTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="keywords"> A list of words to mark as keywords. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keywords"/> is null. </exception>
@@ -28,16 +27,22 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Azure.Search.KeywordMarkerTokenFilter";
         }
 
-        /// <summary> Initializes a new instance of KeywordMarkerTokenFilter. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <summary> Initializes a new instance of <see cref="KeywordMarkerTokenFilter"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keywords"> A list of words to mark as keywords. </param>
         /// <param name="ignoreCase"> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </param>
-        internal KeywordMarkerTokenFilter(string oDataType, string name, IList<string> keywords, bool? ignoreCase) : base(oDataType, name)
+        internal KeywordMarkerTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> keywords, bool? ignoreCase) : base(oDataType, name, serializedAdditionalRawData)
         {
             Keywords = keywords;
             IgnoreCase = ignoreCase;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.KeywordMarkerTokenFilter";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeywordMarkerTokenFilter"/> for deserialization. </summary>
+        internal KeywordMarkerTokenFilter()
+        {
         }
         /// <summary> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </summary>
         public bool? IgnoreCase { get; set; }

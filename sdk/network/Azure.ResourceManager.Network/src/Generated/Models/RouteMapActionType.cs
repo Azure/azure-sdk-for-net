@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(RouteMapActionType left, RouteMapActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteMapActionType"/> values are not the same. </summary>
         public static bool operator !=(RouteMapActionType left, RouteMapActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RouteMapActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RouteMapActionType"/>. </summary>
         public static implicit operator RouteMapActionType(string value) => new RouteMapActionType(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

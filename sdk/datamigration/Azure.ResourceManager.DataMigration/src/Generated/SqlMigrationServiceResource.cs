@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +20,16 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a SqlMigrationService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlMigrationServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlMigrationServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSqlMigrationService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlMigrationServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlMigrationServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSqlMigrationService method.
     /// </summary>
     public partial class SqlMigrationServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlMigrationServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sqlMigrationServiceName"> The sqlMigrationServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataMigration/sqlMigrationServices/{sqlMigrationServiceName}";
@@ -38,12 +40,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly SqlMigrationServicesRestOperations _sqlMigrationServiceRestClient;
         private readonly SqlMigrationServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/sqlMigrationServices";
+
         /// <summary> Initializes a new instance of the <see cref="SqlMigrationServiceResource"/> class for mocking. </summary>
         protected SqlMigrationServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlMigrationServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlMigrationServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlMigrationServiceResource(ArmClient client, SqlMigrationServiceData data) : this(client, data.Id)
@@ -64,9 +69,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/sqlMigrationServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +102,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +142,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +181,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +224,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -231,6 +265,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +312,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -306,12 +356,20 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listAuthKeys</description>
+        /// <description>SqlMigrationServices_ListAuthKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AuthenticationKeys>> GetAuthKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlMigrationAuthenticationKeys>> GetAuthKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.GetAuthKeys");
             scope.Start();
@@ -336,12 +394,20 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listAuthKeys</description>
+        /// <description>SqlMigrationServices_ListAuthKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AuthenticationKeys> GetAuthKeys(CancellationToken cancellationToken = default)
+        public virtual Response<SqlMigrationAuthenticationKeys> GetAuthKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.GetAuthKeys");
             scope.Start();
@@ -366,22 +432,30 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="regenAuthKeys"> Details of SqlMigrationService resource. </param>
+        /// <param name="sqlMigrationRegenAuthKeys"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenAuthKeys"/> is null. </exception>
-        public virtual async Task<Response<RegenAuthKeys>> RegenerateAuthKeysAsync(RegenAuthKeys regenAuthKeys, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationRegenAuthKeys"/> is null. </exception>
+        public virtual async Task<Response<SqlMigrationRegenAuthKeys>> RegenerateAuthKeysAsync(SqlMigrationRegenAuthKeys sqlMigrationRegenAuthKeys, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenAuthKeys, nameof(regenAuthKeys));
+            Argument.AssertNotNull(sqlMigrationRegenAuthKeys, nameof(sqlMigrationRegenAuthKeys));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.RegenerateAuthKeys");
             scope.Start();
             try
             {
-                var response = await _sqlMigrationServiceRestClient.RegenerateAuthKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenAuthKeys, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlMigrationServiceRestClient.RegenerateAuthKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sqlMigrationRegenAuthKeys, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -400,22 +474,30 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="regenAuthKeys"> Details of SqlMigrationService resource. </param>
+        /// <param name="sqlMigrationRegenAuthKeys"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenAuthKeys"/> is null. </exception>
-        public virtual Response<RegenAuthKeys> RegenerateAuthKeys(RegenAuthKeys regenAuthKeys, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationRegenAuthKeys"/> is null. </exception>
+        public virtual Response<SqlMigrationRegenAuthKeys> RegenerateAuthKeys(SqlMigrationRegenAuthKeys sqlMigrationRegenAuthKeys, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenAuthKeys, nameof(regenAuthKeys));
+            Argument.AssertNotNull(sqlMigrationRegenAuthKeys, nameof(sqlMigrationRegenAuthKeys));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.RegenerateAuthKeys");
             scope.Start();
             try
             {
-                var response = _sqlMigrationServiceRestClient.RegenerateAuthKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenAuthKeys, cancellationToken);
+                var response = _sqlMigrationServiceRestClient.RegenerateAuthKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sqlMigrationRegenAuthKeys, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -434,22 +516,30 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_deleteNode</description>
+        /// <description>SqlMigrationServices_DeleteNode</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deleteNode"> Details of SqlMigrationService resource. </param>
+        /// <param name="deletedIntegrationRuntimeNodeResult"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deleteNode"/> is null. </exception>
-        public virtual async Task<Response<DeleteNode>> DeleteNodeAsync(DeleteNode deleteNode, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedIntegrationRuntimeNodeResult"/> is null. </exception>
+        public virtual async Task<Response<DeletedIntegrationRuntimeNodeResult>> DeleteNodeAsync(DeletedIntegrationRuntimeNodeResult deletedIntegrationRuntimeNodeResult, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deleteNode, nameof(deleteNode));
+            Argument.AssertNotNull(deletedIntegrationRuntimeNodeResult, nameof(deletedIntegrationRuntimeNodeResult));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.DeleteNode");
             scope.Start();
             try
             {
-                var response = await _sqlMigrationServiceRestClient.DeleteNodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteNode, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlMigrationServiceRestClient.DeleteNodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deletedIntegrationRuntimeNodeResult, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -468,22 +558,30 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_deleteNode</description>
+        /// <description>SqlMigrationServices_DeleteNode</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deleteNode"> Details of SqlMigrationService resource. </param>
+        /// <param name="deletedIntegrationRuntimeNodeResult"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deleteNode"/> is null. </exception>
-        public virtual Response<DeleteNode> DeleteNode(DeleteNode deleteNode, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedIntegrationRuntimeNodeResult"/> is null. </exception>
+        public virtual Response<DeletedIntegrationRuntimeNodeResult> DeleteNode(DeletedIntegrationRuntimeNodeResult deletedIntegrationRuntimeNodeResult, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deleteNode, nameof(deleteNode));
+            Argument.AssertNotNull(deletedIntegrationRuntimeNodeResult, nameof(deletedIntegrationRuntimeNodeResult));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.DeleteNode");
             scope.Start();
             try
             {
-                var response = _sqlMigrationServiceRestClient.DeleteNode(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteNode, cancellationToken);
+                var response = _sqlMigrationServiceRestClient.DeleteNode(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deletedIntegrationRuntimeNodeResult, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -502,17 +600,25 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMigrations</description>
+        /// <description>SqlMigrationServices_ListMigrations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseMigration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatabaseMigration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseMigration> GetMigrationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListMigrationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListMigrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatabaseMigration.DeserializeDatabaseMigration, _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatabaseMigration.DeserializeDatabaseMigration(e), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -524,17 +630,25 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMigrations</description>
+        /// <description>SqlMigrationServices_ListMigrations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseMigration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatabaseMigration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseMigration> GetMigrations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListMigrationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListMigrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatabaseMigration.DeserializeDatabaseMigration, _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatabaseMigration.DeserializeDatabaseMigration(e), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceResource.GetMigrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -546,12 +660,20 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMonitoringData</description>
+        /// <description>SqlMigrationServices_ListMonitoringData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationRuntimeMonitoringData>> GetMonitoringDataAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationRuntimeMonitoringResult>> GetMonitoringDataAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.GetMonitoringData");
             scope.Start();
@@ -576,12 +698,20 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMonitoringData</description>
+        /// <description>SqlMigrationServices_ListMonitoringData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationRuntimeMonitoringData> GetMonitoringData(CancellationToken cancellationToken = default)
+        public virtual Response<IntegrationRuntimeMonitoringResult> GetMonitoringData(CancellationToken cancellationToken = default)
         {
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.GetMonitoringData");
             scope.Start();
@@ -607,6 +737,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -662,6 +800,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -716,6 +862,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -765,6 +919,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -813,6 +975,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -865,6 +1035,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

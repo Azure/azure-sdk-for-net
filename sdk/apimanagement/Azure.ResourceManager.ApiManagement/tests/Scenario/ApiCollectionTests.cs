@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiCollectionTests : ApiManagementManagementTestBase
     {
         public ApiCollectionTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         private async Task CreateApiService()
         {
             await SetCollectionsAsync();
-            var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
+            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample")
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        public async Task CreateOrUpdate_GetAll_Get_Exists_Delete ()
+        public async Task CreateOrUpdate_GetAll_Get_Exists_Delete()
         {
             await CreateApiService();
             var collection = ApiServiceResource.GetApis();
-            var apiName = Recording.GenerateAssetName("testapi-");
+            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
             var data = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Query = "query3037"
                 },
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("http://newechoapi.cloudapp.net/api"),
+                ServiceLink = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await CreateApiService();
             var collection = ApiServiceResource.GetApis();
-            var apiName = Recording.GenerateAssetName("testapi-");
+            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
             var data = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Query = "query3037"
                 },
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("http://newechoapi.cloudapp.net/api"),
+                ServiceLink = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
@@ -101,6 +101,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var apiRevisionContracts = await api.GetApiRevisionsByServiceAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(apiRevisionContracts.FirstOrDefault().PrivateUriString);
+        }
+
+        [Test]
+        public async Task ListApiByApiMgmtService()
+        {
+            await CreateApiService();
+            var sum = 0;
+            await foreach (var api in ApiServiceResource.GetApis())
+            {
+                sum++;
+            }
+            Assert.IsTrue(sum > 0);
         }
     }
 }

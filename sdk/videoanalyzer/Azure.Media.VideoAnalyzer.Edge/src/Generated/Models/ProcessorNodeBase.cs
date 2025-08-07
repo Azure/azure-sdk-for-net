@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of ProcessorNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessorNodeBase"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
@@ -32,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of ProcessorNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessorNodeBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

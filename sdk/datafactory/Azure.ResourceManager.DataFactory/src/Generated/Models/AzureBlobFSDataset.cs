@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure Data Lake Storage Gen2 storage. </summary>
-    public partial class AzureBlobFSDataset : DataFactoryDatasetDefinition
+    public partial class AzureBlobFSDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AzureBlobFSDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureBlobFSDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AzureBlobFSFile";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobFSDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -50,6 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Format = format;
             Compression = compression;
             DatasetType = datasetType ?? "AzureBlobFSFile";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSDataset"/> for deserialization. </summary>
+        internal AzureBlobFSDataset()
+        {
         }
 
         /// <summary> The path of the Azure Data Lake Storage Gen2 storage. Type: string (or Expression with resultType string). </summary>

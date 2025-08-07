@@ -13,39 +13,57 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> The role scope. </summary>
     public readonly partial struct KeyVaultRoleScope : IEquatable<KeyVaultRoleScope>
     {
-        private readonly string _value;
+        /// <summary> Global scope. </summary>
+        private const string GlobalValue = "/";
+        /// <summary> Keys scope. </summary>
+        private const string KeysValue = "/keys";
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultRoleScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultRoleScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GlobalValue = "/";
-        private const string KeysValue = "/keys";
+            _value = value;
+        }
 
         /// <summary> Global scope. </summary>
         public static KeyVaultRoleScope Global { get; } = new KeyVaultRoleScope(GlobalValue);
+
         /// <summary> Keys scope. </summary>
         public static KeyVaultRoleScope Keys { get; } = new KeyVaultRoleScope(KeysValue);
+
         /// <summary> Determines if two <see cref="KeyVaultRoleScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KeyVaultRoleScope left, KeyVaultRoleScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KeyVaultRoleScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KeyVaultRoleScope left, KeyVaultRoleScope right) => !left.Equals(right);
+
         /// <summary> Converts a string to a <see cref="KeyVaultRoleScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultRoleScope(string value) => new KeyVaultRoleScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KeyVaultRoleScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KeyVaultRoleScope?(string value) => value == null ? null : new KeyVaultRoleScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyVaultRoleScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KeyVaultRoleScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,7 @@ using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using NUnit.Framework;
 using DataFactoryLinkedServiceReference = Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference;
-using DataFactoryLinkedServiceReferenceType = Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType;
+using DataFactoryLinkedServiceReferenceKind = Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceKind;
 
 #nullable enable
 
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Samples
         public void DataFactoryElementFromLiteralInt()
         {
             #region Snippet:Readme_DataFactoryElementInt
-            var policy = new ActivityPolicy
+            var policy = new PipelineActivityPolicy
             {
                 Retry = DataFactoryElement<int>.FromLiteral(1),
             };
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Samples
             };
             var activity = new AzureMLExecutePipelineActivity("name")
             {
-                MlPipelineParameters = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue),
+                MLPipelineParameters = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue),
             };
             #endregion Snippet:Readme_DataFactoryElementDictionary
         }
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Samples
         public void DataFactoryFromKeyVaultSecretReference()
         {
             #region Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
-            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
                 "referenceName");
-            var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "secretName");
+            var keyVaultReference = new DataFactoryKeyVaultSecret(store, "secretName");
             var service = new AmazonS3CompatibleLinkedService()
             {
-                AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference),
+                AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference),
             };
             #endregion Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
         }

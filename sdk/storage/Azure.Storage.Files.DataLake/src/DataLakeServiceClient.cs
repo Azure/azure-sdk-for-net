@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -176,6 +176,7 @@ namespace Azure.Storage.Files.DataLake
                 customerProvidedKey: options.CustomerProvidedKey);
 
             _uri = conn.BlobEndpoint;
+            _accountName = conn.AccountName;
             _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
 
             _blobServiceClient = BlobServiceClientInternals.Create(
@@ -197,13 +198,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, StorageSharedKeyCredential credential)
-            : this(
-                  serviceUri,
-                  credential.AsPolicy(),
-                  options: null,
-                  storageSharedKeyCredential: credential,
-                  sasCredential: null,
-                  tokenCredential: null)
+            : this(serviceUri, credential, default)
         {
         }
 
@@ -231,6 +226,7 @@ namespace Azure.Storage.Files.DataLake
                   sasCredential: null,
                   tokenCredential: null)
         {
+            _accountName ??= credential?.AccountName;
         }
 
         /// <summary>
@@ -293,15 +289,8 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential)
-            : this(
-                  serviceUri,
-                  credential.AsPolicy(new DataLakeClientOptions()),
-                  options: null,
-                  storageSharedKeyCredential: null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+            : this(serviceUri, credential, new DataLakeClientOptions())
         {
-            Errors.VerifyHttpsTokenAuth(serviceUri);
         }
 
         /// <summary>
@@ -321,12 +310,14 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential, DataLakeClientOptions options)
             : this(
-                  serviceUri,
-                  credential.AsPolicy(options),
-                  options,
-                  storageSharedKeyCredential:null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+                serviceUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                storageSharedKeyCredential:null,
+                sasCredential: null,
+                tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -467,6 +458,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="startsOn">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
         /// </param>
         /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
@@ -483,7 +478,10 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
@@ -523,6 +521,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="startsOn">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
+        ///
+        /// Note: If you set the start time to the current time, failures
+        /// might occur intermittently for the first few minutes. This is due to different
+        /// machines having slightly different current times (known as clock skew).
         /// </param>
         /// <param name="expiresOn">
         /// Expiration of the key's validity.  The time should be specified
@@ -539,7 +541,10 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
@@ -606,6 +611,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Pageable<FileSystemItem> GetFileSystems(
@@ -646,6 +653,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual AsyncPageable<FileSystemItem> GetFileSystemsAsync(
@@ -683,6 +692,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -722,6 +733,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -761,6 +774,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileSystemClient> CreateFileSystem(
             string fileSystemName,
@@ -817,6 +832,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
             string fileSystemName,
@@ -885,6 +902,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -958,6 +977,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -996,9 +1017,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete File System
         /// <summary>
         /// The <see cref="DeleteFileSystem"/> operation marks the
-        /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection
-        /// which could take several minutes.
+        /// specified file system for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1021,6 +1040,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response DeleteFileSystem(
             string fileSystemName,
@@ -1051,9 +1072,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteFileSystemAsync"/> operation marks the
-        /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection
-        /// which could take several minutes.
+        /// specified file system for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1076,6 +1095,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response> DeleteFileSystemAsync(
             string fileSystemName,
@@ -1128,6 +1149,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeFileSystemClient> UndeleteFileSystem(
             string deletedFileSystemName,
@@ -1185,6 +1208,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileSystemClient>> UndeleteFileSystemAsync(
             string deletedFileSystemName,
@@ -1391,15 +1416,61 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public Uri GenerateAccountSasUri(
             AccountSasPermissions permissions,
             DateTimeOffset expiresOn,
-            AccountSasResourceTypes resourceTypes) =>
+            AccountSasResourceTypes resourceTypes)
+            => GenerateAccountSasUri(permissions, expiresOn, resourceTypes, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>
+        /// returns a <see cref="Uri"/> that generates a DataLake Account
+        /// Shared Access Signature (SAS) based on the Client properties
+        /// and parameters passed. The SAS is signed by the
+        /// shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the SasBuilder
+        /// See <see cref="DataLakeSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the sas builder.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types associated with the shared access signature.
+        /// The user is restricted to operations on the specified resources.
+        /// See <see cref="AccountSasResourceTypes"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public Uri GenerateAccountSasUri(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasResourceTypes resourceTypes,
+            out string stringToSign) =>
             GenerateAccountSasUri(new AccountSasBuilder(
                 permissions,
                 expiresOn,
                 AccountSasServices.Blobs,
-                resourceTypes));
+                resourceTypes),
+                out stringToSign);
 
         /// <summary>
         /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/> returns a <see cref="Uri"/>
@@ -1423,8 +1494,41 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public Uri GenerateAccountSasUri(
             AccountSasBuilder builder)
+            => GenerateAccountSasUri(builder, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a DataLake Account Shared Access Signature (SAS)
+        /// based on the Client properties and builder passed.
+        /// The SAS is signed by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public Uri GenerateAccountSasUri(
+            AccountSasBuilder builder,
+            out string stringToSign)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
             if (!builder.Services.HasFlag(AccountSasServices.Blobs))
@@ -1435,7 +1539,7 @@ namespace Azure.Storage.Files.DataLake
                     nameof(AccountSasServices.Blobs));
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString();
             return sasUri.ToUri();
         }
         #endregion
@@ -1461,6 +1565,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<DataLakeServiceProperties> GetProperties(
             CancellationToken cancellationToken = default)
@@ -1505,6 +1611,8 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<DataLakeServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default)
@@ -1556,7 +1664,10 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response SetProperties(
             DataLakeServiceProperties properties,
             CancellationToken cancellationToken = default)
@@ -1604,7 +1715,10 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response> SetPropertiesAsync(
             DataLakeServiceProperties properties,
             CancellationToken cancellationToken = default)

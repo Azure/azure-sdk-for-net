@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         public BatchApplicationPackageCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
-            BodyKeySanitizers.Add(new BodyKeySanitizer("https://fakeaccount.blob.core.windows.net") { JsonPath = "properties.storageUrl" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("properties.storageUrl") { Value = "https://fakeaccount.blob.core.windows.net" });
         }
 
         [SetUp]

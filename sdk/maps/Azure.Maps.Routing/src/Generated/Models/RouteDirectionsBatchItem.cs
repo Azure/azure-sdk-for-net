@@ -10,12 +10,12 @@ namespace Azure.Maps.Routing.Models
     /// <summary> An item returned from Route Directions Batch service call. </summary>
     internal partial class RouteDirectionsBatchItem : BatchResultItem
     {
-        /// <summary> Initializes a new instance of RouteDirectionsBatchItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteDirectionsBatchItem"/>. </summary>
         internal RouteDirectionsBatchItem()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteDirectionsBatchItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteDirectionsBatchItem"/>. </summary>
         /// <param name="statusCode"> HTTP request status code. </param>
         /// <param name="response"> The result of the query. RouteDirections if the query completed successfully, ErrorResponse otherwise. </param>
         internal RouteDirectionsBatchItem(int? statusCode, RouteDirectionsBatchItemResponse response) : base(statusCode)

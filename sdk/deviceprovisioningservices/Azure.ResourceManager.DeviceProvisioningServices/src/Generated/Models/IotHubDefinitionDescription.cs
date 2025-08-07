@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
@@ -13,31 +14,69 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Description of the IoT hub. </summary>
     public partial class IotHubDefinitionDescription
     {
-        /// <summary> Initializes a new instance of IotHubDefinitionDescription. </summary>
-        /// <param name="connectionString"> Connection string of the IoT hub. </param>
-        /// <param name="location"> ARM region of the IoT hub. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public IotHubDefinitionDescription(string connectionString, AzureLocation location)
-        {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-            ConnectionString = connectionString;
+        /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
+        /// <param name="location"> ARM region of the IoT hub. </param>
+        public IotHubDefinitionDescription(AzureLocation location)
+        {
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of IotHubDefinitionDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
         /// <param name="applyAllocationPolicy"> flag for applying allocationPolicy or not for a given iot hub. </param>
         /// <param name="allocationWeight"> weight to apply for a given iot h. </param>
         /// <param name="name"> Host name of the IoT hub. </param>
         /// <param name="connectionString"> Connection string of the IoT hub. </param>
         /// <param name="location"> ARM region of the IoT hub. </param>
-        internal IotHubDefinitionDescription(bool? applyAllocationPolicy, int? allocationWeight, string name, string connectionString, AzureLocation location)
+        /// <param name="authenticationType"> IotHub MI authentication type: KeyBased, UserAssigned, SystemAssigned. </param>
+        /// <param name="selectedUserAssignedIdentityResourceId"> The selected user-assigned identity resource Id associated with IoT Hub. This is required when authenticationType is UserAssigned. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDefinitionDescription(bool? applyAllocationPolicy, int? allocationWeight, string name, string connectionString, AzureLocation location, IotHubAuthenticationType? authenticationType, ResourceIdentifier selectedUserAssignedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplyAllocationPolicy = applyAllocationPolicy;
             AllocationWeight = allocationWeight;
             Name = name;
             ConnectionString = connectionString;
             Location = location;
+            AuthenticationType = authenticationType;
+            SelectedUserAssignedIdentityResourceId = selectedUserAssignedIdentityResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/> for deserialization. </summary>
+        internal IotHubDefinitionDescription()
+        {
         }
 
         /// <summary> flag for applying allocationPolicy or not for a given iot hub. </summary>
@@ -50,5 +89,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public string ConnectionString { get; set; }
         /// <summary> ARM region of the IoT hub. </summary>
         public AzureLocation Location { get; set; }
+        /// <summary> IotHub MI authentication type: KeyBased, UserAssigned, SystemAssigned. </summary>
+        public IotHubAuthenticationType? AuthenticationType { get; set; }
+        /// <summary> The selected user-assigned identity resource Id associated with IoT Hub. This is required when authenticationType is UserAssigned. </summary>
+        public ResourceIdentifier SelectedUserAssignedIdentityResourceId { get; set; }
     }
 }

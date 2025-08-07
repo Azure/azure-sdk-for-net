@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -13,27 +15,67 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A class representing the LogicalDatabaseTransparentDataEncryption data model.
-    /// A logical database transparent data encryption state.
+    /// A logical database transparent data encryption scan state.
     /// </summary>
     public partial class LogicalDatabaseTransparentDataEncryptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicalDatabaseTransparentDataEncryptionData"/>. </summary>
         public LogicalDatabaseTransparentDataEncryptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalDatabaseTransparentDataEncryptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> Specifies the state of the transparent data encryption. </param>
-        internal LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TransparentDataEncryptionState? state) : base(id, name, resourceType, systemData)
+        /// <param name="scanState"> Specifies the encryption scan state of the transparent data encryption. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TransparentDataEncryptionState? state, TransparentDataEncryptionScanState? scanState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             State = state;
+            ScanState = scanState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the state of the transparent data encryption. </summary>
+        [WirePath("properties.state")]
         public TransparentDataEncryptionState? State { get; set; }
+        /// <summary> Specifies the encryption scan state of the transparent data encryption. </summary>
+        [WirePath("properties.scanState")]
+        public TransparentDataEncryptionScanState? ScanState { get; set; }
     }
 }

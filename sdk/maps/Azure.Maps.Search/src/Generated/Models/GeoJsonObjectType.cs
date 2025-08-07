@@ -5,28 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </summary>
-    public enum GeoJsonObjectType
+    internal readonly partial struct GeoJsonObjectType : IEquatable<GeoJsonObjectType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonObjectType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GeoJsonObjectType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string GeoJsonPointValue = "Point";
+        private const string GeoJsonMultiPointValue = "MultiPoint";
+        private const string GeoJsonLineStringValue = "LineString";
+        private const string GeoJsonMultiLineStringValue = "MultiLineString";
+        private const string GeoJsonPolygonValue = "Polygon";
+        private const string GeoJsonMultiPolygonValue = "MultiPolygon";
+        private const string GeoJsonGeometryCollectionValue = "GeometryCollection";
+        private const string GeoJsonFeatureValue = "Feature";
+        private const string GeoJsonFeatureCollectionValue = "FeatureCollection";
+
         /// <summary> `GeoJSON Point` geometry. </summary>
-        GeoJsonPoint,
+        public static GeoJsonObjectType GeoJsonPoint { get; } = new GeoJsonObjectType(GeoJsonPointValue);
         /// <summary> `GeoJSON MultiPoint` geometry. </summary>
-        GeoJsonMultiPoint,
+        public static GeoJsonObjectType GeoJsonMultiPoint { get; } = new GeoJsonObjectType(GeoJsonMultiPointValue);
         /// <summary> `GeoJSON LineString` geometry. </summary>
-        GeoJsonLineString,
+        public static GeoJsonObjectType GeoJsonLineString { get; } = new GeoJsonObjectType(GeoJsonLineStringValue);
         /// <summary> `GeoJSON MultiLineString` geometry. </summary>
-        GeoJsonMultiLineString,
+        public static GeoJsonObjectType GeoJsonMultiLineString { get; } = new GeoJsonObjectType(GeoJsonMultiLineStringValue);
         /// <summary> `GeoJSON Polygon` geometry. </summary>
-        GeoJsonPolygon,
+        public static GeoJsonObjectType GeoJsonPolygon { get; } = new GeoJsonObjectType(GeoJsonPolygonValue);
         /// <summary> `GeoJSON MultiPolygon` geometry. </summary>
-        GeoJsonMultiPolygon,
+        public static GeoJsonObjectType GeoJsonMultiPolygon { get; } = new GeoJsonObjectType(GeoJsonMultiPolygonValue);
         /// <summary> `GeoJSON GeometryCollection` geometry. </summary>
-        GeoJsonGeometryCollection,
+        public static GeoJsonObjectType GeoJsonGeometryCollection { get; } = new GeoJsonObjectType(GeoJsonGeometryCollectionValue);
         /// <summary> `GeoJSON Feature` object. </summary>
-        GeoJsonFeature,
+        public static GeoJsonObjectType GeoJsonFeature { get; } = new GeoJsonObjectType(GeoJsonFeatureValue);
         /// <summary> `GeoJSON FeatureCollection` object. </summary>
-        GeoJsonFeatureCollection
+        public static GeoJsonObjectType GeoJsonFeatureCollection { get; } = new GeoJsonObjectType(GeoJsonFeatureCollectionValue);
+        /// <summary> Determines if two <see cref="GeoJsonObjectType"/> values are the same. </summary>
+        public static bool operator ==(GeoJsonObjectType left, GeoJsonObjectType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="GeoJsonObjectType"/> values are not the same. </summary>
+        public static bool operator !=(GeoJsonObjectType left, GeoJsonObjectType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GeoJsonObjectType"/>. </summary>
+        public static implicit operator GeoJsonObjectType(string value) => new GeoJsonObjectType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is GeoJsonObjectType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(GeoJsonObjectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

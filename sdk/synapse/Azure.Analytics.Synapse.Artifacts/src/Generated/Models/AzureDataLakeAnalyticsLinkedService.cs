@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Azure Data Lake Analytics linked service. </summary>
     public partial class AzureDataLakeAnalyticsLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureDataLakeAnalyticsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeAnalyticsLinkedService"/>. </summary>
         /// <param name="accountName"> The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="tenant"/> is null. </exception>
@@ -28,8 +27,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureDataLakeAnalytics";
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeAnalyticsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeAnalyticsLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="resourceGroupName"> Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string). </param>
         /// <param name="dataLakeAnalyticsUri"> Azure Data Lake Analytics URI Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureDataLakeAnalyticsLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accountName, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object subscriptionId, object resourceGroupName, object dataLakeAnalyticsUri, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDataLakeAnalyticsLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accountName, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object subscriptionId, object resourceGroupName, object dataLakeAnalyticsUri, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountName = accountName;
             ServicePrincipalId = servicePrincipalId;

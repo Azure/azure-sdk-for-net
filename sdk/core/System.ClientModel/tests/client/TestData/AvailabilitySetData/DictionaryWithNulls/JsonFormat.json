@@ -1,0 +1,35 @@
+{
+  "testAS-3375": {
+    "name": "testAS-3375",
+    "id": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375",
+    "type": "Microsoft.Compute/availabilitySets",
+    "sku": {
+      "name": "Classic"
+    },
+    "tags": {
+      "key": "value"
+    },
+    "location": "eastus",
+    "properties": {
+      "platformUpdateDomainCount": 5,
+      "platformFaultDomainCount": 3
+    }
+  },
+  "nullEntry":  null,
+  "testAS-3376": {
+    "name": "testAS-3376",
+    "id": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3376",
+    "type": "Microsoft.Compute/availabilitySets",
+    "sku": {
+      "name": "Classic"
+    },
+    "tags": {
+      "key": "value"
+    },
+    "location": "eastus",
+    "properties": {
+      "platformUpdateDomainCount": 6,
+      "platformFaultDomainCount": 4
+    }
+  }
+}

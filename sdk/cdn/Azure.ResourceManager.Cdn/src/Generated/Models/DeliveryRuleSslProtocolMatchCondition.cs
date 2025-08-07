@@ -5,49 +5,82 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for SslProtocol match conditions. </summary>
-    public partial class DeliveryRuleSslProtocolMatchCondition
+    /// <summary>
+    /// Defines the parameters for SslProtocol match conditions
+    /// Serialized Name: SslProtocolMatchConditionParameters
+    /// </summary>
+    public partial class DeliveryRuleSslProtocolMatchCondition : DeliveryRuleConditionProperties
     {
-        /// <summary> Initializes a new instance of DeliveryRuleSslProtocolMatchCondition. </summary>
-        /// <param name="sslProtocolMatchConditionType"></param>
-        /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>
-        public DeliveryRuleSslProtocolMatchCondition(SslProtocolMatchConditionType sslProtocolMatchConditionType, SslProtocolOperator sslProtocolOperator)
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/>. </summary>
+        /// <param name="sslProtocolOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: SslProtocolMatchConditionParameters.operator
+        /// </param>
+        public DeliveryRuleSslProtocolMatchCondition(SslProtocolOperator sslProtocolOperator)
         {
-            SslProtocolMatchConditionType = sslProtocolMatchConditionType;
             SslProtocolOperator = sslProtocolOperator;
             MatchValues = new ChangeTrackingList<DeliveryRuleSslProtocol>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
+            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleSslProtocolConditionParameters;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleSslProtocolMatchCondition. </summary>
-        /// <param name="sslProtocolMatchConditionType"></param>
-        /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>
-        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
-        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        /// <param name="transforms"> List of transforms. </param>
-        internal DeliveryRuleSslProtocolMatchCondition(SslProtocolMatchConditionType sslProtocolMatchConditionType, SslProtocolOperator sslProtocolOperator, bool? negateCondition, IList<DeliveryRuleSslProtocol> matchValues, IList<PreTransformCategory> transforms)
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/>. </summary>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sslProtocolOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: SslProtocolMatchConditionParameters.operator
+        /// </param>
+        /// <param name="negateCondition">
+        /// Describes if this is negate condition or not
+        /// Serialized Name: SslProtocolMatchConditionParameters.negateCondition
+        /// </param>
+        /// <param name="matchValues">
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: SslProtocolMatchConditionParameters.matchValues
+        /// </param>
+        /// <param name="transforms">
+        /// List of transforms
+        /// Serialized Name: SslProtocolMatchConditionParameters.transforms
+        /// </param>
+        internal DeliveryRuleSslProtocolMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, SslProtocolOperator sslProtocolOperator, bool? negateCondition, IList<DeliveryRuleSslProtocol> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
-            SslProtocolMatchConditionType = sslProtocolMatchConditionType;
             SslProtocolOperator = sslProtocolOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            TypeName = typeName;
         }
 
-        /// <summary> Gets or sets the ssl protocol match condition type. </summary>
-        public SslProtocolMatchConditionType SslProtocolMatchConditionType { get; set; }
-        /// <summary> Describes operator to be matched. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/> for deserialization. </summary>
+        internal DeliveryRuleSslProtocolMatchCondition()
+        {
+        }
+
+        /// <summary>
+        /// Describes operator to be matched
+        /// Serialized Name: SslProtocolMatchConditionParameters.operator
+        /// </summary>
         public SslProtocolOperator SslProtocolOperator { get; set; }
-        /// <summary> Describes if this is negate condition or not. </summary>
+        /// <summary>
+        /// Describes if this is negate condition or not
+        /// Serialized Name: SslProtocolMatchConditionParameters.negateCondition
+        /// </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary> The match value for the condition of the delivery rule. </summary>
+        /// <summary>
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: SslProtocolMatchConditionParameters.matchValues
+        /// </summary>
         public IList<DeliveryRuleSslProtocol> MatchValues { get; }
-        /// <summary> List of transforms. </summary>
+        /// <summary>
+        /// List of transforms
+        /// Serialized Name: SslProtocolMatchConditionParameters.transforms
+        /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

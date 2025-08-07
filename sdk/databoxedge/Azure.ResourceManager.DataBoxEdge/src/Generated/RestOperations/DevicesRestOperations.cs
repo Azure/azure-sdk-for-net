@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string expand)
@@ -75,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,13 +115,30 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string expand)
@@ -152,7 +183,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -180,13 +211,27 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -229,7 +274,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -260,7 +305,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,6 +314,20 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceData data)
@@ -289,7 +348,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -317,7 +376,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -348,13 +407,27 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -429,6 +502,20 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDevicePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDevicePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -447,7 +534,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -475,7 +562,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -506,13 +593,28 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDownloadUpdatesRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/downloadUpdates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDownloadUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -586,6 +688,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
+        internal RequestUriBuilder CreateGenerateCertificateRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/generateCertificate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGenerateCertificateRequest(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var message = _pipeline.CreateMessage();
@@ -627,7 +744,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         GenerateCertResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GenerateCertResult.DeserializeGenerateCertResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -656,13 +773,28 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         GenerateCertResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GenerateCertResult.DeserializeGenerateCertResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetExtendedInformationRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/getExtendedInformation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetExtendedInformationRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -706,7 +838,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceExtendedInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceExtendedInfo.DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -735,13 +867,28 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceExtendedInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceExtendedInfo.DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateInstallUpdatesRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/installUpdates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateInstallUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -815,6 +962,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
+        internal RequestUriBuilder CreateGetNetworkSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/networkSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetNetworkSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var message = _pipeline.CreateMessage();
@@ -856,7 +1018,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceNetworkSettings value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceNetworkSettings.DeserializeDataBoxEdgeDeviceNetworkSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -885,13 +1047,28 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceNetworkSettings value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceNetworkSettings.DeserializeDataBoxEdgeDeviceNetworkSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateScanForUpdatesRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/scanForUpdates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateScanForUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -965,6 +1142,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateSecuritySettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/securitySettings/default/update", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateSecuritySettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings)
         {
             var message = _pipeline.CreateMessage();
@@ -984,7 +1176,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(securitySettings);
+            content.JsonWriter.WriteObjectValue(securitySettings, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1044,6 +1236,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
+        internal RequestUriBuilder CreateUpdateExtendedInformationRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/updateExtendedInformation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateExtendedInformationRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -1063,7 +1270,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1091,7 +1298,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceExtendedInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceExtendedInfo.DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1122,13 +1329,28 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceExtendedInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceExtendedInfo.DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUpdateSummaryRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/updateSummary/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUpdateSummaryRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -1172,7 +1394,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceUpdateSummary value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceUpdateSummary.DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1201,13 +1423,28 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceUpdateSummary value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceUpdateSummary.DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUploadCertificateRequestUri(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/uploadCertificate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUploadCertificateRequest(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content)
@@ -1229,7 +1466,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1257,7 +1494,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         UploadCertificateResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UploadCertificateResponse.DeserializeUploadCertificateResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1288,13 +1525,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         UploadCertificateResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UploadCertificateResponse.DeserializeUploadCertificateResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string expand)
@@ -1330,7 +1575,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1358,13 +1603,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string expand)
@@ -1402,7 +1655,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1432,7 +1685,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeDeviceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

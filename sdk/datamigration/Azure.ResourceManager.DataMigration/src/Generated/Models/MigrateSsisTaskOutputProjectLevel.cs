@@ -7,23 +7,23 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSsisTaskOutputProjectLevel. </summary>
     public partial class MigrateSsisTaskOutputProjectLevel : MigrateSsisTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutputProjectLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutputProjectLevel"/>. </summary>
         internal MigrateSsisTaskOutputProjectLevel()
         {
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "SsisProjectLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutputProjectLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutputProjectLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="folderName"> Name of the folder. </param>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="state"> Current state of migration. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSsisTaskOutputProjectLevel(string id, string resultType, string folderName, string projectName, MigrationState? state, SsisMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        internal MigrateSsisTaskOutputProjectLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string folderName, string projectName, DataMigrationState? state, SsisMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             FolderName = folderName;
             ProjectName = projectName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Name of the project. </summary>
         public string ProjectName { get; }
         /// <summary> Current state of migration. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Stage of SSIS migration. </summary>
         public SsisMigrationStage? Stage { get; }
         /// <summary> Migration start time. </summary>
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration progress message. </summary>
         public string Message { get; }
         /// <summary> Migration exceptions and warnings. </summary>
-        public IReadOnlyList<ReportableException> ExceptionsAndWarnings { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
     }
 }

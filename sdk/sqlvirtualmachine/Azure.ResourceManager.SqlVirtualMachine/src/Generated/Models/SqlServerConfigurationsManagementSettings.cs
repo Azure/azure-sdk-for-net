@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Set the connectivity, storage and workload settings. </summary>
     public partial class SqlServerConfigurationsManagementSettings
     {
-        /// <summary> Initializes a new instance of SqlServerConfigurationsManagementSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerConfigurationsManagementSettings"/>. </summary>
         public SqlServerConfigurationsManagementSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerConfigurationsManagementSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerConfigurationsManagementSettings"/>. </summary>
         /// <param name="sqlConnectivityUpdateSettings"> SQL connectivity type settings. </param>
         /// <param name="sqlWorkloadTypeUpdateSettings"> SQL workload type settings. </param>
         /// <param name="sqlStorageUpdateSettings"> SQL storage update settings. </param>
         /// <param name="additionalFeaturesServerConfigurations"> Additional SQL feature settings. </param>
         /// <param name="sqlInstanceSettings"> SQL Instance settings. </param>
-        internal SqlServerConfigurationsManagementSettings(SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings, SqlWorkloadTypeUpdateSettings sqlWorkloadTypeUpdateSettings, SqlStorageUpdateSettings sqlStorageUpdateSettings, AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations, SqlInstanceSettings sqlInstanceSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerConfigurationsManagementSettings(SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings, SqlWorkloadTypeUpdateSettings sqlWorkloadTypeUpdateSettings, SqlStorageUpdateSettings sqlStorageUpdateSettings, AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations, SqlInstanceSettings sqlInstanceSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SqlConnectivityUpdateSettings = sqlConnectivityUpdateSettings;
             SqlWorkloadTypeUpdateSettings = sqlWorkloadTypeUpdateSettings;
             SqlStorageUpdateSettings = sqlStorageUpdateSettings;
             AdditionalFeaturesServerConfigurations = additionalFeaturesServerConfigurations;
             SqlInstanceSettings = sqlInstanceSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SQL connectivity type settings. </summary>

@@ -5,15 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan HVR Azure failover input. </summary>
     public partial class RecoveryPlanHyperVReplicaAzureFailoverContent : RecoveryPlanProviderSpecificFailoverContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanHyperVReplicaAzureFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailoverContent"/>. </summary>
         public RecoveryPlanHyperVReplicaAzureFailoverContent()
         {
             InstanceType = "HyperVReplicaAzure";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="primaryKekCertificatePfx"> The primary KEK certificate PFX. </param>
+        /// <param name="secondaryKekCertificatePfx"> The secondary KEK certificate PFX. </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
+        internal RecoveryPlanHyperVReplicaAzureFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, HyperVReplicaAzureRpRecoveryPointType? recoveryPointType) : base(instanceType, serializedAdditionalRawData)
+        {
+            PrimaryKekCertificatePfx = primaryKekCertificatePfx;
+            SecondaryKekCertificatePfx = secondaryKekCertificatePfx;
+            RecoveryPointType = recoveryPointType;
+            InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
         /// <summary> The primary KEK certificate PFX. </summary>

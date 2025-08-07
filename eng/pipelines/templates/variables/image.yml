@@ -1,0 +1,24 @@
+# Default pool image selection. Set as variable so we can override at pipeline level
+
+variables:
+  - name: LINUXPOOL
+    value: azsdk-pool
+  - name: WINDOWSPOOL
+    value: azsdk-pool
+  - name: MACPOOL
+    value: Azure Pipelines
+
+  - name: LINUXVMIMAGE
+    value: ubuntu-24.04
+  - name: WINDOWSVMIMAGE
+    value: windows-2022
+  - name: MACVMIMAGE
+    value: macos-latest
+
+  # Values required for pool.os field in 1es pipeline templates
+  - name: LINUXOS
+    value: linux
+  - name: WINDOWSOS
+    value: windows
+  - name: MACOS
+    value: macOS

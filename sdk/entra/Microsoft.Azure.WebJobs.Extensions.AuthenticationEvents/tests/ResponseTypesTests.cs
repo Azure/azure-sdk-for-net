@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             var (code, payload) = GetExpected(responseType);
 
-            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
                 MemoryStream memoryStream = null;
                 StreamWriter streamWriter = null;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     memoryStream = new MemoryStream();
                     streamWriter = new StreamWriter(memoryStream);
-                    eventsResponseHandler.SetValueAsync(GetResponseTypeObject(responseType, streamWriter), CancellationToken.None);
+                    await eventsResponseHandler.SetValueAsync(GetResponseTypeObject(responseType, streamWriter), CancellationToken.None);
                 }
                 finally
                 {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             });
 
             Assert.AreEqual(httpResponseMessage.StatusCode, code);
-            Assert.True(DoesPayloadMatch(payload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(DoesPayloadMatch(payload, await httpResponseMessage.Content.ReadAsStringAsync()));
         }
 
         private object GetResponseTypeObject(ResponseTypes responseType, StreamWriter streamWriter)
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ResponseTypes.AuthEventResponse:
                     return (code: HttpStatusCode.OK, Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse);
                 case ResponseTypes.Unknown:
-                    return (code: HttpStatusCode.InternalServerError, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}");
+                    return (code: HttpStatusCode.InternalServerError, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return']}");
                 default:
                     return (code: HttpStatusCode.BadRequest, string.Empty);
             };

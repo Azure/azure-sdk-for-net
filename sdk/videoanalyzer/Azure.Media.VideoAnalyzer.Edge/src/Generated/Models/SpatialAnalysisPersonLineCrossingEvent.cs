@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Defines a Spatial Analysis person line crossing operation eventing configuration. </summary>
     public partial class SpatialAnalysisPersonLineCrossingEvent : SpatialAnalysisOperationEventBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingEvent"/>. </summary>
         public SpatialAnalysisPersonLineCrossingEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingEvent"/>. </summary>
         /// <param name="threshold"> The event threshold. </param>
         /// <param name="focus"> The operation focus type. </param>
         internal SpatialAnalysisPersonLineCrossingEvent(string threshold, SpatialAnalysisOperationFocus? focus) : base(threshold, focus)

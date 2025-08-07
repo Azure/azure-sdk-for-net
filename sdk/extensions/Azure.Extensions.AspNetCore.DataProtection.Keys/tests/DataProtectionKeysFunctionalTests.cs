@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core.TestFramework;
-using Azure.Extensions.AspNetCore.DataProtection.Keys.Tests;
-using Azure.Identity;
 using Azure.Security.KeyVault.Keys;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
@@ -56,7 +54,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         }
 
         [Test]
-        public async Task CanUprotectExistingKeys()
+        public async Task CanDecryptEncryptedKeys()
         {
             var client = new KeyClient(new Uri(TestEnvironment.KeyVaultUrl), TestEnvironment.Credential);
             var key = await client.CreateKeyAsync("TestEncryptionKey2", KeyType.Rsa);
@@ -65,32 +63,23 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 
             var testKeyRepository = new TestKeyRepository();
 
-            AzureDataProtectionBuilderExtensions.ProtectKeysWithAzureKeyVault(
-                serviceCollection.AddDataProtection(),
-                key.Value.Id.AbsoluteUri,
-                TestEnvironment.ClientId,
-                TestEnvironment.ClientSecret);
+            // Configure data protection to use TokenCredential
+            serviceCollection.AddDataProtection()
+                .ProtectKeysWithAzureKeyVault(key.Value.Id, TestEnvironment.Credential);
 
             serviceCollection.Configure<KeyManagementOptions>(options =>
             {
                 options.XmlRepository = testKeyRepository;
             });
 
-            var servicesOld = serviceCollection.BuildServiceProvider();
+            var services = serviceCollection.BuildServiceProvider();
 
-            var serviceCollectionNew = new ServiceCollection();
-            serviceCollectionNew.AddDataProtection().ProtectKeysWithAzureKeyVault(key.Value.Id, TestEnvironment.Credential);
-            serviceCollectionNew.Configure<KeyManagementOptions>(options =>
-            {
-                options.XmlRepository = testKeyRepository;
-            });
-
-            var dataProtector = servicesOld.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
+            // Encrypt data
+            var dataProtector = services.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
             var protectedText = dataProtector.Protect("Hello world!");
 
-            var newServices = serviceCollectionNew.BuildServiceProvider();
-            var newDataProtectionProvider = newServices.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
-            var unprotectedText = newDataProtectionProvider.Unprotect(protectedText);
+            // Decrypt data
+            var unprotectedText = dataProtector.Unprotect(protectedText);
 
             Assert.AreEqual("Hello world!", unprotectedText);
 

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsSamplesProject>true</IsSamplesProject>
+  </PropertyGroup>
+
+  <!-- NU5104: Using a project reference to the client causes build warning/errors on build agents. -->
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);AZC0100;AZC0012;CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="CommandLineParser" />
+    <PackageReference Include="Microsoft.Azure.Devices" />
+    <PackageReference Include="Microsoft.Azure.Devices.Client" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.IoT.TimeSeriesInsights.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\readme.md" />
+  </ItemGroup>
+
+</Project>

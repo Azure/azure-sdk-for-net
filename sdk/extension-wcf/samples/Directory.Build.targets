@@ -1,0 +1,12 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFrameworks Condition="'$(TargetFramework)' != ''">$(TargetFramework)</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.targets, $(MSBuildThisFileDirectory)..))" Condition="'$([MSBuild]::GetPathOfFileAbove(Directory.Build.targets, $(MSBuildThisFileDirectory)..))' != ''"/>
+
+  <!-- Disable targets not necessary for samples -->
+  <Target Name="ValidateTargetFrameworks" />
+  <Target Name="VerifyProjectReferencesReferences" />
+</Project>

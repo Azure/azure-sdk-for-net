@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the action to take on rule match. </summary>
+    /// <summary>
+    /// Defines the action to take on rule match.
+    /// Serialized Name: ActionType
+    /// </summary>
     public readonly partial struct OverrideActionType : IEquatable<OverrideActionType>
     {
         private readonly string _value;
@@ -27,19 +30,31 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string LogValue = "Log";
         private const string RedirectValue = "Redirect";
 
-        /// <summary> Allow. </summary>
+        /// <summary>
+        /// Allow
+        /// Serialized Name: ActionType.Allow
+        /// </summary>
         public static OverrideActionType Allow { get; } = new OverrideActionType(AllowValue);
-        /// <summary> Block. </summary>
+        /// <summary>
+        /// Block
+        /// Serialized Name: ActionType.Block
+        /// </summary>
         public static OverrideActionType Block { get; } = new OverrideActionType(BlockValue);
-        /// <summary> Log. </summary>
+        /// <summary>
+        /// Log
+        /// Serialized Name: ActionType.Log
+        /// </summary>
         public static OverrideActionType Log { get; } = new OverrideActionType(LogValue);
-        /// <summary> Redirect. </summary>
+        /// <summary>
+        /// Redirect
+        /// Serialized Name: ActionType.Redirect
+        /// </summary>
         public static OverrideActionType Redirect { get; } = new OverrideActionType(RedirectValue);
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are the same. </summary>
         public static bool operator ==(OverrideActionType left, OverrideActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are not the same. </summary>
         public static bool operator !=(OverrideActionType left, OverrideActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OverrideActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OverrideActionType"/>. </summary>
         public static implicit operator OverrideActionType(string value) => new OverrideActionType(value);
 
         /// <inheritdoc />
@@ -50,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

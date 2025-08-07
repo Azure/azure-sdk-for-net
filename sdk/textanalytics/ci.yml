@@ -29,3 +29,5 @@ extends:
     Artifacts:
     - name: Azure.AI.TextAnalytics
       safeName: AzureAITextAnalytics
+      triggeringPaths:
+      - Azure.AI.TextAnalytics.Legacy.Shared

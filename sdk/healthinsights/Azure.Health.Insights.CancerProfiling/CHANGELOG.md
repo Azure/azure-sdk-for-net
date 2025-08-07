@@ -5,6 +5,7 @@
 ### Features Added
 
 - Introduced model factory `Azure.Health.Insights.CancerProfiling.AzureHealthInsightsModelFactory` for mocking.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 

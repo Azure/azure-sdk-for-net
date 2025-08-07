@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,44 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A recommended sensitivity label update operation. </summary>
     public partial class SynapseRecommendedSensitivityLabelUpdate : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseRecommendedSensitivityLabelUpdate. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseRecommendedSensitivityLabelUpdate"/>. </summary>
         public SynapseRecommendedSensitivityLabelUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseRecommendedSensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRecommendedSensitivityLabelUpdate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,12 +61,14 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="schema"> Schema name of the column to update. </param>
         /// <param name="table"> Table name of the column to update. </param>
         /// <param name="column"> Column name to update. </param>
-        internal SynapseRecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseRecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseRecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseRecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Op = op;
             Schema = schema;
             Table = table;
             Column = column;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the op. </summary>

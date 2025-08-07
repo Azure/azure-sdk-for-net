@@ -165,7 +165,37 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 deleteTime = deleteTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new BlobPropertiesInternal(creationTime, lastModified, etag, contentLength, contentType, contentEncoding, contentLanguage, contentMD5, contentDisposition, cacheControl, blobSequenceNumber, copyId, copySource, copyProgress, copyCompletionTime, copyStatusDescription, serverEncrypted, incrementalCopy, destinationSnapshot, deletedTime, remainingRetentionDays, accessTierInferred, customerProvidedKeySha256, encryptionScope, accessTierChangeTime, tagCount, expiresOn, isSealed, lastAccessedOn, deleteTime);
+            return new BlobPropertiesInternal(
+                creationTime,
+                lastModified,
+                etag,
+                contentLength,
+                contentType,
+                contentEncoding,
+                contentLanguage,
+                contentMD5,
+                contentDisposition,
+                cacheControl,
+                blobSequenceNumber,
+                copyId,
+                copySource,
+                copyProgress,
+                copyCompletionTime,
+                copyStatusDescription,
+                serverEncrypted,
+                incrementalCopy,
+                destinationSnapshot,
+                deletedTime,
+                remainingRetentionDays,
+                accessTierInferred,
+                customerProvidedKeySha256,
+                encryptionScope,
+                accessTierChangeTime,
+                tagCount,
+                expiresOn,
+                isSealed,
+                lastAccessedOn,
+                deleteTime);
         }
     }
 }

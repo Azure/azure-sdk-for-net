@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Azure.Security.CodeTransparency client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Azure.Security.CodeTransparency client library</AssemblyTitle>
+    <Version>1.0.0-beta.4</Version>
+    <PackageTags>Azure.Security.CodeTransparency;scitt;cose;ccf;receipt;countersignature;$(PackageCommonTags)</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" />
+    <PackageReference Include="System.Security.Cryptography.Cose" />
+  </ItemGroup>
+</Project>

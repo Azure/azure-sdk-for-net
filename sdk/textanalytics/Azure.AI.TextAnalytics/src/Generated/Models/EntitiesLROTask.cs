@@ -10,13 +10,13 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> An object representing the task definition for an Entities Recognition task. </summary>
     internal partial class EntitiesLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of EntitiesLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesLROTask"/>. </summary>
         public EntitiesLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.EntityRecognition;
         }
 
-        /// <summary> Initializes a new instance of EntitiesLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for an Entity Recognition task. </param>

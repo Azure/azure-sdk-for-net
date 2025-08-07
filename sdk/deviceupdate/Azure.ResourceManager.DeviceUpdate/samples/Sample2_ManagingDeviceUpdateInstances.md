@@ -45,7 +45,7 @@ DeviceUpdateAccountResource account = lro1.Value;
 // Get the instance collection from the specific account and create an instance
 string instanceName = "myInstance";
 DeviceUpdateInstanceData input2 = new DeviceUpdateInstanceData(AzureLocation.WestUS2);
-input2.IotHubs.Add(new IotHubSettings("/subscriptions/.../resourceGroups/.../providers/Microsoft.Devices/IotHubs/..."));
+input2.IotHubs.Add(new DeviceUpdateIotHubSettings(new ResourceIdentifier("/subscriptions/.../resourceGroups/.../providers/Microsoft.Devices/IotHubs/...")));
 ArmOperation<DeviceUpdateInstanceResource> lro2 = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(WaitUntil.Completed, instanceName, input2);
 DeviceUpdateInstanceResource instance = lro2.Value;
 ```

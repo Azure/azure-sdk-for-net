@@ -12,12 +12,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The JobProperties. </summary>
     public partial class JobProperties
     {
-        /// <summary> Initializes a new instance of JobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobProperties"/>. </summary>
         public JobProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of JobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobProperties"/>. </summary>
         /// <param name="jobId"> The unique identifier of the job. </param>
         /// <param name="startTimeUtc"> System generated. Ignored at creation. The start date and time of the job in UTC. </param>
         /// <param name="endTimeUtc"> System generated. Ignored at creation. The end date and time of the job in UTC. </param>

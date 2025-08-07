@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
         private const string ResolvingDnsValue = "ResolvingDNS";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Accepted. </summary>
         public static ServiceAccountProvisioningState Accepted { get; } = new ServiceAccountProvisioningState(AcceptedValue);
@@ -44,11 +45,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ServiceAccountProvisioningState Succeeded { get; } = new ServiceAccountProvisioningState(SucceededValue);
         /// <summary> ResolvingDNS. </summary>
         public static ServiceAccountProvisioningState ResolvingDns { get; } = new ServiceAccountProvisioningState(ResolvingDnsValue);
+        /// <summary> Canceled. </summary>
+        public static ServiceAccountProvisioningState Canceled { get; } = new ServiceAccountProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ServiceAccountProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceAccountProvisioningState left, ServiceAccountProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ServiceAccountProvisioningState left, ServiceAccountProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceAccountProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAccountProvisioningState"/>. </summary>
         public static implicit operator ServiceAccountProvisioningState(string value) => new ServiceAccountProvisioningState(value);
 
         /// <inheritdoc />
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

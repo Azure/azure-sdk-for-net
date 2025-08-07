@@ -55,6 +55,12 @@ namespace Azure.Search.Documents.Tests
 
         public double Double { get; set; }
 
+        public sbyte SByte { get; set; }
+
+        public byte Byte { get; set; }
+
+        public short Short { get; set; }
+
         public bool Flag { get; set; }
 
         public DateTimeOffset Time { get; set; }
@@ -108,6 +114,36 @@ namespace Azure.Search.Documents.Tests
         public GeoPoint GeoPoint { get; set; }
 
         public GeographyPoint GeographyPoint { get; set; }
+
+        public sbyte[] SByteArray { get; set; }
+
+        public IList<sbyte> SByteIList { get; set; }
+
+        public List<sbyte> SByteList { get; set; }
+
+        public IEnumerable<sbyte> SByteIEnumerable { get; set; }
+
+        public ICollection<sbyte> SByteICollection { get; set; }
+
+        public byte[] ByteArray { get; set; }
+
+        public IList<byte> ByteIList { get; set; }
+
+        public List<byte> ByteList { get; set; }
+
+        public IEnumerable<byte> ByteIEnumerable { get; set; }
+
+        public ICollection<byte> ByteICollection { get; set; }
+
+        public short[] ShortArray { get; set; }
+
+        public IList<short> ShortIList { get; set; }
+
+        public List<short> ShortList { get; set; }
+
+        public IEnumerable<short> ShortIEnumerable { get; set; }
+
+        public ICollection<short> ShortICollection { get; set; }
 
         public int[] IntArray { get; set; }
 

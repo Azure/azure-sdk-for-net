@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity SQL server sink. </summary>
     public partial class SqlServerSink : CopySink
     {
-        /// <summary> Initializes a new instance of SqlServerSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerSink"/>. </summary>
         public SqlServerSink()
         {
             CopySinkType = "SqlServerSink";
         }
 
-        /// <summary> Initializes a new instance of SqlServerSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerSink"/>. </summary>
         /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="storedProcedureTableTypeParameterName"> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </param>
         /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </param>
         /// <param name="sqlWriterUseTableLock"> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="writeBehavior"> Write behavior when copying data into sql server. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum). </param>
+        /// <param name="writeBehavior"> Write behavior when copying data into sql server. Type: string (or Expression with resultType string). </param>
         /// <param name="upsertSettings"> SQL upsert settings. </param>
-        internal SqlServerSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> sqlWriterStoredProcedureName, DataFactoryElement<string> sqlWriterTableType, DataFactoryElement<string> preCopyScript, BinaryData storedProcedureParameters, DataFactoryElement<string> storedProcedureTableTypeParameterName, DataFactoryElement<string> tableOption, DataFactoryElement<bool> sqlWriterUseTableLock, BinaryData writeBehavior, SqlUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal SqlServerSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> sqlWriterStoredProcedureName, DataFactoryElement<string> sqlWriterTableType, DataFactoryElement<string> preCopyScript, BinaryData storedProcedureParameters, DataFactoryElement<string> storedProcedureTableTypeParameterName, DataFactoryElement<string> tableOption, DataFactoryElement<bool> sqlWriterUseTableLock, DataFactoryElement<string> writeBehavior, SqlUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
             SqlWriterTableType = sqlWriterTableType;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -95,37 +95,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> TableOption { get; set; }
         /// <summary> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> SqlWriterUseTableLock { get; set; }
-        /// <summary>
-        /// Write behavior when copying data into sql server. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum)
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData WriteBehavior { get; set; }
+        /// <summary> Write behavior when copying data into sql server. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> WriteBehavior { get; set; }
         /// <summary> SQL upsert settings. </summary>
         public SqlUpsertSettings UpsertSettings { get; set; }
     }

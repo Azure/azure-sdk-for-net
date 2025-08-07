@@ -5,14 +5,7 @@ A `TimeSeriesInsightsClient` is the primary interface for developers using the T
 ## Creating TimeSeriesInsightsClient
 
 To create a new Time Series Insights client, you need the endpoint to an Azure Time Series Insights environment and supply credentials.
-To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
-or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
-
-```dotnetcli
-dotnet add package Azure.Identity
-```
-
-Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
+To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the [Azure.Identity][AzureIdentity].
 
 ```C# Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
 // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based on the environment it is executing in.
@@ -24,7 +17,7 @@ var client = new TimeSeriesInsightsClient(
     tokenCredential);
 ```
 
-# Time Series Insights Samples
+## Time Series Insights Samples
 
 The following section provides several code snippets using the `client` created above, and covers the main functions of Time Series Insights. You can explore and learn more about the Time Series Insights client library APIs through using the samples project.
 
@@ -69,9 +62,9 @@ Here's what a retrieved model settings object looks like.
     {
       "Name": "Building",
       "Type": {
-        "HasValue": true, 
+        "HasValue": true,
         "Value": {
-          
+
         }
       }
     },
@@ -80,7 +73,7 @@ Here's what a retrieved model settings object looks like.
       "Type": {
         "HasValue": true,
         "Value": {
-          
+
         }
       }
     },
@@ -89,7 +82,7 @@ Here's what a retrieved model settings object looks like.
       "Type": {
         "HasValue": true,
         "Value": {
-          
+
         }
       }
     }
@@ -686,9 +679,10 @@ await foreach (TimeSeriesPoint point in query.GetResultsAsync())
 ```
 
 <!-- LINKS -->
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
-[tsi_instances_learn_more]: https://docs.microsoft.com/azure/time-series-insights/concepts-model-overview#time-series-model-instances
-[tsi_id_learn_more]: https://docs.microsoft.com/azure/time-series-insights/how-to-select-tsid
-[tsi_hierarchies_learn_more]: https://docs.microsoft.com/azure/time-series-insights/concepts-model-overview#time-series-model-hierarchies
-[tsi_numeric_variables]: https://docs.microsoft.com/azure/time-series-insights/concepts-variables#numeric-variables
-[tsi_aggregate_variables]: https://docs.microsoft.com/azure/time-series-insights/concepts-variables#aggregate-variables
+[AzureIdentity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
+[DefaultAzureCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
+[tsi_instances_learn_more]: https://learn.microsoft.com/azure/time-series-insights/concepts-model-overview#time-series-model-instances
+[tsi_id_learn_more]: https://learn.microsoft.com/azure/time-series-insights/how-to-select-tsid
+[tsi_hierarchies_learn_more]: https://learn.microsoft.com/azure/time-series-insights/concepts-model-overview#time-series-model-hierarchies
+[tsi_numeric_variables]: https://learn.microsoft.com/azure/time-series-insights/concepts-variables#numeric-variables
+[tsi_aggregate_variables]: https://learn.microsoft.com/azure/time-series-insights/concepts-variables#aggregate-variables

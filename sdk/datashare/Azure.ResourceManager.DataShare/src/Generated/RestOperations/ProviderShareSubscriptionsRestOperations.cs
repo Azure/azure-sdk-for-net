@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataShare.Models;
@@ -37,6 +36,25 @@ namespace Azure.ResourceManager.DataShare
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateAdjustRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, ProviderShareSubscriptionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendPath("/providerShareSubscriptions/", false);
+            uri.AppendPath(providerShareSubscriptionId, true);
+            uri.AppendPath("/adjust", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAdjustRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, ProviderShareSubscriptionData data)
         {
             var message = _pipeline.CreateMessage();
@@ -60,7 +78,7 @@ namespace Azure.ResourceManager.DataShare
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -92,7 +110,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,13 +145,32 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReinstateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, ProviderShareSubscriptionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendPath("/providerShareSubscriptions/", false);
+            uri.AppendPath(providerShareSubscriptionId, true);
+            uri.AppendPath("/reinstate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReinstateRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, ProviderShareSubscriptionData data)
@@ -159,7 +196,7 @@ namespace Azure.ResourceManager.DataShare
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -191,7 +228,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -226,13 +263,32 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRevokeRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendPath("/providerShareSubscriptions/", false);
+            uri.AppendPath(providerShareSubscriptionId, true);
+            uri.AppendPath("/revoke", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRevokeRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
@@ -318,6 +374,24 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        internal RequestUriBuilder CreateGetByShareRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendPath("/providerShareSubscriptions/", false);
+            uri.AppendPath(providerShareSubscriptionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByShareRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -366,7 +440,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -401,7 +475,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -410,6 +484,27 @@ namespace Azure.ResourceManager.DataShare
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByShareRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendPath("/providerShareSubscriptions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByShareRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, string skipToken)
@@ -462,7 +557,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProviderShareSubscriptionList.DeserializeProviderShareSubscriptionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -494,13 +589,21 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProviderShareSubscriptionList.DeserializeProviderShareSubscriptionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByShareNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByShareNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareName, string skipToken)
@@ -542,7 +645,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProviderShareSubscriptionList.DeserializeProviderShareSubscriptionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -576,7 +679,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ProviderShareSubscriptionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProviderShareSubscriptionList.DeserializeProviderShareSubscriptionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

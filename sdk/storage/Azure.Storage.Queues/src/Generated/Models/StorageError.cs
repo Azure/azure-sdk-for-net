@@ -10,12 +10,12 @@ namespace Azure.Storage.Queues.Models
     /// <summary> The StorageError. </summary>
     internal partial class StorageError
     {
-        /// <summary> Initializes a new instance of StorageError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageError"/>. </summary>
         internal StorageError()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageError"/>. </summary>
         /// <param name="message"></param>
         internal StorageError(string message)
         {

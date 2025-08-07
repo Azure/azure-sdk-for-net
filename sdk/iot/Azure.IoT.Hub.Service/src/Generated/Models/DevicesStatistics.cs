@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The RegistryStatistics. </summary>
     public partial class DevicesStatistics
     {
-        /// <summary> Initializes a new instance of DevicesStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevicesStatistics"/>. </summary>
         internal DevicesStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of DevicesStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevicesStatistics"/>. </summary>
         /// <param name="totalDeviceCount"> The total number of devices registered for the IoT Hub. </param>
         /// <param name="enabledDeviceCount"> The number of currently enabled devices. </param>
         /// <param name="disabledDeviceCount"> The number of currently disabled devices. </param>

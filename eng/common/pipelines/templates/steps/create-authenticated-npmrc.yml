@@ -1,0 +1,28 @@
+parameters:
+  - name: npmrcPath
+    type: string
+  - name: registryUrl
+    type: string
+  - name: CustomCondition
+    type: string
+    default: succeeded()
+
+steps:
+- pwsh: |
+    Write-Host "Creating .npmrc file ${{ parameters.npmrcPath }} for registry ${{ parameters.registryUrl }}"
+    $parentFolder = Split-Path -Path '${{ parameters.npmrcPath }}' -Parent
+    
+    if (!(Test-Path $parentFolder)) {
+      Write-Host "Creating folder $parentFolder"
+      New-Item -Path $parentFolder -ItemType Directory | Out-Null
+    }
+
+    $content = "registry=${{ parameters.registryUrl }}`n`nalways-auth=true"
+    $content | Out-File '${{ parameters.npmrcPath }}'
+  displayName: 'Create .npmrc'
+  condition: ${{ parameters.CustomCondition }}
+- task: npmAuthenticate@0
+  displayName: Authenticate .npmrc
+  condition: ${{ parameters.CustomCondition }}
+  inputs:
+    workingFile: ${{ parameters.npmrcPath }}

@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string MailMessageValue = "MailMessage";
         private const string MailboxValue = "Mailbox";
         private const string SubmissionMailValue = "SubmissionMail";
+        private const string NicValue = "Nic";
 
         /// <summary> Entity represents account in the system. </summary>
         public static SecurityInsightsEntityKind Account { get; } = new SecurityInsightsEntityKind(AccountValue);
@@ -86,11 +87,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsEntityKind Mailbox { get; } = new SecurityInsightsEntityKind(MailboxValue);
         /// <summary> Entity represents submission mail in the system. </summary>
         public static SecurityInsightsEntityKind SubmissionMail { get; } = new SecurityInsightsEntityKind(SubmissionMailValue);
+        /// <summary> Entity represents network interface in the system. </summary>
+        public static SecurityInsightsEntityKind Nic { get; } = new SecurityInsightsEntityKind(NicValue);
         /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsEntityKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsEntityKind"/>. </summary>
         public static implicit operator SecurityInsightsEntityKind(string value) => new SecurityInsightsEntityKind(value);
 
         /// <inheritdoc />
@@ -101,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

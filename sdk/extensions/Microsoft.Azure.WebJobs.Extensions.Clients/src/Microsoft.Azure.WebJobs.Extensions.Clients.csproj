@@ -6,12 +6,21 @@
     <PackageTags>aspnetcore;dataprotection;azure;blob;key store</PackageTags>
     <Version>1.0.0-beta.1</Version>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <NoWarn>$(NoWarn);AZC0001;CA1812</NoWarn>
+    <NoWarn>$(NoWarn);CA1812</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
-    <ProjectReference Include="..\..\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
+
+    <!--
+      Disallow project references. The extensions package is intentionally
+      locked to a specific version to ensure compatibility with the Azure
+      Functions runtime.
+
+      Newer versions are known to break the runtime.
+    -->
+    <ExcludeFromProjectReferenceToConversion Include="Microsoft.Extensions.Azure" />
   </ItemGroup>
 
 </Project>

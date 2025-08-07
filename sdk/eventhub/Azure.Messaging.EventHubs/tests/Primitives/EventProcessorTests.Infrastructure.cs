@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -41,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId };
             var ownedPartitions = new List<string>();
-            var lastEventProperties = new LastEnqueuedEventProperties(1234, 9876, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
+            var lastEventProperties = new LastEnqueuedEventProperties(1234, "9876", DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMinutes(5), TrackLastEnqueuedEventProperties = true };
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
@@ -51,6 +52,10 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLoadBalancer
                 .SetupGet(processor => processor.OwnedPartitionIds)
                 .Returns(ownedPartitions);
+
+            mockLoadBalancer
+                .Setup(lb => lb.IsPartitionOwned(It.IsAny<string>()))
+                .Returns<string>(partition => ownedPartitions.Contains(partition));
 
             mockLoadBalancer
                 .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -67,8 +72,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(() => default);
 
             mockConnection
-                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(partitionIds);
+                .Setup(conn => conn.GetPropertiesAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new EventHubProperties("", DateTime.Now, partitionIds, false));
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -107,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId };
-            var lastEventProperties = new LastEnqueuedEventProperties(1234, 9876, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
+            var lastEventProperties = new LastEnqueuedEventProperties(1234, "9876", DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMinutes(5), TrackLastEnqueuedEventProperties = true };
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
@@ -124,8 +129,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockConnection
-                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(partitionIds);
+                .Setup(conn => conn.GetPropertiesAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new EventHubProperties("", DateTime.Now, partitionIds, false));
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -226,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpointStore = EventProcessor<EventProcessorPartition>.CreateCheckpointStore(mockProcessor.Object);
 
             Assert.That(checkpointStore, Is.Not.Null, "The storage manager should have been created.");
-            Assert.That(() => checkpointStore.UpdateCheckpointAsync(fqNamespace, eventHub, consumerGroup, partitionId, 0, 0, CancellationToken.None), Throws.InstanceOf<NotImplementedException>(), "Calling to update checkpoints should not be implemented.");
+            Assert.That(() => checkpointStore.UpdateCheckpointAsync(fqNamespace, eventHub, consumerGroup, partitionId, "Id", new CheckpointPosition("0"), CancellationToken.None), Throws.InstanceOf<NotImplementedException>(), "Calling to update checkpoints should not be implemented.");
         }
 
         /// <summary>

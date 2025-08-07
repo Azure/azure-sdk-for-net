@@ -10,12 +10,12 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> Represents a message example to be sent from or to the end user. </summary>
     public partial class MessageExample
     {
-        /// <summary> Initializes a new instance of MessageExample. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageExample"/>. </summary>
         public MessageExample()
         {
         }
 
-        /// <summary> Initializes a new instance of MessageExample. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageExample"/>. </summary>
         /// <param name="direction"> Indicates whether the message example is supposed to be sent to or from the end user e.g. toUser. </param>
         /// <param name="text"> Actual example text for the message e.g. 'Want me to notify you when package in the way?'. </param>
         internal MessageExample(MessageDirection? direction, string text)

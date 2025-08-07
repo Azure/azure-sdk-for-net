@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -20,11 +20,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// In the event that one of the datacenters goes offline, normally the replica that was placed in that
     /// datacenter will be packed into one of the remaining datacenters. If this is not desirable then this
     /// policy should be set.
-    ///
     /// </summary>
     public partial class ServicePlacementRequireDomainDistributionPolicy : ManagedServicePlacementPolicy
     {
-        /// <summary> Initializes a new instance of ServicePlacementRequireDomainDistributionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/>. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public ServicePlacementRequireDomainDistributionPolicy(string domainName)
@@ -32,16 +31,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
-            ServicePlacementPolicyType = ServicePlacementPolicyType.RequiredDomainDistribution;
+            Type = ServicePlacementPolicyType.RequiredDomainDistribution;
         }
 
-        /// <summary> Initializes a new instance of ServicePlacementRequireDomainDistributionPolicy. </summary>
-        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/>. </summary>
+        /// <param name="type"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType servicePlacementPolicyType, string domainName) : base(servicePlacementPolicyType)
+        internal ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(type, serializedAdditionalRawData)
         {
             DomainName = domainName;
-            ServicePlacementPolicyType = servicePlacementPolicyType;
+            Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/> for deserialization. </summary>
+        internal ServicePlacementRequireDomainDistributionPolicy()
+        {
         }
 
         /// <summary> The name of the domain that should used for placement as per this policy. </summary>

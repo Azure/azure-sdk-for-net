@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The state of the  ExpressRoute Circuit Authorization provisioning. </summary>
+    /// <summary> Express Route Circuit Authorization provisioning state. </summary>
     public readonly partial struct ExpressRouteAuthorizationProvisioningState : IEquatable<ExpressRouteAuthorizationProvisioningState>
     {
         private readonly string _value;
@@ -24,22 +24,22 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
-        private const string UpdatingValue = "Updating";
         private const string CanceledValue = "Canceled";
+        private const string UpdatingValue = "Updating";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static ExpressRouteAuthorizationProvisioningState Succeeded { get; } = new ExpressRouteAuthorizationProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static ExpressRouteAuthorizationProvisioningState Failed { get; } = new ExpressRouteAuthorizationProvisioningState(FailedValue);
-        /// <summary> Updating. </summary>
-        public static ExpressRouteAuthorizationProvisioningState Updating { get; } = new ExpressRouteAuthorizationProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static ExpressRouteAuthorizationProvisioningState Canceled { get; } = new ExpressRouteAuthorizationProvisioningState(CanceledValue);
+        /// <summary> is updating. </summary>
+        public static ExpressRouteAuthorizationProvisioningState Updating { get; } = new ExpressRouteAuthorizationProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="ExpressRouteAuthorizationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteAuthorizationProvisioningState left, ExpressRouteAuthorizationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteAuthorizationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ExpressRouteAuthorizationProvisioningState left, ExpressRouteAuthorizationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExpressRouteAuthorizationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteAuthorizationProvisioningState"/>. </summary>
         public static implicit operator ExpressRouteAuthorizationProvisioningState(string value) => new ExpressRouteAuthorizationProvisioningState(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

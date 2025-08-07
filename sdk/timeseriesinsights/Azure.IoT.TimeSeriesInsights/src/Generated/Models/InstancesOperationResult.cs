@@ -10,12 +10,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Result of a batch operation on a particular time series instance. Instance object is set when operation is successful (except put operation) and error object is set when operation is unsuccessful. </summary>
     public partial class InstancesOperationResult
     {
-        /// <summary> Initializes a new instance of InstancesOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesOperationResult"/>. </summary>
         internal InstancesOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of InstancesOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesOperationResult"/>. </summary>
         /// <param name="instance"> Time series instance object - set when the operation is successful (except put operation). </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
         internal InstancesOperationResult(TimeSeriesInstance instance, TimeSeriesOperationError error)

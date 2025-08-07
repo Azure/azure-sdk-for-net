@@ -23,11 +23,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         private const string ConnectedValue = "Connected";
+        private const string DisconnectedValue = "Disconnected";
         private const string TimeoutValue = "Timeout";
         private const string UndefinedValue = "Undefined";
 
         /// <summary> Connected. </summary>
         public static ClusterConnectionStatus Connected { get; } = new ClusterConnectionStatus(ConnectedValue);
+        /// <summary> Disconnected. </summary>
+        public static ClusterConnectionStatus Disconnected { get; } = new ClusterConnectionStatus(DisconnectedValue);
         /// <summary> Timeout. </summary>
         public static ClusterConnectionStatus Timeout { get; } = new ClusterConnectionStatus(TimeoutValue);
         /// <summary> Undefined. </summary>
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ClusterConnectionStatus left, ClusterConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(ClusterConnectionStatus left, ClusterConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterConnectionStatus"/>. </summary>
         public static implicit operator ClusterConnectionStatus(string value) => new ClusterConnectionStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

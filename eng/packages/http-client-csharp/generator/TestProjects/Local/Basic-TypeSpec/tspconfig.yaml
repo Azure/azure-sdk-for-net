@@ -1,0 +1,4 @@
+options:
+  "@azure-typespec/http-client-csharp":
+    license: { name: "MIT License", company: "Microsoft Corporation" }
+    new-project: true

@@ -55,7 +55,7 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    Response response = client.DetectUnivariateEntireSeries(request.ToRequestContent());
+    Response response = client.GetUnivariateClient().DetectUnivariateEntireSeries(request.ToRequestContent());
     JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
     bool hasAnomaly = false;

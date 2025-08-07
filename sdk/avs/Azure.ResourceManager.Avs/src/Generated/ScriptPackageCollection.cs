@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScriptPackageResource" /> and their operations.
-    /// Each <see cref="ScriptPackageResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get a <see cref="ScriptPackageCollection" /> instance call the GetScriptPackages method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="ScriptPackageResource"/> and their operations.
+    /// Each <see cref="ScriptPackageResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get a <see cref="ScriptPackageCollection"/> instance call the GetScriptPackages method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class ScriptPackageCollection : ArmCollection, IEnumerable<ScriptPackageResource>, IAsyncEnumerable<ScriptPackageResource>
     {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a script package available to run on a private cloud
+        /// Get a ScriptPackage
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -61,11 +60,19 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptPackages_Get</description>
+        /// <description>ScriptPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
@@ -90,7 +97,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a script package available to run on a private cloud
+        /// Get a ScriptPackage
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -98,11 +105,19 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptPackages_Get</description>
+        /// <description>ScriptPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
@@ -127,7 +142,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List script packages available to run on the private cloud
+        /// List ScriptPackage resources by PrivateCloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -135,21 +150,29 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptPackages_List</description>
+        /// <description>ScriptPackage_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScriptPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScriptPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScriptPackageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptPackageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScriptPackageResource(Client, ScriptPackageData.DeserializeScriptPackageData(e)), _scriptPackageClientDiagnostics, Pipeline, "ScriptPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScriptPackageResource(Client, ScriptPackageData.DeserializeScriptPackageData(e)), _scriptPackageClientDiagnostics, Pipeline, "ScriptPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List script packages available to run on the private cloud
+        /// List ScriptPackage resources by PrivateCloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -157,17 +180,25 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptPackages_List</description>
+        /// <description>ScriptPackage_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScriptPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScriptPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScriptPackageResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptPackageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScriptPackageResource(Client, ScriptPackageData.DeserializeScriptPackageData(e)), _scriptPackageClientDiagnostics, Pipeline, "ScriptPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScriptPackageResource(Client, ScriptPackageData.DeserializeScriptPackageData(e)), _scriptPackageClientDiagnostics, Pipeline, "ScriptPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -179,11 +210,19 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptPackages_Get</description>
+        /// <description>ScriptPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
@@ -214,11 +253,19 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptPackages_Get</description>
+        /// <description>ScriptPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
@@ -232,6 +279,96 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _scriptPackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptPackageName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScriptPackageResource>> GetIfExistsAsync(string scriptPackageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+
+            using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _scriptPackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptPackageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ScriptPackageResource>(response.GetRawResponse());
+                return Response.FromValue(new ScriptPackageResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
+        public virtual NullableResponse<ScriptPackageResource> GetIfExists(string scriptPackageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+
+            using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scriptPackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptPackageName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ScriptPackageResource>(response.GetRawResponse());
+                return Response.FromValue(new ScriptPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

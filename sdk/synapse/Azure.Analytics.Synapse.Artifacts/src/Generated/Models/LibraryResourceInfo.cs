@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Library resource info. </summary>
     public partial class LibraryResourceInfo
     {
-        /// <summary> Initializes a new instance of LibraryResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryResourceInfo"/>. </summary>
         internal LibraryResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LibraryResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryResourceInfo"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="recordId"> record Id of the library/package. </param>
         /// <param name="state"> Provisioning status of the library/package. </param>

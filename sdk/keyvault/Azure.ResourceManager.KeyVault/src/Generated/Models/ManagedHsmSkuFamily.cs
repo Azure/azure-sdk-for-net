@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         private const string BValue = "B";
+        private const string CValue = "C";
 
         /// <summary> B. </summary>
         public static ManagedHsmSkuFamily B { get; } = new ManagedHsmSkuFamily(BValue);
+        /// <summary> C. </summary>
+        public static ManagedHsmSkuFamily C { get; } = new ManagedHsmSkuFamily(CValue);
         /// <summary> Determines if two <see cref="ManagedHsmSkuFamily"/> values are the same. </summary>
         public static bool operator ==(ManagedHsmSkuFamily left, ManagedHsmSkuFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmSkuFamily"/> values are not the same. </summary>
         public static bool operator !=(ManagedHsmSkuFamily left, ManagedHsmSkuFamily right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedHsmSkuFamily"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmSkuFamily"/>. </summary>
         public static implicit operator ManagedHsmSkuFamily(string value) => new ManagedHsmSkuFamily(value);
 
         /// <inheritdoc />
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

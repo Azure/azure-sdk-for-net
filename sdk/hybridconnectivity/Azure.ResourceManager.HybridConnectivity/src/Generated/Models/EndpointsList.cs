@@ -5,33 +5,76 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.HybridConnectivity;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> The list of endpoints. </summary>
     internal partial class EndpointsList
     {
-        /// <summary> Initializes a new instance of EndpointsList. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
+        /// <param name="value"> The list of endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal EndpointsList(IEnumerable<HybridConnectivityEndpointData> value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
+        /// <param name="value"> The list of endpoint. </param>
+        /// <param name="nextLink"> The link used to get the next page of endpoints list. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointsList(IReadOnlyList<HybridConnectivityEndpointData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EndpointsList"/> for deserialization. </summary>
         internal EndpointsList()
         {
-            Value = new ChangeTrackingList<EndpointResourceData>();
         }
 
-        /// <summary> Initializes a new instance of EndpointsList. </summary>
-        /// <param name="nextLink"> The link used to get the next page of endpoints list. </param>
-        /// <param name="value"> The list of endpoint. </param>
-        internal EndpointsList(string nextLink, IReadOnlyList<EndpointResourceData> value)
-        {
-            NextLink = nextLink;
-            Value = value;
-        }
-
-        /// <summary> The link used to get the next page of endpoints list. </summary>
-        public string NextLink { get; }
         /// <summary> The list of endpoint. </summary>
-        public IReadOnlyList<EndpointResourceData> Value { get; }
+        public IReadOnlyList<HybridConnectivityEndpointData> Value { get; }
+        /// <summary> The link used to get the next page of endpoints list. </summary>
+        public Uri NextLink { get; }
     }
 }

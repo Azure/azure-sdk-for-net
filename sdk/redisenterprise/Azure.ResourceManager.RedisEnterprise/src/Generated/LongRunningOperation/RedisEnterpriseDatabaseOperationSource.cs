@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         RedisEnterpriseDatabaseResource IOperationSource<RedisEnterpriseDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(document.RootElement);
+            var data = ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisEnterpriseContext.Default);
             return new RedisEnterpriseDatabaseResource(_client, data);
         }
 
         async ValueTask<RedisEnterpriseDatabaseResource> IOperationSource<RedisEnterpriseDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(document.RootElement);
-            return new RedisEnterpriseDatabaseResource(_client, data);
+            var data = ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisEnterpriseContext.Default);
+            return await Task.FromResult(new RedisEnterpriseDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

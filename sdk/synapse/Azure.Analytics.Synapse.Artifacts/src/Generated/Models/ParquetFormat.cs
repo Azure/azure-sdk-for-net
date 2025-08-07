@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The data stored in Parquet format. </summary>
     public partial class ParquetFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of ParquetFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParquetFormat"/>. </summary>
         public ParquetFormat()
         {
             Type = "ParquetFormat";
         }
 
-        /// <summary> Initializes a new instance of ParquetFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParquetFormat"/>. </summary>
         /// <param name="type"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>

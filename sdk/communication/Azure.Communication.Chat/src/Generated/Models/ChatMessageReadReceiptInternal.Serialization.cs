@@ -7,8 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -42,6 +40,14 @@ namespace Azure.Communication.Chat
                 }
             }
             return new ChatMessageReadReceiptInternal(senderCommunicationIdentifier, chatMessageId, readOn);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatMessageReadReceiptInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeChatMessageReadReceiptInternal(document.RootElement);
         }
     }
 }

@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "..\\..\\Azure.Storage.DataMovement.sln",
+     "projects": [
+      "Azure.Storage.DataMovement.Blobs\\src\\Azure.Azure.Storage.DataMovement.Blobs.csproj",
+      "Azure.Storage.DataMovement.Blobs\\stress\\src\\Azure.Azure.Storage.DataMovement.Blobs.Stress.csproj"
+    ]
+  }
+  }
+}

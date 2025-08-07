@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator ==(SparkSessionResultType left, SparkSessionResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkSessionResultType"/> values are not the same. </summary>
         public static bool operator !=(SparkSessionResultType left, SparkSessionResultType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SparkSessionResultType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SparkSessionResultType"/>. </summary>
         public static implicit operator SparkSessionResultType(string value) => new SparkSessionResultType(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

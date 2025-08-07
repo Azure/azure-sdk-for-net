@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.Common;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
@@ -17,9 +18,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rotation"u8);
-            writer.WriteObjectValue(RotationWrapper);
+            writer.WriteObjectValue<Quaternion>(RotationWrapper);
             writer.WritePropertyName("translation"u8);
-            writer.WriteObjectValue(TranslationWrapper);
+            writer.WriteObjectValue<Vector3>(TranslationWrapper);
             writer.WriteEndObject();
         }
 
@@ -41,6 +42,22 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
             }
             return new TrajectoryPose(rotation, translation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TrajectoryPose FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTrajectoryPose(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

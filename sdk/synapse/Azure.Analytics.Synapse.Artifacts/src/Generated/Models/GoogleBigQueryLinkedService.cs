@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Google BigQuery service linked service. </summary>
     public partial class GoogleBigQueryLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of GoogleBigQueryLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/>. </summary>
         /// <param name="project"> The default BigQuery project to query against. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="project"/> is null. </exception>
@@ -27,8 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "GoogleBigQuery";
         }
 
-        /// <summary> Initializes a new instance of GoogleBigQueryLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal GoogleBigQueryLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object project, object additionalProjects, object requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, SecretBase refreshToken, object clientId, SecretBase clientSecret, object email, object keyFilePath, object trustedCertPath, object useSystemTrustStore, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleBigQueryLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object project, object additionalProjects, object requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, SecretBase refreshToken, object clientId, SecretBase clientSecret, object email, object keyFilePath, object trustedCertPath, object useSystemTrustStore, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Project = project;
             AdditionalProjects = additionalProjects;

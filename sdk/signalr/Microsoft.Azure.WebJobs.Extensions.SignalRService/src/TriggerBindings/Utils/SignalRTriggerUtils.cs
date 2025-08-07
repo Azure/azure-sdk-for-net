@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 return default;
             }
 
-            return signatures.Split(HeaderSeparator, StringSplitOptions.RemoveEmptyEntries);
+            return signatures.Split(HeaderSeparator, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToList();
         }
 
         public static IDictionary<string, string> GetHeaderDictionary(HttpRequestHeaders headers)

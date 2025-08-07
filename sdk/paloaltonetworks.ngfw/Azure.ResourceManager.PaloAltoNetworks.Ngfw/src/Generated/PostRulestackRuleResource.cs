@@ -9,23 +9,23 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a PostRulestackRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostRulestackRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostRulestackRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource" /> using the GetPostRulestackRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostRulestackRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostRulestackRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource"/> using the GetPostRulestackRule method.
     /// </summary>
     public partial class PostRulestackRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostRulestackRuleResource"/> instance. </summary>
+        /// <param name="globalRulestackName"> The globalRulestackName. </param>
+        /// <param name="priority"> The priority. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName, string priority)
         {
             var resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}";
@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly PostRulesRestOperations _postRulestackRulePostRulesRestClient;
         private readonly PostRulestackRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/postRules";
+
         /// <summary> Initializes a new instance of the <see cref="PostRulestackRuleResource"/> class for mocking. </summary>
         protected PostRulestackRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostRulestackRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostRulestackRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostRulestackRuleResource(ArmClient client, PostRulestackRuleData data) : this(client, data.Id)
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/postRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>PostRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>PostRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +177,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PostRules_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +220,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>PostRules_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -229,6 +261,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PostRules_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +308,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>PostRules_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -304,11 +352,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_getCounters</description>
+        /// <description>PostRules_GetCounters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FirewallRuleCounter>> GetCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -335,11 +391,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_getCounters</description>
+        /// <description>PostRules_GetCounters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FirewallRuleCounter> GetCounters(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -366,11 +430,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_refreshCounters</description>
+        /// <description>PostRules_RefreshCounters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RefreshCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -397,11 +469,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_refreshCounters</description>
+        /// <description>PostRules_RefreshCounters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RefreshCounters(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -428,11 +508,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_resetCounters</description>
+        /// <description>PostRules_ResetCounters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -459,11 +547,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_resetCounters</description>
+        /// <description>PostRules_ResetCounters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostRulestackRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FirewallRuleResetConter> ResetCounters(string firewallName = null, CancellationToken cancellationToken = default)
         {

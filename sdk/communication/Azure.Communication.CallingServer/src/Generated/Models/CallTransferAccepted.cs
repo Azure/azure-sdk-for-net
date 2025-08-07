@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CallTransferAcceptedEvent. </summary>
     public partial class CallTransferAccepted
     {
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallTransferAccepted"/>. </summary>
         internal CallTransferAccepted()
         {
         }
 
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallTransferAccepted"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>

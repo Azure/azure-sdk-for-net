@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.Authentication
 {

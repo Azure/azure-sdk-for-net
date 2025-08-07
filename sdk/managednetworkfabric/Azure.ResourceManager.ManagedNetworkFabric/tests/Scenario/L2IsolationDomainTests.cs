@@ -68,6 +68,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
+            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+
+            await foreach (NetworkFabricL2IsolationDomainResource item in subscriptionResource.GetNetworkFabricL2IsolationDomainsAsync())
+            {
+                NetworkFabricL2IsolationDomainData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
+
             // Update Admin State
             TestContext.Out.WriteLine($"POST started.....");
             UpdateAdministrativeStateContent triggerEnable = new UpdateAdministrativeStateContent()

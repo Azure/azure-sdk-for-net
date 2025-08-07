@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -218,7 +218,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAuthenticatedFarmersDetailsRequest(authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAuthenticatedFarmersDetailsNextPageRequest(nextLink, authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "FarmerOAuthTokens.GetAuthenticatedFarmersDetails", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "FarmerOAuthTokens.GetAuthenticatedFarmersDetails", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAuthenticatedFarmersDetailsRequest(authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAuthenticatedFarmersDetailsNextPageRequest(nextLink, authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "FarmerOAuthTokens.GetAuthenticatedFarmersDetails", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "FarmerOAuthTokens.GetAuthenticatedFarmersDetails", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -342,14 +342,14 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/oauth/tokens", false);
-            if (authProviderIds != null && Optional.IsCollectionDefined(authProviderIds))
+            if (authProviderIds != null && !(authProviderIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in authProviderIds)
                 {
                     uri.AppendQuery("authProviderIds", param, true);
                 }
             }
-            if (partyIds != null && Optional.IsCollectionDefined(partyIds))
+            if (partyIds != null && !(partyIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in partyIds)
                 {

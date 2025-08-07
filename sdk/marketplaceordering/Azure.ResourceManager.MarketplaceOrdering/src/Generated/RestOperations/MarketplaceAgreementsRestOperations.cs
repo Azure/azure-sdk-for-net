@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MarketplaceOrdering.Models;
@@ -36,6 +35,25 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/offerTypes/", false);
+            uri.AppendPath(offerType.ToString(), true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendPath("/agreements/current", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId)
@@ -86,7 +104,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -120,7 +138,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,6 +147,25 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId, MarketplaceAgreementTermData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/offerTypes/", false);
+            uri.AppendPath(offerType.ToString(), true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendPath("/agreements/current", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId, MarketplaceAgreementTermData data)
@@ -154,7 +191,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -185,7 +222,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -219,13 +256,30 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSignRequestUri(string subscriptionId, string publisherId, string offerId, string planId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/agreements/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendPath("/sign", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSignRequest(string subscriptionId, string publisherId, string offerId, string planId)
@@ -273,7 +327,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -304,13 +358,30 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string publisherId, string offerId, string planId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/agreements/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelRequest(string subscriptionId, string publisherId, string offerId, string planId)
@@ -358,7 +429,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,13 +460,29 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAgreementRequestUri(string subscriptionId, string publisherId, string offerId, string planId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/agreements/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAgreementRequest(string subscriptionId, string publisherId, string offerId, string planId)
@@ -442,7 +529,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -475,7 +562,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         MarketplaceAgreementTermData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -484,6 +571,17 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/agreements", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -519,7 +617,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         IReadOnlyList<MarketplaceAgreementTermData> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<MarketplaceAgreementTermData> array = new List<MarketplaceAgreementTermData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -549,7 +647,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 case 200:
                     {
                         IReadOnlyList<MarketplaceAgreementTermData> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<MarketplaceAgreementTermData> array = new List<MarketplaceAgreementTermData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {

@@ -9,9 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ApplicationInsights.Mocking;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -20,234 +19,195 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.ApplicationInsights. </summary>
     public static partial class ApplicationInsightsExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableApplicationInsightsArmClient GetMockableApplicationInsightsArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableApplicationInsightsArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableApplicationInsightsResourceGroupResource GetMockableApplicationInsightsResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableApplicationInsightsResourceGroupResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableApplicationInsightsSubscriptionResource GetMockableApplicationInsightsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableApplicationInsightsSubscriptionResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        /// <summary>
+        /// **Gets an access token for live metrics stream data.**
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/generatelivetoken</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveToken_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-14</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetLiveToken(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<LiveTokenResult>> GetLiveTokenAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableApplicationInsightsArmClient(client).GetLiveTokenAsync(scope, cancellationToken).ConfigureAwait(false);
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        /// <summary>
+        /// **Gets an access token for live metrics stream data.**
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/generatelivetoken</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveToken_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-14</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetLiveToken(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<LiveTokenResult> GetLiveToken(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApplicationInsightsArmClient(client).GetLiveToken(scope, cancellationToken);
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ApplicationInsightsComponentResource
         /// <summary>
         /// Gets an object representing an <see cref="ApplicationInsightsComponentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationInsightsComponentResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetApplicationInsightsComponentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationInsightsComponentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApplicationInsightsComponentResource"/> object. </returns>
         public static ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApplicationInsightsComponentResource.ValidateResourceId(id);
-                return new ApplicationInsightsComponentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region WebTestResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WebTestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebTestResource.CreateResourceIdentifier" /> to create a <see cref="WebTestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebTestResource" /> object. </returns>
-        public static WebTestResource GetWebTestResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WebTestResource.ValidateResourceId(id);
-                return new WebTestResource(client, id);
-            }
-            );
+            return GetMockableApplicationInsightsArmClient(client).GetApplicationInsightsComponentResource(id);
         }
-        #endregion
-
-        #region WorkbookTemplateResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkbookTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkbookTemplateResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkbookTemplateResource" /> object. </returns>
-        public static WorkbookTemplateResource GetWorkbookTemplateResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WorkbookTemplateResource.ValidateResourceId(id);
-                return new WorkbookTemplateResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MyWorkbookResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MyWorkbookResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MyWorkbookResource.CreateResourceIdentifier" /> to create a <see cref="MyWorkbookResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MyWorkbookResource" /> object. </returns>
-        public static MyWorkbookResource GetMyWorkbookResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MyWorkbookResource.ValidateResourceId(id);
-                return new MyWorkbookResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WorkbookResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkbookResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkbookResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkbookResource" /> object. </returns>
-        public static WorkbookResource GetWorkbookResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WorkbookResource.ValidateResourceId(id);
-                return new WorkbookResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WorkbookRevisionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkbookRevisionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkbookRevisionResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkbookRevisionResource" /> object. </returns>
-        public static WorkbookRevisionResource GetWorkbookRevisionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WorkbookRevisionResource.ValidateResourceId(id);
-                return new WorkbookRevisionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ComponentLinkedStorageAccountResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ComponentLinkedStorageAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComponentLinkedStorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="ComponentLinkedStorageAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComponentLinkedStorageAccountResource" /> object. </returns>
-        public static ComponentLinkedStorageAccountResource GetComponentLinkedStorageAccountResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ComponentLinkedStorageAccountResource.ValidateResourceId(id);
-                return new ComponentLinkedStorageAccountResource(client, id);
-            }
-            );
-        }
-        #endregion
 
         /// <summary>
-        /// **Gets an access token for live metrics stream data.**
-        /// <list type="bullet">
+        /// Gets an object representing an <see cref="ApplicationInsightsWebTestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationInsightsWebTestResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsWebTestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/generatelivetoken</description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetApplicationInsightsWebTestResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LiveToken_Get</description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<LiveTokenResponse>> GetLiveTokenAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApplicationInsightsWebTestResource"/> object. </returns>
+        public static ApplicationInsightsWebTestResource GetApplicationInsightsWebTestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetLiveTokenAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApplicationInsightsArmClient(client).GetApplicationInsightsWebTestResource(id);
         }
 
         /// <summary>
-        /// **Gets an access token for live metrics stream data.**
-        /// <list type="bullet">
+        /// Gets an object representing an <see cref="ApplicationInsightsWorkbookTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationInsightsWorkbookTemplateResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsWorkbookTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/generatelivetoken</description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetApplicationInsightsWorkbookTemplateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LiveToken_Get</description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<LiveTokenResponse> GetLiveToken(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApplicationInsightsWorkbookTemplateResource"/> object. </returns>
+        public static ApplicationInsightsWorkbookTemplateResource GetApplicationInsightsWorkbookTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetArmResourceExtensionClient(client, scope).GetLiveToken(cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApplicationInsightsArmClient(client).GetApplicationInsightsWorkbookTemplateResource(id);
         }
 
-        /// <summary> Gets a collection of ApplicationInsightsComponentResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationInsightsWorkbookResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationInsightsWorkbookResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsWorkbookResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetApplicationInsightsWorkbookResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApplicationInsightsWorkbookResource"/> object. </returns>
+        public static ApplicationInsightsWorkbookResource GetApplicationInsightsWorkbookResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApplicationInsightsArmClient(client).GetApplicationInsightsWorkbookResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationInsightsWorkbookRevisionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationInsightsWorkbookRevisionResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsWorkbookRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetApplicationInsightsWorkbookRevisionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApplicationInsightsWorkbookRevisionResource"/> object. </returns>
+        public static ApplicationInsightsWorkbookRevisionResource GetApplicationInsightsWorkbookRevisionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableApplicationInsightsArmClient(client).GetApplicationInsightsWorkbookRevisionResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApplicationInsightsComponentResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsComponents()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ApplicationInsightsComponentResources and their operations over a ApplicationInsightsComponentResource. </returns>
         public static ApplicationInsightsComponentCollection GetApplicationInsightsComponents(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplicationInsightsComponents();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsComponents();
         }
 
         /// <summary>
@@ -261,17 +221,31 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsComponentAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ApplicationInsightsComponentResource>> GetApplicationInsightsComponentAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetApplicationInsightsComponents().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsComponentAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -285,25 +259,48 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsComponent(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ApplicationInsightsComponentResource> GetApplicationInsightsComponent(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetApplicationInsightsComponents().Get(resourceName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsComponent(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebTestResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ApplicationInsightsWebTestResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsWebTests()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WebTestResources and their operations over a WebTestResource. </returns>
-        public static WebTestCollection GetWebTests(this ResourceGroupResource resourceGroupResource)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApplicationInsightsWebTestResources and their operations over a ApplicationInsightsWebTestResource. </returns>
+        public static ApplicationInsightsWebTestCollection GetApplicationInsightsWebTests(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWebTests();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsWebTests();
         }
 
         /// <summary>
@@ -317,17 +314,31 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WebTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsWebTestAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="webTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WebTestResource>> GetWebTestAsync(this ResourceGroupResource resourceGroupResource, string webTestName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplicationInsightsWebTestResource>> GetApplicationInsightsWebTestAsync(this ResourceGroupResource resourceGroupResource, string webTestName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWebTests().GetAsync(webTestName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsWebTestAsync(webTestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -341,25 +352,48 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WebTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsWebTest(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="webTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WebTestResource> GetWebTest(this ResourceGroupResource resourceGroupResource, string webTestName, CancellationToken cancellationToken = default)
+        public static Response<ApplicationInsightsWebTestResource> GetApplicationInsightsWebTest(this ResourceGroupResource resourceGroupResource, string webTestName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWebTests().Get(webTestName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsWebTest(webTestName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkbookTemplateResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ApplicationInsightsWorkbookTemplateResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsWorkbookTemplates()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WorkbookTemplateResources and their operations over a WorkbookTemplateResource. </returns>
-        public static WorkbookTemplateCollection GetWorkbookTemplates(this ResourceGroupResource resourceGroupResource)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApplicationInsightsWorkbookTemplateResources and their operations over a ApplicationInsightsWorkbookTemplateResource. </returns>
+        public static ApplicationInsightsWorkbookTemplateCollection GetApplicationInsightsWorkbookTemplates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWorkbookTemplates();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsWorkbookTemplates();
         }
 
         /// <summary>
@@ -373,17 +407,31 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkbookTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsWorkbookTemplateAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkbookTemplateResource>> GetWorkbookTemplateAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplicationInsightsWorkbookTemplateResource>> GetApplicationInsightsWorkbookTemplateAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWorkbookTemplates().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsWorkbookTemplateAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -397,81 +445,48 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkbookTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsWorkbookTemplate(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkbookTemplateResource> GetWorkbookTemplate(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<ApplicationInsightsWorkbookTemplateResource> GetApplicationInsightsWorkbookTemplate(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWorkbookTemplates().Get(resourceName, cancellationToken);
-        }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-        /// <summary> Gets a collection of MyWorkbookResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of MyWorkbookResources and their operations over a MyWorkbookResource. </returns>
-        public static MyWorkbookCollection GetMyWorkbooks(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMyWorkbooks();
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsWorkbookTemplate(resourceName, cancellationToken);
         }
 
         /// <summary>
-        /// Get a single private workbook by its resourceName.
-        /// <list type="bullet">
+        /// Gets a collection of ApplicationInsightsWorkbookResources in the ResourceGroupResource.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/myWorkbooks/{resourceName}</description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsWorkbooks()"/> instead.</description>
         /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MyWorkbooks_Get</description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<MyWorkbookResource>> GetMyWorkbookAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApplicationInsightsWorkbookResources and their operations over a ApplicationInsightsWorkbookResource. </returns>
+        public static ApplicationInsightsWorkbookCollection GetApplicationInsightsWorkbooks(this ResourceGroupResource resourceGroupResource)
         {
-            return await resourceGroupResource.GetMyWorkbooks().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
-        }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-        /// <summary>
-        /// Get a single private workbook by its resourceName.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/myWorkbooks/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MyWorkbooks_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<MyWorkbookResource> GetMyWorkbook(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetMyWorkbooks().Get(resourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of WorkbookResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WorkbookResources and their operations over a WorkbookResource. </returns>
-        public static WorkbookCollection GetWorkbooks(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWorkbooks();
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsWorkbooks();
         }
 
         /// <summary>
@@ -485,18 +500,32 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsWorkbookAsync(string,bool?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkbookResource>> GetWorkbookAsync(this ResourceGroupResource resourceGroupResource, string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplicationInsightsWorkbookResource>> GetApplicationInsightsWorkbookAsync(this ResourceGroupResource resourceGroupResource, string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWorkbooks().GetAsync(resourceName, canFetchContent, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsWorkbookAsync(resourceName, canFetchContent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -510,18 +539,32 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsWorkbook(string,bool?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkbookResource> GetWorkbook(this ResourceGroupResource resourceGroupResource, string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        public static Response<ApplicationInsightsWorkbookResource> GetApplicationInsightsWorkbook(this ResourceGroupResource resourceGroupResource, string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWorkbooks().Get(resourceName, canFetchContent, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsWorkbook(resourceName, canFetchContent, cancellationToken);
         }
 
         /// <summary>
@@ -535,14 +578,29 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationInsightsComponentsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsComponentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -556,14 +614,29 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponents(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationInsightsComponents(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsComponents(cancellationToken);
         }
 
         /// <summary>
@@ -577,14 +650,29 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WebTests_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebTestResource> GetWebTestsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ApplicationInsightsWebTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApplicationInsightsWebTestResource> GetApplicationInsightsWebTestsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebTestsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsWebTestsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -598,62 +686,29 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WebTests_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWebTests(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebTestResource> GetWebTests(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApplicationInsightsWebTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApplicationInsightsWebTestResource> GetApplicationInsightsWebTests(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebTests(cancellationToken);
-        }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-        /// <summary>
-        /// Get all private workbooks defined within a specified subscription and category.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/myWorkbooks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MyWorkbooks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="category"> Category of workbook to return. </param>
-        /// <param name="tags"> Tags presents on each workbook returned. </param>
-        /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MyWorkbookResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MyWorkbookResource> GetMyWorkbooksAsync(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMyWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all private workbooks defined within a specified subscription and category.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/myWorkbooks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MyWorkbooks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="category"> Category of workbook to return. </param>
-        /// <param name="tags"> Tags presents on each workbook returned. </param>
-        /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MyWorkbookResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MyWorkbookResource> GetMyWorkbooks(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMyWorkbooks(category, tags, canFetchContent, cancellationToken);
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsWebTests(cancellationToken);
         }
 
         /// <summary>
@@ -667,17 +722,32 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWorkbooks(WorkbookCategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="category"> Category of workbook to return. </param>
         /// <param name="tags"> Tags presents on each workbook returned. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkbookResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkbookResource> GetWorkbooksAsync(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ApplicationInsightsWorkbookResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApplicationInsightsWorkbookResource> GetApplicationInsightsWorkbooksAsync(this SubscriptionResource subscriptionResource, WorkbookCategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
         }
 
         /// <summary>
@@ -691,17 +761,32 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsWorkbooks(WorkbookCategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="category"> Category of workbook to return. </param>
         /// <param name="tags"> Tags presents on each workbook returned. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkbookResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkbookResource> GetWorkbooks(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApplicationInsightsWorkbookResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApplicationInsightsWorkbookResource> GetApplicationInsightsWorkbooks(this SubscriptionResource subscriptionResource, WorkbookCategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWorkbooks(category, tags, canFetchContent, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsWorkbooks(category, tags, canFetchContent, cancellationToken);
         }
     }
 }

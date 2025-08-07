@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
+    /// <summary>
+    /// Protocol this rule will use when forwarding traffic to backends.
+    /// Serialized Name: ForwardingProtocol
+    /// </summary>
     public readonly partial struct ForwardingProtocol : IEquatable<ForwardingProtocol>
     {
         private readonly string _value;
@@ -26,17 +29,26 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HttpsOnlyValue = "HttpsOnly";
         private const string MatchRequestValue = "MatchRequest";
 
-        /// <summary> HttpOnly. </summary>
+        /// <summary>
+        /// HttpOnly
+        /// Serialized Name: ForwardingProtocol.HttpOnly
+        /// </summary>
         public static ForwardingProtocol HttpOnly { get; } = new ForwardingProtocol(HttpOnlyValue);
-        /// <summary> HttpsOnly. </summary>
+        /// <summary>
+        /// HttpsOnly
+        /// Serialized Name: ForwardingProtocol.HttpsOnly
+        /// </summary>
         public static ForwardingProtocol HttpsOnly { get; } = new ForwardingProtocol(HttpsOnlyValue);
-        /// <summary> MatchRequest. </summary>
+        /// <summary>
+        /// MatchRequest
+        /// Serialized Name: ForwardingProtocol.MatchRequest
+        /// </summary>
         public static ForwardingProtocol MatchRequest { get; } = new ForwardingProtocol(MatchRequestValue);
         /// <summary> Determines if two <see cref="ForwardingProtocol"/> values are the same. </summary>
         public static bool operator ==(ForwardingProtocol left, ForwardingProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForwardingProtocol"/> values are not the same. </summary>
         public static bool operator !=(ForwardingProtocol left, ForwardingProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ForwardingProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ForwardingProtocol"/>. </summary>
         public static implicit operator ForwardingProtocol(string value) => new ForwardingProtocol(value);
 
         /// <inheritdoc />
@@ -47,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

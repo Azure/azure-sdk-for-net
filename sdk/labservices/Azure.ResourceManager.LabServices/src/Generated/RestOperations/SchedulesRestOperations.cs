@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.LabServices.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.LabServices
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByLabRequestUri(string subscriptionId, string resourceGroupName, string labName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/schedules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByLabRequest(string subscriptionId, string resourceGroupName, string labName, string filter)
@@ -83,7 +101,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedSchedules value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedSchedules.DeserializePagedSchedules(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,13 +131,29 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedSchedules value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedSchedules.DeserializePagedSchedules(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string labName, string scheduleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/schedules/", false);
+            uri.AppendPath(scheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string labName, string scheduleName)
@@ -166,7 +200,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabServicesScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabServicesScheduleData.DeserializeLabServicesScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -199,7 +233,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabServicesScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabServicesScheduleData.DeserializeLabServicesScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -208,6 +242,22 @@ namespace Azure.ResourceManager.LabServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string labName, string scheduleName, LabServicesScheduleData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/schedules/", false);
+            uri.AppendPath(scheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string scheduleName, LabServicesScheduleData data)
@@ -230,7 +280,7 @@ namespace Azure.ResourceManager.LabServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -261,7 +311,7 @@ namespace Azure.ResourceManager.LabServices
                 case 201:
                     {
                         LabServicesScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabServicesScheduleData.DeserializeLabServicesScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -295,13 +345,29 @@ namespace Azure.ResourceManager.LabServices
                 case 201:
                     {
                         LabServicesScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabServicesScheduleData.DeserializeLabServicesScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string labName, string scheduleName, LabServicesSchedulePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/schedules/", false);
+            uri.AppendPath(scheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string scheduleName, LabServicesSchedulePatch patch)
@@ -324,7 +390,7 @@ namespace Azure.ResourceManager.LabServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -354,7 +420,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabServicesScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabServicesScheduleData.DeserializeLabServicesScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -387,13 +453,29 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabServicesScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabServicesScheduleData.DeserializeLabServicesScheduleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string labName, string scheduleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/schedules/", false);
+            uri.AppendPath(scheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string labName, string scheduleName)
@@ -474,6 +556,14 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
+        internal RequestUriBuilder CreateListByLabNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string labName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByLabNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string labName, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -511,7 +601,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedSchedules value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PagedSchedules.DeserializePagedSchedules(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -543,7 +633,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         PagedSchedules value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PagedSchedules.DeserializePagedSchedules(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

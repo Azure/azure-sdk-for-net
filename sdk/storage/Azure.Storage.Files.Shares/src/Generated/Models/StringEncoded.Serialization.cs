@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 encoded = (bool?)encodedAttribute;
             }
-            content = element.Value;
+            content = (string)element;
             return new StringEncoded(encoded, content);
         }
     }

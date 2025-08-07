@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -33,8 +32,22 @@ namespace Azure.ResourceManager.DnsResolver
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-07-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, DnsForwardingRulesetData data, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string rulesetName, DnsForwardingRulesetData data, string ifMatch, string ifNoneMatch)
@@ -63,14 +76,14 @@ namespace Azure.ResourceManager.DnsResolver
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates or updates a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
@@ -100,7 +113,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Creates or updates a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
@@ -129,6 +142,20 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, DnsForwardingRulesetPatch patch, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string rulesetName, DnsForwardingRulesetPatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -151,14 +178,14 @@ namespace Azure.ResourceManager.DnsResolver
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Updates a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="patch"> Parameters supplied to the Update operation. </param>
@@ -186,7 +213,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Updates a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="patch"> Parameters supplied to the Update operation. </param>
@@ -211,6 +238,20 @@ namespace Azure.ResourceManager.DnsResolver
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string rulesetName, string ifMatch)
@@ -238,7 +279,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes a DNS forwarding ruleset. WARNING: This operation cannot be undone. All forwarding rules within the ruleset will be deleted. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
@@ -265,7 +306,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes a DNS forwarding ruleset. WARNING: This operation cannot be undone. All forwarding rules within the ruleset will be deleted. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
@@ -291,6 +332,20 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string rulesetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string rulesetName)
         {
             var message = _pipeline.CreateMessage();
@@ -312,7 +367,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Gets a DNS forwarding ruleset properties. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -331,7 +386,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -343,7 +398,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Gets a DNS forwarding ruleset properties. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -362,7 +417,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -371,6 +426,23 @@ namespace Azure.ResourceManager.DnsResolver
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, int? top)
@@ -397,7 +469,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding rulesets within a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -415,7 +487,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsForwardingRulesetListResult.DeserializeDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -425,7 +497,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding rulesets within a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -443,13 +515,28 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsForwardingRulesetListResult.DeserializeDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, int? top)
@@ -474,7 +561,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -490,7 +577,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsForwardingRulesetListResult.DeserializeDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -500,7 +587,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -516,13 +603,32 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsForwardingRulesetListResult.DeserializeDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVirtualNetworkRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
+            uri.AppendPath(virtualNetworkName, true);
+            uri.AppendPath("/listDnsForwardingRulesets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByVirtualNetworkRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, int? top)
@@ -551,7 +657,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -571,7 +677,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         VirtualNetworkDnsForwardingRulesetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkDnsForwardingRulesetListResult.DeserializeVirtualNetworkDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -581,7 +687,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -601,13 +707,21 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         VirtualNetworkDnsForwardingRulesetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkDnsForwardingRulesetListResult.DeserializeVirtualNetworkDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, int? top)
@@ -626,7 +740,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding rulesets within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -645,7 +759,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsForwardingRulesetListResult.DeserializeDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -656,7 +770,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding rulesets within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -675,13 +789,21 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsForwardingRulesetListResult.DeserializeDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, int? top)
@@ -700,7 +822,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -717,7 +839,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsForwardingRulesetListResult.DeserializeDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -728,7 +850,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -745,13 +867,21 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         DnsForwardingRulesetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsForwardingRulesetListResult.DeserializeDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVirtualNetworkNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string virtualNetworkName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByVirtualNetworkNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualNetworkName, int? top)
@@ -770,7 +900,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -791,7 +921,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         VirtualNetworkDnsForwardingRulesetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualNetworkDnsForwardingRulesetListResult.DeserializeVirtualNetworkDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -802,7 +932,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -823,7 +953,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                     {
                         VirtualNetworkDnsForwardingRulesetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualNetworkDnsForwardingRulesetListResult.DeserializeVirtualNetworkDnsForwardingRulesetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

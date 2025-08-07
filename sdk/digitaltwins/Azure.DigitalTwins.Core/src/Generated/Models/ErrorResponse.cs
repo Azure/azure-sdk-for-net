@@ -6,17 +6,16 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Error response. </summary>
     internal partial class ErrorResponse
     {
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
         /// <param name="error"> The error details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal ErrorResponse(Error error)
+        internal ErrorResponse(ErrorInformation error)
         {
             Argument.AssertNotNull(error, nameof(error));
 
@@ -24,6 +23,6 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary> The error details. </summary>
-        public Error Error { get; }
+        public ErrorInformation Error { get; }
     }
 }

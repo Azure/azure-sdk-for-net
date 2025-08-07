@@ -75,7 +75,7 @@ if ($ChangeLogEntries.Contains($Version))
 {
     if ($ChangeLogEntries[$Version].ReleaseStatus -eq $ReleaseStatus)
     {
-        LogDebug "Version [$Version] is already present in change log with specificed ReleaseStatus [$ReleaseStatus]. No Change made."
+        LogDebug "Version [$Version] is already present in change log with specified ReleaseStatus [$ReleaseStatus]. No Change made."
         exit(0)
     }
 
@@ -102,7 +102,7 @@ LogDebug "The latest release note entry in the changelog is for version [$($Late
 
 $LatestsSorted = [AzureEngSemanticVersion]::SortVersionStrings(@($LatestVersion, $Version))
 if ($LatestsSorted[0] -ne $Version) {
-    LogWarning "Version [$Version] is older than the latestversion [$LatestVersion] in the changelog. Consider using a more recent version."
+    LogWarning "Version [$Version] is older than the latest version [$LatestVersion] in the changelog. Consider using a more recent version."
 }
 
 if ($ReplaceLatestEntryTitle)

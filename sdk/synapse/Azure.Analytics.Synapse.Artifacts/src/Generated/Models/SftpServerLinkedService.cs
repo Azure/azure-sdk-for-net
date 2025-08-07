@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A linked service for an SSH File Transfer Protocol (SFTP) server. </summary>
     public partial class SftpServerLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SftpServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpServerLinkedService"/>. </summary>
         /// <param name="host"> The SFTP server host name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public SftpServerLinkedService(object host)
@@ -25,8 +24,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Sftp";
         }
 
-        /// <summary> Initializes a new instance of SftpServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpServerLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="skipHostKeyValidation"> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="hostKeyFingerprint"> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </param>
-        internal SftpServerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object port, SftpAuthenticationType? authenticationType, object userName, SecretBase password, object encryptedCredential, object privateKeyPath, SecretBase privateKeyContent, SecretBase passPhrase, object skipHostKeyValidation, object hostKeyFingerprint) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SftpServerLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object port, SftpAuthenticationType? authenticationType, object userName, SecretBase password, object encryptedCredential, object privateKeyPath, SecretBase privateKeyContent, SecretBase passPhrase, object skipHostKeyValidation, object hostKeyFingerprint) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;

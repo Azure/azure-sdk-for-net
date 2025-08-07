@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Useful links for service health event. </summary>
     public partial class ResourceHealthEventLink
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventLink. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventLink"/>. </summary>
         internal ResourceHealthEventLink()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventLink"/>. </summary>
         /// <param name="linkType"> Type of link. </param>
         /// <param name="displayText"> Display text of link. </param>
         /// <param name="extensionName"> It provides the name of portal extension to produce link for given service health event. </param>
         /// <param name="bladeName"> It provides the name of portal extension blade to produce link for given service health event. </param>
         /// <param name="parameters"> It provides a map of parameter name and value for portal extension blade to produce lik for given service health event. </param>
-        internal ResourceHealthEventLink(ResourceHealthEventLinkTypeValue? linkType, ResourceHealthEventLinkDisplayText displayText, string extensionName, string bladeName, BinaryData parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventLink(ResourceHealthEventLinkTypeValue? linkType, ResourceHealthEventLinkDisplayText displayText, string extensionName, string bladeName, BinaryData parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinkType = linkType;
             DisplayText = displayText;
             ExtensionName = extensionName;
             BladeName = bladeName;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of link. </summary>
@@ -46,7 +81,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

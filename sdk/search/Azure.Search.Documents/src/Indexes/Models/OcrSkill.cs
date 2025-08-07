@@ -14,8 +14,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A value indicating to turn orientation detection on or not. Default is <c>false</c>. </summary>
         public bool? ShouldDetectOrientation { get; set; } = false;
-
-        /// <summary> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is <see cref="Models.LineEnding.Space"/>. </summary>
-        public LineEnding? LineEnding { get; set; } = Models.LineEnding.Space;
     }
 }

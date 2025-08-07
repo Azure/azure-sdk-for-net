@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,21 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure Workload SQL Auto Protection intent item. </summary>
     public partial class WorkloadSqlAutoProtectionIntent : WorkloadAutoProtectionIntent
     {
-        /// <summary> Initializes a new instance of WorkloadSqlAutoProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlAutoProtectionIntent"/>. </summary>
         public WorkloadSqlAutoProtectionIntent()
         {
             ProtectionIntentItemType = ProtectionIntentItemType.AzureWorkloadSqlAutoProtectionIntent;
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlAutoProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlAutoProtectionIntent"/>. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
         /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workloadItemType"> Workload item type of the item for which intent is to be set. </param>
-        internal WorkloadSqlAutoProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, WorkloadItemType? workloadItemType) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState)
+        internal WorkloadSqlAutoProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, WorkloadItemType? workloadItemType) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState, serializedAdditionalRawData)
         {
             WorkloadItemType = workloadItemType;
             ProtectionIntentItemType = protectionIntentItemType;

@@ -15,8 +15,8 @@ namespace Azure.AI.Personalizer
     {
         internal static PersonalizerModelProperties DeserializePersonalizerModelProperties(JsonElement element)
         {
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("creationTime"))
@@ -40,7 +40,7 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerModelProperties(Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime));
+            return new PersonalizerModelProperties(creationTime, lastModifiedTime);
         }
     }
 }

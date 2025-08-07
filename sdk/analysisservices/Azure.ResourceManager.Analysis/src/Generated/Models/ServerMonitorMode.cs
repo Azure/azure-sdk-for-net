@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public static bool operator ==(ServerMonitorMode left, ServerMonitorMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerMonitorMode"/> values are not the same. </summary>
         public static bool operator !=(ServerMonitorMode left, ServerMonitorMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServerMonitorMode"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="ServerMonitorMode"/>. </summary>
         public static implicit operator ServerMonitorMode(int value) => new ServerMonitorMode(value);
 
         /// <inheritdoc />

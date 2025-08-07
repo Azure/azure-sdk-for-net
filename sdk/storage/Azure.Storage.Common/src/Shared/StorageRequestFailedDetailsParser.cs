@@ -27,10 +27,13 @@ namespace Azure.Core.Pipeline
                     if (response.Headers.ContentType.Contains(Constants.ContentTypeApplicationXml))
                     {
                         XDocument xml = XDocument.Load(contentStream);
-                        var errorCode = xml.Root!.Element(Constants.ErrorCode)!.Value;
-                        var message = xml.Root.Element(Constants.ErrorMessage)!.Value;
-                        data = new Dictionary<string, string>();
+                        var errorCode = xml.Root!.Element(Constants.ErrorCode)?.Value ??
+                            xml.Root.Element(Constants.ErrorCodeLower)?.Value;
+                        var message = xml.Root.Element(Constants.ErrorMessage)?.Value ??
+                            xml.Root.Element(Constants.ErrorMessageLower)?.Value;
+                        var headerName = xml.Root!.Element(Constants.HeaderName)?.Value;
 
+                        data = new Dictionary<string, string>();
                         foreach (XElement element in xml.Root.Elements())
                         {
                             switch (element.Name.LocalName)
@@ -44,7 +47,18 @@ namespace Azure.Core.Pipeline
                             }
                         }
 
-                        error = new ResponseError(errorCode, message);
+                        // Clarify exception message if customer has send an x-ms-vesion not enabled on their storage account.
+                        if (errorCode == Constants.ErrorCodes.InvalidHeaderValue
+                            && headerName != null
+                            && headerName == Constants.HeaderNames.Version)
+                        {
+                            error = new ResponseError(errorCode, Constants.Errors.InvalidVersionHeaderMessage);
+                        }
+                        else
+                        {
+                            error = new ResponseError(errorCode, message);
+                        }
+
                         return true;
                     }
 

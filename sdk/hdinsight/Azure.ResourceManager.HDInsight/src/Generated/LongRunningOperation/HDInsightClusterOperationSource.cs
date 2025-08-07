@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HDInsight
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.HDInsight
 
         HDInsightClusterResource IOperationSource<HDInsightClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement);
+            var data = ModelReaderWriter.Read<HDInsightClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContext.Default);
             return new HDInsightClusterResource(_client, data);
         }
 
         async ValueTask<HDInsightClusterResource> IOperationSource<HDInsightClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement);
-            return new HDInsightClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<HDInsightClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContext.Default);
+            return await Task.FromResult(new HDInsightClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

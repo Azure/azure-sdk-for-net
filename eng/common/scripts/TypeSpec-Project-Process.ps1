@@ -14,7 +14,7 @@ param (
 
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
 function CreateUpdate-TspLocation([System.Object]$tspConfig, [string]$TypeSpecProjectDirectory, [string]$CommitHash, [string]$repo, [string]$repoRoot, [ref]$isNewSdkProject) {
   $additionalDirs = @()

@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Set the access level and network port settings for SQL Server. </summary>
     public partial class SqlConnectivityUpdateSettings
     {
-        /// <summary> Initializes a new instance of SqlConnectivityUpdateSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlConnectivityUpdateSettings"/>. </summary>
         public SqlConnectivityUpdateSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlConnectivityUpdateSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectivityUpdateSettings"/>. </summary>
         /// <param name="connectivityType"> SQL Server connectivity option. </param>
         /// <param name="port"> SQL Server port. </param>
         /// <param name="sqlAuthUpdateUserName"> SQL Server sysadmin login to create. </param>
         /// <param name="sqlAuthUpdatePassword"> SQL Server sysadmin login password. </param>
-        internal SqlConnectivityUpdateSettings(SqlServerConnectivityType? connectivityType, int? port, string sqlAuthUpdateUserName, string sqlAuthUpdatePassword)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlConnectivityUpdateSettings(SqlServerConnectivityType? connectivityType, int? port, string sqlAuthUpdateUserName, string sqlAuthUpdatePassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectivityType = connectivityType;
             Port = port;
             SqlAuthUpdateUserName = sqlAuthUpdateUserName;
             SqlAuthUpdatePassword = sqlAuthUpdatePassword;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SQL Server connectivity option. </summary>

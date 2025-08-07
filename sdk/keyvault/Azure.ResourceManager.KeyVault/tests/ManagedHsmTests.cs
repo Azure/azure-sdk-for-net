@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             Assert.AreEqual(expectedResourceId, managedHsmData.Id.ToString());
             Assert.AreEqual(expectedLocation.ToString(), managedHsmData.Location.ToString());
-            Assert.AreEqual(expectedTenantId, managedHsmData.Properties.TenantId);
+            Assert.AreEqual(Mode == RecordedTestMode.Live ? expectedTenantId : Guid.Empty, managedHsmData.Properties.TenantId);
             Assert.AreEqual(expectedVaultName, managedHsmData.Name);
             Assert.AreEqual(expectedSkuFamily, managedHsmData.Sku.Family);
             Assert.AreEqual(expectedSkuName, managedHsmData.Sku.Name);

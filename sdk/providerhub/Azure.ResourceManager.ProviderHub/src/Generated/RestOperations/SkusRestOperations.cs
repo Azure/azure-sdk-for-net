@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ProviderHub.Models;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.ProviderHub
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-11-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string providerNamespace, string resourceType, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string providerNamespace, string resourceType, string sku)
@@ -81,7 +96,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -114,7 +129,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -123,6 +138,22 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data)
@@ -145,7 +176,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -175,7 +206,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -208,13 +239,29 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string providerNamespace, string resourceType, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string providerNamespace, string resourceType, string sku)
@@ -293,6 +340,24 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        internal RequestUriBuilder CreateGetNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
         {
             var message = _pipeline.CreateMessage();
@@ -341,7 +406,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -376,7 +441,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -385,6 +450,24 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data)
@@ -409,7 +492,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -441,7 +524,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -476,13 +559,31 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku)
@@ -567,6 +668,26 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        internal RequestUriBuilder CreateGetNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
         {
             var message = _pipeline.CreateMessage();
@@ -619,7 +740,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -656,7 +777,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -665,6 +786,26 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data)
@@ -691,7 +832,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -725,7 +866,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -762,13 +903,33 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku)
@@ -859,6 +1020,28 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        internal RequestUriBuilder CreateGetNestedResourceTypeThirdRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeThird, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetNestedResourceTypeThirdRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku)
         {
             var message = _pipeline.CreateMessage();
@@ -915,7 +1098,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -954,7 +1137,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -963,6 +1146,28 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateNestedResourceTypeThirdRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, ResourceTypeSkuData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeThird, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateNestedResourceTypeThirdRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, ResourceTypeSkuData data)
@@ -991,7 +1196,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1027,7 +1232,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1066,13 +1271,35 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuData.DeserializeResourceTypeSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteNestedResourceTypeThirdRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeThird, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(sku, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteNestedResourceTypeThirdRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku)
@@ -1169,6 +1396,21 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsRequestUri(string subscriptionId, string providerNamespace, string resourceType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceTypeRegistrationsRequest(string subscriptionId, string providerNamespace, string resourceType)
         {
             var message = _pipeline.CreateMessage();
@@ -1210,7 +1452,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1239,13 +1481,30 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
@@ -1293,7 +1552,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1324,13 +1583,32 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeSecondRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeSecondRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond)
@@ -1382,7 +1660,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1415,13 +1693,34 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequestUri(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeFirst, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeSecond, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(nestedResourceTypeThird, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
@@ -1477,7 +1776,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1512,13 +1811,21 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceTypeRegistrationsNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType)
@@ -1557,7 +1864,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1588,13 +1895,21 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst)
@@ -1635,7 +1950,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1668,13 +1983,21 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeSecondNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeSecondNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond)
@@ -1717,7 +2040,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1752,13 +2075,21 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird)
@@ -1803,7 +2134,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1840,7 +2171,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceTypeSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceTypeSkuListResult.DeserializeResourceTypeSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

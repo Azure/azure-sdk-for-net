@@ -67,11 +67,11 @@ The Cancer Profiling model allows you to infer cancer attributes such as tumor s
 ### Cancer Profiling
 
 ```C# Snippet:HealthInsightsCancerProfilingClientInferCancerProfileAsync
-OncoPhenotypeResult oncoPhenotypeResult = default;
+OncoPhenotypeResults oncoResults = default;
 try
 {
-    Operation<OncoPhenotypeResult> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
-    oncoPhenotypeResult = operation.Value;
+    Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+    oncoResults = operation.Value;
 }
 catch (Exception ex)
 {
@@ -81,37 +81,25 @@ catch (Exception ex)
 ```
 ```C# Snippet:HealthInsightsCancerProfilingInferCancerProfileAsyncViewResults
 // View operation results
-if (oncoPhenotypeResult.Status == JobStatus.Succeeded)
+foreach (OncoPhenotypePatientResult patientResult in oncoResults.Patients)
 {
-    OncoPhenotypeResults oncoResults = oncoPhenotypeResult.Results;
-    foreach (OncoPhenotypePatientResult patientResult in oncoResults.Patients)
+    Console.WriteLine($"\n==== Inferences of Patient {patientResult.Id} ====");
+    foreach (OncoPhenotypeInference oncoInference in patientResult.Inferences)
     {
-        Console.WriteLine($"\n==== Inferences of Patient {patientResult.Id} ====");
-        foreach (OncoPhenotypeInference oncoInference in patientResult.Inferences)
+        Console.WriteLine($"\n=== Clinical Type: {oncoInference.Type.ToString()}  Value: {oncoInference.Value}   ConfidenceScore: {oncoInference.ConfidenceScore} ===");
+        foreach (InferenceEvidence evidence in oncoInference.Evidence)
         {
-            Console.WriteLine($"\n=== Clinical Type: {oncoInference.Type.ToString()}  Value: {oncoInference.Value}   ConfidenceScore: {oncoInference.ConfidenceScore} ===");
-            foreach (InferenceEvidence evidence in oncoInference.Evidence)
+            if (evidence.PatientDataEvidence != null)
             {
-                if (evidence.PatientDataEvidence != null)
-                {
-                    var dataEvidence = evidence.PatientDataEvidence;
-                    Console.WriteLine($"Evidence {dataEvidence.Id} {dataEvidence.Offset} {dataEvidence.Length} {dataEvidence.Text}");
-                }
-                if (evidence.PatientInfoEvidence != null)
-                {
-                    var infoEvidence = evidence.PatientInfoEvidence;
-                    Console.WriteLine($"Evidence {infoEvidence.System} {infoEvidence.Code} {infoEvidence.Name} {infoEvidence.Value}");
-                }
+                var dataEvidence = evidence.PatientDataEvidence;
+                Console.WriteLine($"Evidence {dataEvidence.Id} {dataEvidence.Offset} {dataEvidence.Length} {dataEvidence.Text}");
+            }
+            if (evidence.PatientInfoEvidence != null)
+            {
+                var infoEvidence = evidence.PatientInfoEvidence;
+                Console.WriteLine($"Evidence {infoEvidence.System} {infoEvidence.Code} {infoEvidence.Name} {infoEvidence.Value}");
             }
         }
-    }
-}
-else
-{
-    IReadOnlyList<ResponseError> oncoErrors = oncoPhenotypeResult.Errors;
-    foreach (ResponseError error in oncoErrors)
-    {
-        Console.WriteLine($"{error.Code} : {error.Message}");
     }
 }
 ```
@@ -134,7 +122,7 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 ## Additional documentation
 
-For more extensive documentation on Azure Health Insights Cancer Profiling, see the [Cancer Profiling documentation][cancer_profiling_docs] on docs.microsoft.com.
+For more extensive documentation on Azure Health Insights Cancer Profiling, see the [Cancer Profiling documentation][cancer_profiling_docs] on learn.microsoft.com.
 
 ## Contributing
 
@@ -152,7 +140,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cancer_profiling_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/src/Generated/CancerProfilingClient.cs
 [samples_location]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/samples
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesHealthInsights

@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Class  representing the video's rate control. </summary>
     public partial class RateControl
     {
-        /// <summary> Initializes a new instance of RateControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="RateControl"/>. </summary>
         public RateControl()
         {
         }
 
-        /// <summary> Initializes a new instance of RateControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="RateControl"/>. </summary>
         /// <param name="bitRateLimit"> the maximum output bitrate in kbps. </param>
         /// <param name="encodingInterval"> Interval at which images are encoded and transmitted. </param>
         /// <param name="frameRateLimit"> Maximum output framerate in fps. </param>

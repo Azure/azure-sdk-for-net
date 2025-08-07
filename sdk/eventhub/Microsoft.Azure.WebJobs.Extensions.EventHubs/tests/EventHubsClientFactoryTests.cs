@@ -87,6 +87,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
+        public void FailsWhenConnectionStringUsedAsName()
+        {
+            EventHubOptions options = new EventHubOptions();
+
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", ConnectionString));
+            var factory = ConfigurationUtilities.CreateFactory(configuration, options);
+
+            var errorMessage = Assert.Throws<InvalidOperationException>(() => factory.GetEventHubProducerClient("k1", ConnectionString)).Message;
+            StringAssert.DoesNotContain(ConnectionString, errorMessage);
+            StringAssert.Contains("REDACTED", errorMessage);
+        }
+
+        [Test]
         public void ConsumersAndProducersAreCached()
         {
             EventHubOptions options = new EventHubOptions();

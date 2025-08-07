@@ -14,8 +14,8 @@ namespace Azure.AI.Personalizer.Models
     {
         internal static InternalError DeserializeInternalError(JsonElement element)
         {
-            Optional<string> code = default;
-            Optional<InternalError> innererror = default;
+            string code = default;
+            InternalError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -34,7 +34,7 @@ namespace Azure.AI.Personalizer.Models
                     continue;
                 }
             }
-            return new InternalError(code.Value, innererror.Value);
+            return new InternalError(code, innererror);
         }
     }
 }

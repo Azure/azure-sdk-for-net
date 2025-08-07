@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkBatchJobState. </summary>
     public partial class SparkBatchJobState
     {
-        /// <summary> Initializes a new instance of SparkBatchJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJobState"/>. </summary>
         internal SparkBatchJobState()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkBatchJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJobState"/>. </summary>
         /// <param name="notStartedAt"> the time that at which "not_started" livy state was first seen. </param>
         /// <param name="startingAt"> the time that at which "starting" livy state was first seen. </param>
         /// <param name="runningAt"> the time that at which "running" livy state was first seen. </param>

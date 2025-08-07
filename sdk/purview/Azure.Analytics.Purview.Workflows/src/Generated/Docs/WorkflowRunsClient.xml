@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetWorkflowRunsAsync(string,string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},int?,RequestContext)">
+      <example>
+This sample shows how to call GetWorkflowRunsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetWorkflowRunsAsync(null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("workflowId").ToString());
+    Console.WriteLine(result.GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("requestor").ToString());
+    Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+}
+]]></code>
+This sample shows how to call GetWorkflowRunsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetWorkflowRunsAsync("<viewMode>", "1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, new string[] { "<requestors>" }, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("workflowId").ToString());
+    Console.WriteLine(result.GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("requestor").ToString());
+    Console.WriteLine(result.GetProperty("userRequestId").ToString());
+    Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("endTime").ToString());
+    Console.WriteLine(result.GetProperty("cancelTime").ToString());
+    Console.WriteLine(result.GetProperty("cancelComment").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetWorkflowRuns(string,string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},int?,RequestContext)">
+      <example>
+This sample shows how to call GetWorkflowRuns and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetWorkflowRuns(null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("workflowId").ToString());
+    Console.WriteLine(result.GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("requestor").ToString());
+    Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+}
+]]></code>
+This sample shows how to call GetWorkflowRuns with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunsClient client = new WorkflowRunsClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetWorkflowRuns("<viewMode>", "1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, new string[] { "<requestors>" }, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("workflowId").ToString());
+    Console.WriteLine(result.GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("requestor").ToString());
+    Console.WriteLine(result.GetProperty("userRequestId").ToString());
+    Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("endTime").ToString());
+    Console.WriteLine(result.GetProperty("cancelTime").ToString());
+    Console.WriteLine(result.GetProperty("cancelComment").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

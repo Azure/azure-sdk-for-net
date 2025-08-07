@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -454,7 +454,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInsightsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -511,7 +511,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInsightsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -673,35 +673,35 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxInsightEndDateTime", maxInsightEndDateTime.Value, "O", true);
             }
-            if (measurementFilters != null && Optional.IsCollectionDefined(measurementFilters))
+            if (measurementFilters != null && !(measurementFilters is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in measurementFilters)
                 {
                     uri.AppendQuery("measurementFilters", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

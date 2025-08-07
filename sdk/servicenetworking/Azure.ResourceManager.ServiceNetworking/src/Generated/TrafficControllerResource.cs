@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceNetworking.Models;
 
@@ -21,13 +19,16 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
     /// A Class representing a TrafficController along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TrafficControllerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTrafficControllerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetTrafficController method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficControllerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTrafficControllerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetTrafficController method.
     /// </summary>
     public partial class TrafficControllerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TrafficControllerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="trafficControllerName"> The trafficControllerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string trafficControllerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}";
@@ -38,12 +39,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         private readonly TrafficControllerInterfaceRestOperations _trafficControllerTrafficControllerInterfaceRestClient;
         private readonly TrafficControllerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceNetworking/trafficControllers";
+
         /// <summary> Initializes a new instance of the <see cref="TrafficControllerResource"/> class for mocking. </summary>
         protected TrafficControllerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TrafficControllerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficControllerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TrafficControllerResource(ArmClient client, TrafficControllerData data) : this(client, data.Id)
@@ -64,9 +68,6 @@ namespace Azure.ResourceManager.ServiceNetworking
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceNetworking/trafficControllers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ServiceNetworking
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AssociationResources in the TrafficController. </summary>
-        /// <returns> An object representing collection of AssociationResources and their operations over a AssociationResource. </returns>
-        public virtual AssociationCollection GetAssociations()
+        /// <summary> Gets a collection of TrafficControllerAssociationResources in the TrafficController. </summary>
+        /// <returns> An object representing collection of TrafficControllerAssociationResources and their operations over a TrafficControllerAssociationResource. </returns>
+        public virtual TrafficControllerAssociationCollection GetTrafficControllerAssociations()
         {
-            return GetCachedClient(Client => new AssociationCollection(Client, Id));
+            return GetCachedClient(client => new TrafficControllerAssociationCollection(client, Id));
         }
 
         /// <summary>
@@ -105,18 +106,26 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AssociationsInterface_Get</description>
+        /// <description>Association_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerAssociationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associationName"> Name of Association. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AssociationResource>> GetAssociationAsync(string associationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficControllerAssociationResource>> GetTrafficControllerAssociationAsync(string associationName, CancellationToken cancellationToken = default)
         {
-            return await GetAssociations().GetAsync(associationName, cancellationToken).ConfigureAwait(false);
+            return await GetTrafficControllerAssociations().GetAsync(associationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -128,48 +137,33 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AssociationsInterface_Get</description>
+        /// <description>Association_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerAssociationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="associationName"> Name of Association. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AssociationResource> GetAssociation(string associationName, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficControllerAssociationResource> GetTrafficControllerAssociation(string associationName, CancellationToken cancellationToken = default)
         {
-            return GetAssociations().Get(associationName, cancellationToken);
+            return GetTrafficControllerAssociations().Get(associationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FrontendResources in the TrafficController. </summary>
-        /// <returns> An object representing collection of FrontendResources and their operations over a FrontendResource. </returns>
-        public virtual FrontendCollection GetFrontends()
+        /// <summary> Gets a collection of TrafficControllerFrontendResources in the TrafficController. </summary>
+        /// <returns> An object representing collection of TrafficControllerFrontendResources and their operations over a TrafficControllerFrontendResource. </returns>
+        public virtual TrafficControllerFrontendCollection GetTrafficControllerFrontends()
         {
-            return GetCachedClient(Client => new FrontendCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a Frontend
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FrontendsInterface_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="frontendName"> Frontends. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FrontendResource>> GetFrontendAsync(string frontendName, CancellationToken cancellationToken = default)
-        {
-            return await GetFrontends().GetAsync(frontendName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new TrafficControllerFrontendCollection(client, Id));
         }
 
         /// <summary>
@@ -181,18 +175,126 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontendsInterface_Get</description>
+        /// <description>Frontend_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerFrontendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontendName"> Frontends. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FrontendResource> GetFrontend(string frontendName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficControllerFrontendResource>> GetTrafficControllerFrontendAsync(string frontendName, CancellationToken cancellationToken = default)
         {
-            return GetFrontends().Get(frontendName, cancellationToken);
+            return await GetTrafficControllerFrontends().GetAsync(frontendName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Frontend
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Frontend_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerFrontendResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TrafficControllerFrontendResource> GetTrafficControllerFrontend(string frontendName, CancellationToken cancellationToken = default)
+        {
+            return GetTrafficControllerFrontends().Get(frontendName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApplicationGatewayForContainersSecurityPolicyResources in the TrafficController. </summary>
+        /// <returns> An object representing collection of ApplicationGatewayForContainersSecurityPolicyResources and their operations over a ApplicationGatewayForContainersSecurityPolicyResource. </returns>
+        public virtual ApplicationGatewayForContainersSecurityPolicyCollection GetApplicationGatewayForContainersSecurityPolicies()
+        {
+            return GetCachedClient(client => new ApplicationGatewayForContainersSecurityPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SecurityPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApplicationGatewayForContainersSecurityPolicyResource>> GetApplicationGatewayForContainersSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetApplicationGatewayForContainersSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SecurityPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApplicationGatewayForContainersSecurityPolicyResource> GetApplicationGatewayForContainersSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetApplicationGatewayForContainersSecurityPolicies().Get(securityPolicyName, cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +306,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +346,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,7 +386,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Delete</description>
+        /// <description>TrafficController_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,7 +428,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Delete</description>
+        /// <description>TrafficController_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +470,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Update</description>
+        /// <description>TrafficController_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,7 +512,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Update</description>
+        /// <description>TrafficController_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,7 +554,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -458,7 +616,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,7 +678,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -561,7 +735,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -610,7 +792,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -662,7 +852,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

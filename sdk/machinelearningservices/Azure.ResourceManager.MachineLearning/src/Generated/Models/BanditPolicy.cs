@@ -5,33 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an early termination policy based on slack criteria, and a frequency and delay interval for evaluation. </summary>
     public partial class BanditPolicy : MachineLearningEarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of BanditPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BanditPolicy"/>. </summary>
         public BanditPolicy()
         {
             PolicyType = EarlyTerminationPolicyType.Bandit;
         }
 
-        /// <summary> Initializes a new instance of BanditPolicy. </summary>
-        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
-        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <summary> Initializes a new instance of <see cref="BanditPolicy"/>. </summary>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>
-        /// <param name="slackAmount"> Absolute distance allowed from the best performing run. </param>
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="slackFactor"> Ratio of the allowed distance from the best performing run. </param>
-        internal BanditPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, float? slackAmount, float? slackFactor) : base(delayEvaluation, evaluationInterval, policyType)
+        /// <param name="slackAmount"> Absolute distance allowed from the best performing run. </param>
+        internal BanditPolicy(EarlyTerminationPolicyType policyType, int? evaluationInterval, int? delayEvaluation, IDictionary<string, BinaryData> serializedAdditionalRawData, float? slackFactor, float? slackAmount) : base(policyType, evaluationInterval, delayEvaluation, serializedAdditionalRawData)
         {
-            SlackAmount = slackAmount;
             SlackFactor = slackFactor;
+            SlackAmount = slackAmount;
             PolicyType = policyType;
         }
 
-        /// <summary> Absolute distance allowed from the best performing run. </summary>
-        public float? SlackAmount { get; set; }
         /// <summary> Ratio of the allowed distance from the best performing run. </summary>
+        [WirePath("slackFactor")]
         public float? SlackFactor { get; set; }
+        /// <summary> Absolute distance allowed from the best performing run. </summary>
+        [WirePath("slackAmount")]
+        public float? SlackAmount { get; set; }
     }
 }

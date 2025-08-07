@@ -13,7 +13,6 @@ using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
-using System.Security.Policy;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -136,6 +135,87 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             Location = location
         };
+
+        protected static DeploymentStackData CreateRGDeploymentStackDataWithTemplate()
+        {
+            var data = new DeploymentStackData();
+
+            data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "Scenario",
+                    "DeploymentTemplates",
+                    $"rg-stack-template.json")));
+
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
+
+            data.ActionOnUnmanage = new ActionOnUnmanage()
+            {
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
+            };
+
+            data.BypassStackOutOfSyncError = false;
+
+            data.Parameters.Add("templateSpecName", new DeploymentParameter { Value = BinaryData.FromString("\"stacksTestTemplate4321\"") });
+
+            return data;
+        }
+
+        protected static DeploymentStackData CreateSubDeploymentStackDataWithTemplate(AzureLocation location) {
+            var data = new DeploymentStackData();
+
+            data.Location = location;
+
+            data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "Scenario",
+                    "DeploymentTemplates",
+                    $"sub-stack-template.json")));
+
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
+
+            data.ActionOnUnmanage = new ActionOnUnmanage()
+            {
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
+            };
+
+            data.BypassStackOutOfSyncError = false;
+
+            data.Parameters.Add("rgName", new DeploymentParameter { Value = BinaryData.FromString("\"stacksTestRG4321\"") } );
+
+            return data;
+        }
+
+        protected static DeploymentStackData CreateMGDeploymentStackDataWithTemplate(AzureLocation location)
+        {
+            var data = new DeploymentStackData();
+
+            data.Location = location;
+
+            data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "Scenario",
+                    "DeploymentTemplates",
+                    $"mg-stack-template.json")));
+
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
+
+            data.ActionOnUnmanage = new ActionOnUnmanage()
+            {
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
+            };
+
+            data.BypassStackOutOfSyncError = false;
+
+            data.Parameters.Add("message", new DeploymentParameter { Value = BinaryData.FromString("\"hello world\"") });
+
+            return data;
+        }
 
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
         {

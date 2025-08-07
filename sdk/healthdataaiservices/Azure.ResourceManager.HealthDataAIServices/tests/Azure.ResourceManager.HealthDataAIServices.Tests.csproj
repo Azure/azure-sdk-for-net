@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.HealthDataAIServices.csproj" />
+  </ItemGroup>
+</Project>

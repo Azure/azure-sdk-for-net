@@ -24,7 +24,7 @@ dotnet add package Azure.ResourceManager.Storage
 
 ### Prerequisites
 
-First, to install the [Microsoft Azure Identity](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet) package:
+First, to install the [Microsoft Azure Identity](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet) package:
 
 ```dotnetcli
 dotnet add package Azure.Identity
@@ -33,11 +33,11 @@ dotnet add package Azure.Identity
 Set up a way to authenticate to Microsoft Azure with Azure Identity.
 
 Some options are:
-- Through the [Azure CLI Sign in](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
-- Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
+- Through the [Azure CLI Sign in](https://learn.microsoft.com/cli/azure/authenticate-azure-cli).
+- Via [Visual Studio](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
 - Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
 
-More information and different authentication approaches using Microsoft Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+More information and different authentication approaches using Microsoft Azure Identity can be found in [this document](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
 ### Authenticate the Client
 
@@ -53,7 +53,7 @@ using Azure.ResourceManager;
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
-More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
+More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 
@@ -71,7 +71,7 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://git
 -   If you find a bug or have a suggestion, file an issue via [GitHub issues](https://github.com/Azure/azure-sdk-for-net/issues), and make sure you add the "Preview" label to the issue.
 -   If you need help, check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net)
     or ask new ones on StackOverflow using Azure and .NET tags.
--   If having trouble with authentication, go to [DefaultAzureCredential documentation](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
+-   If having trouble with authentication, go to [DefaultAzureCredential documentation](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
 
 
 ## Next steps

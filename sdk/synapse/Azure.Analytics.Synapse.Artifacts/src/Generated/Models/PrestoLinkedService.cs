@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Presto server linked service. </summary>
     public partial class PrestoLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of PrestoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
         /// <param name="host"> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </param>
         /// <param name="serverVersion"> The version of the Presto server. (i.e. 0.148-t). </param>
         /// <param name="catalog"> The catalog context for all request against the server. </param>
@@ -33,8 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Presto";
         }
 
-        /// <summary> Initializes a new instance of PrestoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="timeZoneID"> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value is the system time zone. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal PrestoLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object serverVersion, object catalog, object port, PrestoAuthenticationType authenticationType, object username, SecretBase password, object enableSsl, object trustedCertPath, object useSystemTrustStore, object allowHostNameCNMismatch, object allowSelfSignedServerCert, object timeZoneID, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal PrestoLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object serverVersion, object catalog, object port, PrestoAuthenticationType authenticationType, object username, SecretBase password, object enableSsl, object trustedCertPath, object useSystemTrustStore, object allowHostNameCNMismatch, object allowSelfSignedServerCert, object timeZoneID, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             ServerVersion = serverVersion;

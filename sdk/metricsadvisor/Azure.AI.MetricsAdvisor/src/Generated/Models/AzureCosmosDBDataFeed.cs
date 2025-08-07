@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureCosmosDBDataFeed. </summary>
     internal partial class AzureCosmosDBDataFeed : DataFeedDetail
     {
-        /// <summary> Initializes a new instance of AzureCosmosDBDataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBDataFeed"/>. </summary>
         /// <param name="dataFeedName"> data feed name. </param>
         /// <param name="granularityName"> granularity of the time series. </param>
         /// <param name="metrics"> measure list. </param>
@@ -31,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.AzureCosmosDb;
         }
 
-        /// <summary> Initializes a new instance of AzureCosmosDBDataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBDataFeed"/>. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>
         /// <param name="dataFeedName"> data feed name. </param>

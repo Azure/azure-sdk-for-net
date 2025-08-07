@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PostgreSql.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.PostgreSql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateExecuteRequestUri(string subscriptionId, PostgreSqlNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExecuteRequest(string subscriptionId, PostgreSqlNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -76,7 +86,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PostgreSqlNameAvailabilityResult.DeserializePostgreSqlNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +113,7 @@ namespace Azure.ResourceManager.PostgreSql
                 case 200:
                     {
                         PostgreSqlNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PostgreSqlNameAvailabilityResult.DeserializePostgreSqlNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

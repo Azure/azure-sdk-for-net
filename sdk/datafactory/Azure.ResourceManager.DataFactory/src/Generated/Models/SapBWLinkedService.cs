@@ -7,15 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SAP Business Warehouse Linked Service. </summary>
-    public partial class SapBWLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class SapBWLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SapBWLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapBWLinkedService"/>. </summary>
         /// <param name="server"> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </param>
         /// <param name="systemNumber"> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
         /// <param name="clientId"> Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
@@ -32,8 +31,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "SapBW";
         }
 
-        /// <summary> Initializes a new instance of SapBWLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapBWLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> Username to access the SAP BW server. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password to access the SAP BW server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SapBWLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapBWLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "SapBW";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapBWLinkedService"/> for deserialization. </summary>
+        internal SapBWLinkedService()
+        {
         }
 
         /// <summary> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </summary>
@@ -65,37 +70,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Username to access the SAP BW server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password to access the SAP BW server. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        public DataFactorySecret Password { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
     }
 }

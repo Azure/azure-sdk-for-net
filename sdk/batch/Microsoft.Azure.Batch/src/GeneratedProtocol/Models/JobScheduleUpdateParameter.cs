@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         public JobScheduleUpdateParameter()
         {
-            JobSpecification = new JobSpecification();
             CustomInit();
         }
 

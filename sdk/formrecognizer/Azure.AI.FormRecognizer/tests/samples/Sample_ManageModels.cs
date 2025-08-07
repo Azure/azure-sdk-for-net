@@ -19,12 +19,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            // Check number of custom models in the FormRecognizer account, and the maximum number of custom models that can be stored.
+            // Check number of custom models in the Form Recognizer resource, and the maximum number of custom models that can be stored.
             ResourceDetails resourceDetails = client.GetResourceDetails();
             Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} custom models.");
             Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
-            // List the first ten or fewer models currently stored in the account.
+            // List the first ten or fewer models currently stored in the resource.
             Pageable<DocumentModelSummary> models = client.GetDocumentModels();
 
             foreach (DocumentModelSummary modelSummary in models.Take(10))
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 Console.WriteLine($"  Created on: {modelSummary.CreatedOn}");
             }
 
-            // Create a new model to store in the account
+            // Create a new model to store in the resource.
 
 #if SNIPPET
             Uri blobContainerUri = new Uri("<blobContainerUri>");
@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             BuildDocumentModelOperation operation = client.BuildDocumentModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
             DocumentModelDetails model = operation.Value;
 
-            // Get the model that was just created
+            // Get the model that was just created.
             DocumentModelDetails newCreatedModel = client.GetDocumentModel(model.ModelId);
 
             Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 Console.WriteLine($"  Model description: {newCreatedModel.Description}");
             Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 
-            // Delete the created model from the account.
+            // Delete the created model from the resource.
             client.DeleteDocumentModel(newCreatedModel.ModelId);
 
             #endregion

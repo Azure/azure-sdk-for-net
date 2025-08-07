@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Advisor.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.Advisor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGenerateRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Advisor/generateRecommendations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateRequest(string subscriptionId)
@@ -92,6 +102,18 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetGenerateStatusRequestUri(string subscriptionId, Guid operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Advisor/generateRecommendations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetGenerateStatusRequest(string subscriptionId, Guid operationId)
@@ -156,6 +178,29 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string filter, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string filter, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -204,7 +249,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceRecommendationBaseListResult.DeserializeResourceRecommendationBaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -232,13 +277,25 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceRecommendationBaseListResult.DeserializeResourceRecommendationBaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri, string recommendationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations/", false);
+            uri.AppendPath(recommendationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceUri, string recommendationId)
@@ -277,7 +334,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -306,7 +363,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,6 +372,14 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string filter, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top, string skipToken)
@@ -352,7 +417,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceRecommendationBaseListResult.DeserializeResourceRecommendationBaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -382,7 +447,7 @@ namespace Azure.ResourceManager.Advisor
                 case 200:
                     {
                         ResourceRecommendationBaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceRecommendationBaseListResult.DeserializeResourceRecommendationBaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

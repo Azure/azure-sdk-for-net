@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+    /// <summary> The subscription status. </summary>
     public readonly partial struct BillingSubscriptionStatus : IEquatable<BillingSubscriptionStatus>
     {
         private readonly string _value;
@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Billing.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string OtherValue = "Other";
         private const string UnknownValue = "Unknown";
         private const string ActiveValue = "Active";
         private const string DisabledValue = "Disabled";
@@ -32,7 +33,10 @@ namespace Azure.ResourceManager.Billing.Models
         private const string AutoRenewValue = "AutoRenew";
         private const string CancelledValue = "Cancelled";
         private const string SuspendedValue = "Suspended";
+        private const string FailedValue = "Failed";
 
+        /// <summary> Other. </summary>
+        public static BillingSubscriptionStatus Other { get; } = new BillingSubscriptionStatus(OtherValue);
         /// <summary> Unknown. </summary>
         public static BillingSubscriptionStatus Unknown { get; } = new BillingSubscriptionStatus(UnknownValue);
         /// <summary> Active. </summary>
@@ -53,11 +57,13 @@ namespace Azure.ResourceManager.Billing.Models
         public static BillingSubscriptionStatus Cancelled { get; } = new BillingSubscriptionStatus(CancelledValue);
         /// <summary> Suspended. </summary>
         public static BillingSubscriptionStatus Suspended { get; } = new BillingSubscriptionStatus(SuspendedValue);
+        /// <summary> Failed. </summary>
+        public static BillingSubscriptionStatus Failed { get; } = new BillingSubscriptionStatus(FailedValue);
         /// <summary> Determines if two <see cref="BillingSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(BillingSubscriptionStatus left, BillingSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingSubscriptionStatus"/> values are not the same. </summary>
         public static bool operator !=(BillingSubscriptionStatus left, BillingSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingSubscriptionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingSubscriptionStatus"/>. </summary>
         public static implicit operator BillingSubscriptionStatus(string value) => new BillingSubscriptionStatus(value);
 
         /// <inheritdoc />
@@ -68,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

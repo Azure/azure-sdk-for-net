@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseGeoBackupPolicyName left, SynapseGeoBackupPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseGeoBackupPolicyName"/> values are not the same. </summary>
         public static bool operator !=(SynapseGeoBackupPolicyName left, SynapseGeoBackupPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseGeoBackupPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseGeoBackupPolicyName"/>. </summary>
         public static implicit operator SynapseGeoBackupPolicyName(string value) => new SynapseGeoBackupPolicyName(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

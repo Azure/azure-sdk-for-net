@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningFlowModelJobInput. </summary>
     public partial class MachineLearningFlowModelJobInput : MachineLearningJobInput
     {
-        /// <summary> Initializes a new instance of MachineLearningFlowModelJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFlowModelJobInput"/>. </summary>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public MachineLearningFlowModelJobInput(Uri uri)
@@ -24,21 +24,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType = JobInputType.MlflowModel;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFlowModelJobInput. </summary>
-        /// <param name="description"> Description for the input. </param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFlowModelJobInput"/>. </summary>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
-        /// <param name="mode"> Input Asset Delivery Mode. </param>
+        /// <param name="description"> Description for the input. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
-        internal MachineLearningFlowModelJobInput(string description, JobInputType jobInputType, MachineLearningInputDeliveryMode? mode, Uri uri) : base(description, jobInputType)
+        /// <param name="mode"> Input Asset Delivery Mode. </param>
+        internal MachineLearningFlowModelJobInput(JobInputType jobInputType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, MachineLearningInputDeliveryMode? mode) : base(jobInputType, description, serializedAdditionalRawData)
         {
-            Mode = mode;
             Uri = uri;
+            Mode = mode;
             JobInputType = jobInputType;
         }
 
-        /// <summary> Input Asset Delivery Mode. </summary>
-        public MachineLearningInputDeliveryMode? Mode { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFlowModelJobInput"/> for deserialization. </summary>
+        internal MachineLearningFlowModelJobInput()
+        {
+        }
+
         /// <summary> [Required] Input Asset URI. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
+        /// <summary> Input Asset Delivery Mode. </summary>
+        [WirePath("mode")]
+        public MachineLearningInputDeliveryMode? Mode { get; set; }
     }
 }

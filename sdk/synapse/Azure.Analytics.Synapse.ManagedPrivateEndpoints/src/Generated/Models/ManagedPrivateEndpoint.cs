@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
     /// <summary> Managed private endpoint. </summary>
     public partial class ManagedPrivateEndpoint
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpoint"/>. </summary>
         public ManagedPrivateEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpoint"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>

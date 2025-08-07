@@ -50,7 +50,14 @@ namespace Azure.Storage.Blobs.Models
             {
                 value = (string)valueElement;
             }
-            return new UserDelegationKey(signedObjectId, signedTenantId, signedStartsOn, signedExpiresOn, signedService, signedVersion, value);
+            return new UserDelegationKey(
+                signedObjectId,
+                signedTenantId,
+                signedStartsOn,
+                signedExpiresOn,
+                signedService,
+                signedVersion,
+                value);
         }
     }
 }

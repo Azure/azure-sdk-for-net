@@ -778,7 +778,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var link = await mockScope.Object.OpenConsumerLinkAsync(consumerGroup, partitionId, position, TimeSpan.FromDays(1), TimeSpan.FromDays(1), prefetchCount, prefetchSizeInBytes, ownerLevel, trackLastEvent, identifier, cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
-            Assert.That(link.Settings.DesiredCapabilities, Is.Null, "There should have not have been a set of desired capabilities created, as we're not tracking the last event.");
+            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
         }
 
         /// <summary>
@@ -1292,6 +1292,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");
+            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerSequenceNumber], Is.EqualTo(options.StartingSequenceNumber), "The published sequence number should have been set.");
         }
 
@@ -1435,6 +1436,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var linkTarget = (Target)link.Settings.Target;
             Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
+            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.True, "The producer group should have been set.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerOwnerLevel.ToString()), Is.True, "The owner level should have been set.");
@@ -1513,7 +1515,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var linkTarget = (Target)link.Settings.Target;
             Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
-            Assert.That(link.Settings.DesiredCapabilities, Is.Null, "The idempotent publishing capability should not have been set.");
+            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");
@@ -2115,7 +2117,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockScope.Object.Dispose();
             Assert.That(managedAuthorizations.Count, Is.Zero, "Disposal should stop managing authorizations.");
+
+#if NET8_0_OR_GREATER
+            Assert.That(refreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan), Is.False, "The timer should have been disposed.");
+#else
             Assert.That(() => refreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan), Throws.InstanceOf<ObjectDisposedException>(), "The timer should have been disposed.");
+#endif
         }
 
         /// <summary>

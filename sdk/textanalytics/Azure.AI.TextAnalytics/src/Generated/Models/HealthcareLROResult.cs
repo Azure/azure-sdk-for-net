@@ -6,15 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The HealthcareLROResult. </summary>
     internal partial class HealthcareLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of HealthcareLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
@@ -27,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.HealthcareLROResults;
         }
 
-        /// <summary> Initializes a new instance of HealthcareLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>

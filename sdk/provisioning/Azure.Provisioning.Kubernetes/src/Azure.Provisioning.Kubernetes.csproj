@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Azure.Provisioning.Kubernetes simplifies declarative resource provisioning in .NET.</Description>
+    <Version>1.0.0-beta.4</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <LangVersion>12</LangVersion>
+
+    <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <!-- Remove integration projects. -->
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.Identity\integration\**\*.csproj" />
+  </ItemGroup>
+</Project>

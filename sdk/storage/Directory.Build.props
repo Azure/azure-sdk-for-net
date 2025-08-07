@@ -18,7 +18,6 @@
   <PropertyGroup Condition="'$(IsWebjobsProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
     <NoWarn>
       $(NoWarn);
-      AZC0001;
       AZC0006;
       AZC0007;
     </NoWarn>
@@ -77,8 +76,6 @@
   <!-- Add references for TEST projects -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
     <PackageReference Include="BenchmarkDotNet" />
-    <PackageReference Include="System.Memory" />
-    <PackageReference Include="System.Text.Json" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
   
@@ -93,5 +90,6 @@
     <AzureStorageBlobsSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Blobs\tests\Shared\</AzureStorageBlobsSharedTestSources>
     <AzureStorageDataMovementSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.DataMovement\src\Shared\</AzureStorageDataMovementSharedSources>
     <AzureStorageDataMovementTestSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.DataMovement\tests\Shared\</AzureStorageDataMovementTestSharedSources>
+	<AzureStorageStressTestSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\stress\Shared\</AzureStorageStressTestSharedSources>
   </PropertyGroup>
 </Project>

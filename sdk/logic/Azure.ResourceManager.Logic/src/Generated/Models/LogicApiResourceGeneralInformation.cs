@@ -6,25 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The API general information. </summary>
     public partial class LogicApiResourceGeneralInformation
     {
-        /// <summary> Initializes a new instance of LogicApiResourceGeneralInformation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceGeneralInformation"/>. </summary>
         internal LogicApiResourceGeneralInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceGeneralInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceGeneralInformation"/>. </summary>
         /// <param name="iconUri"> The icon url. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="description"> The description. </param>
         /// <param name="termsOfUseUri"> The terms of use url. </param>
         /// <param name="releaseTag"> The release tag. </param>
         /// <param name="tier"> The tier. </param>
-        internal LogicApiResourceGeneralInformation(Uri iconUri, string displayName, string description, Uri termsOfUseUri, string releaseTag, LogicApiTier? tier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicApiResourceGeneralInformation(Uri iconUri, string displayName, string description, Uri termsOfUseUri, string releaseTag, LogicApiTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IconUri = iconUri;
             DisplayName = displayName;
@@ -32,6 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
             TermsOfUseUri = termsOfUseUri;
             ReleaseTag = releaseTag;
             Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The icon url. </summary>

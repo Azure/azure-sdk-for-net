@@ -14,7 +14,7 @@ namespace BatchClientIntegrationTests.Fixtures
     public abstract class PoolFixture : IDisposable
     {
         public const string OSFamily = "4";
-        public const string VMSize = "STANDARD_D1_v2";
+        public const string VMSize = "Standard_D2s_v3";
         public const string AdminUserAccountName = "BatchTestAdmin";
         public const string NonAdminUserAccountName = "BatchTestNonAdmin";
 

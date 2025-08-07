@@ -5,15 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The parameters needed to retrieve the default function definition for an Azure Machine Learning web service function. </summary>
     public partial class MachineLearningServiceFunctionRetrieveDefaultDefinitionContent : FunctionRetrieveDefaultDefinitionContent
     {
-        /// <summary> Initializes a new instance of MachineLearningServiceFunctionRetrieveDefaultDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServiceFunctionRetrieveDefaultDefinitionContent"/>. </summary>
         public MachineLearningServiceFunctionRetrieveDefaultDefinitionContent()
         {
             BindingType = "Microsoft.MachineLearningServices";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServiceFunctionRetrieveDefaultDefinitionContent"/>. </summary>
+        /// <param name="bindingType"> Indicates the function binding type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="executeEndpoint"> The Request-Response execute endpoint of the Azure Machine Learning web service. </param>
+        /// <param name="udfType"> The function type. </param>
+        internal MachineLearningServiceFunctionRetrieveDefaultDefinitionContent(string bindingType, IDictionary<string, BinaryData> serializedAdditionalRawData, string executeEndpoint, StreamingJobFunctionUdfType? udfType) : base(bindingType, serializedAdditionalRawData)
+        {
+            ExecuteEndpoint = executeEndpoint;
+            UdfType = udfType;
+            BindingType = bindingType ?? "Microsoft.MachineLearningServices";
         }
 
         /// <summary> The Request-Response execute endpoint of the Azure Machine Learning web service. </summary>

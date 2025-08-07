@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.Authentication
 {
@@ -112,7 +113,6 @@ namespace Azure.MixedReality.Authentication
             MixedRealityTokenRequestOptions headerOptions = MixedRealityTokenRequestOptions.GenerateNew();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MixedRealityStsClient)}.{nameof(GetToken)}");
-            scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
             scope.Start();
 
             try
@@ -138,7 +138,6 @@ namespace Azure.MixedReality.Authentication
             MixedRealityTokenRequestOptions headerOptions = MixedRealityTokenRequestOptions.GenerateNew();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MixedRealityStsClient)}.{nameof(GetToken)}");
-            scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
             scope.Start();
 
             try

@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SQL pool SKU. </summary>
     public partial class Sku
     {
-        /// <summary> Initializes a new instance of Sku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sku"/>. </summary>
         public Sku()
         {
         }
 
-        /// <summary> Initializes a new instance of Sku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sku"/>. </summary>
         /// <param name="tier"> The service tier. </param>
         /// <param name="name"> The SKU name. </param>
         /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>

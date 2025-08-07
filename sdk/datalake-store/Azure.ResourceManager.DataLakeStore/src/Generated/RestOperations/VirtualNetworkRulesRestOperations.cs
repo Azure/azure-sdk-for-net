@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataLakeStore.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.DataLakeStore
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2016-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByAccountRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeStore/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/virtualNetworkRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByAccountRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreVirtualNetworkRuleListResult.DeserializeDataLakeStoreVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +121,29 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreVirtualNetworkRuleListResult.DeserializeDataLakeStoreVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeStore/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/virtualNetworkRules/", false);
+            uri.AppendPath(virtualNetworkRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent content)
@@ -136,7 +166,7 @@ namespace Azure.ResourceManager.DataLakeStore
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -166,7 +196,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -199,13 +229,29 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeStore/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/virtualNetworkRules/", false);
+            uri.AppendPath(virtualNetworkRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName)
@@ -252,7 +298,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +331,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,6 +340,22 @@ namespace Azure.ResourceManager.DataLakeStore
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRulePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeStore/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/virtualNetworkRules/", false);
+            uri.AppendPath(virtualNetworkRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRulePatch patch)
@@ -316,7 +378,7 @@ namespace Azure.ResourceManager.DataLakeStore
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -346,7 +408,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -379,13 +441,29 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeStore/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/virtualNetworkRules/", false);
+            uri.AppendPath(virtualNetworkRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName)
@@ -463,6 +541,14 @@ namespace Azure.ResourceManager.DataLakeStore
             }
         }
 
+        internal RequestUriBuilder CreateListByAccountNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
@@ -499,7 +585,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreVirtualNetworkRuleListResult.DeserializeDataLakeStoreVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -530,7 +616,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case 200:
                     {
                         DataLakeStoreVirtualNetworkRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreVirtualNetworkRuleListResult.DeserializeDataLakeStoreVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

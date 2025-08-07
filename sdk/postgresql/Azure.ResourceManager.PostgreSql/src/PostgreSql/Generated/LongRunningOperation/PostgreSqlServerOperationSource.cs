@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlServerResource IOperationSource<PostgreSqlServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PostgreSqlServerData.DeserializePostgreSqlServerData(document.RootElement);
+            var data = ModelReaderWriter.Read<PostgreSqlServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new PostgreSqlServerResource(_client, data);
         }
 
         async ValueTask<PostgreSqlServerResource> IOperationSource<PostgreSqlServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PostgreSqlServerData.DeserializePostgreSqlServerData(document.RootElement);
-            return new PostgreSqlServerResource(_client, data);
+            var data = ModelReaderWriter.Read<PostgreSqlServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            return await Task.FromResult(new PostgreSqlServerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

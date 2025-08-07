@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,13 +14,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 provider specific input for unplanned failover. </summary>
     public partial class InMageAzureV2UnplannedFailoverContent : UnplannedFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2UnplannedFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2UnplannedFailoverContent"/>. </summary>
         public InMageAzureV2UnplannedFailoverContent()
         {
             InstanceType = "InMageAzureV2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2UnplannedFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        internal InMageAzureV2UnplannedFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryPointId, string osUpgradeVersion) : base(instanceType, serializedAdditionalRawData)
+        {
+            RecoveryPointId = recoveryPointId;
+            OSUpgradeVersion = osUpgradeVersion;
+            InstanceType = instanceType ?? "InMageAzureV2";
+        }
+
         /// <summary> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
+        public string OSUpgradeVersion { get; set; }
     }
 }

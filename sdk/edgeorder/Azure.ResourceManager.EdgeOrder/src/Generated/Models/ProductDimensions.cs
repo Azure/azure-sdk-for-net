@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Dimensions of a configuration. </summary>
     public partial class ProductDimensions
     {
-        /// <summary> Initializes a new instance of ProductDimensions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductDimensions"/>. </summary>
         internal ProductDimensions()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductDimensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDimensions"/>. </summary>
         /// <param name="length"> Length of the device. </param>
         /// <param name="height"> Height of the device. </param>
         /// <param name="width"> Width of the device. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="weight"> Weight of the device. </param>
         /// <param name="depth"> Depth of the device. </param>
         /// <param name="weightUnit"> Unit for the dimensions of weight. </param>
-        internal ProductDimensions(double? length, double? height, double? width, ProductLengthHeightWidthUnit? lengthHeightUnit, double? weight, double? depth, ProductWeightMeasurementUnit? weightUnit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductDimensions(double? length, double? height, double? width, ProductLengthHeightWidthUnit? lengthHeightUnit, double? weight, double? depth, ProductWeightMeasurementUnit? weightUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Length = length;
             Height = height;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Weight = weight;
             Depth = depth;
             WeightUnit = weightUnit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Length of the device. </summary>

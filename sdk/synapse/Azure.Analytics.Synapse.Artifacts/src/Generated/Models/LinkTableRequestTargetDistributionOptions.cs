@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkTableRequestTargetDistributionOptions. </summary>
     public partial class LinkTableRequestTargetDistributionOptions
     {
-        /// <summary> Initializes a new instance of LinkTableRequestTargetDistributionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTargetDistributionOptions"/>. </summary>
         public LinkTableRequestTargetDistributionOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableRequestTargetDistributionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTargetDistributionOptions"/>. </summary>
         /// <param name="type"> Target table distribution type. </param>
         /// <param name="distributionColumn"> Target table distribution column. </param>
         internal LinkTableRequestTargetDistributionOptions(string type, string distributionColumn)

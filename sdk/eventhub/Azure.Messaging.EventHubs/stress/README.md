@@ -21,7 +21,7 @@ Or, you can run all tests with the "--all" flag.
 
 ### Prerequisites
 
-When tests are run locally, Azure resources need to be created prior to running the test. This can be done through the Azure CLI, an ARM pr bicep file, or the Azure Portal. The bicep file included in this directory can be used to [deploy all resources](https://docs.microsoft.com/azure/azure-resource-manager/bicep/deploy-to-resource-group?tabs=azure-cli) aside from the application insights portal.
+When tests are run locally, Azure resources need to be created prior to running the test. This can be done through the Azure CLI, an ARM pr bicep file, or the Azure Portal. The bicep file included in this directory can be used to [deploy all resources](https://learn.microsoft.com/azure/azure-resource-manager/bicep/deploy-to-resource-group?tabs=azure-cli) aside from the application insights portal.
 
 To run the compiled .dll file, navigate to the `<git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0` directory.
 
@@ -36,7 +36,7 @@ The user is required to input the connection strings upon request on the command
 (env) <git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0> dotnet Azure.Messaging.EventHubs.Stress.dll --tests <test/s-to-run> --interactive
 ```
 
-To see the variable names for the environment file, see `EnvironmentVariables.cs`, The path to the environment file needs to be stored in the environment variable `$ENV_FILE`. In this case, do not include the `--interactive flag`. For more information about what specific resources are needed for each test, see the "Scenario Information" section below. 
+To see the variable names for the environment file, see `EnvironmentVariables.cs`, The path to the environment file needs to be stored in the environment variable `$ENV_FILE`. In this case, do not include the `--interactive flag`. For more information about what specific resources are needed for each test, see the "Scenario Information" section below.
 
 The recommended approach is to run tests one at a time when running locally.
 To run any one test, run the following:
@@ -109,7 +109,7 @@ Without a .env file:
 
 ### Deploying a stress test
 In order to deploy stress tests to be run in kubernetes clusters, run:
-```cmd 
+```cmd
 (env) <git root>/eng/common/scripts/stress-testing/deploy-stress-tests.ps1 `
 >>     -Login `
 >>     -PushImages
@@ -125,5 +125,3 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
-  
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fstress%2FREADME.png)

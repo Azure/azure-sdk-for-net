@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Monitor.Tests
             var profiles = new List<AutoscaleProfile>()
                 {
                     //new AutoscaleProfile("Profiles2", scaleCapacity, rules)
-                    new AutoscaleProfile("Profiles2", scaleCapacity, rules, fixDate, null),
-                    new AutoscaleProfile("Profiles3", scaleCapacity, rules,null, recurrence),
+                    new AutoscaleProfile("Profiles2", scaleCapacity, rules, fixDate, null, null),
+                    new AutoscaleProfile("Profiles3", scaleCapacity, rules,null, recurrence, null),
                 };
             var data = new AutoscaleSettingData(location, profiles)
             {

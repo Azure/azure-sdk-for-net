@@ -5,28 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount. </summary>
     public partial class BillingAmount
     {
-        /// <summary> Initializes a new instance of BillingAmount. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingAmount"/>. </summary>
         internal BillingAmount()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingAmount. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAmount"/>. </summary>
         /// <param name="currency"> The currency for the amount value. </param>
-        /// <param name="value"> Amount value. </param>
-        internal BillingAmount(string currency, float? value)
+        /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingAmount(string currency, float? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Currency = currency;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The currency for the amount value. </summary>
+        [WirePath("currency")]
         public string Currency { get; }
-        /// <summary> Amount value. </summary>
+        /// <summary> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </summary>
+        [WirePath("value")]
         public float? Value { get; }
     }
 }

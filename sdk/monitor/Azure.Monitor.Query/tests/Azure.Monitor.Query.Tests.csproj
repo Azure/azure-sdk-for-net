@@ -14,5 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Monitor.Query.csproj" />
+    <!--Removing samples while generator is being updated: https://github.com/Azure/autorest.csharp/issues/4120-->
+    <Compile Remove ="..\tests\Generated\Samples\*.cs"/> 
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Holds the alert intent stage(s) mapping for this alert. </summary>
+    /// <summary> The intent of the alert. </summary>
     public readonly partial struct SecurityInsightsKillChainIntent : IEquatable<SecurityInsightsKillChainIntent>
     {
         private readonly string _value;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsKillChainIntent DefenseEvasion { get; } = new SecurityInsightsKillChainIntent(DefenseEvasionValue);
         /// <summary> Credential access represents techniques resulting in access to or control over system, domain, or service credentials that are used within an enterprise environment. Adversaries will likely attempt to obtain legitimate credentials from users or administrator accounts (local system administrator or domain users with administrator access) to use within the network. With sufficient access within a network, an adversary can create accounts for later use within the environment. </summary>
         public static SecurityInsightsKillChainIntent CredentialAccess { get; } = new SecurityInsightsKillChainIntent(CredentialAccessValue);
-        /// <summary> Discovery consists of techniques that allow the adversary to gain knowledge about the system and internal network. When adversaries gain access to a new system, they must orient themselves to what they now have control of and what benefits operating from that system give to their current objective or overall goals during the intrusion. The operating system provides many native tools that aid in this post-compromise information-gathering phase. </summary>
+        /// <summary> Discovery consists of techniques that allow the adversary to gain knowledge about the system and internal network. When adversaries gain access to a new system, they must navigate themselves to what they now have control of and what benefits operating from that system give to their current objective or overall goals during the intrusion. The operating system provides many native tools that aid in this post-compromise information-gathering phase. </summary>
         public static SecurityInsightsKillChainIntent Discovery { get; } = new SecurityInsightsKillChainIntent(DiscoveryValue);
         /// <summary> Lateral movement consists of techniques that enable an adversary to access and control remote systems on a network and could, but does not necessarily, include execution of tools on remote systems. The lateral movement techniques could allow an adversary to gather information from a system without needing additional tools, such as a remote access tool. An adversary can use lateral movement for many purposes, including remote Execution of tools, pivoting to additional systems, access to specific information or files, access to additional credentials, or to cause an effect. </summary>
         public static SecurityInsightsKillChainIntent LateralMovement { get; } = new SecurityInsightsKillChainIntent(LateralMovementValue);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SecurityInsightsKillChainIntent left, SecurityInsightsKillChainIntent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsKillChainIntent"/> values are not the same. </summary>
         public static bool operator !=(SecurityInsightsKillChainIntent left, SecurityInsightsKillChainIntent right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityInsightsKillChainIntent"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsKillChainIntent"/>. </summary>
         public static implicit operator SecurityInsightsKillChainIntent(string value) => new SecurityInsightsKillChainIntent(value);
 
         /// <inheritdoc />
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

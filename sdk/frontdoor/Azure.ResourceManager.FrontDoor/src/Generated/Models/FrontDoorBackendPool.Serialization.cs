@@ -5,28 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorBackendPool : IUtf8JsonSerializable
+    public partial class FrontDoorBackendPool : IUtf8JsonSerializable, IJsonModel<FrontDoorBackendPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorBackendPool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FrontDoorBackendPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorBackendPool>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Backends))
@@ -35,37 +45,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Backends)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                JsonSerializer.Serialize(writer, LoadBalancingSettings);
+                ((IJsonModel<WritableSubResource>)LoadBalancingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                JsonSerializer.Serialize(writer, HealthProbeSettings);
+                ((IJsonModel<WritableSubResource>)HealthProbeSettings).Write(writer, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            {
+                writer.WritePropertyName("resourceState"u8);
+                writer.WriteStringValue(ResourceState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorBackendPool DeserializeFrontDoorBackendPool(JsonElement element)
+        FrontDoorBackendPool IJsonModel<FrontDoorBackendPool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorBackendPool>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorBackendPool(document.RootElement, options);
+        }
+
+        internal static FrontDoorBackendPool DeserializeFrontDoorBackendPool(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IList<FrontDoorBackend>> backends = default;
-            Optional<WritableSubResource> loadBalancingSettings = default;
-            Optional<WritableSubResource> healthProbeSettings = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IList<FrontDoorBackend> backends = default;
+            WritableSubResource loadBalancingSettings = default;
+            WritableSubResource healthProbeSettings = default;
+            FrontDoorResourceState? resourceState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +139,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<FrontDoorBackend> array = new List<FrontDoorBackend>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorBackend.DeserializeFrontDoorBackend(item));
+                                array.Add(FrontDoorBackend.DeserializeFrontDoorBackend(item, options));
                             }
                             backends = array;
                             continue;
@@ -120,7 +150,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            loadBalancingSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadBalancingSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"u8))
@@ -129,7 +159,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            healthProbeSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            healthProbeSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))
@@ -144,8 +174,52 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(backends), loadBalancingSettings, healthProbeSettings, Optional.ToNullable(resourceState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FrontDoorBackendPool(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                backends ?? new ChangeTrackingList<FrontDoorBackend>(),
+                loadBalancingSettings,
+                healthProbeSettings,
+                resourceState);
         }
+
+        BinaryData IPersistableModel<FrontDoorBackendPool>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorBackendPool>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FrontDoorBackendPool IPersistableModel<FrontDoorBackendPool>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorBackendPool>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeFrontDoorBackendPool(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FrontDoorBackendPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

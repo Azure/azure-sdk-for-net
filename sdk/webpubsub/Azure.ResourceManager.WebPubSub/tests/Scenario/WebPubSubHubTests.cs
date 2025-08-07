@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                     Auth = new UpstreamAuthSettings(),
                 },
             };
-            var webPubSubHubProperties = new WebPubSubHubProperties(eventHandlers, "Deny");
+            var webPubSubHubProperties = new WebPubSubHubProperties(eventHandlers, "Deny", null);
             WebPubSubHubData data = new WebPubSubHubData(webPubSubHubProperties)
             {
             };

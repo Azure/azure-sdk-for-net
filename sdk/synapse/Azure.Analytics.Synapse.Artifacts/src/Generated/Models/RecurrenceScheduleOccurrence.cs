@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The recurrence schedule occurrence. </summary>
     public partial class RecurrenceScheduleOccurrence
     {
-        /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecurrenceScheduleOccurrence"/>. </summary>
         public RecurrenceScheduleOccurrence()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecurrenceScheduleOccurrence"/>. </summary>
         /// <param name="day"> The day of the week. </param>
         /// <param name="occurrence"> The occurrence. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

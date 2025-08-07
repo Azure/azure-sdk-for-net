@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The status of the HCX Enterprise Site. </summary>
+    /// <summary> HCX Enterprise Site status. </summary>
     public readonly partial struct HcxEnterpriseSiteStatus : IEquatable<HcxEnterpriseSiteStatus>
     {
         private readonly string _value;
@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.Avs.Models
         private const string DeactivatedValue = "Deactivated";
         private const string DeletedValue = "Deleted";
 
-        /// <summary> Available. </summary>
+        /// <summary> is available. </summary>
         public static HcxEnterpriseSiteStatus Available { get; } = new HcxEnterpriseSiteStatus(AvailableValue);
-        /// <summary> Consumed. </summary>
+        /// <summary> is consumed. </summary>
         public static HcxEnterpriseSiteStatus Consumed { get; } = new HcxEnterpriseSiteStatus(ConsumedValue);
-        /// <summary> Deactivated. </summary>
+        /// <summary> is deactivated. </summary>
         public static HcxEnterpriseSiteStatus Deactivated { get; } = new HcxEnterpriseSiteStatus(DeactivatedValue);
-        /// <summary> Deleted. </summary>
+        /// <summary> is deleted. </summary>
         public static HcxEnterpriseSiteStatus Deleted { get; } = new HcxEnterpriseSiteStatus(DeletedValue);
         /// <summary> Determines if two <see cref="HcxEnterpriseSiteStatus"/> values are the same. </summary>
         public static bool operator ==(HcxEnterpriseSiteStatus left, HcxEnterpriseSiteStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HcxEnterpriseSiteStatus"/> values are not the same. </summary>
         public static bool operator !=(HcxEnterpriseSiteStatus left, HcxEnterpriseSiteStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HcxEnterpriseSiteStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HcxEnterpriseSiteStatus"/>. </summary>
         public static implicit operator HcxEnterpriseSiteStatus(string value) => new HcxEnterpriseSiteStatus(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

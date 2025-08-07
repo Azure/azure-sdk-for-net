@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "eventhub/resource-manager" -AutoRestVersion "v2"

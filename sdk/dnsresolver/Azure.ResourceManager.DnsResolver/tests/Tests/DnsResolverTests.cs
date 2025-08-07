@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Lack of testing resources")]
         public async Task UpdateDnsResolverAsync()
         {
             // ARRANGE

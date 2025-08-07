@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Trial status. </summary>
+    /// <summary> trial status. </summary>
     public readonly partial struct AvsSubscriptionTrialStatus : IEquatable<AvsSubscriptionTrialStatus>
     {
         private readonly string _value;
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Avs.Models
         private const string TrialUsedValue = "TrialUsed";
         private const string TrialDisabledValue = "TrialDisabled";
 
-        /// <summary> TrialAvailable. </summary>
+        /// <summary> is available. </summary>
         public static AvsSubscriptionTrialStatus TrialAvailable { get; } = new AvsSubscriptionTrialStatus(TrialAvailableValue);
-        /// <summary> TrialUsed. </summary>
+        /// <summary> is used. </summary>
         public static AvsSubscriptionTrialStatus TrialUsed { get; } = new AvsSubscriptionTrialStatus(TrialUsedValue);
-        /// <summary> TrialDisabled. </summary>
+        /// <summary> is disabled. </summary>
         public static AvsSubscriptionTrialStatus TrialDisabled { get; } = new AvsSubscriptionTrialStatus(TrialDisabledValue);
         /// <summary> Determines if two <see cref="AvsSubscriptionTrialStatus"/> values are the same. </summary>
         public static bool operator ==(AvsSubscriptionTrialStatus left, AvsSubscriptionTrialStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsSubscriptionTrialStatus"/> values are not the same. </summary>
         public static bool operator !=(AvsSubscriptionTrialStatus left, AvsSubscriptionTrialStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsSubscriptionTrialStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsSubscriptionTrialStatus"/>. </summary>
         public static implicit operator AvsSubscriptionTrialStatus(string value) => new AvsSubscriptionTrialStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

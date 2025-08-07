@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
@@ -12,24 +14,58 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing a Traffic Manager Name Availability response. </summary>
     public partial class TrafficManagerNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of TrafficManagerNameAvailabilityResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerNameAvailabilityResult"/>. </summary>
         internal TrafficManagerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerNameAvailabilityResult"/>. </summary>
         /// <param name="name"> The relative name. </param>
         /// <param name="resourceType"> Traffic Manager profile resource type. </param>
         /// <param name="isNameAvailable"> Describes whether the relative name is available or not. </param>
         /// <param name="unavailableReason"> The reason why the name is not available, when applicable. </param>
         /// <param name="message"> Descriptive message that explains why the name is not available, when applicable. </param>
-        internal TrafficManagerNameAvailabilityResult(string name, ResourceType? resourceType, bool? isNameAvailable, string unavailableReason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficManagerNameAvailabilityResult(string name, ResourceType? resourceType, bool? isNameAvailable, string unavailableReason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceType = resourceType;
             IsNameAvailable = isNameAvailable;
             UnavailableReason = unavailableReason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The relative name. </summary>

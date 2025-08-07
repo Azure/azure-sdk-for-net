@@ -34,6 +34,7 @@ namespace Azure.MixedReality.Authentication.Tests
         }
 
         [Test]
+        [LiveOnly(Reason = "JWT cannot be stored in test recording.")]
         public async Task GetToken()
         {
             MixedRealityStsClient client = CreateClient();

@@ -12,9 +12,18 @@ namespace Azure.Security.Attestation
     /// <summary> Defines the "initialization time data" used to provision the attestation target for use by the MAA. </summary>
     internal partial class InitTimeData
     {
-        /// <summary> Initializes a new instance of InitTimeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitTimeData"/>. </summary>
         public InitTimeData()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InitTimeData"/>. </summary>
+        /// <param name="data"> UTF-8 encoded Initialization Data passed into the trusted environment when it is created. </param>
+        /// <param name="dataType"> The type of data contained within the "data" field. </param>
+        internal InitTimeData(byte[] data, DataType? dataType)
+        {
+            Data = data;
+            DataType = dataType;
         }
 
         /// <summary> UTF-8 encoded Initialization Data passed into the trusted environment when it is created. </summary>

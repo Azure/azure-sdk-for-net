@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
         private const string SupportedManagedInstanceVersionsValue = "supportedManagedInstanceVersions";
         private const string SupportedInstancePoolEditionsValue = "supportedInstancePoolEditions";
         private const string SupportedManagedInstanceEditionsValue = "supportedManagedInstanceEditions";
+        private const string SupportedJobAgentVersionsValue = "supportedJobAgentVersions";
 
         /// <summary> supportedEditions. </summary>
         public static SqlCapabilityGroup SupportedEditions { get; } = new SqlCapabilityGroup(SupportedEditionsValue);
@@ -38,11 +39,13 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlCapabilityGroup SupportedInstancePoolEditions { get; } = new SqlCapabilityGroup(SupportedInstancePoolEditionsValue);
         /// <summary> supportedManagedInstanceEditions. </summary>
         public static SqlCapabilityGroup SupportedManagedInstanceEditions { get; } = new SqlCapabilityGroup(SupportedManagedInstanceEditionsValue);
+        /// <summary> supportedJobAgentVersions. </summary>
+        public static SqlCapabilityGroup SupportedJobAgentVersions { get; } = new SqlCapabilityGroup(SupportedJobAgentVersionsValue);
         /// <summary> Determines if two <see cref="SqlCapabilityGroup"/> values are the same. </summary>
         public static bool operator ==(SqlCapabilityGroup left, SqlCapabilityGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlCapabilityGroup"/> values are not the same. </summary>
         public static bool operator !=(SqlCapabilityGroup left, SqlCapabilityGroup right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlCapabilityGroup"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlCapabilityGroup"/>. </summary>
         public static implicit operator SqlCapabilityGroup(string value) => new SqlCapabilityGroup(value);
 
         /// <inheritdoc />
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

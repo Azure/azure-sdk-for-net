@@ -23,17 +23,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         private const string NodePoolValue = "NodePool";
-        private const string ManagedClusterValue = "ManagedCluster";
 
         /// <summary> The snapshot is a snapshot of a node pool. </summary>
         public static SnapshotType NodePool { get; } = new SnapshotType(NodePoolValue);
-        /// <summary> The snapshot is a snapshot of a managed cluster. </summary>
-        public static SnapshotType ManagedCluster { get; } = new SnapshotType(ManagedClusterValue);
         /// <summary> Determines if two <see cref="SnapshotType"/> values are the same. </summary>
         public static bool operator ==(SnapshotType left, SnapshotType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnapshotType"/> values are not the same. </summary>
         public static bool operator !=(SnapshotType left, SnapshotType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SnapshotType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotType"/>. </summary>
         public static implicit operator SnapshotType(string value) => new SnapshotType(value);
 
         /// <inheritdoc />
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

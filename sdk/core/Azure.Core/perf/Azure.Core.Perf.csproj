@@ -4,19 +4,21 @@
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Condition="'$(AzureCoreVersion)' == ''" Include="../../Azure.Core/src/Azure.Core.csproj" />
-    <PackageReference Condition="'$(AzureCoreVersion)' != ''" Include="Azure.Core" VersionOverride="$(AzureCoreVersion)" />
+    <PackageReference Condition="'$(AzureCoreVersion)' != ''" Include="Azure.Core" />
   </ItemGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);AZURE_CORE_VERSION_$(AzureCoreVersion)</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
-    <ProjectReference Include="..\tests\Azure.Core.Tests.csproj" />
     <!--
       Explicit references to pull in patched versions of ASP.NET Core packages
     -->
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" />
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
@@ -24,6 +26,19 @@
     <None Update="TestData\JsonFormattedString.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="..\tests\common\TestData\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\src\Shared\Utf8JsonWriterExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\JsonElementExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\Optional.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\TypeFormatters.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ChangeTrackingDictionary.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ChangeTrackingList.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

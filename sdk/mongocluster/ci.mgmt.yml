@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/mongocluster/ci.mgmt.yml
+    - sdk/mongocluster/Azure.ResourceManager.MongoCluster/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: mongocluster
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.MongoCluster
+      safeName: AzureResourceManagerMongoCluster

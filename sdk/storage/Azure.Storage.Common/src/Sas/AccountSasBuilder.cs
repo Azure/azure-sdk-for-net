@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.Storage.Sas
 {
@@ -190,7 +191,27 @@ namespace Azure.Storage.Sas
         /// The <see cref="SasQueryParameters"/> used for authenticating
         /// requests.
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-common")]
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
+            => ToSasQueryParameters(sharedKeyCredential, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SasQueryParameters"/> used for authenticating
+        /// requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-common")]
+        public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential, out string stringToSign)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/Constructing-an-Account-SAS
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
@@ -200,24 +221,7 @@ namespace Azure.Storage.Sas
                 throw Errors.AccountSasMissingData();
             }
 
-            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
-
-            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-
-            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign = string.Join("\n",
-                sharedKeyCredential.AccountName,
-                Permissions,
-                Services.ToPermissionsString(),
-                ResourceTypes.ToPermissionsString(),
-                startTime,
-                expiryTime,
-                IPRange.ToString(),
-                Protocol.ToProtocolString(),
-                Version,
-                EncryptionScope,
-                string.Empty);  // That's right, the account SAS requires a terminating extra newline
+            stringToSign = ToStringToSign(sharedKeyCredential);
 
             string signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
             SasQueryParameters p = SasQueryParametersInternals.Create(
@@ -234,6 +238,28 @@ namespace Azure.Storage.Sas
                 signature,
                 encryptionScope: EncryptionScope);
             return p;
+        }
+
+        private string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        {
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
+
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+
+            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            return string.Join("\n",
+                sharedKeyCredential.AccountName,
+                Permissions,
+                Services.ToPermissionsString(),
+                ResourceTypes.ToPermissionsString(),
+                startTime,
+                expiryTime,
+                IPRange.ToString(),
+                Protocol.ToProtocolString(),
+                Version,
+                EncryptionScope,
+                string.Empty);  // That's right, the account SAS requires a terminating extra newline
         }
 
         /// <summary>

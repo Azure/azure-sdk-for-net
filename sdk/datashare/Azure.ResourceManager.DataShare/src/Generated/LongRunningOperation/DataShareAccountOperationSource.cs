@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DataShare
 
         DataShareAccountResource IOperationSource<DataShareAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);
+            var data = ModelReaderWriter.Read<DataShareAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataShareContext.Default);
             return new DataShareAccountResource(_client, data);
         }
 
         async ValueTask<DataShareAccountResource> IOperationSource<DataShareAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DataShareAccountData.DeserializeDataShareAccountData(document.RootElement);
-            return new DataShareAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<DataShareAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataShareContext.Default);
+            return await Task.FromResult(new DataShareAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

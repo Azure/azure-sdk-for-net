@@ -80,7 +80,20 @@ namespace Azure.Storage.Blobs.Models
             {
                 isImmutableStorageWithVersioningEnabled = (bool?)immutableStorageWithVersioningEnabledElement;
             }
-            return new ContainerPropertiesInternal(lastModified, etag, leaseStatus, leaseState, leaseDuration, publicAccess, hasImmutabilityPolicy, hasLegalHold, defaultEncryptionScope, preventEncryptionScopeOverride, deletedTime, remainingRetentionDays, isImmutableStorageWithVersioningEnabled);
+            return new ContainerPropertiesInternal(
+                lastModified,
+                etag,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
+                publicAccess,
+                hasImmutabilityPolicy,
+                hasLegalHold,
+                defaultEncryptionScope,
+                preventEncryptionScopeOverride,
+                deletedTime,
+                remainingRetentionDays,
+                isImmutableStorageWithVersioningEnabled);
         }
     }
 }

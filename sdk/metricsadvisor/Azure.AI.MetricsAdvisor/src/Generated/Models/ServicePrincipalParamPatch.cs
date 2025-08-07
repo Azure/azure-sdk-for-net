@@ -10,9 +10,20 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ServicePrincipalParamPatch. </summary>
     internal partial class ServicePrincipalParamPatch
     {
-        /// <summary> Initializes a new instance of ServicePrincipalParamPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalParamPatch"/>. </summary>
         public ServicePrincipalParamPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalParamPatch"/>. </summary>
+        /// <param name="clientId"> The client id of the service principal. </param>
+        /// <param name="clientSecret"> The client secret of the service principal. </param>
+        /// <param name="tenantId"> The tenant id of the service principal. </param>
+        internal ServicePrincipalParamPatch(string clientId, string clientSecret, string tenantId)
+        {
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+            TenantId = tenantId;
         }
 
         /// <summary> The client id of the service principal. </summary>

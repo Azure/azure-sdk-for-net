@@ -22,6 +22,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> TLS1_2. </summary>
         [CodeGenMember("TLS12")]
         public static StorageMinimumTlsVersion Tls1_2 { get; } = new StorageMinimumTlsVersion(Tls1_2Value);
+        /// <summary> TLS1_3. </summary>
+        [CodeGenMember("TLS13")]
+        public static StorageMinimumTlsVersion Tls1_3 { get; } = new StorageMinimumTlsVersion(Tls1_3Value);
 #pragma warning restore CA1707
     }
 }

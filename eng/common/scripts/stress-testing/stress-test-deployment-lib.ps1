@@ -43,12 +43,20 @@ function RunOrExitOnFailure()
     }
 }
 
-function Login([string]$subscription, [string]$clusterGroup, [switch]$skipPushImages)
+function Login([string]$subscription, [string]$tenant, [string]$clusterGroup, [switch]$skipPushImages)
 {
     Write-Host "Logging in to subscription, cluster and container registry"
-    az account show *> $null
+    az account show -s "$subscription" *> $null
     if ($LASTEXITCODE) {
-        RunOrExitOnFailure az login --allow-no-subscriptions
+        Run az login --allow-no-subscriptions --tenant $tenant
+        if ($LASTEXITCODE) {
+            throw "You do not have access to the TME subscription. Follow these steps to join the group: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/206/Subscription-and-Tenant-Usage?anchor=azure-sdk-test-resources-tme"
+        }
+    }
+
+    $subscriptions = (Run az account list -o json) | ConvertFrom-Json
+    if ($subscriptions.Length -eq 0) {
+        throw "You do not have access to the TME subscription. Follow these steps to join the group: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/206/Subscription-and-Tenant-Usage?anchor=azure-sdk-test-resources-tme"
     }
 
     # Discover cluster name, only one cluster per group is expected
@@ -59,7 +67,7 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$skipPushIm
     $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json -AsHashtable
     $defaultNamespace = $null
     $targetContext = $kubeContext.contexts.Where({ $_.name -eq $clusterName }) | Select -First 1
-    if ($targetContext -ne $null -and $targetContext.PSObject.Properties.Name -match "namespace") {
+    if ($targetContext -ne $null -and $targetContext.Contains('context') -and $targetContext.context.Contains('namespace')) {
         $defaultNamespace = $targetContext.context.namespace
     }
 
@@ -103,30 +111,40 @@ function DeployStressTests(
     [Parameter(Mandatory=$False)][switch]$Template,
     [Parameter(Mandatory=$False)][switch]$RetryFailedTests,
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
-    [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
+    [Parameter(Mandatory=$False)][string]$MatrixSelection,
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
     [Parameter(Mandatory=$False)][array]$MatrixReplace,
-    [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters
+    [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters,
+    [Parameter(Mandatory=$False)][int]$LockDeletionForDays
 ) {
     if ($environment -eq 'pg') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'pg' environment."
         }
         $clusterGroup = 'rg-stress-cluster-pg'
-        $subscription = 'Azure SDK Developer Playground'
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
     } elseif ($environment -eq 'prod') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
         }
         $clusterGroup = 'rg-stress-cluster-prod'
-        $subscription = 'Azure SDK Test Resources'
-    } elseif (!$clusterGroup -or !$subscription) {
-        throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
+    } elseif ($environment -eq 'storage') {
+        if ($clusterGroup -or $subscription) {
+            Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."
+        }
+        $clusterGroup = 'rg-stress-cluster-storage'
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '72f988bf-86f1-41af-91ab-2d7cd011db47'
+    } elseif (!$clusterGroup -or !$subscription -or $tenant) {
+        throw "-ClusterGroup, -Subscription and -Tenant parameters must be specified when deploying to an environment that is not pg or prod."
     }
 
     if (!$skipLogin) {
-        Login -subscription $subscription -clusterGroup $clusterGroup -skipPushImages:$skipPushImages
+        Login -subscription $subscription -tenant $tenant -clusterGroup $clusterGroup -skipPushImages:$skipPushImages
     }
 
     $chartRepoName = 'stress-test-charts'
@@ -137,7 +155,7 @@ function DeployStressTests(
         }
         RunOrExitOnFailure helm repo add --force-update $chartRepoName file://$absAddonsPath
     } else {
-        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://stresstestcharts.blob.core.windows.net/helm/
+        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://azuresdkartifacts.z5.web.core.windows.net/stress/
     }
 
     Run helm repo update
@@ -148,8 +166,9 @@ function DeployStressTests(
                 -filters $filters `
                 -CI:$CI `
                 -namespaceOverride $Namespace `
-                -MatrixSelection $MatrixSelection `
                 -MatrixFileName $MatrixFileName `
+                -MatrixSelection $MatrixSelection `
+                -MatrixDisplayNameFilter $MatrixDisplayNameFilter `
                 -MatrixFilters $MatrixFilters `
                 -MatrixReplace $MatrixReplace `
                 -MatrixNonSparseParameters $MatrixNonSparseParameters)
@@ -168,7 +187,7 @@ function DeployStressTests(
             -subscription $subscription
     }
 
-    if ($FailedCommands.Count -lt $pkgs.Count) {
+    if ($FailedCommands.Count -lt $pkgs.Count -and !$Template) {
         Write-Host "Releases deployed by $deployer"
         Run helm list --all-namespaces -l deployId=$deployer
     }
@@ -211,12 +230,22 @@ function DeployStressPackage(
     }
     $imageTagBase += "/$($pkg.Namespace)/$($pkg.ReleaseName)"
 
-    Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
-    kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
-    if ($LASTEXITCODE) {exit $LASTEXITCODE}
-    Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
-    $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
-    if ($LASTEXITCODE) {exit $LASTEXITCODE}
+    if (!$Template) {
+        Write-Host "Checking for namespace $($pkg.Namespace)"
+        kubectl get namespace $pkg.Namespace
+        if ($LASTEXITCODE) {
+            Write-Host "Creating namespace $($pkg.Namespace) ..."
+            kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
+            if ($LASTEXITCODE) {exit $LASTEXITCODE}
+            # Give a few seconds for stress watcher to initialize the federated identity credential
+            # and create the service account before we reference it
+            Write-Host "Waiting 15 seconds for namespace federated credentials to be created and synced"
+            Start-Sleep 15
+        }
+        Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
+        $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
+        if ($LASTEXITCODE) {exit $LASTEXITCODE}
+    }
 
     $dockerBuildConfigs = @()
 
@@ -254,7 +283,7 @@ function DeployStressPackage(
     if ($pkg.Dockerfile -or $pkg.DockerBuildDir) {
         throw "The chart.yaml docker config is deprecated, please use the scenarios matrix instead."
     }
-    
+
 
     foreach ($dockerBuildConfig in $dockerBuildConfigs) {
         $dockerFilePath = $dockerBuildConfig.dockerFilePath
@@ -274,7 +303,10 @@ function DeployStressPackage(
             Write-Host "Setting DOCKER_BUILDKIT=1"
             $env:DOCKER_BUILDKIT = 1
 
-            $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
+            # Force amd64 since that's what our AKS cluster is running. Without this you
+            # end up inheriting the default for our platform, which is bad when using ARM
+            # platforms.
+            $dockerBuildCmd = "docker", "build", "--platform", "linux/amd64", "-t", $imageTag, "-f", $dockerFile
             foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
                 $dockerBuildCmd += "--build-arg"
                 $dockerBuildCmd += "'$($buildArg.Key)'='$($buildArg.Value)'"
@@ -282,7 +314,7 @@ function DeployStressPackage(
             $dockerBuildCmd += $dockerBuildFolder
 
             Run @dockerBuildCmd
-            
+
             Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
             Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
             Write-Host "  docker run -it $imageTag <shell, e.g. 'bash' 'pwsh' 'sh'>" -ForegroundColor DarkBlue
@@ -299,7 +331,7 @@ function DeployStressPackage(
             }
         }
         $generatedHelmValues.scenarios = @( foreach ($scenario in $generatedHelmValues.scenarios) {
-            $dockerPath = if ("image" -notin $scenario) {
+            $dockerPath = if ("image" -notin $scenario.keys) {
                 $dockerFilePath
             } else {
                 Join-Path $pkg.Directory $scenario.image
@@ -317,8 +349,29 @@ function DeployStressPackage(
 
     $generatedConfigPath = Join-Path $pkg.Directory generatedValues.yaml
     $subCommand = $Template ? "template" : "upgrade"
-    $installFlag = $Template ? "" : "--install"
-    $helmCommandArg = "helm", $subCommand, $releaseName, $pkg.Directory, "-n", $pkg.Namespace, $installFlag, "--set", "stress-test-addons.env=$environment", "--values", $generatedConfigPath
+    $subCommandFlag = $Template ? "--debug" : "--install"
+    $helmCommandArg = @(
+        "helm", $subCommand, $releaseName, $pkg.Directory,
+        "-n", $pkg.Namespace,
+        $subCommandFlag,
+        "--values", $generatedConfigPath,
+        "--set", "stress-test-addons.env=$environment"
+    )
+
+    $gitCommit = git -C $pkg.Directory rev-parse HEAD 2>&1
+    if (!$LASTEXITCODE) {
+        $helmCommandArg += "--set", "GitCommit=$gitCommit"
+    }
+
+    if ($LockDeletionForDays) {
+        $date = (Get-Date).AddDays($LockDeletionForDays).ToUniversalTime()
+        $isoDate = $date.ToString("o")
+        # Tell kubernetes job to run only on this specific future time. Technically it will run once per year.
+        $cron = "$($date.Minute) $($date.Hour) $($date.Day) $($date.Month) *"
+
+        Write-Host "PodDisruptionBudget will be set to prevent deletion until $isoDate"
+        $helmCommandArg += "--set", "PodDisruptionBudgetExpiry=$($isoDate)", "--set", "PodDisruptionBudgetExpiryCron=$cron"
+    }
 
     $result = (Run @helmCommandArg) 2>&1 | Write-Host
 
@@ -342,7 +395,7 @@ function DeployStressPackage(
     # Helm 3 stores release information in kubernetes secrets. The only way to add extra labels around
     # specific releases (thereby enabling filtering on `helm list`) is to label the underlying secret resources.
     # There is not currently support for setting these labels via the helm cli.
-    if(!$Template) {
+    if (!$Template) {
         $helmReleaseConfig = RunOrExitOnFailure kubectl get secrets `
                                                 -n $pkg.Namespace `
                                                 -l "status=deployed,name=$releaseName" `
@@ -372,7 +425,7 @@ function CheckDependencies()
         }
     )
 
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
     $shouldError = $false
     foreach ($dep in $deps) {
@@ -401,7 +454,7 @@ function CheckDependencies()
         $job | Remove-Job -Force
 
         if (($result -eq $null -and $job.State -ne "Completed") -or ($result | Select -Last 1) -ne 0) {
-            throw "Docker does not appear to be running. Start/restart docker."
+            throw "Docker does not appear to be running. Start/restart docker or re-run this script with -SkipPushImages"
         }
     }
 
@@ -463,7 +516,7 @@ function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues)
             $failedJobsScenario += $job.split("-$($pkg.ReleaseName)")[0]
         }
     }
-    
+
     $releaseName = "$($pkg.ReleaseName)-$revision-retry"
 
     $retryTestsHelmVal = @{"scenarios"=@()}

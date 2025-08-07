@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaTransformResource" /> and their operations.
-    /// Each <see cref="MediaTransformResource" /> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource" />.
-    /// To get a <see cref="MediaTransformCollection" /> instance call the GetMediaTransforms method from an instance of <see cref="MediaServicesAccountResource" />.
+    /// A class representing a collection of <see cref="MediaTransformResource"/> and their operations.
+    /// Each <see cref="MediaTransformResource"/> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource"/>.
+    /// To get a <see cref="MediaTransformCollection"/> instance call the GetMediaTransforms method from an instance of <see cref="MediaServicesAccountResource"/>.
     /// </summary>
     public partial class MediaTransformCollection : ArmCollection, IEnumerable<MediaTransformResource>, IAsyncEnumerable<MediaTransformResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaTransformTransformsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaTransformTransformsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +139,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaTransformTransformsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaTransformTransformsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +163,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +209,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transformName"> The Transform name. </param>
@@ -219,17 +254,25 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaTransformResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaTransformResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaTransformResource> GetAllAsync(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaTransformTransformsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -243,17 +286,25 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaTransformResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaTransformResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaTransformResource> GetAll(string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaTransformTransformsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaTransformTransformsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaTransformResource(Client, MediaTransformData.DeserializeMediaTransformData(e)), _mediaTransformTransformsClientDiagnostics, Pipeline, "MediaTransformCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -266,6 +317,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +361,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transformName"> The Transform name. </param>
@@ -318,6 +385,96 @@ namespace Azure.ResourceManager.Media
             {
                 var response = _mediaTransformTransformsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Transforms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="transformName"> The Transform name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MediaTransformResource>> GetIfExistsAsync(string transformName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+
+            using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mediaTransformTransformsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaTransformResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaTransformResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Transforms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="transformName"> The Transform name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        public virtual NullableResponse<MediaTransformResource> GetIfExists(string transformName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+
+            using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mediaTransformTransformsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaTransformResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaTransformResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The ONVIF device DNS properties. </summary>
     public partial class OnvifHostName
     {
-        /// <summary> Initializes a new instance of OnvifHostName. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifHostName"/>. </summary>
         public OnvifHostName()
         {
         }
 
-        /// <summary> Initializes a new instance of OnvifHostName. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifHostName"/>. </summary>
         /// <param name="fromDhcp"> Result value showing if the ONVIF device is configured to use DHCP. </param>
         /// <param name="hostname"> The hostname of the ONVIF device. </param>
         internal OnvifHostName(bool? fromDhcp, string hostname)

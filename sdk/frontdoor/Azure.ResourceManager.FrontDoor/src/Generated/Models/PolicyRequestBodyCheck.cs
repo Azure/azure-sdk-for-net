@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(PolicyRequestBodyCheck left, PolicyRequestBodyCheck right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyRequestBodyCheck"/> values are not the same. </summary>
         public static bool operator !=(PolicyRequestBodyCheck left, PolicyRequestBodyCheck right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyRequestBodyCheck"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyRequestBodyCheck"/>. </summary>
         public static implicit operator PolicyRequestBodyCheck(string value) => new PolicyRequestBodyCheck(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

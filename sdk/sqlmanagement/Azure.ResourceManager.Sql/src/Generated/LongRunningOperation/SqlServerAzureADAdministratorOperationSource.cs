@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerAzureADAdministratorResource IOperationSource<SqlServerAzureADAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerAzureADAdministratorResource(_client, data);
         }
 
         async ValueTask<SqlServerAzureADAdministratorResource> IOperationSource<SqlServerAzureADAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(document.RootElement);
-            return new SqlServerAzureADAdministratorResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new SqlServerAzureADAdministratorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

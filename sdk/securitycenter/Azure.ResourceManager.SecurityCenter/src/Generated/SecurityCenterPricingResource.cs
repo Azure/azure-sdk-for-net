@@ -9,23 +9,23 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityCenterPricing along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityCenterPricingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityCenterPricingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSecurityCenterPricing method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityCenterPricingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityCenterPricingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecurityCenterPricing method.
     /// </summary>
     public partial class SecurityCenterPricingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityCenterPricingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="pricingName"> The pricingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string pricingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}";
@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly PricingsRestOperations _securityCenterPricingPricingsRestClient;
         private readonly SecurityCenterPricingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/pricings";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityCenterPricingResource"/> class for mocking. </summary>
         protected SecurityCenterPricingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityCenterPricingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityCenterPricingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityCenterPricingResource(ArmClient client, SecurityCenterPricingData data) : this(client, data.Id)
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/pricings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -87,6 +87,75 @@ namespace Azure.ResourceManager.SecurityCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SecurityOperatorResources in the SecurityCenterPricing. </summary>
+        /// <returns> An object representing collection of SecurityOperatorResources and their operations over a SecurityOperatorResource. </returns>
+        public virtual SecurityOperatorCollection GetSecurityOperators()
+        {
+            return GetCachedClient(client => new SecurityOperatorCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific security operator for the requested scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityOperators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityOperatorResource>> GetSecurityOperatorAsync(string securityOperatorName, CancellationToken cancellationToken = default)
+        {
+            return await GetSecurityOperators().GetAsync(securityOperatorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific security operator for the requested scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityOperators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityOperatorResource> GetSecurityOperator(string securityOperatorName, CancellationToken cancellationToken = default)
+        {
+            return GetSecurityOperators().Get(securityOperatorName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a provided Microsoft Defender for Cloud pricing configuration in the subscription.
         /// <list type="bullet">
@@ -97,6 +166,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pricings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterPricingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +207,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Pricings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +247,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Pricings_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -177,7 +270,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityCenterPricingPricingsRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()));
+                var uri = _securityCenterPricingPricingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -200,6 +295,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Pricings_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterPricingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -215,7 +318,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityCenterPricingPricingsRestClient.Update(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()));
+                var uri = _securityCenterPricingPricingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

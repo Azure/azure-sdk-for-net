@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -13,16 +14,17 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Information of user assigned identity used by this add-on. </summary>
     public partial class ManagedClusterAddonProfileIdentity : ContainerServiceUserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of ManagedClusterAddonProfileIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfileIdentity"/>. </summary>
         public ManagedClusterAddonProfileIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAddonProfileIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAddonProfileIdentity"/>. </summary>
         /// <param name="resourceId"> The resource ID of the user assigned identity. </param>
         /// <param name="clientId"> The client ID of the user assigned identity. </param>
         /// <param name="objectId"> The object ID of the user assigned identity. </param>
-        internal ManagedClusterAddonProfileIdentity(ResourceIdentifier resourceId, Guid? clientId, Guid? objectId) : base(resourceId, clientId, objectId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAddonProfileIdentity(ResourceIdentifier resourceId, Guid? clientId, Guid? objectId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceId, clientId, objectId, serializedAdditionalRawData)
         {
         }
     }

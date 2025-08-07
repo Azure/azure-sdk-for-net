@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Containers AWS offering. </summary>
     public partial class DefenderForContainersAwsOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOffering"/>. </summary>
         public DefenderForContainersAwsOffering()
         {
             OfferingType = OfferingType.DefenderForContainersAws;
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kubernetesService"> The kubernetes service connection configuration. </param>
         /// <param name="kubernetesScubaReader"> The kubernetes to scuba connection configuration. </param>
         /// <param name="cloudWatchToKinesis"> The cloudwatch to kinesis connection configuration. </param>
@@ -29,7 +33,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isAutoProvisioningEnabled"> Is audit logs pipeline auto provisioning enabled. </param>
         /// <param name="kubeAuditRetentionTime"> The retention time in days of kube audit logs set on the CloudWatch log group. </param>
         /// <param name="scubaExternalId"> The externalId used by the data reader to prevent the confused deputy attack. </param>
-        internal DefenderForContainersAwsOffering(OfferingType offeringType, string description, DefenderForContainersAwsOfferingKubernetesService kubernetesService, DefenderForContainersAwsOfferingKubernetesScubaReader kubernetesScubaReader, DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis, DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3, DefenderForContainersAwsOfferingContainerVulnerabilityAssessment containerVulnerabilityAssessment, DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask containerVulnerabilityAssessmentTask, bool? isContainerVulnerabilityAssessmentEnabled, bool? isAutoProvisioningEnabled, long? kubeAuditRetentionTime, string scubaExternalId) : base(offeringType, description)
+        /// <param name="mdcContainersImageAssessment"> The Microsoft Defender container image assessment configuration. </param>
+        /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender container agentless discovery K8s configuration. </param>
+        internal DefenderForContainersAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DefenderForContainersAwsOfferingKubernetesService kubernetesService, DefenderForContainersAwsOfferingKubernetesScubaReader kubernetesScubaReader, DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis, DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3, DefenderForContainersAwsOfferingContainerVulnerabilityAssessment containerVulnerabilityAssessment, DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask containerVulnerabilityAssessmentTask, bool? isContainerVulnerabilityAssessmentEnabled, bool? isAutoProvisioningEnabled, long? kubeAuditRetentionTime, string scubaExternalId, DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S) : base(offeringType, description, serializedAdditionalRawData)
         {
             KubernetesService = kubernetesService;
             KubernetesScubaReader = kubernetesScubaReader;
@@ -41,6 +47,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IsAutoProvisioningEnabled = isAutoProvisioningEnabled;
             KubeAuditRetentionTime = kubeAuditRetentionTime;
             ScubaExternalId = scubaExternalId;
+            MdcContainersImageAssessment = mdcContainersImageAssessment;
+            MdcContainersAgentlessDiscoveryK8S = mdcContainersAgentlessDiscoveryK8S;
             OfferingType = offeringType;
         }
 
@@ -136,5 +144,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public long? KubeAuditRetentionTime { get; set; }
         /// <summary> The externalId used by the data reader to prevent the confused deputy attack. </summary>
         public string ScubaExternalId { get; set; }
+        /// <summary> The Microsoft Defender container image assessment configuration. </summary>
+        public DefenderForContainersAwsOfferingMdcContainersImageAssessment MdcContainersImageAssessment { get; set; }
+        /// <summary> The Microsoft Defender container agentless discovery K8s configuration. </summary>
+        public DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S MdcContainersAgentlessDiscoveryK8S { get; set; }
     }
 }

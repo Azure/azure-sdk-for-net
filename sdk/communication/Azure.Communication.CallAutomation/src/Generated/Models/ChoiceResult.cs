@@ -10,21 +10,23 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The ChoiceResult. </summary>
     public partial class ChoiceResult
     {
-        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChoiceResult"/>. </summary>
         internal ChoiceResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChoiceResult"/>. </summary>
         /// <param name="label"> Label is the primary identifier for the choice detected. </param>
         /// <param name="recognizedPhrase">
         /// Phrases are set to the value if choice is selected via phrase detection.
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </param>
-        internal ChoiceResult(string label, string recognizedPhrase)
+        /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
+        internal ChoiceResult(string label, string recognizedPhrase, double? confidence)
         {
             Label = label;
             RecognizedPhrase = recognizedPhrase;
+            Confidence = confidence;
         }
 
         /// <summary> Label is the primary identifier for the choice detected. </summary>
@@ -34,5 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </summary>
         public string RecognizedPhrase { get; }
+        /// <summary> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </summary>
+        public double? Confidence { get; }
     }
 }

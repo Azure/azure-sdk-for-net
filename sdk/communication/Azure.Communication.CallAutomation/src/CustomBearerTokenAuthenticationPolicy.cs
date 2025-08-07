@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Diagnostics;
+using Azure.Communication.CallAutomation;
 
 namespace Azure.Communication.Pipeline
 {

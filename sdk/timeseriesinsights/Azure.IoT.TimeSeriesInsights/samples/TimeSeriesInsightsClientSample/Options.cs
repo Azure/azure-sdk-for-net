@@ -17,24 +17,6 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         public string TsiEnvironmentFqdn { get; set; }
 
         /// <summary>
-        /// The application Id used to log the user in.
-        /// </summary>
-        [Option('i', "clientId", Required = true, HelpText = "Client Id of the application Id to login, or the application Id used to log the user in.")]
-        public string ClientId { get; set; }
-
-        /// <summary>
-        /// The tenant Id used when logging the user in.
-        /// </summary>
-        [Option('t', "tenantId", Required = true, HelpText = "Application tenant Id")]
-        public string TenantId { get; set; }
-
-        /// <summary>
-        /// The application client secret.
-        /// </summary>
-        [Option('s', "clientSecret", Required = false, HelpText = "Application client secret. Only applicable when using LoginMethod of AppId.")]
-        public string ClientSecret { get; set; }
-
-        /// <summary>
         /// The IoT hub connection string.
         /// </summary>
         [Option('c', "iotHubConnectionString", Required = false, HelpText = "IoT Hub connection string. Required for the Query sample.")]

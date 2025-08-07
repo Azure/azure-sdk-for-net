@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(BlobEventType left, BlobEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobEventType"/> values are not the same. </summary>
         public static bool operator !=(BlobEventType left, BlobEventType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlobEventType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobEventType"/>. </summary>
         public static implicit operator BlobEventType(string value) => new BlobEventType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

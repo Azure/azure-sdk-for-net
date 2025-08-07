@@ -54,6 +54,7 @@
         },
         {
             "file":[
+                "sdk/communication/Azure.Communication.Common/tests/Pipeline/HMACAuthenticationPolicyTests.cs",
                 "sdk/core/Azure.Core/tests/PemReaderTests.Keys.cs",
                 "sdk/identity/Azure.Identity/tests/Data/cert.pfx",
                 "sdk/identity/Azure.Identity/tests/Data/cert-invalid-data.pem",
@@ -61,7 +62,6 @@
                 "sdk/identity/Azure.Identity/tests/Data/cert.pem",
                 "sdk/identity/Azure.Identity/tests/Data/mock-arc-mi-key.key",
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/PemReaderTests.Keys.cs",
-                "sdk/locationbasedservices/Microsoft.Azure.Management.LocationBasedServices/tests/Tests/LocationBasedServicesAccountTests.cs",
                 "sdk/storage/Azure.Storage.Common/tests/Shared/azurite_cert.pem",
                 "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/tests/cert.pem"
             ],
@@ -75,14 +75,10 @@
         },
         {
             "file":[
-                "sdk/automation/Microsoft.Azure.Management.Automation/tests/SessionRecords/AutomationTest/CanCreateUpdateDeleteWebhook.json",
                 "sdk/containerservice/Azure.ResourceManager.ContainerService/tests/SessionRecords/ContainerServiceCollectionTests/GetCredentials().json",
                 "sdk/containerservice/Azure.ResourceManager.ContainerService/tests/SessionRecords/ContainerServiceCollectionTests/GetCredentials()Async.json",
-                "sdk/containerservice/Microsoft.Azure.Management.ContainerService/tests/SessionRecords/ContainerServiceTests/ContainerListClusterAdminCredentialsTest.json",
-                "sdk/containerservice/Microsoft.Azure.Management.ContainerService/tests/SessionRecords/ContainerServiceTests/ContainerServiceCreateManagedServiceTest.json",
-                "sdk/containerservice/Microsoft.Azure.Management.ContainerService/tests/SessionRecords/ContainerServiceTests/ContainerServiceDeleteServiceTest.json",
-                "sdk/containerservice/Microsoft.Azure.Management.ContainerService/tests/SessionRecords/ContainerServiceTests/ContainerServiceGetCredentialsTest.json",
-                "sdk/containerservice/Microsoft.Azure.Management.ContainerService/tests/SessionRecords/ContainerServiceTests/ContainerServiceUpdateServiceTest.json",
+                "sdk/hdinsight/Microsoft.Azure.HDInsight.Job/tests/SessionRecords/CommonTestsFixture/.ctor.json",
+                "sdk/hdinsight/Microsoft.Azure.HDInsight.Job/tests/SessionRecords/SparkJobTestsFixture/.ctor.json",
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignLocalVerifyRemote(application%x-pem-file,P-256).json",
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignLocalVerifyRemote(application%x-pem-file,P-256)Async.json",
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/DownloadECDsaCertificateSignLocalVerifyRemote(application%x-pem-file,P-384).json",
@@ -103,24 +99,6 @@
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/VerifyImportCertificatePemAsync.json",
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/VerifyImportCertificatePemWithoutIssuer.json",
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/VerifyImportCertificatePemWithoutIssuerAsync.json",
-                "sdk/hybridkubernetes/Microsoft.Azure.Management.Kubernetes/tests/SessionRecords/KubernetesServiceTests/ListClusterUserCredentialCSPAADTest.json",
-                "sdk/hybridkubernetes/Microsoft.Azure.Management.Kubernetes/tests/SessionRecords/KubernetesServiceTests/ListClusterUserCredentialCSPTokenTest.json",
-                "sdk/locationbasedservices/Microsoft.Azure.Management.LocationBasedServices/tests/SessionRecords/LocationBasedServicesServicesAccountTests/LocationBasedServicesAccountListKeysTest.json",
-                "sdk/locationbasedservices/Microsoft.Azure.Management.LocationBasedServices/tests/SessionRecords/LocationBasedServicesServicesAccountTests/LocationBasedServicesAccountRegenerateKeyTest.json",
-                "sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute/tests/SessionRecords/MachineLearningComputeTests/CheckSystemServicesUpdatesAvailable.json",
-                "sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute/tests/SessionRecords/MachineLearningComputeTests/CreateCluster.json",
-                "sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute/tests/SessionRecords/MachineLearningComputeTests/DeleteAllResources.json",
-                "sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute/tests/SessionRecords/MachineLearningComputeTests/DeleteCluster.json",
-                "sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute/tests/SessionRecords/MachineLearningComputeTests/GetCluster.json",
-                "sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute/tests/SessionRecords/MachineLearningComputeTests/ListClustersBySubscriptionId.json",
-                "sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute/tests/SessionRecords/MachineLearningComputeTests/ListClustersInResourceGroup.json",
-                "sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute/tests/SessionRecords/MachineLearningComputeTests/ListKeys.json",
-                "sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute/tests/SessionRecords/MachineLearningComputeTests/UpdateSystemServices.json",
-                "sdk/maps/Microsoft.Azure.Management.Maps/tests/SessionRecords/MapsServicesAccountTests/MapsAccountListKeysTest.json",
-                "sdk/maps/Microsoft.Azure.Management.Maps/tests/SessionRecords/MapsServicesAccountTests/MapsAccountRegenerateKeyTest.json",
-                "sdk/mediaservices/Microsoft.Azure.Management.Media/tests/SessionRecords/LiveEventTests/LiveEventComboTest.json",
-                "sdk/mediaservices/Microsoft.Azure.Management.Media/tests/SessionRecords/LiveOutputTests/LiveOutputComboTest.json",
-                "sdk/scheduler/Microsoft.Azure.Management.Scheduler/tests/SessionRecords/JobTests/Scenario_JobCreateHttpJobWithOAuth.json",
                 "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateGetDeleteSqlVirtualMachineGroup().json",
                 "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateGetDeleteSqlVirtualMachineGroup()Async.json",
                 "sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine/tests/SessionRecords/SqlVmGroupTests/TestCreateUpdateGetSqlVirtualMachineGroup().json",
@@ -133,6 +111,7 @@
         {
             "file":[
                 "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs",
+                "sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/README.md",
                 "sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/Models/RestServiceAuthenticationType.cs"
             ],
             "_justification": "File contains a string value that ends with credential, not a true credential."

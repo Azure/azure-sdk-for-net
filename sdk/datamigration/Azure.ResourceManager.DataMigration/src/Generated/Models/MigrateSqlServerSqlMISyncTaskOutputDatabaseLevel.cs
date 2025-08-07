@@ -7,24 +7,24 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel. </summary>
     public partial class MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel : MigrateSqlServerSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>. </summary>
         internal MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel()
         {
-            ActiveBackupSets = new ChangeTrackingList<BackupSetInfo>();
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ActiveBackupSets = new ChangeTrackingList<DataMigrationBackupSetInfo>();
+            ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "DatabaseLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceDatabaseName"> Name of the database. </param>
         /// <param name="migrationState"> Current state of database. </param>
         /// <param name="startedOn"> Database migration start time. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="errorPrefix"> prefix string to use for querying errors for this database. </param>
         /// <param name="isFullBackupRestored"> Whether full backup has been applied to the target database or not. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(string id, string resultType, string sourceDatabaseName, DatabaseMigrationState? migrationState, DateTimeOffset? startedOn, DateTimeOffset? endedOn, BackupSetInfo fullBackupSetInfo, BackupSetInfo lastRestoredBackupSetInfo, IReadOnlyList<BackupSetInfo> activeBackupSets, string containerName, string errorPrefix, bool? isFullBackupRestored, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        internal MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string sourceDatabaseName, DatabaseMigrationState? migrationState, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationBackupSetInfo fullBackupSetInfo, DataMigrationBackupSetInfo lastRestoredBackupSetInfo, IReadOnlyList<DataMigrationBackupSetInfo> activeBackupSets, string containerName, string errorPrefix, bool? isFullBackupRestored, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             SourceDatabaseName = sourceDatabaseName;
             MigrationState = migrationState;
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Database migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
         /// <summary> Details of full backup set. </summary>
-        public BackupSetInfo FullBackupSetInfo { get; }
+        public DataMigrationBackupSetInfo FullBackupSetInfo { get; }
         /// <summary> Last applied backup set information. </summary>
-        public BackupSetInfo LastRestoredBackupSetInfo { get; }
+        public DataMigrationBackupSetInfo LastRestoredBackupSetInfo { get; }
         /// <summary> Backup sets that are currently active (Either being uploaded or getting restored). </summary>
-        public IReadOnlyList<BackupSetInfo> ActiveBackupSets { get; }
+        public IReadOnlyList<DataMigrationBackupSetInfo> ActiveBackupSets { get; }
         /// <summary> Name of container created in the Azure Storage account where backups are copied to. </summary>
         public string ContainerName { get; }
         /// <summary> prefix string to use for querying errors for this database. </summary>
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Whether full backup has been applied to the target database or not. </summary>
         public bool? IsFullBackupRestored { get; }
         /// <summary> Migration exceptions and warnings. </summary>
-        public IReadOnlyList<ReportableException> ExceptionsAndWarnings { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
     }
 }

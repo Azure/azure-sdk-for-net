@@ -6,17 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomEntityLookupSkill : IUtf8JsonSerializable
+    public partial class CustomEntityLookupSkill : IUtf8JsonSerializable, IJsonModel<CustomEntityLookupSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomEntityLookupSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CustomEntityLookupSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityLookupSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomEntityLookupSkill)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DefaultLanguageCode))
             {
                 if (DefaultLanguageCode != null)
@@ -49,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStartArray();
                     foreach (var item in InlineEntitiesDefinition)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<CustomEntity>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -94,58 +112,42 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("globalDefaultFuzzyEditDistance");
                 }
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(Context))
-            {
-                writer.WritePropertyName("context"u8);
-                writer.WriteStringValue(Context);
-            }
-            writer.WritePropertyName("inputs"u8);
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs"u8);
-            writer.WriteStartArray();
-            foreach (var item in Outputs)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
         }
 
-        internal static CustomEntityLookupSkill DeserializeCustomEntityLookupSkill(JsonElement element)
+        CustomEntityLookupSkill IJsonModel<CustomEntityLookupSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityLookupSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomEntityLookupSkill)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomEntityLookupSkill(document.RootElement, options);
+        }
+
+        internal static CustomEntityLookupSkill DeserializeCustomEntityLookupSkill(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CustomEntityLookupSkillLanguage?> defaultLanguageCode = default;
-            Optional<Uri> entitiesDefinitionUri = default;
-            Optional<IList<CustomEntity>> inlineEntitiesDefinition = default;
-            Optional<bool?> globalDefaultCaseSensitive = default;
-            Optional<bool?> globalDefaultAccentSensitive = default;
-            Optional<int?> globalDefaultFuzzyEditDistance = default;
+            CustomEntityLookupSkillLanguage? defaultLanguageCode = default;
+            Uri entitiesDefinitionUri = default;
+            IList<CustomEntity> inlineEntitiesDefinition = default;
+            bool? globalDefaultCaseSensitive = default;
+            bool? globalDefaultAccentSensitive = default;
+            int? globalDefaultFuzzyEditDistance = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultLanguageCode"u8))
@@ -178,7 +180,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<CustomEntity> array = new List<CustomEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomEntity.DeserializeCustomEntity(item));
+                        array.Add(CustomEntity.DeserializeCustomEntity(item, options));
                     }
                     inlineEntitiesDefinition = array;
                     continue;
@@ -238,7 +240,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
@@ -248,13 +250,78 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomEntityLookupSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), entitiesDefinitionUri.Value, Optional.ToList(inlineEntitiesDefinition), Optional.ToNullable(globalDefaultCaseSensitive), Optional.ToNullable(globalDefaultAccentSensitive), Optional.ToNullable(globalDefaultFuzzyEditDistance));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CustomEntityLookupSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                serializedAdditionalRawData,
+                defaultLanguageCode,
+                entitiesDefinitionUri,
+                inlineEntitiesDefinition ?? new ChangeTrackingList<CustomEntity>(),
+                globalDefaultCaseSensitive,
+                globalDefaultAccentSensitive,
+                globalDefaultFuzzyEditDistance);
+        }
+
+        BinaryData IPersistableModel<CustomEntityLookupSkill>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityLookupSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomEntityLookupSkill)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomEntityLookupSkill IPersistableModel<CustomEntityLookupSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityLookupSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCustomEntityLookupSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomEntityLookupSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomEntityLookupSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomEntityLookupSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCustomEntityLookupSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

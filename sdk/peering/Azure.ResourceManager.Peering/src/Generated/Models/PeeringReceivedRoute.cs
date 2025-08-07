@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a received route. </summary>
     public partial class PeeringReceivedRoute
     {
-        /// <summary> Initializes a new instance of PeeringReceivedRoute. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringReceivedRoute"/>. </summary>
         internal PeeringReceivedRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringReceivedRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringReceivedRoute"/>. </summary>
         /// <param name="prefix"> The prefix. </param>
         /// <param name="nextHop"> The next hop for the prefix. </param>
         /// <param name="asPath"> The AS path for the prefix. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="rpkiValidationState"> The RPKI validation state for the prefix and origin AS that's listed in the AS path. </param>
         /// <param name="trustAnchor"> The authority which holds the Route Origin Authorization record for the prefix, if any. </param>
         /// <param name="receivedTimestamp"> The received timestamp associated with the prefix. </param>
-        internal PeeringReceivedRoute(string prefix, string nextHop, string asPath, string originAsValidationState, string rpkiValidationState, string trustAnchor, string receivedTimestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringReceivedRoute(string prefix, string nextHop, string asPath, string originAsValidationState, string rpkiValidationState, string trustAnchor, string receivedTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Prefix = prefix;
             NextHop = nextHop;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.Peering.Models
             RpkiValidationState = rpkiValidationState;
             TrustAnchor = trustAnchor;
             ReceivedTimestamp = receivedTimestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The prefix. </summary>

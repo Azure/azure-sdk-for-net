@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,23 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the service bus topic destination for an event subscription. </summary>
     public partial class ServiceBusTopicEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of ServiceBusTopicEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusTopicEventSubscriptionDestination"/>. </summary>
         public ServiceBusTopicEventSubscriptionDestination()
         {
             DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.ServiceBusTopic;
         }
 
-        /// <summary> Initializes a new instance of ServiceBusTopicEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusTopicEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of the Service Bus Topic destination of an event subscription. </param>
         /// <param name="deliveryAttributeMappings">
         /// Delivery attribute details.
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </param>
-        internal ServiceBusTopicEventSubscriptionDestination(EndpointType endpointType, ResourceIdentifier resourceId, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
+        internal ServiceBusTopicEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType, serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             DeliveryAttributeMappings = deliveryAttributeMappings;
@@ -36,12 +38,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The Azure Resource Id that represents the endpoint of the Service Bus Topic destination of an event subscription. </summary>
+        [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary>
         /// Delivery attribute details.
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </summary>
+        [WirePath("properties.deliveryAttributeMappings")]
         public IList<DeliveryAttributeMapping> DeliveryAttributeMappings { get; }
     }
 }

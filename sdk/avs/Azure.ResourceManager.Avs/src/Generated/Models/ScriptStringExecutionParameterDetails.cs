@@ -6,31 +6,37 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> a plain text value execution parameter. </summary>
     public partial class ScriptStringExecutionParameterDetails : ScriptExecutionParameterDetails
     {
-        /// <summary> Initializes a new instance of ScriptStringExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptStringExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScriptStringExecutionParameterDetails(string name) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ParameterType = ScriptExecutionParameterType.Value;
+            Type = ScriptExecutionParameterType.Value;
         }
 
-        /// <summary> Initializes a new instance of ScriptStringExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptStringExecutionParameterDetails"/>. </summary>
+        /// <param name="type"> script execution parameter type. </param>
         /// <param name="name"> The parameter name. </param>
-        /// <param name="parameterType"> The type of execution parameter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The value for the passed parameter. </param>
-        internal ScriptStringExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, string value) : base(name, parameterType)
+        internal ScriptStringExecutionParameterDetails(ScriptExecutionParameterType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(type, name, serializedAdditionalRawData)
         {
             Value = value;
-            ParameterType = parameterType;
+            Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptStringExecutionParameterDetails"/> for deserialization. </summary>
+        internal ScriptStringExecutionParameterDetails()
+        {
         }
 
         /// <summary> The value for the passed parameter. </summary>

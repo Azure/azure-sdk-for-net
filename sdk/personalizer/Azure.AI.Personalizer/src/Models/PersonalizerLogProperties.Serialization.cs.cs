@@ -11,7 +11,7 @@ namespace Azure.AI.Personalizer
     {
         internal static PersonalizerLogProperties DeserializePersonalizerLogProperties(JsonElement element)
         {
-            Optional<PersonalizerLogPropertiesDateRange> dateRange = default;
+            PersonalizerLogPropertiesDateRange dateRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateRange"))
@@ -22,7 +22,7 @@ namespace Azure.AI.Personalizer
                         continue;
                     }
                     dateRange = PersonalizerLogPropertiesDateRange.DeserializePersonalizerLogPropertiesDateRange(property.Value);
-                    return new PersonalizerLogProperties(dateRange.Value.From, dateRange.Value.To);
+                    return new PersonalizerLogProperties(dateRange.From, dateRange.To);
                 }
             }
             return new PersonalizerLogProperties(DateTime.MinValue, DateTime.MinValue);

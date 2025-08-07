@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DataBoxEdgeRoleResource IOperationSource<DataBoxEdgeRoleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(document.RootElement);
+            var data = ModelReaderWriter.Read<DataBoxEdgeRoleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DataBoxEdgeRoleResource(_client, data);
         }
 
         async ValueTask<DataBoxEdgeRoleResource> IOperationSource<DataBoxEdgeRoleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(document.RootElement);
-            return new DataBoxEdgeRoleResource(_client, data);
+            var data = ModelReaderWriter.Read<DataBoxEdgeRoleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            return await Task.FromResult(new DataBoxEdgeRoleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

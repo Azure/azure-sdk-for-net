@@ -68,7 +68,7 @@ namespace Azure.Core.Serialization
             Argument.AssertNotNull(returnType, nameof(returnType));
 
             using StreamReader reader = new StreamReader(stream, UTF8NoBOM, true, DefaultBufferSize, true);
-            return _serializer.Deserialize(reader, returnType);
+            return _serializer.Deserialize(reader, returnType)!;
         }
 
         /// <inheritdoc />
@@ -102,7 +102,7 @@ namespace Azure.Core.Serialization
 
             return _cache.GetOrAdd(member, m =>
             {
-                if (_serializer.ContractResolver.ResolveContract(m.ReflectedType) is JsonObjectContract contract)
+                if (_serializer.ContractResolver.ResolveContract(m.ReflectedType!) is JsonObjectContract contract)
                 {
                     foreach (JsonProperty property in contract.Properties)
                     {

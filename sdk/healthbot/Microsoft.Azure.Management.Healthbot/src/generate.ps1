@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "healthbot/resource-manager" -AutoRestVersion "v2"

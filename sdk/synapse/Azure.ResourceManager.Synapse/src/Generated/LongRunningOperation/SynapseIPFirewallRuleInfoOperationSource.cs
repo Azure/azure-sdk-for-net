@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseIPFirewallRuleInfoResource IOperationSource<SynapseIPFirewallRuleInfoResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(document.RootElement);
+            var data = ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return new SynapseIPFirewallRuleInfoResource(_client, data);
         }
 
         async ValueTask<SynapseIPFirewallRuleInfoResource> IOperationSource<SynapseIPFirewallRuleInfoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(document.RootElement);
-            return new SynapseIPFirewallRuleInfoResource(_client, data);
+            var data = ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            return await Task.FromResult(new SynapseIPFirewallRuleInfoResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

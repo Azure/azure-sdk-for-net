@@ -1,3 +1,3 @@
 {
-  "errors": [ "Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return." ]
+  "errors": [ "Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return" ]
 }

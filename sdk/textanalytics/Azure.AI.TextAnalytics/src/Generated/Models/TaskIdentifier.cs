@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Base task object. </summary>
     internal partial class TaskIdentifier
     {
-        /// <summary> Initializes a new instance of TaskIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskIdentifier"/>. </summary>
         public TaskIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of TaskIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskIdentifier"/>. </summary>
         /// <param name="taskName"></param>
         internal TaskIdentifier(string taskName)
         {

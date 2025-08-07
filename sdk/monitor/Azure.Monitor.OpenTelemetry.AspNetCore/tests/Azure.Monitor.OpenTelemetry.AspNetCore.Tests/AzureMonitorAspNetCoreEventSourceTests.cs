@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         /// This validates that parameters are logged and helps to confirm that EventIds are correct.
         /// </summary>
         [Fact]
-        public void EventSourceTest_AzureMonitorExporterEventSource()
+        public void EventSourceTest_AzureMonitorAspNetCoreEventSource()
         {
             EventSourceTestHelper.MethodsAreImplementedConsistentlyWithTheirAttributes(AzureMonitorAspNetCoreEventSource.Log);
         }

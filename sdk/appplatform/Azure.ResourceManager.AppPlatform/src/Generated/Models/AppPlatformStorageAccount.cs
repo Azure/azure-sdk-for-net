@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> storage resource of type Azure Storage Account. </summary>
     public partial class AppPlatformStorageAccount : AppPlatformStorageProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageAccount"/>. </summary>
         /// <param name="accountName"> The account name of the Azure Storage Account. </param>
         /// <param name="accountKey"> The account key of the Azure Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="accountKey"/> is null. </exception>
@@ -27,15 +27,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
             StorageType = StorageType.StorageAccount;
         }
 
-        /// <summary> Initializes a new instance of AppPlatformStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageAccount"/>. </summary>
         /// <param name="storageType"> The type of the storage. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accountName"> The account name of the Azure Storage Account. </param>
         /// <param name="accountKey"> The account key of the Azure Storage Account. </param>
-        internal AppPlatformStorageAccount(StorageType storageType, string accountName, string accountKey) : base(storageType)
+        internal AppPlatformStorageAccount(StorageType storageType, IDictionary<string, BinaryData> serializedAdditionalRawData, string accountName, string accountKey) : base(storageType, serializedAdditionalRawData)
         {
             AccountName = accountName;
             AccountKey = accountKey;
             StorageType = storageType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageAccount"/> for deserialization. </summary>
+        internal AppPlatformStorageAccount()
+        {
         }
 
         /// <summary> The account name of the Azure Storage Account. </summary>

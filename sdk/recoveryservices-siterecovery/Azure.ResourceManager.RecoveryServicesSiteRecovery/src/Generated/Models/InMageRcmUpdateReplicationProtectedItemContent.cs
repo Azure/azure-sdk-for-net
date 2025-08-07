@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,56 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm provider specific input to update replication protected item. </summary>
     public partial class InMageRcmUpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent
     {
-        /// <summary> Initializes a new instance of InMageRcmUpdateReplicationProtectedItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateReplicationProtectedItemContent"/>. </summary>
         public InMageRcmUpdateReplicationProtectedItemContent()
         {
             VmNics = new ChangeTrackingList<InMageRcmNicContent>();
+            TargetVmTags = new ChangeTrackingList<UserCreatedResourceTag>();
+            TargetManagedDiskTags = new ChangeTrackingList<UserCreatedResourceTag>();
+            TargetNicTags = new ChangeTrackingList<UserCreatedResourceTag>();
             InstanceType = "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateReplicationProtectedItemContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="targetVmName"> The target VM name. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set ARM Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
+        /// <param name="targetNetworkId"> The target network ARM Id. </param>
+        /// <param name="testNetworkId"> The test network ARM Id. </param>
+        /// <param name="vmNics"> The list of NIC details. </param>
+        /// <param name="licenseType"> The license type. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
+        /// <param name="userSelectedOSName"> The OS name selected by user. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        internal InMageRcmUpdateReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IList<InMageRcmNicContent> vmNics, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, string userSelectedOSName, IList<UserCreatedResourceTag> targetVmTags, IList<UserCreatedResourceTag> targetManagedDiskTags, IList<UserCreatedResourceTag> targetNicTags) : base(instanceType, serializedAdditionalRawData)
+        {
+            TargetVmName = targetVmName;
+            TargetVmSize = targetVmSize;
+            TargetResourceGroupId = targetResourceGroupId;
+            TargetAvailabilitySetId = targetAvailabilitySetId;
+            TargetAvailabilityZone = targetAvailabilityZone;
+            TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
+            TargetBootDiagnosticsStorageAccountId = targetBootDiagnosticsStorageAccountId;
+            TargetNetworkId = targetNetworkId;
+            TestNetworkId = testNetworkId;
+            VmNics = vmNics;
+            LicenseType = licenseType;
+            SqlServerLicenseType = sqlServerLicenseType;
+            LinuxLicenseType = linuxLicenseType;
+            UserSelectedOSName = userSelectedOSName;
+            TargetVmTags = targetVmTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
+            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> The target VM name. </summary>
@@ -42,5 +88,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IList<InMageRcmNicContent> VmNics { get; }
         /// <summary> The license type. </summary>
         public SiteRecoveryLicenseType? LicenseType { get; set; }
+        /// <summary> The SQL Server license type. </summary>
+        public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
+        /// <summary> The license type for Linux VM's. </summary>
+        public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; set; }
+        /// <summary> The OS name selected by user. </summary>
+        public string UserSelectedOSName { get; set; }
+        /// <summary> The target VM tags. </summary>
+        public IList<UserCreatedResourceTag> TargetVmTags { get; }
+        /// <summary> The tags for the target managed disks. </summary>
+        public IList<UserCreatedResourceTag> TargetManagedDiskTags { get; }
+        /// <summary> The tags for the target NICs. </summary>
+        public IList<UserCreatedResourceTag> TargetNicTags { get; }
     }
 }

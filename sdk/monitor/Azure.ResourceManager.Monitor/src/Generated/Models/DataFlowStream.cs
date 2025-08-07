@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(DataFlowStream left, DataFlowStream right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFlowStream"/> values are not the same. </summary>
         public static bool operator !=(DataFlowStream left, DataFlowStream right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFlowStream"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFlowStream"/>. </summary>
         public static implicit operator DataFlowStream(string value) => new DataFlowStream(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

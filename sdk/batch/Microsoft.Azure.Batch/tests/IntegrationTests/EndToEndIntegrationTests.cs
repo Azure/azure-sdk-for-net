@@ -232,7 +232,7 @@
 
                     // forget to set CloudServiceConfiguration on Create, get error
                     {
-                        CloudPool noArgs = poolOperations.CreatePool("Bug1965363ButNoOSFamily-" + TestUtilities.GetMyName(), PoolFixture.VMSize, default(CloudServiceConfiguration), targetDedicatedComputeNodes: 0);
+                        CloudPool noArgs = poolOperations.CreatePool("Bug1965363ButNoOSFamily-" + TestUtilities.GetMyName(), PoolFixture.VMSize, default(VirtualMachineConfiguration), targetDedicatedComputeNodes: 0);
 
                         BatchException ex = TestUtilities.AssertThrows<BatchException>(() => noArgs.Commit());
                         string exStr = ex.ToString();
@@ -246,7 +246,13 @@
                         string poolIdHOSF = "Bug1965363HasOSF-" + TestUtilities.GetMyName();
                         try
                         {
-                            CloudPool hasOSF = poolOperations.CreatePool(poolIdHOSF, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
+                            var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                                ubuntuImageDetails.ImageReference,
+                                nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                            CloudPool hasOSF = poolOperations.CreatePool(poolIdHOSF, PoolFixture.VMSize, virtualMachineConfiguration, targetDedicatedComputeNodes: 0);
 
                             hasOSF.Commit();
                         }

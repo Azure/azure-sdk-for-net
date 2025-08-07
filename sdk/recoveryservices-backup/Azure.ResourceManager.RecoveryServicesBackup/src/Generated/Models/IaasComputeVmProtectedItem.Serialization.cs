@@ -6,184 +6,91 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasComputeVmProtectedItem : IUtf8JsonSerializable
+    public partial class IaasComputeVmProtectedItem : IUtf8JsonSerializable, IJsonModel<IaasComputeVmProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasComputeVmProtectedItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IaasComputeVmProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtectionStatus))
-            {
-                writer.WritePropertyName("protectionStatus"u8);
-                writer.WriteStringValue(ProtectionStatus);
-            }
-            if (Optional.IsDefined(ProtectionState))
-            {
-                writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(HealthDetails))
-            {
-                writer.WritePropertyName("healthDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in HealthDetails)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(KpisHealths))
-            {
-                writer.WritePropertyName("kpisHealths"u8);
-                writer.WriteStartObject();
-                foreach (var item in KpisHealths)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(LastBackupStatus))
-            {
-                writer.WritePropertyName("lastBackupStatus"u8);
-                writer.WriteStringValue(LastBackupStatus);
-            }
-            if (Optional.IsDefined(ExtendedInfo))
-            {
-                writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
-            }
-            if (Optional.IsDefined(ExtendedProperties))
-            {
-                writer.WritePropertyName("extendedProperties"u8);
-                writer.WriteObjectValue(ExtendedProperties);
-            }
-            writer.WritePropertyName("protectedItemType"u8);
-            writer.WriteStringValue(ProtectedItemType);
-            if (Optional.IsDefined(ContainerName))
-            {
-                writer.WritePropertyName("containerName"u8);
-                writer.WriteStringValue(ContainerName);
-            }
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(PolicyId))
-            {
-                writer.WritePropertyName("policyId"u8);
-                writer.WriteStringValue(PolicyId);
-            }
-            if (Optional.IsDefined(LastRecoverOn))
-            {
-                writer.WritePropertyName("lastRecoveryPoint"u8);
-                writer.WriteStringValue(LastRecoverOn.Value, "O");
-            }
-            if (Optional.IsDefined(BackupSetName))
-            {
-                writer.WritePropertyName("backupSetName"u8);
-                writer.WriteStringValue(BackupSetName);
-            }
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
-            if (Optional.IsDefined(DeferredDeletedOn))
-            {
-                writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
-                writer.WriteStringValue(DeferredDeletedOn.Value, "O");
-            }
-            if (Optional.IsDefined(IsScheduledForDeferredDelete))
-            {
-                writer.WritePropertyName("isScheduledForDeferredDelete"u8);
-                writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
-            }
-            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
-            {
-                writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
-                writer.WriteStringValue(DeferredDeleteTimeRemaining);
-            }
-            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
-            {
-                writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
-                writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
-            }
-            if (Optional.IsDefined(IsRehydrate))
-            {
-                writer.WritePropertyName("isRehydrate"u8);
-                writer.WriteBooleanValue(IsRehydrate.Value);
-            }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
-            {
-                writer.WritePropertyName("resourceGuardOperationRequests"u8);
-                writer.WriteStartArray();
-                foreach (var item in ResourceGuardOperationRequests)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsArchiveEnabled))
-            {
-                writer.WritePropertyName("isArchiveEnabled"u8);
-                writer.WriteBooleanValue(IsArchiveEnabled.Value);
-            }
-            if (Optional.IsDefined(PolicyName))
-            {
-                writer.WritePropertyName("policyName"u8);
-                writer.WriteStringValue(PolicyName);
-            }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
-            {
-                writer.WritePropertyName("softDeleteRetentionPeriod"u8);
-                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static IaasComputeVmProtectedItem DeserializeIaasComputeVmProtectedItem(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasComputeVmProtectedItem)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        IaasComputeVmProtectedItem IJsonModel<IaasComputeVmProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasComputeVmProtectedItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasComputeVmProtectedItem(document.RootElement, options);
+        }
+
+        internal static IaasComputeVmProtectedItem DeserializeIaasComputeVmProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> virtualMachineId = default;
-            Optional<string> protectionStatus = default;
-            Optional<BackupProtectionState> protectionState = default;
-            Optional<IaasVmProtectedItemHealthStatus> healthStatus = default;
-            Optional<IList<IaasVmHealthDetails>> healthDetails = default;
-            Optional<IDictionary<string, KpiResourceHealthDetails>> kpisHealths = default;
-            Optional<string> lastBackupStatus = default;
-            Optional<DateTimeOffset> lastBackupTime = default;
-            Optional<string> protectedItemDataId = default;
-            Optional<IaasVmProtectedItemExtendedInfo> extendedInfo = default;
-            Optional<IaasVmBackupExtendedProperties> extendedProperties = default;
+            string friendlyName = default;
+            ResourceIdentifier virtualMachineId = default;
+            string protectionStatus = default;
+            BackupProtectionState? protectionState = default;
+            IaasVmProtectedItemHealthStatus? healthStatus = default;
+            IList<IaasVmHealthDetails> healthDetails = default;
+            IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
+            string lastBackupStatus = default;
+            DateTimeOffset? lastBackupTime = default;
+            string protectedItemDataId = default;
+            IaasVmProtectedItemExtendedInfo extendedInfo = default;
+            IaasVmBackupExtendedProperties extendedProperties = default;
+            string policyType = default;
             string protectedItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<BackupDataSourceType> workloadType = default;
-            Optional<string> containerName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<DateTimeOffset> lastRecoveryPoint = default;
-            Optional<string> backupSetName = default;
-            Optional<BackupCreateMode> createMode = default;
-            Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
-            Optional<bool> isScheduledForDeferredDelete = default;
-            Optional<string> deferredDeleteTimeRemaining = default;
-            Optional<bool> isDeferredDeleteScheduleUpcoming = default;
-            Optional<bool> isRehydrate = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> policyName = default;
-            Optional<int> softDeleteRetentionPeriod = default;
+            BackupManagementType? backupManagementType = default;
+            BackupDataSourceType? workloadType = default;
+            string containerName = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier policyId = default;
+            DateTimeOffset? lastRecoveryPoint = default;
+            string backupSetName = default;
+            BackupCreateMode? createMode = default;
+            DateTimeOffset? deferredDeleteTimeInUTC = default;
+            bool? isScheduledForDeferredDelete = default;
+            string deferredDeleteTimeRemaining = default;
+            bool? isDeferredDeleteScheduleUpcoming = default;
+            bool? isRehydrate = default;
+            IList<string> resourceGuardOperationRequests = default;
+            bool? isArchiveEnabled = default;
+            string policyName = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            string vaultId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -193,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("virtualMachineId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -232,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<IaasVmHealthDetails> array = new List<IaasVmHealthDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IaasVmHealthDetails.DeserializeIaasVmHealthDetails(item));
+                        array.Add(IaasVmHealthDetails.DeserializeIaasVmHealthDetails(item, options));
                     }
                     healthDetails = array;
                     continue;
@@ -246,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, KpiResourceHealthDetails> dictionary = new Dictionary<string, KpiResourceHealthDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value));
+                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value, options));
                     }
                     kpisHealths = dictionary;
                     continue;
@@ -258,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("lastBackupTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -276,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = IaasVmProtectedItemExtendedInfo.DeserializeIaasVmProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = IaasVmProtectedItemExtendedInfo.DeserializeIaasVmProtectedItemExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedProperties"u8))
@@ -285,7 +192,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedProperties = IaasVmBackupExtendedProperties.DeserializeIaasVmBackupExtendedProperties(property.Value);
+                    extendedProperties = IaasVmBackupExtendedProperties.DeserializeIaasVmBackupExtendedProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("policyType"u8))
+                {
+                    policyType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))
@@ -318,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -327,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -336,7 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("lastRecoveryPoint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -359,7 +271,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("deferredDeleteTimeInUTC"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -426,17 +338,91 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softDeleteRetentionPeriod"u8))
+                if (property.NameEquals("softDeleteRetentionPeriodInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    softDeleteRetentionPeriod = property.Value.GetInt32();
+                    softDeleteRetentionPeriodInDays = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("vaultId"u8))
+                {
+                    vaultId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IaasComputeVmProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriod), friendlyName.Value, virtualMachineId.Value, protectionStatus.Value, Optional.ToNullable(protectionState), Optional.ToNullable(healthStatus), Optional.ToList(healthDetails), Optional.ToDictionary(kpisHealths), lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), protectedItemDataId.Value, extendedInfo.Value, extendedProperties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IaasComputeVmProtectedItem(
+                protectedItemType,
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoveryPoint,
+                backupSetName,
+                createMode,
+                deferredDeleteTimeInUTC,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData,
+                friendlyName,
+                virtualMachineId,
+                protectionStatus,
+                protectionState,
+                healthStatus,
+                healthDetails ?? new ChangeTrackingList<IaasVmHealthDetails>(),
+                kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(),
+                lastBackupStatus,
+                lastBackupTime,
+                protectedItemDataId,
+                extendedInfo,
+                extendedProperties,
+                policyType);
         }
+
+        BinaryData IPersistableModel<IaasComputeVmProtectedItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IaasComputeVmProtectedItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IaasComputeVmProtectedItem IPersistableModel<IaasComputeVmProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeIaasComputeVmProtectedItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IaasComputeVmProtectedItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IaasComputeVmProtectedItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

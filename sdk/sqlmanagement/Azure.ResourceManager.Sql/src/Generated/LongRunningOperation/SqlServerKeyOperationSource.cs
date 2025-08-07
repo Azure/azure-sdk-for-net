@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerKeyResource IOperationSource<SqlServerKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlServerKeyData.DeserializeSqlServerKeyData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlServerKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerKeyResource(_client, data);
         }
 
         async ValueTask<SqlServerKeyResource> IOperationSource<SqlServerKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlServerKeyData.DeserializeSqlServerKeyData(document.RootElement);
-            return new SqlServerKeyResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlServerKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new SqlServerKeyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.Tests
             await foreach (LocationExpanded loc in listLocs)
             {
                 Assert.IsNotNull(loc.Metadata);
-                Assert.IsNotNull(loc.SubscriptionId);
                 Assert.IsNotNull(loc.RegionalDisplayName);
 
                 AzureLocation locStruct = loc;

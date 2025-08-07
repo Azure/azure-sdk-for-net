@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Linked service for Dataworld. </summary>
     public partial class DataworldLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of DataworldLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataworldLinkedService"/>. </summary>
         /// <param name="apiToken">
         /// The api token for the Dataworld source.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,8 +28,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Dataworld";
         }
 
-        /// <summary> Initializes a new instance of DataworldLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataworldLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal DataworldLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, SecretBase apiToken, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal DataworldLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, SecretBase apiToken, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ApiToken = apiToken;
             EncryptedCredential = encryptedCredential;

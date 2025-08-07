@@ -9,23 +9,23 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
     /// A Class representing a LinkerResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LinkerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLinkerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetLinkerResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LinkerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLinkerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetLinkerResource method.
     /// </summary>
     public partial class LinkerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LinkerResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="linkerName"> The linkerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string linkerName)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}";
@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.ServiceLinker
         private readonly LinkerRestOperations _linkerResourceLinkerRestClient;
         private readonly LinkerResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/linkers";
+
         /// <summary> Initializes a new instance of the <see cref="LinkerResource"/> class for mocking. </summary>
         protected LinkerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LinkerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LinkerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LinkerResource(ArmClient client, LinkerResourceData data) : this(client, data.Id)
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.ServiceLinker
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/linkers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +177,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +220,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -229,6 +261,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +308,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -306,6 +354,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Validate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -339,6 +395,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,6 +438,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_ListConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -403,6 +475,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_ListConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

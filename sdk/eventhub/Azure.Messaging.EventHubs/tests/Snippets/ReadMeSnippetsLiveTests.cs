@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
 #else
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = "fakeHub";
+            var eventHubName = "fake";
 #endif
 
             // It is recommended that you cache the Event Hubs clients for the lifetime of your

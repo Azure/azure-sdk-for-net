@@ -9,9 +9,9 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Geolocation
 {
@@ -29,7 +29,7 @@ namespace Azure.Maps.Geolocation
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public GeolocationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "1.0")
@@ -61,16 +61,15 @@ namespace Azure.Maps.Geolocation
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
-        /// </summary>
+        /// <summary> Use to get the ISO country code for a given IP address. </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get IP To Location` API is an HTTP `GET` request that, given an IP address, returns the ISO country code from which that IP address is located. Developers can use this information to block or alter certain content based on geographical locations where the application is being viewed from.
+        /// </remarks>
         public async Task<Response<CountryRegionResult>> GetLocationAsync(JsonFormat format, string ipAddress, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
@@ -85,7 +84,7 @@ namespace Azure.Maps.Geolocation
                 case 200:
                     {
                         CountryRegionResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CountryRegionResult.DeserializeCountryRegionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -94,16 +93,15 @@ namespace Azure.Maps.Geolocation
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
-        /// </summary>
+        /// <summary> Use to get the ISO country code for a given IP address. </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get IP To Location` API is an HTTP `GET` request that, given an IP address, returns the ISO country code from which that IP address is located. Developers can use this information to block or alter certain content based on geographical locations where the application is being viewed from.
+        /// </remarks>
         public Response<CountryRegionResult> GetLocation(JsonFormat format, string ipAddress, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
@@ -118,7 +116,7 @@ namespace Azure.Maps.Geolocation
                 case 200:
                     {
                         CountryRegionResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CountryRegionResult.DeserializeCountryRegionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

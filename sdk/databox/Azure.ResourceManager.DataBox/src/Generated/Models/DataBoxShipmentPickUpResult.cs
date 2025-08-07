@@ -6,24 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Shipment pick up response. </summary>
     public partial class DataBoxShipmentPickUpResult
     {
-        /// <summary> Initializes a new instance of DataBoxShipmentPickUpResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxShipmentPickUpResult"/>. </summary>
         internal DataBoxShipmentPickUpResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxShipmentPickUpResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxShipmentPickUpResult"/>. </summary>
         /// <param name="confirmationNumber"> Confirmation number for the pick up request. </param>
         /// <param name="readyBy"> Time by which shipment should be ready for pick up, this is in local time of pick up area. </param>
-        internal DataBoxShipmentPickUpResult(string confirmationNumber, DateTimeOffset? readyBy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxShipmentPickUpResult(string confirmationNumber, DateTimeOffset? readyBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfirmationNumber = confirmationNumber;
             ReadyBy = readyBy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Confirmation number for the pick up request. </summary>

@@ -148,20 +148,20 @@ For more information see the Code of Conduct FAQ or contact opencode@microsoft.c
 <!-- LINKS -->
 [microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
 [azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [package]: https://www.nuget.org/packages/Azure.IoT.TimeSeriesInsights
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com/
-[azure_rest_api]: https://docs.microsoft.com/rest/api/azure/
+[azure_rest_api]: https://learn.microsoft.com/rest/api/azure/
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core
-[token_credential]: https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet
-[azure_cli]: https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest
+[token_credential]: https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet
+[azure_cli]: https://learn.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest
 [iot_cli_extension]: https://github.com/Azure/azure-iot-cli-extension/releases
-[iot_cli_doc]: https://docs.microsoft.com/cli/azure/ext/azure-iot/dt?view=azure-cli-latest
-[http_status_code]: https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1
+[iot_cli_doc]: https://learn.microsoft.com/cli/azure/ext/azure-iot/dt?view=azure-cli-latest
+[http_status_code]: https://learn.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1
 [tsi_nuget]: https://www.nuget.org/packages/Azure.IoT.TimeSeriesInsights
 [tsi_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src
-[tsi_product_documentation]: https://docs.microsoft.com/azure/time-series-insights/
+[tsi_product_documentation]: https://learn.microsoft.com/azure/time-series-insights/
 [tsi_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples/Readme.md

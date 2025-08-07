@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator ==(DevTestLabEnvironmentPermission left, DevTestLabEnvironmentPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabEnvironmentPermission"/> values are not the same. </summary>
         public static bool operator !=(DevTestLabEnvironmentPermission left, DevTestLabEnvironmentPermission right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevTestLabEnvironmentPermission"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabEnvironmentPermission"/>. </summary>
         public static implicit operator DevTestLabEnvironmentPermission(string value) => new DevTestLabEnvironmentPermission(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

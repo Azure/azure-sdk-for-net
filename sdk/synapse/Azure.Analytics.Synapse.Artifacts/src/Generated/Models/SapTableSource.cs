@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity source for SAP Table source. </summary>
     public partial class SapTableSource : TabularSource
     {
-        /// <summary> Initializes a new instance of SapTableSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapTableSource"/>. </summary>
         public SapTableSource()
         {
             Type = "SapTableSource";
         }
 
-        /// <summary> Initializes a new instance of SapTableSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapTableSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -33,9 +33,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="batchSize"> Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType integer). </param>
         /// <param name="customRfcReadTableFunctionModule"> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </param>
         /// <param name="sapDataColumnDelimiter"> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </param>
-        /// <param name="partitionOption"> The partition mechanism that will be used for SAP table read in parallel. </param>
+        /// <param name="partitionOption"> The partition mechanism that will be used for SAP table read in parallel. Possible values include: "None", "PartitionOnInt", "PartitionOnCalendarYear", "PartitionOnCalendarMonth", "PartitionOnCalendarDate", "PartitionOnTime". </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for SAP table source partitioning. </param>
-        internal SapTableSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object rowCount, object rowSkips, object rfcTableFields, object rfcTableOptions, object batchSize, object customRfcReadTableFunctionModule, object sapDataColumnDelimiter, SapTablePartitionOption? partitionOption, SapTablePartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        internal SapTableSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object rowCount, object rowSkips, object rfcTableFields, object rfcTableOptions, object batchSize, object customRfcReadTableFunctionModule, object sapDataColumnDelimiter, object partitionOption, SapTablePartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             RowCount = rowCount;
             RowSkips = rowSkips;
@@ -63,8 +63,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object CustomRfcReadTableFunctionModule { get; set; }
         /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
         public object SapDataColumnDelimiter { get; set; }
-        /// <summary> The partition mechanism that will be used for SAP table read in parallel. </summary>
-        public SapTablePartitionOption? PartitionOption { get; set; }
+        /// <summary> The partition mechanism that will be used for SAP table read in parallel. Possible values include: "None", "PartitionOnInt", "PartitionOnCalendarYear", "PartitionOnCalendarMonth", "PartitionOnCalendarDate", "PartitionOnTime". </summary>
+        public object PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for SAP table source partitioning. </summary>
         public SapTablePartitionSettings PartitionSettings { get; set; }
     }

@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The Communication Services error response. </summary>
     internal partial class CommunicationErrorResponse
     {
-        /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationErrorResponse"/>. </summary>
         /// <param name="error"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal CommunicationErrorResponse(CommunicationError error)

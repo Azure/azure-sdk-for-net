@@ -236,10 +236,16 @@
                 CloudPool boundPool;
 
                 {
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                     CloudPool unboundPool = poolOperations.CreatePool(
                         poolId: poolId,
                         virtualMachineSize: PoolFixture.VMSize,
-                        cloudServiceConfiguration: new CloudServiceConfiguration(PoolFixture.OSFamily),
+                        virtualMachineConfiguration: virtualMachineConfiguration,
                         targetDedicatedComputeNodes: 0);
 
                     // create the pool with initial cert refs
@@ -295,6 +301,12 @@
 
             try
             {
+                var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                    ubuntuImageDetails.ImageReference,
+                    nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                 PoolInformation poolInformation = new PoolInformation
                     {
                         AutoPoolSpecification = new AutoPoolSpecification
@@ -302,7 +314,7 @@
                                 PoolSpecification = new PoolSpecification
                                     {
                                         CertificateReferences = certificateReferences,
-                                        CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
+                                        VirtualMachineConfiguration = virtualMachineConfiguration,
                                         TargetDedicatedComputeNodes = 0,
                                         VirtualMachineSize = PoolFixture.VMSize,
                                     },
@@ -333,6 +345,11 @@
             Certificate certToDelete)
         {
             string poolId = "CancelDeleteCert-" + TestUtilities.GetMyName();
+            var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                ubuntuImageDetails.ImageReference,
+                nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
 
             try
             {
@@ -340,7 +357,7 @@
                     CloudPool unboundPool = batchCli.PoolOperations.CreatePool(
                         poolId: poolId,
                         virtualMachineSize: PoolFixture.VMSize,
-                        cloudServiceConfiguration: new CloudServiceConfiguration(PoolFixture.OSFamily),
+                        virtualMachineConfiguration: virtualMachineConfiguration,
                         targetDedicatedComputeNodes: 0);
                     unboundPool.CertificateReferences = certificateReferences;
 

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -12,18 +14,19 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A rule management event data source. The discriminator fields is always RuleManagementEventDataSource in this case. </summary>
     public partial class RuleManagementEventDataSource : RuleDataSource
     {
-        /// <summary> Initializes a new instance of RuleManagementEventDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleManagementEventDataSource"/>. </summary>
         public RuleManagementEventDataSource()
         {
             OdataType = "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource";
         }
 
-        /// <summary> Initializes a new instance of RuleManagementEventDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleManagementEventDataSource"/>. </summary>
         /// <param name="odataType"> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </param>
         /// <param name="resourceId"> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="resourceLocation"> the location of the resource. </param>
         /// <param name="metricNamespace"> the namespace of the metric. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventName"> the event name. </param>
         /// <param name="eventSource"> the event source. </param>
         /// <param name="level"> the level. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="status"> The status of the operation that should be checked for. If no status is provided, any status will match. </param>
         /// <param name="subStatus"> the substatus. </param>
         /// <param name="claims"> the claims. </param>
-        internal RuleManagementEventDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace, string eventName, string eventSource, string level, string operationName, string resourceGroupName, string resourceProviderName, string status, string subStatus, RuleManagementEventClaimsDataSource claims) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace)
+        internal RuleManagementEventDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace, IDictionary<string, BinaryData> serializedAdditionalRawData, string eventName, string eventSource, string level, string operationName, string resourceGroupName, string resourceProviderName, string status, string subStatus, RuleManagementEventClaimsDataSource claims) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace, serializedAdditionalRawData)
         {
             EventName = eventName;
             EventSource = eventSource;

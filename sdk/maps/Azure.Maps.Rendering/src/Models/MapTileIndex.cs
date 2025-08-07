@@ -14,15 +14,15 @@ namespace Azure.Maps.Rendering
         /// <summary> Initializes a new instance of MapTileIndex. </summary>
         /// <param name="x">
         /// X coordinate of the tile on zoom grid. Value must be in the range [0, (2^zoom)-1]].
-        /// Please see <see href="https://docs.microsoft.com/en-us/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
+        /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
         /// </param>
         /// <param name="y">
         /// Y coordinate of the tile on zoom grid. Value must be in the range [0, (2^zoom)-1]].
-        /// Please see <see href="https://docs.microsoft.com/en-us/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
+        /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
         /// </param>
         /// <param name="z">
         /// Zoom level for the desired tile.
-        /// Please see <see href="https://docs.microsoft.com/en-us/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
+        /// Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details.
         /// </param>
         public MapTileIndex(int x, int y, int z)
         {

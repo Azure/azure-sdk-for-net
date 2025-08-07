@@ -5,49 +5,82 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for SocketAddress match conditions. </summary>
-    public partial class SocketAddressMatchCondition
+    /// <summary>
+    /// Defines the parameters for SocketAddress match conditions
+    /// Serialized Name: SocketAddrMatchConditionParameters
+    /// </summary>
+    public partial class SocketAddressMatchCondition : DeliveryRuleConditionProperties
     {
-        /// <summary> Initializes a new instance of SocketAddressMatchCondition. </summary>
-        /// <param name="conditionType"></param>
-        /// <param name="socketAddressOperator"> Describes operator to be matched. </param>
-        public SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator socketAddressOperator)
+        /// <summary> Initializes a new instance of <see cref="SocketAddressMatchCondition"/>. </summary>
+        /// <param name="socketAddressOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: SocketAddrMatchConditionParameters.operator
+        /// </param>
+        public SocketAddressMatchCondition(SocketAddressOperator socketAddressOperator)
         {
-            ConditionType = conditionType;
             SocketAddressOperator = socketAddressOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
+            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleSocketAddrConditionParameters;
         }
 
-        /// <summary> Initializes a new instance of SocketAddressMatchCondition. </summary>
-        /// <param name="conditionType"></param>
-        /// <param name="socketAddressOperator"> Describes operator to be matched. </param>
-        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
-        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        /// <param name="transforms"> List of transforms. </param>
-        internal SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator socketAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        /// <summary> Initializes a new instance of <see cref="SocketAddressMatchCondition"/>. </summary>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="socketAddressOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: SocketAddrMatchConditionParameters.operator
+        /// </param>
+        /// <param name="negateCondition">
+        /// Describes if this is negate condition or not
+        /// Serialized Name: SocketAddrMatchConditionParameters.negateCondition
+        /// </param>
+        /// <param name="matchValues">
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: SocketAddrMatchConditionParameters.matchValues
+        /// </param>
+        /// <param name="transforms">
+        /// List of transforms
+        /// Serialized Name: SocketAddrMatchConditionParameters.transforms
+        /// </param>
+        internal SocketAddressMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, SocketAddressOperator socketAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
-            ConditionType = conditionType;
             SocketAddressOperator = socketAddressOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            TypeName = typeName;
         }
 
-        /// <summary> Gets or sets the condition type. </summary>
-        public SocketAddressMatchConditionType ConditionType { get; set; }
-        /// <summary> Describes operator to be matched. </summary>
+        /// <summary> Initializes a new instance of <see cref="SocketAddressMatchCondition"/> for deserialization. </summary>
+        internal SocketAddressMatchCondition()
+        {
+        }
+
+        /// <summary>
+        /// Describes operator to be matched
+        /// Serialized Name: SocketAddrMatchConditionParameters.operator
+        /// </summary>
         public SocketAddressOperator SocketAddressOperator { get; set; }
-        /// <summary> Describes if this is negate condition or not. </summary>
+        /// <summary>
+        /// Describes if this is negate condition or not
+        /// Serialized Name: SocketAddrMatchConditionParameters.negateCondition
+        /// </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary> The match value for the condition of the delivery rule. </summary>
+        /// <summary>
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: SocketAddrMatchConditionParameters.matchValues
+        /// </summary>
         public IList<string> MatchValues { get; }
-        /// <summary> List of transforms. </summary>
+        /// <summary>
+        /// List of transforms
+        /// Serialized Name: SocketAddrMatchConditionParameters.transforms
+        /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

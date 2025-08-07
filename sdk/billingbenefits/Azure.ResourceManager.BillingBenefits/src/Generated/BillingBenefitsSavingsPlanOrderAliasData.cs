@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.BillingBenefits
     /// </summary>
     public partial class BillingBenefitsSavingsPlanOrderAliasData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanOrderAliasData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderAliasData"/>. </summary>
         /// <param name="sku"> Savings plan SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public BillingBenefitsSavingsPlanOrderAliasData(BillingBenefitsSku sku)
@@ -28,7 +61,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanOrderAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +77,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
         /// <param name="commitment"> Commitment towards the benefit. </param>
-        internal BillingBenefitsSavingsPlanOrderAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string kind, string displayName, ResourceIdentifier savingsPlanOrderId, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, BillingBenefitsCommitment commitment) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanOrderAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string kind, string displayName, ResourceIdentifier savingsPlanOrderId, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, BillingBenefitsCommitment commitment, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Kind = kind;
@@ -57,6 +91,12 @@ namespace Azure.ResourceManager.BillingBenefits
             AppliedScopeType = appliedScopeType;
             AppliedScopeProperties = appliedScopeProperties;
             Commitment = commitment;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderAliasData"/> for deserialization. </summary>
+        internal BillingBenefitsSavingsPlanOrderAliasData()
+        {
         }
 
         /// <summary> Savings plan SKU. </summary>

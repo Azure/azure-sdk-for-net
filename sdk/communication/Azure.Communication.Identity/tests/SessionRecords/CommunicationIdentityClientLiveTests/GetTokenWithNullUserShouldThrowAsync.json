@@ -1,6 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg=="
-  }
-}

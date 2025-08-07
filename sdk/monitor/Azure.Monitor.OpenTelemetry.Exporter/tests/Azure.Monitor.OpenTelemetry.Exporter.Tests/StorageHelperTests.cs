@@ -72,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var platform = new MockPlatform();
             platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
-            platform.CreateDirectoryFunc = (path) => false;
+            platform.CreateDirectoryFunc = (path) => throw new Exception("unit test: failed to create directory");
 
             Assert.Throws<InvalidOperationException>(() => StorageHelper.GetStorageDirectory(platform: platform, configuredStorageDirectory: null, instrumentationKey: "00000000-0000-0000-0000-000000000000"));
         }
@@ -101,12 +101,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             // In NON-Windows environments, First attempt is an EnvironmentVariable.
             // If that's not available, we'll attempt hardcoded defaults.
+            // This test simulates repeated failures to verify that the StorageHelper is selecting the expected directories.
             int attemptCount = 0;
 
             var platform = new MockPlatform();
             platform.IsOsPlatformFunc = (os) => os.ToString() == "LINUX";
             platform.SetEnvironmentVariable("TMPDIR", envVarValue);
-            platform.CreateDirectoryFunc = (path) => attemptCount++ == attempt;
+            platform.CreateDirectoryFunc = (path) =>
+            {
+                if (attemptCount++ != attempt)
+                {
+                    throw new Exception("unit test: failed to create directory");
+                }
+            };
 
             var directoryPath = StorageHelper.GetDefaultStorageDirectory(platform: platform);
 

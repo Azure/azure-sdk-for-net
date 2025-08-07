@@ -10,22 +10,37 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The PlaySource. </summary>
     internal partial class PlaySourceInternal
     {
-        /// <summary> Initializes a new instance of PlaySourceInternal. </summary>
-        /// <param name="sourceType"> Defines the type of the play source. </param>
-        public PlaySourceInternal(PlaySourceTypeInternal sourceType)
+        /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
+        /// <param name="kind"> Defines the type of the play source. </param>
+        public PlaySourceInternal(PlaySourceTypeInternal kind)
         {
-            SourceType = sourceType;
+            Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
+        /// <param name="kind"> Defines the type of the play source. </param>
+        /// <param name="playSourceCacheId"> Defines the identifier to be used for caching related media. </param>
+        /// <param name="file"> Defines the file source info to be used for play. </param>
+        /// <param name="text"> Defines the text source info to be used for play. </param>
+        /// <param name="ssml"> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </param>
+        internal PlaySourceInternal(PlaySourceTypeInternal kind, string playSourceCacheId, FileSourceInternal file, TextSourceInternal text, SsmlSourceInternal ssml)
+        {
+            Kind = kind;
+            PlaySourceCacheId = playSourceCacheId;
+            File = file;
+            Text = text;
+            Ssml = ssml;
         }
 
         /// <summary> Defines the type of the play source. </summary>
-        public PlaySourceTypeInternal SourceType { get; }
+        public PlaySourceTypeInternal Kind { get; }
         /// <summary> Defines the identifier to be used for caching related media. </summary>
-        public string PlaySourceId { get; set; }
+        public string PlaySourceCacheId { get; set; }
         /// <summary> Defines the file source info to be used for play. </summary>
-        public FileSourceInternal FileSource { get; set; }
+        public FileSourceInternal File { get; set; }
         /// <summary> Defines the text source info to be used for play. </summary>
-        public TextSourceInternal TextSource { get; set; }
+        public TextSourceInternal Text { get; set; }
         /// <summary> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </summary>
-        public SsmlSourceInternal SsmlSource { get; set; }
+        public SsmlSourceInternal Ssml { get; set; }
     }
 }

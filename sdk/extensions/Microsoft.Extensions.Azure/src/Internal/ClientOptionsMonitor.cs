@@ -3,13 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 
 namespace Microsoft.Extensions.Azure
 {
     // Slightly adjusted copy of https://github.com/aspnet/Extensions/blob/master/src/Options/Options/src/OptionsMonitor.cs
-    internal class ClientOptionsMonitor<TClient, TOptions> : IOptionsMonitor<TOptions>, IDisposable where TOptions : class
+    internal class ClientOptionsMonitor<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>
+        : IOptionsMonitor<TOptions>, IDisposable where TOptions : class
     {
         private readonly IOptionsMonitorCache<TOptions> _cache;
         private readonly ClientOptionsFactory<TClient, TOptions> _factory;

@@ -28,6 +28,9 @@ namespace Azure.Storage.Blobs.Models
         /// include both updated and cleared pages. The target blob may be a
         /// snapshot, as long as the snapshot specified by
         /// <see cref="PreviousSnapshot"/> is the older of the two.
+        /// For more information on working with blob snapshots,
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
         /// </summary>
         public string PreviousSnapshot { get; set; }
 

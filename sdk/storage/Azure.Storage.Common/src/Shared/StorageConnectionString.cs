@@ -222,9 +222,9 @@ namespace Azure.Storage
         public object Credentials { get; set; }
 
         /// <summary>
-        /// Private record of the account name for use in ToString(bool).
+        /// Gets the account name.
         /// </summary>
-        internal string _accountName;
+        public string AccountName;
 
         /// <summary>
         /// Parses a connection string and returns a <see cref="StorageConnectionString"/> created
@@ -516,7 +516,7 @@ namespace Azure.Storage
                             Settings = s_validCredentials(settings)
                         };
 
-                    accountInformation._accountName = settingOrDefault(Constants.ConnectionStrings.AccountNameSetting);
+                    accountInformation.AccountName = settingOrDefault(Constants.ConnectionStrings.AccountNameSetting);
 
                     return true;
                 }

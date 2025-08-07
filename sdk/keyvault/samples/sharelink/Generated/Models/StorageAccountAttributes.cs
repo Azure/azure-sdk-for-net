@@ -12,12 +12,12 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The storage account management attributes. </summary>
     public partial class StorageAccountAttributes
     {
-        /// <summary> Initializes a new instance of StorageAccountAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountAttributes"/>. </summary>
         public StorageAccountAttributes()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountAttributes"/>. </summary>
         /// <param name="enabled"> the enabled state of the object. </param>
         /// <param name="created"> Creation time in UTC. </param>
         /// <param name="updated"> Last updated time in UTC. </param>

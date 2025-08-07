@@ -12,6 +12,7 @@ parameters:
     default: ''
 
 steps:
+
   - pwsh: |
        Install-Module -Name Pester -Force
     displayName: Install Pester
@@ -48,10 +49,9 @@ steps:
       testResultsFiles: $(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}/testResults.xml
       testRunTitle: $(System.StageName)_$(Agent.JobName)_Tests
 
-  - task: PublishCodeCoverageResults@1
+  - task: PublishCodeCoverageResults@2
     displayName: Publish Code Coverage to Azure DevOps
     condition: succeededOrFailed()
     inputs:
-      codeCoverageTool: JaCoCo
       summaryFileLocation: $(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}/coverage.xml
       pathToSources: $(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}

@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
@@ -19,16 +19,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusManageRules
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string topicName = "<topic_name>";
                 string subscriptionName = "<subscription_name>";
+                DefaultAzureCredential credential = new();
 #else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string topicName = scope.TopicName;
                 string subscriptionName = scope.SubscriptionNames.First();
+                var credential = TestEnvironment.Credential;
 #endif
 
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
                 await using ServiceBusRuleManager ruleManager = client.CreateRuleManager(topicName, subscriptionName);
 
@@ -43,9 +45,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 ServiceBusMessage[] messages =
                 {
-                    new ServiceBusMessage { Subject = "Ford", ApplicationProperties = { { "Price", 25000 } } },
-                    new ServiceBusMessage { Subject = "Toyota", ApplicationProperties = { { "Price", 28000 } } },
-                    new ServiceBusMessage { Subject = "Honda", ApplicationProperties = { { "Price", 35000 } } }
+                    new ServiceBusMessage() { Subject = "Ford", ApplicationProperties = { { "Price", 25000 } } },
+                    new ServiceBusMessage() { Subject = "Toyota", ApplicationProperties = { { "Price", 28000 } } },
+                    new ServiceBusMessage() { Subject = "Honda", ApplicationProperties = { { "Price", 35000 } } }
                 };
 
                 // send the messages

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> If the encrypted VNet allows VM that does not support encryption. </summary>
+    /// <summary> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </summary>
     public readonly partial struct VirtualNetworkEncryptionEnforcement : IEquatable<VirtualNetworkEncryptionEnforcement>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(VirtualNetworkEncryptionEnforcement left, VirtualNetworkEncryptionEnforcement right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkEncryptionEnforcement"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkEncryptionEnforcement left, VirtualNetworkEncryptionEnforcement right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkEncryptionEnforcement"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkEncryptionEnforcement"/>. </summary>
         public static implicit operator VirtualNetworkEncryptionEnforcement(string value) => new VirtualNetworkEncryptionEnforcement(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

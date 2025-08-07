@@ -11,5 +11,10 @@ namespace Azure.Storage
 
         public static bool DisableRequestConditionsValidation => _disableRequestConditionsValidation
             ??= AppContextSwitchHelper.GetConfigValue(Constants.DisableRequestConditionsValidationSwitchName, Constants.DisableRequestConditionsValidationEnvVar);
+
+        private static bool? _disableExpectContinueHeader;
+
+        public static bool DisableExpectContinueHeader => _disableExpectContinueHeader
+            ??= AppContextSwitchHelper.GetConfigValue(Constants.DisableExpectContinueHeaderSwitchName, Constants.DisableExpectContinueHeaderEnvVar);
     }
 }

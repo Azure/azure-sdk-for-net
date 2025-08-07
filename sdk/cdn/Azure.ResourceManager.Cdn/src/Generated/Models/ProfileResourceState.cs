@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Resource status of the profile. </summary>
+    /// <summary>
+    /// Resource status of the profile.
+    /// Serialized Name: ProfileResourceState
+    /// </summary>
     public readonly partial struct ProfileResourceState : IEquatable<ProfileResourceState>
     {
         private readonly string _value;
@@ -26,20 +29,62 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ActiveValue = "Active";
         private const string DeletingValue = "Deleting";
         private const string DisabledValue = "Disabled";
+        private const string MigratingValue = "Migrating";
+        private const string MigratedValue = "Migrated";
+        private const string PendingMigrationCommitValue = "PendingMigrationCommit";
+        private const string CommittingMigrationValue = "CommittingMigration";
+        private const string AbortingMigrationValue = "AbortingMigration";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ProfileResourceState.Creating
+        /// </summary>
         public static ProfileResourceState Creating { get; } = new ProfileResourceState(CreatingValue);
-        /// <summary> Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: ProfileResourceState.Active
+        /// </summary>
         public static ProfileResourceState Active { get; } = new ProfileResourceState(ActiveValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProfileResourceState.Deleting
+        /// </summary>
         public static ProfileResourceState Deleting { get; } = new ProfileResourceState(DeletingValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ProfileResourceState.Disabled
+        /// </summary>
         public static ProfileResourceState Disabled { get; } = new ProfileResourceState(DisabledValue);
+        /// <summary>
+        /// Migrating
+        /// Serialized Name: ProfileResourceState.Migrating
+        /// </summary>
+        public static ProfileResourceState Migrating { get; } = new ProfileResourceState(MigratingValue);
+        /// <summary>
+        /// Migrated
+        /// Serialized Name: ProfileResourceState.Migrated
+        /// </summary>
+        public static ProfileResourceState Migrated { get; } = new ProfileResourceState(MigratedValue);
+        /// <summary>
+        /// PendingMigrationCommit
+        /// Serialized Name: ProfileResourceState.PendingMigrationCommit
+        /// </summary>
+        public static ProfileResourceState PendingMigrationCommit { get; } = new ProfileResourceState(PendingMigrationCommitValue);
+        /// <summary>
+        /// CommittingMigration
+        /// Serialized Name: ProfileResourceState.CommittingMigration
+        /// </summary>
+        public static ProfileResourceState CommittingMigration { get; } = new ProfileResourceState(CommittingMigrationValue);
+        /// <summary>
+        /// AbortingMigration
+        /// Serialized Name: ProfileResourceState.AbortingMigration
+        /// </summary>
+        public static ProfileResourceState AbortingMigration { get; } = new ProfileResourceState(AbortingMigrationValue);
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are the same. </summary>
         public static bool operator ==(ProfileResourceState left, ProfileResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are not the same. </summary>
         public static bool operator !=(ProfileResourceState left, ProfileResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProfileResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProfileResourceState"/>. </summary>
         public static implicit operator ProfileResourceState(string value) => new ProfileResourceState(value);
 
         /// <inheritdoc />
@@ -50,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

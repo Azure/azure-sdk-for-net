@@ -2,4 +2,14 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.AppContainers.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.ExtendedLocations" />
+    <PackageReference Include="Azure.ResourceManager.Kubernetes" />
+    <PackageReference Include="Azure.ResourceManager.KubernetesConfiguration" />
+    <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
+  </ItemGroup>
 </Project>

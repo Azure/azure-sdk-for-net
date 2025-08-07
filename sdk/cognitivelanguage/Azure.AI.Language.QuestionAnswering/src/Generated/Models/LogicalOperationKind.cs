@@ -28,7 +28,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public static bool operator ==(LogicalOperationKind left, LogicalOperationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicalOperationKind"/> values are not the same. </summary>
         public static bool operator !=(LogicalOperationKind left, LogicalOperationKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogicalOperationKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogicalOperationKind"/>. </summary>
         public static implicit operator LogicalOperationKind(string value) => new LogicalOperationKind(value);
 
         /// <inheritdoc />
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.QuestionAnswering
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

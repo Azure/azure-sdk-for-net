@@ -10,12 +10,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Property of an event that is either stored or computed. Properties are identified by both name and type. Different events can have properties with same name, but different type. </summary>
     public partial class TimeSeriesInsightsEventProperty
     {
-        /// <summary> Initializes a new instance of TimeSeriesInsightsEventProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesInsightsEventProperty"/>. </summary>
         public TimeSeriesInsightsEventProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesInsightsEventProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesInsightsEventProperty"/>. </summary>
         /// <param name="name"> The name of the property. </param>
         /// <param name="propertyValueType"> The type of the property. </param>
         internal TimeSeriesInsightsEventProperty(string name, TimeSeriesPropertyType? propertyValueType)

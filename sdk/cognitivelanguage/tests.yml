@@ -13,4 +13,12 @@ extends:
       AZURE_QUESTIONANSWERING_ENDPOINT: $(qna-uri)
       AZURE_QUESTIONANSWERING_KEY: $(qna-key)
       AZURE_QUESTIONANSWERING_PROJECT: $(qna-project)
+      AZURE_TEXT_KEY: $(ta-key)
+      AZURE_TEXT_ENDPOINT: $(ta-uri)
+      AZURE_TEXT_CUSTOM_NER_PROJECT: $(ct-project)
+      AZURE_TEXT_CUSTOM_NER_DEPLOYMENT: $(ct-deployment)
+      AZURE_TEXT_CUSTOM_SINGLE_CLASSIFICATION_PROJECT: $(csc-project)
+      AZURE_TEXT_CUSTOM_SINGLE_CLASSIFICATION_DEPLOYMENT: $(csc-deployment)
+      AZURE_TEXT_CUSTOM_MULTI_CLASSIFICATION_PROJECT: $(cmc-project)
+      AZURE_TEXT_CUSTOM_MULTI_CLASSIFICATION_DEPLOYMENT: $(cmc-deployment)
     ServiceDirectory: cognitivelanguage

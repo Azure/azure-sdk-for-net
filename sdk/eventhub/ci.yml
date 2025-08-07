@@ -13,8 +13,6 @@ trigger:
     - sdk/eventhub/Azure.Messaging.EventHubs
     - sdk/eventhub/Azure.Messaging.EventHubs.Processor
     - sdk/eventhub/Azure.Messaging.EventHubs.Shared
-    - sdk/eventhub/Azure.Messaging.EventHubs.Experimental
-    - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
 
 pr:
   branches:
@@ -30,8 +28,6 @@ pr:
     - sdk/eventhub/Azure.Messaging.EventHubs
     - sdk/eventhub/Azure.Messaging.EventHubs.Processor
     - sdk/eventhub/Azure.Messaging.EventHubs.Shared
-    - sdk/eventhub/Azure.Messaging.EventHubs.Experimental
-    - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -42,9 +38,15 @@ extends:
     Artifacts:
     - name: Azure.Messaging.EventHubs
       safeName: AzureMessagingEventHubs
+      triggeringPaths:
+      - Azure.Messaging.EventHubs.Shared
     - name: Azure.Messaging.EventHubs.Processor
       safeName: AzureMessagingEventHubsProcessor
-    - name: Azure.Messaging.EventHubs.Experimental
-      safeName: AzureMessagingEventHubsExperimental
-    - name: Microsoft.Azure.WebJobs.Extensions.EventHubs
-      safeName: MicrosoftAzureWebJobsExtensionsEventHubs
+      triggeringPaths:
+      - Azure.Messaging.EventHubs.Shared
+    CheckAotCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Messaging.EventHubs
+      ExpectedWarningsFilepath: Azure.Messaging.EventHubs/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Messaging.EventHubs.Processor
+      ExpectedWarningsFilepath: Azure.Messaging.EventHubs.Processor/tests/compatibility/ExpectedWarnings.txt

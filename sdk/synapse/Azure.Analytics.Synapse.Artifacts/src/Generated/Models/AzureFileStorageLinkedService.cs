@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Azure File Storage linked service. </summary>
     public partial class AzureFileStorageLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureFileStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileStorageLinkedService"/>. </summary>
         /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public AzureFileStorageLinkedService(object host)
@@ -25,8 +24,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureFileStorage";
         }
 
-        /// <summary> Initializes a new instance of AzureFileStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileStorageLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -46,7 +46,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="fileShare"> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </param>
         /// <param name="snapshot"> The azure file share snapshot version. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureFileStorageLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object userId, SecretBase password, object connectionString, AzureKeyVaultSecretReference accountKey, object sasUri, AzureKeyVaultSecretReference sasToken, object fileShare, object snapshot, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="serviceEndpoint"> File service endpoint of the Azure File Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureFileStorageLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, object userId, SecretBase password, object connectionString, AzureKeyVaultSecretReference accountKey, object sasUri, AzureKeyVaultSecretReference sasToken, object fileShare, object snapshot, object encryptedCredential, object serviceEndpoint, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             UserId = userId;
@@ -58,6 +60,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             FileShare = fileShare;
             Snapshot = snapshot;
             EncryptedCredential = encryptedCredential;
+            ServiceEndpoint = serviceEndpoint;
+            Credential = credential;
             Type = type ?? "AzureFileStorage";
         }
 
@@ -85,5 +89,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Snapshot { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> File service endpoint of the Azure File Storage resource. It is mutually exclusive with connectionString, sasUri property. </summary>
+        public object ServiceEndpoint { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

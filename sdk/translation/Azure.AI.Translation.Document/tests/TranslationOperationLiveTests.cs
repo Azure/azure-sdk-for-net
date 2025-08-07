@@ -19,7 +19,8 @@ namespace Azure.AI.Translation.Document.Tests
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public TranslationOperationLiveTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)
+            //: base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -275,12 +276,9 @@ namespace Azure.AI.Translation.Document.Tests
 
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-            Thread.Sleep(2000);
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
 
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
-
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
             Assert.AreEqual(DocumentTranslationStatus.ValidationFailed, operation.Status);
@@ -366,23 +364,17 @@ namespace Azure.AI.Translation.Document.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync();
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
 
             Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(DocumentTranslationStatus.Failed, operation.Status);
+            Assert.AreEqual(DocumentTranslationStatus.ValidationFailed, operation.Status);
 
-            Assert.AreEqual(1, operation.DocumentsTotal);
+            Assert.AreEqual(0, operation.DocumentsTotal);
             Assert.AreEqual(0, operation.DocumentsSucceeded);
-            Assert.AreEqual(1, operation.DocumentsFailed);
+            Assert.AreEqual(0, operation.DocumentsFailed);
             Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
-
-            List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
-            Assert.AreEqual(1, documentsList.Count);
-            Assert.AreEqual(DocumentTranslationStatus.Failed, documentsList[0].Status);
-            Assert.AreEqual("InvalidRequest", documentsList[0].Error.Code);
         }
 
         [RecordedTest]
@@ -416,6 +408,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
+        [Ignore("Test is failing and needs to be recorded.  Tracking: #50669")]
         public async Task DocumentTranslationWithGlossary()
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);

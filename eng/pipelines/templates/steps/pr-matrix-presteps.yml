@@ -1,0 +1,64 @@
+parameters:
+  - name: PublishingArtifactName
+    type: string
+  - name: ServiceDirectory
+    type: string
+  - name: ForceDirect
+    type: boolean
+    default: false
+  - name: ExcludePaths
+    type: object
+    default: []
+
+steps:
+  - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+  - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+    parameters:
+      ServiceDirectory: ${{parameters.ServiceDirectory}}
+      PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
+      ExcludePaths: ${{ parameters.ExcludePaths }}
+
+  # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation steps
+  # that will execute directly after the pregeneration steps here, we output them to a publishing directory, copy from there into the target PackageInfoDirectory,
+  # and then publish the originals
+  - pwsh: |
+      mkdir "$(Build.ArtifactStagingDirectory)/PackageInfo"
+      Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing" -File `
+        | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo/$($_.Name)" -Force
+    displayName: Copy ArtifactInfo from Publishing Directory
+
+  - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+    parameters:
+      ArtifactName: '${{ parameters.PublishingArtifactName }}'
+      ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
+
+  - pwsh: |
+      $packageInfos = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse `
+        | ForEach-Object { Get-Content $_.FullName | ConvertFrom-Json }
+
+      $directPackages = $packageInfos | Where-Object { $_.IncludedForValidation -eq $false }
+
+      if (!$directPackages) {
+        Write-Host "Falling back to Azure.Template from the original package list. There are no other direct packages for assembly."
+
+        # grab just the Azure.Template package from the original list, set it to direct
+        Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "Azure.Template.json" -Recurse |
+          ForEach-Object {
+            $json = Get-Content $_.FullName | ConvertFrom-Json
+            $json.IncludedForValidation = $false
+            $json | ConvertTo-Json -Depth 100 | Set-Content $_.FullName
+          }
+      }
+
+      # remove all the indirect packages from the list of packages that we want to generate matrix for
+      Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse |
+        ForEach-Object {
+          $json = Get-Content $_.FullName | ConvertFrom-Json
+          if ($json.IncludedForValidation -eq $true) {
+            Remove-Item $_.FullName -Force
+          }
+        }
+    displayName: Only target direct packages for build and test
+    condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
+

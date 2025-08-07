@@ -7,23 +7,23 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSqlServerSqlMITaskOutputAgentJobLevel. </summary>
     public partial class MigrateSqlServerSqlMITaskOutputAgentJobLevel : MigrateSqlServerSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputAgentJobLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>. </summary>
         internal MigrateSqlServerSqlMITaskOutputAgentJobLevel()
         {
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "AgentJobLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputAgentJobLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Agent Job name. </param>
         /// <param name="isEnabled"> The state of the original Agent Job. </param>
         /// <param name="state"> Current state of migration. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration errors and warnings per job. </param>
-        internal MigrateSqlServerSqlMITaskOutputAgentJobLevel(string id, string resultType, string name, bool? isEnabled, MigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        internal MigrateSqlServerSqlMITaskOutputAgentJobLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, bool? isEnabled, DataMigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             Name = name;
             IsEnabled = isEnabled;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> The state of the original Agent Job. </summary>
         public bool? IsEnabled { get; }
         /// <summary> Current state of migration. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
         /// <summary> Migration end time. </summary>
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration progress message. </summary>
         public string Message { get; }
         /// <summary> Migration errors and warnings per job. </summary>
-        public IReadOnlyList<ReportableException> ExceptionsAndWarnings { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
     }
 }

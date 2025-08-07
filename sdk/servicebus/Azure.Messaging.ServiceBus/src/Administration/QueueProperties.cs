@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -12,6 +12,7 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// <summary>
     /// Represents the static properties of the queue.
     /// </summary>
+    [SuppressMessage("Usage", "AZC0034:Type name 'QueueProperties' conflicts with 'Azure.Storage.Queues.Models.QueueProperties (from Azure.Storage.Queues)'. Consider renaming to 'AdministrationQueuePropertiesClient' or 'AdministrationQueuePropertiesService' to avoid confusion.", Justification = "The type name is already approved in a stable version.")]
     public class QueueProperties : IEquatable<QueueProperties>
     {
         private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
@@ -139,6 +140,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// The <see cref="TimeSpan"/> idle interval after which the queue is automatically deleted.
         /// </summary>
         /// <remarks>The minimum duration is 5 minutes. Default value is <see cref="TimeSpan.MaxValue"/>.</remarks>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/message-expiration#idleness">Service Bus: Idleness</seealso>
         public TimeSpan AutoDeleteOnIdle
         {
             get => _autoDeleteOnIdle;
@@ -315,7 +317,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         /// Gets or sets the maximum message size, in kilobytes, for messages sent to this queue.
         /// This feature is only available when using a Premium namespace and service version "2021-05" or higher.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging"/>
         /// </summary>
         public long? MaxMessageSizeInKilobytes { get; set; }
 

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static bool operator ==(MoverDependencyLevel left, MoverDependencyLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverDependencyLevel"/> values are not the same. </summary>
         public static bool operator !=(MoverDependencyLevel left, MoverDependencyLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MoverDependencyLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MoverDependencyLevel"/>. </summary>
         public static implicit operator MoverDependencyLevel(string value) => new MoverDependencyLevel(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

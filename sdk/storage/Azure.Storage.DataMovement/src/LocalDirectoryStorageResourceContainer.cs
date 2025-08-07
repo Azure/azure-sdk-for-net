@@ -7,31 +7,20 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Defines the local directory to transfer to or from
     /// </summary>
-    public class LocalDirectoryStorageResourceContainer : StorageResourceContainer
+    internal class LocalDirectoryStorageResourceContainer : StorageResourceContainer
     {
-        private string _path;
+        private Uri _uri;
 
-        /// <summary>
-        /// Gets the path
-        /// </summary>
-        public override string Path => _path;
+        public override Uri Uri => _uri;
 
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected internal override bool CanProduceUri => false;
-
-        /// <summary>
-        /// Cannot get Uri. Will throw NotSupportedException();
-        /// </summary>
-        public override Uri Uri => throw new NotSupportedException();
+        public override string ProviderId => "local";
 
         /// <summary>
         /// Constructor
@@ -40,63 +29,86 @@ namespace Azure.Storage.DataMovement
         public LocalDirectoryStorageResourceContainer(string path)
         {
             Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
-            _path = path;
+            _uri = PathScanner.GetEncodedUriFromPath(path);
+        }
+
+        /// <summary>
+        /// Internal Constructor for uri
+        /// </summary>
+        /// <param name="uri"></param>
+        internal LocalDirectoryStorageResourceContainer(Uri uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNullOrWhiteSpace(uri.AbsoluteUri, nameof(uri));
+            _uri = uri;
         }
 
         /// <summary>
         /// Gets the storage Resource
         /// </summary>
         /// <param name="childPath"></param>
+        /// <param name="resourceId"></param>
         /// <returns></returns>
-        protected internal override StorageResourceSingle GetChildStorageResource(string childPath)
+        protected internal override StorageResourceItem GetStorageResourceReference(string childPath, string resourceId)
         {
-            string concatPath = System.IO.Path.Combine(Path, childPath);
+            Uri concatPath = _uri.AppendToPath(childPath);
             return new LocalFileStorageResource(concatPath);
         }
 
         /// <summary>
         /// Lists storage resource in the filesystem.
         /// </summary>
+        /// <param name="destinationContainer"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         protected internal override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            StorageResourceContainer destinationContainer = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            PathScanner scanner = new PathScanner(_path);
+            PathScanner scanner = new PathScanner(_uri.LocalPath);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
-                // Skip over directories for now since directory creation is unnecessary.
-                if (!fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
+                if (fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
                 {
+                    // Directory - but check for the case where it returns the directory you're currently listing
+                    if (fileSystemInfo.FullName != _uri.LocalPath)
+                    {
+                        yield return new LocalDirectoryStorageResourceContainer(fileSystemInfo.FullName);
+                    }
+                }
+                else
+                {
+                    // File
                     yield return new LocalFileStorageResource(fileSystemInfo.FullName);
                 }
             }
         }
 
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static LocalDirectoryStorageResourceContainer RehydrateResource(
-            DataTransferProperties transferProperties,
-            bool isSource)
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            return new LocalSourceCheckpointDetails();
+        }
 
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
+        {
+            return new LocalDestinationCheckpointDetails();
+        }
 
-            return new LocalDirectoryStorageResourceContainer(storedPath);
+        protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
+
+        protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
+        {
+            Uri concatPath = _uri.AppendToPath(path);
+            return new LocalDirectoryStorageResourceContainer(concatPath);
+        }
+
+        protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            // Will implement this when implementing NFS Upload
+            return Task.FromResult(new StorageResourceContainerProperties());
         }
     }
 }

@@ -12,30 +12,35 @@ namespace Azure.Maps.Rendering
     /// <summary> Client options for MapsRenderClient. </summary>
     public partial class MapsRenderingClientOptions : Azure.Core.ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2022_08_01;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2024_04_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2022-08-01". </summary>
-            V2022_08_01 = 1,
+            /// <summary> Service version "2024-04-01". </summary>
+            V2024_04_01 = 1,
         }
 
         internal string Version { get; }
 
         internal Uri Endpoint { get; }
 
+        /// <summary> The Accept header field can be used to specify preferences regarding response media types. Allowed media types include image/jpeg and image/png. Return image in image/png if Accept header is not specified. </summary>
+        public MediaType? AcceptMediaType { get; set; }
+
         /// <summary> Initializes new instance of MapsRenderClientOptions. </summary>
         /// <param name="version"> Azure Maps Render API version. </param>
         /// <param name="endpoint"> The endpoint for Azure Maps. </param>
-        public MapsRenderingClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
+        /// <param name="acceptMediaType"> The Accept header field. </param>
+        public MapsRenderingClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null, MediaType? acceptMediaType = null)
         {
             Version = version switch
             {
-                ServiceVersion.V2022_08_01 => "2022-08-01",
+                ServiceVersion.V2024_04_01 => "2024-04-01",
                 _ => throw new NotSupportedException()
             };
             Endpoint = endpoint;
+            AcceptMediaType = acceptMediaType != null ? (MediaType)acceptMediaType : new MediaType("");
         }
     }
 }

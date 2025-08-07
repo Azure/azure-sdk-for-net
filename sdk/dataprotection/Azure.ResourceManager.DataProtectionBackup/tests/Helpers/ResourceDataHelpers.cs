@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
                     {
                         PolicyParameters = new BackupInstancePolicySettings()
                         {
-                            BackupDataSourceParametersList = { new UnknownBackupDatasourceParameters("AzureOperationalStoreParameters") }
+                            BackupDataSourceParametersList = { new UnknownBackupDatasourceParameters("AzureOperationalStoreParameters" ,null) }
                         }
                     },
                     "BackupInstance"

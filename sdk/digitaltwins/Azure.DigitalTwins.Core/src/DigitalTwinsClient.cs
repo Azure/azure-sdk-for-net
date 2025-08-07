@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Azure.DigitalTwins.Core.Models;
 using static Azure.DigitalTwins.Core.StreamHelper;
 
 namespace Azure.DigitalTwins.Core
@@ -20,6 +22,15 @@ namespace Azure.DigitalTwins.Core
     public class DigitalTwinsClient
     {
         private const bool IncludeModelDefinition = true;
+        private const string OTelTwinIdKey = "az.digitaltwins.twin.id";
+        private const string OTelModelIdKey = "az.digitaltwins.model.id";
+        private const string OTelComponentNameKey = "az.digitaltwins.component.name";
+        private const string OTelRelationshipNameKey = "az.digitaltwins.relationship.name";
+        private const string OTelRelationshipIdKey = "az.digitaltwins.relationship.id";
+        private const string OTelMessageIdKey = "az.digitaltwins.message.id";
+        private const string OTelJobIdKey = "az.digitaltwins.job.id";
+        private const string OTeQueryKey = "az.digitaltwins.query";
+        private const string OTelEventRouteIdKey = "az.digitaltwins.event_route.id";
 
         // Vanity representation for azure digital twin app Id "0b07f429-9f4b-4714-9392-cc5e8e80c8b0" in the public cloud
         // and shared by other clouds.
@@ -37,6 +48,7 @@ namespace Azure.DigitalTwins.Core
         private readonly DigitalTwinModelsRestClient _dtModelsRestClient;
         private readonly EventRoutesRestClient _eventRoutesRestClient;
         private readonly QueryRestClient _queryClient;
+        private readonly ImportJobsRestClient _importJobsRestClient;
 
         /// <summary>
         /// Creates a new instance of the <see cref="DigitalTwinsClient"/> class.
@@ -95,6 +107,7 @@ namespace Azure.DigitalTwins.Core
             _dtModelsRestClient = new DigitalTwinModelsRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
             _eventRoutesRestClient = new EventRoutesRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
             _queryClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
+            _importJobsRestClient = new ImportJobsRestClient(_clientDiagnostics, _httpPipeline, endpoint, versionString);
         }
 
         /// <summary>
@@ -147,7 +160,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response<T>> GetDigitalTwinAsync<T>(string digitalTwinId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetDigitalTwin)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -198,7 +211,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response<T> GetDigitalTwin<T>(string digitalTwinId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetDigitalTwin)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -273,7 +286,7 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceDigitalTwin)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -341,7 +354,7 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceDigitalTwin)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -395,7 +408,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteDigitalTwin)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -436,7 +449,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response DeleteDigitalTwin(string digitalTwinId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteDigitalTwin)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -474,7 +487,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateDigitalTwin)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -515,7 +528,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response UpdateDigitalTwin(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateDigitalTwin)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -560,7 +573,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response<T>> GetComponentAsync<T>(string digitalTwinId, string componentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetComponent)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -605,8 +618,8 @@ namespace Azure.DigitalTwins.Core
         public virtual Response<T> GetComponent<T>(string digitalTwinId, string componentName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetComponent)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(componentName), componentName);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelComponentNameKey, componentName);
             scope.Start();
 
             try
@@ -663,8 +676,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateComponent)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(componentName), componentName);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelComponentNameKey, componentName);
             scope.Start();
 
             try
@@ -717,8 +730,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateComponent)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(componentName), componentName);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelComponentNameKey, componentName);
             scope.Start();
 
             try
@@ -779,8 +792,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipName), relationshipName);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipNameKey, relationshipName);
             scope.Start();
 
             try
@@ -856,8 +869,8 @@ namespace Azure.DigitalTwins.Core
         public virtual Pageable<T> GetRelationships<T>(string digitalTwinId, string relationshipName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipName), relationshipName);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipNameKey, relationshipName);
             scope.Start();
 
             try
@@ -939,7 +952,7 @@ namespace Azure.DigitalTwins.Core
         public virtual AsyncPageable<IncomingRelationship> GetIncomingRelationshipsAsync(string digitalTwinId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationships)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -1008,7 +1021,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Pageable<IncomingRelationship> GetIncomingRelationships(string digitalTwinId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetIncomingRelationships)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
             scope.Start();
 
             try
@@ -1092,8 +1105,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationship)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipId), relationshipId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipIdKey, relationshipId);
             scope.Start();
 
             try
@@ -1137,8 +1150,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationship)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipId), relationshipId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipIdKey, relationshipId);
             scope.Start();
 
             try
@@ -1179,8 +1192,8 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteRelationship)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipId), relationshipId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipIdKey, relationshipId);
             scope.Start();
 
             try
@@ -1218,8 +1231,8 @@ namespace Azure.DigitalTwins.Core
         public virtual Response DeleteRelationship(string digitalTwinId, string relationshipId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteRelationship)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipId), relationshipId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipIdKey, relationshipId);
             scope.Start();
 
             try
@@ -1298,8 +1311,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceRelationship)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipId), relationshipId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipIdKey, relationshipId);
             scope.Start();
 
             try
@@ -1375,8 +1388,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceRelationship)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipId), relationshipId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipIdKey, relationshipId);
             scope.Start();
 
             try
@@ -1429,8 +1442,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateRelationship)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipId), relationshipId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipIdKey, relationshipId);
             scope.Start();
 
             try
@@ -1482,8 +1495,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(UpdateRelationship)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(relationshipId), relationshipId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelRelationshipIdKey, relationshipId);
             scope.Start();
 
             try
@@ -1682,7 +1695,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response<DigitalTwinsModelData>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModel)}");
-            scope.AddAttribute(nameof(modelId), modelId);
+            scope.AddAttribute(OTelModelIdKey, modelId);
             scope.Start();
 
             try
@@ -1716,7 +1729,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response<DigitalTwinsModelData> GetModel(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetModel)}");
-            scope.AddAttribute(nameof(modelId), modelId);
+            scope.AddAttribute(OTelModelIdKey, modelId);
             scope.Start();
 
             try
@@ -1770,7 +1783,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response> DecommissionModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DecommissionModel)}");
-            scope.AddAttribute(nameof(modelId), modelId);
+            scope.AddAttribute(OTelModelIdKey, modelId);
             scope.Start();
 
             try
@@ -1812,7 +1825,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response DecommissionModel(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DecommissionModel)}");
-            scope.AddAttribute(nameof(modelId), modelId);
+            scope.AddAttribute(OTelModelIdKey, modelId);
             scope.Start();
 
             try
@@ -1857,11 +1870,6 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response<DigitalTwinsModelData[]>> CreateModelsAsync(IEnumerable<string> dtdlModels, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateModels)}");
-            int index = 1;
-            foreach (var id in dtdlModels)
-            {
-                scope.AddAttribute($"model{index++}", id);
-            }
             scope.Start();
 
             try
@@ -1903,11 +1911,6 @@ namespace Azure.DigitalTwins.Core
         public virtual Response<DigitalTwinsModelData[]> CreateModels(IEnumerable<string> dtdlModels, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateModels)}");
-            int index = 1;
-            foreach (var id in dtdlModels)
-            {
-                scope.AddAttribute($"model{index++}", id);
-            }
             scope.Start();
 
             try
@@ -1964,7 +1967,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteModel)}");
-            scope.AddAttribute(nameof(modelId), modelId);
+            scope.AddAttribute(OTelModelIdKey, modelId);
             scope.Start();
 
             try
@@ -2007,12 +2010,369 @@ namespace Azure.DigitalTwins.Core
         public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteModel)}");
-            scope.AddAttribute(nameof(modelId), modelId);
+            scope.AddAttribute(OTelModelIdKey, modelId);
             scope.Start();
 
             try
             {
                 return _dtModelsRestClient.Delete(modelId, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all import jobs.
+        /// Status codes:
+        /// * 200 OK
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ImportJob> GetImportJobsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
+            scope.Start();
+
+            try
+            {
+                async Task<Page<ImportJob>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
+                    scope.Start();
+                    try
+                    {
+                        var options = new ImportJobsListOptions
+                        {
+                            // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                            MaxItemsPerPage = pageSizeHint
+                        };
+
+                        Response<ImportJobCollection> response = await _importJobsRestClient
+                            .ListAsync(options, cancellationToken)
+                            .ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                async Task<Page<ImportJob>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
+                    scope.Start();
+                    try
+                    {
+                        var options = new ImportJobsListOptions
+                        {
+                            // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                            MaxItemsPerPage = pageSizeHint
+                        };
+
+                        Response<ImportJobCollection> response = await _importJobsRestClient
+                            .ListNextPageAsync(nextLink, options, cancellationToken)
+                            .ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all import jobs.
+        /// Status codes:
+        /// * 200 OK
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ImportJob> GetImportJobs(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
+            scope.Start();
+
+            try
+            {
+                Page<ImportJob> FirstPageFunc(int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
+                    scope.Start();
+                    try
+                    {
+                        var options = new ImportJobsListOptions
+                        {
+                            // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                            MaxItemsPerPage = pageSizeHint
+                        };
+
+                        Response<ImportJobCollection> response = _importJobsRestClient.List(options, cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                Page<ImportJob> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutes)}");
+                    scope.Start();
+
+                    var options = new ImportJobsListOptions
+                    {
+                        // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                        MaxItemsPerPage = pageSizeHint
+                    };
+
+                    try
+                    {
+                        Response<ImportJobCollection> response = _importJobsRestClient.ListNextPage(nextLink, options, cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates an import job.
+        /// Status codes:
+        /// * 201 Created
+        /// * 400 Bad Request
+        ///   * JobLimitReached - The maximum number of import jobs allowed has been reached.
+        ///   * ValidationFailed - The import job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="importJob"> The import job being added. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="importJob"/> is null. </exception>
+        public virtual async Task<Response<ImportJob>> ImportGraphAsync(string jobId, ImportJob importJob, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(ImportGraph)}");
+            scope.AddAttribute(OTelJobIdKey, jobId);
+            scope.Start();
+
+            try
+            {
+                return await _importJobsRestClient.AddAsync(jobId, importJob, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates an import job.
+        /// Status codes:
+        /// * 201 Created
+        /// * 400 Bad Request
+        ///   * JobLimitReached - The maximum number of import jobs allowed has been reached.
+        ///   * ValidationFailed - The import job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="importJob"> The import job being added. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="importJob"/> is null. </exception>
+        public virtual Response<ImportJob> ImportGraph(string jobId, ImportJob importJob, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(ImportGraph)}");
+            scope.AddAttribute(OTelJobIdKey, jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.Add(jobId, importJob, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves an import job.
+        /// Status codes:
+        /// * 200 OK
+        /// * 404 Not Found
+        ///   * ImportJobNotFound - The import job was not found.
+        /// </summary>
+        /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual async Task<Response<ImportJob>> GetImportJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJob)}");
+            scope.AddAttribute(OTelJobIdKey, jobId);
+            scope.Start();
+
+            try
+            {
+                return await _importJobsRestClient.GetByIdAsync(jobId, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves an import job.
+        /// Status codes:
+        /// * 200 OK
+        /// * 404 Not Found
+        ///   * ImportJobNotFound - The import job was not found.
+        /// </summary>
+        /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual Response<ImportJob> GetImportJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJob)}");
+            scope.AddAttribute(OTelJobIdKey, jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.GetById(jobId, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an import job.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * ValidationFailed - The import job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual async Task<Response> DeleteImportJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteImportJob)}");
+            scope.AddAttribute(OTelJobIdKey, jobId);
+            scope.Start();
+
+            try
+            {
+                return await _importJobsRestClient.DeleteAsync(jobId, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an import job.
+        /// Status codes:
+        /// * 204 No Content
+        /// * 400 Bad Request
+        ///   * ValidationFailed - The import job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual Response DeleteImportJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteImportJob)}");
+            scope.AddAttribute(OTelJobIdKey, jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.Delete(jobId, null, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels an import job.
+        /// Status codes:
+        /// * 200 Request Accepted
+        /// * 400 Bad Request
+        ///   * ValidationFailed - The import job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual async Task<Response<ImportJob>> CancelImportJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CancelImportJob)}");
+            scope.AddAttribute(OTelJobIdKey, jobId);
+            scope.Start();
+
+            try
+            {
+                return await _importJobsRestClient.CancelAsync(jobId, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels an import job.
+        /// Status codes:
+        /// * 200 Request Accepted
+        /// * 400 Bad Request
+        ///   * ValidationFailed - The import job request is not valid.
+        /// </summary>
+        /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        public virtual Response<ImportJob> CancelImportJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CancelImportJob)}");
+            scope.AddAttribute(OTelJobIdKey, jobId);
+            scope.Start();
+
+            try
+            {
+                return _importJobsRestClient.Cancel(jobId, null, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -2056,7 +2416,7 @@ namespace Azure.DigitalTwins.Core
         public virtual AsyncPageable<T> QueryAsync<T>(string query, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
-            scope.AddAttribute(nameof(query), query);
+            scope.AddAttribute(OTeQueryKey, query);
             scope.Start();
 
             try
@@ -2163,7 +2523,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Pageable<T> Query<T>(string query, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
-            scope.AddAttribute(nameof(query), query);
+            scope.AddAttribute(OTeQueryKey, query);
             scope.Start();
 
             try
@@ -2421,7 +2781,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response<DigitalTwinsEventRoute>> GetEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoute)}");
-            scope.AddAttribute(nameof(eventRouteId), eventRouteId);
+            scope.AddAttribute(OTelEventRouteIdKey, eventRouteId);
             scope.Start();
 
             try
@@ -2454,7 +2814,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response<DigitalTwinsEventRoute> GetEventRoute(string eventRouteId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoute)}");
-            scope.AddAttribute(nameof(eventRouteId), eventRouteId);
+            scope.AddAttribute(OTelEventRouteIdKey, eventRouteId);
             scope.Start();
 
             try
@@ -2498,7 +2858,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response> CreateOrReplaceEventRouteAsync(string eventRouteId, DigitalTwinsEventRoute eventRoute, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceEventRoute)}");
-            scope.AddAttribute(nameof(eventRouteId), eventRouteId);
+            scope.AddAttribute(OTelEventRouteIdKey, eventRouteId);
             scope.Start();
 
             try
@@ -2533,7 +2893,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response CreateOrReplaceEventRoute(string eventRouteId, DigitalTwinsEventRoute eventRoute, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateOrReplaceEventRoute)}");
-            scope.AddAttribute(nameof(eventRouteId), eventRouteId);
+            scope.AddAttribute(OTelEventRouteIdKey, eventRouteId);
             scope.Start();
 
             try
@@ -2572,7 +2932,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response> DeleteEventRouteAsync(string eventRouteId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteEventRoute)}");
-            scope.AddAttribute(nameof(eventRouteId), eventRouteId);
+            scope.AddAttribute(OTelEventRouteIdKey, eventRouteId);
             scope.Start();
 
             try
@@ -2605,7 +2965,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response DeleteEventRoute(string eventRouteId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteEventRoute)}");
-            scope.AddAttribute(nameof(eventRouteId), eventRouteId);
+            scope.AddAttribute(OTelEventRouteIdKey, eventRouteId);
             scope.Start();
 
             try
@@ -2655,8 +3015,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(PublishTelemetry)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(messageId), messageId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelMessageIdKey, messageId);
             scope.Start();
 
             try
@@ -2713,8 +3073,8 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(PublishTelemetry)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(messageId), messageId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelMessageIdKey, messageId);
             scope.Start();
 
             try
@@ -2786,9 +3146,9 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(PublishComponentTelemetry)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(componentName), componentName);
-            scope.AddAttribute(nameof(messageId), messageId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelComponentNameKey, componentName);
+            scope.AddAttribute(OTelMessageIdKey, messageId);
             scope.Start();
 
             try
@@ -2847,9 +3207,9 @@ namespace Azure.DigitalTwins.Core
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(PublishComponentTelemetry)}");
-            scope.AddAttribute(nameof(digitalTwinId), digitalTwinId);
-            scope.AddAttribute(nameof(componentName), componentName);
-            scope.AddAttribute(nameof(messageId), messageId);
+            scope.AddAttribute(OTelTwinIdKey, digitalTwinId);
+            scope.AddAttribute(OTelComponentNameKey, componentName);
+            scope.AddAttribute(OTelMessageIdKey, messageId);
             scope.Start();
 
             try

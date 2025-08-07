@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoDatabaseCallerRole left, KustoDatabaseCallerRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoDatabaseCallerRole"/> values are not the same. </summary>
         public static bool operator !=(KustoDatabaseCallerRole left, KustoDatabaseCallerRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoDatabaseCallerRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoDatabaseCallerRole"/>. </summary>
         public static implicit operator KustoDatabaseCallerRole(string value) => new KustoDatabaseCallerRole(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

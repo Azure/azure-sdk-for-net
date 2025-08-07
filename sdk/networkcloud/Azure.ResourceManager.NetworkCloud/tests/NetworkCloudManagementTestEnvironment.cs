@@ -12,22 +12,27 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         private TokenCredential _credential;
 
         // Cluster Manager
-        public string ClusterManagedRG => GetRecordedVariable("CLUSTER_MANAGED_RESOURCE_GROUP");
         public string ManagerExtendedLocation => GetRecordedVariable("MANAGER_EXTENDED_LOCATION");
 
         // Cluster
 
+        public string ClusterManagedRG => GetRecordedVariable("CLUSTER_MANAGED_RESOURCE_GROUP");
         public string ClusterName => GetRecordedVariable("CLUSTER_NAME");
         public ResourceIdentifier ClusterId => new ResourceIdentifier(GetRecordedVariable("CLUSTER_ID"));
         public string ClusterExtendedLocation => GetRecordedVariable("CLUSTER_EXTENDED_LOCATION");
         public string ClusterRG => GetRecordedVariable("CLUSTER_RG");
         public string ClusterVersion => GetRecordedVariable("CLUSTER_VERSION");
+        public string UserAssignedIdentity => GetRecordedVariable("USER_ASSIGNED_IDENTITY");
+        public string ContainerUri => GetRecordedVariable("CONTAINER_URI", options => options.IsSecret("https://sanitized.blob.core.windows.net/container"));
+        public string VaultUri => GetRecordedVariable("VAULT_URI", options => options.IsSecret("https://sanitized.vault.azure.net"));
 
         // Kubernetes Cluster
 
         public string KubernetesClusterName => GetRecordedVariable("KUBERNETES_CLUSTER_NAME");
         public string KubernetesClusterRG => GetRecordedVariable("KUBERNETES_CLUSTER_RG");
         public ResourceIdentifier KubernetesClusterId => new ResourceIdentifier(GetRecordedVariable("KUBERNETES_CLUSTER_ID"));
+        public string KubernetesVersion => GetRecordedVariable("KUBERNETES_VERSION");
+        public string KubernetesVersionUpdate => GetRecordedVariable("KUBERNETES_VERSION_UPDATE");
 
         // Virtual Machine
 
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string VMImageRepoUri => GetRecordedVariable("VM_IMAGE_REPO_URI");
         public string VMImageRepoUser => GetRecordedVariable("VM_IMAGE_REPO_USER");
         public string VMName => GetRecordedVariable("VIRTUAL_MACHINE_NAME");
+        public string VMSSHPubicKey => GetRecordedVariable("VM_SSH_PUBLIC_KEY", options => options.IsSecret());
 
         // Console
 
@@ -56,11 +62,17 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string TrunkedNetworkVlans => GetRecordedVariable("TRUNKED_VLANS");
         public string SubnetId => GetRecordedVariable("SUBNET_ID");
 
+        // BMC KeySet
+
+        public string BMCSSHPubicKey => GetRecordedVariable("BMC_SSH_PUBLIC_KEY");
+
         // Misc.
 
         public System.DateTimeOffset DayFromNow => System.DateTimeOffset.Parse(GetRecordedVariable("DAY_FROM_NOW"));
         public string LawId => GetRecordedVariable("LAW_ID");
         public string InterfaceName => GetRecordedVariable("INTERFACE_NAME");
+        public string BMMKeySetSSHPublicKey => GetRecordedVariable("BMM_KS_SSH_PUBLIC_KEY");
+        public string BMMKeySetGroupId => GetRecordedVariable("BMM_KS_GROUP_ID");
 
         // Support using the Default Credential created by Azure CLI so
         // that we don't have to support creating a service principal, etc. to run these tests.

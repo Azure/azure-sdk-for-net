@@ -76,8 +76,7 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets the login mode for the user.
         /// </summary>
         /// <remarks>
-        /// The default value for <see cref="CloudPool.VirtualMachineConfiguration" /> pools is <see cref="Common.LoginMode.Interactive" 
-        /// /> and for <see cref="CloudPool.CloudServiceConfiguration" /> pools is <see cref="Common.LoginMode.Batch" />.
+        /// The default is 'batch'.
         /// </remarks>
         public Common.LoginMode? LoginMode
         {

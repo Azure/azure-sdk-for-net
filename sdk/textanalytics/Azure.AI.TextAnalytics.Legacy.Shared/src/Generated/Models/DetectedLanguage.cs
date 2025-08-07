@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The DetectedLanguage. </summary>
     internal partial class DetectedLanguage
     {
-        /// <summary> Initializes a new instance of DetectedLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
         /// <param name="name"> Long name of a detected language (e.g. English, French). </param>
         /// <param name="iso6391Name"> A two letter representation of the detected language according to the ISO 639-1 standard (e.g. en, fr). </param>
         /// <param name="confidenceScore"> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection container mapping properties. </summary>
     public partial class ProtectionContainerMappingProperties
     {
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingProperties"/>. </summary>
         internal ProtectionContainerMappingProperties()
         {
             HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingProperties"/>. </summary>
         /// <param name="targetProtectionContainerId"> Paired protection container ARM ID. </param>
         /// <param name="targetProtectionContainerFriendlyName"> Friendly name of paired container. </param>
         /// <param name="providerSpecificDetails">
@@ -35,7 +68,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sourceFabricFriendlyName"> Friendly name of source fabric. </param>
         /// <param name="targetFabricFriendlyName"> Friendly name of target fabric. </param>
         /// <param name="policyFriendlyName"> Friendly name of replication policy. </param>
-        internal ProtectionContainerMappingProperties(ResourceIdentifier targetProtectionContainerId, string targetProtectionContainerFriendlyName, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails, string health, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, ResourceIdentifier policyId, string state, string sourceProtectionContainerFriendlyName, string sourceFabricFriendlyName, string targetFabricFriendlyName, string policyFriendlyName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProtectionContainerMappingProperties(ResourceIdentifier targetProtectionContainerId, string targetProtectionContainerFriendlyName, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails, string health, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, ResourceIdentifier policyId, string state, string sourceProtectionContainerFriendlyName, string sourceFabricFriendlyName, string targetFabricFriendlyName, string policyFriendlyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetProtectionContainerId = targetProtectionContainerId;
             TargetProtectionContainerFriendlyName = targetProtectionContainerFriendlyName;
@@ -48,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SourceFabricFriendlyName = sourceFabricFriendlyName;
             TargetFabricFriendlyName = targetFabricFriendlyName;
             PolicyFriendlyName = policyFriendlyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Paired protection container ARM ID. </summary>

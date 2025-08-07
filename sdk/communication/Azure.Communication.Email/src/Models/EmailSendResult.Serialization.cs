@@ -14,7 +14,7 @@ namespace Azure.Communication.Email
         {
             string id = default;
             EmailSendStatus status = default;
-            Optional<ErrorDetail> error = default;
+            ErrorDetail error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -37,7 +37,7 @@ namespace Azure.Communication.Email
                     continue;
                 }
             }
-            return new EmailSendResult(id, status, error.Value);
+            return new EmailSendResult(id, status, error);
         }
     }
 }

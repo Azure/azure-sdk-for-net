@@ -11,6 +11,10 @@ namespace Azure.AI.Language.Conversations.Tests
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
+        ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview,
+        ConversationsClientOptions.ServiceVersion.V2024_11_15_Preview,
+        ConversationsClientOptions.ServiceVersion.V2024_11_01,
+        ConversationsClientOptions.ServiceVersion.V2024_05_01,
         ConversationsClientOptions.ServiceVersion.V2023_04_01,
         ConversationsClientOptions.ServiceVersion.V2022_05_01)]
     [IgnoreServiceError(429, "429")]

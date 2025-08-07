@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,59 @@ namespace Azure.ResourceManager.HealthBot.Models
     /// <summary> Parameters for updating a Azure Health Bot. </summary>
     public partial class HealthBotPatch
     {
-        /// <summary> Initializes a new instance of HealthBotPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthBotPatch"/>. </summary>
         public HealthBotPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthBotPatch"/>. </summary>
+        /// <param name="properties"> Properties of Azure Health Bot. </param>
+        /// <param name="tags"> Tags for a Azure Health Bot. </param>
+        /// <param name="sku"> SKU of the Azure Health Bot. </param>
+        /// <param name="identity"> The identity of the Azure Health Bot. </param>
+        /// <param name="location"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthBotPatch(HealthBotProperties properties, IDictionary<string, string> tags, HealthBotSku sku, ManagedServiceIdentity identity, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            Tags = tags;
+            Sku = sku;
+            Identity = identity;
+            Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of Azure Health Bot. </summary>

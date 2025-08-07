@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -12,18 +14,52 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Public representation of one of the locations where a resource is provisioned. </summary>
     public partial class IotHubLocationDescription
     {
-        /// <summary> Initializes a new instance of IotHubLocationDescription. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubLocationDescription"/>. </summary>
         internal IotHubLocationDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubLocationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubLocationDescription"/>. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="role"> The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to. </param>
-        internal IotHubLocationDescription(AzureLocation? location, IotHubReplicaRoleType? role)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubLocationDescription(AzureLocation? location, IotHubReplicaRoleType? role, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Role = role;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the Azure region. </summary>

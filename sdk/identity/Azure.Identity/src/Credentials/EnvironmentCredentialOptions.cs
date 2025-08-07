@@ -41,7 +41,7 @@ namespace Azure.Identity
         internal bool SendCertificateChain { get; set; } = EnvironmentVariables.ClientSendCertificateChain;
 
         /// <summary>
-        /// The username of the user account the credeential will authenticate. This value defaults to the value of the environment variable AZURE_USERNAME.
+        /// The username of the user account the credential will authenticate. This value defaults to the value of the environment variable AZURE_USERNAME.
         /// </summary>
         internal string Username { get; set; } = EnvironmentVariables.Username;
 
@@ -50,6 +50,16 @@ namespace Azure.Identity
         /// </summary>
         internal string Password { get; set; } = EnvironmentVariables.Password;
 
+        /// <summary>
+        /// MSAL client to be used for testing.
+        /// </summary>
+        internal MsalConfidentialClient MsalConfidentialClient { get; set;}
+
+        /// <summary>
+        /// MSAL client to be used for testing.
+        /// </summary>
+        internal MsalPublicClient MsalPublicClient { get; set;}
+
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
@@ -57,8 +67,10 @@ namespace Azure.Identity
         /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
         /// If no value is specified for <see cref="TenantId"/>, this option will have no effect on that authentication method, and the credential will acquire tokens for any requested tenant when using that method.
-        /// This value defaults to the value of the environment variable AZURE_ADDITIONALLY_ALLOWED_TENANTS.
         /// </summary>
+        /// <remarks>
+        /// Defaults to the value of environment variable <c>AZURE_ADDITIONALLY_ALLOWED_TENANTS</c>. Values can be a semi-colon delimited list of tenant IDs , or '*' to denote any tenant ID.
+        /// </remarks>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = EnvironmentVariables.AdditionallyAllowedTenants;
     }
 }

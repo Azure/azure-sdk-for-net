@@ -10,10 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The UnknownDataFeedDetail. </summary>
+    /// <summary> Unknown version of DataFeedDetail. </summary>
     internal partial class UnknownDataFeedDetail : DataFeedDetail
     {
-        /// <summary> Initializes a new instance of UnknownDataFeedDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataFeedDetail"/>. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>
         /// <param name="dataFeedName"> data feed name. </param>

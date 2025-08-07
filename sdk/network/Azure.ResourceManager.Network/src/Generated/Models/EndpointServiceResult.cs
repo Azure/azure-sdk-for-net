@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,20 +14,54 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Endpoint service. </summary>
     public partial class EndpointServiceResult
     {
-        /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointServiceResult"/>. </summary>
         internal EndpointServiceResult()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointServiceResult"/>. </summary>
         /// <param name="name"> Name of the endpoint service. </param>
         /// <param name="resourceType"> Type of the endpoint service. </param>
         /// <param name="id"> Resource ID. </param>
-        internal EndpointServiceResult(string name, ResourceType? resourceType, ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointServiceResult(string name, ResourceType? resourceType, ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceType = resourceType;
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the endpoint service. </summary>

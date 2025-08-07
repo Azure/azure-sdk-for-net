@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorData(AzureLocation location) : base(location)
         {
@@ -31,7 +64,7 @@ namespace Azure.ResourceManager.FrontDoor
             ExtendedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +85,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="frontdoorId"> The Id of the frontdoor. </param>
         /// <param name="rulesEngines"> Rules Engine Configurations available to routing rules. </param>
         /// <param name="extendedProperties"> Key-Value pair representing additional properties for frontdoor. </param>
-        internal FrontDoorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string friendlyName, IList<RoutingRuleData> routingRules, IList<FrontDoorLoadBalancingSettingsData> loadBalancingSettings, IList<FrontDoorHealthProbeSettingsData> healthProbeSettings, IList<FrontDoorBackendPool> backendPools, IList<FrontendEndpointData> frontendEndpoints, BackendPoolsSettings backendPoolsSettings, FrontDoorEnabledState? enabledState, FrontDoorResourceState? resourceState, string provisioningState, string cname, string frontdoorId, IReadOnlyList<FrontDoorRulesEngineData> rulesEngines, IReadOnlyDictionary<string, string> extendedProperties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string friendlyName, IList<RoutingRuleData> routingRules, IList<FrontDoorLoadBalancingSettingsData> loadBalancingSettings, IList<FrontDoorHealthProbeSettingsData> healthProbeSettings, IList<FrontDoorBackendPool> backendPools, IList<FrontendEndpointData> frontendEndpoints, BackendPoolsSettings backendPoolsSettings, FrontDoorEnabledState? enabledState, FrontDoorResourceState? resourceState, string provisioningState, string cname, string frontdoorId, IReadOnlyList<FrontDoorRulesEngineData> rulesEngines, IReadOnlyDictionary<string, string> extendedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             FriendlyName = friendlyName;
             RoutingRules = routingRules;
@@ -68,6 +102,12 @@ namespace Azure.ResourceManager.FrontDoor
             FrontdoorId = frontdoorId;
             RulesEngines = rulesEngines;
             ExtendedProperties = extendedProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorData"/> for deserialization. </summary>
+        internal FrontDoorData()
+        {
         }
 
         /// <summary> A friendly name for the frontDoor. </summary>

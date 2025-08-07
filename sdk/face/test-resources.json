@@ -1,0 +1,77 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"
+        },
+        "cognitiveServicesEndpointSuffix": {
+            "type": "string",
+            "defaultValue": ".cognitiveservices.azure.com"
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The principal to assign the role to. This is application object id."
+            }
+        },
+        "tenantId": {
+            "type": "String",
+            "metadata": {
+                "description": "The tenant id to which the application and resources belong."
+            }
+        }
+    },
+    "variables": {
+        "authorizationApiVersion": "2018-09-01-preview",
+        "faceApiVersion": "2022-03-01",
+        "faceAccountName": "[concat('face', parameters('baseName'))]",
+        "azureFaceUrl": "[concat('https://', variables('faceAccountName'), parameters('cognitiveServicesEndpointSuffix'))]",
+        "cognitiveServiceUserRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "[variables('authorizationApiVersion')]",
+            "name": "[guid(concat(variables('cognitiveServiceUserRoleId'), variables('faceAccountName')))]",
+            "dependsOn": [
+                "[variables('faceAccountName')]"
+            ],
+            "properties": {
+                "principalId": "[parameters('testApplicationOid')]",
+                "roleDefinitionId": "[variables('cognitiveServiceUserRoleId')]"
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "[variables('faceApiVersion')]",
+            "name": "[variables('faceAccountName')]",
+            "location": "[parameters('location')]",
+            "kind": "CognitiveServices",
+            "tags": {
+                "Owner": "[resourceGroup().name]"
+            },
+            "sku": {
+                "name": "S0"
+            },
+            "properties": {
+                "customSubDomainName": "[toLower(variables('faceAccountName'))]"
+            }
+        }
+    ],
+    "outputs": {
+        "AZURE_CLIENT_ID": {
+            "type": "String",
+            "value": "[parameters('testApplicationOid')]"
+        },
+        "FACE_ENDPOINT": {
+            "type": "string",
+            "value": "[variables('azureFaceUrl')]"
+        }
+    }
+}

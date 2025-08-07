@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Columns that define the structure of the dataset. </summary>
     public partial class DatasetDataElement
     {
-        /// <summary> Initializes a new instance of DatasetDataElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetDataElement"/>. </summary>
         public DatasetDataElement()
         {
         }
 
-        /// <summary> Initializes a new instance of DatasetDataElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetDataElement"/>. </summary>
         /// <param name="name"> Name of the column. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> Type of the column. Type: string (or Expression with resultType string). </param>
         internal DatasetDataElement(object name, object type)

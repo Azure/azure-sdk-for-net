@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The github scope connector's environment data. </summary>
     public partial class GithubScopeEnvironment : SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of GithubScopeEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="GithubScopeEnvironment"/>. </summary>
         public GithubScopeEnvironment()
         {
             EnvironmentType = EnvironmentType.GithubScope;
         }
 
-        /// <summary> Initializes a new instance of GithubScopeEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="GithubScopeEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
-        internal GithubScopeEnvironment(EnvironmentType environmentType) : base(environmentType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GithubScopeEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(environmentType, serializedAdditionalRawData)
         {
             EnvironmentType = environmentType;
         }

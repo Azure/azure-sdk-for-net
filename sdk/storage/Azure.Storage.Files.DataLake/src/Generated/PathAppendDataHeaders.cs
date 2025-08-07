@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake
@@ -30,5 +29,7 @@ namespace Azure.Storage.Files.DataLake
         public string EncryptionKeySha256 => _response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string value) ? value : null;
         /// <summary> If the lease was auto-renewed with this request. </summary>
         public bool? LeaseRenewed => _response.Headers.TryGetValue("x-ms-lease-renewed", out bool? value) ? value : null;
+        /// <summary> Indicates the structured message body was accepted and mirrors back the message schema version and properties. </summary>
+        public string StructuredBodyType => _response.Headers.TryGetValue("x-ms-structured-body", out string value) ? value : null;
     }
 }

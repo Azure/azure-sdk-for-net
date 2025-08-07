@@ -5,21 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration for auto scaling. </summary>
     internal partial class ExpressRouteGatewayPropertiesAutoScaleConfiguration
     {
-        /// <summary> Initializes a new instance of ExpressRouteGatewayPropertiesAutoScaleConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayPropertiesAutoScaleConfiguration"/>. </summary>
         public ExpressRouteGatewayPropertiesAutoScaleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteGatewayPropertiesAutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayPropertiesAutoScaleConfiguration"/>. </summary>
         /// <param name="bounds"> Minimum and maximum number of scale units to deploy. </param>
-        internal ExpressRouteGatewayPropertiesAutoScaleConfiguration(ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds bounds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteGatewayPropertiesAutoScaleConfiguration(ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds bounds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Bounds = bounds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Minimum and maximum number of scale units to deploy. </summary>

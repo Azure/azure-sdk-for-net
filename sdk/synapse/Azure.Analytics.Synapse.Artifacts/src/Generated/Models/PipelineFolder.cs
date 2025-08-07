@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </summary>
     public partial class PipelineFolder
     {
-        /// <summary> Initializes a new instance of PipelineFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineFolder"/>. </summary>
         public PipelineFolder()
         {
         }
 
-        /// <summary> Initializes a new instance of PipelineFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineFolder"/>. </summary>
         /// <param name="name"> The name of the folder that this Pipeline is in. </param>
         internal PipelineFolder(string name)
         {

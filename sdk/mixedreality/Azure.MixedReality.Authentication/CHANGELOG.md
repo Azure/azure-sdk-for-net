@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Removed `ClientRequestId` tag reported on `MixedRealityStsClient` activities - it is reported on the underlying HTTP activities.
+
 ### Bugs Fixed
 
 ### Other Changes

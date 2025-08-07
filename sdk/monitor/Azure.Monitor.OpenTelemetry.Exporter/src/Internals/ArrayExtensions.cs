@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -19,6 +20,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         [return: System.Diagnostics.CodeAnalysis.NotNullIfNotNull(nameof(input))]
         public static string? ToCommaDelimitedString(this Array? input)
         {
+            return ToCommaDelimitedString(input, CultureInfo.InvariantCulture);
+        }
+
+        // This overload is used for testing purposes only.
+        internal static string? ToCommaDelimitedString(this Array? input, CultureInfo cultureInfo)
+        {
             if (input == null)
             {
                 return null;
@@ -29,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (item != null)
                 {
-                    sb.Append(item);
+                    sb.Append(Convert.ToString(item, cultureInfo));
                     sb.Append(',');
                 }
             }

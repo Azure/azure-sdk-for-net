@@ -11,7 +11,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -142,7 +141,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Model value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Model.DeserializeModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -165,7 +164,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Model value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Model.DeserializeModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -240,7 +239,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -314,7 +313,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -404,7 +403,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -427,7 +426,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -539,7 +538,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         CopyOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -562,7 +561,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         CopyOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -599,7 +598,7 @@ namespace Azure.AI.FormRecognizer
                 case 201:
                     {
                         CopyAuthorizationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -621,7 +620,7 @@ namespace Azure.AI.FormRecognizer
                 case 201:
                     {
                         CopyAuthorizationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -723,7 +722,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -799,7 +798,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -886,7 +885,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -908,7 +907,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -935,7 +934,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1011,7 +1010,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1098,7 +1097,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1120,7 +1119,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1143,7 +1142,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1213,7 +1212,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1298,7 +1297,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1320,7 +1319,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1347,7 +1346,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1423,7 +1422,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1510,7 +1509,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1532,7 +1531,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1551,7 +1550,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/", false);
             uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/layout/analyze", false);
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1627,7 +1626,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/", false);
             uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/layout/analyze", false);
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1722,7 +1721,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1744,7 +1743,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1781,7 +1780,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1802,7 +1801,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1839,7 +1838,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1860,7 +1859,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1903,7 +1902,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1931,7 +1930,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

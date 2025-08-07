@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The encryption settings for automation account. </summary>
     public partial class AutomationEncryptionProperties
     {
-        /// <summary> Initializes a new instance of AutomationEncryptionProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationEncryptionProperties"/>. </summary>
         public AutomationEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationEncryptionProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Key vault properties. </param>
         /// <param name="keySource"> Encryption Key Source. </param>
         /// <param name="identity"> User identity used for CMK. </param>
-        internal AutomationEncryptionProperties(AutomationKeyVaultProperties keyVaultProperties, EncryptionKeySourceType? keySource, EncryptionPropertiesIdentity identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationEncryptionProperties(AutomationKeyVaultProperties keyVaultProperties, EncryptionKeySourceType? keySource, EncryptionPropertiesIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Key vault properties. </summary>
@@ -40,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

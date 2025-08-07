@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
@@ -13,20 +14,54 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Sql upsert option settings. </summary>
     public partial class SqlUpsertSettings
     {
-        /// <summary> Initializes a new instance of SqlUpsertSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlUpsertSettings"/>. </summary>
         public SqlUpsertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlUpsertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlUpsertSettings"/>. </summary>
         /// <param name="useTempDB"> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
         /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
-        internal SqlUpsertSettings(DataFactoryElement<bool> useTempDB, DataFactoryElement<string> interimSchemaName, DataFactoryElement<IList<string>> keys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlUpsertSettings(DataFactoryElement<bool> useTempDB, DataFactoryElement<string> interimSchemaName, DataFactoryElement<IList<string>> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UseTempDB = useTempDB;
             InterimSchemaName = interimSchemaName;
             Keys = keys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </summary>

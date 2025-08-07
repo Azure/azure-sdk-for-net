@@ -1,0 +1,273 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resource_name_prefix": {
+            "type": "string"
+        },
+        "flt_db_account_name": {
+            "type": "string"
+        },
+        "flt_cosmosdb_zone_redundant": {
+            "type": "string"
+        },
+        "flt_deploy_cosmosdb": {
+            "type": "string"
+        },
+        "production": {
+            "type": "bool",
+            "defaultValue": true
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "flt_db_name": "fleet",
+        "containers": [
+            {
+                "name": "Fleet",
+                "partitionKeyPath": "/subscriptionId",
+                "uniqueKeyPaths": [ "/subscriptionId", "/resourceGroup", "/name" ],
+                "indexes": [
+                    {
+                        "path": "/subscriptionId/?"
+                    },
+                    {
+                        "path": "/resourceGroup/?"
+                    },
+                    {
+                        "path": "/name/?"
+                    }
+                ]
+            },
+            {
+                "name": "FleetMember",
+                "partitionKeyPath": "/subscriptionId",
+                "uniqueKeyPaths": [ "/subscriptionId", "/resourceGroup", "/fleetName", "/name" ],
+                "indexes": [
+                    {
+                        "path": "/subscriptionId/?"
+                    },
+                    {
+                        "path": "/resourceGroup/?"
+                    },
+                    {
+                        "path": "/fleetName/?"
+                    },
+                    {
+                        "path": "/name/?"
+                    },
+                    {
+                        "path": "/group/?"
+                    }
+                ]
+            },
+            {
+                "name": "FleetMembershipExtension",
+                "partitionKeyPath": "/clusterResourceId",
+                "uniqueKeyPaths": [ "/clusterResourceId" ],
+                "indexes": [
+                    {
+                        "path": "/clusterResourceId/?"
+                    },
+                    {
+                        "path": "/name/?"
+                    }
+                ]
+            },
+            {
+                "name": "UpdateRun",
+                "partitionKeyPath": "/subscriptionId",
+                "uniqueKeyPaths": [ "/subscriptionId", "/resourceGroup", "/fleetName", "/name" ],
+                "indexes": [
+                    {
+                        "path": "/subscriptionId/?"
+                    },
+                    {
+                        "path": "/resourceGroup/?"
+                    },
+                    {
+                        "path": "/fleetName/?"
+                    },
+                    {
+                        "path": "/name/?"
+                    }
+                ]
+            },
+            {
+                "name": "UpdateStrategy",
+                "partitionKeyPath": "/subscriptionId",
+                "uniqueKeyPaths": [ "/subscriptionId", "/resourceGroup", "/fleetName", "/name" ],
+                "indexes": [
+                    {
+                        "path": "/subscriptionId/?"
+                    },
+                    {
+                        "path": "/resourceGroup/?"
+                    },
+                    {
+                        "path": "/fleetName/?"
+                    },
+                    {
+                        "path": "/name/?"
+                    }
+                ]
+            }
+        ],
+        "flt_user_assigned_identity_name": "[concat(parameters('resource_name_prefix'),'flt')]",
+        "ip_rules": [
+            {
+                "ipAddressOrRange": "104.42.195.92"
+            },
+            {
+                "ipAddressOrRange": "40.76.54.131"
+            },
+            {
+                "ipAddressOrRange": "52.176.6.30"
+            },
+            {
+                "ipAddressOrRange": "52.169.50.45"
+            },
+            {
+                "ipAddressOrRange": "52.187.184.26"
+            },
+            {
+                "ipAddressOrRange": "207.68.190.32/27"
+            },
+            {
+                "ipAddressOrRange": "157.58.216.64/26"
+            },
+            {
+                "ipAddressOrRange": "13.106.78.32/27"
+            },
+            {
+                "ipAddressOrRange": "13.106.174.32/27"
+            },
+            {
+                "ipAddressOrRange": "194.69.119.64/26"
+            },
+            {
+                "ipAddressOrRange": "13.106.4.96/27"
+            },
+            {
+                "ipAddressOrRange": "167.220.249.128/26"
+            },
+            {
+                "ipAddressOrRange": "0.0.0.0"
+            }
+        ]
+    },
+    "resources": [
+        {
+            "condition": "[parameters('production')]",
+            "name": "[variables('flt_user_assigned_identity_name')]",
+            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "apiVersion": "2018-11-30",
+            "location": "[variables('location')]"
+        },
+        {
+            "condition": "[equals(parameters('flt_deploy_cosmosdb'),'true')]",
+            "name": "[parameters('flt_db_account_name')]",
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "apiVersion": "2021-10-15",
+            "location": "[variables('location')]",
+            "kind": "GlobalDocumentDB",
+            "properties": {
+                "consistencyPolicy": {
+                    "defaultConsistencyLevel": "Strong"
+                },
+                "locations": [
+                    {
+                        "locationName": "[variables('location')]",
+                        "failoverPriority": 0,
+                        "isZoneRedundant": "[equals('true',parameters('flt_cosmosdb_zone_redundant'))]"
+                    }
+                ],
+                "backupPolicy": {
+                    "type": "Periodic",
+                    "periodicModeProperties": {
+                        "backupIntervalInMinutes": 240,
+                        "backupRetentionIntervalInHours": 720
+                    }
+                },
+                "ipRules": "[if(parameters('production'),variables('ip_rules'),createArray())]",
+                "databaseAccountOfferType": "Standard",
+                "enableAutomaticFailover": true,
+                "disableLocalAuth": "[parameters('production')]"
+            }
+        },
+        {
+            "condition": "[equals(parameters('flt_deploy_cosmosdb'),'true')]",
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+            "apiVersion": "2021-10-15",
+            "name": "[concat(parameters('flt_db_account_name'), '/', variables('flt_db_name'))]",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/', parameters('flt_db_account_name'))]"
+            ],
+            "properties": {
+                "options": {
+                    "autoscaleSettings": {
+                        "maxThroughput": 4000
+                    }
+                },
+                "resource": {
+                    "id": "[variables('flt_db_name')]"
+                }
+            }
+        },
+        {
+            "condition": "[equals(parameters('flt_deploy_cosmosdb'),'true')]",
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+            "name": "[concat(parameters('flt_db_account_name'), '/', variables('flt_db_name'), '/', variables('containers')[copyIndex()].name)]",
+            "copy": {
+                "name": "ContainerCopy",
+                "count": "[length(variables('containers'))]"
+            },
+            "apiVersion": "2021-10-15",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('flt_db_account_name'), variables('flt_db_name'))]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/', parameters('flt_db_account_name'))]"
+            ],
+            "properties": {
+                "resource": {
+                    "id": "[variables('containers')[copyIndex()].name]",
+                    "partitionKey": {
+                        "paths": [ "[variables('containers')[copyIndex()].partitionKeyPath]" ],
+                        "kind": "hash"
+                    },
+                    "indexingPolicy": {
+                        "indexingMode": "consistent",
+                        "automatic": true,
+                        "includedPaths": "[variables('containers')[copyIndex()].indexes]",
+                        "excludedPaths": [
+                            {
+                                "path": "/*"
+                            }
+                        ]
+                    },
+                    "uniqueKeyPolicy": {
+                        "uniqueKeys": [
+                            {
+                                "paths": "[variables('containers')[copyIndex()].uniqueKeyPaths]"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[and(parameters('production'),equals(parameters('flt_deploy_cosmosdb'),'true'))]",
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments",
+            "apiVersion": "2021-10-15",
+            "name": "[concat(parameters('flt_db_account_name'), '/',guid(parameters('flt_db_account_name')))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('flt_db_account_name'))]"
+            ],
+            "properties": {
+                "roleDefinitionId": "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions', parameters('flt_db_account_name'), '00000000-0000-0000-0000-000000000002')]",
+                "principalId": "[if(parameters('production'),reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('flt_user_assigned_identity_name')), '2018-11-30').principalId,'')]",
+                "scope": "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('flt_db_account_name'))]"
+            }
+        }
+    ]
+}

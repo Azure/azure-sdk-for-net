@@ -129,7 +129,8 @@ namespace Azure.Messaging.ServiceBus.Tests
             mockConnection
                 .Setup(connection => connection.CreateTransportClient(
                     It.IsAny<ServiceBusTokenCredential>(),
-                    It.IsAny<ServiceBusClientOptions>()))
+                    It.IsAny<ServiceBusClientOptions>(),
+                    It.IsAny<bool>()))
                 .Returns(Mock.Of<TransportClient>());
 
             return mockConnection;

@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The HealthcareTaskResult. </summary>
     internal partial class HealthcareTaskResult
     {
-        /// <summary> Initializes a new instance of HealthcareTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskResult"/>. </summary>
         internal HealthcareTaskResult()
         {
             Errors = new ChangeTrackingList<TextAnalyticsError>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskResult"/>. </summary>
         /// <param name="results"></param>
         /// <param name="errors"></param>
         internal HealthcareTaskResult(HealthcareResult results, IReadOnlyList<TextAnalyticsError> errors)

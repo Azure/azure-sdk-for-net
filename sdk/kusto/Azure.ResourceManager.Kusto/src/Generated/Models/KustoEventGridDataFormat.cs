@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoEventGridDataFormat left, KustoEventGridDataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoEventGridDataFormat"/> values are not the same. </summary>
         public static bool operator !=(KustoEventGridDataFormat left, KustoEventGridDataFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoEventGridDataFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoEventGridDataFormat"/>. </summary>
         public static implicit operator KustoEventGridDataFormat(string value) => new KustoEventGridDataFormat(value);
 
         /// <inheritdoc />
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

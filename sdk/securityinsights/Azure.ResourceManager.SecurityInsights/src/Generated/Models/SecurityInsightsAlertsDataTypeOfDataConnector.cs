@@ -5,34 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Alerts data type for data connectors. </summary>
     public partial class SecurityInsightsAlertsDataTypeOfDataConnector
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertsDataTypeOfDataConnector. </summary>
-        public SecurityInsightsAlertsDataTypeOfDataConnector()
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
+        /// <param name="alerts"> Alerts data type connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alerts"/> is null. </exception>
+        public SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts)
         {
+            Argument.AssertNotNull(alerts, nameof(alerts));
+
+            Alerts = alerts;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertsDataTypeOfDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
         /// <param name="alerts"> Alerts data type connection. </param>
-        internal SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Alerts = alerts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Alerts data type connection. </summary>
         internal DataConnectorDataTypeCommon Alerts { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        [WirePath("alerts.state")]
         public SecurityInsightsDataTypeConnectionState? AlertsState
         {
-            get => Alerts is null ? default : Alerts.State;
+            get => Alerts is null ? default(SecurityInsightsDataTypeConnectionState?) : Alerts.State;
             set
             {
-                if (Alerts is null)
-                    Alerts = new DataConnectorDataTypeCommon();
-                Alerts.State = value;
+                Alerts = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
             }
         }
     }

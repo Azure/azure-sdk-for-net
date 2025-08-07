@@ -1,6 +1,6 @@
 # Release History
 
-## 4.18.0-beta.1 (Unreleased)
+## 5.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,153 @@
 
 ### Other Changes
 
+## 5.0.0 (2025-06-26)
+
+### Features Added
+
+- Added a dependency on the `Azure.Messaging.EventGrid.SystemEvents` package.
+  The system events are now referenced via [type forwarding](https://learn.microsoft.com/dotnet/standard/assembly/type-forwarding). If you encounter any exceptions
+  related to missing types, ensure that you `dotnet clean` and `dotnet build` your project. You should not
+  use the `Azure.Messaging.EventGrid.SystemEvents` package with a version of `Azure.Messaging.EventGrid` prior to 5.0.0,
+  as it will result in type conflicts.
+
+### Breaking Changes
+
+- Various system events have been updated to reflect the actual service behavior.
+  There are no binary breaks or compilation breaks, but there are behavior breaking changes. For instance,
+  some properties that were previously incorrectly marked as optional, have been marked as required. If you
+  are using the `EventGridModelFactory` methods to create such events, and you encounter `ArgumentNullException` when
+  upgrading, you will need to update your code to provide the required properties.
+
+## 5.0.0-beta.1 (2025-06-04)
+
+### Features Added
+
+- Added a dependency on the `Azure.Messaging.EventGrid.SystemEvents` package.
+The system events are now referenced via type-forwarding.
+
+### Breaking Changes
+
+- Various system events have been updated to reflect the actual service behavior.
+There are no binary breaks or compilation breaks, but there are behavior breaking changes. For instance,
+some properties that were previously incorrectly marked as optional, have been marked as required.
+
+## 4.31.0 (2025-05-19)
+
+### Features Added
+
+- Added new communication events.
+- Added new API management events.
+- Add `EdgeSolutionVersionPublishedEventData` Edge event.
+
+## 4.30.0 (2025-02-14)
+
+### Features Added
+
+- Added `MessageId`, `MessageType`, and `Reaction` properties to the `AcsMessageReceivedEventData` event.
+- Added the `Animated` property to `AcsMessageMediaContent` event.
+
+## 4.29.0 (2025-01-21)
+
+### Features Added
+
+- Added `RecipientMailServerHostName` property to `AcsEmailDeliveryReportStatusDetails`.
+- Added `InternetMessageId` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `SegmentCount` property to `AcsSmsReceivedEventData` event.
+
+## 4.28.0 (2024-11-18)
+
+### Features Added
+
+- Added `ResourceNotificationsContainerServiceEventResourcesScheduledEventData` event.
+- Added `PolicyRunSummary` property to `StorageLifecyclePolicyCompletedEventData` event.
+
+## 4.27.0 (2024-10-14)
+
+### Features Added
+
+- Added `OnBehalfOfCallee` property to `AcsIncomingCallEventData` event.
+
+## 4.26.0 (2024-09-18)
+
+### Features Added
+
+- Added `TierToColdSummary` property to `StorageLifecyclePolicyCompletedEventData`.
+
+## 4.25.0 (2024-08-21)
+
+### Features Added
+
+- Added `AccessTier` and `PreviousTier` properties to `StorageBlobTierChangedEventData` system event.
+- Added `AccessTier` to `StorageBlobCreatedEventData` system event.
+
+## 4.24.1 (2024-07-16)
+
+### Bugs Fixed
+
+- Fixed deserialization bugs in `AcsEmailEngagementTrackingReportReceivedEventData` and `AcsEmailDeliveryReportReceivedEventData` system events that caused the `DeliveryAttemptTimestamp` and `UserActionTimeStamp` properties to be null.
+
+## 4.24.0 (2024-04-09)
+
+### Features Added
+
+- Added new Communication events.
+
+## 4.23.0 (2024-03-11)
+
+### Features Added
+
+- Added API Center events.
+
+## 4.22.0 (2024-02-12)
+
+### Features Added
+
+- Added new Storage Task Assignment system events.
+- Added new AVS system events.
+- Added `Metadata` property to `AcsChatThreadCreatedEventData` system event.
+
+## 4.21.0 (2023-11-07)
+
+### Features Added
+
+- Added new system events for Resource Notifications
+- Added the `Metadata` property to various Azure Communication Services events.
+
+## 4.20.0 (2023-10-18)
+
+### Bugs Fixed
+
+- Added several communication models into the correct namespace and hid the old ones.
+
+## 4.19.0 (2023-10-11)
+
+### Features Added
+
+- Added new system events for Resource Notifications and Azure Communication Services.
+
+## 4.18.0 (2023-09-12)
+
+### Features Added
+
+- Added new system events for Event Grid and App Configuration.
+- Added `Recipient` property to `AcsEmailEngagementTrackingReportReceivedEventData` event.
+
+### Breaking Changes
+
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
+## 4.18.0-beta.1 (2023-07-16)
+
+### Other Changes
+
+- Shipping the `EventGridClient` on top of the latest system events.
+
 ## 4.17.0 (2023-06-08)
 
 ### Features Added
 
-- Added new system events for Container Service. 
+- Added new system events for Container Service.
 
 ### Breaking Changes
 
@@ -157,7 +299,7 @@
 ### New Features
 * Added the following new system events:
   - StorageBlobInventoryPolicyCompletedEventData
-    
+
 * Updated existing system events:
  - AcsRecordingChunkInfoProperties - Added `ContentLocation` and `MetadataLocation` properties.
 
@@ -167,7 +309,7 @@
 ## 4.2.0 (2021-05-10)
 
 ### New Features
-* Added the following new system events: 
+* Added the following new system events:
   - PolicyInsightsPolicyStateChangedEventData
   - PolicyInsightsPolicyStateCreatedEventData
   - PolicyInsightsPolicyStateDeletedEventData

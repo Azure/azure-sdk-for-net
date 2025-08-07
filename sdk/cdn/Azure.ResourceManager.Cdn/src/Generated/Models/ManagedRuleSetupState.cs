@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </summary>
+    /// <summary>
+    /// Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified.
+    /// Serialized Name: ManagedRuleEnabledState
+    /// </summary>
     public readonly partial struct ManagedRuleSetupState : IEquatable<ManagedRuleSetupState>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ManagedRuleEnabledState.Disabled
+        /// </summary>
         public static ManagedRuleSetupState Disabled { get; } = new ManagedRuleSetupState(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ManagedRuleEnabledState.Enabled
+        /// </summary>
         public static ManagedRuleSetupState Enabled { get; } = new ManagedRuleSetupState(EnabledValue);
         /// <summary> Determines if two <see cref="ManagedRuleSetupState"/> values are the same. </summary>
         public static bool operator ==(ManagedRuleSetupState left, ManagedRuleSetupState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedRuleSetupState"/> values are not the same. </summary>
         public static bool operator !=(ManagedRuleSetupState left, ManagedRuleSetupState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedRuleSetupState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedRuleSetupState"/>. </summary>
         public static implicit operator ManagedRuleSetupState(string value) => new ManagedRuleSetupState(value);
 
         /// <inheritdoc />
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

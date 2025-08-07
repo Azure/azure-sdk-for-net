@@ -1,0 +1,37 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/thisIsNotAValidModelId?includeModelDefinition=true&api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-298e70e977e3a003d8ca47d200b465d5-0d346333da94e157-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "199",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:58:37 GMT",
+        "mise-correlation-id": "e1283f24-b6a5-4a02-b0be-83dd08f58260",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-298e70e977e3a003d8ca47d200b465d5-728c69a77c62da52-01",
+        "x-ms-error-code": "InvalidArgument"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidArgument",
+          "message": "The format of the Model ID thisIsNotAValidModelId provided is not supported. See model documentation(https://aka.ms/ADTv2Models) for supported format."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
+    "RandomSeed": "308574517"
+  }
+}

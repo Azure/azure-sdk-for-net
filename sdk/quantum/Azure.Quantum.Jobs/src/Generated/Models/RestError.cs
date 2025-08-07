@@ -10,12 +10,12 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Error information returned by the API. </summary>
     internal partial class RestError
     {
-        /// <summary> Initializes a new instance of RestError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestError"/>. </summary>
         internal RestError()
         {
         }
 
-        /// <summary> Initializes a new instance of RestError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestError"/>. </summary>
         /// <param name="error"> An error response from Azure. </param>
         internal RestError(ErrorData error)
         {

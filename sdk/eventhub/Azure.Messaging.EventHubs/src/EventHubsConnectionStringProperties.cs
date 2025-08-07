@@ -29,6 +29,9 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The token that identifies the value of a shared access signature.</summary>
         private const string SharedAccessSignatureToken = "SharedAccessSignature";
 
+        /// <summary>The token that identifies the intent to use a local emulator for development.</summary>
+        private const string DevelopmentEmulatorToken = "UseDevelopmentEmulator";
+
         /// <summary>The character used to separate a token and its value in the connection string.</summary>
         private const char TokenValueSeparator = '=';
 
@@ -84,6 +87,15 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         public string SharedAccessSignature { get; internal set; }
+
+        /// <summary>
+        ///   Indicates whether or not the connection string indicates that the
+        ///   local development emulator is being used.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if the emulator is being used; otherwise, <c>false</c>.</value>
+        ///
+        internal bool UseDevelopmentEmulator { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -173,6 +185,15 @@ namespace Azure.Messaging.EventHubs
                     .Append(SharedAccessKeyValueToken)
                     .Append(TokenValueSeparator)
                     .Append(SharedAccessKey)
+                    .Append(TokenValuePairDelimiter);
+            }
+
+            if (UseDevelopmentEmulator)
+            {
+                builder
+                    .Append(DevelopmentEmulatorToken)
+                    .Append(TokenValueSeparator)
+                    .Append("true")
                     .Append(TokenValuePairDelimiter);
             }
 
@@ -298,10 +319,40 @@ namespace Azure.Messaging.EventHubs
 
                     if (string.Compare(EndpointToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        var endpointBuilder = new UriBuilder(value)
+                        // If this is an absolute URI, then it may have a custom port specified, which we
+                        // want to preserve.  If no scheme was specified, the URI is considered relative and
+                        // the default port should be used.
+
+                        if (!Uri.TryCreate(value, UriKind.Absolute, out var endpointUri))
                         {
-                            Scheme = EventHubsEndpointScheme,
-                            Port = -1
+                            endpointUri = null;
+                        }
+                        else if (string.IsNullOrEmpty(endpointUri.Host) && (CountChar(':', value.AsSpan()) == 1))
+                        {
+                            // If the host was empty after parsing and the value has a single port/scheme separator,
+                            // then the parsing likely failed to recognize the host due to the lack of a scheme.  Add
+                            // an artificial scheme and try to parse again.
+
+                            if (!Uri.TryCreate(string.Concat(EventHubsEndpointScheme, value), UriKind.Absolute, out endpointUri))
+                            {
+                                endpointUri = null;
+                            }
+                        }
+
+                        var endpointBuilder = endpointUri switch
+                        {
+                            null => new UriBuilder(value)
+                            {
+                                Scheme = EventHubsEndpointScheme,
+                                Port = -1
+                            },
+
+                            _ => new UriBuilder()
+                            {
+                                Scheme = EventHubsEndpointScheme,
+                                Host = endpointUri.Host,
+                                Port = endpointUri.IsDefaultPort ? -1 : endpointUri.Port,
+                            }
                         };
 
                         if ((string.Compare(endpointBuilder.Scheme, EventHubsEndpointSchemeName, StringComparison.OrdinalIgnoreCase) != 0)
@@ -328,6 +379,16 @@ namespace Azure.Messaging.EventHubs
                     {
                         parsedValues.SharedAccessSignature = value;
                     }
+                    else if (string.Compare(DevelopmentEmulatorToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    {
+                        // Do not enforce a value for the development emulator token. If a valid boolean, use it.
+                        // Otherwise, leave the default value of false.
+
+                        if (bool.TryParse(value, out var useEmulator))
+                        {
+                            parsedValues.UseDevelopmentEmulator = useEmulator;
+                        }
+                    }
                 }
                 else if ((slice.Length != 1) || (slice[0] != TokenValuePairDelimiter))
                 {
@@ -342,6 +403,31 @@ namespace Azure.Messaging.EventHubs
             }
 
             return parsedValues;
+        }
+
+        /// <summary>
+        ///   Counts the number of times a character occurs in a given span.
+        /// </summary>
+        ///
+        /// <param name="span">The span to evaluate.</param>
+        /// <param name="value">The character to count.</param>
+        ///
+        /// <returns>The number of times the <paramref name="value"/> occurs in <paramref name="span"/>.</returns>
+        ///
+        private static int CountChar(char value,
+                                     ReadOnlySpan<char> span)
+        {
+            var count = 0;
+
+            foreach (var character in span)
+            {
+                if (character == value)
+                {
+                    ++count;
+                }
+            }
+
+            return count;
         }
     }
 }

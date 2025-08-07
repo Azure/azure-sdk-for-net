@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListAppServiceCertificateOrderDetectorResponseRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/detectors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +121,41 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAppServiceCertificateOrderDetectorResponseRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/detectors/", false);
+            uri.AppendPath(detectorName, true);
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime.Value, "O", true);
+            }
+            if (endTime != null)
+            {
+                uri.AppendQuery("endTime", endTime.Value, "O", true);
+            }
+            if (timeGrain != null)
+            {
+                uri.AppendQuery("timeGrain", timeGrain, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain)
@@ -175,7 +217,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -211,7 +253,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -220,6 +262,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAppServiceCertificateOrderDetectorResponseNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAppServiceCertificateOrderDetectorResponseNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -258,7 +308,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +339,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

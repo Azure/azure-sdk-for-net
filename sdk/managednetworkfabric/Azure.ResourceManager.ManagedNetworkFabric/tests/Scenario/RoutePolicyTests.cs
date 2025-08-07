@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             NetworkFabricRoutePolicyData data = new NetworkFabricRoutePolicyData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
             {
                 Annotation = "annotation",
+                DefaultAction = CommunityActionType.Permit,
                 Statements =
                 {
                     new RoutePolicyStatementProperties(
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         new StatementConditionProperties()
                         {
                             RoutePolicyConditionType = RoutePolicyConditionType.Or,
-                            IPPrefixId = new ResourceIdentifier("/subscriptions/9531faa8-8c39-4165-b033-48697fe943db/resourceGroups/nfa-tool-ts-clisdktest-GA-nfcrg071323/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipPrefix071423"),
+                            IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipprefix"),
                         },
                         new StatementActionProperties(RoutePolicyActionType.Deny)
                         {
@@ -80,6 +81,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
+
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
+            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+
+            await foreach (NetworkFabricRoutePolicyResource item in subscriptionResource.GetNetworkFabricRoutePoliciesAsync())
+            {
+                NetworkFabricRoutePolicyData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Redis
 
         RedisResource IOperationSource<RedisResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = RedisData.DeserializeRedisData(document.RootElement);
+            var data = ModelReaderWriter.Read<RedisData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
             return new RedisResource(_client, data);
         }
 
         async ValueTask<RedisResource> IOperationSource<RedisResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = RedisData.DeserializeRedisData(document.RootElement);
-            return new RedisResource(_client, data);
+            var data = ModelReaderWriter.Read<RedisData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
+            return await Task.FromResult(new RedisResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

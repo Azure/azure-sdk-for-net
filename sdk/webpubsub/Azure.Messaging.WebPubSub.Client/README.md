@@ -26,7 +26,7 @@ Details about the terms used here are described in [Key concepts](#key-concepts)
 Install the client library from [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Messaging.WebPubSub.Client --prerelease
+dotnet add package Azure.Messaging.WebPubSub.Client
 ```
 
 ### Prerequisites
@@ -234,8 +234,6 @@ You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [awps_sample]: https://github.com/Azure/azure-webpubsub/tree/main/samples/csharp

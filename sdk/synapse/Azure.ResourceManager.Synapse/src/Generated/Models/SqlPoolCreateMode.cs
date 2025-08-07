@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SqlPoolCreateMode left, SqlPoolCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPoolCreateMode"/> values are not the same. </summary>
         public static bool operator !=(SqlPoolCreateMode left, SqlPoolCreateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlPoolCreateMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlPoolCreateMode"/>. </summary>
         public static implicit operator SqlPoolCreateMode(string value) => new SqlPoolCreateMode(value);
 
         /// <inheritdoc />
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

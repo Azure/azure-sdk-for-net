@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(MonitorNamespaceClassification left, MonitorNamespaceClassification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorNamespaceClassification"/> values are not the same. </summary>
         public static bool operator !=(MonitorNamespaceClassification left, MonitorNamespaceClassification right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorNamespaceClassification"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorNamespaceClassification"/>. </summary>
         public static implicit operator MonitorNamespaceClassification(string value) => new MonitorNamespaceClassification(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

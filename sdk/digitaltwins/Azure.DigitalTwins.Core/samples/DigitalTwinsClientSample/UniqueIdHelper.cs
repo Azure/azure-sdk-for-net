@@ -21,6 +21,11 @@ namespace Azure.DigitalTwins.Core.Samples
             return await GetUniqueIdAsync(baseName, (twinId) => client.GetDigitalTwinAsync<BasicDigitalTwin>(twinId));
         }
 
+        internal static async Task<string> GetUniqueJobIdAsync(string baseName, DigitalTwinsClient client)
+        {
+            return await GetUniqueIdAsync(baseName, (jobId) => client.GetImportJobAsync(jobId));
+        }
+
         private static async Task<string> GetUniqueIdAsync(string baseName, Func<string, Task> getResource)
         {
             const int maxAttempts = 10;

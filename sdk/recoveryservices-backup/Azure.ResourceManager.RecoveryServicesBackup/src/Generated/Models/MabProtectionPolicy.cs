@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,16 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Mab container-specific backup policy. </summary>
     public partial class MabProtectionPolicy : BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of MabProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabProtectionPolicy"/>. </summary>
         public MabProtectionPolicy()
         {
             BackupManagementType = "MAB";
         }
 
-        /// <summary> Initializes a new instance of MabProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule of backup policy.
         /// Please note <see cref="BackupSchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
-        internal MabProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        internal MabProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
         {
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;

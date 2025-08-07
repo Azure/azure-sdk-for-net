@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.CustomerInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2017-04-26";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByHubRequestUri(string subscriptionId, string resourceGroupName, string hubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/widgetTypes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByHubRequest(string subscriptionId, string resourceGroupName, string hubName)
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         WidgetTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WidgetTypeListResult.DeserializeWidgetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +121,29 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         WidgetTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WidgetTypeListResult.DeserializeWidgetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string hubName, string widgetTypeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/widgetTypes/", false);
+            uri.AppendPath(widgetTypeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string hubName, string widgetTypeName)
@@ -160,7 +190,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         WidgetTypeResourceFormatData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WidgetTypeResourceFormatData.DeserializeWidgetTypeResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         WidgetTypeResourceFormatData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WidgetTypeResourceFormatData.DeserializeWidgetTypeResourceFormatData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,6 +232,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByHubNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string hubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByHubNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hubName)
@@ -240,7 +278,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         WidgetTypeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WidgetTypeListResult.DeserializeWidgetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,7 +309,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case 200:
                     {
                         WidgetTypeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WidgetTypeListResult.DeserializeWidgetTypeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
@@ -16,14 +17,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
+                Uri accountUri = new($"https://{TestEnvironment.StorageClaimCheckAccountName}.blob.core.windows.net/claim-checks");
                 #region Snippet:CreateBlobContainer
 #if SNIPPET
-                var containerClient = new BlobContainerClient("<storage connection string>", "claim-checks");
+                DefaultAzureCredential credential = new();
 #else
-                var containerClient = new BlobContainerClient(TestEnvironment.StorageClaimCheckConnectionString, "claim-checks");
+                var credential = TestEnvironment.Credential;
 #endif
+                var containerClient = new BlobContainerClient(accountUri, credential);
                 await containerClient.CreateIfNotExistsAsync();
-                #endregion
+#endregion
 
                 try
                 {
@@ -45,9 +48,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     #region Snippet:ClaimCheckSendMessage
 
 #if SNIPPET
-                    var client = new ServiceBusClient("<service bus connection string>");
+                    ServiceBusClient client = new("<service bus fully qualified namespace>", credential);
 #else
-                    var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                    ServiceBusClient client = new(TestEnvironment.FullyQualifiedNamespace, credential);
 #endif
                     ServiceBusSender sender = client.CreateSender(scope.QueueName);
                     await sender.SendMessageAsync(message);
@@ -61,13 +64,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
                     {
 #if SNIPPET
-                        var blobClient = new BlobClient("<storage connection string>", "claim-checks", (string) blobNameReceived);
+                        Uri blobUri = new($"https://<storage account name>.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
 #else
-                        var blobClient = new BlobClient(
-                            TestEnvironment.StorageClaimCheckConnectionString,
-                            "claim-checks",
-                            (string)blobNameReceived);
+                        Uri blobUri = new($"https://{TestEnvironment.StorageClaimCheckAccountName}.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
 #endif
+                        var blobClient = new BlobClient(blobUri, credential);
+
                         BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
                         BinaryData messageBody = downloadResult.Content;
 

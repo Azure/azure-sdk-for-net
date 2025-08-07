@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(NetworkFabricValidateAction left, NetworkFabricValidateAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFabricValidateAction"/> values are not the same. </summary>
         public static bool operator !=(NetworkFabricValidateAction left, NetworkFabricValidateAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkFabricValidateAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricValidateAction"/>. </summary>
         public static implicit operator NetworkFabricValidateAction(string value) => new NetworkFabricValidateAction(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

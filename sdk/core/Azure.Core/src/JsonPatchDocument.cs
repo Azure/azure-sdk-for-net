@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,8 @@ namespace Azure
         /// <summary>
         /// Initializes a new instance of <see cref="JsonPatchDocument"/> that uses <see cref="JsonObjectSerializer"/> as the default serializer.
         /// </summary>
+        [RequiresUnreferencedCode("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
+        [RequiresDynamicCode("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
         public JsonPatchDocument() : this(default(ReadOnlyMemory<byte>))
         {
         }
@@ -41,6 +44,8 @@ namespace Azure
         /// Initializes a new instance of <see cref="JsonPatchDocument"/>
         /// </summary>
         /// <param name="rawDocument">The binary representation of JSON Patch document.</param>
+        [RequiresUnreferencedCode("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
+        [RequiresDynamicCode("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
         public JsonPatchDocument(ReadOnlyMemory<byte> rawDocument) : this(rawDocument, new JsonObjectSerializer())
         {
         }
@@ -58,7 +63,7 @@ namespace Azure
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="JsonPatchDocument"/> using an existing UTF8-encoded JSON Patch document.
+        /// Appends an "add" operation to this <see cref="JsonPatchDocument"/>.
         /// </summary>
         /// <param name="path">The path to apply the addition to.</param>
         /// <param name="rawJsonValue">The raw JSON value to add to the path.</param>

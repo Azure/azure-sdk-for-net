@@ -19,18 +19,28 @@ namespace Azure.Security.Attestation.Tests
 
         public string SharedAttestationUrl => "https://shared" + LocationShortName + "." + LocationShortName + ".test.attest.azure.net";
 
-        public X509Certificate2 PolicyCertificate0 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("policySigningCertificate0")));
-        public X509Certificate2 PolicyCertificate1 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("policySigningCertificate1")));
-        public X509Certificate2 PolicyCertificate2 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("policySigningCertificate2")));
+#if NET9_0_OR_GREATER
+        public X509Certificate2 PolicyCertificate0 => X509CertificateLoader.LoadCertificate(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE0")));
+        public X509Certificate2 PolicyCertificate1 => X509CertificateLoader.LoadCertificate(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE1")));
+        public X509Certificate2 PolicyCertificate2 => X509CertificateLoader.LoadCertificate(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE2")));
+#else
+        public X509Certificate2 PolicyCertificate0 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE0")));
+        public X509Certificate2 PolicyCertificate1 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE1")));
+        public X509Certificate2 PolicyCertificate2 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("POLICYSIGNINGCERTIFICATE2")));
+#endif
 
-        public RSA PolicySigningKey0 => GetRSACryptoServiceProvider("serializedPolicySigningKey0");
-        public RSA PolicySigningKey1 => GetRSACryptoServiceProvider("serializedPolicySigningKey1");
-        public RSA PolicySigningKey2 => GetRSACryptoServiceProvider("serializedPolicySigningKey2");
+        public RSA PolicySigningKey0 => GetRSACryptoServiceProvider("SERIALIZEDPOLICYSIGNINGKEY0");
+        public RSA PolicySigningKey1 => GetRSACryptoServiceProvider("SERIALIZEDPOLICYSIGNINGKEY1");
+        public RSA PolicySigningKey2 => GetRSACryptoServiceProvider("SERIALIZEDPOLICYSIGNINGKEY2");
 
         // Policy management keys.
-        public X509Certificate2 PolicyManagementCertificate => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("isolatedSigningCertificate")));
-        public RSA PolicyManagementKey => GetRSACryptoServiceProvider("serializedIsolatedSigningKey");
-        public string LocationShortName => GetRecordedVariable("locationShortName");
+#if NET9_0_OR_GREATER
+        public X509Certificate2 PolicyManagementCertificate => X509CertificateLoader.LoadCertificate(Convert.FromBase64String(GetRecordedVariable("ISOLATEDSIGNINGCERTIFICATE")));
+#else
+        public X509Certificate2 PolicyManagementCertificate => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("ISOLATEDSIGNINGCERTIFICATE")));
+#endif
+        public RSA PolicyManagementKey => GetRSACryptoServiceProvider("SERIALIZEDISOLATEDSIGNINGKEY");
+        public string LocationShortName => GetRecordedVariable("LOCATIONSHORTNAME");
 
         private static Uri DataPlaneScope => new Uri($"https://attest.azure.net");
 

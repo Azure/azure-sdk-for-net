@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtMigrateContent : IUtf8JsonSerializable
+    public partial class VMwareCbtMigrateContent : IUtf8JsonSerializable, IJsonModel<VMwareCbtMigrateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtMigrateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VMwareCbtMigrateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtMigrateContent)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("performShutdown"u8);
             writer.WriteStringValue(PerformShutdown);
             if (Optional.IsDefined(OSUpgradeVersion))
@@ -22,9 +42,113 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);
             }
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
-            writer.WriteEndObject();
+            if (Optional.IsCollectionDefined(PostMigrationSteps))
+            {
+                writer.WritePropertyName("postMigrationSteps"u8);
+                writer.WriteStartArray();
+                foreach (var item in PostMigrationSteps)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
+
+        VMwareCbtMigrateContent IJsonModel<VMwareCbtMigrateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtMigrateContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareCbtMigrateContent(document.RootElement, options);
+        }
+
+        internal static VMwareCbtMigrateContent DeserializeVMwareCbtMigrateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string performShutdown = default;
+            string osUpgradeVersion = default;
+            IList<ManagedRunCommandScriptContent> postMigrationSteps = default;
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("performShutdown"u8))
+                {
+                    performShutdown = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("osUpgradeVersion"u8))
+                {
+                    osUpgradeVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("postMigrationSteps"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ManagedRunCommandScriptContent> array = new List<ManagedRunCommandScriptContent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ManagedRunCommandScriptContent.DeserializeManagedRunCommandScriptContent(item, options));
+                    }
+                    postMigrationSteps = array;
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VMwareCbtMigrateContent(instanceType, serializedAdditionalRawData, performShutdown, osUpgradeVersion, postMigrationSteps ?? new ChangeTrackingList<ManagedRunCommandScriptContent>());
+        }
+
+        BinaryData IPersistableModel<VMwareCbtMigrateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareCbtMigrateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VMwareCbtMigrateContent IPersistableModel<VMwareCbtMigrateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVMwareCbtMigrateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareCbtMigrateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VMwareCbtMigrateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

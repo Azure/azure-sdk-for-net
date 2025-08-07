@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApplicationInsights.Models;
@@ -36,6 +35,21 @@ namespace Azure.ResourceManager.ApplicationInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2015-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/exportconfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -79,7 +93,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsComponentExportConfiguration> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<ApplicationInsightsComponentExportConfiguration> array = new List<ApplicationInsightsComponentExportConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -113,7 +127,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsComponentExportConfiguration> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<ApplicationInsightsComponentExportConfiguration> array = new List<ApplicationInsightsComponentExportConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -127,7 +141,22 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsComponentExportRequest exportProperties)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsComponentExportContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/exportconfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsComponentExportContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -145,9 +174,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(exportProperties);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -156,25 +185,25 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="exportProperties"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
+        /// <param name="content"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<ApplicationInsightsComponentExportConfiguration>>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ApplicationInsightsComponentExportConfiguration>>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsComponentExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, exportProperties);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsComponentExportConfiguration> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<ApplicationInsightsComponentExportConfiguration> array = new List<ApplicationInsightsComponentExportConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -192,25 +221,25 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="exportProperties"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
+        /// <param name="content"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<ApplicationInsightsComponentExportConfiguration>> Create(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ApplicationInsightsComponentExportConfiguration>> Create(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsComponentExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, exportProperties);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsComponentExportConfiguration> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<ApplicationInsightsComponentExportConfiguration> array = new List<ApplicationInsightsComponentExportConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -222,6 +251,22 @@ namespace Azure.ResourceManager.ApplicationInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string exportId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/exportconfiguration/", false);
+            uri.AppendPath(exportId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string exportId)
@@ -268,7 +313,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentExportConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -299,13 +344,29 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentExportConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string exportId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/exportconfiguration/", false);
+            uri.AppendPath(exportId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string exportId)
@@ -352,7 +413,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentExportConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,7 +444,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentExportConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -392,7 +453,23 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string exportId, ApplicationInsightsComponentExportRequest exportProperties)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string exportId, ApplicationInsightsComponentExportContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/exportconfiguration/", false);
+            uri.AppendPath(exportId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string exportId, ApplicationInsightsComponentExportContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -411,9 +488,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(exportProperties);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -423,26 +500,26 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
-        /// <param name="exportProperties"> Properties that need to be specified to update the Continuous Export configuration. </param>
+        /// <param name="content"> Properties that need to be specified to update the Continuous Export configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="exportId"/> or <paramref name="exportProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="exportId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentExportConfiguration>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string exportId, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationInsightsComponentExportConfiguration>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string exportId, ApplicationInsightsComponentExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, exportId, exportProperties);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, exportId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         ApplicationInsightsComponentExportConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -456,26 +533,26 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
-        /// <param name="exportProperties"> Properties that need to be specified to update the Continuous Export configuration. </param>
+        /// <param name="content"> Properties that need to be specified to update the Continuous Export configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="exportId"/> or <paramref name="exportProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="exportId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentExportConfiguration> Update(string subscriptionId, string resourceGroupName, string resourceName, string exportId, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
+        public Response<ApplicationInsightsComponentExportConfiguration> Update(string subscriptionId, string resourceGroupName, string resourceName, string exportId, ApplicationInsightsComponentExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, exportId, exportProperties);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, exportId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         ApplicationInsightsComponentExportConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

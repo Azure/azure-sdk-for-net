@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: RemoteAddressOperator
+    /// </summary>
     public readonly partial struct RemoteAddressOperator : IEquatable<RemoteAddressOperator>
     {
         private readonly string _value;
@@ -26,17 +29,26 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string IPMatchValue = "IPMatch";
         private const string GeoMatchValue = "GeoMatch";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: RemoteAddressOperator.Any
+        /// </summary>
         public static RemoteAddressOperator Any { get; } = new RemoteAddressOperator(AnyValue);
-        /// <summary> IPMatch. </summary>
+        /// <summary>
+        /// IPMatch
+        /// Serialized Name: RemoteAddressOperator.IPMatch
+        /// </summary>
         public static RemoteAddressOperator IPMatch { get; } = new RemoteAddressOperator(IPMatchValue);
-        /// <summary> GeoMatch. </summary>
+        /// <summary>
+        /// GeoMatch
+        /// Serialized Name: RemoteAddressOperator.GeoMatch
+        /// </summary>
         public static RemoteAddressOperator GeoMatch { get; } = new RemoteAddressOperator(GeoMatchValue);
         /// <summary> Determines if two <see cref="RemoteAddressOperator"/> values are the same. </summary>
         public static bool operator ==(RemoteAddressOperator left, RemoteAddressOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RemoteAddressOperator"/> values are not the same. </summary>
         public static bool operator !=(RemoteAddressOperator left, RemoteAddressOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RemoteAddressOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RemoteAddressOperator"/>. </summary>
         public static implicit operator RemoteAddressOperator(string value) => new RemoteAddressOperator(value);
 
         /// <inheritdoc />
@@ -47,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

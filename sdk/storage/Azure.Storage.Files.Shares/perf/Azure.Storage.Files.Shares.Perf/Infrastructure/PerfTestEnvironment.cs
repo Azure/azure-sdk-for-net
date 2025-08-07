@@ -22,28 +22,28 @@ namespace Azure.Storage.Files.Shares.Perf
         public new string StorageEndpointSuffix => base.StorageEndpointSuffix ?? "core.windows.net";
 
         /// <summary>
-        /// The name of the Files Shares storage account to test against.
+        /// The name of the Blob storage account to test against.
         /// </summary>
-        /// <value>The Files Shares storage account name, read from the "AZURE_STORAGE_ACCOUNT_NAME" environment variable.</value>
-        public string FilesSharesAccountName => GetVariable("AZURE_STORAGE_ACCOUNT_NAME");
+        /// <value>The Blob storage account name, read from the "AZURE_STORAGE_ACCOUNT_NAME" environment variable.</value>
+        public string StorageAccountName => GetVariable("AZURE_STORAGE_ACCOUNT_NAME");
 
         /// <summary>
-        /// The shared access key of the Files Shares storage account to test against.
+        /// The shared access key of the Blob storage account to test against.
         /// </summary>
-        /// <value>The Files Shares storage account key, read from the "AZURE_STORAGE_ACCOUNT_KEY" environment variable.</value>
-        public string FilesSharesAccountKey => GetVariable("AZURE_STORAGE_ACCOUNT_KEY");
+        /// <value>The Blob storage account key, read from the "AZURE_STORAGE_ACCOUNT_KEY" environment variable.</value>
+        public string StorageAccountKey => GetOptionalVariable("AZURE_STORAGE_ACCOUNT_KEY");
 
         /// <summary>
-        /// The connection string for accessing the Files Shares storage account used for testing.
+        /// The Blob storage endpoint.
         /// </summary>
-        public string FileSharesConnectionString { get; }
+        public Uri StorageEndpoint { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PerfTestEnvironment"/> class.
         /// </summary>
         public PerfTestEnvironment()
         {
-            FileSharesConnectionString = $"DefaultEndpointsProtocol={Uri.UriSchemeHttps};AccountName={FilesSharesAccountName};AccountKey={FilesSharesAccountKey};EndpointSuffix={StorageEndpointSuffix}";
+            StorageEndpoint = new Uri($"https://{StorageAccountName}.file.{StorageEndpointSuffix}");
         }
     }
 }

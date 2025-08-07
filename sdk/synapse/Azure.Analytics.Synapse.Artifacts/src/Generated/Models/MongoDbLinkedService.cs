@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Linked service for MongoDb data source. </summary>
     public partial class MongoDbLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of MongoDbLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDbLinkedService"/>. </summary>
         /// <param name="server"> The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string). </param>
         /// <param name="databaseName"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="databaseName"/> is null. </exception>
@@ -28,8 +27,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "MongoDb";
         }
 
-        /// <summary> Initializes a new instance of MongoDbLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDbLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal MongoDbLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, MongoDbAuthenticationType? authenticationType, object databaseName, object username, SecretBase password, object authSource, object port, object enableSsl, object allowSelfSignedServerCert, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal MongoDbLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, MongoDbAuthenticationType? authenticationType, object databaseName, object username, SecretBase password, object authSource, object port, object enableSsl, object allowSelfSignedServerCert, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             AuthenticationType = authenticationType;

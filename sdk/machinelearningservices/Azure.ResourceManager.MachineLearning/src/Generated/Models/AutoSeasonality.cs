@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The AutoSeasonality. </summary>
     public partial class AutoSeasonality : ForecastingSeasonality
     {
-        /// <summary> Initializes a new instance of AutoSeasonality. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoSeasonality"/>. </summary>
         public AutoSeasonality()
         {
             Mode = SeasonalityMode.Auto;
         }
 
-        /// <summary> Initializes a new instance of AutoSeasonality. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoSeasonality"/>. </summary>
         /// <param name="mode"> [Required] Seasonality mode. </param>
-        internal AutoSeasonality(SeasonalityMode mode) : base(mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoSeasonality(SeasonalityMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
         {
             Mode = mode;
         }

@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static bool operator ==(SparkErrorSource left, SparkErrorSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkErrorSource"/> values are not the same. </summary>
         public static bool operator !=(SparkErrorSource left, SparkErrorSource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SparkErrorSource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SparkErrorSource"/>. </summary>
         public static implicit operator SparkErrorSource(string value) => new SparkErrorSource(value);
     }
 }

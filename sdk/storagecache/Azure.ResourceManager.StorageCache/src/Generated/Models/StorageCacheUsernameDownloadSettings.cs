@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Settings for Extended Groups username and group download. </summary>
     public partial class StorageCacheUsernameDownloadSettings
     {
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsernameDownloadSettings"/>. </summary>
         public StorageCacheUsernameDownloadSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsernameDownloadSettings"/>. </summary>
         /// <param name="enableExtendedGroups"> Whether or not Extended Groups is enabled. </param>
         /// <param name="usernameSource"> This setting determines how the cache gets username and group names for clients. </param>
         /// <param name="groupFileUri"> The URI of the file containing group information (in /etc/group file format). This field must be populated when 'usernameSource' is set to 'File'. </param>
@@ -30,7 +63,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="caCertificateUri"> The URI of the CA certificate to validate the LDAP secure connection. This field must be populated when 'requireValidCertificate' is set to true. </param>
         /// <param name="usernameDownloaded"> Indicates whether or not the HPC Cache has performed the username download successfully. </param>
         /// <param name="credentials"> When present, these are the credentials for the secure LDAP connection. </param>
-        internal StorageCacheUsernameDownloadSettings(bool? enableExtendedGroups, StorageCacheUsernameSourceType? usernameSource, Uri groupFileUri, Uri userFileUri, string ldapServer, string ldapBaseDN, bool? encryptLdapConnection, bool? requireValidCertificate, bool? autoDownloadCertificate, Uri caCertificateUri, StorageCacheUsernameDownloadedType? usernameDownloaded, StorageCacheUsernameDownloadCredential credentials)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUsernameDownloadSettings(bool? enableExtendedGroups, StorageCacheUsernameSourceType? usernameSource, Uri groupFileUri, Uri userFileUri, string ldapServer, string ldapBaseDN, bool? encryptLdapConnection, bool? requireValidCertificate, bool? autoDownloadCertificate, Uri caCertificateUri, StorageCacheUsernameDownloadedType? usernameDownloaded, StorageCacheUsernameDownloadCredential credentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableExtendedGroups = enableExtendedGroups;
             UsernameSource = usernameSource;
@@ -44,6 +78,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             CaCertificateUri = caCertificateUri;
             UsernameDownloaded = usernameDownloaded;
             Credentials = credentials;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether or not Extended Groups is enabled. </summary>

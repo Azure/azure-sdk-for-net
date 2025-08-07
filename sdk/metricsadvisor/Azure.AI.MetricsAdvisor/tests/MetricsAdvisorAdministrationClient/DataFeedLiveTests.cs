@@ -15,8 +15,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
     public class DataFeedLiveTests : MetricsAdvisorLiveTestBase
     {
         private const string DataSourceAccount = "account";
-        private const string DataSourceAppId = "appId";
-        private const string DataSourceClientId = "clientId";
+        private string DataSourceAppId => Mode == RecordedTestMode.Live ? "appId" : EmptyGuid;
+        private string DataSourceClientId => Mode == RecordedTestMode.Live ? "clientId" : EmptyGuid;
         private const string DataSourceCloud = "cloud";
         private const string DataSourceCollectionId = "collectId";
         private const string DataSourceCommand = "command";
@@ -29,8 +29,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceQuery = "query";
         private const string DataSourceTable = "table";
         private const string DataSourceTemplate = "template";
-        private const string DataSourceTenantId = "tenantId";
-        private const string DataSourceUsername = "username";
+        private string DataSourceTenantId => Mode == RecordedTestMode.Live ? "tenantId" : EmptyGuid;
+        private string DataSourceUsername => Mode == RecordedTestMode.Live ? "username" : SanitizeValue;
         private const string DataSourceWorkspaceId = "workspaceId";
 
         private static string[] DataFeedSourceTestCases =

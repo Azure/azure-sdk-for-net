@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(ActivityStatusCode.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, "/search");
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
@@ -95,11 +95,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData("200", true)]
-        [InlineData("400", false)]
-        [InlineData("500", false)]
-        [InlineData("0", false)]
-        public void ValidateHttpRequestSuccess(string httpStatusCode, bool isSuccess)
+        [InlineData("200", ActivityStatusCode.Unset, true)]
+        [InlineData("200", ActivityStatusCode.Ok, true)]
+        [InlineData("200", ActivityStatusCode.Error, false)]
+        [InlineData("400", ActivityStatusCode.Unset, false)]
+        [InlineData("400", ActivityStatusCode.Ok, true)]
+        [InlineData("400", ActivityStatusCode.Error, false)]
+        [InlineData("500", ActivityStatusCode.Unset, false)]
+        [InlineData("500", ActivityStatusCode.Ok, true)]
+        [InlineData("500", ActivityStatusCode.Error, false)]
+        [InlineData("0", ActivityStatusCode.Unset, false)]
+        [InlineData("0", ActivityStatusCode.Ok, true)]
+        [InlineData("0", ActivityStatusCode.Error, false)]
+        public void ValidateHttpRequestSuccess(string httpStatusCode, ActivityStatusCode activityStatus, bool isSuccess)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -113,6 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetStatus(activityStatus);
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 

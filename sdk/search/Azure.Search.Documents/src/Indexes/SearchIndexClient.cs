@@ -23,11 +23,27 @@ namespace Azure.Search.Documents.Indexes
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
         private readonly ObjectSerializer _serializer;
-
         private SearchServiceRestClient _serviceClient;
         private IndexesRestClient _indexesClient;
         private SynonymMapsRestClient _synonymMapsClient;
         private string _serviceName;
+
+        /// <summary>
+        /// The HTTP pipeline for sending and receiving REST requests and responses.
+        /// </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// Gets the URI endpoint of the Search service.  This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// </summary>
+        public virtual Uri Endpoint { get; }
+
+        /// <summary>
+        /// Gets the name of the Search service.
+        /// </summary>
+        public virtual string ServiceName =>
+            _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchIndexClient"/> class for mocking.
@@ -105,7 +121,6 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="options">Client configuration options for connecting to Azure Cognitive Search.</param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0006:DO provide constructor overloads that allow specifying additional options.", Justification = "Avoid ambiguous method definition")]
         public SearchIndexClient(
             Uri endpoint,
             TokenCredential tokenCredential,
@@ -152,18 +167,6 @@ namespace Azure.Search.Documents.Indexes
             _pipeline = pipeline;
             _version = version;
         }
-
-        /// <summary>
-        /// Gets the URI endpoint of the Search service.  This is likely
-        /// to be similar to "https://{search_service}.search.windows.net".
-        /// </summary>
-        public virtual Uri Endpoint { get; }
-
-        /// <summary>
-        /// Gets the name of the Search service.
-        /// </summary>
-        public virtual string ServiceName =>
-            _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
         /// Gets the generated <see cref="SearchServiceRestClient"/> to make requests.
@@ -299,6 +302,54 @@ namespace Azure.Search.Documents.Indexes
                 throw;
             }
         }
+
+        /// <summary>
+        /// Retrieves a summary of statistics for all indexes in the search service.
+        /// </summary>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="ListIndexStatsSummary"/>.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual Response<ListIndexStatsSummary> GetIndexStatsSummary(
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexStatsSummary)}");
+            scope.Start();
+            try
+            {
+                return ServiceClient.GetIndexStatsSummary(
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a summary of statistics for all indexes in the search service.
+        /// </summary>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response{T}"/> from the server containing <see cref="ListIndexStatsSummary"/>.</returns>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual async Task<Response<ListIndexStatsSummary>> GetIndexStatsSummaryAsync(
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexStatsSummary)}");
+            scope.Start();
+            try
+            {
+                return await ServiceClient.GetIndexStatsSummaryAsync(
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Index operations

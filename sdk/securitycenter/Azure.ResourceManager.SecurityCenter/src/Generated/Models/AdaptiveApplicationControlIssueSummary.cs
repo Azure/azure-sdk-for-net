@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents a summary of the alerts of the machine group. </summary>
     public partial class AdaptiveApplicationControlIssueSummary
     {
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlIssueSummary. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlIssueSummary"/>. </summary>
         internal AdaptiveApplicationControlIssueSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlIssueSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlIssueSummary"/>. </summary>
         /// <param name="issue"> An alert that machines within a group can have. </param>
         /// <param name="numberOfVms"> The number of machines in the group that have this alert. </param>
-        internal AdaptiveApplicationControlIssueSummary(AdaptiveApplicationControlIssue? issue, float? numberOfVms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdaptiveApplicationControlIssueSummary(AdaptiveApplicationControlIssue? issue, float? numberOfVms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Issue = issue;
             NumberOfVms = numberOfVms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An alert that machines within a group can have. </summary>

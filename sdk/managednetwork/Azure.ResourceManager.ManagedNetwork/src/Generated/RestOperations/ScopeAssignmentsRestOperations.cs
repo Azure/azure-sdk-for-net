@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagedNetwork.Models;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.ManagedNetwork
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string scopeAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments/", false);
+            uri.AppendPath(scopeAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string scopeAssignmentName)
@@ -73,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ScopeAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScopeAssignmentData.DeserializeScopeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ScopeAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScopeAssignmentData.DeserializeScopeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,6 +122,18 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string scopeAssignmentName, ScopeAssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments/", false);
+            uri.AppendPath(scopeAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string scopeAssignmentName, ScopeAssignmentData data)
@@ -129,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -156,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 201:
                     {
                         ScopeAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScopeAssignmentData.DeserializeScopeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,13 +209,25 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 201:
                     {
                         ScopeAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScopeAssignmentData.DeserializeScopeAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string scopeAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments/", false);
+            uri.AppendPath(scopeAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string scope, string scopeAssignmentName)
@@ -256,6 +291,17 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -288,7 +334,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ScopeAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScopeAssignmentListResult.DeserializeScopeAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -312,13 +358,21 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ScopeAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScopeAssignmentListResult.DeserializeScopeAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope)
@@ -352,7 +406,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ScopeAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScopeAssignmentListResult.DeserializeScopeAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -378,7 +432,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case 200:
                     {
                         ScopeAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScopeAssignmentListResult.DeserializeScopeAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

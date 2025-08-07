@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Implements InnerHealthError class. HealthError object has a list of InnerHealthErrors as child errors. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </summary>
     public partial class SiteRecoveryInnerHealthError
     {
-        /// <summary> Initializes a new instance of SiteRecoveryInnerHealthError. </summary>
-        internal SiteRecoveryInnerHealthError()
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryInnerHealthError"/>. </summary>
+        public SiteRecoveryInnerHealthError()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryInnerHealthError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryInnerHealthError"/>. </summary>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
         /// <param name="errorLevel"> Level of error. </param>
@@ -32,7 +65,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="entityId"> ID of the entity. </param>
         /// <param name="errorId"> The health error unique id. </param>
         /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
-        internal SiteRecoveryInnerHealthError(string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? createdOn, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryInnerHealthError(string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? createdOn, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorSource = errorSource;
             ErrorType = errorType;
@@ -48,35 +82,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             EntityId = entityId;
             ErrorId = errorId;
             CustomerResolvability = customerResolvability;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source of error. </summary>
-        public string ErrorSource { get; }
+        public string ErrorSource { get; set; }
         /// <summary> Type of error. </summary>
-        public string ErrorType { get; }
+        public string ErrorType { get; set; }
         /// <summary> Level of error. </summary>
-        public string ErrorLevel { get; }
+        public string ErrorLevel { get; set; }
         /// <summary> Category of error. </summary>
-        public string ErrorCategory { get; }
+        public string ErrorCategory { get; set; }
         /// <summary> Error code. </summary>
-        public string ErrorCode { get; }
+        public string ErrorCode { get; set; }
         /// <summary> Summary message of the entity. </summary>
-        public string SummaryMessage { get; }
+        public string SummaryMessage { get; set; }
         /// <summary> Error message. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage { get; set; }
         /// <summary> Possible causes of error. </summary>
-        public string PossibleCauses { get; }
+        public string PossibleCauses { get; set; }
         /// <summary> Recommended action to resolve error. </summary>
-        public string RecommendedAction { get; }
+        public string RecommendedAction { get; set; }
         /// <summary> Error creation time (UTC). </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> DRA error message. </summary>
-        public string RecoveryProviderErrorMessage { get; }
+        public string RecoveryProviderErrorMessage { get; set; }
         /// <summary> ID of the entity. </summary>
-        public string EntityId { get; }
+        public string EntityId { get; set; }
         /// <summary> The health error unique id. </summary>
-        public string ErrorId { get; }
+        public string ErrorId { get; set; }
         /// <summary> Value indicating whether the health error is customer resolvable. </summary>
-        public HealthErrorCustomerResolvability? CustomerResolvability { get; }
+        public HealthErrorCustomerResolvability? CustomerResolvability { get; set; }
     }
 }

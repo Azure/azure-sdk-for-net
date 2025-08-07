@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 #nullable enable
@@ -19,18 +20,23 @@ namespace Azure.Core.Pipeline
         private readonly string? _resourceProviderNamespace;
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
-
-#if NETCOREAPP2_1
-        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
-#else
+        private readonly bool _isStable;
         private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
-#endif
 
-        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
+        /// <summary>
+        /// Creates diagnostic scope factory.
+        /// </summary>
+        /// <param name="clientNamespace">The namespace which is used as a prefix for all ActivitySources created by the factory and the name of DiagnosticSource (when used).</param>
+        /// <param name="resourceProviderNamespace">Azure resource provider namespace.</param>
+        /// <param name="isActivityEnabled">Flag indicating if distributed tracing is enabled.</param>
+        /// <param name="suppressNestedClientActivities">Flag indicating if nested Azure SDK activities describing public API calls should be suppressed.</param>
+        /// <param name="isStable">Whether instrumentation is considered stable. When false, experimental feature flag controls if tracing is enabled.</param>
+        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities = true, bool isStable = false)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
             _suppressNestedClientActivities = suppressNestedClientActivities;
+            _isStable = isStable;
 
             if (IsActivityEnabled)
             {
@@ -49,11 +55,8 @@ namespace Azure.Core.Pipeline
 
         public bool IsActivityEnabled { get; }
 
-#if NETCOREAPP2_1
-        public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
-#else
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "The DiagnosticScope constructor is marked as RequiresUnreferencedCode because of the usage of the diagnosticSourceArgs parameter. Since we are passing in null here we can suppress this warning.")]
         public DiagnosticScope CreateScope(string name, System.Diagnostics.ActivityKind kind = ActivityKind.Internal)
-#endif
         {
             if (_source == null)
             {
@@ -82,32 +85,20 @@ namespace Azure.Core.Pipeline
         ///     name: BlobClient.DownloadTo
         ///     result Azure.Storage.Blobs.BlobClient
         /// </summary>
-#if NETCOREAPP2_1
-        private static object? GetActivitySource(string ns, string name)
-#else
-        private static ActivitySource? GetActivitySource(string ns, string name)
-#endif
+        private ActivitySource? GetActivitySource(string ns, string name)
         {
-#if NETCOREAPP2_1
-            if (!ActivityExtensions.SupportsActivitySource())
-#else
-            if (!ActivityExtensions.SupportsActivitySource)
-#endif
+            bool enabled = _isStable;
+            enabled |= ActivityExtensions.SupportsActivitySource;
+
+            if (!enabled)
             {
                 return null;
             }
 
-            string clientName = ns;
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
-            if (indexOfDot != -1)
-            {
-                clientName += "." + name.Substring(0, indexOfDot);
-            }
-#if NETCOREAPP2_1
-            return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
-#else
+            string clientName = ns + "." + ((indexOfDot < 0) ? name : name.Substring(0, indexOfDot));
+
             return ActivitySources.GetOrAdd(clientName, static n => new ActivitySource(n));
-#endif
         }
     }
 }

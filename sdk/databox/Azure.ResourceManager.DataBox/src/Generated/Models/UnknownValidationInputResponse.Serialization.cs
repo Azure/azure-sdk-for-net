@@ -5,22 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownValidationInputResponse
+    internal partial class UnknownValidationInputResponse : IUtf8JsonSerializable, IJsonModel<DataBoxValidationInputResult>
     {
-        internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidationInputResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataBoxValidationInputResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidationInputResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxValidationInputResult)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        DataBoxValidationInputResult IJsonModel<DataBoxValidationInputResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidationInputResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxValidationInputResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxValidationInputResult(document.RootElement, options);
+        }
+
+        internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataBoxValidationInputDiscriminator validationType = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationType"u8))
@@ -34,11 +75,47 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataBoxContext.Default);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownValidationInputResponse(validationType, error.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownValidationInputResponse(validationType, error, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxValidationInputResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidationInputResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxValidationInputResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxValidationInputResult IPersistableModel<DataBoxValidationInputResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidationInputResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataBoxValidationInputResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxValidationInputResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxValidationInputResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

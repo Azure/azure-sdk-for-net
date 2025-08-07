@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Logic
 
         IntegrationServiceEnvironmentResource IOperationSource<IntegrationServiceEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(document.RootElement);
+            var data = ModelReaderWriter.Read<IntegrationServiceEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLogicContext.Default);
             return new IntegrationServiceEnvironmentResource(_client, data);
         }
 
         async ValueTask<IntegrationServiceEnvironmentResource> IOperationSource<IntegrationServiceEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(document.RootElement);
-            return new IntegrationServiceEnvironmentResource(_client, data);
+            var data = ModelReaderWriter.Read<IntegrationServiceEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLogicContext.Default);
+            return await Task.FromResult(new IntegrationServiceEnvironmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

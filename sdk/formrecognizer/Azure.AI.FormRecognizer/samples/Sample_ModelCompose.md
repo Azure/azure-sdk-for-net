@@ -24,9 +24,9 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential
 In our case, we will be writing an application that collects the expenses a company is making. There are 4 main areas where we get purchase orders from (office supplies, office equipment, furniture, and cleaning supplies). Because each area has its own document with its own structure, we need to create a model per document type.
 
 ```C# Snippet:FormRecognizerSampleBuildVariousModels
-// For this sample, you can use the training forms found in the `trainingFiles` folder.
-// Upload the forms to your storage container and then generate a container SAS URL.
-// For instructions on setting up forms for training in an Azure Storage Blob Container, see
+// For this sample, you can use the training documents found in the `trainingFiles` folder.
+// Upload the documents to your storage container and then generate a container SAS URL.
+// For instructions on setting up documents for training in an Azure Storage Blob Container, see
 // https://aka.ms/azsdk/formrecognizer/buildtrainingset
 
 Uri officeSuppliesUri = new Uri("<purchaseOrderOfficeSuppliesUri>");

@@ -7,16 +7,16 @@ This sample demonstrates how to send and receive messages from a Service Bus que
 Message sending is performed using the `ServiceBusSender`. Receiving is performed using the `ServiceBusReceiver`.
 
 ```C# Snippet:ServiceBusSendAndReceive
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
 
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send. UTF-8 encoding is used when providing a string.
-ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+ServiceBusMessage message = new("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -37,17 +37,17 @@ Console.WriteLine(body);
 As discussed in the [Key concepts section](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/README.md#key-concepts) of the README, Service Bus supports topics and subscriptions that are useful in pub/sub scenarios. When using topics and subscriptions, each subscription will get its own copy of each message that is delivered to the topic. So completing a message in one subscription won't impact what happens to the message in a different subscription. Another important point about using subscriptions is that messages that were delivered to a topic *before* a subscription resource is created (whether creating resources via portal, the `ServiceBusAdministrationClient`, or the management library) will never get delivered to that subscription. The types that we use to send and receive messages are the same as the types used to send and receive messages using queues. However, the way we construct them is slightly different. When constructing a `ServiceBusSender` we pass the topic name to the `CreateSender` method. When constructing a `ServiceBusReceiver`, we have to pass both the topic name *and* the subscription name.
 
 ```C# Snippet:ServiceBusSendAndReceiveTopic
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string topicName = "<topic_name>";
 string subscriptionName = "<subscription_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
 
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 // create the sender that we will use to send to our topic
 ServiceBusSender sender = client.CreateSender(topicName);
 
 // create a message that we can send. UTF-8 encoding is used when providing a string.
-ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+ServiceBusMessage message = new("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -70,9 +70,11 @@ Console.WriteLine(body);
 There are two ways of sending several messages at once. The first way uses the `SendMessagesAsync` overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
 
 ```C# Snippet:ServiceBusSendAndReceiveBatch
-IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
-messages.Add(new ServiceBusMessage("First"));
-messages.Add(new ServiceBusMessage("Second"));
+IList<ServiceBusMessage> messages = new List<ServiceBusMessage>
+{
+    new ServiceBusMessage("First"),
+    new ServiceBusMessage("Second")
+};
 // send the messages
 await sender.SendMessagesAsync(messages);
 ```
@@ -81,7 +83,7 @@ The second way of doing this is using safe-batching. With safe-batching, you can
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 // add the messages that we plan to send to a local queue
-Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
+Queue<ServiceBusMessage> messages = new();
 messages.Enqueue(new ServiceBusMessage("First message"));
 messages.Enqueue(new ServiceBusMessage("Second message"));
 messages.Enqueue(new ServiceBusMessage("Third message"));
@@ -168,7 +170,7 @@ await sender.CancelScheduledMessageAsync(seq);
 
 ### Setting time to live
 
-Message time to live can be configured at the queue or subscription level. By default, it is 14 days. Once this time has passed, the message is considered "expired". You can configure what happens to expired messages at the queue or subscription level. By default, these messages are deleted, but they can also be configured to move to the dead letter queue. More information about message expiry can be found [here](https://docs.microsoft.com/azure/service-bus-messaging/message-expiration). If you want to have an individual message expire before the entity-level configured time, you can set the `TimeToLive` property on the message.
+Message time to live can be configured at the queue or subscription level. By default, it is 14 days. Once this time has passed, the message is considered "expired". You can configure what happens to expired messages at the queue or subscription level. By default, these messages are deleted, but they can also be configured to move to the dead letter queue. More information about message expiry can be found [here](https://learn.microsoft.com/azure/service-bus-messaging/message-expiration). If you want to have an individual message expire before the entity-level configured time, you can set the `TimeToLive` property on the message.
 
 ```C# Snippet:ServiceBusMessageTimeToLive
 var message = new ServiceBusMessage("Hello world!") { TimeToLive = TimeSpan.FromMinutes(5) };

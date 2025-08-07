@@ -46,6 +46,11 @@ namespace Azure.Search.Documents.Tests
         public const string CognitiveKeyVariableName = "SEARCH_COGNITIVE_KEY";
 
         /// <summary>
+        /// The name of the variable for <see cref="OpenAIKeyVariableName"/>.
+        /// </summary>
+        public const string OpenAIKeyVariableName = "OPENAI_KEY";
+
+        /// <summary>
         /// Gets the service name.
         /// </summary>
         public string SearchServiceName => GetRecordedVariable(SearchServiceNameVariableName);
@@ -89,5 +94,15 @@ namespace Azure.Search.Documents.Tests
         /// Gets the recorded value for the CLIENT_ID, which gets sanitized as part of the payload.
         /// </summary>
         public string RecordedClientSecret => GetRecordedVariable(ClientSecretVariableName, options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the optional OpenAI key
+        /// </summary>
+        public string OpenAIKey => GetRecordedOptionalVariable(OpenAIKeyVariableName, options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the optional OpenAI URL used used for Vector Search.
+        /// </summary>
+        public string OpenAIEndpoint => GetRecordedOptionalVariable("OPENAI_ENDPOINT");
     }
 }

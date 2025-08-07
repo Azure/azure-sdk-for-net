@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Flag to indicate whether the private cloud has the quota for provisioned NSX Public IP count raised from 64 to 1024. </summary>
+    /// <summary> NSX public IP quota raised. </summary>
     public readonly partial struct NsxPublicIPQuotaRaisedEnum : IEquatable<NsxPublicIPQuotaRaisedEnum>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> is enabled. </summary>
         public static NsxPublicIPQuotaRaisedEnum Enabled { get; } = new NsxPublicIPQuotaRaisedEnum(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> is disabled. </summary>
         public static NsxPublicIPQuotaRaisedEnum Disabled { get; } = new NsxPublicIPQuotaRaisedEnum(DisabledValue);
         /// <summary> Determines if two <see cref="NsxPublicIPQuotaRaisedEnum"/> values are the same. </summary>
         public static bool operator ==(NsxPublicIPQuotaRaisedEnum left, NsxPublicIPQuotaRaisedEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NsxPublicIPQuotaRaisedEnum"/> values are not the same. </summary>
         public static bool operator !=(NsxPublicIPQuotaRaisedEnum left, NsxPublicIPQuotaRaisedEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NsxPublicIPQuotaRaisedEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NsxPublicIPQuotaRaisedEnum"/>. </summary>
         public static implicit operator NsxPublicIPQuotaRaisedEnum(string value) => new NsxPublicIPQuotaRaisedEnum(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

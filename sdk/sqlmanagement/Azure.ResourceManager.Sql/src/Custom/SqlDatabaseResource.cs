@@ -6,16 +6,9 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A Class representing a SqlDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlDatabase method.
-    /// </summary>
     public partial class SqlDatabaseResource : ArmResource
     {
         /// <summary>
@@ -56,6 +49,14 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<SqlDatabaseResource> Get(CancellationToken cancellationToken)
         {
             return Get(null, null, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a DataMaskingPolicyResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="DataMaskingPolicyResource"/> object. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual DataMaskingPolicyResource GetDataMaskingPolicy()
+        {
+            return new DataMaskingPolicyResource(Client, Id.AppendChildResource("dataMaskingPolicies", "Default"));
         }
     }
 }

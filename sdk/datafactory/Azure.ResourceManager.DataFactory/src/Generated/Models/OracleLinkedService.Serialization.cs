@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,70 +14,114 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class OracleLinkedService : IUtf8JsonSerializable
+    public partial class OracleLinkedService : IUtf8JsonSerializable, IJsonModel<OracleLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OracleLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OracleLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                throw new FormatException($"The model {nameof(OracleLinkedService)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
-#endif
-                }
-                writer.WriteEndArray();
-            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString"u8);
-            JsonSerializer.Serialize(writer, ConnectionString);
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                JsonSerializer.Serialize(writer, ConnectionString);
+            }
+            if (Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                JsonSerializer.Serialize(writer, Server);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                JsonSerializer.Serialize(writer, Username);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
+            if (Optional.IsDefined(EncryptionClient))
+            {
+                writer.WritePropertyName("encryptionClient"u8);
+                JsonSerializer.Serialize(writer, EncryptionClient);
+            }
+            if (Optional.IsDefined(EncryptionTypesClient))
+            {
+                writer.WritePropertyName("encryptionTypesClient"u8);
+                JsonSerializer.Serialize(writer, EncryptionTypesClient);
+            }
+            if (Optional.IsDefined(CryptoChecksumClient))
+            {
+                writer.WritePropertyName("cryptoChecksumClient"u8);
+                JsonSerializer.Serialize(writer, CryptoChecksumClient);
+            }
+            if (Optional.IsDefined(CryptoChecksumTypesClient))
+            {
+                writer.WritePropertyName("cryptoChecksumTypesClient"u8);
+                JsonSerializer.Serialize(writer, CryptoChecksumTypesClient);
+            }
+            if (Optional.IsDefined(InitialLobFetchSize))
+            {
+                writer.WritePropertyName("initialLobFetchSize"u8);
+                JsonSerializer.Serialize(writer, InitialLobFetchSize);
+            }
+            if (Optional.IsDefined(FetchSize))
+            {
+                writer.WritePropertyName("fetchSize"u8);
+                JsonSerializer.Serialize(writer, FetchSize);
+            }
+            if (Optional.IsDefined(StatementCacheSize))
+            {
+                writer.WritePropertyName("statementCacheSize"u8);
+                JsonSerializer.Serialize(writer, StatementCacheSize);
+            }
+            if (Optional.IsDefined(InitializationString))
+            {
+                writer.WritePropertyName("initializationString"u8);
+                JsonSerializer.Serialize(writer, InitializationString);
+            }
+            if (Optional.IsDefined(EnableBulkLoad))
+            {
+                writer.WritePropertyName("enableBulkLoad"u8);
+                JsonSerializer.Serialize(writer, EnableBulkLoad);
+            }
+            if (Optional.IsDefined(SupportV1DataTypes))
+            {
+                writer.WritePropertyName("supportV1DataTypes"u8);
+                JsonSerializer.Serialize(writer, SupportV1DataTypes);
+            }
+            if (Optional.IsDefined(FetchTswtzAsTimestamp))
+            {
+                writer.WritePropertyName("fetchTswtzAsTimestamp"u8);
+                JsonSerializer.Serialize(writer, FetchTswtzAsTimestamp);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -85,26 +130,57 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            writer.WriteEndObject();
         }
 
-        internal static OracleLinkedService DeserializeOracleLinkedService(JsonElement element)
+        OracleLinkedService IJsonModel<OracleLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OracleLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OracleLinkedService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOracleLinkedService(document.RootElement, options);
+        }
+
+        internal static OracleLinkedService DeserializeOracleLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            string version = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> connectionString = default;
-            Optional<DataFactoryKeyVaultSecretReference> password = default;
-            Optional<BinaryData> encryptedCredential = default;
+            DataFactoryElement<string> server = default;
+            OracleAuthenticationType? authenticationType = default;
+            DataFactoryElement<string> username = default;
+            DataFactoryKeyVaultSecret password = default;
+            DataFactoryElement<string> encryptionClient = default;
+            DataFactoryElement<string> encryptionTypesClient = default;
+            DataFactoryElement<string> cryptoChecksumClient = default;
+            DataFactoryElement<string> cryptoChecksumTypesClient = default;
+            DataFactoryElement<int> initialLobFetchSize = default;
+            DataFactoryElement<int> fetchSize = default;
+            DataFactoryElement<int> statementCacheSize = default;
+            DataFactoryElement<string> initializationString = default;
+            DataFactoryElement<bool> enableBulkLoad = default;
+            DataFactoryElement<bool> supportV1DataTypes = default;
+            DataFactoryElement<bool> fetchTswtzAsTimestamp = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,13 +190,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -137,7 +218,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -174,7 +255,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("connectionString"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("server"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authenticationType = new OracleAuthenticationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("username"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -183,16 +295,111 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("encryptedCredential"u8))
+                        if (property0.NameEquals("encryptionClient"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptionClient = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionTypesClient"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionTypesClient = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("cryptoChecksumClient"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cryptoChecksumClient = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("cryptoChecksumTypesClient"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cryptoChecksumTypesClient = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("initialLobFetchSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            initialLobFetchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("fetchSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            fetchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("statementCacheSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            statementCacheSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("initializationString"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            initializationString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("enableBulkLoad"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableBulkLoad = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("supportV1DataTypes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            supportV1DataTypes = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("fetchTswtzAsTimestamp"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            fetchTswtzAsTimestamp = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptedCredential"u8))
+                        {
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -201,7 +408,62 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OracleLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password, encryptedCredential.Value);
+            return new OracleLinkedService(
+                type,
+                version,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString,
+                server,
+                authenticationType,
+                username,
+                password,
+                encryptionClient,
+                encryptionTypesClient,
+                cryptoChecksumClient,
+                cryptoChecksumTypesClient,
+                initialLobFetchSize,
+                fetchSize,
+                statementCacheSize,
+                initializationString,
+                enableBulkLoad,
+                supportV1DataTypes,
+                fetchTswtzAsTimestamp,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<OracleLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OracleLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OracleLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OracleLinkedService IPersistableModel<OracleLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OracleLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeOracleLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OracleLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OracleLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

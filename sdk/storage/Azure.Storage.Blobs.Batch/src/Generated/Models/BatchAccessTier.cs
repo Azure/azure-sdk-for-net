@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs.Batch.Models
         public static bool operator ==(BatchAccessTier left, BatchAccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchAccessTier"/> values are not the same. </summary>
         public static bool operator !=(BatchAccessTier left, BatchAccessTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchAccessTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchAccessTier"/>. </summary>
         public static implicit operator BatchAccessTier(string value) => new BatchAccessTier(value);
 
         /// <inheritdoc />
@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.Batch.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

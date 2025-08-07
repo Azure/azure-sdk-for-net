@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ProviderHub
 
         ProviderRegistrationResource IOperationSource<ProviderRegistrationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ProviderRegistrationData.DeserializeProviderRegistrationData(document.RootElement);
+            var data = ModelReaderWriter.Read<ProviderRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
             return new ProviderRegistrationResource(_client, data);
         }
 
         async ValueTask<ProviderRegistrationResource> IOperationSource<ProviderRegistrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ProviderRegistrationData.DeserializeProviderRegistrationData(document.RootElement);
-            return new ProviderRegistrationResource(_client, data);
+            var data = ModelReaderWriter.Read<ProviderRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
+            return await Task.FromResult(new ProviderRegistrationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

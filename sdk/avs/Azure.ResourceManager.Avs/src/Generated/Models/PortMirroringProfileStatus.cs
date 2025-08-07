@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Port Mirroring Status. </summary>
+    /// <summary> Port Mirroring status. </summary>
     public readonly partial struct PortMirroringProfileStatus : IEquatable<PortMirroringProfileStatus>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string SuccessValue = "SUCCESS";
         private const string FailureValue = "FAILURE";
 
-        /// <summary> SUCCESS. </summary>
+        /// <summary> is success. </summary>
         public static PortMirroringProfileStatus Success { get; } = new PortMirroringProfileStatus(SuccessValue);
-        /// <summary> FAILURE. </summary>
+        /// <summary> is failure. </summary>
         public static PortMirroringProfileStatus Failure { get; } = new PortMirroringProfileStatus(FailureValue);
         /// <summary> Determines if two <see cref="PortMirroringProfileStatus"/> values are the same. </summary>
         public static bool operator ==(PortMirroringProfileStatus left, PortMirroringProfileStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PortMirroringProfileStatus"/> values are not the same. </summary>
         public static bool operator !=(PortMirroringProfileStatus left, PortMirroringProfileStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PortMirroringProfileStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PortMirroringProfileStatus"/>. </summary>
         public static implicit operator PortMirroringProfileStatus(string value) => new PortMirroringProfileStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

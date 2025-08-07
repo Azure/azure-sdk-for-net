@@ -1,0 +1,45 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+  <!-- Feature flag to enable/disable experimental features end-to-end -->
+  <PropertyGroup>
+    <ExperimentalProvisioning Condition="'$(ExperimentalProvisioning)' == ''">false</ExperimentalProvisioning>
+    <DefineConstants Condition="'$(ExperimentalProvisioning)' == 'true'">EXPERIMENTAL_PROVISIONING;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(AssemblyName)' != 'Generator'">
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsMgmtLibrary>true</IsMgmtLibrary>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!--
+    Temporarily disable warnings from new analyzers:
+      AZC0034: Typename is already used in another library.
+      AZC0035: Missing model factory method
+
+      Tracked by # 51311
+  -->
+  <PropertyGroup>
+    <NoWarn>
+      $(NoWarn);
+      AZC0034;
+      AZC0035;
+    </NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(AssemblyName)' != 'Generator'">
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+    Azure.Core isn't being found on builds with
+    dotnet build .\Azure.Provisioning.sln /p:UseProjectReferenceToAzureClients=true
+    for some reason.  Temporarily adding an explicit Azure.Core reference so
+    it's correctly replaced in all projects for those build targets.
+    -->
+    <PackageReference Include="Azure.Core" Condition="$(UseProjectReferenceToAzureClients) == 'true'" />
+  </ItemGroup>
+
+</Project>

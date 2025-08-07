@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
@@ -32,8 +33,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     // Check flat account. For some reason we observe failures if that one doesn't work before we start datalake run.
                     {
                         BlobServiceClient serviceClient = new BlobServiceClient(
-                            new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
-                            GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
+                            new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint), Credential);
                         await serviceClient.GetPropertiesAsync();
                         var containerName = Guid.NewGuid().ToString();
                         var containerClient = serviceClient.GetBlobContainerClient(containerName);
@@ -64,8 +64,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     // Check hierarchical account.
                     {
                         DataLakeServiceClient serviceClient = new DataLakeServiceClient(
-                          new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint),
-                          GetOAuthCredential(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant));
+                          new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint), Credential);
                         await serviceClient.GetPropertiesAsync();
                         var fileSystemName = Guid.NewGuid().ToString();
                         var fileSystemClient = serviceClient.GetFileSystemClient(fileSystemName);

@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
@@ -30,19 +30,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
         internal static string? GetDefaultStorageDirectory(IPlatform platform)
         {
             string? dirPath;
-            IDictionary environmentVars = platform.GetEnvironmentVariables();
 
             if (platform.IsOSPlatform(OSPlatform.Windows))
             {
-                if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars["LOCALAPPDATA"]?.ToString(), createdDirectoryPath: out dirPath)
-                    || TryCreateTelemetryDirectory(platform: platform, path: environmentVars["TEMP"]?.ToString(), createdDirectoryPath: out dirPath))
+                if (TryCreateTelemetryDirectory(platform: platform, path: platform.GetEnvironmentVariable(EnvironmentVariableConstants.LOCALAPPDATA), createdDirectoryPath: out dirPath)
+                    || TryCreateTelemetryDirectory(platform: platform, path: platform.GetEnvironmentVariable(EnvironmentVariableConstants.TEMP), createdDirectoryPath: out dirPath))
                 {
                     return dirPath;
                 }
             }
             else
             {
-                if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars["TMPDIR"]?.ToString(), createdDirectoryPath: out dirPath)
+                if (TryCreateTelemetryDirectory(platform: platform, path: platform.GetEnvironmentVariable(EnvironmentVariableConstants.TMPDIR), createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: "/var/tmp/", createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: "/tmp/", createdDirectoryPath: out dirPath))
                 {
@@ -70,7 +69,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 
             // these names need to be separate to use the correct OS specific DirectorySeparatorChar.
             createdDirectoryPath = Path.Combine(path, "Microsoft", "AzureMonitor");
-            return platform.CreateDirectory(createdDirectoryPath);
+            try
+            {
+                platform.CreateDirectory(createdDirectoryPath);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.ErrorCreatingStorageFolder(path, ex);
+                return false;
+            }
         }
     }
 }

@@ -6,17 +6,23 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DetectionIncidentFilterCondition. </summary>
     internal partial class DetectionIncidentFilterCondition
     {
-        /// <summary> Initializes a new instance of DetectionIncidentFilterCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionIncidentFilterCondition"/>. </summary>
         public DetectionIncidentFilterCondition()
         {
             DimensionFilter = new ChangeTrackingList<DimensionKey>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectionIncidentFilterCondition"/>. </summary>
+        /// <param name="dimensionFilter"> dimension filter. </param>
+        internal DetectionIncidentFilterCondition(IList<DimensionKey> dimensionFilter)
+        {
+            DimensionFilter = dimensionFilter;
         }
 
         /// <summary> dimension filter. </summary>

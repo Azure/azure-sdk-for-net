@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Class representing the ONVIF MediaProfiles. </summary>
     public partial class MediaProfile
     {
-        /// <summary> Initializes a new instance of MediaProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaProfile"/>. </summary>
         public MediaProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaProfile"/>. </summary>
         /// <param name="name"> The name of the Media Profile. </param>
         /// <param name="mediaUri"> Object representing the URI that will be used to request for media streaming. </param>
         /// <param name="videoEncoderConfiguration"> The Video encoder configuration. </param>

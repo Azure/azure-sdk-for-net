@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +19,16 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a MediaServicesAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaServicesAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMediaServicesAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMediaServicesAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MediaServicesAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMediaServicesAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMediaServicesAccount method.
     /// </summary>
     public partial class MediaServicesAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MediaServicesAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}";
@@ -38,12 +39,15 @@ namespace Azure.ResourceManager.Media
         private readonly MediaservicesRestOperations _mediaServicesAccountMediaservicesRestClient;
         private readonly MediaServicesAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices";
+
         /// <summary> Initializes a new instance of the <see cref="MediaServicesAccountResource"/> class for mocking. </summary>
         protected MediaServicesAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MediaServicesAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaServicesAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MediaServicesAccountResource(ArmClient client, MediaServicesAccountData data) : this(client, data.Id)
@@ -64,9 +68,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaServicesAccountFilterResources and their operations over a MediaServicesAccountFilterResource. </returns>
         public virtual MediaServicesAccountFilterCollection GetMediaServicesAccountFilters()
         {
-            return GetCachedClient(Client => new MediaServicesAccountFilterCollection(Client, Id));
+            return GetCachedClient(client => new MediaServicesAccountFilterCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +108,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>AccountFilters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountFilterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The Account Filter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaServicesAccountFilterResource>> GetMediaServicesAccountFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +139,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>AccountFilters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountFilterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The Account Filter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaServicesAccountFilterResource> GetMediaServicesAccountFilter(string filterName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +163,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaServicesPrivateLinkResources and their operations over a MediaServicesPrivateLinkResource. </returns>
         public virtual MediaServicesPrivateLinkResourceCollection GetMediaServicesPrivateLinkResources()
         {
-            return GetCachedClient(Client => new MediaServicesPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new MediaServicesPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +177,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The String to use. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaServicesPrivateLinkResource>> GetMediaServicesPrivateLinkResourceAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -183,12 +208,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The String to use. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaServicesPrivateLinkResource> GetMediaServicesPrivateLinkResource(string name, CancellationToken cancellationToken = default)
         {
@@ -199,7 +232,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaServicesPrivateEndpointConnectionResources and their operations over a MediaServicesPrivateEndpointConnectionResource. </returns>
         public virtual MediaServicesPrivateEndpointConnectionCollection GetMediaServicesPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new MediaServicesPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new MediaServicesPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -213,12 +246,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The String to use. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaServicesPrivateEndpointConnectionResource>> GetMediaServicesPrivateEndpointConnectionAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -236,12 +277,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The String to use. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaServicesPrivateEndpointConnectionResource> GetMediaServicesPrivateEndpointConnection(string name, CancellationToken cancellationToken = default)
         {
@@ -252,7 +301,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaAssetResources and their operations over a MediaAssetResource. </returns>
         public virtual MediaAssetCollection GetMediaAssets()
         {
-            return GetCachedClient(Client => new MediaAssetCollection(Client, Id));
+            return GetCachedClient(client => new MediaAssetCollection(client, Id));
         }
 
         /// <summary>
@@ -266,12 +315,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assetName"> The Asset name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaAssetResource>> GetMediaAssetAsync(string assetName, CancellationToken cancellationToken = default)
         {
@@ -289,12 +346,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assetName"> The Asset name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaAssetResource> GetMediaAsset(string assetName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +370,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of ContentKeyPolicyResources and their operations over a ContentKeyPolicyResource. </returns>
         public virtual ContentKeyPolicyCollection GetContentKeyPolicies()
         {
-            return GetCachedClient(Client => new ContentKeyPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ContentKeyPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -319,12 +384,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>ContentKeyPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContentKeyPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="contentKeyPolicyName"> The Content Key Policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContentKeyPolicyResource>> GetContentKeyPolicyAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
@@ -342,12 +415,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>ContentKeyPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContentKeyPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="contentKeyPolicyName"> The Content Key Policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContentKeyPolicyResource> GetContentKeyPolicy(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
@@ -358,7 +439,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaTransformResources and their operations over a MediaTransformResource. </returns>
         public virtual MediaTransformCollection GetMediaTransforms()
         {
-            return GetCachedClient(Client => new MediaTransformCollection(Client, Id));
+            return GetCachedClient(client => new MediaTransformCollection(client, Id));
         }
 
         /// <summary>
@@ -372,12 +453,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transformName"> The Transform name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaTransformResource>> GetMediaTransformAsync(string transformName, CancellationToken cancellationToken = default)
         {
@@ -395,12 +484,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaTransformResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transformName"> The Transform name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaTransformResource> GetMediaTransform(string transformName, CancellationToken cancellationToken = default)
         {
@@ -411,7 +508,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of StreamingPolicyResources and their operations over a StreamingPolicyResource. </returns>
         public virtual StreamingPolicyCollection GetStreamingPolicies()
         {
-            return GetCachedClient(Client => new StreamingPolicyCollection(Client, Id));
+            return GetCachedClient(client => new StreamingPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -425,12 +522,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingPolicyName"> The Streaming Policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamingPolicyResource>> GetStreamingPolicyAsync(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
@@ -448,12 +553,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingPolicyName"> The Streaming Policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamingPolicyResource> GetStreamingPolicy(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
@@ -464,7 +577,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of StreamingLocatorResources and their operations over a StreamingLocatorResource. </returns>
         public virtual StreamingLocatorCollection GetStreamingLocators()
         {
-            return GetCachedClient(Client => new StreamingLocatorCollection(Client, Id));
+            return GetCachedClient(client => new StreamingLocatorCollection(client, Id));
         }
 
         /// <summary>
@@ -478,12 +591,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingLocators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingLocatorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingLocatorName"> The Streaming Locator name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamingLocatorResource>> GetStreamingLocatorAsync(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
@@ -501,12 +622,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingLocators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingLocatorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingLocatorName"> The Streaming Locator name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="streamingLocatorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamingLocatorResource> GetStreamingLocator(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
@@ -517,7 +646,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaLiveEventResources and their operations over a MediaLiveEventResource. </returns>
         public virtual MediaLiveEventCollection GetMediaLiveEvents()
         {
-            return GetCachedClient(Client => new MediaLiveEventCollection(Client, Id));
+            return GetCachedClient(client => new MediaLiveEventCollection(client, Id));
         }
 
         /// <summary>
@@ -531,12 +660,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaLiveEventResource>> GetMediaLiveEventAsync(string liveEventName, CancellationToken cancellationToken = default)
         {
@@ -554,12 +691,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaLiveEventResource> GetMediaLiveEvent(string liveEventName, CancellationToken cancellationToken = default)
         {
@@ -570,7 +715,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of StreamingEndpointResources and their operations over a StreamingEndpointResource. </returns>
         public virtual StreamingEndpointCollection GetStreamingEndpoints()
         {
-            return GetCachedClient(Client => new StreamingEndpointCollection(Client, Id));
+            return GetCachedClient(client => new StreamingEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -584,12 +729,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamingEndpointResource>> GetStreamingEndpointAsync(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
@@ -607,12 +760,20 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamingEndpointResource> GetStreamingEndpoint(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
@@ -629,6 +790,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -662,6 +831,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -694,6 +871,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -705,7 +890,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaServicesAccountMediaservicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(response);
+                var uri = _mediaServicesAccountMediaservicesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -728,6 +915,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -739,7 +934,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaServicesAccountMediaservicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(response);
+                var uri = _mediaServicesAccountMediaservicesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -761,6 +958,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -800,6 +1005,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -838,6 +1051,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_SyncStorageKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
@@ -871,6 +1092,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_SyncStorageKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -906,6 +1135,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_ListEdgePolicies</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
@@ -940,6 +1177,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_ListEdgePolicies</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
@@ -973,6 +1218,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1028,6 +1281,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1082,6 +1343,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1131,6 +1400,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1179,6 +1456,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1231,6 +1516,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

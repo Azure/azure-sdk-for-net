@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.VoiceServices
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.VoiceServices
 
         VoiceServicesCommunicationsGatewayResource IOperationSource<VoiceServicesCommunicationsGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement);
+            var data = ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVoiceServicesContext.Default);
             return new VoiceServicesCommunicationsGatewayResource(_client, data);
         }
 
         async ValueTask<VoiceServicesCommunicationsGatewayResource> IOperationSource<VoiceServicesCommunicationsGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement);
-            return new VoiceServicesCommunicationsGatewayResource(_client, data);
+            var data = ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVoiceServicesContext.Default);
+            return await Task.FromResult(new VoiceServicesCommunicationsGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

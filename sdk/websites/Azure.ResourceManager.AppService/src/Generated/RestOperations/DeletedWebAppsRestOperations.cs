@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
@@ -33,8 +32,19 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/deletedSites", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedWebAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedWebAppListResult.DeserializeDeletedWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,13 +105,26 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedWebAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedWebAppListResult.DeserializeDeletedWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/deletedSites", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation location)
@@ -125,7 +148,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -140,7 +163,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedWebAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedWebAppListResult.DeserializeDeletedWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -151,7 +174,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -166,13 +189,27 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedWebAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedWebAppListResult.DeserializeDeletedWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeletedWebAppByLocationRequestUri(string subscriptionId, AzureLocation location, string deletedSiteId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/deletedSites/", false);
+            uri.AppendPath(deletedSiteId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeletedWebAppByLocationRequest(string subscriptionId, AzureLocation location, string deletedSiteId)
@@ -197,7 +234,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get deleted app for a subscription at location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
@@ -214,7 +251,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedSiteData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedSiteData.DeserializeDeletedSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,7 +262,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get deleted app for a subscription at location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
@@ -242,13 +279,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedSiteData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedSiteData.DeserializeDeletedSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
@@ -283,7 +328,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedWebAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedWebAppListResult.DeserializeDeletedWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -310,13 +355,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedWebAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedWebAppListResult.DeserializeDeletedWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation location)
@@ -336,7 +389,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -352,7 +405,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedWebAppListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedWebAppListResult.DeserializeDeletedWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -364,7 +417,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -380,7 +433,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DeletedWebAppListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedWebAppListResult.DeserializeDeletedWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(ManagedHsmGeoReplicatedRegionProvisioningState left, ManagedHsmGeoReplicatedRegionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmGeoReplicatedRegionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ManagedHsmGeoReplicatedRegionProvisioningState left, ManagedHsmGeoReplicatedRegionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedHsmGeoReplicatedRegionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmGeoReplicatedRegionProvisioningState"/>. </summary>
         public static implicit operator ManagedHsmGeoReplicatedRegionProvisioningState(string value) => new ManagedHsmGeoReplicatedRegionProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

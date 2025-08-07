@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The swagger custom dynamic tree parameter. </summary>
     public partial class SwaggerCustomDynamicTreeParameterInfo
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameterInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeParameterInfo"/>. </summary>
         public SwaggerCustomDynamicTreeParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeParameterInfo"/>. </summary>
         /// <param name="selectedItemValuePath"> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </param>
         /// <param name="value"> The parameter value. </param>
         /// <param name="parameterReference"> The parameter reference. </param>
         /// <param name="isRequired"> Indicates whether the parameter is required. </param>
-        internal SwaggerCustomDynamicTreeParameterInfo(string selectedItemValuePath, BinaryData value, string parameterReference, bool? isRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerCustomDynamicTreeParameterInfo(string selectedItemValuePath, BinaryData value, string parameterReference, bool? isRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SelectedItemValuePath = selectedItemValuePath;
             Value = value;
             ParameterReference = parameterReference;
             IsRequired = isRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </summary>
@@ -38,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

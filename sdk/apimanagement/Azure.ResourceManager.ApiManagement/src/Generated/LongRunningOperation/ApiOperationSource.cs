@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiResource IOperationSource<ApiResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ApiData.DeserializeApiData(document.RootElement);
+            var data = ModelReaderWriter.Read<ApiData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return new ApiResource(_client, data);
         }
 
         async ValueTask<ApiResource> IOperationSource<ApiResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ApiData.DeserializeApiData(document.RootElement);
-            return new ApiResource(_client, data);
+            var data = ModelReaderWriter.Read<ApiData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
+            return await Task.FromResult(new ApiResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

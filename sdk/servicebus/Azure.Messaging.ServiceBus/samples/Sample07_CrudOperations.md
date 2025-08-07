@@ -5,9 +5,9 @@ This sample demonstrates how to use the management client to manage entities wit
 ## Create a queue
 
 ```C# Snippet:CreateQueue
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
-var client = new ServiceBusAdministrationClient(connectionString);
+var client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 var options = new CreateQueueOptions(queueName)
 {
     AutoDeleteOnIdle = TimeSpan.FromDays(7),
@@ -61,9 +61,9 @@ await client.DeleteQueueAsync(queueName);
 ## Create a topic and subscription
 
 ```C# Snippet:CreateTopicAndSubscription
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string topicName = "<topic_name>";
-var client = new ServiceBusAdministrationClient(connectionString);
+var client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 var topicOptions = new CreateTopicOptions(topicName)
 {
     AutoDeleteOnIdle = TimeSpan.FromDays(7),

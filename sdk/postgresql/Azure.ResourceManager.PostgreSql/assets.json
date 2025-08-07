@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/postgresql/Azure.ResourceManager.PostgreSql",
-  "Tag": "net/postgresql/Azure.ResourceManager.PostgreSql_cb2c823a17"
+  "Tag": "net/postgresql/Azure.ResourceManager.PostgreSql_1f4154b2f1"
 }

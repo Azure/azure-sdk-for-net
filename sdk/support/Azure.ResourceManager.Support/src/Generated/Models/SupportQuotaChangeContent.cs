@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> This property is required for providing the region and new quota limits. </summary>
     public partial class SupportQuotaChangeContent
     {
-        /// <summary> Initializes a new instance of SupportQuotaChangeContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportQuotaChangeContent"/>. </summary>
         public SupportQuotaChangeContent()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportQuotaChangeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportQuotaChangeContent"/>. </summary>
         /// <param name="region"> Region for which the quota increase request is being made. </param>
         /// <param name="payload"> Payload of the quota increase request. </param>
-        internal SupportQuotaChangeContent(string region, string payload)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportQuotaChangeContent(string region, string payload, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Region = region;
             Payload = payload;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Region for which the quota increase request is being made. </summary>

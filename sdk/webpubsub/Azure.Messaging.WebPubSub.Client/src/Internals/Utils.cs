@@ -27,5 +27,13 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
             _ = Task.Run(() => task);
         }
+
+        internal static void AssertNotNegtive(long? number)
+        {
+            if (number < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(number), "Value must be non-negative");
+            }
+        }
     }
 }

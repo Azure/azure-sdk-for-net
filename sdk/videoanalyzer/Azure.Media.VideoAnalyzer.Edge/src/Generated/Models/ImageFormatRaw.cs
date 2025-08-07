@@ -10,7 +10,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Raw image formatting. </summary>
     public partial class ImageFormatRaw : ImageFormatProperties
     {
-        /// <summary> Initializes a new instance of ImageFormatRaw. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatRaw"/>. </summary>
         /// <param name="pixelFormat"> Pixel format to be applied to the raw image. </param>
         public ImageFormatRaw(ImageFormatRawPixelFormat pixelFormat)
         {
@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.ImageFormatRaw";
         }
 
-        /// <summary> Initializes a new instance of ImageFormatRaw. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatRaw"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="pixelFormat"> Pixel format to be applied to the raw image. </param>
         internal ImageFormatRaw(string type, ImageFormatRawPixelFormat pixelFormat) : base(type)

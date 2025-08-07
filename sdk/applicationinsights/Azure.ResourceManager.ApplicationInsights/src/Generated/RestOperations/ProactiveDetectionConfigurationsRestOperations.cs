@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApplicationInsights.Models;
@@ -36,6 +35,21 @@ namespace Azure.ResourceManager.ApplicationInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2015-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/ProactiveDetectionConfigs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -79,7 +93,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<ApplicationInsightsComponentProactiveDetectionConfiguration> array = new List<ApplicationInsightsComponentProactiveDetectionConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -113,7 +127,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<ApplicationInsightsComponentProactiveDetectionConfiguration> array = new List<ApplicationInsightsComponentProactiveDetectionConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -125,6 +139,22 @@ namespace Azure.ResourceManager.ApplicationInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string configurationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/ProactiveDetectionConfigs/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string configurationId)
@@ -171,7 +201,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentProactiveDetectionConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,13 +232,29 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentProactiveDetectionConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/ProactiveDetectionConfigs/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties)
@@ -231,7 +277,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(proactiveDetectionProperties);
+            content.JsonWriter.WriteObjectValue(proactiveDetectionProperties, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -261,7 +307,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentProactiveDetectionConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,7 +340,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         ApplicationInsightsComponentProactiveDetectionConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -10,9 +10,16 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The JobDescriptor. </summary>
     internal partial class JobDescriptor
     {
-        /// <summary> Initializes a new instance of JobDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDescriptor"/>. </summary>
         public JobDescriptor()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobDescriptor"/>. </summary>
+        /// <param name="displayName"> Optional display name for the analysis job. </param>
+        internal JobDescriptor(string displayName)
+        {
+            DisplayName = displayName;
         }
 
         /// <summary> Optional display name for the analysis job. </summary>

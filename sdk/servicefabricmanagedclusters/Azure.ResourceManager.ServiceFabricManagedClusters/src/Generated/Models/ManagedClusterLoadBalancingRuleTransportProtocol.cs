@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string TcpValue = "tcp";
         private const string UdpValue = "udp";
 
-        /// <summary> tcp. </summary>
+        /// <summary> Transport protocol is TCP. </summary>
         public static ManagedClusterLoadBalancingRuleTransportProtocol Tcp { get; } = new ManagedClusterLoadBalancingRuleTransportProtocol(TcpValue);
-        /// <summary> udp. </summary>
+        /// <summary> Transport protocol is UDP. </summary>
         public static ManagedClusterLoadBalancingRuleTransportProtocol Udp { get; } = new ManagedClusterLoadBalancingRuleTransportProtocol(UdpValue);
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterLoadBalancingRuleTransportProtocol left, ManagedClusterLoadBalancingRuleTransportProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/> values are not the same. </summary>
         public static bool operator !=(ManagedClusterLoadBalancingRuleTransportProtocol left, ManagedClusterLoadBalancingRuleTransportProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/>. </summary>
         public static implicit operator ManagedClusterLoadBalancingRuleTransportProtocol(string value) => new ManagedClusterLoadBalancingRuleTransportProtocol(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

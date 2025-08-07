@@ -29,5 +29,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

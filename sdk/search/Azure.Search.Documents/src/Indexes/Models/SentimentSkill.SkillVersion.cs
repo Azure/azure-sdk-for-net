@@ -25,6 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             /// <summary> <see cref="SkillVersion.V1"/> version of the <see cref="SentimentSkill"/> is deprecated. Use the  <see cref="SkillVersion.V3"/> version instead. </summary>
+            [EditorBrowsable(EditorBrowsableState.Never)]
             public static SkillVersion V1 { get; } = new SkillVersion(V1Value);
 
             /// <summary> Version 3 of the <see cref="SkillVersion"/>. </summary>
@@ -42,30 +43,30 @@ namespace Azure.Search.Documents.Indexes.Models
                 string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
             /// <summary> Defines the equal-to comparison operator on <see cref="SkillVersion"/>. </summary>
-            public static bool operator ==(SkillVersion lhs, SkillVersion rhs) => lhs.Equals(rhs);
+            public static bool operator ==(SkillVersion left, SkillVersion right) => left.Equals(right);
 
             /// <summary> Defines the not-equal-to comparison operator on <see cref="SkillVersion"/>. </summary>
-            public static bool operator !=(SkillVersion lhs, SkillVersion rhs) => !(lhs == rhs);
+            public static bool operator !=(SkillVersion left, SkillVersion right) => !(left == right);
 
             /// <summary> Defines the greater-than-or-equal-to comparison operator on <see cref="SkillVersion"/>. </summary>
-            public static bool operator >=(SkillVersion lhs, SkillVersion rhs)
+            public static bool operator >=(SkillVersion left, SkillVersion right)
             {
-                if (lhs == rhs)
+                if (left == right)
                     return true;
 
-                if (lhs == Latest)
+                if (left == Latest)
                     return true;
 
                 return false;
             }
 
             /// <summary> Defines the less-than-or-equal-to comparison operator on <see cref="SkillVersion"/>. </summary>
-            public static bool operator <=(SkillVersion lhs, SkillVersion rhs)
+            public static bool operator <=(SkillVersion left, SkillVersion right)
             {
-                if (lhs == rhs)
+                if (left == right)
                     return true;
 
-                return !(lhs >= rhs);
+                return !(left >= right);
             }
 
             /// <summary> Converts a string to a <see cref="SkillVersion"/>. </summary>

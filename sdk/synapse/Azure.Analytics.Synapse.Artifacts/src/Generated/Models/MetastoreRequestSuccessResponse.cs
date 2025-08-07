@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The MetastoreRequestSuccessResponse. </summary>
     public partial class MetastoreRequestSuccessResponse
     {
-        /// <summary> Initializes a new instance of MetastoreRequestSuccessResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetastoreRequestSuccessResponse"/>. </summary>
         internal MetastoreRequestSuccessResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of MetastoreRequestSuccessResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetastoreRequestSuccessResponse"/>. </summary>
         /// <param name="status"> Enumerates possible Status of the resource. </param>
         internal MetastoreRequestSuccessResponse(ResourceStatus? status)
         {

@@ -19,13 +19,45 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationJobData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationJobData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationJobData"/>. </summary>
         public AutomationJobData()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +76,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastStatusModifiedOn"> Gets or sets the last status modified time of the job. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job. </param>
         /// <param name="provisioningState"> The current provisioning state of the job. </param>
-        internal AutomationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, string startedBy, string runOn, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, string startedBy, string runOn, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Runbook = runbook;
             StartedBy = startedBy;
@@ -60,6 +93,7 @@ namespace Azure.ResourceManager.Automation
             LastStatusModifiedOn = lastStatusModifiedOn;
             Parameters = parameters;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the runbook. </summary>

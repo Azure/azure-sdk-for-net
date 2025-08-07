@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Communication.CallingServer;
 
 namespace Azure.Communication
 {
     /// <summary> The CommunicationUserIdentifierModel. </summary>
     internal partial class CommunicationUserIdentifierModel
     {
-        /// <summary> Initializes a new instance of CommunicationUserIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierModel"/>. </summary>
         /// <param name="id"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public CommunicationUserIdentifierModel(string id)

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerJobAgentResource IOperationSource<SqlServerJobAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlServerJobAgentData.DeserializeSqlServerJobAgentData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlServerJobAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerJobAgentResource(_client, data);
         }
 
         async ValueTask<SqlServerJobAgentResource> IOperationSource<SqlServerJobAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlServerJobAgentData.DeserializeSqlServerJobAgentData(document.RootElement);
-            return new SqlServerJobAgentResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlServerJobAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new SqlServerJobAgentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

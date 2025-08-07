@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core.Cryptography;
 using Azure.Security.KeyVault.Keys.Cryptography;
@@ -36,11 +35,6 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys
 
         public EncryptedXmlInfo Encrypt(XElement plaintextElement)
         {
-            return Task.Run(() => EncryptAsync(plaintextElement)).GetAwaiter().GetResult();
-        }
-
-        private async Task<EncryptedXmlInfo> EncryptAsync(XElement plaintextElement)
-        {
             byte[] value;
             using (var memoryStream = new MemoryStream())
             {
@@ -62,8 +56,8 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys
                     encryptedValue = encryptor.TransformFinalBlock(value, 0, value.Length);
                 }
 
-                var key = await _client.ResolveAsync(_keyId).ConfigureAwait(false);
-                var wrappedKey = await key.WrapKeyAsync(DefaultKeyEncryption, symmetricKey).ConfigureAwait(false);
+                var key = _client.Resolve(_keyId);
+                var wrappedKey = key.WrapKey(DefaultKeyEncryption, symmetricKey);
 
                 var element = new XElement("encryptedKey",
                     new XComment(" This key is encrypted with Azure Key Vault. "),

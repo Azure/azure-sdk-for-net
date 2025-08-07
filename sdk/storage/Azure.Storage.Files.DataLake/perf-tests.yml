@@ -3,7 +3,7 @@ Service: storage-file-datalake
 Project: sdk/storage/Azure.Storage.Files.DataLake/perf/Azure.Storage.Files.DataLake.Perf/Azure.Storage.Files.DataLake.Perf.csproj
 
 PackageVersions:
-- Azure.Storage.Files.DataLake: 12.12.1
+- Azure.Storage.Files.DataLake: 12.20.0
 - Azure.Storage.Files.DataLake: source
 
 Tests:

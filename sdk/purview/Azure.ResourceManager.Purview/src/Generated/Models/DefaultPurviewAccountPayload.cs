@@ -6,25 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> Payload to get and set the default account in the given scope. </summary>
     public partial class DefaultPurviewAccountPayload
     {
-        /// <summary> Initializes a new instance of DefaultPurviewAccountPayload. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefaultPurviewAccountPayload"/>. </summary>
         public DefaultPurviewAccountPayload()
         {
         }
 
-        /// <summary> Initializes a new instance of DefaultPurviewAccountPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultPurviewAccountPayload"/>. </summary>
         /// <param name="accountName"> The name of the account that is set as the default. </param>
         /// <param name="resourceGroupName"> The resource group name of the account that is set as the default. </param>
         /// <param name="scope"> The scope object ID. For example, sub ID or tenant ID. </param>
         /// <param name="scopeTenantId"> The scope tenant in which the default account is set. </param>
         /// <param name="scopeType"> The scope where the default account is set. </param>
         /// <param name="subscriptionId"> The subscription ID of the account that is set as the default. </param>
-        internal DefaultPurviewAccountPayload(string accountName, string resourceGroupName, string scope, Guid? scopeTenantId, PurviewAccountScopeType? scopeType, string subscriptionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefaultPurviewAccountPayload(string accountName, string resourceGroupName, string scope, Guid? scopeTenantId, PurviewAccountScopeType? scopeType, string subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountName = accountName;
             ResourceGroupName = resourceGroupName;
@@ -32,6 +66,7 @@ namespace Azure.ResourceManager.Purview.Models
             ScopeTenantId = scopeTenantId;
             ScopeType = scopeType;
             SubscriptionId = subscriptionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the account that is set as the default. </summary>

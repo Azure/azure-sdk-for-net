@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class IndexingParametersConfiguration : IUtf8JsonSerializable
+    public partial class IndexingParametersConfiguration : IUtf8JsonSerializable, IJsonModel<IndexingParametersConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IndexingParametersConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<IndexingParametersConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(ParsingMode))
             {
                 writer.WritePropertyName("parsingMode"u8);
@@ -61,6 +79,30 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("firstLineContainsHeaders"u8);
                 writer.WriteBooleanValue(FirstLineContainsHeaders.Value);
             }
+            if (Optional.IsDefined(MarkdownParsingSubmode))
+            {
+                if (MarkdownParsingSubmode != null)
+                {
+                    writer.WritePropertyName("markdownParsingSubmode"u8);
+                    writer.WriteStringValue(MarkdownParsingSubmode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("markdownParsingSubmode");
+                }
+            }
+            if (Optional.IsDefined(MarkdownHeaderDepth))
+            {
+                if (MarkdownHeaderDepth != null)
+                {
+                    writer.WritePropertyName("markdownHeaderDepth"u8);
+                    writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("markdownHeaderDepth");
+                }
+            }
             if (Optional.IsDefined(DocumentRoot))
             {
                 writer.WritePropertyName("documentRoot"u8);
@@ -99,33 +141,48 @@ namespace Azure.Search.Documents.Indexes.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value, options);
             }
-            writer.WriteEndObject();
         }
 
-        internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element)
+        IndexingParametersConfiguration IJsonModel<IndexingParametersConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIndexingParametersConfiguration(document.RootElement, options);
+        }
+
+        internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BlobIndexerParsingMode> parsingMode = default;
-            Optional<string> excludedFileNameExtensions = default;
-            Optional<string> indexedFileNameExtensions = default;
-            Optional<bool> failOnUnsupportedContentType = default;
-            Optional<bool> failOnUnprocessableDocument = default;
-            Optional<bool> indexStorageMetadataOnlyForOversizedDocuments = default;
-            Optional<string> delimitedTextHeaders = default;
-            Optional<string> delimitedTextDelimiter = default;
-            Optional<bool> firstLineContainsHeaders = default;
-            Optional<string> documentRoot = default;
-            Optional<BlobIndexerDataToExtract> dataToExtract = default;
-            Optional<BlobIndexerImageAction> imageAction = default;
-            Optional<bool> allowSkillsetToReadFileData = default;
-            Optional<BlobIndexerPdfTextRotationAlgorithm> pdfTextRotationAlgorithm = default;
-            Optional<IndexerExecutionEnvironment> executionEnvironment = default;
-            Optional<string> queryTimeout = default;
+            BlobIndexerParsingMode? parsingMode = default;
+            string excludedFileNameExtensions = default;
+            string indexedFileNameExtensions = default;
+            bool? failOnUnsupportedContentType = default;
+            bool? failOnUnprocessableDocument = default;
+            bool? indexStorageMetadataOnlyForOversizedDocuments = default;
+            string delimitedTextHeaders = default;
+            string delimitedTextDelimiter = default;
+            bool? firstLineContainsHeaders = default;
+            MarkdownParsingSubmode? markdownParsingSubmode = default;
+            MarkdownHeaderDepth? markdownHeaderDepth = default;
+            string documentRoot = default;
+            BlobIndexerDataToExtract? dataToExtract = default;
+            BlobIndexerImageAction? imageAction = default;
+            bool? allowSkillsetToReadFileData = default;
+            BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm = default;
+            IndexerExecutionEnvironment? executionEnvironment = default;
+            string queryTimeout = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -195,6 +252,26 @@ namespace Azure.Search.Documents.Indexes.Models
                     firstLineContainsHeaders = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("markdownParsingSubmode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        markdownParsingSubmode = null;
+                        continue;
+                    }
+                    markdownParsingSubmode = new MarkdownParsingSubmode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("markdownHeaderDepth"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        markdownHeaderDepth = null;
+                        continue;
+                    }
+                    markdownHeaderDepth = new MarkdownHeaderDepth(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("documentRoot"u8))
                 {
                     documentRoot = property.Value.GetString();
@@ -253,7 +330,73 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IndexingParametersConfiguration(Optional.ToNullable(parsingMode), excludedFileNameExtensions.Value, indexedFileNameExtensions.Value, Optional.ToNullable(failOnUnsupportedContentType), Optional.ToNullable(failOnUnprocessableDocument), Optional.ToNullable(indexStorageMetadataOnlyForOversizedDocuments), delimitedTextHeaders.Value, delimitedTextDelimiter.Value, Optional.ToNullable(firstLineContainsHeaders), documentRoot.Value, Optional.ToNullable(dataToExtract), Optional.ToNullable(imageAction), Optional.ToNullable(allowSkillsetToReadFileData), Optional.ToNullable(pdfTextRotationAlgorithm), Optional.ToNullable(executionEnvironment), queryTimeout.Value, additionalProperties);
+            return new IndexingParametersConfiguration(
+                parsingMode,
+                excludedFileNameExtensions,
+                indexedFileNameExtensions,
+                failOnUnsupportedContentType,
+                failOnUnprocessableDocument,
+                indexStorageMetadataOnlyForOversizedDocuments,
+                delimitedTextHeaders,
+                delimitedTextDelimiter,
+                firstLineContainsHeaders,
+                markdownParsingSubmode,
+                markdownHeaderDepth,
+                documentRoot,
+                dataToExtract,
+                imageAction,
+                allowSkillsetToReadFileData,
+                pdfTextRotationAlgorithm,
+                executionEnvironment,
+                queryTimeout,
+                additionalProperties);
+        }
+
+        BinaryData IPersistableModel<IndexingParametersConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IndexingParametersConfiguration IPersistableModel<IndexingParametersConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeIndexingParametersConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IndexingParametersConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexingParametersConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIndexingParametersConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

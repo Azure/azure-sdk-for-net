@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Communication.Chat;
 
 namespace Azure.Communication
 {
     /// <summary> A phone number. </summary>
     internal partial class PhoneNumberIdentifierModel
     {
-        /// <summary> Initializes a new instance of PhoneNumberIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifierModel"/>. </summary>
         /// <param name="value"> The phone number in E.164 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PhoneNumberIdentifierModel(string value)

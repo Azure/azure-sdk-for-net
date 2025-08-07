@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The UnknownSecurityPolicyProperties. </summary>
+    /// <summary> Unknown version of SecurityPolicyPropertiesParameters. </summary>
     internal partial class UnknownSecurityPolicyProperties : SecurityPolicyProperties
     {
-        /// <summary> Initializes a new instance of UnknownSecurityPolicyProperties. </summary>
-        /// <param name="policyType"> The type of the Security policy to create. </param>
-        internal UnknownSecurityPolicyProperties(SecurityPolicyType policyType) : base(policyType)
+        /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyProperties"/>. </summary>
+        /// <param name="policyType">
+        /// The type of the Security policy to create.
+        /// Serialized Name: SecurityPolicyPropertiesParameters.type
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSecurityPolicyProperties(SecurityPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, serializedAdditionalRawData)
         {
             PolicyType = policyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyProperties"/> for deserialization. </summary>
+        internal UnknownSecurityPolicyProperties()
+        {
         }
     }
 }

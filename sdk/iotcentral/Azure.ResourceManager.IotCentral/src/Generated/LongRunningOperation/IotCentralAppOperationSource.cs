@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotCentral
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.IotCentral
 
         IotCentralAppResource IOperationSource<IotCentralAppResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = IotCentralAppData.DeserializeIotCentralAppData(document.RootElement);
+            var data = ModelReaderWriter.Read<IotCentralAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotCentralContext.Default);
             return new IotCentralAppResource(_client, data);
         }
 
         async ValueTask<IotCentralAppResource> IOperationSource<IotCentralAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = IotCentralAppData.DeserializeIotCentralAppData(document.RootElement);
-            return new IotCentralAppResource(_client, data);
+            var data = ModelReaderWriter.Read<IotCentralAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotCentralContext.Default);
+            return await Task.FromResult(new IotCentralAppResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

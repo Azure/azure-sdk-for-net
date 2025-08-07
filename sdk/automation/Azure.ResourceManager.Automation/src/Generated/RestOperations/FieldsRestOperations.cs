@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automation.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.Automation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-01-13-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByTypeRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string moduleName, string typeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/modules/", false);
+            uri.AppendPath(moduleName, true);
+            uri.AppendPath("/types/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/fields", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByTypeRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string moduleName, string typeName)
@@ -86,7 +104,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleFieldListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationModuleFieldListResult.DeserializeAutomationModuleFieldListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +137,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationModuleFieldListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationModuleFieldListResult.DeserializeAutomationModuleFieldListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

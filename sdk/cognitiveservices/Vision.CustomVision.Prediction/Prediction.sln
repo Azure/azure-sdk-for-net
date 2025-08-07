@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction", "src\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.csproj", "{338BB7D5-245A-4508-BA7D-71B37A254367}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests", "tests\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests.csproj", "{F47DEF2A-CD64-4CB6-A074-6931B31FA253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests", "tests\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests.csproj", "{F47DEF2A-CD64-4CB6-A074-6931B31FA253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{B33E25B7-0737-4711-A2C0-96EF5CBD88D8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{6F9E83F5-0852-43F3-943F-7B6D98FB1E4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training", "..\Vision.CustomVision.Training\src\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.csproj", "{B9ADF01D-8170-4CA6-84CD-3C5AE96FF838}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +23,10 @@ Global
 		{F47DEF2A-CD64-4CB6-A074-6931B31FA253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F47DEF2A-CD64-4CB6-A074-6931B31FA253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F47DEF2A-CD64-4CB6-A074-6931B31FA253}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B33E25B7-0737-4711-A2C0-96EF5CBD88D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B33E25B7-0737-4711-A2C0-96EF5CBD88D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B33E25B7-0737-4711-A2C0-96EF5CBD88D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B33E25B7-0737-4711-A2C0-96EF5CBD88D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F9E83F5-0852-43F3-943F-7B6D98FB1E4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F9E83F5-0852-43F3-943F-7B6D98FB1E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F9E83F5-0852-43F3-943F-7B6D98FB1E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F9E83F5-0852-43F3-943F-7B6D98FB1E4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9ADF01D-8170-4CA6-84CD-3C5AE96FF838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9ADF01D-8170-4CA6-84CD-3C5AE96FF838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9ADF01D-8170-4CA6-84CD-3C5AE96FF838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9ADF01D-8170-4CA6-84CD-3C5AE96FF838}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

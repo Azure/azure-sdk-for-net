@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         private string _cloudEndpointName;
         private CloudEndpointCreateOrUpdateContent _cloudEndpointCreateOrUpdateContent;
 
-        public CloudEndpointTests(bool async) : base(async) //, RecordedTestMode.Record)
+        public CloudEndpointTests(bool async) : base(async, ModeFromSourceCode )
         {
         }
 

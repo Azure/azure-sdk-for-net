@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.AnomalyDetector
 {
+    /// <summary> The MultivariateBatchDetectionStatus. </summary>
     public readonly partial struct MultivariateBatchDetectionStatus : IEquatable<MultivariateBatchDetectionStatus>
     {
         private readonly string _value;
@@ -38,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
         public static bool operator ==(MultivariateBatchDetectionStatus left, MultivariateBatchDetectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MultivariateBatchDetectionStatus"/> values are not the same. </summary>
         public static bool operator !=(MultivariateBatchDetectionStatus left, MultivariateBatchDetectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MultivariateBatchDetectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MultivariateBatchDetectionStatus"/>. </summary>
         public static implicit operator MultivariateBatchDetectionStatus(string value) => new MultivariateBatchDetectionStatus(value);
 
         /// <inheritdoc />
@@ -49,7 +50,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

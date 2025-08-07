@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -33,8 +32,35 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-09-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, long? top, bool? includeBody, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (includeBody != null)
+            {
+                uri.AppendQuery("includeBody", includeBody.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string queryPackName, long? top, bool? includeBody, string skipToken)
@@ -93,7 +119,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryPackQueryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogAnalyticsQueryPackQueryListResult.DeserializeLogAnalyticsQueryPackQueryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -125,13 +151,40 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryPackQueryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogAnalyticsQueryPackQueryListResult.DeserializeLogAnalyticsQueryPackQueryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSearchRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/search", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (includeBody != null)
+            {
+                uri.AppendQuery("includeBody", includeBody.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSearchRequest(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
@@ -165,7 +218,7 @@ namespace Azure.ResourceManager.OperationalInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(querySearchProperties);
+            content.JsonWriter.WriteObjectValue(querySearchProperties, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -196,7 +249,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryPackQueryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogAnalyticsQueryPackQueryListResult.DeserializeLogAnalyticsQueryPackQueryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -230,13 +283,29 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryPackQueryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogAnalyticsQueryPackQueryListResult.DeserializeLogAnalyticsQueryPackQueryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id)
@@ -283,7 +352,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -316,7 +385,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -325,6 +394,22 @@ namespace Azure.ResourceManager.OperationalInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
@@ -347,7 +432,7 @@ namespace Azure.ResourceManager.OperationalInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -377,7 +462,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -410,13 +495,29 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
@@ -439,7 +540,7 @@ namespace Azure.ResourceManager.OperationalInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -469,7 +570,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -502,13 +603,29 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id)
@@ -587,6 +704,14 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, long? top, bool? includeBody, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, long? top, bool? includeBody, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -626,7 +751,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryPackQueryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogAnalyticsQueryPackQueryListResult.DeserializeLogAnalyticsQueryPackQueryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -660,13 +785,21 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryPackQueryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogAnalyticsQueryPackQueryListResult.DeserializeLogAnalyticsQueryPackQueryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSearchNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateSearchNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
@@ -710,7 +843,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryPackQueryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogAnalyticsQueryPackQueryListResult.DeserializeLogAnalyticsQueryPackQueryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -746,7 +879,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LogAnalyticsQueryPackQueryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogAnalyticsQueryPackQueryListResult.DeserializeLogAnalyticsQueryPackQueryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

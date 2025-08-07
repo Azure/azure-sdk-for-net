@@ -163,16 +163,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
+            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+
+            await foreach (NetworkFabricResource item in subscriptionResource.GetNetworkFabricsAsync())
+            {
+                NetworkFabricData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
+
+            ResourceIdentifier networkFabricResourceId2 = NetworkFabricResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.ExistingNetworkFabricName);
+            TestContext.Out.WriteLine($"networkFabricId: {networkFabricResourceId2}");
+            NetworkFabricResource networkFabric2 = Client.GetNetworkFabricResource(networkFabricResourceId2);
+
             // provision
             TestContext.Out.WriteLine($"POST - Provision started.....");
-            ArmOperation<DeviceUpdateCommonPostActionResult> triggerProvision = await networkFabric.ProvisionAsync(WaitUntil.Completed);
+            ArmOperation<DeviceUpdateCommonPostActionResult> triggerProvision = await networkFabric2.ProvisionAsync(WaitUntil.Completed);
             DeviceUpdateCommonPostActionResult triggerProvisionResult = triggerProvision.Value;
-            Console.WriteLine(triggerProvisionResult);
+            TestContext.Out.WriteLine(triggerProvisionResult);
 
             // Deprovision
             TestContext.Out.WriteLine($"POST - Deprovision started.....");
-            ArmOperation<DeviceUpdateCommonPostActionResult> deProvisionResponse = await networkFabric.DeprovisionAsync(WaitUntil.Completed);
-            Console.WriteLine(triggerProvisionResult);
+            ArmOperation<DeviceUpdateCommonPostActionResult> deProvisionResponse = await networkFabric2.DeprovisionAsync(WaitUntil.Completed);
+            TestContext.Out.WriteLine(deProvisionResponse);
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

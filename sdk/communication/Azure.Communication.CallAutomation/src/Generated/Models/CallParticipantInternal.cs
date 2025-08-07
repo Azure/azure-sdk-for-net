@@ -5,30 +5,32 @@
 
 #nullable disable
 
-using Azure.Communication;
-
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Contract model of an ACS call participant. </summary>
+    /// <summary> A call participant. </summary>
     internal partial class CallParticipantInternal
     {
-        /// <summary> Initializes a new instance of CallParticipantInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallParticipantInternal"/>. </summary>
         internal CallParticipantInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CallParticipantInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallParticipantInternal"/>. </summary>
         /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        internal CallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted)
+        /// <param name="isOnHold"> Is participant on hold. </param>
+        internal CallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted, bool? isOnHold)
         {
             Identifier = identifier;
             IsMuted = isMuted;
+            IsOnHold = isOnHold;
         }
 
         /// <summary> Communication identifier of the participant. </summary>
         public CommunicationIdentifierModel Identifier { get; }
         /// <summary> Is participant muted. </summary>
         public bool? IsMuted { get; }
+        /// <summary> Is participant on hold. </summary>
+        public bool? IsOnHold { get; }
     }
 }

@@ -5,7 +5,7 @@ using System;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringEnum
     {
@@ -15,11 +15,11 @@ namespace Azure
             InitType();
             DayOfWeek day = DayOfWeek.Monday;
 
-            Value value;
+            Variant value;
             DayOfWeek outDay;
             using (MemoryWatch watch = MemoryWatch.Create())
             {
-                value = Value.Create(day);
+                value = Variant.Create(day);
                 outDay = value.As<DayOfWeek>();
             }
 
@@ -32,7 +32,7 @@ namespace Azure
         {
             DayOfWeek? day = DayOfWeek.Monday;
 
-            Value value = Value.Create(day);
+            Variant value = Variant.Create(day);
             DayOfWeek outDay = value.As<DayOfWeek>();
 
             Assert.AreEqual(day.Value, outDay);
@@ -43,11 +43,11 @@ namespace Azure
         public void ToFromNullableEnum()
         {
             DayOfWeek day = DayOfWeek.Monday;
-            Value value = Value.Create(day);
+            Variant value = Variant.Create(day);
             Assert.True(value.TryGetValue(out DayOfWeek? nullDay));
             Assert.AreEqual(day, nullDay);
 
-            value = Value.Create((DayOfWeek?)day);
+            value = Variant.Create((DayOfWeek?)day);
             Assert.True(value.TryGetValue(out DayOfWeek outDay));
             Assert.AreEqual(day, outDay);
         }
@@ -56,7 +56,7 @@ namespace Azure
         public void BoxedEnum()
         {
             DayOfWeek day = DayOfWeek.Monday;
-            Value value = new(day);
+            Variant value = new(day);
             Assert.True(value.TryGetValue(out DayOfWeek? nullDay));
             Assert.AreEqual(day, nullDay);
 
@@ -69,12 +69,12 @@ namespace Azure
         [TestCase(ByteEnum.MaxValue)]
         public void ByteSize(ByteEnum testValue)
         {
-            Value value = Value.Create(testValue);
+            Variant value = Variant.Create(testValue);
             Assert.True(value.TryGetValue(out ByteEnum result));
             Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out ByteEnum? nullResult));
             Assert.AreEqual(testValue, nullResult!.Value);
-            value = Value.Create((ByteEnum?)testValue);
+            value = Variant.Create((ByteEnum?)testValue);
             Assert.True(value.TryGetValue(out result));
             Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
@@ -97,12 +97,12 @@ namespace Azure
         [TestCase(ShortEnum.MaxValue)]
         public void ShortSize(ShortEnum testValue)
         {
-            Value value = Value.Create(testValue);
+            Variant value = Variant.Create(testValue);
             Assert.True(value.TryGetValue(out ShortEnum result));
             Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out ShortEnum? nullResult));
             Assert.AreEqual(testValue, nullResult!.Value);
-            value = Value.Create((ShortEnum?)testValue);
+            value = Variant.Create((ShortEnum?)testValue);
             Assert.True(value.TryGetValue(out result));
             Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
@@ -125,12 +125,12 @@ namespace Azure
         [TestCase(LongEnum.MaxValue)]
         public void LongSize(LongEnum testValue)
         {
-            Value value = Value.Create(testValue);
+            Variant value = Variant.Create(testValue);
             Assert.True(value.TryGetValue(out LongEnum result));
             Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out LongEnum? nullResult));
             Assert.AreEqual(testValue, nullResult!.Value);
-            value = Value.Create((LongEnum?)testValue);
+            value = Variant.Create((LongEnum?)testValue);
             Assert.True(value.TryGetValue(out result));
             Assert.AreEqual(testValue, result);
             Assert.True(value.TryGetValue(out nullResult));
@@ -153,7 +153,7 @@ namespace Azure
         internal DayOfWeek InitType()
         {
             DayOfWeek day = DayOfWeek.Monday;
-            return Value.Create(day).As<DayOfWeek>();
+            return Variant.Create(day).As<DayOfWeek>();
         }
 
         public enum ByteEnum : byte

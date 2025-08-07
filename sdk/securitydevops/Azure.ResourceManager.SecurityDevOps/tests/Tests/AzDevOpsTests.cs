@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
             : base(async)//, RecordedTestMode.Record)
         {
             // Sanitize Azure DevOps OAuth code for Connector creation
-            BodyKeySanitizers.Add(new BodyKeySanitizer("Sanitized") { JsonPath = "properties.authorization.code" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("properties.authorization.code"));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
                 // Code is sanitized from test recording so credential doesn't leak.
                 Properties = new AzureDevOpsConnectorProperties(
                     null,
-                    new AuthorizationInfo("AzureDevOpsOAuthCode"),
+                    new AuthorizationInfo("AzureDevOpsOAuthCode", null),
                     new List<AzureDevOpsOrgMetadata>
                     {
                         new AzureDevOpsOrgMetadata(
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
                             AutoDiscovery.Disabled,
                             new List<AzureDevOpsProjectMetadata>
                             {
-                                new AzureDevOpsProjectMetadata("MyProject", AutoDiscovery.Disabled, repos: new List<string> { "ARepo", "AnotherRepo" })
-                            })
-                    })
+                                new AzureDevOpsProjectMetadata("MyProject", AutoDiscovery.Disabled, repos: new List<string> { "ARepo", "AnotherRepo" }, null)
+                            }, null)
+                    }, null)
             };
 
             var azureDevOpsConnector = (await azureDevOpsConnectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, connectorData)).Value;

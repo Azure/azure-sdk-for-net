@@ -42,11 +42,10 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
 
         private async Task<NotificationHubNamespaceAuthorizationRuleResource> CreateNamespaceAuthorizationRule(string authorizationRuleName)
         {
-            var properties = new SharedAccessAuthorizationRuleProperties();
-            properties.Rights.Add(AuthorizationRuleAccessRight.Listen);
-            properties.Rights.Add(AuthorizationRuleAccessRight.Send);
-            properties.Rights.Add(AuthorizationRuleAccessRight.Manage);
-            var data = new SharedAccessAuthorizationRuleCreateOrUpdateContent(properties);
+            var data = new NotificationHubAuthorizationRuleData(DefaultLocation);
+            data.AccessRights.Add(AuthorizationRuleAccessRightExt.Send);
+            data.AccessRights.Add(AuthorizationRuleAccessRightExt.Listen);
+            data.AccessRights.Add(AuthorizationRuleAccessRightExt.Manage);
             var authoriaztionRule = await _AuthorizationRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, authorizationRuleName, data);
             return authoriaztionRule.Value;
         }

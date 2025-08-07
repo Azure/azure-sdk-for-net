@@ -10,13 +10,13 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> An object representing the task definition for a Key Phrase Extraction task. </summary>
     internal partial class KeyPhraseLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of KeyPhraseLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseLROTask"/>. </summary>
         public KeyPhraseLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.KeyPhraseExtraction;
         }
 
-        /// <summary> Initializes a new instance of KeyPhraseLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Key Phrase Extraction task. </param>

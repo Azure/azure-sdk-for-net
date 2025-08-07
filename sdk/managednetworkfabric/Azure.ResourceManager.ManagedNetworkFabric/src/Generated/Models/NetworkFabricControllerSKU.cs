@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(NetworkFabricControllerSKU left, NetworkFabricControllerSKU right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFabricControllerSKU"/> values are not the same. </summary>
         public static bool operator !=(NetworkFabricControllerSKU left, NetworkFabricControllerSKU right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkFabricControllerSKU"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricControllerSKU"/>. </summary>
         public static implicit operator NetworkFabricControllerSKU(string value) => new NetworkFabricControllerSKU(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

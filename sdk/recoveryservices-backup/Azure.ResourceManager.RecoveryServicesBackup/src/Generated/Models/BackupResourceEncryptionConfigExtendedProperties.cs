@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -13,20 +14,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The BackupResourceEncryptionConfigExtendedProperties. </summary>
     public partial class BackupResourceEncryptionConfigExtendedProperties : BackupResourceEncryptionConfig
     {
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfigExtendedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfigExtendedProperties"/>. </summary>
         public BackupResourceEncryptionConfigExtendedProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfigExtendedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfigExtendedProperties"/>. </summary>
         /// <param name="encryptionAtRestType"> Encryption At Rest Type. </param>
         /// <param name="keyUri"> Key Vault Key URI. </param>
         /// <param name="subscriptionId"> Key Vault Subscription Id. </param>
         /// <param name="lastUpdateStatus"></param>
         /// <param name="infrastructureEncryptionState"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userAssignedIdentity"> User Assigned Identity Id. </param>
         /// <param name="useSystemAssignedIdentity"> bool to indicate whether to use system Assigned Identity or not. </param>
-        internal BackupResourceEncryptionConfigExtendedProperties(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, ResourceIdentifier userAssignedIdentity, bool? useSystemAssignedIdentity) : base(encryptionAtRestType, keyUri, subscriptionId, lastUpdateStatus, infrastructureEncryptionState)
+        internal BackupResourceEncryptionConfigExtendedProperties(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier userAssignedIdentity, bool? useSystemAssignedIdentity) : base(encryptionAtRestType, keyUri, subscriptionId, lastUpdateStatus, infrastructureEncryptionState, serializedAdditionalRawData)
         {
             UserAssignedIdentity = userAssignedIdentity;
             UseSystemAssignedIdentity = useSystemAssignedIdentity;

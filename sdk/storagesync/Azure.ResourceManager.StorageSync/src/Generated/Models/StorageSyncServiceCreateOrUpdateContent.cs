@@ -5,27 +5,83 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> The parameters used when creating a storage sync service. </summary>
-    public partial class StorageSyncServiceCreateOrUpdateContent
+    public partial class StorageSyncServiceCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncServiceCreateOrUpdateContent. </summary>
-        /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
-        public StorageSyncServiceCreateOrUpdateContent(AzureLocation location)
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The location. </param>
+        public StorageSyncServiceCreateOrUpdateContent(AzureLocation location) : base(location)
         {
-            Location = location;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </summary>
-        public AzureLocation Location { get; }
-        /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> managed identities for the Storage Sync to interact with other Azure services without maintaining any secrets or credentials in code. </param>
+        /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
+        /// <param name="useIdentity"> Use Identity authorization when customer have finished setup RBAC permissions. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncServiceCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, bool? useIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        {
+            Identity = identity;
+            IncomingTrafficPolicy = incomingTrafficPolicy;
+            UseIdentity = useIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceCreateOrUpdateContent"/> for deserialization. </summary>
+        internal StorageSyncServiceCreateOrUpdateContent()
+        {
+        }
+
+        /// <summary> managed identities for the Storage Sync to interact with other Azure services without maintaining any secrets or credentials in code. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Incoming Traffic Policy. </summary>
         public IncomingTrafficPolicy? IncomingTrafficPolicy { get; set; }
+        /// <summary> Use Identity authorization when customer have finished setup RBAC permissions. </summary>
+        public bool? UseIdentity { get; set; }
     }
 }

@@ -268,9 +268,9 @@ namespace Azure.Messaging.ServiceBus.Administration
         private static string GenerateRandomKey()
         {
             byte[] key256 = new byte[32];
-            using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
+            using (var rng = RandomNumberGenerator.Create())
             {
-                rngCryptoServiceProvider.GetBytes(key256);
+                rng.GetBytes(key256);
             }
 
             return Convert.ToBase64String(key256);

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,9 +15,58 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </summary>
     public partial class VirtualMachineScaleSetUpdatePublicIPAddressConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdatePublicIPAddressConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdatePublicIPAddressConfiguration"/>. </summary>
         public VirtualMachineScaleSetUpdatePublicIPAddressConfiguration()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdatePublicIPAddressConfiguration"/>. </summary>
+        /// <param name="name"> The publicIP address configuration name. </param>
+        /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
+        /// <param name="dnsSettings"> The dns settings to be applied on the publicIP addresses . </param>
+        /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
+        /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, WritableSubResource publicIPPrefix, ComputeDeleteOption? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            IdleTimeoutInMinutes = idleTimeoutInMinutes;
+            DnsSettings = dnsSettings;
+            PublicIPPrefix = publicIPPrefix;
+            DeleteOption = deleteOption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The publicIP address configuration name. </summary>
@@ -23,14 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
-        internal VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
-        /// <summary> The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </summary>
-        public string DnsDomainNameLabel
-        {
-            get => DnsSettings is null ? default : DnsSettings.DomainNameLabel;
-            set => DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(value);
-        }
-
+        public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
         internal WritableSubResource PublicIPPrefix { get; set; }
         /// <summary> Gets or sets Id. </summary>

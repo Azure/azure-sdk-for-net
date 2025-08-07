@@ -10,12 +10,12 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Summary of the results for the batch request. </summary>
     internal partial class BatchResultSummary
     {
-        /// <summary> Initializes a new instance of BatchResultSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResultSummary"/>. </summary>
         internal BatchResultSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchResultSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResultSummary"/>. </summary>
         /// <param name="successfulRequests"> Number of successful requests in the batch. </param>
         /// <param name="totalRequests"> Total number of requests in the batch. </param>
         internal BatchResultSummary(int? successfulRequests, int? totalRequests)

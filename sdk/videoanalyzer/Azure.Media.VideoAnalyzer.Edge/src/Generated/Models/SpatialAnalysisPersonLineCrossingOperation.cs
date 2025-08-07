@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Defines a Spatial Analysis person line crossing operation. This requires the Azure Cognitive Services Spatial analysis module to be deployed alongside the Video Analyzer module, please see https://aka.ms/ava-spatial-analysis for more information. </summary>
     public partial class SpatialAnalysisPersonLineCrossingOperation : SpatialAnalysisTypedOperationBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingOperation"/>. </summary>
         /// <param name="lines"> The list of lines with optional events. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lines"/> is null. </exception>
         public SpatialAnalysisPersonLineCrossingOperation(IEnumerable<SpatialAnalysisPersonLineCrossingLineEvents> lines)
@@ -26,7 +25,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.SpatialAnalysisPersonLineCrossingOperation";
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingOperation"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="debug"> If set to 'true', enables debugging mode for this operation. </param>
         /// <param name="calibrationConfiguration"> Advanced calibration configuration. </param>

@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The parameters to execute a direct method on the device. </summary>
     public partial class CloudToDeviceMethodRequest
     {
-        /// <summary> Initializes a new instance of CloudToDeviceMethodRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudToDeviceMethodRequest"/>. </summary>
         public CloudToDeviceMethodRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudToDeviceMethodRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudToDeviceMethodRequest"/>. </summary>
         /// <param name="methodName"> The name of the method to execute. </param>
         /// <param name="payload"> The JSON-formatted direct method payload, up to 128kb in size. </param>
         /// <param name="responseTimeoutInSeconds"> The time (in seconds) that the service waits for the method invocation to return a response. The default is 30 seconds, minimum is 5 seconds, and maximum is 300 seconds. </param>

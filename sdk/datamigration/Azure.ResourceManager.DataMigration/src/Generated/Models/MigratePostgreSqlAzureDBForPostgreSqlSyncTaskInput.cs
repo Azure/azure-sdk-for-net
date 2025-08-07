@@ -8,19 +8,50 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for the task that migrates PostgreSQL databases to Azure Database for PostgreSQL for online migrations. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selectedDatabases"/>, <paramref name="targetConnectionInfo"/> or <paramref name="sourceConnectionInfo"/> is null. </exception>
-        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IEnumerable<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, PostgreSqlConnectionInfo sourceConnectionInfo)
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IEnumerable<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo)
         {
             Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -31,27 +62,34 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
         /// <param name="startedOn"> Migration start time. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, PostgreSqlConnectionInfo sourceConnectionInfo, string encryptedKeyForSecureFields, DateTimeOffset? startedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo, string encryptedKeyForSecureFields, DateTimeOffset? startedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SelectedDatabases = selectedDatabases;
             TargetConnectionInfo = targetConnectionInfo;
             SourceConnectionInfo = sourceConnectionInfo;
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
             StartedOn = startedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput"/> for deserialization. </summary>
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput()
+        {
         }
 
         /// <summary> Databases to migrate. </summary>
         public IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> SelectedDatabases { get; }
         /// <summary> Connection information for target Azure Database for PostgreSQL. </summary>
-        public PostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationPostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Connection information for source PostgreSQL. </summary>
-        public PostgreSqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationPostgreSqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> encrypted key for secure fields. </summary>
         public string EncryptedKeyForSecureFields { get; set; }
         /// <summary> Migration start time. </summary>

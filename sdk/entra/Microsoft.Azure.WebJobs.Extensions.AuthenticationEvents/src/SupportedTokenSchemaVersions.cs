@@ -9,8 +9,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     internal enum SupportedTokenSchemaVersions
     {
         /// <summary>Version 1.</summary>
-        [Description("1.0")] V1_0,
+        [Description("1.0")]
+        V1_0,
+
         /// <summary>Version 2.</summary>
-        [Description("2.0")] V2_0
+        [Description("2.0")]
+        V2_0
     }
 }

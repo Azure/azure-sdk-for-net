@@ -12,18 +12,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure File Storage write settings. </summary>
     public partial class AzureFileStorageWriteSettings : StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of AzureFileStorageWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileStorageWriteSettings"/>. </summary>
         public AzureFileStorageWriteSettings()
         {
             Type = "AzureFileStorageWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of AzureFileStorageWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileStorageWriteSettings"/>. </summary>
         /// <param name="type"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal AzureFileStorageWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IDictionary<string, object> additionalProperties) : base(type, maxConcurrentConnections, copyBehavior, additionalProperties)
+        internal AzureFileStorageWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IList<MetadataItem> metadata, IDictionary<string, object> additionalProperties) : base(type, maxConcurrentConnections, copyBehavior, metadata, additionalProperties)
         {
             Type = type ?? "AzureFileStorageWriteSettings";
         }

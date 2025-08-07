@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The overwrite option for SSIS object migration, only ignore and overwrite are supported in DMS now and future may add Reuse option for container object. </summary>
+    /// <summary> The overwrite option for SSIS object migration, only ignore and overwrite are supported in DMS (classic) now and future may add Reuse option for container object. </summary>
     public readonly partial struct SsisMigrationOverwriteOption : IEquatable<SsisMigrationOverwriteOption>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(SsisMigrationOverwriteOption left, SsisMigrationOverwriteOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisMigrationOverwriteOption"/> values are not the same. </summary>
         public static bool operator !=(SsisMigrationOverwriteOption left, SsisMigrationOverwriteOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SsisMigrationOverwriteOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SsisMigrationOverwriteOption"/>. </summary>
         public static implicit operator SsisMigrationOverwriteOption(string value) => new SsisMigrationOverwriteOption(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

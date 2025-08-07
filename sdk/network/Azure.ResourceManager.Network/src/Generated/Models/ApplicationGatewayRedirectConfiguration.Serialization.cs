@@ -6,28 +6,41 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayRedirectConfiguration : IUtf8JsonSerializable
+    public partial class ApplicationGatewayRedirectConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayRedirectConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayRedirectConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationGatewayRedirectConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -39,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TargetListener))
             {
                 writer.WritePropertyName("targetListener"u8);
-                JsonSerializer.Serialize(writer, TargetListener);
+                ((IJsonModel<WritableSubResource>)TargetListener).Write(writer, options);
             }
             if (Optional.IsDefined(TargetUri))
             {
@@ -62,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestRoutingRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in UrlPathMaps)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,32 +95,47 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in PathRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayRedirectConfiguration DeserializeApplicationGatewayRedirectConfiguration(JsonElement element)
+        ApplicationGatewayRedirectConfiguration IJsonModel<ApplicationGatewayRedirectConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayRedirectConfiguration(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayRedirectConfiguration DeserializeApplicationGatewayRedirectConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayRedirectType> redirectType = default;
-            Optional<WritableSubResource> targetListener = default;
-            Optional<Uri> targetUrl = default;
-            Optional<bool> includePath = default;
-            Optional<bool> includeQueryString = default;
-            Optional<IList<WritableSubResource>> requestRoutingRules = default;
-            Optional<IList<WritableSubResource>> urlPathMaps = default;
-            Optional<IList<WritableSubResource>> pathRules = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ApplicationGatewayRedirectType? redirectType = default;
+            WritableSubResource targetListener = default;
+            Uri targetUrl = default;
+            bool? includePath = default;
+            bool? includeQueryString = default;
+            IList<WritableSubResource> requestRoutingRules = default;
+            IList<WritableSubResource> urlPathMaps = default;
+            IList<WritableSubResource> pathRules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -166,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            targetListener = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            targetListener = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("targetUrl"u8))
@@ -205,7 +233,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
                             }
                             requestRoutingRules = array;
                             continue;
@@ -219,7 +247,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
                             }
                             urlPathMaps = array;
                             continue;
@@ -233,7 +261,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
                             }
                             pathRules = array;
                             continue;
@@ -241,8 +269,57 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayRedirectConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(redirectType), targetListener, targetUrl.Value, Optional.ToNullable(includePath), Optional.ToNullable(includeQueryString), Optional.ToList(requestRoutingRules), Optional.ToList(urlPathMaps), Optional.ToList(pathRules));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayRedirectConfiguration(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                redirectType,
+                targetListener,
+                targetUrl,
+                includePath,
+                includeQueryString,
+                requestRoutingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                urlPathMaps ?? new ChangeTrackingList<WritableSubResource>(),
+                pathRules ?? new ChangeTrackingList<WritableSubResource>());
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayRedirectConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayRedirectConfiguration IPersistableModel<ApplicationGatewayRedirectConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeApplicationGatewayRedirectConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayRedirectConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

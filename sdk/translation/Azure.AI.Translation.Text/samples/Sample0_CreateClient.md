@@ -54,16 +54,16 @@ Instead of API key and Region authentication you can use JWT token. For informat
 Once you have the value for the token, create an class that extends `Azure.Core.TokenCredential`. With the value of the `AzureKeyCredential` and your service returning tokens, you can create the [TextTranslationClient][translator_client_class]:
 
 ```C# Snippet:CreateTextTranslationClientWithToken
-string apiKey = "<Text Translator Resource API Key>";
-TokenCredential credential = new CustomTokenCredential(new AzureKeyCredential(apiKey));
+string token = "<Cognitive Services Token>";
+TokenCredential credential = new StaticAccessTokenCredential(new AccessToken(token, DateTimeOffset.Now.AddMinutes(1)));
 TextTranslationClient client = new(credential);
 ```
 
 [translator_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/Custom/TextTranslationClient.cs
 [translator_vnet]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference#virtual-network-support
-[custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[custom_subdomain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [translator_token]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference#authenticating-with-an-access-token
 [cognitive_resource_azure_portal]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_azure_cli]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [service_access]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account

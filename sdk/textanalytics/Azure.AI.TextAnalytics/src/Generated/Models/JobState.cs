@@ -7,15 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The JobState. </summary>
     internal partial class JobState
     {
-        /// <summary> Initializes a new instance of JobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdatedDateTime"></param>
@@ -32,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
             Errors = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of JobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobState"/>. </summary>
         /// <param name="displayName"></param>
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>

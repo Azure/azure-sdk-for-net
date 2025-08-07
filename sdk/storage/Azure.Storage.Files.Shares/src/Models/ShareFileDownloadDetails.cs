@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -122,9 +123,15 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareLeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
-        /// The SMB properties for the file
+        /// The SMB properties for the file.
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
+
+        /// <summary>
+        /// NFS properties.
+        /// Note that this property is only applicable to files created in NFS shares.
+        /// </summary>
+        public FilePosixProperties PosixProperties { get; internal set; }
 
         /// <summary>
         /// Constructor.
@@ -140,6 +147,60 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageFileDownloadProperties instance for mocking.
         /// </summary>
+        public static ShareFileDownloadDetails StorageFileDownloadProperties(
+            DateTimeOffset lastModified = default,
+            IDictionary<string, string> metadata = default,
+            string contentRange = default,
+            ETag eTag = default,
+            IEnumerable<string> contentEncoding = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            IEnumerable<string> contentLanguage = default,
+            string acceptRanges = default,
+            DateTimeOffset copyCompletedOn = default,
+            string copyStatusDescription = default,
+            string copyId = default,
+            string copyProgress = default,
+            Uri copySource = default,
+            CopyStatus copyStatus = default,
+            byte[] fileContentHash = default,
+            bool isServiceEncrypted = default,
+            ShareLeaseDuration leaseDuration = default,
+            ShareLeaseState leaseState = default,
+            ShareLeaseStatus leaseStatus = default,
+            FileSmbProperties smbProperties = default,
+            FilePosixProperties posixProperties = default)
+        {
+            return new ShareFileDownloadDetails
+            {
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentRange = contentRange,
+                ETag = eTag,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                AcceptRanges = acceptRanges,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                FileContentHash = fileContentHash,
+                IsServerEncrypted = isServiceEncrypted,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                SmbProperties = smbProperties,
+                PosixProperties = posixProperties,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new StorageFileDownloadProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareFileDownloadDetails StorageFileDownloadProperties(
             DateTimeOffset lastModified,
             IDictionary<string, string> metadata,

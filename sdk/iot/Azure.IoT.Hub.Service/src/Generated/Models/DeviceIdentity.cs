@@ -12,12 +12,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The Device. </summary>
     public partial class DeviceIdentity
     {
-        /// <summary> Initializes a new instance of DeviceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceIdentity"/>. </summary>
         public DeviceIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceIdentity"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="generationId"> The IoT Hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created. </param>
         /// <param name="etag"> The string representing a weak ETag for the device identity, as per RFC7232. </param>

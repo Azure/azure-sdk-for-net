@@ -5,19 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RequestSchemeMatchCondition : IUtf8JsonSerializable
+    public partial class RequestSchemeMatchCondition : IUtf8JsonSerializable, IJsonModel<RequestSchemeMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestSchemeMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RequestSchemeMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(ConditionType.ToString());
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestSchemeMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(RequestSchemeOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
@@ -45,27 +62,37 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
         }
 
-        internal static RequestSchemeMatchCondition DeserializeRequestSchemeMatchCondition(JsonElement element)
+        RequestSchemeMatchCondition IJsonModel<RequestSchemeMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestSchemeMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRequestSchemeMatchCondition(document.RootElement, options);
+        }
+
+        internal static RequestSchemeMatchCondition DeserializeRequestSchemeMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RequestSchemeMatchConditionType typeName = default;
             RequestSchemeOperator @operator = default;
-            Optional<bool> negateCondition = default;
-            Optional<IList<PreTransformCategory>> transforms = default;
-            Optional<IList<RequestSchemeMatchConditionMatchValue>> matchValues = default;
+            bool? negateCondition = default;
+            IList<PreTransformCategory> transforms = default;
+            IList<RequestSchemeMatchConditionMatchValue> matchValues = default;
+            DeliveryRuleConditionParametersType typeName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"u8))
-                {
-                    typeName = new RequestSchemeMatchConditionType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("operator"u8))
                 {
                     @operator = new RequestSchemeOperator(property.Value.GetString());
@@ -108,8 +135,55 @@ namespace Azure.ResourceManager.Cdn.Models
                     matchValues = array;
                     continue;
                 }
+                if (property.NameEquals("typeName"u8))
+                {
+                    typeName = new DeliveryRuleConditionParametersType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RequestSchemeMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(transforms), Optional.ToList(matchValues));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RequestSchemeMatchCondition(
+                typeName,
+                serializedAdditionalRawData,
+                @operator,
+                negateCondition,
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                matchValues ?? new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>());
         }
+
+        BinaryData IPersistableModel<RequestSchemeMatchCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestSchemeMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RequestSchemeMatchCondition IPersistableModel<RequestSchemeMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestSchemeMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeRequestSchemeMatchCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RequestSchemeMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

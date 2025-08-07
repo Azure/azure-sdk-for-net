@@ -4,48 +4,49 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ReclassifyExceptionAction")]
-    [CodeGenSuppress("ReclassifyExceptionAction")]
     public partial class ReclassifyExceptionAction
     {
+        /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
+        public ReclassifyExceptionAction()
+        {
+            Kind = ExceptionActionKind.Reclassify;
+            _labelsToUpsert = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
         [CodeGenMember("LabelsToUpsert")]
-        internal IDictionary<string, object> _labelsToUpsert
+        internal IDictionary<string, BinaryData> _labelsToUpsert
         {
             get
             {
                 return LabelsToUpsert != null && LabelsToUpsert.Count != 0
-                    ? LabelsToUpsert?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? LabelsToUpsert?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
-                LabelsToUpsert = value != null && value.Count != 0
-                    ? value.ToDictionary(x => x.Key, x => new LabelValue(x.Value))
-                    : new Dictionary<string, LabelValue>();
+                if (value != null && value.Count != 0)
+                {
+                    foreach (var label in value)
+                    {
+                        LabelsToUpsert[label.Key] = new RouterValue(label.Value.ToObjectFromJson());
+                    }
+                }
             }
         }
 
         /// <summary>
-        /// (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs
+        /// (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs. Values must be primitive values - number, string, boolean.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, LabelValue> LabelsToUpsert { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
+        public IDictionary<string, RouterValue> LabelsToUpsert { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> Initializes a new instance of ReclassifyExceptionAction. </summary>
-        /// <param name="classificationPolicyId"> (optional) The new classification policy that will determine queue, priority and worker selectors. </param>
-        /// <param name="labelsToUpsert"> (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs. </param>
-        public ReclassifyExceptionAction(string classificationPolicyId, IDictionary<string, LabelValue> labelsToUpsert = default)
-            : this(null, classificationPolicyId, null)
-        {
-            Argument.AssertNotNullOrWhiteSpace(classificationPolicyId, nameof(classificationPolicyId));
-
-            LabelsToUpsert = labelsToUpsert;
-        }
+        /// <summary>
+        /// (optional) The new classification policy that will determine queue, priority
+        /// and worker selectors.
+        /// </summary>
+        public string ClassificationPolicyId { get; set; }
     }
 }

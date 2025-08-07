@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator ==(FavoriteSourceType left, FavoriteSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FavoriteSourceType"/> values are not the same. </summary>
         public static bool operator !=(FavoriteSourceType left, FavoriteSourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FavoriteSourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FavoriteSourceType"/>. </summary>
         public static implicit operator FavoriteSourceType(string value) => new FavoriteSourceType(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

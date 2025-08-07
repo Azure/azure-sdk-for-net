@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ScheduledActionStatus left, ScheduledActionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledActionStatus"/> values are not the same. </summary>
         public static bool operator !=(ScheduledActionStatus left, ScheduledActionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduledActionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionStatus"/>. </summary>
         public static implicit operator ScheduledActionStatus(string value) => new ScheduledActionStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

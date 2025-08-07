@@ -15,12 +15,12 @@ namespace Azure.Template.Models
     {
         internal static SecretBundle DeserializeSecretBundle(JsonElement element)
         {
-            Optional<string> value = default;
-            Optional<string> id = default;
-            Optional<string> contentType = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<string> kid = default;
-            Optional<bool> managed = default;
+            string value = default;
+            string id = default;
+            string contentType = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            string kid = default;
+            bool? managed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -69,7 +69,7 @@ namespace Azure.Template.Models
                     continue;
                 }
             }
-            return new SecretBundle(value.Value, id.Value, contentType.Value, Optional.ToDictionary(tags), kid.Value, Optional.ToNullable(managed));
+            return new SecretBundle(value, id, contentType, tags ?? new ChangeTrackingDictionary<string, string>(), kid, managed);
         }
 
         internal static SecretBundle FromResponse(Response response)

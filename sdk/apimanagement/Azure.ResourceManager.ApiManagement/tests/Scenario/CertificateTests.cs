@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class CertificateTests : ApiManagementManagementTestBase
     {
         public CertificateTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync)// RecordedTestMode.Record)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private async Task SetCollectionsAsync()
         {
-            ResourceGroup = await CreateResourceGroupAsync();
+            ResourceGroup = await CreateResourceGroupAsync(AzureLocation.EastUS);
             ApiServiceCollection = ResourceGroup.GetApiManagementServices();
         }
 
@@ -61,7 +61,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             X509Certificate2 cert = null;
             if (Mode != RecordedTestMode.Playback)
             {
+#if NET9_0_OR_GREATER
+                cert = X509CertificateLoader.LoadCertificateFromFile("./Resources/sdktest.cer");
+#else
                 cert = new X509Certificate2("./Resources/sdktest.cer");
+#endif
             }
             var content = new ApiManagementCertificateCreateOrUpdateContent()
             {

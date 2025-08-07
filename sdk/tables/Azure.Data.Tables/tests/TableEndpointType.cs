@@ -7,6 +7,7 @@ namespace Azure.Data.Tables.Tests
     {
         Storage,
         CosmosTable,
-        StorageAAD
+        StorageAAD,
+        CosmosTableAAD
     }
 }

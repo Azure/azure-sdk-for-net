@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The folder that this Spark job definition is in. If not specified, this Spark job definition will appear at the root level. </summary>
     public partial class SparkJobDefinitionFolder
     {
-        /// <summary> Initializes a new instance of SparkJobDefinitionFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobDefinitionFolder"/>. </summary>
         public SparkJobDefinitionFolder()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkJobDefinitionFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobDefinitionFolder"/>. </summary>
         /// <param name="name"> The name of the folder that this Spark job definition is in. </param>
         internal SparkJobDefinitionFolder(string name)
         {

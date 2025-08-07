@@ -5,39 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayListener : IUtf8JsonSerializable
+    public partial class ApplicationGatewayListener : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayListener>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayListener>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationGatewayListener>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayListener>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ApplicationGatewayListener)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
-                JsonSerializer.Serialize(writer, FrontendIPConfiguration);
+                ((IJsonModel<WritableSubResource>)FrontendIPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort"u8);
-                JsonSerializer.Serialize(writer, FrontendPort);
+                ((IJsonModel<WritableSubResource>)FrontendPort).Write(writer, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -47,33 +62,64 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SslCertificate))
             {
                 writer.WritePropertyName("sslCertificate"u8);
-                JsonSerializer.Serialize(writer, SslCertificate);
+                ((IJsonModel<WritableSubResource>)SslCertificate).Write(writer, options);
             }
             if (Optional.IsDefined(SslProfile))
             {
                 writer.WritePropertyName("sslProfile"u8);
-                JsonSerializer.Serialize(writer, SslProfile);
+                ((IJsonModel<WritableSubResource>)SslProfile).Write(writer, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(HostNames))
+            {
+                writer.WritePropertyName("hostNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in HostNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayListener DeserializeApplicationGatewayListener(JsonElement element)
+        ApplicationGatewayListener IJsonModel<ApplicationGatewayListener>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayListener>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayListener)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayListener(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayListener DeserializeApplicationGatewayListener(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<WritableSubResource> frontendPort = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<WritableSubResource> sslCertificate = default;
-            Optional<WritableSubResource> sslProfile = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource frontendIPConfiguration = default;
+            WritableSubResource frontendPort = default;
+            ApplicationGatewayProtocol? protocol = default;
+            WritableSubResource sslCertificate = default;
+            WritableSubResource sslProfile = default;
+            NetworkProvisioningState? provisioningState = default;
+            IList<string> hostNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -123,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            frontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            frontendIPConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("frontendPort"u8))
@@ -132,7 +178,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            frontendPort = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            frontendPort = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("protocol"u8))
@@ -150,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            sslCertificate = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            sslCertificate = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("sslProfile"u8))
@@ -159,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            sslProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            sslProfile = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -171,11 +217,73 @@ namespace Azure.ResourceManager.Network.Models
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("hostNames"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            hostNames = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayListener(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), sslCertificate, sslProfile, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayListener(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                frontendIPConfiguration,
+                frontendPort,
+                protocol,
+                sslCertificate,
+                sslProfile,
+                provisioningState,
+                hostNames ?? new ChangeTrackingList<string>());
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayListener>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayListener>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayListener)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayListener IPersistableModel<ApplicationGatewayListener>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayListener>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeApplicationGatewayListener(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayListener)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayListener>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

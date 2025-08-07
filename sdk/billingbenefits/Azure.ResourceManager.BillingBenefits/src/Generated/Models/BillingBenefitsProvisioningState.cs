@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static bool operator ==(BillingBenefitsProvisioningState left, BillingBenefitsProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(BillingBenefitsProvisioningState left, BillingBenefitsProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingBenefitsProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitsProvisioningState"/>. </summary>
         public static implicit operator BillingBenefitsProvisioningState(string value) => new BillingBenefitsProvisioningState(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

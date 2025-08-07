@@ -10,12 +10,12 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> The FileSystem. </summary>
     internal partial class FileSystem
     {
-        /// <summary> Initializes a new instance of FileSystem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystem"/>. </summary>
         internal FileSystem()
         {
         }
 
-        /// <summary> Initializes a new instance of FileSystem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="lastModified"></param>
         /// <param name="eTag"></param>

@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringInt
     {
@@ -18,7 +18,7 @@ namespace Azure
         [Test]
         public void IntImplicit([ValueSource("Int32Data")] int testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<int>());
             Assert.AreEqual(typeof(int), value.Type);
 
@@ -31,10 +31,10 @@ namespace Azure
         [Test]
         public void IntCreate([ValueSource("Int32Data")] int testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
-                value = Value.Create(testValue);
+                value = Variant.Create(testValue);
             }
 
             Assert.AreEqual(testValue, value.As<int>());
@@ -44,7 +44,7 @@ namespace Azure
 
             using (MemoryWatch.Create())
             {
-                value = Value.Create(source);
+                value = Variant.Create(source);
             }
 
             Assert.AreEqual(source, value.As<int?>());
@@ -54,7 +54,7 @@ namespace Azure
         [Test]
         public void IntInOut([ValueSource("Int32Data")] int testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out int result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -67,7 +67,7 @@ namespace Azure
         public void NullableIntInIntOut([ValueSource("Int32Data")] int? testValue)
         {
             int? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out int result);
             Assert.True(success);
@@ -82,7 +82,7 @@ namespace Azure
         public void IntInNullableIntOut([ValueSource("Int32Data")] int testValue)
         {
             int source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             Assert.True(value.TryGetValue(out int? result));
             Assert.AreEqual(testValue, result);
 
@@ -94,7 +94,7 @@ namespace Azure
         {
             int i = testValue;
             object o = i;
-            Value value = new(o);
+            Variant value = new(o);
 
             Assert.AreEqual(typeof(int), value.Type);
             Assert.True(value.TryGetValue(out int result));
@@ -117,7 +117,7 @@ namespace Azure
         public void NullInt()
         {
             int? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<int?>());
             Assert.False(value.As<int?>().HasValue);
@@ -126,7 +126,7 @@ namespace Azure
         [Test]
         public void OutAsObject([ValueSource("Int32Data")] int testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(int), o.GetType());
             Assert.AreEqual(testValue, (int)o);

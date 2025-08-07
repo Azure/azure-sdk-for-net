@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.SecurityCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/governanceRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string scope)
@@ -69,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceRuleList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GovernanceRuleList.DeserializeGovernanceRuleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -93,13 +103,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceRuleList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GovernanceRuleList.DeserializeGovernanceRuleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string ruleId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/governanceRules/", false);
+            uri.AppendPath(ruleId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string ruleId)
@@ -138,7 +160,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GovernanceRuleData.DeserializeGovernanceRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -167,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GovernanceRuleData.DeserializeGovernanceRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,6 +198,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string ruleId, GovernanceRuleData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/governanceRules/", false);
+            uri.AppendPath(ruleId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string ruleId, GovernanceRuleData data)
@@ -194,7 +228,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -221,7 +255,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 201:
                     {
                         GovernanceRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GovernanceRuleData.DeserializeGovernanceRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -251,13 +285,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 201:
                     {
                         GovernanceRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GovernanceRuleData.DeserializeGovernanceRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string ruleId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/governanceRules/", false);
+            uri.AppendPath(ruleId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string scope, string ruleId)
@@ -325,6 +371,19 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateExecuteRequestUri(string scope, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/governanceRules/", false);
+            uri.AppendPath(ruleId, true);
+            uri.AppendPath("/execute", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExecuteRequest(string scope, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams)
         {
             var message = _pipeline.CreateMessage();
@@ -344,7 +403,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(executeGovernanceRuleParams);
+                content.JsonWriter.WriteObjectValue(executeGovernanceRuleParams, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -397,6 +456,14 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -428,7 +495,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceRuleList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GovernanceRuleList.DeserializeGovernanceRuleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -454,7 +521,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         GovernanceRuleList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GovernanceRuleList.DeserializeGovernanceRuleList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

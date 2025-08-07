@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Information about payment related to a reservation order. </summary>
     public partial class PaymentDetail
     {
-        /// <summary> Initializes a new instance of PaymentDetail. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PaymentDetail"/>. </summary>
         internal PaymentDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of PaymentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentDetail"/>. </summary>
         /// <param name="dueOn"> Date when the payment needs to be done. </param>
         /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
         /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
@@ -25,7 +58,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="billingAccount"> Shows the Account that is charged for this payment. </param>
         /// <param name="status"> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </param>
         /// <param name="extendedStatusInfo"></param>
-        internal PaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? payOn, PurchasePrice pricingCurrencyTotal, PurchasePrice billingCurrencyTotal, string billingAccount, PaymentStatus? status, ExtendedStatusInfo extendedStatusInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? payOn, PurchasePrice pricingCurrencyTotal, PurchasePrice billingCurrencyTotal, string billingAccount, PaymentStatus? status, ExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DueOn = dueOn;
             PayOn = payOn;
@@ -34,6 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
             BillingAccount = billingAccount;
             Status = status;
             ExtendedStatusInfo = extendedStatusInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Date when the payment needs to be done. </summary>

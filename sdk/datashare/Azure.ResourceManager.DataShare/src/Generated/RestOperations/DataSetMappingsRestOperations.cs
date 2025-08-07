@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataShare.Models;
@@ -35,6 +34,24 @@ namespace Azure.ResourceManager.DataShare
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shareSubscriptions/", false);
+            uri.AppendPath(shareSubscriptionName, true);
+            uri.AppendPath("/dataSetMappings/", false);
+            uri.AppendPath(dataSetMappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName)
@@ -85,7 +102,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ShareDataSetMappingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -120,7 +137,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         ShareDataSetMappingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,6 +146,24 @@ namespace Azure.ResourceManager.DataShare
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, ShareDataSetMappingData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shareSubscriptions/", false);
+            uri.AppendPath(shareSubscriptionName, true);
+            uri.AppendPath("/dataSetMappings/", false);
+            uri.AppendPath(dataSetMappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, ShareDataSetMappingData data)
@@ -153,7 +188,7 @@ namespace Azure.ResourceManager.DataShare
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -186,7 +221,7 @@ namespace Azure.ResourceManager.DataShare
                 case 201:
                     {
                         ShareDataSetMappingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -222,13 +257,31 @@ namespace Azure.ResourceManager.DataShare
                 case 201:
                     {
                         ShareDataSetMappingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ShareDataSetMappingData.DeserializeShareDataSetMappingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shareSubscriptions/", false);
+            uri.AppendPath(shareSubscriptionName, true);
+            uri.AppendPath("/dataSetMappings/", false);
+            uri.AppendPath(dataSetMappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName)
@@ -313,6 +366,35 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        internal RequestUriBuilder CreateListByShareSubscriptionRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken, string filter, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shareSubscriptions/", false);
+            uri.AppendPath(shareSubscriptionName, true);
+            uri.AppendPath("/dataSetMappings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByShareSubscriptionRequest(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken, string filter, string orderby)
         {
             var message = _pipeline.CreateMessage();
@@ -373,7 +455,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataSetMappingList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataSetMappingList.DeserializeDataSetMappingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,13 +489,21 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataSetMappingList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataSetMappingList.DeserializeDataSetMappingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByShareSubscriptionNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken, string filter, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByShareSubscriptionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken, string filter, string orderby)
@@ -457,7 +547,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataSetMappingList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataSetMappingList.DeserializeDataSetMappingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -493,7 +583,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataSetMappingList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataSetMappingList.DeserializeDataSetMappingList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

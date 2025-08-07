@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkTableRequestSource. </summary>
     public partial class LinkTableRequestSource
     {
-        /// <summary> Initializes a new instance of LinkTableRequestSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestSource"/>. </summary>
         public LinkTableRequestSource()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableRequestSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestSource"/>. </summary>
         /// <param name="tableName"> Source table table name. </param>
         /// <param name="schemaName"> Source table schema name. </param>
         internal LinkTableRequestSource(string tableName, string schemaName)

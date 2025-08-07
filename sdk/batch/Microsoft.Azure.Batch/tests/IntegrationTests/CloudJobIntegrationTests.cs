@@ -319,6 +319,114 @@
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void TestJobPatch()
+        {
+            void test()
+            {
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestJobPatch";
+                try
+                {
+                    //
+                    // Create the job
+                    //
+                    CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
+                    cloudJob.PoolInformation = new PoolInformation()
+                    {
+                        PoolId = poolFixture.PoolId
+                    };
+
+                    testOutputHelper.WriteLine("Initial job schedule commit()");
+                    cloudJob.Commit();
+
+                    //Get the job
+                    CloudJob refreshableJob = batchCli.JobOperations.GetJob(jobId);
+
+                    refreshableJob.NetworkConfiguration = new JobNetworkConfiguration("0.0.0.0", false);
+                    
+                    refreshableJob.CommitChanges();
+
+                    refreshableJob.Refresh();
+
+                    Assert.Equal(false, refreshableJob.NetworkConfiguration.SkipWithdrawFromVNet);
+                }
+                finally
+                {
+                    batchCli.JobOperations.DeleteJob(jobId);
+                }
+            }
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void TestJobTerminate()
+        {
+            void test()
+            {
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundJobCommit";
+                try
+                {
+                    //
+                    // Create the job
+                    //
+                    CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
+                    cloudJob.PoolInformation = new PoolInformation()
+                    {
+                        PoolId = poolFixture.PoolId
+                    };
+
+                    testOutputHelper.WriteLine("Initial job schedule commit()");
+                    cloudJob.Commit();
+
+                    //Get the job
+                    CloudJob refreshableJob = batchCli.JobOperations.GetJob(jobId);
+                    Assert.Equal(JobState.Active, refreshableJob.State);
+
+                    // terminate the job with the force option
+                    BatchClientBehavior terminateInterceptor = new Protocol.RequestInterceptor(req =>
+                    {
+                        if (req.Options is Protocol.Models.JobTerminateOptions typedParams)
+                        {
+                            typedParams.Force = true;
+                        }
+                    });
+
+                    refreshableJob.Terminate(additionalBehaviors: new[] { terminateInterceptor });
+                    
+
+                    // verify terminate
+                    while(refreshableJob.State != JobState.Completed)
+                    {
+                        testOutputHelper.WriteLine("TestJobTerminate: sleeping for (refreshableJob.State != JobState.Completed)");
+                        Thread.Sleep(TimeSpan.FromSeconds(10));
+                        refreshableJob.Refresh();
+                    }
+                    
+                    Assert.Equal("UserTerminate", refreshableJob.ExecutionInformation.TerminateReason);
+                }
+                finally
+                {
+                    BatchClientBehavior deleteInterceptor = new Protocol.RequestInterceptor(req =>
+                    {
+                        if (req.Options is Protocol.Models.JobDeleteOptions typedParams)
+                        {
+                            typedParams.Force = true;
+                        }
+                    });
+                    batchCli.JobOperations.DeleteJob(jobId, additionalBehaviors: new[] { deleteInterceptor });
+                }
+            }
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1996130_JobTaskVerbsFailAfterDoubleRefresh()
         {
             void test()
@@ -555,11 +663,17 @@
                     AutoPoolSpecification autoPoolSpec = new AutoPoolSpecification();
                     autoPoolSpec.PoolLifetimeOption = PoolLifetimeOption.Job;
 
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                     autoPoolSpec.PoolSpecification = new PoolSpecification()
                     {
                         VirtualMachineSize = PoolFixture.VMSize,
                         TargetNodeCommunicationMode = NodeCommunicationMode.Classic,
-                        CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily, "*")
+                        VirtualMachineConfiguration = virtualMachineConfiguration
                 };
 
                     job.PoolInformation = new PoolInformation()
@@ -667,7 +781,13 @@
                 // Use an auto pool with the job, since PoolInformation can't be updated otherwise.
                 PoolSpecification poolSpec = new PoolSpecification();
 
-                poolSpec.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily, "*");
+                var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                    ubuntuImageDetails.ImageReference,
+                    nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                poolSpec.VirtualMachineConfiguration = virtualMachineConfiguration;
 
                 poolSpec.TargetDedicatedComputeNodes = 0;
                 poolSpec.VirtualMachineSize = PoolFixture.VMSize;
@@ -771,6 +891,11 @@
                 string jobId = "Bug1965363Job-" + TestUtilities.GetMyName();
                 try
                 {
+                    var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                        ubuntuImageDetails.ImageReference,
+                        nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
 
                     PoolInformation poolInfo = new PoolInformation()
                     {
@@ -779,7 +904,7 @@
                             PoolLifetimeOption = PoolLifetimeOption.Job,
                             PoolSpecification = new PoolSpecification()
                             {
-                                CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
+                                VirtualMachineConfiguration = virtualMachineConfiguration,
                                 VirtualMachineSize = PoolFixture.VMSize,
                                 TargetDedicatedComputeNodes = 1
                             }

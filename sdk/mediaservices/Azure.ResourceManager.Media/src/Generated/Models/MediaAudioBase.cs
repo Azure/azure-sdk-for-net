@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
@@ -14,19 +17,20 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public partial class MediaAudioBase : MediaCodecBase
     {
-        /// <summary> Initializes a new instance of MediaAudioBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAudioBase"/>. </summary>
         public MediaAudioBase()
         {
             OdataType = "#Microsoft.Media.Audio";
         }
 
-        /// <summary> Initializes a new instance of MediaAudioBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAudioBase"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="channels"> The number of channels in the audio. </param>
         /// <param name="samplingRate"> The sampling rate to use for encoding in hertz. </param>
         /// <param name="bitrate"> The bitrate, in bits per second, of the output encoded audio. </param>
-        internal MediaAudioBase(string odataType, string label, int? channels, int? samplingRate, int? bitrate) : base(odataType, label)
+        internal MediaAudioBase(string odataType, string label, IDictionary<string, BinaryData> serializedAdditionalRawData, int? channels, int? samplingRate, int? bitrate) : base(odataType, label, serializedAdditionalRawData)
         {
             Channels = channels;
             SamplingRate = samplingRate;

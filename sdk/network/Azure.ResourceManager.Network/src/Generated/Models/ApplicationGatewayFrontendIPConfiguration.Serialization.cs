@@ -5,27 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayFrontendIPConfiguration : IUtf8JsonSerializable
+    public partial class ApplicationGatewayFrontendIPConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayFrontendIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayFrontendIPConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationGatewayFrontendIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ApplicationGatewayFrontendIPConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -42,38 +57,58 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                JsonSerializer.Serialize(writer, Subnet);
+                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                JsonSerializer.Serialize(writer, PublicIPAddress);
+                ((IJsonModel<WritableSubResource>)PublicIPAddress).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateLinkConfiguration))
             {
                 writer.WritePropertyName("privateLinkConfiguration"u8);
-                JsonSerializer.Serialize(writer, PrivateLinkConfiguration);
+                ((IJsonModel<WritableSubResource>)PrivateLinkConfiguration).Write(writer, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayFrontendIPConfiguration DeserializeApplicationGatewayFrontendIPConfiguration(JsonElement element)
+        ApplicationGatewayFrontendIPConfiguration IJsonModel<ApplicationGatewayFrontendIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayFrontendIPConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayFrontendIPConfiguration(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayFrontendIPConfiguration DeserializeApplicationGatewayFrontendIPConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> privateIPAddress = default;
-            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<WritableSubResource> publicIPAddress = default;
-            Optional<WritableSubResource> privateLinkConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string privateIPAddress = default;
+            NetworkIPAllocationMethod? privateIPAllocationMethod = default;
+            WritableSubResource subnet = default;
+            WritableSubResource publicIPAddress = default;
+            WritableSubResource privateLinkConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -137,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddress"u8))
@@ -146,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            publicIPAddress = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkConfiguration"u8))
@@ -155,7 +190,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            privateLinkConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateLinkConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -170,8 +205,55 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateLinkConfiguration, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayFrontendIPConfiguration(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                publicIPAddress,
+                privateLinkConfiguration,
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayFrontendIPConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayFrontendIPConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayFrontendIPConfiguration IPersistableModel<ApplicationGatewayFrontendIPConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeApplicationGatewayFrontendIPConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayFrontendIPConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayFrontendIPConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

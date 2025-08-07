@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -14,11 +15,72 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The HyperVFailoverIPConfigDetails. </summary>
     public partial class HyperVFailoverIPConfigDetails
     {
-        /// <summary> Initializes a new instance of HyperVFailoverIPConfigDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HyperVFailoverIPConfigDetails"/>. </summary>
         public HyperVFailoverIPConfigDetails()
         {
             RecoveryLBBackendAddressPoolIds = new ChangeTrackingList<string>();
             TfoLBBackendAddressPoolIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HyperVFailoverIPConfigDetails"/>. </summary>
+        /// <param name="ipConfigName"></param>
+        /// <param name="isPrimary"></param>
+        /// <param name="isSeletedForFailover"></param>
+        /// <param name="recoverySubnetName"></param>
+        /// <param name="recoveryStaticIPAddress"></param>
+        /// <param name="recoveryPublicIPAddressId"></param>
+        /// <param name="recoveryLBBackendAddressPoolIds"></param>
+        /// <param name="tfoSubnetName"></param>
+        /// <param name="tfoStaticIPAddress"></param>
+        /// <param name="tfoPublicIPAddressId"></param>
+        /// <param name="tfoLBBackendAddressPoolIds"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HyperVFailoverIPConfigDetails(string ipConfigName, bool? isPrimary, bool? isSeletedForFailover, string recoverySubnetName, IPAddress recoveryStaticIPAddress, ResourceIdentifier recoveryPublicIPAddressId, IList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, IPAddress tfoStaticIPAddress, ResourceIdentifier tfoPublicIPAddressId, IList<string> tfoLBBackendAddressPoolIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IPConfigName = ipConfigName;
+            IsPrimary = isPrimary;
+            IsSeletedForFailover = isSeletedForFailover;
+            RecoverySubnetName = recoverySubnetName;
+            RecoveryStaticIPAddress = recoveryStaticIPAddress;
+            RecoveryPublicIPAddressId = recoveryPublicIPAddressId;
+            RecoveryLBBackendAddressPoolIds = recoveryLBBackendAddressPoolIds;
+            TfoSubnetName = tfoSubnetName;
+            TfoStaticIPAddress = tfoStaticIPAddress;
+            TfoPublicIPAddressId = tfoPublicIPAddressId;
+            TfoLBBackendAddressPoolIds = tfoLBBackendAddressPoolIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the ip config name. </summary>

@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(SemanticFieldState left, SemanticFieldState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SemanticFieldState"/> values are not the same. </summary>
         public static bool operator !=(SemanticFieldState left, SemanticFieldState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SemanticFieldState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SemanticFieldState"/>. </summary>
         public static implicit operator SemanticFieldState(string value) => new SemanticFieldState(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

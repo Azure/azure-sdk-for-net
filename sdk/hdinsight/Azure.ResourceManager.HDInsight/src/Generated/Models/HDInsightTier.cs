@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static bool operator ==(HDInsightTier left, HDInsightTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightTier"/> values are not the same. </summary>
         public static bool operator !=(HDInsightTier left, HDInsightTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HDInsightTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightTier"/>. </summary>
         public static implicit operator HDInsightTier(string value) => new HDInsightTier(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

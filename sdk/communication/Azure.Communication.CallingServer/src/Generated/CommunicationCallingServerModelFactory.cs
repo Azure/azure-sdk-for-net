@@ -14,7 +14,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> Model factory for models. </summary>
     public static partial class CommunicationCallingServerModelFactory
     {
-        /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.TransferCallToParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallingServer.TransferCallToParticipantResult"/> instance for mocking. </returns>
         public static TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null)
@@ -22,7 +22,7 @@ namespace Azure.Communication.CallingServer
             return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.RemoveParticipantsResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallingServer.RemoveParticipantsResult"/> instance for mocking. </returns>
         public static RemoveParticipantsResult RemoveParticipantsResult(string operationContext = null)
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
             return new RemoveParticipantsResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.RecordingStateResult"/>. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
         /// <returns> A new <see cref="CallingServer.RecordingStateResult"/> instance for mocking. </returns>
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallingServer
             return new RecordingStateResult(recordingId, recordingState);
         }
 
-        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.ResultInformation"/>. </summary>
         /// <param name="code"></param>
         /// <param name="subCode"></param>
         /// <param name="message"></param>
@@ -49,7 +49,7 @@ namespace Azure.Communication.CallingServer
             return new ResultInformation(code, subCode, message);
         }
 
-        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.CallConnected"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
@@ -61,10 +61,18 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.CallConnected"/> instance for mocking. </returns>
         public static CallConnected CallConnected(string eventSource = null, string version = null, string operationContext = null, ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
-            return new CallConnected(eventSource, version, operationContext, resultInformation, callConnectionId, serverCallId, correlationId, publicEventType);
+            return new CallConnected(
+                eventSource,
+                version,
+                operationContext,
+                resultInformation,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
 
-        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.CallDisconnected"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
@@ -76,10 +84,18 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.CallDisconnected"/> instance for mocking. </returns>
         public static CallDisconnected CallDisconnected(string eventSource = null, string version = null, string operationContext = null, ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
-            return new CallDisconnected(eventSource, version, operationContext, resultInformation, callConnectionId, serverCallId, correlationId, publicEventType);
+            return new CallDisconnected(
+                eventSource,
+                version,
+                operationContext,
+                resultInformation,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
 
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.CallTransferAccepted"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
@@ -91,10 +107,18 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.CallTransferAccepted"/> instance for mocking. </returns>
         public static CallTransferAccepted CallTransferAccepted(string eventSource = null, string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
-            return new CallTransferAccepted(eventSource, operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
+            return new CallTransferAccepted(
+                eventSource,
+                operationContext,
+                resultInformation,
+                version,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
 
-        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.CallTransferFailed"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
@@ -106,10 +130,18 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.CallTransferFailed"/> instance for mocking. </returns>
         public static CallTransferFailed CallTransferFailed(string eventSource = null, string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
-            return new CallTransferFailed(eventSource, operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
+            return new CallTransferFailed(
+                eventSource,
+                operationContext,
+                resultInformation,
+                version,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
 
-        /// <summary> Initializes a new instance of CallRecordingStateChanged. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.CallRecordingStateChanged"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
@@ -124,10 +156,21 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.CallRecordingStateChanged"/> instance for mocking. </returns>
         public static CallRecordingStateChanged CallRecordingStateChanged(string eventSource = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null, string version = null, string operationContext = null, ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
-            return new CallRecordingStateChanged(eventSource, recordingId, state, startDateTime, version, operationContext, resultInformation, callConnectionId, serverCallId, correlationId, publicEventType);
+            return new CallRecordingStateChanged(
+                eventSource,
+                recordingId,
+                state,
+                startDateTime,
+                version,
+                operationContext,
+                resultInformation,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
 
-        /// <summary> Initializes a new instance of PlayCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.PlayCompleted"/>. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
@@ -138,10 +181,17 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.PlayCompleted"/> instance for mocking. </returns>
         public static PlayCompleted PlayCompleted(string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
-            return new PlayCompleted(operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
+            return new PlayCompleted(
+                operationContext,
+                resultInformation,
+                version,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
 
-        /// <summary> Initializes a new instance of PlayFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.PlayFailed"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
@@ -153,10 +203,18 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.PlayFailed"/> instance for mocking. </returns>
         public static PlayFailed PlayFailed(string eventSource = null, string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
-            return new PlayFailed(eventSource, operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
+            return new PlayFailed(
+                eventSource,
+                operationContext,
+                resultInformation,
+                version,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
 
-        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.RecognizeCompleted"/>. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
         /// <param name="recognitionType">
@@ -172,10 +230,19 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.RecognizeCompleted"/> instance for mocking. </returns>
         public static RecognizeCompleted RecognizeCompleted(string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
-            return new RecognizeCompleted(operationContext, resultInformation, recognitionType, collectTonesResult, version, callConnectionId, serverCallId, correlationId, publicEventType);
+            return new RecognizeCompleted(
+                operationContext,
+                resultInformation,
+                recognitionType,
+                collectTonesResult,
+                version,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
 
-        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.CollectTonesResult"/>. </summary>
         /// <param name="tones"></param>
         /// <returns> A new <see cref="CallingServer.CollectTonesResult"/> instance for mocking. </returns>
         public static CollectTonesResult CollectTonesResult(IEnumerable<DtmfTone> tones = null)
@@ -185,7 +252,7 @@ namespace Azure.Communication.CallingServer
             return new CollectTonesResult(tones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallingServer.RecognizeFailed"/>. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
@@ -196,7 +263,14 @@ namespace Azure.Communication.CallingServer
         /// <returns> A new <see cref="CallingServer.RecognizeFailed"/> instance for mocking. </returns>
         public static RecognizeFailed RecognizeFailed(string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
         {
-            return new RecognizeFailed(operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
+            return new RecognizeFailed(
+                operationContext,
+                resultInformation,
+                version,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
     }
 }

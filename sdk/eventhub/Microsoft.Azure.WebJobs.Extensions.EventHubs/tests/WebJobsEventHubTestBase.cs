@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -63,6 +64,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             var hostBuilder = new HostBuilder();
             hostBuilder
+                .ConfigureServices(services =>
+                {
+                    services.AddAzureClients(clientBuilder =>
+                    {
+                        clientBuilder.UseCredential(EventHubsTestEnvironment.Instance.Credential);
+                    });
+                })
                 .ConfigureAppConfiguration(builder =>
                 {
                     builder.AddInMemoryCollection(new Dictionary<string, string>()
@@ -93,5 +101,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             return (jobHost, host);
         }
+
+        protected int GetRemainingTimeoutMilliseconds(TimeSpan elapsedTime) =>
+            (int)(Timeout - elapsedTime.TotalMilliseconds);
     }
 }

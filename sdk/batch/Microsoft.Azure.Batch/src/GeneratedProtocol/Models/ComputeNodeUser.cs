@@ -82,11 +82,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the password of the Account.
         /// </summary>
         /// <remarks>
-        /// The password is required for Windows Compute Nodes (those created
-        /// with 'cloudServiceConfiguration', or created with
-        /// 'virtualMachineConfiguration' using a Windows Image reference). For
-        /// Linux Compute Nodes, the password can optionally be specified along
-        /// with the sshPublicKey property.
+        /// The password is required for Windows Compute Nodes. For Linux
+        /// Compute Nodes, the password can optionally be specified along with
+        /// the sshPublicKey property.
         /// </remarks>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }

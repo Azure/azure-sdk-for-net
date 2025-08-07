@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(DiffBackupIntervalInHours left, DiffBackupIntervalInHours right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiffBackupIntervalInHours"/> values are not the same. </summary>
         public static bool operator !=(DiffBackupIntervalInHours left, DiffBackupIntervalInHours right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiffBackupIntervalInHours"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="DiffBackupIntervalInHours"/>. </summary>
         public static implicit operator DiffBackupIntervalInHours(int value) => new DiffBackupIntervalInHours(value);
 
         /// <inheritdoc />

@@ -9,23 +9,25 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
     /// A Class representing a StorageSyncRegisteredServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageSyncRegisteredServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageSyncRegisteredServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource" /> using the GetStorageSyncRegisteredServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageSyncRegisteredServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageSyncRegisteredServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource"/> using the GetStorageSyncRegisteredServer method.
     /// </summary>
     public partial class StorageSyncRegisteredServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageSyncRegisteredServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageSyncServiceName"> The storageSyncServiceName. </param>
+        /// <param name="serverId"> The serverId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, Guid serverId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.StorageSync
         private readonly RegisteredServersRestOperations _storageSyncRegisteredServerRegisteredServersRestClient;
         private readonly StorageSyncRegisteredServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/registeredServers";
+
         /// <summary> Initializes a new instance of the <see cref="StorageSyncRegisteredServerResource"/> class for mocking. </summary>
         protected StorageSyncRegisteredServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageSyncRegisteredServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncRegisteredServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageSyncRegisteredServerResource(ArmClient client, StorageSyncRegisteredServerData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.StorageSync
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/registeredServers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>RegisteredServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +140,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>RegisteredServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +179,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegisteredServers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +222,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>RegisteredServers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -220,7 +254,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary>
-        /// Add a new registered server.
+        /// Update registered server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,24 +262,32 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RegisteredServers_Create</description>
+        /// <description>RegisteredServers_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Body of Registered Server object. </param>
+        /// <param name="patch"> Body of Registered Server object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<StorageSyncRegisteredServerResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<StorageSyncRegisteredServerResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncRegisteredServerPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Update");
             scope.Start();
             try
             {
-                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), patch, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -258,7 +300,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary>
-        /// Add a new registered server.
+        /// Update registered server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -266,24 +308,32 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RegisteredServers_Create</description>
+        /// <description>RegisteredServers_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Body of Registered Server object. </param>
+        /// <param name="patch"> Body of Registered Server object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<StorageSyncRegisteredServerResource> Update(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<StorageSyncRegisteredServerResource> Update(WaitUntil waitUntil, StorageSyncRegisteredServerPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Update");
             scope.Start();
             try
             {
-                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content, cancellationToken);
-                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), patch, cancellationToken);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -304,7 +354,15 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RegisteredServers_triggerRollover</description>
+        /// <description>RegisteredServers_TriggerRollover</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,7 +400,15 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RegisteredServers_triggerRollover</description>
+        /// <description>RegisteredServers_TriggerRollover</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -109,12 +109,12 @@ namespace Azure.Storage.Blobs.Samples
             // Get a temporary path on disk where we can download the file
             //@@ string downloadPath = "hello.jpg";
 
-            // Download the public blob at https://aka.ms/bloburl
-            await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadToAsync(downloadPath);
+            // Download the public MacBeth copy at https://www.gutenberg.org/cache/epub/1533/pg1533.txt
+            await new BlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt")).DownloadToAsync(downloadPath);
             #endregion
 
             Assert.IsTrue(File.ReadAllBytes(downloadPath).Length > 0);
-            File.Delete("hello.jpg");
+            File.Delete(downloadPath);
         }
 
         /// <summary>

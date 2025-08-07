@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -50,7 +49,13 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 metadata = dictionary;
             }
-            return new ShareItemInternal(name, snapshot, deleted, version, properties, metadata);
+            return new ShareItemInternal(
+                name,
+                snapshot,
+                deleted,
+                version,
+                properties,
+                metadata);
         }
     }
 }

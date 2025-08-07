@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Custom domain of app resource payload. </summary>
     public partial class AppPlatformCustomDomainProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainProperties"/>. </summary>
         public AppPlatformCustomDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
         /// <param name="appName"> The app name of domain. </param>
         /// <param name="certName"> The bound certificate name of domain. </param>
         /// <param name="provisioningState"> Provisioning state of the Domain. </param>
-        internal AppPlatformCustomDomainProperties(string thumbprint, string appName, string certName, AppPlatformCustomDomainProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformCustomDomainProperties(string thumbprint, string appName, string certName, AppPlatformCustomDomainProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Thumbprint = thumbprint;
             AppName = appName;
             CertName = certName;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The thumbprint of bound certificate. </summary>

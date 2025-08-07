@@ -7,14 +7,13 @@
 
 using System;
 using Azure.AI.MetricsAdvisor.Models;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The PeriodFeedback. </summary>
     public partial class MetricPeriodFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricPeriodFeedback. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricPeriodFeedback"/>. </summary>
         /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
         /// <param name="createdOn"> feedback created time. </param>

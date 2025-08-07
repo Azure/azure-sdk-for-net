@@ -592,19 +592,22 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 link = await ConnectionScope.OpenProducerLinkAsync(partitionId, ActiveFeatures, partitionOptions, operationTimeout, timeout, producerIdentifier, cancellationToken).ConfigureAwait(false);
 
-                if (!MaximumMessageSize.HasValue)
-                {
-                    // This delay is necessary to prevent the link from causing issues for subsequent
-                    // operations after creating a batch.  Without it, operations using the link consistently
-                    // timeout.  The length of the delay does not appear significant, just the act of introducing
-                    // an asynchronous delay.
-                    //
-                    // For consistency the value used by the legacy Event Hubs client has been brought forward and
-                    // used here.
+                // Update the known maximum message size each time a link is opened, as the
+                // configuration can be changed on-the-fly and may not match the previously cached value.
+                //
+                // This delay is necessary to prevent the link from causing issues for subsequent
+                // operations after creating a batch.  Without it, operations using the link consistently
+                // timeout.  The length of the delay does not appear significant, just the act of introducing
+                // an asynchronous delay.
+                //
+                // For consistency the value used by the legacy Event Hubs client has been brought forward and
+                // used here.
 
-                    await Task.Delay(15, cancellationToken).ConfigureAwait(false);
-                    MaximumMessageSize = (long)link.Settings.MaxMessageSize;
-                }
+                await Task.Delay(15, cancellationToken).ConfigureAwait(false);
+                MaximumMessageSize = (long)link.Settings.MaxMessageSize;
+
+                // Unlike the maximum message size, the publishing properties will not change arbitrarily, so
+                // there is no need to update them each time a link is opened.
 
                 if (InitializedPartitionProperties == null)
                 {

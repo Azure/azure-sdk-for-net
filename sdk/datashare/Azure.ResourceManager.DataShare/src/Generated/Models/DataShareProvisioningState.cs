@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator ==(DataShareProvisioningState left, DataShareProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DataShareProvisioningState left, DataShareProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataShareProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataShareProvisioningState"/>. </summary>
         public static implicit operator DataShareProvisioningState(string value) => new DataShareProvisioningState(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

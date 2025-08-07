@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.FrontDoor.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.FrontDoor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByFrontDoorRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFrontDoorRequest(string subscriptionId, string resourceGroupName, string frontDoorName)
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +121,29 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints/", false);
+            uri.AppendPath(frontendEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
@@ -160,7 +190,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontendEndpointData.DeserializeFrontendEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -193,7 +223,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontendEndpointData.DeserializeFrontendEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,6 +232,23 @@ namespace Azure.ResourceManager.FrontDoor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateEnableHttpsRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints/", false);
+            uri.AppendPath(frontendEndpointName, true);
+            uri.AppendPath("/enableHttps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateEnableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration)
@@ -225,7 +272,7 @@ namespace Azure.ResourceManager.FrontDoor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(customHttpsConfiguration);
+            content.JsonWriter.WriteObjectValue(customHttpsConfiguration, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -287,6 +334,23 @@ namespace Azure.ResourceManager.FrontDoor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDisableHttpsRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints/", false);
+            uri.AppendPath(frontendEndpointName, true);
+            uri.AppendPath("/disableHttps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDisableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
@@ -366,6 +430,14 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
+        internal RequestUriBuilder CreateListByFrontDoorNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByFrontDoorNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName)
         {
             var message = _pipeline.CreateMessage();
@@ -402,7 +474,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +505,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

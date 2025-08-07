@@ -1,1 +1,0 @@
-<Playlist Version="1.0"><Add Test="MachineLearning.Tests.ScenarioTests.WebServiceTests.CreateGetRemoveGraphWebServiceWithLargePayload" /><Add Test="MachineLearning.Tests.ScenarioTests.WebServiceTests.CreateGetRemoveGraphWebService" /></Playlist>

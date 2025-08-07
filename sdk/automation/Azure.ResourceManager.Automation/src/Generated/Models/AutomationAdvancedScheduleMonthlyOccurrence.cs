@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The properties of the create advanced schedule monthly occurrence. </summary>
     public partial class AutomationAdvancedScheduleMonthlyOccurrence
     {
-        /// <summary> Initializes a new instance of AutomationAdvancedScheduleMonthlyOccurrence. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAdvancedScheduleMonthlyOccurrence"/>. </summary>
         public AutomationAdvancedScheduleMonthlyOccurrence()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationAdvancedScheduleMonthlyOccurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAdvancedScheduleMonthlyOccurrence"/>. </summary>
         /// <param name="occurrence"> Occurrence of the week within the month. Must be between 1 and 5. </param>
         /// <param name="day"> Day of the occurrence. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday. </param>
-        internal AutomationAdvancedScheduleMonthlyOccurrence(int? occurrence, AutomationDayOfWeek? day)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAdvancedScheduleMonthlyOccurrence(int? occurrence, AutomationDayOfWeek? day, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Occurrence = occurrence;
             Day = day;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Occurrence of the week within the month. Must be between 1 and 5. </summary>

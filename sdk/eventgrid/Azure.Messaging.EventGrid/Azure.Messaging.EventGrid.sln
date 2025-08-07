@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30204.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.35925.212
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
 EndProject
@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Messaging.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests", "..\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents\tests\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests.csproj", "{28B77D76-084F-4C7E-8A1B-631444EED6A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventGridSourceGenerator", "EventGridSourceGenerator\src\EventGridSourceGenerator.csproj", "{FFBE6318-A232-4490-8DB4-2441EA3ED8C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventGrid.SourceGeneration", "EventGridSourceGenerator\src\Azure.Messaging.EventGrid.SourceGeneration.csproj", "{FFBE6318-A232-4490-8DB4-2441EA3ED8C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventGrid.SystemEvents", "..\Azure.Messaging.EventGrid.SystemEvents\src\Azure.Messaging.EventGrid.SystemEvents.csproj", "{FD5ADE22-9804-4A94-B824-28BB62E23DF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +35,6 @@ Global
 		{779EF7D4-B9C1-4177-BAA7-CF7CBDEF6A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{779EF7D4-B9C1-4177-BAA7-CF7CBDEF6A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{779EF7D4-B9C1-4177-BAA7-CF7CBDEF6A5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21CF4B4A-5027-46D0-B50A-976BF8483095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21CF4B4A-5027-46D0-B50A-976BF8483095}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21CF4B4A-5027-46D0-B50A-976BF8483095}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21CF4B4A-5027-46D0-B50A-976BF8483095}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A24C8A1C-B6A0-4F50-A690-9B1D3DF9228C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A24C8A1C-B6A0-4F50-A690-9B1D3DF9228C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A24C8A1C-B6A0-4F50-A690-9B1D3DF9228C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,6 +47,10 @@ Global
 		{FFBE6318-A232-4490-8DB4-2441EA3ED8C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFBE6318-A232-4490-8DB4-2441EA3ED8C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFBE6318-A232-4490-8DB4-2441EA3ED8C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD5ADE22-9804-4A94-B824-28BB62E23DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD5ADE22-9804-4A94-B824-28BB62E23DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD5ADE22-9804-4A94-B824-28BB62E23DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD5ADE22-9804-4A94-B824-28BB62E23DF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

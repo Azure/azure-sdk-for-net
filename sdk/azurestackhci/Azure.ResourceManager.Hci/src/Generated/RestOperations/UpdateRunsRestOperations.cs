@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Hci.Models;
@@ -33,8 +32,25 @@ namespace Azure.ResourceManager.Hci
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string updateName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/updates/", false);
+            uri.AppendPath(updateName, true);
+            uri.AppendPath("/updateRuns", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string clusterName, string updateName)
@@ -61,7 +77,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> List all Update runs for a specified update. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -82,7 +98,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         UpdateRunList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UpdateRunList.DeserializeUpdateRunList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -92,7 +108,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> List all Update runs for a specified update. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -113,13 +129,31 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         UpdateRunList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UpdateRunList.DeserializeUpdateRunList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/updates/", false);
+            uri.AppendPath(updateName, true);
+            uri.AppendPath("/updateRuns/", false);
+            uri.AppendPath(updateRunName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName)
@@ -147,7 +181,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Delete specified Update Run. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -177,7 +211,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Delete specified Update Run. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -206,7 +240,25 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, UpdateRunData data)
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, HciClusterUpdateRunData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/updates/", false);
+            uri.AppendPath(updateName, true);
+            uri.AppendPath("/updateRuns/", false);
+            uri.AppendPath(updateRunName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, HciClusterUpdateRunData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -228,14 +280,14 @@ namespace Azure.ResourceManager.Hci
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Put Update runs for a specified update. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -244,7 +296,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/>, <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateRunData>> PutAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, UpdateRunData data, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterUpdateRunData>> PutAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, HciClusterUpdateRunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -259,9 +311,9 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        HciClusterUpdateRunData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -270,7 +322,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Put Update runs for a specified update. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -279,7 +331,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/>, <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateRunData> Put(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, UpdateRunData data, CancellationToken cancellationToken = default)
+        public Response<HciClusterUpdateRunData> Put(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, HciClusterUpdateRunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -294,14 +346,32 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        HciClusterUpdateRunData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/updates/", false);
+            uri.AppendPath(updateName, true);
+            uri.AppendPath("/updateRuns/", false);
+            uri.AppendPath(updateRunName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName)
@@ -329,7 +399,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Get the Update run for a specified update. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -337,7 +407,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateRunData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterUpdateRunData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -351,20 +421,20 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        HciClusterUpdateRunData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateRunData)null, message.Response);
+                    return Response.FromValue((HciClusterUpdateRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get the Update run for a specified update. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -372,7 +442,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateRunData> Get(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
+        public Response<HciClusterUpdateRunData> Get(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -386,16 +456,24 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        HciClusterUpdateRunData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = HciClusterUpdateRunData.DeserializeHciClusterUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateRunData)null, message.Response);
+                    return Response.FromValue((HciClusterUpdateRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string updateName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string updateName)
@@ -414,7 +492,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> List all Update runs for a specified update. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -436,7 +514,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         UpdateRunList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UpdateRunList.DeserializeUpdateRunList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +525,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> List all Update runs for a specified update. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="updateName"> The name of the Update. </param>
@@ -469,7 +547,7 @@ namespace Azure.ResourceManager.Hci
                 case 200:
                     {
                         UpdateRunList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UpdateRunList.DeserializeUpdateRunList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

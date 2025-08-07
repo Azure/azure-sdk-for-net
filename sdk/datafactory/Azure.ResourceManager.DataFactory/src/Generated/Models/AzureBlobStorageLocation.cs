@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The location of azure blob dataset. </summary>
     public partial class AzureBlobStorageLocation : DatasetLocation
     {
-        /// <summary> Initializes a new instance of AzureBlobStorageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageLocation"/>. </summary>
         public AzureBlobStorageLocation()
         {
             DatasetLocationType = "AzureBlobStorageLocation";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobStorageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>

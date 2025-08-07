@@ -23,6 +23,21 @@ function Split-Project-File-To-Groups($ProjectFile, $NumberOfTestsPerJob, $Exclu
     return ,$projGroup
 }
 
+function Write-PkgInfoToDependencyGroupFile([string]$OutputPath, [string]$PackageInfoFolder, [string[]]$ProjectNames) {
+  $packageProperties = Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
+  | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json }
+  $changedProjects = $packageProperties | Where-Object { $ProjectNames -contains $_.ArtifactName }
+    | ForEach-Object { "$($_.DirectoryPath)/**/*.csproj"; }
+
+  $projectsForGeneration = ($changedProjects | ForEach-Object { "`$(RepoRoot)$_" } | Sort-Object)
+
+  $projectGroups = @()
+  $projectGroups += ,$projectsForGeneration
+
+  $outputFile = (Write-Test-Dependency-Group-To-Files -ProjectFileConfigName "packages" -ProjectGroups $projectGroups -MatrixOutputFolder $OutputPath)[0]
+
+  return $outputFile
+}
 
 # Take the group contains the project list. Write each group into a project file which can be used by dotnet test command.
 # Return the array of project files

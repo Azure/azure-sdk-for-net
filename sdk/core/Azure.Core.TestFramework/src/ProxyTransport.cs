@@ -100,7 +100,9 @@ namespace Azure.Core.TestFramework
 
                 if (_isWebRequestTransport)
                 {
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
                     ServicePointManager.ServerCertificateValidationCallback -= _serverCertificateCustomValidationCallback;
+#pragma warning restore SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
                 }
             }
         }
@@ -135,8 +137,16 @@ namespace Azure.Core.TestFramework
             _recording.HasRequests = true;
             lock (_recording.Random)
             {
-                // Make sure ClientRequestId are the same across request and response
-                request.ClientRequestId = _recording.Random.NewGuid().ToString("N");
+                if (_recording.UseDefaultGuidFormatForClientRequestId)
+                {
+                    // User want the client format to use the default format
+                    request.ClientRequestId = _recording.Random.NewGuid().ToString();
+                }
+                else
+                {
+                    // Make sure ClientRequestId are the same across request and response
+                    request.ClientRequestId = _recording.Random.NewGuid().ToString("N");
+                }
             }
             return request;
         }
@@ -184,7 +194,9 @@ namespace Azure.Core.TestFramework
 
             if (_isWebRequestTransport)
             {
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
                 ServicePointManager.ServerCertificateValidationCallback += _serverCertificateCustomValidationCallback;
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
             }
         }
     }

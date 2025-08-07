@@ -1,0 +1,6 @@
+{
+    "nfdvId": "{configurationparameters('vnet_ConfigGroupSchema').nfdvId}",
+    "vnetName": "{configurationparameters('vnet_ConfigGroupSchema').vnetName}",
+    "vnetAddressPrefixes": "{configurationparameters('vnet_ConfigGroupSchema').vnetAddressPrefixes}",
+    "subnets": "{configurationparameters('vnet_ConfigGroupSchema').subnets}"
+}

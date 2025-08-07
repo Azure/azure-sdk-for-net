@@ -3,7 +3,7 @@ page_type: sample
 languages:
 - csharp
 products:
-# Including relevant stubs from https://review.docs.microsoft.com/help/contribute/metadata-taxonomies#product
+# Including relevant stubs from https://review.learn.microsoft.com/help/contribute/metadata-taxonomies#product
 - azure
 name: Azure.Monitor.Ingestion samples for .NET
 description: Samples for the Azure Monitor Ingestion client library.

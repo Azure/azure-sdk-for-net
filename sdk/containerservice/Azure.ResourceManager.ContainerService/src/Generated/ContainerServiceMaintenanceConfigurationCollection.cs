@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerServiceMaintenanceConfigurationResource" /> and their operations.
-    /// Each <see cref="ContainerServiceMaintenanceConfigurationResource" /> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource" />.
-    /// To get a <see cref="ContainerServiceMaintenanceConfigurationCollection" /> instance call the GetContainerServiceMaintenanceConfigurations method from an instance of <see cref="ContainerServiceManagedClusterResource" />.
+    /// A class representing a collection of <see cref="ContainerServiceMaintenanceConfigurationResource"/> and their operations.
+    /// Each <see cref="ContainerServiceMaintenanceConfigurationResource"/> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource"/>.
+    /// To get a <see cref="ContainerServiceMaintenanceConfigurationCollection"/> instance call the GetContainerServiceMaintenanceConfigurations method from an instance of <see cref="ContainerServiceManagedClusterResource"/>.
     /// </summary>
     public partial class ContainerServiceMaintenanceConfigurationCollection : ArmCollection, IEnumerable<ContainerServiceMaintenanceConfigurationResource>, IAsyncEnumerable<ContainerServiceMaintenanceConfigurationResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,9 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +139,9 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +163,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +209,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -219,15 +254,23 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_ListByManagedCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceMaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerServiceMaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceMaintenanceConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,15 +284,23 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_ListByManagedCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceMaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceMaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceMaintenanceConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,6 +313,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +357,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -314,6 +381,96 @@ namespace Azure.ResourceManager.ContainerService
             {
                 var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerServiceMaintenanceConfigurationResource>> GetIfExistsAsync(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerServiceMaintenanceConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceMaintenanceConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        public virtual NullableResponse<ContainerServiceMaintenanceConfigurationResource> GetIfExists(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerServiceMaintenanceConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

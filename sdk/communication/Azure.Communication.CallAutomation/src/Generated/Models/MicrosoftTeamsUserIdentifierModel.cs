@@ -6,15 +6,15 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Communication.CallAutomation;
 
 namespace Azure.Communication
 {
     /// <summary> A Microsoft Teams user. </summary>
     internal partial class MicrosoftTeamsUserIdentifierModel
     {
-        /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
-        /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
+        /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the Entra ID object Id of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public MicrosoftTeamsUserIdentifierModel(string userId)
         {
@@ -23,8 +23,8 @@ namespace Azure.Communication
             UserId = userId;
         }
 
-        /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
-        /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
+        /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the Entra ID object Id of the user. </param>
         /// <param name="isAnonymous"> True if the Microsoft Teams user is anonymous. By default false if missing. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </param>
         internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud)
@@ -34,7 +34,7 @@ namespace Azure.Communication
             Cloud = cloud;
         }
 
-        /// <summary> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </summary>
+        /// <summary> The Id of the Microsoft Teams user. If not anonymous, this is the Entra ID object Id of the user. </summary>
         public string UserId { get; set; }
         /// <summary> True if the Microsoft Teams user is anonymous. By default false if missing. </summary>
         public bool? IsAnonymous { get; set; }

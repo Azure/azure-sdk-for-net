@@ -10,7 +10,6 @@
    - "all" will build all projects
    - "client" will build the new track 2 client/data libraries
    - "data" will build the track 1 data plane libraries
-   - "mgmt" will build the track 1 mgmt libraries
 -->
 
 <Project>
@@ -20,10 +19,6 @@
 
   <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.ContainerRegistry*\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup>

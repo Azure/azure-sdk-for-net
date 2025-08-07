@@ -8,6 +8,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -20,6 +21,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     public class LogsTests
     {
         internal readonly TelemetryItemOutputHelper telemetryOutput;
+
+        internal readonly Dictionary<string, object> testResourceAttributes = new()
+        {
+            { "service.instance.id", "testInstance" },
+            { "service.name", "testName" },
+            { "service.namespace", "testNamespace" },
+            { "service.version", "testVersion" },
+        };
 
         public LogsTests(ITestOutputHelper output)
         {
@@ -48,18 +57,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
+                        options.IncludeScopes = true;
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
                         options.AddAzureMonitorLogExporterForTest(out telemetryItems);
                     });
             });
 
             // ACT
             var logger = loggerFactory.CreateLogger(logCategoryName);
-            logger.Log(
-                logLevel: logLevel,
-                eventId: 0,
-                exception: null,
-                message: "Hello {name}.",
-                args: new object[] { "World" });
+
+            List<KeyValuePair<string, object>> scope1 = new()
+            {
+                new("scopeKey1", "scopeValue1"),
+                new("scopeKey1", "scopeValue2")
+            };
+
+            List<KeyValuePair<string, object>> scope2 = new()
+            {
+                new("scopeKey1", "scopeValue3")
+            };
+
+            using (logger.BeginScope(scope1))
+            using (logger.BeginScope(scope2))
+            {
+                logger.Log(
+                    logLevel: logLevel,
+                    eventId: 1,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+            }
 
             // CLEANUP
             loggerFactory.Dispose();
@@ -73,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }},
+                expectedMessageProperties: new Dictionary<string, string> { { "EventId", "1" }, { "name", "World" }, { "CategoryName", logCategoryName }, { "scopeKey1", "scopeValue1" } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
@@ -100,6 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
                         options.AddAzureMonitorLogExporterForTest(out telemetryItems);
                     });
             });
@@ -115,7 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             {
                 logger.Log(
                     logLevel: logLevel,
-                    eventId: 0,
+                    eventId: 1,
                     exception: ex,
                     message: "Hello {name}.",
                     args: new object[] { "World" });
@@ -133,7 +161,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Test Exception",
-                expectedTypeName: "System.Exception");
+                expectedTypeName: "System.Exception",
+                expectedProperties: new Dictionary<string, string> { { "EventId", "1" } });
         }
     }
 }

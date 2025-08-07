@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
@@ -13,20 +14,54 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The details of the policy triggered deployment that created or modified the tracked resource. </summary>
     public partial class TrackedResourceModificationDetails
     {
-        /// <summary> Initializes a new instance of TrackedResourceModificationDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrackedResourceModificationDetails"/>. </summary>
         internal TrackedResourceModificationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TrackedResourceModificationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackedResourceModificationDetails"/>. </summary>
         /// <param name="policyDetails"> The details of the policy that created or modified the tracked resource. </param>
         /// <param name="deploymentId"> The ID of the deployment that created or modified the tracked resource. </param>
         /// <param name="deploymentOn"> Timestamp of the deployment that created or modified the tracked resource. </param>
-        internal TrackedResourceModificationDetails(PolicyDetails policyDetails, ResourceIdentifier deploymentId, DateTimeOffset? deploymentOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrackedResourceModificationDetails(PolicyDetails policyDetails, ResourceIdentifier deploymentId, DateTimeOffset? deploymentOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyDetails = policyDetails;
             DeploymentId = deploymentId;
             DeploymentOn = deploymentOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The details of the policy that created or modified the tracked resource. </summary>

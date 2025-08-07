@@ -5,20 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class PolicyAssignmentArtifact : IUtf8JsonSerializable
+    public partial class PolicyAssignmentArtifact : IUtf8JsonSerializable, IJsonModel<PolicyAssignmentArtifact>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAssignmentArtifact>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PolicyAssignmentArtifact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -48,7 +66,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(ResourceGroup))
@@ -57,11 +75,24 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static PolicyAssignmentArtifact DeserializePolicyAssignmentArtifact(JsonElement element)
+        PolicyAssignmentArtifact IJsonModel<PolicyAssignmentArtifact>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyAssignmentArtifact(document.RootElement, options);
+        }
+
+        internal static PolicyAssignmentArtifact DeserializePolicyAssignmentArtifact(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,13 +101,15 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IList<string>> dependsOn = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            IList<string> dependsOn = default;
             string policyDefinitionId = default;
             IDictionary<string, ParameterValue> parameters = default;
-            Optional<string> resourceGroup = default;
+            string resourceGroup = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -105,7 +138,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBlueprintContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -151,7 +184,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                             Dictionary<string, ParameterValue> dictionary = new Dictionary<string, ParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -164,8 +197,56 @@ namespace Azure.ResourceManager.Blueprint.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyAssignmentArtifact(id, name, type, systemData.Value, kind, displayName.Value, description.Value, Optional.ToList(dependsOn), policyDefinitionId, parameters, resourceGroup.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PolicyAssignmentArtifact(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                displayName,
+                description,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                policyDefinitionId,
+                parameters,
+                resourceGroup);
         }
+
+        BinaryData IPersistableModel<PolicyAssignmentArtifact>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBlueprintContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PolicyAssignmentArtifact IPersistableModel<PolicyAssignmentArtifact>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePolicyAssignmentArtifact(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicyAssignmentArtifact>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

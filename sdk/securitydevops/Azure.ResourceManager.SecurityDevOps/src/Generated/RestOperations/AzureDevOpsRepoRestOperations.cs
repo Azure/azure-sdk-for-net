@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityDevOps.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.SecurityDevOps
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByConnectorRequestUri(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/", false);
+            uri.AppendPath(azureDevOpsConnectorName, true);
+            uri.AppendPath("/repos", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByConnectorRequest(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName)
@@ -77,7 +91,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,13 +119,32 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/", false);
+            uri.AppendPath(azureDevOpsConnectorName, true);
+            uri.AppendPath("/orgs/", false);
+            uri.AppendPath(azureDevOpsOrgName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(azureDevOpsProjectName, true);
+            uri.AppendPath("/repos", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName)
@@ -162,7 +195,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -194,13 +227,33 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName, string azureDevOpsRepoName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/", false);
+            uri.AppendPath(azureDevOpsConnectorName, true);
+            uri.AppendPath("/orgs/", false);
+            uri.AppendPath(azureDevOpsOrgName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(azureDevOpsProjectName, true);
+            uri.AppendPath("/repos/", false);
+            uri.AppendPath(azureDevOpsRepoName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName, string azureDevOpsRepoName)
@@ -255,7 +308,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -292,7 +345,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -301,6 +354,26 @@ namespace Azure.ResourceManager.SecurityDevOps
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName, string azureDevOpsRepoName, AzureDevOpsRepoData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/", false);
+            uri.AppendPath(azureDevOpsConnectorName, true);
+            uri.AppendPath("/orgs/", false);
+            uri.AppendPath(azureDevOpsOrgName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(azureDevOpsProjectName, true);
+            uri.AppendPath("/repos/", false);
+            uri.AppendPath(azureDevOpsRepoName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName, string azureDevOpsRepoName, AzureDevOpsRepoData data)
@@ -327,7 +400,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -399,6 +472,26 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName, string azureDevOpsRepoName, AzureDevOpsRepoData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/", false);
+            uri.AppendPath(azureDevOpsConnectorName, true);
+            uri.AppendPath("/orgs/", false);
+            uri.AppendPath(azureDevOpsOrgName, true);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(azureDevOpsProjectName, true);
+            uri.AppendPath("/repos/", false);
+            uri.AppendPath(azureDevOpsRepoName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName, string azureDevOpsRepoName, AzureDevOpsRepoData data)
         {
             var message = _pipeline.CreateMessage();
@@ -423,7 +516,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -493,6 +586,14 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        internal RequestUriBuilder CreateListByConnectorNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByConnectorNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName)
         {
             var message = _pipeline.CreateMessage();
@@ -528,7 +629,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -558,13 +659,21 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName)
@@ -606,7 +715,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -640,7 +749,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsRepoListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsRepoListResponse.DeserializeAzureDevOpsRepoListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

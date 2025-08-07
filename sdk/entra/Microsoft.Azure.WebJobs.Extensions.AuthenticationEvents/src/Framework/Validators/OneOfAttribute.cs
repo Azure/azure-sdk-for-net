@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Validator to validated that a value is one of the the values in a list.</summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]

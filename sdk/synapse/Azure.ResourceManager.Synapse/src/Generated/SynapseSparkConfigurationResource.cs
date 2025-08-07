@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSparkConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSparkConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSparkConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseSparkConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSparkConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSparkConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseSparkConfiguration method.
     /// </summary>
     public partial class SynapseSparkConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseSparkConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sparkConfigurationName"> The sparkConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sparkConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly SparkConfigurationRestOperations _synapseSparkConfigurationSparkConfigurationRestClient;
         private readonly SynapseSparkConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sparkconfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseSparkConfigurationResource"/> class for mocking. </summary>
         protected SynapseSparkConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSparkConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSparkConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSparkConfigurationResource(ArmClient client, SynapseSparkConfigurationData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sparkconfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SparkConfiguration_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSparkConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SparkConfiguration_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSparkConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,9 +5,6 @@ extends:
   parameters:
     ServiceDirectory: storage
     TimeoutInMinutes: 180
-    MatrixReplace:
-      # Use dedicated storage pool in canadacentral with higher memory capacity
-      - Pool=(.*)-general/$1-storage
     MatrixConfigs:
       - Name: Storage_virtualized
         Path: sdk/storage/platform-matrix-virtualized.json

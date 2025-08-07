@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Document
         // TODO: Respect retry after #19442
         private readonly TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(30);
 
-        private readonly DocumentTranslationRestClient _serviceClient;
+        private readonly DocumentTranslationClient _serviceClient;
         private readonly ClientDiagnostics _diagnostics;
         private readonly OperationInternal<AsyncPageable<DocumentStatusResult>> _operationInternal;
 
@@ -117,7 +117,7 @@ namespace Azure.AI.Translation.Document
         {
             var parsedTranslationId = ClientCommon.ValidateModelId(translationId, nameof(translationId));
             Id = parsedTranslationId.ToString();
-            _serviceClient = client._serviceRestClient;
+            _serviceClient = client._serviceClient;
             _diagnostics = client._clientDiagnostics;
 
             _operationInternal = new OperationInternal<AsyncPageable<DocumentStatusResult>>(this, _diagnostics, rawResponse: null);
@@ -129,13 +129,13 @@ namespace Azure.AI.Translation.Document
         /// <param name="serviceClient">The client for communicating with the Translator Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal DocumentTranslationOperation(DocumentTranslationRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
+        internal DocumentTranslationOperation(DocumentTranslationClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
             _operationInternal = new OperationInternal<AsyncPageable<DocumentStatusResult>>(this, _diagnostics, rawResponse: null);
 
-            Id = operationLocation.Split('/').Last();
+            Id = operationLocation.Split('/').Last().Split('?').First();
         }
 
         /// <summary>
@@ -240,6 +240,10 @@ namespace Azure.AI.Translation.Document
             return OperationState<AsyncPageable<DocumentStatusResult>>.Pending(rawResponse);
         }
 
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<AsyncPageable<DocumentStatusResult>>.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
+
         private AsyncPageable<DocumentStatusResult> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {
             return GetDocumentStatusesAsync(cancellationToken: cancellationToken);
@@ -296,52 +300,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
         public virtual Pageable<DocumentStatusResult> GetDocumentStatuses(GetDocumentStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
-            Page<DocumentStatusResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetDocumentStatuses)}");
-                scope.Start();
+            var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
+            var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
+            var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
 
-                try
-                {
-                    var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
-                    var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
-                    var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
-
-                    var response = _serviceClient.GetDocumentsStatus(
-                        new Guid(Id),
-                        ids: idList,
-                        statuses: statusList,
-                        createdDateTimeUtcStart: options?.CreatedAfter,
-                        createdDateTimeUtcEnd: options?.CreatedBefore,
-                        orderBy: orderByList,
-                        cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            Page<DocumentStatusResult> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetDocumentStatuses)}");
-                scope.Start();
-
-                try
-                {
-                    var response = _serviceClient.GetDocumentsStatusNextPage(nextLink, new Guid(Id), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return _serviceClient.GetDocumentsStatus(
+                new Guid(Id),
+                documentIds: idList,
+                statuses: statusList,
+                createdDateTimeUtcStart: options?.CreatedAfter,
+                createdDateTimeUtcEnd: options?.CreatedBefore,
+                orderby: orderByList,
+                cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -351,52 +321,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
         public virtual AsyncPageable<DocumentStatusResult> GetDocumentStatusesAsync(GetDocumentStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DocumentStatusResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetDocumentStatuses)}");
-                scope.Start();
+            var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
+            var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
+            var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
 
-                try
-                {
-                    var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
-                    var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
-                    var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
-
-                    var response = await _serviceClient.GetDocumentsStatusAsync(
-                        new Guid(Id),
-                        ids: idList,
-                        statuses: statusList,
-                        createdDateTimeUtcStart: options?.CreatedAfter,
-                        createdDateTimeUtcEnd: options?.CreatedBefore,
-                        orderBy: orderByList,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<DocumentStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetDocumentStatuses)}");
-                scope.Start();
-
-                try
-                {
-                    var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return _serviceClient.GetDocumentsStatusAsync(
+                new Guid(Id),
+                documentIds: idList,
+                statuses: statusList,
+                createdDateTimeUtcStart: options?.CreatedAfter,
+                createdDateTimeUtcEnd: options?.CreatedBefore,
+                orderby: orderByList,
+                cancellationToken: cancellationToken);
         }
 
         /// <summary>

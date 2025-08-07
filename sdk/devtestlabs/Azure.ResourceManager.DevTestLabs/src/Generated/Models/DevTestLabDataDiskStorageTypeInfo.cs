@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Storage information about the data disks present in the custom image. </summary>
     public partial class DevTestLabDataDiskStorageTypeInfo
     {
-        /// <summary> Initializes a new instance of DevTestLabDataDiskStorageTypeInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDataDiskStorageTypeInfo"/>. </summary>
         public DevTestLabDataDiskStorageTypeInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabDataDiskStorageTypeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDataDiskStorageTypeInfo"/>. </summary>
         /// <param name="lun"> Disk Lun. </param>
         /// <param name="storageType"> Disk Storage Type. </param>
-        internal DevTestLabDataDiskStorageTypeInfo(string lun, DevTestLabStorageType? storageType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabDataDiskStorageTypeInfo(string lun, DevTestLabStorageType? storageType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Lun = lun;
             StorageType = storageType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Disk Lun. </summary>

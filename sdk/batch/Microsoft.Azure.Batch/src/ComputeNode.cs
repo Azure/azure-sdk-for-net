@@ -65,65 +65,6 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Begins an asynchronous call to get RDP file data targeting the compute node of the current instance and write them to a specified Stream.
-        /// </summary>
-        /// <param name="rdpStream">The Stream into which the RDP file data will be written.  This stream will not be closed or rewound by this call.</param>
-        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
-        public Task GetRDPFileAsync(Stream rdpStream, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
-
-            Task asyncTask = this.parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(this.parentPoolId, this.Id, rdpStream, bhMgr, cancellationToken);
-
-            return asyncTask;
-        }
-
-        /// <summary>
-        /// Blocking call to get RDP file data targeting the compute node of the current instance and write them to a specified Stream.
-        /// </summary>
-        /// <param name="rdpStream">The Stream into which the RDP file data will be written.  This stream will not be closed or rewound by this call.</param>
-        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
-        public void GetRDPFile(Stream rdpStream, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
-        {
-            Task asyncTask = GetRDPFileAsync(rdpStream, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
-        }
-
-        /// <summary>
-        /// Begins an asynchronous call to get RDP file data targeting the compute node of the current instance and write them to a file with the specified name.
-        /// </summary>
-        /// <param name="rdpFileNameToCreate">The name of the RDP file to be created.</param>
-        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
-        public Task GetRDPFileAsync(
-            string rdpFileNameToCreate, 
-            IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
-
-            Task asyncTask = this.parentBatchClient.PoolOperations.GetRDPFileViaFileNameAsyncImpl(this.parentPoolId, this.Id, rdpFileNameToCreate, bhMgr, cancellationToken);
-
-            return asyncTask;
-        }
-
-        /// <summary>
-        /// Blocking call to get RDP file data targeting the compute node of the current instance and write them to a file with the specified name.
-        /// </summary>
-        /// <param name="rdpFileNameToCreate">The name of the RDP file to be created.</param>
-        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
-        public void GetRDPFile(string rdpFileNameToCreate, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
-        {
-            Task asyncTask = GetRDPFileAsync(rdpFileNameToCreate, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
-        }
-
-        /// <summary>
         /// Gets the settings required for remote login to a compute node.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
@@ -131,9 +72,7 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The get remote login settings operation runs asynchronously.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property. 
-        /// If this method is invoked on pools created with <see cref="CloudServiceConfiguration" />, then Batch service returns 409 (Conflict). 
-        /// For pools with a <see cref="CloudServiceConfiguration" /> property, one of the GetRDPFileAsync/GetRDPFile methods must be used.</para>
+        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property. </para>
         /// </remarks>
         public System.Threading.Tasks.Task<RemoteLoginSettings> GetRemoteLoginSettingsAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null,  CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -155,9 +94,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="Microsoft.Azure.Batch.ComputeNode.GetRemoteLoginSettingsAsync"/>.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="Microsoft.Azure.Batch.VirtualMachineConfiguration"/> property. 
-        /// If this method is invoked on pools created with <see cref="Microsoft.Azure.Batch.CloudServiceConfiguration" />, then Batch service returns 409 (Conflict). 
-        /// For pools with a <see cref="Microsoft.Azure.Batch.CloudServiceConfiguration" /> property, one of the GetRDPFileAsync/GetRDPFile methods must be used.</para>
+        /// <para>This method can be invoked only if the pool is created with a <see cref="Microsoft.Azure.Batch.VirtualMachineConfiguration"/> property. </para>
         /// </remarks>
         public RemoteLoginSettings GetRemoteLoginSettings(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
@@ -208,6 +145,17 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Blocking call to reboot the compute node.
+        /// </summary>
+        /// <param name="rebootOption">The reboot option associated with the reboot.</param>
+        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        public void Reboot(Common.ComputeNodeRebootOption? rebootOption = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            Task asyncTask = RebootAsync(rebootOption, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+        }
+
+        /// <summary>
         /// Begins an asynchronous call to reboot the compute node.
         /// </summary>
         /// <param name="rebootOption">The reboot option associated with the reboot.</param>
@@ -228,14 +176,63 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Blocking call to reboot the compute node.
+        /// Blocking call to start the compute node.
         /// </summary>
-        /// <param name="rebootOption">The reboot option associated with the reboot.</param>
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
-        public void Reboot(Common.ComputeNodeRebootOption? rebootOption = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        public void Start( IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task asyncTask = RebootAsync(rebootOption, additionalBehaviors);
+            Task asyncTask = StartAsync(additionalBehaviors);
             asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous call to start the compute node.
+        /// </summary>
+        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        public Task StartAsync(
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // create the behavior manager
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            Task asyncTask = this.parentBatchClient.ProtocolLayer.StartComputeNode(this.parentPoolId, this.Id, bhMgr, cancellationToken);
+
+            return asyncTask;
+        }
+
+
+        /// <summary>
+        /// Blocking call to deallocate the compute node.
+        /// </summary>
+        /// <param name="deallocateOption">The deallocate option associated with the deallocate.</param>
+        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        public void Deallocate(Common.ComputeNodeDeallocateOption? deallocateOption = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            Task asyncTask = DeallocateAsync(deallocateOption, additionalBehaviors);
+            asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous call to deallocate the compute node.
+        /// </summary>
+        /// <param name="deallocateOption">The deallocate option associated with the deallocate.</param>
+        /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
+        public Task DeallocateAsync(
+            Common.ComputeNodeDeallocateOption? deallocateOption = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // create the behavior manager
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            Task asyncTask = this.parentBatchClient.ProtocolLayer.DeallocateComputeNode(this.parentPoolId, this.Id, deallocateOption, bhMgr, cancellationToken);
+
+            return asyncTask;
         }
 
         /// <summary>

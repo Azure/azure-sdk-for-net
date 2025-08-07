@@ -22,15 +22,21 @@ namespace Azure.ResourceManager.Monitor.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string AlertValue = "alert";
+        private const string AuditValue = "audit";
         private const string AuthValue = "auth";
         private const string AuthprivValue = "authpriv";
+        private const string ClockValue = "clock";
         private const string CronValue = "cron";
         private const string DaemonValue = "daemon";
+        private const string FtpValue = "ftp";
         private const string KernValue = "kern";
         private const string LprValue = "lpr";
         private const string MailValue = "mail";
         private const string MarkValue = "mark";
         private const string NewsValue = "news";
+        private const string NopriValue = "nopri";
+        private const string NtpValue = "ntp";
         private const string SyslogValue = "syslog";
         private const string UserValue = "user";
         private const string UucpValue = "uucp";
@@ -44,14 +50,22 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string Local7Value = "local7";
         private const string AsteriskValue = "*";
 
+        /// <summary> alert. </summary>
+        public static SyslogDataSourceFacilityName Alert { get; } = new SyslogDataSourceFacilityName(AlertValue);
+        /// <summary> audit. </summary>
+        public static SyslogDataSourceFacilityName Audit { get; } = new SyslogDataSourceFacilityName(AuditValue);
         /// <summary> auth. </summary>
         public static SyslogDataSourceFacilityName Auth { get; } = new SyslogDataSourceFacilityName(AuthValue);
         /// <summary> authpriv. </summary>
         public static SyslogDataSourceFacilityName Authpriv { get; } = new SyslogDataSourceFacilityName(AuthprivValue);
+        /// <summary> clock. </summary>
+        public static SyslogDataSourceFacilityName Clock { get; } = new SyslogDataSourceFacilityName(ClockValue);
         /// <summary> cron. </summary>
         public static SyslogDataSourceFacilityName Cron { get; } = new SyslogDataSourceFacilityName(CronValue);
         /// <summary> daemon. </summary>
         public static SyslogDataSourceFacilityName Daemon { get; } = new SyslogDataSourceFacilityName(DaemonValue);
+        /// <summary> ftp. </summary>
+        public static SyslogDataSourceFacilityName Ftp { get; } = new SyslogDataSourceFacilityName(FtpValue);
         /// <summary> kern. </summary>
         public static SyslogDataSourceFacilityName Kern { get; } = new SyslogDataSourceFacilityName(KernValue);
         /// <summary> lpr. </summary>
@@ -62,6 +76,10 @@ namespace Azure.ResourceManager.Monitor.Models
         public static SyslogDataSourceFacilityName Mark { get; } = new SyslogDataSourceFacilityName(MarkValue);
         /// <summary> news. </summary>
         public static SyslogDataSourceFacilityName News { get; } = new SyslogDataSourceFacilityName(NewsValue);
+        /// <summary> nopri. </summary>
+        public static SyslogDataSourceFacilityName Nopri { get; } = new SyslogDataSourceFacilityName(NopriValue);
+        /// <summary> ntp. </summary>
+        public static SyslogDataSourceFacilityName Ntp { get; } = new SyslogDataSourceFacilityName(NtpValue);
         /// <summary> syslog. </summary>
         public static SyslogDataSourceFacilityName Syslog { get; } = new SyslogDataSourceFacilityName(SyslogValue);
         /// <summary> user. </summary>
@@ -90,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(SyslogDataSourceFacilityName left, SyslogDataSourceFacilityName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyslogDataSourceFacilityName"/> values are not the same. </summary>
         public static bool operator !=(SyslogDataSourceFacilityName left, SyslogDataSourceFacilityName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SyslogDataSourceFacilityName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SyslogDataSourceFacilityName"/>. </summary>
         public static implicit operator SyslogDataSourceFacilityName(string value) => new SyslogDataSourceFacilityName(value);
 
         /// <inheritdoc />
@@ -101,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

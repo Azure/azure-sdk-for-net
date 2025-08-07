@@ -1,6 +1,6 @@
-using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
@@ -28,13 +28,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [TestCase("http://test/mock?function=onTokenissuancestart", HttpStatusCode.BadRequest, HttpMethods.Get, "{\"errors\":[\"Method can only be post.\"]}")]
         public async Task PostConfigProviderTests(string url, HttpStatusCode httpStatusCode, HttpMethods method, string expectedMessage)
         {
-            HttpResponseMessage httpResponse = await BaseTest(method, url, t =>
+            HttpResponseMessage httpResponse = await BaseTest(method, url, async t =>
             {
                 if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
                 {
-                    AuthenticationEventResponseHandler eventsResponseHandler = GetAuthenticationEventResponseHandler(mockedRequest);
+                    WebJobsAuthenticationEventResponseHandler eventsResponseHandler = GetAuthenticationEventResponseHandler(mockedRequest);
 
-                    eventsResponseHandler.Response = GetContentForHttpStatus(httpStatusCode);
+                    await eventsResponseHandler.SetValueAsync(GetContentForHttpStatus(httpStatusCode), CancellationToken.None);
                 }
             });
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The public IP Address configuration of the networking configuration of a Pool. </summary>
     public partial class BatchPublicIPAddressConfiguration
     {
-        /// <summary> Initializes a new instance of BatchPublicIPAddressConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchPublicIPAddressConfiguration"/>. </summary>
         public BatchPublicIPAddressConfiguration()
         {
             IPAddressIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of BatchPublicIPAddressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPublicIPAddressConfiguration"/>. </summary>
         /// <param name="provision"> The default value is BatchManaged. </param>
         /// <param name="ipAddressIds"> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
-        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<ResourceIdentifier> ipAddressIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<ResourceIdentifier> ipAddressIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Provision = provision;
             IPAddressIds = ipAddressIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The default value is BatchManaged. </summary>

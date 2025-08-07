@@ -74,11 +74,14 @@ namespace Azure.Communication.CallAutomation
             PlayEventResult result = default;
             switch (returnedEvent)
             {
+                case PlayStarted:
+                    result = new PlayEventResult(true, null, null, (PlayStarted)returnedEvent);
+                    break;
                 case PlayCompleted:
-                    result = new PlayEventResult(true, (PlayCompleted)returnedEvent, null);
+                    result = new PlayEventResult(true, (PlayCompleted)returnedEvent, null, null);
                     break;
                 case PlayFailed:
-                    result = new PlayEventResult(false, null, (PlayFailed)returnedEvent);
+                    result = result = new PlayEventResult(false, null, (PlayFailed)returnedEvent, null);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

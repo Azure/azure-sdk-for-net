@@ -22,7 +22,7 @@ You can download our [sample data](https://github.com/Azure/azure-sdk-for-net/bl
 
 ```C# Snippet:Azure_AI_ContentSafety_AnalyzeImage
 string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "image.jpg");
-ImageData image = new ImageData() { Content = BinaryData.FromBytes(File.ReadAllBytes(datapath)) };
+ContentSafetyImageData image = new ContentSafetyImageData(BinaryData.FromBytes(File.ReadAllBytes(datapath)));
 
 var request = new AnalyzeImageOptions(image);
 
@@ -37,10 +37,10 @@ catch (RequestFailedException ex)
     throw;
 }
 
-Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
-Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
-Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
-Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
+Console.WriteLine("Hate severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Hate)?.Severity ?? 0);
+Console.WriteLine("SelfHarm severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.SelfHarm)?.Severity ?? 0);
+Console.WriteLine("Sexual severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Sexual)?.Severity ?? 0);
+Console.WriteLine("Violence severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Violence)?.Severity ?? 0);
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety/README.md

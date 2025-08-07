@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;

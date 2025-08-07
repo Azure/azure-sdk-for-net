@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm disk input. </summary>
     public partial class InMageRcmDiskContent
     {
-        /// <summary> Initializes a new instance of InMageRcmDiskContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskType"> The disk type. </param>
@@ -28,6 +61,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskType = diskType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DiskId = diskId;
+            LogStorageAccountId = logStorageAccountId;
+            DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
+            SectorSizeInBytes = sectorSizeInBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDiskContent"/> for deserialization. </summary>
+        internal InMageRcmDiskContent()
+        {
+        }
+
         /// <summary> The disk Id. </summary>
         public string DiskId { get; }
         /// <summary> The log storage account ARM Id. </summary>
@@ -36,5 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public SiteRecoveryDiskAccountType DiskType { get; }
         /// <summary> The DiskEncryptionSet ARM Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
+        /// <summary> The logical sector size (in bytes), 512 by default. </summary>
+        public int? SectorSizeInBytes { get; set; }
     }
 }

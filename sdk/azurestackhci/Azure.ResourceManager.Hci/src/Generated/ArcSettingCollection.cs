@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ArcSettingResource" /> and their operations.
-    /// Each <see cref="ArcSettingResource" /> in the collection will belong to the same instance of <see cref="HciClusterResource" />.
-    /// To get an <see cref="ArcSettingCollection" /> instance call the GetArcSettings method from an instance of <see cref="HciClusterResource" />.
+    /// A class representing a collection of <see cref="ArcSettingResource"/> and their operations.
+    /// Each <see cref="ArcSettingResource"/> in the collection will belong to the same instance of <see cref="HciClusterResource"/>.
+    /// To get an <see cref="ArcSettingCollection"/> instance call the GetArcSettings method from an instance of <see cref="HciClusterResource"/>.
     /// </summary>
     public partial class ArcSettingCollection : ArmCollection, IEnumerable<ArcSettingResource>, IAsyncEnumerable<ArcSettingResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>ArcSettings_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,9 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _arcSettingRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<ArcSettingResource>(Response.FromValue(new ArcSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _arcSettingRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<ArcSettingResource>(Response.FromValue(new ArcSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>ArcSettings_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +139,9 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _arcSettingRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, data, cancellationToken);
-                var operation = new HciArmOperation<ArcSettingResource>(Response.FromValue(new ArcSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _arcSettingRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<ArcSettingResource>(Response.FromValue(new ArcSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +163,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ArcSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +209,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>ArcSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -219,15 +254,23 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>ArcSettings_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArcSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ArcSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArcSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _arcSettingRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcSettingRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArcSettingResource(Client, ArcSettingData.DeserializeArcSettingData(e)), _arcSettingClientDiagnostics, Pipeline, "ArcSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArcSettingResource(Client, ArcSettingData.DeserializeArcSettingData(e)), _arcSettingClientDiagnostics, Pipeline, "ArcSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,15 +284,23 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>ArcSettings_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ArcSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ArcSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArcSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _arcSettingRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arcSettingRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArcSettingResource(Client, ArcSettingData.DeserializeArcSettingData(e)), _arcSettingClientDiagnostics, Pipeline, "ArcSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArcSettingResource(Client, ArcSettingData.DeserializeArcSettingData(e)), _arcSettingClientDiagnostics, Pipeline, "ArcSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,6 +313,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ArcSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +357,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>ArcSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
@@ -314,6 +381,96 @@ namespace Azure.ResourceManager.Hci
             {
                 var response = _arcSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArcSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ArcSettingResource>> GetIfExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _arcSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ArcSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new ArcSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArcSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArcSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
+        public virtual NullableResponse<ArcSettingResource> GetIfExists(string arcSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _arcSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ArcSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new ArcSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

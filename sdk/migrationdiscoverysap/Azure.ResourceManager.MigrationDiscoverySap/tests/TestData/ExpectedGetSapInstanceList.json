@@ -1,0 +1,93 @@
+[
+    {
+        "id": "__DiscoverySiteId__/sapInstances/MSB_MSB",
+        "name": "MSB_MSB",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
+        "location": "southeastasia",
+        "properties": {
+            "systemSid": "MSB",
+            "environment": "Production",
+            "landscapeSid": "MSB",
+            "application": "Finance",
+            "provisioningState": "Succeeded"
+        }
+    },
+    {
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP",
+        "name": "ANQ_ADP",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
+        "location": "southeastasia",
+        "properties": {
+            "systemSid": "ADP",
+            "environment": "Development",
+            "landscapeSid": "ANQ",
+            "application": "Finance",
+            "provisioningState": "Succeeded"
+        }
+    },
+    {
+        "id": "__DiscoverySiteId__/sapInstances/MST_MPS",
+        "name": "MST_MPS",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
+        "location": "southeastasia",
+        "properties": {
+            "systemSid": "MPS",
+            "environment": "PreProduction",
+            "landscapeSid": "MST",
+            "application": "Finance",
+            "provisioningState": "Succeeded"
+        }
+    },
+    {
+        "id": "__DiscoverySiteId__/sapInstances/MSE_MSH",
+        "name": "MSE_MSH",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
+        "location": "southeastasia",
+        "properties": {
+            "systemSid": "MSH",
+            "environment": "QualityAssurance",
+            "landscapeSid": "MSE",
+            "application": "Finance",
+            "provisioningState": "Succeeded"
+        }
+    },
+    {
+        "id": "__DiscoverySiteId__/sapInstances/MSF_MSJ",
+        "name": "MSF_MSJ",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
+        "location": "southeastasia",
+        "properties": {
+            "systemSid": "MSJ",
+            "environment": "Test",
+            "landscapeSid": "MSF",
+            "application": "Finance",
+            "provisioningState": "Succeeded"
+        }
+    },
+    {
+        "id": "__DiscoverySiteId__/sapInstances/MJN_MSL",
+        "name": "MJN_MSL",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
+        "location": "southeastasia",
+        "properties": {
+            "systemSid": "MSL",
+            "environment": "Sandbox",
+            "landscapeSid": "MJN",
+            "application": "Finance",
+            "provisioningState": "Succeeded"
+        }
+    },
+    {
+        "id": "__DiscoverySiteId__/sapInstances/MJF_MSM",
+        "name": "MJF_MSM",
+        "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
+        "location": "southeastasia",
+        "properties": {
+            "systemSid": "MSM",
+            "environment": "Training",
+            "landscapeSid": "MJF",
+            "application": "Finance",
+            "provisioningState": "Succeeded"
+        }
+    }
+]

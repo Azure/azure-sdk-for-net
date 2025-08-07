@@ -23,8 +23,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(testDomain, DummyTestDomain));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(testDomain) { Value = DummyTestDomain });
         }
 
         [SetUp]

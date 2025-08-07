@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The exposure control response. </summary>
     public partial class ExposureControlResponse
     {
-        /// <summary> Initializes a new instance of ExposureControlResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExposureControlResponse"/>. </summary>
         public ExposureControlResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ExposureControlResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExposureControlResponse"/>. </summary>
         /// <param name="featureName"> The feature name. </param>
         /// <param name="value"> The feature value. </param>
         internal ExposureControlResponse(string featureName, string value)

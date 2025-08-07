@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -21,13 +20,13 @@ namespace Azure.Data.AppConfiguration
 
         private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
-            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.Content, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
         private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
-            return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream), response);
+            return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(response.Content), response);
         }
 
         private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
@@ -53,28 +52,87 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
+        private HttpMessage CreateNextGetConfigurationSettingsRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
-            if (!string.IsNullOrEmpty(selector.KeyFilter))
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            if (syncToken != null)
             {
-                builder.AppendQuery(KeyQueryFilter, selector.KeyFilter);
+                request.Headers.SetValue("Sync-Token", syncToken);
             }
+            if (acceptDatetime != null)
+            {
+                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kvset+json");
+            return message;
+        }
 
-            if (!string.IsNullOrEmpty(selector.LabelFilter))
+        private HttpMessage CreateNextGetSnapshotsRequest(string nextLink, string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            if (syncToken != null)
             {
-                builder.AppendQuery(LabelQueryFilter, selector.LabelFilter);
+                request.Headers.SetValue("Sync-Token", syncToken);
             }
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.snapshotset+json");
+            return message;
+        }
 
-            if (selector.Fields != SettingFields.All)
+        private HttpMessage CreateNextGetLabelsRequest(string nextLink, string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            if (syncToken != null)
             {
-                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
-                builder.AppendQuery(FieldsQueryFilter, filter);
+                request.Headers.SetValue("Sync-Token", syncToken);
             }
+            if (acceptDatetime != null)
+            {
+                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+            }
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.labelset+json");
+            return message;
+        }
 
-            if (!string.IsNullOrEmpty(pageLink))
+        private HttpMessage CreateNextGetRevisionsRequest(string nextLink, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            if (syncToken != null)
             {
-                builder.AppendQuery("after", pageLink, escapeValue: false);
+                request.Headers.SetValue("Sync-Token", syncToken);
             }
+            if (acceptDatetime != null)
+            {
+                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+            }
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kvset+json");
+            return message;
         }
 
         #region nobody wants to see these

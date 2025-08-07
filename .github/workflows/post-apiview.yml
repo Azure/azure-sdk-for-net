@@ -1,0 +1,29 @@
+name: After APIView
+
+on:
+  check_run:
+    types: [completed]
+    
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  post-apiview:
+    name: After APIView
+    runs-on: ubuntu-24.04
+    if: |
+      github.event.check_run.check_suite.app.name == 'Azure Pipelines' && (
+      contains(github.event.check_run.name, 'Build Build') ||
+      contains(github.event.check_run.name, 'Build Analyze') )
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: 'eng/common'
+    
+      - name: Create APIView Comment on PR
+        run: |
+          . "eng/common/scripts/Helpers/ApiView-Helpers.ps1"
+          Set-ApiViewCommentForRelatedIssues -HeadCommitish ${{ github.event.check_run.head_sha }} -AuthToken ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh

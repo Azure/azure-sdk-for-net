@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
@@ -35,6 +34,49 @@ namespace Azure.ResourceManager.Reservations
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetCatalogRequestUri(string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Capacity/catalogs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (reservedResourceType != null)
+            {
+                uri.AppendQuery("reservedResourceType", reservedResourceType, true);
+            }
+            if (location != null)
+            {
+                uri.AppendQuery("location", location.Value, true);
+            }
+            if (publisherId != null)
+            {
+                uri.AppendQuery("publisherId", publisherId, true);
+            }
+            if (offerId != null)
+            {
+                uri.AppendQuery("offerId", offerId, true);
+            }
+            if (planId != null)
+            {
+                uri.AppendQuery("planId", planId, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (take != null)
+            {
+                uri.AppendQuery("$take", take.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetCatalogRequest(string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
@@ -110,7 +152,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         CatalogsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -143,13 +185,24 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         CatalogsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAppliedReservationListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Capacity/appliedReservations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAppliedReservationListRequest(string subscriptionId)
@@ -185,7 +238,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         AppliedReservationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppliedReservationData.DeserializeAppliedReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -210,13 +263,21 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         AppliedReservationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppliedReservationData.DeserializeAppliedReservationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCatalogNextPageRequestUri(string nextLink, string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetCatalogNextPageRequest(string nextLink, string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
@@ -259,7 +320,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         CatalogsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,7 +355,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         CatalogsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CatalogsResult.DeserializeCatalogsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

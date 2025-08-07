@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string InboundValue = "inbound";
         private const string OutboundValue = "outbound";
 
-        /// <summary> inbound. </summary>
+        /// <summary> Inbound direction. </summary>
         public static ServiceFabricManagedNetworkSecurityRuleDirection Inbound { get; } = new ServiceFabricManagedNetworkSecurityRuleDirection(InboundValue);
-        /// <summary> outbound. </summary>
+        /// <summary> Outbound direction. </summary>
         public static ServiceFabricManagedNetworkSecurityRuleDirection Outbound { get; } = new ServiceFabricManagedNetworkSecurityRuleDirection(OutboundValue);
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedNetworkSecurityRuleDirection left, ServiceFabricManagedNetworkSecurityRuleDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedNetworkSecurityRuleDirection left, ServiceFabricManagedNetworkSecurityRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/>. </summary>
         public static implicit operator ServiceFabricManagedNetworkSecurityRuleDirection(string value) => new ServiceFabricManagedNetworkSecurityRuleDirection(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

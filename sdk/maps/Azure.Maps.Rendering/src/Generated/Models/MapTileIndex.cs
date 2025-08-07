@@ -13,7 +13,7 @@ namespace Azure.Maps.Rendering
         /// <summary>
         /// Zoom level for the desired tile.
         ///
-        /// Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/en-us/azure/location-based-services/zoom-levels-and-tile-grid) for details.
+        /// Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details.
         /// </summary>
         public int Z { get; }
         /// <summary>

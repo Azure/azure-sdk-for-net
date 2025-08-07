@@ -5,6 +5,18 @@ namespace Azure.Messaging.WebPubSub
         public static string Create(System.FormattableString filter) { throw null; }
         public static string Create(System.FormattableString filter, System.IFormatProvider formatProvider) { throw null; }
     }
+    public enum WebPubSubClientProtocol
+    {
+        Default = 0,
+        Mqtt = 1,
+        SocketIO = 2,
+    }
+    public partial class WebPubSubGroupMember
+    {
+        public WebPubSubGroupMember(string connectionId) { }
+        public string ConnectionId { get { throw null; } }
+        public string? UserId { get { throw null; } set { } }
+    }
     public enum WebPubSubPermission
     {
         SendToGroup = 1,
@@ -22,6 +34,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string Hub { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response AddConnectionsToGroups(System.Collections.Generic.IEnumerable<string> groups, string filter, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddConnectionsToGroupsAsync(System.Collections.Generic.IEnumerable<string> groups, string filter, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AddConnectionToGroup(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddConnectionToGroupAsync(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AddUserToGroup(string group, string userId, Azure.RequestContext context = null) { throw null; }
@@ -38,22 +52,38 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> CloseUserConnectionsAsync(string userId, System.Collections.Generic.IEnumerable<string> excluded = null, string reason = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<bool> ConnectionExists(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ConnectionExistsAsync(string connectionId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.WebPubSubClientProtocol clientProtocol = Azure.Messaging.WebPubSub.WebPubSubClientProtocol.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.WebPubSubClientProtocol clientProtocol = Azure.Messaging.WebPubSub.WebPubSubClientProtocol.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.WebPubSubClientProtocol clientProtocol = Azure.Messaging.WebPubSub.WebPubSubClientProtocol.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.WebPubSubClientProtocol clientProtocol = Azure.Messaging.WebPubSub.WebPubSubClientProtocol.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response GrantPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GrantPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<bool> GroupExists(string group, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GroupExistsAsync(string group, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.WebPubSubGroupMember> ListConnectionsInGroup(string group, int? maxpagesize = default(int?), int? maxCount = default(int?), string continuationToken = null) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.WebPubSubGroupMember> ListConnectionsInGroupAsync(string group, int? maxpagesize = default(int?), int? maxCount = default(int?), string continuationToken = null) { throw null; }
         public virtual Azure.Response RemoveConnectionFromAllGroups(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromAllGroupsAsync(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveConnectionFromGroup(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromGroupAsync(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response RemoveConnectionsFromGroups(System.Collections.Generic.IEnumerable<string> groups, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionsFromGroupsAsync(System.Collections.Generic.IEnumerable<string> groups, string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveUserFromAllGroups(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveUserFromAllGroupsAsync(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveUserFromGroup(string group, string userId, Azure.RequestContext context = null) { throw null; }
@@ -87,11 +117,13 @@ namespace Azure.Messaging.WebPubSub
     }
     public partial class WebPubSubServiceClientOptions : Azure.Core.ClientOptions
     {
-        public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2021_10_01) { }
+        public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2024_12_01) { }
         public System.Uri ReverseProxyEndpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_10_01 = 1,
+            V2024_01_01 = 2,
+            V2024_12_01 = 3,
         }
     }
 }

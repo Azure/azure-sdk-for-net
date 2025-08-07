@@ -42,11 +42,17 @@
                 }
             }
 
+            var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchClient);
+
+            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                ubuntuImageDetails.ImageReference,
+                nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
             // gotta create a new pool
             CloudPool newPool = poolOp.CreatePool(
                 poolId,
                 PoolFixture.VMSize,
-                new CloudServiceConfiguration(PoolFixture.OSFamily),
+                virtualMachineConfiguration,
                 targetDedicatedComputeNodes: 3);
 
             newPool.InterComputeNodeCommunicationEnabled = true;

@@ -14,11 +14,13 @@ namespace Azure.Security.KeyVault.Secrets
     /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing <see cref="KeyVaultSecret"/>.
     /// The client also supports listing <see cref="DeletedSecret"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
+    [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/security-keyvault-secrets")]
     public class SecretClient
     {
         internal const string SecretsPath = "/secrets/";
         internal const string DeletedSecretsPath = "/deletedsecrets/";
-
+        private const string OTelSecretNameKey = "az.keyvault.secret.name";
+        private const string OTelSecretVersionKey = "az.keyvault.secret.version";
         private readonly KeyVaultPipeline _pipeline;
 
         /// <summary>
@@ -91,8 +93,8 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
-            scope.AddAttribute("secret", name);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute(OTelSecretNameKey, name);
+            scope.AddAttribute(OTelSecretVersionKey, version);
             scope.Start();
 
             try
@@ -124,8 +126,8 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
-            scope.AddAttribute("secret", name);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute(OTelSecretNameKey, name);
+            scope.AddAttribute(OTelSecretVersionKey, version);
             scope.Start();
 
             try
@@ -248,8 +250,8 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
-            scope.AddAttribute("secret", properties.Name);
-            scope.AddAttribute("version", properties.Version);
+            scope.AddAttribute(OTelSecretNameKey, properties.Name);
+            scope.AddAttribute(OTelSecretVersionKey, properties.Version);
             scope.Start();
 
             try
@@ -282,8 +284,8 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
-            scope.AddAttribute("secret", properties.Name);
-            scope.AddAttribute("version", properties.Version);
+            scope.AddAttribute(OTelSecretNameKey, properties.Name);
+            scope.AddAttribute(OTelSecretVersionKey, properties.Version);
             scope.Start();
 
             try
@@ -314,7 +316,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(secret, nameof(secret));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(SetSecret)}");
-            scope.AddAttribute("secret", secret.Name);
+            scope.AddAttribute(OTelSecretNameKey, secret.Name);
             scope.Start();
 
             try
@@ -345,7 +347,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(secret, nameof(secret));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(SetSecret)}");
-            scope.AddAttribute("secret", secret.Name);
+            scope.AddAttribute(OTelSecretNameKey, secret.Name);
             scope.Start();
 
             try
@@ -420,7 +422,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartDeleteSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try
@@ -458,7 +460,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartDeleteSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try
@@ -490,7 +492,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetDeletedSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try
@@ -521,7 +523,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetDeletedSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try
@@ -588,7 +590,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartRecoverDeletedSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try
@@ -622,7 +624,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartRecoverDeletedSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try
@@ -656,7 +658,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try
@@ -689,7 +691,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try
@@ -721,7 +723,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(BackupSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try
@@ -755,7 +757,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(BackupSecret)}");
-            scope.AddAttribute("secret", name);
+            scope.AddAttribute(OTelSecretNameKey, name);
             scope.Start();
 
             try

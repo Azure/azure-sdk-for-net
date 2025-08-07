@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformServiceRegistryResource IOperationSource<AppPlatformServiceRegistryResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AppPlatformServiceRegistryData.DeserializeAppPlatformServiceRegistryData(document.RootElement);
+            var data = ModelReaderWriter.Read<AppPlatformServiceRegistryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return new AppPlatformServiceRegistryResource(_client, data);
         }
 
         async ValueTask<AppPlatformServiceRegistryResource> IOperationSource<AppPlatformServiceRegistryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AppPlatformServiceRegistryData.DeserializeAppPlatformServiceRegistryData(document.RootElement);
-            return new AppPlatformServiceRegistryResource(_client, data);
+            var data = ModelReaderWriter.Read<AppPlatformServiceRegistryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
+            return await Task.FromResult(new AppPlatformServiceRegistryResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

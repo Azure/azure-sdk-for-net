@@ -36,16 +36,6 @@ namespace Azure.Search.Documents.Indexes
         public string IndexAnalyzerName { get; set; }
 
         /// <summary>
-        /// The dimensionality of the vector field.
-        /// </summary>
-        public string VectorSearchDimensions { get; set; }
-
-        /// <summary>
-        /// The name of the vector search algorithm configuration that specifies the algorithm and optional parameters for searching the vector field.
-        /// </summary>
-        public string VectorSearchConfiguration { get; set; }
-
-        /// <summary>
         /// Gets or sets a list of names of synonym maps to associate with this field.
         /// Currently, only one synonym map per field is supported.
         /// </summary>
@@ -84,16 +74,6 @@ namespace Azure.Search.Documents.Indexes
             if (IndexAnalyzerName != null)
             {
                 field.IndexAnalyzerName = IndexAnalyzerName;
-            }
-
-            if (int.TryParse(VectorSearchDimensions, out int dimensions))
-            {
-                field.VectorSearchDimensions = dimensions;
-            }
-
-            if (VectorSearchConfiguration != null)
-            {
-                field.VectorSearchConfiguration = VectorSearchConfiguration;
             }
         }
     }

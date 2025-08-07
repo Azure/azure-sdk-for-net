@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleManagementPolicies();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAll()
         {
             var collection = await GetRoleManagementPolicyCollectionAsync();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(roleManagementPolicies.Count, 0);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Get()
         {
             var collection = await GetRoleManagementPolicyCollectionAsync();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Exists()
         {
             var collection = await GetRoleManagementPolicyCollectionAsync();

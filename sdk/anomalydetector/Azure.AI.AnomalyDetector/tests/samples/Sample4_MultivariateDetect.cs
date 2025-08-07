@@ -68,7 +68,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         private int GetModelNumber(AnomalyDetectorClient client)
         {
             int modelNumber = 0;
-            foreach (AnomalyDetectionModel multivariateModel in client.GetMultivariateModels())
+            foreach (AnomalyDetectionModel multivariateModel in client.GetMultivariateClient().GetMultivariateModels())
             {
                 modelNumber++;
             }
@@ -90,18 +90,18 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 };
 
                 Console.WriteLine("Training new model...(it may take a few minutes)");
-                AnomalyDetectionModel response = client.TrainMultivariateModel(modelInfo);
+                AnomalyDetectionModel response = client.GetMultivariateClient().TrainMultivariateModel(modelInfo);
                 string trainedModelId = response.ModelId.ToString();
                 Console.WriteLine($"Training model id is {trainedModelId}");
 
                 // Wait until the model is ready. It usually takes several minutes
                 ModelStatus? modelStatus = null;
                 int tryoutCount = 1;
-                response = client.GetMultivariateModel(trainedModelId);
+                response = client.GetMultivariateClient().GetMultivariateModel(trainedModelId);
                 while (tryoutCount < maxTryout & modelStatus != ModelStatus.Ready & modelStatus != ModelStatus.Failed)
                 {
                     System.Threading.Thread.Sleep(1000);
-                    response = client.GetMultivariateModel(trainedModelId);
+                    response = client.GetMultivariateClient().GetMultivariateModel(trainedModelId);
                     modelStatus = response.ModelInfo.Status;
                     TestContext.Progress.WriteLine($"try {tryoutCount}, model id: {trainedModelId}, status: {modelStatus}.");
                     tryoutCount += 1;
@@ -144,21 +144,24 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             try
             {
                 Console.WriteLine("Start batch detect...");
-                MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, 10, startTime, endTime);
+                MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, startTime, endTime)
+                {
+                    TopContributorCount = 10
+                };
 
                 Console.WriteLine("Start batch detection, this might take a few minutes...");
-                MultivariateDetectionResult response = client.DetectMultivariateBatchAnomaly(modelId, request);
+                MultivariateDetectionResult response = client.GetMultivariateClient().DetectMultivariateBatchAnomaly(modelId, request);
                 Guid resultId = response.ResultId;
                 Console.WriteLine($"result id is: {resultId.ToString()}");
 
                 // get detection result
-                MultivariateDetectionResult resultResponse = client.GetMultivariateBatchDetectionResult(resultId);
+                MultivariateDetectionResult resultResponse = client.GetMultivariateClient().GetMultivariateBatchDetectionResult(resultId);
                 MultivariateBatchDetectionStatus resultStatus = resultResponse.Summary.Status;
                 int tryoutCount = 0;
                 while (tryoutCount < maxTryout & resultStatus != MultivariateBatchDetectionStatus.Ready & resultStatus != MultivariateBatchDetectionStatus.Failed)
                 {
                     System.Threading.Thread.Sleep(1000);
-                    resultResponse = client.GetMultivariateBatchDetectionResult(resultId);
+                    resultResponse = client.GetMultivariateClient().GetMultivariateBatchDetectionResult(resultId);
                     resultStatus = resultResponse.Summary.Status;
                     Console.WriteLine($"try: {tryoutCount}, result id: {resultId} Detection status is {resultStatus}");
                 }
@@ -199,7 +202,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     }
                 }
                 MultivariateLastDetectionOptions request = new MultivariateLastDetectionOptions(variables);
-                MultivariateLastDetectionResult response = client.DetectMultivariateLastAnomaly(modelId, request);
+                MultivariateLastDetectionResult response = client.GetMultivariateClient().DetectMultivariateLastAnomaly(modelId, request);
                 return response;
             }
             catch (Exception ex)
@@ -213,7 +216,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         #region Snippet:DeleteMultivariateModel
         private void DeleteModel(AnomalyDetectorClient client, string modelId)
         {
-            client.DeleteMultivariateModel(modelId);
+            client.GetMultivariateClient().DeleteMultivariateModel(modelId);
             int modelNumber = GetModelNumber(client);
             Console.WriteLine($"{modelNumber} available models after deletion.");
         }

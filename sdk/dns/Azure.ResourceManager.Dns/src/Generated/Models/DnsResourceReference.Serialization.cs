@@ -5,23 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsResourceReference
+    public partial class DnsResourceReference : IUtf8JsonSerializable, IJsonModel<DnsResourceReference>
     {
-        internal static DnsResourceReference DeserializeDnsResourceReference(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsResourceReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DnsResourceReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(DnsResources))
+            {
+                writer.WritePropertyName("dnsResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in DnsResources)
+                {
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(TargetResource))
+            {
+                writer.WritePropertyName("targetResource"u8);
+                ((IJsonModel<WritableSubResource>)TargetResource).Write(writer, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        DnsResourceReference IJsonModel<DnsResourceReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsResourceReference(document.RootElement, options);
+        }
+
+        internal static DnsResourceReference DeserializeDnsResourceReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<WritableSubResource>> dnsResources = default;
-            Optional<WritableSubResource> targetResource = default;
+            IReadOnlyList<WritableSubResource> dnsResources = default;
+            WritableSubResource targetResource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsResources"u8))
@@ -33,7 +103,7 @@ namespace Azure.ResourceManager.Dns.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerDnsContext.Default));
                     }
                     dnsResources = array;
                     continue;
@@ -44,11 +114,47 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    targetResource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    targetResource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDnsContext.Default);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DnsResourceReference(Optional.ToList(dnsResources), targetResource);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DnsResourceReference(dnsResources ?? new ChangeTrackingList<WritableSubResource>(), targetResource, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DnsResourceReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DnsResourceReference IPersistableModel<DnsResourceReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDnsResourceReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DnsResourceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

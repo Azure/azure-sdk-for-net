@@ -11,18 +11,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SubscriptionSecurityApplicationResource" /> and their operations.
-    /// Each <see cref="SubscriptionSecurityApplicationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SubscriptionSecurityApplicationCollection" /> instance call the GetSubscriptionSecurityApplications method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SubscriptionSecurityApplicationResource"/> and their operations.
+    /// Each <see cref="SubscriptionSecurityApplicationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionSecurityApplicationCollection"/> instance call the GetSubscriptionSecurityApplications method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SubscriptionSecurityApplicationCollection : ArmCollection, IEnumerable<SubscriptionSecurityApplicationResource>, IAsyncEnumerable<SubscriptionSecurityApplicationResource>
     {
@@ -69,6 +68,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Application_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -87,7 +94,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _subscriptionSecurityApplicationApplicationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, applicationId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response), response.GetRawResponse()));
+                var uri = _subscriptionSecurityApplicationApplicationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, applicationId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,6 +119,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Application_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -128,7 +145,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _subscriptionSecurityApplicationApplicationRestClient.CreateOrUpdate(Id.SubscriptionId, applicationId, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response), response.GetRawResponse()));
+                var uri = _subscriptionSecurityApplicationApplicationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, applicationId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SubscriptionSecurityApplicationResource>(Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -150,6 +169,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Application_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,6 +215,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Application_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
@@ -225,15 +260,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Applications_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionSecurityApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionSecurityApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionSecurityApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -247,15 +290,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Applications_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionSecurityApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionSecurityApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionSecurityApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityApplicationApplicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _subscriptionSecurityApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionSecurityApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -268,6 +319,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Application_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +363,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Application_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
@@ -320,6 +387,96 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _subscriptionSecurityApplicationApplicationRestClient.Get(Id.SubscriptionId, applicationId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Application_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SubscriptionSecurityApplicationResource>> GetIfExistsAsync(string applicationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
+
+            using var scope = _subscriptionSecurityApplicationApplicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _subscriptionSecurityApplicationApplicationRestClient.GetAsync(Id.SubscriptionId, applicationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionSecurityApplicationResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Application_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSecurityApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
+        public virtual NullableResponse<SubscriptionSecurityApplicationResource> GetIfExists(string applicationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
+
+            using var scope = _subscriptionSecurityApplicationApplicationClientDiagnostics.CreateScope("SubscriptionSecurityApplicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionSecurityApplicationApplicationRestClient.Get(Id.SubscriptionId, applicationId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionSecurityApplicationResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSecurityApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

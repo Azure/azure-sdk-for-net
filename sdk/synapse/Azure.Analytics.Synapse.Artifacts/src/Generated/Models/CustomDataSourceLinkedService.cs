@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Custom linked service. </summary>
     public partial class CustomDataSourceLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDataSourceLinkedService"/>. </summary>
         /// <param name="typeProperties"> Custom linked service properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
         public CustomDataSourceLinkedService(object typeProperties)
@@ -25,15 +24,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "CustomDataSource";
         }
 
-        /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDataSourceLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="typeProperties"> Custom linked service properties. </param>
-        internal CustomDataSourceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object typeProperties) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal CustomDataSourceLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object typeProperties) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
             Type = type ?? "CustomDataSource";

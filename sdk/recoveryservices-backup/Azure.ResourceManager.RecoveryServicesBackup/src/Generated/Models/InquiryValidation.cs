@@ -5,25 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Validation for inquired protectable items under a given container. </summary>
     public partial class InquiryValidation
     {
-        /// <summary> Initializes a new instance of InquiryValidation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InquiryValidation"/>. </summary>
         public InquiryValidation()
         {
         }
 
-        /// <summary> Initializes a new instance of InquiryValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="InquiryValidation"/>. </summary>
         /// <param name="status"> Status for the Inquiry Validation. </param>
         /// <param name="errorDetail"> Error Detail in case the status is non-success. </param>
         /// <param name="additionalDetail"> Error Additional Detail in case the status is non-success. </param>
-        internal InquiryValidation(string status, BackupErrorDetail errorDetail, string additionalDetail)
+        /// <param name="protectableItemCount"> Dictionary to store the count of ProtectableItems with key POType. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InquiryValidation(string status, BackupErrorDetail errorDetail, string additionalDetail, BinaryData protectableItemCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             ErrorDetail = errorDetail;
             AdditionalDetail = additionalDetail;
+            ProtectableItemCount = protectableItemCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status for the Inquiry Validation. </summary>
@@ -32,5 +71,36 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public BackupErrorDetail ErrorDetail { get; set; }
         /// <summary> Error Additional Detail in case the status is non-success. </summary>
         public string AdditionalDetail { get; }
+        /// <summary>
+        /// Dictionary to store the count of ProtectableItems with key POType.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData ProtectableItemCount { get; }
     }
 }

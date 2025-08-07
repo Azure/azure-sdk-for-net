@@ -2,5 +2,136 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "resources": [
-    ]
+        {
+            "type": "Microsoft.HybridCompute/machines",
+            "apiVersion": "[parameters('hcApiVersion')]",
+            "name": "[parameters('hcName')]",
+            "location": "[parameters('location')]",
+            "kind": "HCI",
+            "properties": {
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        },
+        {
+            "type": "Microsoft.HybridCompute/machines",
+            "apiVersion": "[parameters('hcApiVersion')]",
+            "name": "[parameters('hcNameAsync')]",
+            "location": "[parameters('location')]",
+            "kind": "HCI",
+            "properties": {
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            }
+        }
+    ],
+    "parameters":{
+        "subscriptionId": {
+            "type": "string",
+            "defaultValue": "[subscription().subscriptionId]",
+            "metadata": {
+                "description": "The subscription ID to which the application and resources belong."
+            }
+        },
+        "resourceGroupPrefix": {
+            "type": "string",
+            "defaultValue": "hci-dotnet-test-rg-",
+            "metadata": {
+                "description": "The prefix to which the resource group will create its name with."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        },
+        "extendedLocationRg": {
+            "type": "string",
+            "defaultValue": "hci-dotnet-test-rg",
+            "metadata": {
+                "description": "The resource group to which the custom location belongs."
+            }
+        },
+        "hcApiVersion": {
+            "type": "string",
+            "defaultValue": "2023-06-20-preview",
+            "metadata": {
+                "description": "The api-version to create the hybrid compute machine with."
+            }
+        },
+        "hcName": {
+            "type": "string",
+            "defaultValue": "dotnet-machine",
+            "metadata": {
+                "description": "The name of the hybrid compute machine to create with."
+            }
+        },
+        "hcNameAsync": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('hcName'), '-async')]",
+            "metadata": {
+                "description": "The name of the hybrid compute machine to create with."
+            }
+        },
+        "imagePath": {
+            "type": "string",
+            "defaultValue": "C:\\ClusterStorage\\Volume1\\test.vhdx",
+            "metadata": {
+                "description": "The image path to create gallery images from."
+            }
+        },
+        "storagePath": {
+            "type": "string",
+            "defaultValue": "C:\\ClusterStorage\\Volume1\\sc-dotnet-test",
+            "metadata": {
+                "description": "The storage path to create storage containers from."
+            }
+        },
+        "vmUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "The username to create a virtualmachineinstance with."
+            }
+        },
+        "vmPass": {
+            "type": "string",
+            "metadata": {
+                "description": "The password to create a virtualmachineinstance with."
+            }
+        }
+    },
+    "outputs": {
+        "CUSTOM_LOCATION_ID": {
+            "type": "string",
+            "value": "[format('/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ExtendedLocation/customLocations/myResourceBridge-cl', parameters('subscriptionId'), parameters('extendedLocationRg'))]"
+        },
+        "HC_MACHINE_NAME": {
+            "type": "string",
+            "value": "[parameters('hcName')]"
+        },
+        "HC_MACHINE_NAME_ASYNC": {
+            "type": "string",
+            "value": "[parameters('hcNameAsync')]"
+        },
+        "IMAGE_PATH": {
+            "type": "string",
+            "value": "[parameters('imagePath')]"
+        },
+        "STORAGE_PATH": {
+            "type": "string",
+            "value": "[parameters('storagePath')]"
+        },
+        "VM_USERNAME": {
+            "type": "string",
+            "value": "[parameters('vmUsername')]"
+        },
+        "VM_PASS": {
+            "type": "string",
+            "value": "[parameters('vmPass')]"
+        }
+    }
 }

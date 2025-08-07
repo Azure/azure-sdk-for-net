@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.ContainerOrchestratorRuntime.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Kubernetes" />
+  </ItemGroup>
+</Project>

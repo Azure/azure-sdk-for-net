@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The integration runtime authentication keys. </summary>
     public partial class SynapseIntegrationRuntimeAuthKeys
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeAuthKeys. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeAuthKeys"/>. </summary>
         internal SynapseIntegrationRuntimeAuthKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeAuthKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeAuthKeys"/>. </summary>
         /// <param name="authKey1"> The primary integration runtime authentication key. </param>
         /// <param name="authKey2"> The secondary integration runtime authentication key. </param>
-        internal SynapseIntegrationRuntimeAuthKeys(string authKey1, string authKey2)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseIntegrationRuntimeAuthKeys(string authKey1, string authKey2, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthKey1 = authKey1;
             AuthKey2 = authKey2;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary integration runtime authentication key. </summary>

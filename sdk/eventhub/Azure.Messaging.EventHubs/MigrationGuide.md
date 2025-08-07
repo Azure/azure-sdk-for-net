@@ -51,33 +51,33 @@ In the case of Event Hubs, the client libraries have packages and namespaces tha
 
 ### Client hierarchy
 
-The key goal for the Event Hubs client library is to provide a first-class experience for developers, from early exploration of Event Hubs through real-world use.  We wanted to simplify the API surface to focus on scenarios important to the majority of developers without losing support for those with specialized needs.  To achieve this, the client hierarchy has been split into two general categories, mainstream and specialized.  
+The key goal for the Event Hubs client library is to provide a first-class experience for developers, from early exploration of Event Hubs through real-world use.  We wanted to simplify the API surface to focus on scenarios important to the majority of developers without losing support for those with specialized needs.  To achieve this, the client hierarchy has been split into two general categories, mainstream and specialized.
 
 The mainstream set of clients provides an approachable onboarding experience for those new to Event Hubs with a clear step-up path to production use.  The specialized set of clients is focused on high-throughput and allowing developers a higher degree of control, at the cost of more complexity in their use.  This section will briefly introduce the clients in both categories, with the remainder of the migration guide focused on mainstream scenarios.
 
-#### Mainstream  
+#### Mainstream
 
 In order to allow for a single focus and clear responsibility, the core functionality for publishing and reading events belongs to distinct clients, rather than the single `EventHubClient` used by previous versions.  The producer and consumer clients operate in the context of a specific Event Hub and offer operations for all partitions. Clients in the `Azure.Messaging.EventHubs` family are not bound to a specific partition, instead offering specific partitions to be provided at the method-level, where needed.
 
-- The [EventHubProducerClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer?view=azure-dotnet) is responsible for publishing events and supports multiple approaches for selecting the partition to which the event is associated, including automatic routing by the Event Hubs service and specifying an explicit partition.
+- The [EventHubProducerClient](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer?view=azure-dotnet) is responsible for publishing events and supports multiple approaches for selecting the partition to which the event is associated, including automatic routing by the Event Hubs service and specifying an explicit partition.
 
-- The [EventHubBufferedProducerClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer?view=azure-dotnet) publishes events using a deferred model where events are collected into a buffer and the producer has responsibility for implicitly batching and sending them.  More on the design and philosophy behind this type can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hub-buffered-producer.md).
-  
-- The [EventHubConsumerClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.eventhubconsumerclient?view=azure-dotnet) supports reading events from a single partition and also offers an easy way to familiarize yourself with Event Hubs by reading from all partitions without the rigor and complexity that you would need in a production application. For reading events from all partitions in a production scenario, we strongly recommend using the [EventProcessorClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient?view=azure-dotnet) over the `EventHubConsumerClient`.
+- The [EventHubBufferedProducerClient](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.producer?view=azure-dotnet) publishes events using a deferred model where events are collected into a buffer and the producer has responsibility for implicitly batching and sending them.  More on the design and philosophy behind this type can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-hub-buffered-producer.md).
 
-- The [EventProcessorClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient?view=azure-dotnet) is responsible for reading and processing events for all partitions of an Event Hub. It will collaborate with other instances for the same Event Hub and consumer group pairing to balance work between them.  A high degree of fault tolerance is built-in, allowing the processor to be resilient in the face of errors.  The `EventProcessorClient` can be found in the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) package. 
-  
-  One of the key features of the `EventProcessorClient` is enabling tracking of which events have been processed by interacting with a durable storage provider.  This process is commonly referred to as [checkpointing](https://docs.microsoft.com/azure/event-hubs/event-hubs-features#checkpointing) and the persisted state as a checkpoint.  This version of the `EventProcessorClient` supports only Azure Storage Blobs as a backing store.  
-  
-  **_Important note on checkpoints:_**  The [EventProcessorClient](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient?view=azure-dotnet) does not support legacy checkpoint data created using the `EventProcessorHost` from the `Microsoft.Azure.EventHubs.Processor` package.  In order to allow for a unified format for checkpoint data across languages, a more efficient approach to data storage, and improvements to the algorithm used for managing partition ownership, breaking changes were necessary.  An approach for migrating the legacy `EventProcessorHost` checkpoints can be found in the [checkpoint migration section](#migrating-eventprocessorhost-checkpoints) below.
+- The [EventHubConsumerClient](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.eventhubconsumerclient?view=azure-dotnet) supports reading events from a single partition and also offers an easy way to familiarize yourself with Event Hubs by reading from all partitions without the rigor and complexity that you would need in a production application. For reading events from all partitions in a production scenario, we strongly recommend using the [EventProcessorClient](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient?view=azure-dotnet) over the `EventHubConsumerClient`.
+
+- The [EventProcessorClient](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient?view=azure-dotnet) is responsible for reading and processing events for all partitions of an Event Hub. It will collaborate with other instances for the same Event Hub and consumer group pairing to balance work between them.  A high degree of fault tolerance is built-in, allowing the processor to be resilient in the face of errors.  The `EventProcessorClient` can be found in the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) package.
+
+  One of the key features of the `EventProcessorClient` is enabling tracking of which events have been processed by interacting with a durable storage provider.  This process is commonly referred to as [checkpointing](https://learn.microsoft.com/azure/event-hubs/event-hubs-features#checkpointing) and the persisted state as a checkpoint.  This version of the `EventProcessorClient` supports only Azure Storage Blobs as a backing store.
+
+  **_Important note on checkpoints:_**  The [EventProcessorClient](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient?view=azure-dotnet) does not support legacy checkpoint data created using the `EventProcessorHost` from the `Microsoft.Azure.EventHubs.Processor` package.  In order to allow for a unified format for checkpoint data across languages, a more efficient approach to data storage, and improvements to the algorithm used for managing partition ownership, breaking changes were necessary.  An approach for migrating the legacy `EventProcessorHost` checkpoints can be found in the [checkpoint migration section](#migrating-eventprocessorhost-checkpoints) below.
 
 #### Specialized
 
-- The [PartitionReceiver](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.partitionreceiver?view=azure-dotnet) is responsible for reading events from a specific partition of an Event Hub, with a greater level of control over communication with the Event Hubs service than is offered by other event consumers.  More detail on the design and philosophy for the `PartitionReceiver` can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-partition-receiver.md).
+- The [PartitionReceiver](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.partitionreceiver?view=azure-dotnet) is responsible for reading events from a specific partition of an Event Hub, with a greater level of control over communication with the Event Hubs service than is offered by other event consumers.  More detail on the design and philosophy for the `PartitionReceiver` can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-partition-receiver.md).
 
-- The [PluggableCheckpointStoreEventProcessor&lt;TPartition&gt;](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.PluggableCheckpointStoreEventProcessor-1?view=azure-dotnet) provides a base for creating a custom processor for reading and processing events from all partitions of an Event Hub, using the provided checkpoint store for state persistence. It fills a role similar to the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package, with cooperative load balancing and resiliency as its core features.  However, `PluggableCheckpointStoreEventProcessor<TPartition>` also offers native batch processing, a greater level of control over communication with the Event Hubs service, and a less opinionated API.  The caveat is that this comes with additional complexity and exists as an abstract base, which needs to be extended.
+- The [PluggableCheckpointStoreEventProcessor&lt;TPartition&gt;](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.PluggableCheckpointStoreEventProcessor-1?view=azure-dotnet) provides a base for creating a custom processor for reading and processing events from all partitions of an Event Hub, using the provided checkpoint store for state persistence. It fills a role similar to the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package, with cooperative load balancing and resiliency as its core features.  However, `PluggableCheckpointStoreEventProcessor<TPartition>` also offers native batch processing, a greater level of control over communication with the Event Hubs service, and a less opinionated API.  The caveat is that this comes with additional complexity and exists as an abstract base, which needs to be extended.
 
-- The [EventProcessor&lt;TPartition&gt;](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.eventprocessor-1?view=azure-dotnet) is our lowest-level base for creating a custom processor allowing the greatest degree of customizability. It fills a role similar to the [PluggableCheckpointStoreEventProcessor&lt;TPartition&gt;](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.PluggableCheckpointStoreEventProcessor-1?view=azure-dotnet), with cooperative load balancing, resiliency, and batch processing as its core features.  However, `EventProcessor<TPartition>` also provides the ability to customize checkpoint storage, including using different stores for ownership and checkpoint data.  `EventProcessor<TPartition>` exists as an abstract base, which needs to be extended.  More on the design and philosophy behind this type can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-processor%7BT%7D.md).
+- The [EventProcessor&lt;TPartition&gt;](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.eventprocessor-1?view=azure-dotnet) is our lowest-level base for creating a custom processor allowing the greatest degree of customizability. It fills a role similar to the [PluggableCheckpointStoreEventProcessor&lt;TPartition&gt;](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.PluggableCheckpointStoreEventProcessor-1?view=azure-dotnet), with cooperative load balancing, resiliency, and batch processing as its core features.  However, `EventProcessor<TPartition>` also provides the ability to customize checkpoint storage, including using different stores for ownership and checkpoint data.  `EventProcessor<TPartition>` exists as an abstract base, which needs to be extended.  More on the design and philosophy behind this type can be found in its [design document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-processor%7BT%7D.md).
 
 ### Client constructors
 
@@ -206,10 +206,14 @@ finally
 In the `Azure.Messaging.EventHubs` library, the `EventHubProducerClient` is used as the publisher for a batch created with its default configuration.
 
 ```C# Snippet:EventHubs_Sample04_AutomaticRouting
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -276,10 +280,14 @@ finally
 In the `Azure.Messaging.EventHubs` library, the `EventHubProducerClient` is used as the publisher for a batch created with a partition key specified as an option.
 
 ```C# Snippet:EventHubs_Sample04_PartitionKey
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -351,10 +359,14 @@ finally
 In the `Azure.Messaging.EventHubs` library, the `EventHubProducerClient` is used as the publisher for a batch created with a partition identifier specified as an option.
 
 ```C# Snippet:EventHubs_Sample04_PartitionId
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
-var producer = new EventHubProducerClient(connectionString, eventHubName);
+var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -387,7 +399,7 @@ finally
 
 ### Reading events
 
-In the `Microsoft.Azure.EventHubs` library, reading events can be performed by either the `EventProcessorHost` or the `PartitionReceiver`, depending on whether you would like to read from all partitions of an Event Hub or a single partition.  Generally, using the `EventProcessorHost` is the preferred approach for most production scenarios.  
+In the `Microsoft.Azure.EventHubs` library, reading events can be performed by either the `EventProcessorHost` or the `PartitionReceiver`, depending on whether you would like to read from all partitions of an Event Hub or a single partition.  Generally, using the `EventProcessorHost` is the preferred approach for most production scenarios.
 
 The `Azure.Messaging.EventHubs` library also provides multiple types for reading events, with the `EventProcessorClient` focused on reading from all partitions, and the `EventHubConsumerClient` and `PartitionReceiver` focused on reading from a single partition. The `EventProcessorClient` is the preferred approach for most production scenarios.  For a detailed discussion of common scenarios and options, please see the [Event Processor Client](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) and [Reading Events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadingEvents.md) samples.
 
@@ -658,17 +670,19 @@ finally
 }
 ```
 
-In the `Azure.Messaging.EventHubs` library, the `EventHubConsumerClient` can be used to read events from a partition in a streaming manner using the asynchronous enumerator pattern.  
+In the `Azure.Messaging.EventHubs` library, the `EventHubConsumerClient` can be used to read events from a partition in a streaming manner using the asynchronous enumerator pattern.
 
 ```C# Snippet:EventHubs_Sample05_ReadPartition
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
 var consumer = new EventHubConsumerClient(
     consumerGroup,
-    connectionString,
-    eventHubName);
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -703,8 +717,9 @@ finally
 For those that prefer a batched approach to reading, `Azure.Messaging.EventHubs` also offers a `PartitionReceiver` that follows pull-based semantics.
 
 ```C# Snippet:EventHubs_Sample05_ReadPartitionWithReceiver
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
@@ -712,7 +727,10 @@ cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
 string firstPartition;
 
-await using (var producer = new EventHubProducerClient(connectionString, eventHubName))
+await using (var producer = new EventHubProducerClient(
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential))
 {
     firstPartition = (await producer.GetPartitionIdsAsync()).First();
 }
@@ -721,8 +739,9 @@ var receiver = new PartitionReceiver(
     consumerGroup,
     firstPartition,
     EventPosition.Earliest,
-    connectionString,
-    eventHubName);
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
 
 try
 {
@@ -762,7 +781,7 @@ In `Azure.Messaging.EventHubs`, Activity baggage is not currently flowed through
 
 ## Migrating EventProcessorHost checkpoints
 
-In `Microsoft.Azure.EventHubs`, the `EventProcessorHost` supported a model of pluggable storage providers for checkpoint data, using Azure Storage Blobs as the default.  Using the Azure Storage checkpoint manager, the lease and checkpoint information is stored as a JSON blob appearing within the Azure Storage account provided to the `EventProcessorHost`.  More details can be found in the [documentation](https://docs.microsoft.com/azure/event-hubs/event-hubs-event-processor-host#partition-ownership-tracking).
+In `Microsoft.Azure.EventHubs`, the `EventProcessorHost` supported a model of pluggable storage providers for checkpoint data, using Azure Storage Blobs as the default.  Using the Azure Storage checkpoint manager, the lease and checkpoint information is stored as a JSON blob appearing within the Azure Storage account provided to the `EventProcessorHost`.  More details can be found in the [documentation](https://learn.microsoft.com/azure/event-hubs/event-hubs-event-processor-host#partition-ownership-tracking).
 
 In `Azure.Messaging.EventHubs`, the `EventProcessorClient` is an opinionated implementation, storing checkpoints in Azure Storage Blobs using the blob metadata to track information.  Unfortunately, the `EventProcessorClient` is unable to consume legacy checkpoints due to the differences in format, approach, and the possibility of a custom checkpoint provider having been used.
 
@@ -777,14 +796,16 @@ private class MigrationCheckpoint
 }
 ```
 
-The `Azure.Messaging.EventHubs` checkpoints are expected by the `EventProcessorClient` to exist in a specifically named blob per partition that contains two metadata attributes.  Any content of the blob itself is ignored.  Casing is significant where both the name of the blob and the metadata attributes are concerned and must be lowercase.  
+The `Azure.Messaging.EventHubs` checkpoints are expected by the `EventProcessorClient` to exist in a specifically named blob per partition that contains two metadata attributes.  Any content of the blob itself is ignored.  Casing is significant where both the name of the blob and the metadata attributes are concerned and must be lowercase.
 
 ```C# Snippet:EventHubs_Migrate_Checkpoints
+var credential = new DefaultAzureCredential();
+
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER  >>";
 var legacyBlobContainerName = "<< NAME OF THE BLOB CONTAINER THAT CONTAINS THE LEGACY DATA>>";
 
@@ -796,9 +817,10 @@ using var cancellationSource = new CancellationTokenSource();
 // Note: The ReadLegacyCheckpoints method will be defined in another snippet.
 
 var legacyCheckpoints = await ReadLegacyCheckpoints(
-    storageConnectionString,
+    storageAccountEndpoint,
     legacyBlobContainerName,
     consumerGroup,
+    credential,
     cancellationSource.Token);
 
 // The member names of MigrationCheckpoint match the names of the checkpoint
@@ -820,7 +842,15 @@ var prefix = string.Format(
 // assumes that the connection string grants the appropriate permissions to create a
 // container in the storage account.
 
-var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
+var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+{
+    BlobContainerName = blobContainerName
+};
+
+var storageClient = new BlobContainerClient(
+    blobUriBuilder.ToUri(),
+    credential);
+
 await storageClient.CreateIfNotExistsAsync(cancellationToken: cancellationSource.Token);
 
 // Translate each of the legacy checkpoints, storing the offset and
@@ -849,12 +879,20 @@ The following snippet to read and parse legacy checkpoints assumes that the defa
 
 ```C# Snippet:EventHubs_Migrate_LegacyCheckpoints
 private async Task<List<MigrationCheckpoint>> ReadLegacyCheckpoints(
-    string connectionString,
+    string storageAccountEndpoint,
     string container,
     string consumerGroup,
+    TokenCredential credential,
     CancellationToken cancellationToken)
 {
-    var storageClient = new BlobContainerClient(connectionString, container);
+    var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+    {
+        BlobContainerName = container
+    };
+
+    var storageClient = new BlobContainerClient(
+        blobUriBuilder.ToUri(),
+        credential);
 
     // If there is no container, no action can be taken.
 

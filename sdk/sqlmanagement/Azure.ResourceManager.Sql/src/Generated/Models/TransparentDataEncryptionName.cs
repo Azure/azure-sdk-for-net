@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(TransparentDataEncryptionName left, TransparentDataEncryptionName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TransparentDataEncryptionName"/> values are not the same. </summary>
         public static bool operator !=(TransparentDataEncryptionName left, TransparentDataEncryptionName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TransparentDataEncryptionName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TransparentDataEncryptionName"/>. </summary>
         public static implicit operator TransparentDataEncryptionName(string value) => new TransparentDataEncryptionName(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

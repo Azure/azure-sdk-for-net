@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringDouble
     {
@@ -21,7 +21,7 @@ namespace Azure
         [Test]
         public void DoubleImplicit([ValueSource("DoubleData")] double testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<double>());
             Assert.AreEqual(typeof(double), value.Type);
 
@@ -34,10 +34,10 @@ namespace Azure
         [Test]
         public void DoubleCreate([ValueSource("DoubleData")] double testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
-                value = Value.Create(testValue);
+                value = Variant.Create(testValue);
             }
 
             Assert.AreEqual(testValue, value.As<double>());
@@ -47,7 +47,7 @@ namespace Azure
 
             using (MemoryWatch.Create())
             {
-                value = Value.Create(source);
+                value = Variant.Create(source);
             }
 
             Assert.AreEqual(source, value.As<double?>());
@@ -57,7 +57,7 @@ namespace Azure
         [Test]
         public void DoubleInOut([ValueSource("DoubleData")] double testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out double result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -70,7 +70,7 @@ namespace Azure
         public void NullableDoubleInDoubleOut([ValueSource("DoubleData")] double? testValue)
         {
             double? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out double result);
             Assert.True(success);
@@ -85,7 +85,7 @@ namespace Azure
         public void DoubleInNullableDoubleOut([ValueSource("DoubleData")] double testValue)
         {
             double source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out double? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -98,7 +98,7 @@ namespace Azure
         {
             double i = testValue;
             object o = i;
-            Value value = new(o);
+            Variant value = new(o);
 
             Assert.AreEqual(typeof(double), value.Type);
             Assert.True(value.TryGetValue(out double result));
@@ -121,7 +121,7 @@ namespace Azure
         public void NullDouble()
         {
             double? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<double?>());
             Assert.False(value.As<double?>().HasValue);
@@ -130,7 +130,7 @@ namespace Azure
         [Test]
         public void OutAsObject([ValueSource("DoubleData")] double testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(double), o.GetType());
             Assert.AreEqual(testValue, (double)o);

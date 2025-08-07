@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The routes table associated with the ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCrossConnectionRoutesTableSummary
     {
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionRoutesTableSummary. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionRoutesTableSummary"/>. </summary>
         internal ExpressRouteCrossConnectionRoutesTableSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionRoutesTableSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionRoutesTableSummary"/>. </summary>
         /// <param name="neighbor"> IP address of Neighbor router. </param>
         /// <param name="asn"> Autonomous system number. </param>
         /// <param name="upDown"> The length of time that the BGP session has been in the Established state, or the current status if not in the Established state. </param>
         /// <param name="stateOrPrefixesReceived"> Current state of the BGP session, and the number of prefixes that have been received from a neighbor or peer group. </param>
-        internal ExpressRouteCrossConnectionRoutesTableSummary(string neighbor, int? asn, string upDown, string stateOrPrefixesReceived)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCrossConnectionRoutesTableSummary(string neighbor, int? asn, string upDown, string stateOrPrefixesReceived, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Neighbor = neighbor;
             Asn = asn;
             UpDown = upDown;
             StateOrPrefixesReceived = stateOrPrefixesReceived;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP address of Neighbor router. </summary>

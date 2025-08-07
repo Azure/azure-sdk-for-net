@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Tests
 {

@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Communication.Identity.Models;
-using Azure.Core;
 
 namespace Azure.Communication.Identity
 {

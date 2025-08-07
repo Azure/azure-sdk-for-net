@@ -8,13 +8,20 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
-# tag: package-2023-01
-require: https://github.com/Azure/azure-rest-api-specs/blob/add28efcd3a5fd422285d992fb1ec5ee5a7a40a6/specification/recoveryservicesbackup/resource-manager/readme.md
+# tag: package-2025-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/97ee23a6db6078abcbec7b75bf9af8c503e9bb8b/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../tests/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+models-to-treat-empty-string-as-null:
+  - IaasComputeVmProtectedItem
 
 rename-mapping:
   Job: BackupGenericJob
@@ -91,6 +98,7 @@ rename-mapping:
   AzureVmWorkloadProtectedItem: VmWorkloadProtectedItem
   AzureVmWorkloadProtectedItemExtendedInfo: VmWorkloadProtectedItemExtendedInfo
   AzureVmWorkloadProtectionPolicy: VmWorkloadProtectionPolicy
+  AzureVmWorkloadSAPAseDatabaseProtectableItem: VmWorkloadSapAseDatabaseProtectableItem
   AzureVmWorkloadSAPAseDatabaseProtectedItem: VmWorkloadSapAseDatabaseProtectedItem
   AzureVmWorkloadSAPAseDatabaseWorkloadItem: VmWorkloadSapAseDatabaseWorkloadItem
   AzureVmWorkloadSAPAseSystemProtectableItem: VmWorkloadSapAseSystemProtectableItem
@@ -100,7 +108,7 @@ rename-mapping:
   AzureVmWorkloadSAPHanaDatabaseWorkloadItem: VmWorkloadSapHanaDatabaseWorkloadItem
   AzureVmWorkloadSAPHanaDBInstance: VmWorkloadSapHanaDBInstance
   AzureVmWorkloadSAPHanaDBInstanceProtectedItem: VmWorkloadSapHanaDBInstanceProtectedItem
-  AzureVmWorkloadSAPHanaHSR: VmWorkloadSapHanaHsr
+  AzureVmWorkloadSAPHanaHSRProtectableItem: VmWorkloadSapHanaHsrProtectableItem
   AzureVmWorkloadSAPHanaSystemProtectableItem: VmWorkloadSapHanaSystemProtectableItem
   AzureVmWorkloadSAPHanaSystemWorkloadItem: VmWorkloadSapHanaSystemWorkloadItem
   AzureVmWorkloadSQLAvailabilityGroupProtectableItem: VmWorkloadSqlAvailabilityGroupProtectableItem
@@ -136,6 +144,10 @@ rename-mapping:
   AzureWorkloadSQLRecoveryPointExtendedInfo: WorkloadSqlRecoveryPointExtendedInfo
   AzureWorkloadSQLRestoreRequest: WorkloadSqlRestoreContent
   AzureWorkloadSQLRestoreWithRehydrateRequest: WorkloadSqlRestoreWithRehydrateContent
+  AzureWorkloadSAPAsePointInTimeRecoveryPoint: WorkloadSapAsePointInTimeRecoveryPoint
+  AzureWorkloadSAPAsePointInTimeRestoreRequest: WorkloadSapAsePointInTimeRestoreContent
+  AzureWorkloadSAPAseRecoveryPoint: WorkloadSapAseRecoveryPoint
+  AzureWorkloadSAPAseRestoreRequest: WorkloadSapAseRestoreContent
   BackupRequest: BackupContent
   BackupRequestResource: TriggerBackupContent
   BackupStatusResponse: BackupStatusResult
@@ -150,6 +162,10 @@ rename-mapping:
   ErrorDetail: BackupErrorDetail
   ExtendedProperties: IaasVmBackupExtendedProperties
   FabricName: BackupFabricName
+  FetchTieringCostInfoForRehydrationRequest: FetchTieringCostInfoForRehydrationContent
+  FetchTieringCostSavingsInfoForPolicyRequest: FetchTieringCostSavingsInfoForPolicyContent
+  FetchTieringCostSavingsInfoForProtectedItemRequest: FetchTieringCostSavingsInfoForProtectedItemContent
+  FetchTieringCostSavingsInfoForVaultRequest: FetchTieringCostSavingsInfoForVaultContent
   HealthStatus: IaasVmProtectedItemHealthStatus
   ProtectedItemHealthStatus: VmWorkloadProtectedItemHealthStatus
   HourlySchedule: BackupHourlySchedule
@@ -283,6 +299,7 @@ rename-mapping:
   DpmJobTaskDetails: DpmBackupJobTaskDetails
   IdentityInfo: BackupIdentityInfo
   SecuredVMDetails.securedVMOsDiskEncryptionSetId: -|arm-id
+  SnapshotRestoreParameters: SnapshotRestoreContent
   TargetDiskNetworkAccessOption: BackupTargetDiskNetworkAccessOption
   TargetDiskNetworkAccessSettings: BackupTargetDiskNetworkAccessSettings
   TargetDiskNetworkAccessSettings.targetDiskAccessId: -|arm-id
@@ -295,7 +312,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'SubscriptionIdParameter': 'object'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -317,6 +334,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
   IaaSVM: IaasVm
   Iaasvm: IaasVm
   Sqldb: SqlDB
@@ -373,6 +391,7 @@ directive:
   - remove-operation: BackupOperationResults_Get
   - remove-operation: BackupOperationStatuses_Get
   - remove-operation: ProtectionPolicyOperationStatuses_Get
+  - remove-operation: TieringCostOperationStatus_Get
   - from: bms.json
     where: $.definitions
     transform: >
@@ -468,9 +487,18 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies']
     transform: >
       $.get['operationId'] = 'ResourceGuardProxy_List';
-  # Here the format date-time isn't specified in swagger, hence adding it explicitly 
+  # Here the format date-time isn't specified in swagger, hence adding it explicitly
   - from: bms.json
     where: $.definitions.RecoveryPointProperties.properties.expiryTime
     transform: >
       $["format"] = "date-time";
+  # TODO: Remove this workaround once we have the swagger issue fixed
+  - from: bms.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}']
+    transform: >
+      $.put['x-ms-long-running-operation'] = true;
+  - from: bms.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}']
+    transform: >
+      $.put['x-ms-long-running-operation'] = true;
 ```

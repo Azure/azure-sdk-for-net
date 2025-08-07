@@ -11,7 +11,8 @@ Below are the packages contained in Azure Maps:
 - [Azure.Maps.Routing][route] allows you to get the routing information for multiple origins and destinations.
 - [Azure.Maps.Search][search] supports many searching functionalities for entities, point of interests (POI) or streets, and also supports reverse geocode a coordinate to a place or an entity.
 - [Azure.Maps.Geolocation][geolocation] allows you to get the ISO country code for the provided IP address.
-
+- [Azure.Maps.TimeZones][timezone] allows you to get time zone information for the world.
+- [Azure.Maps.Weather][weather] allows you to get real-time, forecasted, and historical weather data.
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
@@ -21,13 +22,14 @@ dotnet add package Azure.Maps.Rendering --prerelease
 dotnet add package Azure.Maps.Routing --prerelease
 dotnet add package Azure.Maps.Search --prerelease
 dotnet add package Azure.Maps.Geolocation --prerelease
+dotnet add package Azure.Maps.TimeZones --prerelease
 ```
 
 Azure.Maps.Common will be automatically installed when you install other packages.
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://docs.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://learn.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
 
 To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
 
@@ -37,7 +39,7 @@ az maps account create --kind "Gen2" --account-name "myMapAccountName" --resourc
 
 ### Authenticate the client
 
-There are 2 ways to authenticate the client: Shared key authentication and Azure AD. Please refer to each package's README for details.
+There are 3  ways to authenticate the client: Shared key authentication, Microsoft Entra and Shared Access Signature (SAS) Authentication. Please refer to each package's README for details.
 
 ## Key concepts
 
@@ -73,7 +75,7 @@ using Azure.Maps.Routing;
 using Azure.Maps.Search;
 ```
 
-In the main function, instantiate `MapsSearchClient`, `MapsRoutingClient` and `MapsRenderingClient` either via AAD or subscription key authentication. Below is an example of instantiation via AAD:
+In the main function, instantiate `MapsSearchClient`, `MapsRoutingClient` and `MapsRenderingClient` either via subscription key, Microsoft Entra, or SAS token authentication. Below is an example of instantiation via Microsoft Entra:
 
 ```C#
 // Create a MapsSearchClient and MapsRoutingClient that will authenticate through Active Directory
@@ -211,14 +213,14 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/README.png)
-
 <!-- LINKS -->
 [common]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common
 [render]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering
 [route]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Routing
 [geolocation]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation
 [search]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search
+[timezone]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZones
+[weather]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Weather
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

@@ -42,6 +42,15 @@ namespace Azure.Communication
                       rawId);
             }
 
+            if (kind == CommunicationIdentifierModelKind.MicrosoftTeamsApp
+                 && identifier.MicrosoftTeamsApp is not null)
+            {
+                var app = identifier.MicrosoftTeamsApp;
+                return new MicrosoftTeamsAppIdentifier(
+                      AssertNotNull(app.AppId, nameof(app.AppId), nameof(MicrosoftTeamsAppIdentifierModel)),
+                      Deserialize(AssertNotNull(app.Cloud, nameof(app.Cloud), nameof(MicrosoftTeamsAppIdentifierModel))));
+            }
+
             return new UnknownIdentifier(rawId);
 
             static void AssertMaximumOneNestedModel(CommunicationIdentifierModel identifier)
@@ -53,13 +62,15 @@ namespace Azure.Communication
                     presentProperties.Add(nameof(identifier.PhoneNumber));
                 if (identifier.MicrosoftTeamsUser is not null)
                     presentProperties.Add(nameof(identifier.MicrosoftTeamsUser));
+                if (identifier.MicrosoftTeamsApp is not null)
+                    presentProperties.Add(nameof(identifier.MicrosoftTeamsApp));
 
                 if (presentProperties.Count > 1)
                     throw new JsonException($"Only one of the properties in {{{string.Join(", ", presentProperties)}}} should be present.");
             }
         }
 
-        private static CommunicationIdentifierModelKind GetKind(CommunicationIdentifierModel identifier)
+        internal static CommunicationIdentifierModelKind GetKind(CommunicationIdentifierModel identifier)
         {
             if (identifier.CommunicationUser is not null)
             {
@@ -76,10 +87,15 @@ namespace Azure.Communication
                 return CommunicationIdentifierModelKind.MicrosoftTeamsUser;
             }
 
+            if (identifier.MicrosoftTeamsApp is not null)
+            {
+                return CommunicationIdentifierModelKind.MicrosoftTeamsApp;
+            }
+
             return CommunicationIdentifierModelKind.Unknown;
         }
 
-        private static CommunicationCloudEnvironment Deserialize(CommunicationCloudEnvironmentModel cloud)
+        internal static CommunicationCloudEnvironment Deserialize(CommunicationCloudEnvironmentModel cloud)
         {
             if (cloud == CommunicationCloudEnvironmentModel.Public)
                 return CommunicationCloudEnvironment.Public;
@@ -113,6 +129,14 @@ namespace Azure.Communication
                         Cloud = Serialize(u.Cloud),
                     }
                 },
+                MicrosoftTeamsAppIdentifier app => new CommunicationIdentifierModel
+                {
+                    RawId = app.RawId,
+                    MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(app.AppId)
+                    {
+                        Cloud = Serialize(app.Cloud),
+                    }
+                },
                 UnknownIdentifier u => new CommunicationIdentifierModel
                 {
                     RawId = u.Id
@@ -120,7 +144,7 @@ namespace Azure.Communication
                 _ => throw new NotSupportedException(),
             };
 
-        private static CommunicationCloudEnvironmentModel Serialize(CommunicationCloudEnvironment cloud)
+        internal static CommunicationCloudEnvironmentModel Serialize(CommunicationCloudEnvironment cloud)
         {
             if (cloud == CommunicationCloudEnvironment.Public)
                 return CommunicationCloudEnvironmentModel.Public;
@@ -132,10 +156,10 @@ namespace Azure.Communication
             return new CommunicationCloudEnvironmentModel(cloud.ToString());
         }
 
-        private static T AssertNotNull<T>(T value, string name, string type) where T : class
+        internal static T AssertNotNull<T>(T value, string name, string type) where T : class
             => value ?? throw new JsonException($"Property '{name}' is required for identifier of type `{type}`.");
 
-        private static T AssertNotNull<T>(T? value, string name, string type) where T : struct
+        internal static T AssertNotNull<T>(T? value, string name, string type) where T : struct
         {
             if (value is null)
                 throw new JsonException($"Property '{name}' is required for identifier of type `{type}`.");

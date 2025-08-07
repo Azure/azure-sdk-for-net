@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class SystemData
     {
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         [InitializationConstructor]
         public SystemData()
         {
         }
 
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         /// <param name="createdBy"> The identity that created the resource. </param>
         /// <param name="createdByType"> The type of identity that created the resource. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
@@ -39,16 +39,22 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> The identity that created the resource. </summary>
+        [WirePath("createdBy")]
         public string CreatedBy { get; }
         /// <summary> The type of identity that created the resource. </summary>
+        [WirePath("createdByType")]
         public CreatedByType? CreatedByType { get; }
         /// <summary> The timestamp of resource creation (UTC). </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The identity that last modified the resource. </summary>
+        [WirePath("lastModifiedBy")]
         public string LastModifiedBy { get; }
         /// <summary> The type of identity that last modified the resource. </summary>
+        [WirePath("lastModifiedByType")]
         public CreatedByType? LastModifiedByType { get; }
         /// <summary> The timestamp of resource last modification (UTC). </summary>
+        [WirePath("lastModifiedAt")]
         public DateTimeOffset? LastModifiedOn { get; }
     }
 }

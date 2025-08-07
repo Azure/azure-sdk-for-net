@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataShare.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.DataShare
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateActivateEmailRequestUri(AzureLocation location, DataShareEmailRegistration emailRegistration)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.DataShare/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/activateEmail", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateActivateEmailRequest(AzureLocation location, DataShareEmailRegistration emailRegistration)
         {
             var message = _pipeline.CreateMessage();
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.DataShare
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(emailRegistration);
+            content.JsonWriter.WriteObjectValue(emailRegistration, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -74,7 +84,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareEmailRegistration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataShareEmailRegistration.DeserializeDataShareEmailRegistration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -99,13 +109,24 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareEmailRegistration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataShareEmailRegistration.DeserializeDataShareEmailRegistration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterEmailRequestUri(AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.DataShare/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/registerEmail", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterEmailRequest(AzureLocation location)
@@ -137,7 +158,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareEmailRegistration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataShareEmailRegistration.DeserializeDataShareEmailRegistration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -158,7 +179,7 @@ namespace Azure.ResourceManager.DataShare
                 case 200:
                     {
                         DataShareEmailRegistration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataShareEmailRegistration.DeserializeDataShareEmailRegistration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

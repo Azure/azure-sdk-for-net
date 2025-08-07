@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Defines the Azure Cognitive Services Spatial Analysis operation eventing configuration. </summary>
     public partial class SpatialAnalysisOperationEventBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationEventBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationEventBase"/>. </summary>
         public SpatialAnalysisOperationEventBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationEventBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationEventBase"/>. </summary>
         /// <param name="threshold"> The event threshold. </param>
         /// <param name="focus"> The operation focus type. </param>
         internal SpatialAnalysisOperationEventBase(string threshold, SpatialAnalysisOperationFocus? focus)

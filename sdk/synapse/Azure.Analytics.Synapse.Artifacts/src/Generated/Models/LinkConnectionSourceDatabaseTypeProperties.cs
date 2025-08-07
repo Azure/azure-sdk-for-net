@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionSourceDatabaseTypeProperties. </summary>
     public partial class LinkConnectionSourceDatabaseTypeProperties
     {
-        /// <summary> Initializes a new instance of LinkConnectionSourceDatabaseTypeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionSourceDatabaseTypeProperties"/>. </summary>
         public LinkConnectionSourceDatabaseTypeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionSourceDatabaseTypeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionSourceDatabaseTypeProperties"/>. </summary>
         /// <param name="resourceId"> Link connection source database server's resource id. </param>
         /// <param name="principalId"> Link connection source database server's principal id. </param>
         internal LinkConnectionSourceDatabaseTypeProperties(string resourceId, string principalId)

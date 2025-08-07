@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         private readonly string _vgVnet = "vnetnortheurope-anf";
         private readonly ResourceIdentifier _proximityPlacementGroup = new ResourceIdentifier("/subscriptions/69a75bda-882e-44d5-8431-63421204132a/resourceGroups/sdk-net-test-qa2/providers/Microsoft.Compute/proximityPlacementGroups/sdk_test_northeurope_ppg");
         //private readonly string _gENPOPDeploymentSpecID = "30542149-bfca-5618-1879-9863dc6767f1";
-        private readonly string _sAPHANAOnGENPOPDeploymentSpecID = "20542149-bfca-5618-1879-9863dc6767f1";
+        //private readonly string _sAPHANAOnGENPOPDeploymentSpecID = "20542149-bfca-5618-1879-9863dc6767f1";
         private ResourceGroupResource _volumeGroupResourceGroup;
         private NetAppAccountCollection _netAppAccountCollection { get => _volumeGroupResourceGroup.GetNetAppAccounts(); }
         private NetAppVolumeGroupCollection _volumeGroupCollection { get => _netAppAccount.GetNetAppVolumeGroups(); }
@@ -51,10 +51,24 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [TearDown]
-        public async Task ClearVolumeGroups()
+        public async Task TeardownTestVolumeGroups()
         {
             //remove all volumes under current capcityPool, remove pool and netAppAccount
-            if (_resourceGroup != null)
+            if (_volumeGroupResourceGroup != null)
+            {
+                bool exists = await _netAppAccountCollection.ExistsAsync(_netAppAccount.Data.Name.Split('/').Last());
+                if (exists)
+                {
+                    await _netAppAccount.DeleteAsync(WaitUntil.Completed);
+                }
+            }
+            _resourceGroup = null;
+        }
+
+        public async Task ClearVolumeGroupVolumesAndPool()
+        {
+            //remove all volumes under current capcityPool, remove pool and netAppAccount
+            if (_volumeGroupResourceGroup != null)
             {
                 bool exists = await _capacityPoolCollection.ExistsAsync(_capacityPool.Data.Name.Split('/').Last());
                 CapacityPoolCollection poolCollection = _netAppAccount.GetCapacityPools();
@@ -72,15 +86,10 @@ namespace Azure.ResourceManager.NetApp.Tests
                 }
 
                 await LiveDelay(40000);
-                //remove
-                //await _capacityPool.DeleteAsync(WaitUntil.Completed);
-                //await LiveDelay(40000);
-                await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
-            _resourceGroup = null;
         }
 
-        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
+        //[Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateDeleteVolumeGroup()
         {
@@ -101,6 +110,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
             Assert.IsTrue(await _volumeGroupCollection.ExistsAsync(volumeGroupName));
             Assert.IsFalse(await _volumeGroupCollection.ExistsAsync(volumeGroupName + "1"));
+
+            //Before deleting the volumeGroup, delete all volumes under it and pool
+            await ClearVolumeGroupVolumesAndPool();
 
             //delete VolumeGroup
             await volumeGroupDetailsResource2.DeleteAsync(WaitUntil.Completed);
@@ -133,9 +145,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             logVolumeProperties.ProximityPlacementGroupId = _proximityPlacementGroup;
             logVolumeProperties.UsageThreshold = 100 * _gibibyte;
             logVolumeProperties.ThroughputMibps = 6;
-            logVolumeProperties.ProtocolTypes.InitializeFrom(_defaultProtocolTypes);
+            logVolumeProperties.ProtocolTypes.InitializeFrom(_nfsProtocolTypes);
             logVolumeProperties.Tags.InitializeFrom(DefaultTags);
-            logVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_defaultExportPolicyRuleList);
+            logVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_nfs41ExportPolicyRuleList, serializedAdditionalRawData: null);
             volumeGroupVolumeProperties.Add(logVolumeProperties);
 
             string dataVolumeName = $"{volumeGroupName}-data-1";
@@ -146,9 +158,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             dataVolumeProperties.ProximityPlacementGroupId = _proximityPlacementGroup;
             dataVolumeProperties.UsageThreshold = 100 * _gibibyte;
             dataVolumeProperties.ThroughputMibps = 6;
-            dataVolumeProperties.ProtocolTypes.InitializeFrom(_defaultProtocolTypes);
+            dataVolumeProperties.ProtocolTypes.InitializeFrom(_nfsProtocolTypes);
             dataVolumeProperties.Tags.InitializeFrom(DefaultTags);
-            dataVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_defaultExportPolicyRuleList);
+            dataVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_nfs41ExportPolicyRuleList, serializedAdditionalRawData: null);
             volumeGroupVolumeProperties.Add(dataVolumeProperties);
 
             string sharedVolumeName = $"{volumeGroupName}-shared-1";
@@ -159,16 +171,16 @@ namespace Azure.ResourceManager.NetApp.Tests
             sharedVolumeProperties.ProximityPlacementGroupId = _proximityPlacementGroup;
             sharedVolumeProperties.UsageThreshold = 100 * _gibibyte;
             sharedVolumeProperties.ThroughputMibps = 6;
-            sharedVolumeProperties.ProtocolTypes.InitializeFrom(_defaultProtocolTypes);
+            sharedVolumeProperties.ProtocolTypes.InitializeFrom(_nfsProtocolTypes);
             sharedVolumeProperties.Tags.InitializeFrom(DefaultTags);
-            sharedVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_defaultExportPolicyRuleList);
+            sharedVolumeProperties.ExportPolicy = new VolumePropertiesExportPolicy(_nfs41ExportPolicyRuleList, serializedAdditionalRawData: null);
             volumeGroupVolumeProperties.Add(sharedVolumeProperties);
 
             IList<NetAppVolumePlacementRule> globalPlacementRules = new List<NetAppVolumePlacementRule> { new NetAppVolumePlacementRule("key1", "value1") };
 
             NetAppVolumeGroupData volumeGroupDetailsData = new();
             volumeGroupDetailsData.Location = _volumeGroupLocation;
-            volumeGroupDetailsData.GroupMetaData = new("group description", NetAppApplicationType.SapHana, "SH1", globalPlacementRules, _sAPHANAOnGENPOPDeploymentSpecID, null);
+            volumeGroupDetailsData.GroupMetaData = new("group description", NetAppApplicationType.SapHana, "SH1", globalPlacementRules, null, serializedAdditionalRawData: null);
             volumeGroupDetailsData.Volumes.InitializeFrom(volumeGroupVolumeProperties);
 
             NetAppVolumeGroupResource volumeGroupDetails = (await volumeGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, volumeGroupDetailsData)).Value;

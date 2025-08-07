@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> SSL configuration. If configured data-plane calls to user services will be exposed over SSL only. </summary>
     public partial class SslConfiguration
     {
-        /// <summary> Initializes a new instance of SslConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SslConfiguration"/>. </summary>
         public SslConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SslConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SslConfiguration"/>. </summary>
         /// <param name="status"> SSL status. Allowed values are Enabled and Disabled. </param>
         /// <param name="cert"> The SSL cert data in PEM format. </param>
         /// <param name="key"> The SSL key data in PEM format. This is not returned in response of GET/PUT on the resource. To see this please call listKeys API. </param>
         /// <param name="cname"> The CName of the certificate. </param>
-        internal SslConfiguration(Status? status, string cert, string key, string cname)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SslConfiguration(Status? status, string cert, string key, string cname, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Cert = cert;
             Key = key;
             Cname = cname;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SSL status. Allowed values are Enabled and Disabled. </summary>

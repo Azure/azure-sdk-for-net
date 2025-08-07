@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The KeyVaultSigningKeyType. </summary>
+    /// <summary>
+    /// The KeyVaultSigningKeyType.
+    /// Serialized Name: KeyVaultSigningKeyParametersType
+    /// </summary>
     public readonly partial struct KeyVaultSigningKeyType : IEquatable<KeyVaultSigningKeyType>
     {
         private readonly string _value;
@@ -24,13 +27,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string KeyVaultSigningKeyValue = "KeyVaultSigningKeyParameters";
 
-        /// <summary> KeyVaultSigningKeyParameters. </summary>
+        /// <summary>
+        /// KeyVaultSigningKeyParameters
+        /// Serialized Name: KeyVaultSigningKeyParametersType.KeyVaultSigningKeyParameters
+        /// </summary>
         public static KeyVaultSigningKeyType KeyVaultSigningKey { get; } = new KeyVaultSigningKeyType(KeyVaultSigningKeyValue);
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultSigningKeyType left, KeyVaultSigningKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are not the same. </summary>
         public static bool operator !=(KeyVaultSigningKeyType left, KeyVaultSigningKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KeyVaultSigningKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultSigningKeyType"/>. </summary>
         public static implicit operator KeyVaultSigningKeyType(string value) => new KeyVaultSigningKeyType(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

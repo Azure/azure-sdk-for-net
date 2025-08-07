@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public BareMetalMachinesTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task BareMetalMachines()
         {
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ClusterManagedRG);

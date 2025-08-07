@@ -4,6 +4,7 @@
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     using Azure.Core;
+    using Azure.MixedReality.Common;
     using System;
 
     /// <summary>

@@ -11,23 +11,22 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedGrafanaResource" /> and their operations.
-    /// Each <see cref="ManagedGrafanaResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ManagedGrafanaCollection" /> instance call the GetManagedGrafanas method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ManagedGrafanaResource"/> and their operations.
+    /// Each <see cref="ManagedGrafanaResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ManagedGrafanaCollection"/> instance call the GetManagedGrafanas method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ManagedGrafanaCollection : ArmCollection, IEnumerable<ManagedGrafanaResource>, IAsyncEnumerable<ManagedGrafanaResource>
     {
-        private readonly ClientDiagnostics _managedGrafanaGrafanaClientDiagnostics;
-        private readonly GrafanaRestOperations _managedGrafanaGrafanaRestClient;
+        private readonly ClientDiagnostics _managedGrafanaClientDiagnostics;
+        private readonly ManagedGrafanasRestOperations _managedGrafanaRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedGrafanaCollection"/> class for mocking. </summary>
         protected ManagedGrafanaCollection()
@@ -39,9 +38,9 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedGrafanaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedGrafanaGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedGrafanaResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedGrafanaResource.ResourceType, out string managedGrafanaGrafanaApiVersion);
-            _managedGrafanaGrafanaRestClient = new GrafanaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedGrafanaGrafanaApiVersion);
+            _managedGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedGrafanaResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedGrafanaResource.ResourceType, out string managedGrafanaApiVersion);
+            _managedGrafanaRestClient = new ManagedGrafanasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedGrafanaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,13 +61,21 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_Create</description>
+        /// <description>ManagedGrafana_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
-        /// <param name="data"> The ManagedGrafana to use. </param>
+        /// <param name="data"> The <see cref="ManagedGrafanaData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
@@ -77,12 +84,12 @@ namespace Azure.ResourceManager.Grafana
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedGrafanaGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.CreateOrUpdate");
+            using var scope = _managedGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedGrafanaGrafanaRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GrafanaArmOperation<ManagedGrafanaResource>(new ManagedGrafanaOperationSource(Client), _managedGrafanaGrafanaClientDiagnostics, Pipeline, _managedGrafanaGrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _managedGrafanaRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<ManagedGrafanaResource>(new ManagedGrafanaOperationSource(Client), _managedGrafanaClientDiagnostics, Pipeline, _managedGrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -103,13 +110,21 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_Create</description>
+        /// <description>ManagedGrafana_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
-        /// <param name="data"> The ManagedGrafana to use. </param>
+        /// <param name="data"> The <see cref="ManagedGrafanaData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
@@ -118,12 +133,12 @@ namespace Azure.ResourceManager.Grafana
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedGrafanaGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.CreateOrUpdate");
+            using var scope = _managedGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedGrafanaGrafanaRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new GrafanaArmOperation<ManagedGrafanaResource>(new ManagedGrafanaOperationSource(Client), _managedGrafanaGrafanaClientDiagnostics, Pipeline, _managedGrafanaGrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _managedGrafanaRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
+                var operation = new GrafanaArmOperation<ManagedGrafanaResource>(new ManagedGrafanaOperationSource(Client), _managedGrafanaClientDiagnostics, Pipeline, _managedGrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,7 +159,15 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_Get</description>
+        /// <description>ManagedGrafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,11 +179,11 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _managedGrafanaGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.Get");
+            using var scope = _managedGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedGrafanaGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                var response = await _managedGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedGrafanaResource(Client, response.Value), response.GetRawResponse());
@@ -181,7 +204,15 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_Get</description>
+        /// <description>ManagedGrafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,11 +224,11 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _managedGrafanaGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.Get");
+            using var scope = _managedGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedGrafanaGrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                var response = _managedGrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedGrafanaResource(Client, response.Value), response.GetRawResponse());
@@ -218,17 +249,25 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_ListByResourceGroup</description>
+        /// <description>ManagedGrafana_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedGrafanaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedGrafanaGrafanaRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedGrafanaRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), _managedGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,17 +279,25 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_ListByResourceGroup</description>
+        /// <description>ManagedGrafana_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedGrafanaResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedGrafanaGrafanaRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedGrafanaRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), _managedGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +309,15 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_Get</description>
+        /// <description>ManagedGrafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,11 +329,11 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _managedGrafanaGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.Exists");
+            using var scope = _managedGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managedGrafanaGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,7 +352,15 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_Get</description>
+        /// <description>ManagedGrafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,12 +372,102 @@ namespace Azure.ResourceManager.Grafana
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _managedGrafanaGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.Exists");
+            using var scope = _managedGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managedGrafanaGrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                var response = _managedGrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedGrafanaResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = _managedGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedGrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedGrafanaResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedGrafanaResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual NullableResponse<ManagedGrafanaResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = _managedGrafanaClientDiagnostics.CreateScope("ManagedGrafanaCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedGrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedGrafanaResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedGrafanaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

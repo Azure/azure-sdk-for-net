@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -19,20 +19,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #region Snippet:ServiceBusSendAndReceive
                 #region Snippet:ServiceBusSendSingleMessage
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
-#else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
-                string queueName = scope.QueueName;
-#endif
-                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
 
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+#else
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+                string queueName = scope.QueueName;
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
+#endif
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send. UTF-8 encoding is used when providing a string.
-                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+                ServiceBusMessage message = new("Hello world!");
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -59,15 +60,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
 
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+                ServiceBusMessage message = new("Hello world!");
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -90,18 +91,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
 
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
 
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
                 #region Snippet:ServiceBusSendAndReceiveBatch
-                IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
-                messages.Add(new ServiceBusMessage("First"));
-                messages.Add(new ServiceBusMessage("Second"));
+                IList<ServiceBusMessage> messages = new List<ServiceBusMessage>
+                {
+                    new ServiceBusMessage("First"),
+                    new ServiceBusMessage("Second")
+                };
                 // send the messages
                 await sender.SendMessagesAsync(messages);
                 #endregion
@@ -133,21 +136,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
-#else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
-                string queueName = scope.QueueName;
-#endif
-                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
 
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+#else
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+                string queueName = scope.QueueName;
+
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
+#endif
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 #region Snippet:ServiceBusSendAndReceiveSafeBatch
                 // add the messages that we plan to send to a local queue
-                Queue<ServiceBusMessage> messages = new Queue<ServiceBusMessage>();
+                Queue<ServiceBusMessage> messages = new();
                 messages.Enqueue(new ServiceBusMessage("First message"));
                 messages.Enqueue(new ServiceBusMessage("Second message"));
                 messages.Enqueue(new ServiceBusMessage("Third message"));
@@ -211,16 +216,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
 
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+                ServiceBusMessage message = new("Hello world!");
 
                 #region Snippet:ServiceBusSchedule
                 long seq = await sender.ScheduleMessageAsync(
@@ -247,22 +252,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusSendAndReceiveTopic
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string topicName = "<topic_name>";
                 string subscriptionName = "<subscription_name>";
-#else
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
-                string topicName = scope.TopicName;
-                string subscriptionName = scope.SubscriptionNames.First();
-#endif
-                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
 
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+#else
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+                string topicName = scope.TopicName;
+                string subscriptionName = scope.SubscriptionNames[0];
+
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
+#endif
                 // create the sender that we will use to send to our topic
                 ServiceBusSender sender = client.CreateSender(topicName);
 
                 // create a message that we can send. UTF-8 encoding is used when providing a string.
-                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+                ServiceBusMessage message = new("Hello world!");
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -288,7 +295,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             #region Snippet:ServiceBusCustomEndpoint
             // Connect to the service using a custom endpoint
-            string connectionString = "<connection_string>";
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
             string customEndpoint = "<custom_endpoint>";
 
             var options = new ServiceBusClientOptions
@@ -296,7 +303,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 CustomEndpointAddress = new Uri(customEndpoint)
             };
 
-            ServiceBusClient client = new ServiceBusClient(connectionString, options);
+#if SNIPPET
+            ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential(), options);
+#else
+            ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential, options);
+#endif
             #endregion
         }
 

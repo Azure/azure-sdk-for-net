@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+		<PackageReference Include="Azure.ResourceManager" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="./**/*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="../Local/**/*.cs" Exclude="../Local/**/Properties/**/*.cs" Link="Projects/%(RecursiveDir)/%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Include shared code from Azure.Core -->
+  <ItemGroup>
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/TypeFormatters.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/AsyncLockWithValue.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/ClientDiagnostics.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/IOperationSource.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/NextLinkOperationImplementation.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/OperationFinalStateVia.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/OperationInternal.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/OperationInternalBase.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/OperationInternalOfT.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/OperationPoller.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/SequentialDelayStrategy.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/TaskExtensions.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/VoidValue.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+</Project>

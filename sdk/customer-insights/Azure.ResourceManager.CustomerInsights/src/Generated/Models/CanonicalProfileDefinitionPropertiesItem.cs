@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The definition of a canonical profile property. </summary>
     public partial class CanonicalProfileDefinitionPropertiesItem
     {
-        /// <summary> Initializes a new instance of CanonicalProfileDefinitionPropertiesItem. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinitionPropertiesItem"/>. </summary>
         internal CanonicalProfileDefinitionPropertiesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of CanonicalProfileDefinitionPropertiesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinitionPropertiesItem"/>. </summary>
         /// <param name="profileName"> Profile name. </param>
         /// <param name="profilePropertyName"> Property name of profile. </param>
         /// <param name="rank"> The rank. </param>
         /// <param name="valueType"> Type of canonical property value. </param>
         /// <param name="value"> Value of the canonical property. </param>
-        internal CanonicalProfileDefinitionPropertiesItem(string profileName, string profilePropertyName, int? rank, CanonicalPropertyValueType? valueType, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CanonicalProfileDefinitionPropertiesItem(string profileName, string profilePropertyName, int? rank, CanonicalPropertyValueType? valueType, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProfileName = profileName;
             ProfilePropertyName = profilePropertyName;
             Rank = rank;
             ValueType = valueType;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Profile name. </summary>

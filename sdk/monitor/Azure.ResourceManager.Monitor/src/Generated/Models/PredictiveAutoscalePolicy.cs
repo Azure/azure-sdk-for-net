@@ -6,26 +6,66 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The parameters for enabling predictive autoscale. </summary>
     public partial class PredictiveAutoscalePolicy
     {
-        /// <summary> Initializes a new instance of PredictiveAutoscalePolicy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictiveAutoscalePolicy"/>. </summary>
         /// <param name="scaleMode"> the predictive autoscale mode. </param>
         public PredictiveAutoscalePolicy(PredictiveAutoscalePolicyScaleMode scaleMode)
         {
             ScaleMode = scaleMode;
         }
 
-        /// <summary> Initializes a new instance of PredictiveAutoscalePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictiveAutoscalePolicy"/>. </summary>
         /// <param name="scaleMode"> the predictive autoscale mode. </param>
         /// <param name="scaleLookAheadTime"> the amount of time to specify by which instances are launched in advance. It must be between 1 minute and 60 minutes in ISO 8601 format. </param>
-        internal PredictiveAutoscalePolicy(PredictiveAutoscalePolicyScaleMode scaleMode, TimeSpan? scaleLookAheadTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictiveAutoscalePolicy(PredictiveAutoscalePolicyScaleMode scaleMode, TimeSpan? scaleLookAheadTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScaleMode = scaleMode;
             ScaleLookAheadTime = scaleLookAheadTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PredictiveAutoscalePolicy"/> for deserialization. </summary>
+        internal PredictiveAutoscalePolicy()
+        {
         }
 
         /// <summary> the predictive autoscale mode. </summary>

@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Supported parameters for a Sentiment Analysis task. </summary>
     internal partial class SentimentAnalysisTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of SentimentAnalysisTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskParameters"/>. </summary>
         public SentimentAnalysisTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of SentimentAnalysisTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="modelVersion"></param>
         /// <param name="opinionMining"></param>

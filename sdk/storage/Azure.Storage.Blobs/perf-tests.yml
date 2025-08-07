@@ -3,7 +3,7 @@ Service: storage-blob
 Project: sdk/storage/Azure.Storage.Blobs/perf/Azure.Storage.Blobs.Perf/Azure.Storage.Blobs.Perf.csproj
 
 PackageVersions:
-- Azure.Storage.Blobs: 12.14.1
+- Azure.Storage.Blobs: 12.22.1
 - Azure.Storage.Blobs: source
 
 Tests:

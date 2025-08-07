@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a WorkloadNetworkPublicIP along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkPublicIPResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkPublicIPResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkPublicIP method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkPublicIPResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkPublicIPResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkloadNetworkResource"/> using the GetWorkloadNetworkPublicIP method.
     /// </summary>
     public partial class WorkloadNetworkPublicIPResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkloadNetworkPublicIPResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="publicIPId"> The publicIPId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/publicIPs/{publicIPId}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Avs
         private readonly WorkloadNetworksRestOperations _workloadNetworkPublicIPWorkloadNetworksRestClient;
         private readonly WorkloadNetworkPublicIPData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/publicIPs";
+
         /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkPublicIPResource"/> class for mocking. </summary>
         protected WorkloadNetworkPublicIPResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkloadNetworkPublicIPResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkPublicIPResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkloadNetworkPublicIPResource(ArmClient client, WorkloadNetworkPublicIPData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/publicIPs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -87,7 +89,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a Public IP Block by id in a private cloud workload network.
+        /// Get a WorkloadNetworkPublicIP
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +97,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetPublicIP</description>
+        /// <description>WorkloadNetworkPublicIP_GetPublicIP</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPublicIPResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,7 +129,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a Public IP Block by id in a private cloud workload network.
+        /// Get a WorkloadNetworkPublicIP
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -127,7 +137,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetPublicIP</description>
+        /// <description>WorkloadNetworkPublicIP_GetPublicIP</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPublicIPResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +169,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete a Public IP Block by id in a private cloud workload network.
+        /// Delete a WorkloadNetworkPublicIP
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -159,7 +177,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_DeletePublicIP</description>
+        /// <description>WorkloadNetworkPublicIP_DeletePublicIP</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPublicIPResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,8 +197,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _workloadNetworkPublicIPWorkloadNetworksRestClient.DeletePublicIPAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateDeletePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _workloadNetworkPublicIPWorkloadNetworksRestClient.DeletePublicIPAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateDeletePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -185,7 +211,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete a Public IP Block by id in a private cloud workload network.
+        /// Delete a WorkloadNetworkPublicIP
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -193,7 +219,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_DeletePublicIP</description>
+        /// <description>WorkloadNetworkPublicIP_DeletePublicIP</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPublicIPResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,8 +239,8 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _workloadNetworkPublicIPWorkloadNetworksRestClient.DeletePublicIP(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateDeletePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _workloadNetworkPublicIPWorkloadNetworksRestClient.DeletePublicIP(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, cancellationToken);
+                var operation = new AvsArmOperation(_workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateDeletePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -219,7 +253,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create a Public IP Block by id in a private cloud workload network.
+        /// Create a WorkloadNetworkPublicIP
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -227,12 +261,20 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_CreatePublicIP</description>
+        /// <description>WorkloadNetworkPublicIP_CreatePublicIP</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPublicIPResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> NSX Public IP Block. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkPublicIPResource>> UpdateAsync(WaitUntil waitUntil, WorkloadNetworkPublicIPData data, CancellationToken cancellationToken = default)
@@ -244,7 +286,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _workloadNetworkPublicIPWorkloadNetworksRestClient.CreatePublicIPAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPOperationSource(Client), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateCreatePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPOperationSource(Client), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateCreatePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -257,7 +299,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create a Public IP Block by id in a private cloud workload network.
+        /// Create a WorkloadNetworkPublicIP
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -265,12 +307,20 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_CreatePublicIP</description>
+        /// <description>WorkloadNetworkPublicIP_CreatePublicIP</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPublicIPResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> NSX Public IP Block. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkPublicIPResource> Update(WaitUntil waitUntil, WorkloadNetworkPublicIPData data, CancellationToken cancellationToken = default)
@@ -282,7 +332,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _workloadNetworkPublicIPWorkloadNetworksRestClient.CreatePublicIP(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPOperationSource(Client), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateCreatePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(new WorkloadNetworkPublicIPOperationSource(Client), _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPublicIPWorkloadNetworksRestClient.CreateCreatePublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

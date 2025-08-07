@@ -6,28 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel. </summary>
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel : MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/>. </summary>
         internal MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel()
         {
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="sourceServerVersion"> Source server version. </param>
         /// <param name="sourceServer"> Source server name. </param>
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServer"> Target server name. </param>
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer) : base(id, resultType)
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer) : base(id, resultType, serializedAdditionalRawData)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;

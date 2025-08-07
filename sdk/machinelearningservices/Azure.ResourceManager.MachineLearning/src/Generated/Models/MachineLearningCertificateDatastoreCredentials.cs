@@ -6,61 +6,73 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Certificate datastore credentials configuration. </summary>
     public partial class MachineLearningCertificateDatastoreCredentials : MachineLearningDatastoreCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningCertificateDatastoreCredentials. </summary>
-        /// <param name="clientId"> [Required] Service principal client ID. </param>
-        /// <param name="secrets"> [Required] Service principal secrets. </param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/>. </summary>
         /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
+        /// <param name="clientId"> [Required] Service principal client ID. </param>
         /// <param name="thumbprint"> [Required] Thumbprint of the certificate used for authentication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> or <paramref name="thumbprint"/> is null. </exception>
-        public MachineLearningCertificateDatastoreCredentials(Guid clientId, MachineLearningCertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint)
+        /// <param name="secrets"> [Required] Service principal secrets. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> or <paramref name="secrets"/> is null. </exception>
+        public MachineLearningCertificateDatastoreCredentials(Guid tenantId, Guid clientId, string thumbprint, MachineLearningCertificateDatastoreSecrets secrets)
         {
-            Argument.AssertNotNull(secrets, nameof(secrets));
             Argument.AssertNotNull(thumbprint, nameof(thumbprint));
+            Argument.AssertNotNull(secrets, nameof(secrets));
 
-            ClientId = clientId;
-            Secrets = secrets;
             TenantId = tenantId;
+            ClientId = clientId;
             Thumbprint = thumbprint;
+            Secrets = secrets;
             CredentialsType = CredentialsType.Certificate;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCertificateDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="authorityUri"> Authority URL used for authentication. </param>
-        /// <param name="clientId"> [Required] Service principal client ID. </param>
         /// <param name="resourceUri"> Resource the service principal has access to. </param>
-        /// <param name="secrets"> [Required] Service principal secrets. </param>
         /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
+        /// <param name="clientId"> [Required] Service principal client ID. </param>
         /// <param name="thumbprint"> [Required] Thumbprint of the certificate used for authentication. </param>
-        internal MachineLearningCertificateDatastoreCredentials(CredentialsType credentialsType, Uri authorityUri, Guid clientId, Uri resourceUri, MachineLearningCertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint) : base(credentialsType)
+        /// <param name="secrets"> [Required] Service principal secrets. </param>
+        internal MachineLearningCertificateDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri authorityUri, Uri resourceUri, Guid tenantId, Guid clientId, string thumbprint, MachineLearningCertificateDatastoreSecrets secrets) : base(credentialsType, serializedAdditionalRawData)
         {
             AuthorityUri = authorityUri;
-            ClientId = clientId;
             ResourceUri = resourceUri;
-            Secrets = secrets;
             TenantId = tenantId;
+            ClientId = clientId;
             Thumbprint = thumbprint;
+            Secrets = secrets;
             CredentialsType = credentialsType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/> for deserialization. </summary>
+        internal MachineLearningCertificateDatastoreCredentials()
+        {
+        }
+
         /// <summary> Authority URL used for authentication. </summary>
+        [WirePath("authorityUrl")]
         public Uri AuthorityUri { get; set; }
-        /// <summary> [Required] Service principal client ID. </summary>
-        public Guid ClientId { get; set; }
         /// <summary> Resource the service principal has access to. </summary>
+        [WirePath("resourceUrl")]
         public Uri ResourceUri { get; set; }
-        /// <summary> [Required] Service principal secrets. </summary>
-        public MachineLearningCertificateDatastoreSecrets Secrets { get; set; }
         /// <summary> [Required] ID of the tenant to which the service principal belongs. </summary>
+        [WirePath("tenantId")]
         public Guid TenantId { get; set; }
+        /// <summary> [Required] Service principal client ID. </summary>
+        [WirePath("clientId")]
+        public Guid ClientId { get; set; }
         /// <summary> [Required] Thumbprint of the certificate used for authentication. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; set; }
+        /// <summary> [Required] Service principal secrets. </summary>
+        [WirePath("secrets")]
+        public MachineLearningCertificateDatastoreSecrets Secrets { get; set; }
     }
 }

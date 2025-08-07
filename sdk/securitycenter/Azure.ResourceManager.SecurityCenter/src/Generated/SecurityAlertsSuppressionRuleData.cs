@@ -19,24 +19,57 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAlertsSuppressionRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertsSuppressionRuleData"/>. </summary>
         public SecurityAlertsSuppressionRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertsSuppressionRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
         /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
-        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </param>
+        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </param>
         /// <param name="reason"> The reason for dismissing the alert. </param>
         /// <param name="state"> Possible states of the rule. </param>
         /// <param name="comment"> Any comment regarding the rule. </param>
         /// <param name="suppressionAlertsScope"> The suppression conditions. </param>
-        internal SecurityAlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, DateTimeOffset? lastModifiedOn, DateTimeOffset? expireOn, string reason, SecurityAlertsSuppressionRuleState? state, string comment, SuppressionAlertsScope suppressionAlertsScope) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, DateTimeOffset? lastModifiedOn, DateTimeOffset? expireOn, string reason, SecurityAlertsSuppressionRuleState? state, string comment, SuppressionAlertsScope suppressionAlertsScope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AlertType = alertType;
             LastModifiedOn = lastModifiedOn;
@@ -45,13 +78,14 @@ namespace Azure.ResourceManager.SecurityCenter
             State = state;
             Comment = comment;
             SuppressionAlertsScope = suppressionAlertsScope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the alert to automatically suppress. For all alert types, use '*'. </summary>
         public string AlertType { get; set; }
         /// <summary> The last time this rule was modified. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </summary>
+        /// <summary> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The reason for dismissing the alert. </summary>
         public string Reason { get; set; }

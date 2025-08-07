@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The approval status for the connection to the Private Link. </summary>
+    /// <summary>
+    /// The approval status for the connection to the Private Link
+    /// Serialized Name: PrivateEndpointStatus
+    /// </summary>
     public readonly partial struct PrivateEndpointStatus : IEquatable<PrivateEndpointStatus>
     {
         private readonly string _value;
@@ -28,21 +31,36 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DisconnectedValue = "Disconnected";
         private const string TimeoutValue = "Timeout";
 
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: PrivateEndpointStatus.Pending
+        /// </summary>
         public static PrivateEndpointStatus Pending { get; } = new PrivateEndpointStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: PrivateEndpointStatus.Approved
+        /// </summary>
         public static PrivateEndpointStatus Approved { get; } = new PrivateEndpointStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: PrivateEndpointStatus.Rejected
+        /// </summary>
         public static PrivateEndpointStatus Rejected { get; } = new PrivateEndpointStatus(RejectedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary>
+        /// Disconnected
+        /// Serialized Name: PrivateEndpointStatus.Disconnected
+        /// </summary>
         public static PrivateEndpointStatus Disconnected { get; } = new PrivateEndpointStatus(DisconnectedValue);
-        /// <summary> Timeout. </summary>
+        /// <summary>
+        /// Timeout
+        /// Serialized Name: PrivateEndpointStatus.Timeout
+        /// </summary>
         public static PrivateEndpointStatus Timeout { get; } = new PrivateEndpointStatus(TimeoutValue);
         /// <summary> Determines if two <see cref="PrivateEndpointStatus"/> values are the same. </summary>
         public static bool operator ==(PrivateEndpointStatus left, PrivateEndpointStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateEndpointStatus"/> values are not the same. </summary>
         public static bool operator !=(PrivateEndpointStatus left, PrivateEndpointStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PrivateEndpointStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateEndpointStatus"/>. </summary>
         public static implicit operator PrivateEndpointStatus(string value) => new PrivateEndpointStatus(value);
 
         /// <inheritdoc />
@@ -53,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

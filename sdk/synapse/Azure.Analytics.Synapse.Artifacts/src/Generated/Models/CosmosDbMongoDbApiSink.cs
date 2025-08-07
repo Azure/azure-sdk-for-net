@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity sink for a CosmosDB (MongoDB API) database. </summary>
     public partial class CosmosDbMongoDbApiSink : CopySink
     {
-        /// <summary> Initializes a new instance of CosmosDbMongoDbApiSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbMongoDbApiSink"/>. </summary>
         public CosmosDbMongoDbApiSink()
         {
             Type = "CosmosDbMongoDbApiSink";
         }
 
-        /// <summary> Initializes a new instance of CosmosDbMongoDbApiSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbMongoDbApiSink"/>. </summary>
         /// <param name="type"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 
@@ -24,7 +25,12 @@ namespace Microsoft.Extensions.Azure
         /// <param name="serviceVersion">The value of ServiceVersion enum to use, null to use the default.</param>
         /// <param name="configuration">The <see cref="IConfiguration"/> instance to apply to options.</param>
         /// <returns>A new instance of <paramref name="optionsType"/>.</returns>
-        public abstract object CreateClientOptions(Type optionsType, object serviceVersion, IConfiguration configuration);
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        public abstract object CreateClientOptions(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type optionsType,
+            object serviceVersion,
+            IConfiguration configuration);
 
         /// <summary>
         /// Creates a new client instance using the provided configuration to map constructor parameters from.
@@ -35,6 +41,11 @@ namespace Microsoft.Extensions.Azure
         /// <param name="credential">The <see cref="TokenCredential"/> object to use if required by constructor, if null no .</param>
         /// <param name="clientOptions">The client </param>
         /// <returns></returns>
-        public abstract object CreateClient(Type clientType, IConfiguration configuration, TokenCredential credential, object clientOptions);
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        public abstract object CreateClient(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type clientType,
+            IConfiguration configuration,
+            TokenCredential credential,
+            object clientOptions);
     }
 }

@@ -22,21 +22,61 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class JobNetworkConfiguration : ITransportObjectProvider<Models.JobNetworkConfiguration>, IPropertyMetadata
     {
+        private class PropertyContainer : PropertyCollection
+        {
+            public readonly PropertyAccessor<bool?> SkipWithdrawFromVNetProperty;
+            public readonly PropertyAccessor<string> SubnetIdProperty;
+
+            public PropertyContainer() : base(BindingState.Unbound)
+            {
+                this.SkipWithdrawFromVNetProperty = this.CreatePropertyAccessor<bool?>(nameof(SkipWithdrawFromVNet), BindingAccess.Read | BindingAccess.Write);
+                this.SubnetIdProperty = this.CreatePropertyAccessor<string>(nameof(SubnetId), BindingAccess.Read | BindingAccess.Write);
+            }
+
+            public PropertyContainer(Models.JobNetworkConfiguration protocolObject) : base(BindingState.Bound)
+            {
+                this.SkipWithdrawFromVNetProperty = this.CreatePropertyAccessor(
+                    protocolObject.SkipWithdrawFromVNet,
+                    nameof(SkipWithdrawFromVNet),
+                    BindingAccess.Read);
+                this.SubnetIdProperty = this.CreatePropertyAccessor(
+                    protocolObject.SubnetId,
+                    nameof(SubnetId),
+                    BindingAccess.Read);
+            }
+        }
+
+        private readonly PropertyContainer propertyContainer;
+
         #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="JobNetworkConfiguration"/> class.
         /// </summary>
         /// <param name='subnetId'>The ARM resource identifier of the virtual network subnet which nodes running tasks from the job will join for 
         /// the duration of the task.</param>
+        /// <param name='skipWithdrawFromVNet'>Gets or sets whether to withdraw Compute Nodes from the virtual network to DNC when the job is terminated or 
+        /// deleted.</param>
         public JobNetworkConfiguration(
-            string subnetId = default(string))
+            string subnetId,
+            bool? skipWithdrawFromVNet = default(bool?))
         {
+            this.propertyContainer = new PropertyContainer();
             this.SubnetId = subnetId;
+            this.SkipWithdrawFromVNet = skipWithdrawFromVNet;
+        }
+
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="JobNetworkConfiguration"/> class.
+        /// </summary>
+        protected JobNetworkConfiguration()
+        {
+            this.propertyContainer = new PropertyContainer();
         }
 
         internal JobNetworkConfiguration(Models.JobNetworkConfiguration protocolObject)
         {
-            this.SubnetId = protocolObject.SubnetId;
+            this.propertyContainer = new PropertyContainer(protocolObject);
         }
 
         #endregion Constructors
@@ -44,8 +84,22 @@ namespace Microsoft.Azure.Batch
         #region JobNetworkConfiguration
 
         /// <summary>
-        /// Gets the ARM resource identifier of the virtual network subnet which nodes running tasks from the job will join 
-        /// for the duration of the task.
+        /// Gets or sets gets or sets whether to withdraw Compute Nodes from the virtual network to DNC when the job is terminated 
+        /// or deleted.
+        /// </summary>
+        /// <remarks>
+        /// If true, nodes will remain joined to the virtual network to DNC. If false, nodes will automatically withdraw 
+        /// when the job ends. Defaults to false.
+        /// </remarks>
+        public bool? SkipWithdrawFromVNet
+        {
+            get { return this.propertyContainer.SkipWithdrawFromVNetProperty.Value; }
+            set { this.propertyContainer.SkipWithdrawFromVNetProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the ARM resource identifier of the virtual network subnet which nodes running tasks from the job 
+        /// will join for the duration of the task.
         /// </summary>
         /// <remarks>
         /// <para>The specified subnet should have enough free IP addresses to accommodate the number of nodes which will 
@@ -63,7 +117,11 @@ namespace Microsoft.Azure.Batch
         /// 3389 for Windows. Also enable outbound connections to Azure Storage on port 443. For more details see: https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration 
         /// </para>
         /// </remarks>
-        public string SubnetId { get; }
+        public string SubnetId
+        {
+            get { return this.propertyContainer.SubnetIdProperty.Value; }
+            set { this.propertyContainer.SubnetIdProperty.Value = value; }
+        }
 
         #endregion // JobNetworkConfiguration
 
@@ -71,23 +129,18 @@ namespace Microsoft.Azure.Batch
 
         bool IModifiable.HasBeenModified
         {
-            //This class is compile time readonly so it cannot have been modified
-            get { return false; }
+            get { return this.propertyContainer.HasBeenModified; }
         }
 
         bool IReadOnly.IsReadOnly
         {
-            get { return true; }
-            set
-            {
-                // This class is compile time readonly already
-            }
+            get { return this.propertyContainer.IsReadOnly; }
+            set { this.propertyContainer.IsReadOnly = value; }
         }
 
-        #endregion // IPropertyMetadata
+        #endregion //IPropertyMetadata
 
         #region Internal/private methods
-
         /// <summary>
         /// Return a protocol object of the requested type.
         /// </summary>
@@ -96,6 +149,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.JobNetworkConfiguration result = new Models.JobNetworkConfiguration()
             {
+                SkipWithdrawFromVNet = this.SkipWithdrawFromVNet,
                 SubnetId = this.SubnetId,
             };
 

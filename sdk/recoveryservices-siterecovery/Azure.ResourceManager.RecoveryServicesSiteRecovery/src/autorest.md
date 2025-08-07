@@ -8,15 +8,27 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
-require: https://github.com/Azure/azure-rest-api-specs/blob/d03c1964cb76ffd6884d10a1871bbe779a2f68ef/specification/recoveryservicessiterecovery/resource-manager/readme.md
-#tag: package-2023-04
+require: https://github.com/Azure/azure-rest-api-specs/blob/84eef1839d5db0edaf791fd0915b38a50b3b64b5/specification/recoveryservicessiterecovery/resource-manager/readme.md
+#tag: package-2025-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../tests/Generated
+  clear-output-folder: true
+  skipped-operations:
+    # The discriminator value is incorrect
+    - ReplicationFabrics_Create
+    - ReplicationProtectionContainers_Create
+    - ReplicationProtectedItems_Delete
+    - ReplicationProtectionContainerMappings_Create
+    # Missing requried parameter
+    - ReplicationJobs_Export
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
@@ -28,11 +40,18 @@ rename-mapping:
   ASRTask: AsrTask
   A2ACrossClusterMigrationReplicationDetails.primaryFabricLocation: -|azure-location
   A2AVmManagedDiskInputDetails: A2AVmManagedDiskDetails
-  A2AProtectedDiskDetails.resyncRequired: IsResyncRequired
+  A2AProtectedManagedDiskDetails.allowedDiskLevelOperation: SiteRecoveryAllowedDiskLevelOperation
   A2AProtectedManagedDiskDetails.recoveryTargetDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.recoveryReplicaDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.recoveryOrignalTargetDiskId: -|arm-id
+  A2AReplicationDetails.protectionClusterId: -|arm-id
+  A2AReplicationProtectionClusterDetails.clusterManagementId: -|uuid
+  A2AReplicationProtectionClusterDetails.multiVmGroupId: -|uuid
+  A2ASharedDiskReplicationDetails.managementId: -|uuid
+  RegisteredClusterNodes.biosId: -|uuid
+  RegisteredClusterNodes.machineId: -|uuid
   A2AProtectedManagedDiskDetails.resyncRequired: IsResyncRequired
+  A2AProtectedDiskDetails.resyncRequired: IsResyncRequired
   A2AProtectionIntentDiskInputDetails: A2AProtectionIntentDiskDetails
   A2AProtectionIntentManagedDiskInputDetails: A2AProtectionIntentManagedDiskDetails
   A2AVmDiskInputDetails: A2AVmDiskDetails
@@ -58,6 +77,9 @@ rename-mapping:
   AzureToAzureUpdateNetworkMappingInput: A2AUpdateNetworkMappingContent
   AzureToAzureVmSyncedConfigDetails: A2AVmSyncedConfigDetails
   AzureVmDiskDetails: SiteRecoveryVmDiskDetails
+  ClusterRecoveryPoint: SiteRecoveryClusterRecoveryPoint
+  ClusterRecoveryPointProperties: SiteRecoveryClusterRecoveryPointProperties
+  ClusterSwitchProtectionJobDetails.newReplicationProtectionClusterId: -|arm-id
   ConfigurationSettings: SiteRecoveryReplicationProviderSettings
   ConfigureAlertRequestProperties: SiteRecoveryConfigureAlertProperties
   CreateNetworkMappingInputProperties: SiteRecoveryCreateReplicationNetworkMappingProperties
@@ -230,6 +252,8 @@ rename-mapping:
   ReplicationEligibilityResultsProperties: ReplicationEligibilityResultProperties
   ReplicationProtectedItemCollection: ReplicationProtectedItemListResult
   ReplicationProtectedItemProperties.eventCorrelationId: -|uuid
+  ReplicationProtectionCluster: SiteRecoveryReplicationProtectionCluster
+  ReplicationProtectionClusterProperties: SiteRecoveryReplicationProtectionClusterProperties
   ReplicationProtectionIntentCollection: ReplicationProtectionIntentListResult
   ReplicationProtectionIntentProperties.creationTimeUTC: CreatedOn
   ReprotectAgentDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
@@ -245,6 +269,7 @@ rename-mapping:
   RunAsAccount: SiteRecoveryRunAsAccount
   ServiceError: SiteRecoveryServiceError
   Severity: SiteRecoveryErrorSeverity
+  HealthError.innerHealthErrors: SiteRecoveryInnerHealthErrorsList
   SqlServerLicenseType: SiteRecoverySqlServerLicenseType
   StorageClassificationCollection: StorageClassificationListResult
   StorageClassificationProperties: StorageClassificationProperties
@@ -296,11 +321,18 @@ rename-mapping:
   VMNicDetails.enableAcceleratedNetworkingOnTfo: IsAcceleratedNetworkingOnTfoEnabled
   VMNicDetails.reuseExistingNic: IsReuseExistingNicAllowed
   VMNicDetails.tfoReuseExistingNic: IsTfoReuseExistingNicAllowed
-  VMwareCbtEnableMigrationInput.dataMoverRunAsAccountId: -|arm-id 
-  VMwareCbtEnableMigrationInput.snapshotRunAsAccountId: -|arm-id 
-  VMwareCbtMigrationDetails.dataMoverRunAsAccountId: -|arm-id 
-  VMwareCbtMigrationDetails.snapshotRunAsAccountId: -|arm-id 
+  VMwareCbtEnableMigrationInput.dataMoverRunAsAccountId: -|arm-id
+  VMwareCbtEnableMigrationInput.snapshotRunAsAccountId: -|arm-id
+  VMwareCbtMigrationDetails.dataMoverRunAsAccountId: -|arm-id
+  VMwareCbtMigrationDetails.snapshotRunAsAccountId: -|arm-id
   VMwareV2FabricSpecificDetails.serviceResourceId: -|arm-id
+  
+prepend-rp-prefix:
+  - LinuxLicenseType
+  - FailoverDirection
+  - DiskState
+  - SecurityProfileProperties
+  - SecurityConfiguration
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -336,7 +368,7 @@ format-by-name-rules:
   'VMwareMachineId': 'arm-id'
   '*ProcessServerId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -369,6 +401,10 @@ rename-rules:
 
 request-path-to-parent:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/export: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}: SiteRecoveryReplicationProtectionClusterResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}/operationResults/{jobId}: SiteRecoveryReplicationProtectionClusterResource
 
 directive:
   - remove-operation: Operations_List

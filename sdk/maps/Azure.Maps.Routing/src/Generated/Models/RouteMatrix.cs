@@ -10,7 +10,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Matrix result object. </summary>
     public partial class RouteMatrix
     {
-        /// <summary> Initializes a new instance of RouteMatrix. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMatrix"/>. </summary>
         internal RouteMatrix()
         {
         }

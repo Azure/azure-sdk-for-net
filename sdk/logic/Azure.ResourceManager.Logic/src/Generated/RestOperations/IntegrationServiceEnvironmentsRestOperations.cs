@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Logic.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.Logic
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationServiceEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, int? top)
@@ -75,7 +89,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationServiceEnvironmentListResult.DeserializeIntegrationServiceEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,13 +115,30 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationServiceEnvironmentListResult.DeserializeIntegrationServiceEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroup, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroup, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationServiceEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroup, int? top)
@@ -152,7 +183,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationServiceEnvironmentListResult.DeserializeIntegrationServiceEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -180,13 +211,27 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationServiceEnvironmentListResult.DeserializeIntegrationServiceEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroup, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationServiceEnvironments/", false);
+            uri.AppendPath(integrationServiceEnvironmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName)
@@ -229,7 +274,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -260,7 +305,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,6 +314,20 @@ namespace Azure.ResourceManager.Logic
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, IntegrationServiceEnvironmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroup, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationServiceEnvironments/", false);
+            uri.AppendPath(integrationServiceEnvironmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, IntegrationServiceEnvironmentData data)
@@ -289,7 +348,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -349,6 +408,20 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, IntegrationServiceEnvironmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroup, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationServiceEnvironments/", false);
+            uri.AppendPath(integrationServiceEnvironmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, IntegrationServiceEnvironmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -367,7 +440,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -423,6 +496,20 @@ namespace Azure.ResourceManager.Logic
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroup, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationServiceEnvironments/", false);
+            uri.AppendPath(integrationServiceEnvironmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName)
@@ -495,6 +582,21 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateRestartRequestUri(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroup, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationServiceEnvironments/", false);
+            uri.AppendPath(integrationServiceEnvironmentName, true);
+            uri.AppendPath("/restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRestartRequest(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -564,6 +666,14 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -597,7 +707,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationServiceEnvironmentListResult.DeserializeIntegrationServiceEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -625,13 +735,21 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationServiceEnvironmentListResult.DeserializeIntegrationServiceEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroup, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroup, int? top)
@@ -669,7 +787,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationServiceEnvironmentListResult.DeserializeIntegrationServiceEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -699,7 +817,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         IntegrationServiceEnvironmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationServiceEnvironmentListResult.DeserializeIntegrationServiceEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

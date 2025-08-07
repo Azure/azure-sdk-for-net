@@ -6,6 +6,7 @@
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
     <SupportsNetStandard20>true</SupportsNetStandard20>
     <IsShippingLibrary>false</IsShippingLibrary>
+    <ImportDefaultReferences>false</ImportDefaultReferences>
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 </Project>

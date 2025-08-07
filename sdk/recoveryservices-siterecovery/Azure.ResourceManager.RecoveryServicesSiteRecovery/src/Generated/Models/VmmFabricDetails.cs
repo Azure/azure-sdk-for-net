@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> VMM fabric specific details. </summary>
     public partial class VmmFabricDetails : FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of VmmFabricDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmFabricDetails"/>. </summary>
         internal VmmFabricDetails()
         {
             InstanceType = "VMM";
         }
 
-        /// <summary> Initializes a new instance of VmmFabricDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmFabricDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        internal VmmFabricDetails(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmmFabricDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "VMM";
         }

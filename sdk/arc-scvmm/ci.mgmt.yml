@@ -11,7 +11,7 @@ pr:
   paths:
     include:
     - sdk/arc-scvmm/ci.mgmt.yml
-    - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm/
+    - sdk/arc-scvmm/Azure.ResourceManager.ScVmm/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -19,5 +19,5 @@ extends:
     ServiceDirectory: arc-scvmm
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.ArcScVmm
-      safeName: AzureResourceManagerArcScVmm
+    - name: Azure.ResourceManager.ScVmm
+      safeName: AzureResourceManagerScVmm

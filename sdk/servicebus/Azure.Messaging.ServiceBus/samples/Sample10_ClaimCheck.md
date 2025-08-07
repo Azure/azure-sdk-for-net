@@ -1,14 +1,15 @@
 # Claim check pattern
 
-This sample demonstrates the use of the [claim check pattern](https://docs.microsoft.com/azure/architecture/patterns/claim-check) which enables you to work with arbitrarily large message bodies. For standard namespaces, a message can be at most 256 KB. For Premium namespaces, the limit is 100 MB. If these limits don't work for your application you can leverage Azure Storage Blobs to implement this pattern.
+This sample demonstrates the use of the [claim check pattern](https://learn.microsoft.com/azure/architecture/patterns/claim-check) which enables you to work with arbitrarily large message bodies. For standard namespaces, a message can be at most 256 KB. For Premium namespaces, the limit is 100 MB. If these limits don't work for your application you can leverage Azure Storage Blobs to implement this pattern.
 
 ## Sending the message
 
-In our example, we will assume that the message body can fit in memory. This allows us to use the Storage Blob methods that let you work with `BinaryData`. If your message body cannot fit in memory, you can use the [stream-based](https://docs.microsoft.com/dotnet/api/azure.storage.blobs.blobcontainerclient.uploadblobasync?view=azure-dotnet#Azure_Storage_Blobs_BlobContainerClient_UploadBlobAsync_System_String_System_IO_Stream_System_Threading_CancellationToken_) Upload/Download methods instead.
+In our example, we will assume that the message body can fit in memory. This allows us to use the Storage Blob methods that let you work with `BinaryData`. If your message body cannot fit in memory, you can use the [stream-based](https://learn.microsoft.com/dotnet/api/azure.storage.blobs.blobcontainerclient.uploadblobasync?view=azure-dotnet#Azure_Storage_Blobs_BlobContainerClient_UploadBlobAsync_System_String_System_IO_Stream_System_Threading_CancellationToken_) Upload/Download methods instead.
 
 First, we will create a `BlobContainerClient` and use the container name "claim-checks". We will be storing our message bodies in blobs within this container.
 ```C# Snippet:CreateBlobContainer
-var containerClient = new BlobContainerClient("<storage connection string>", "claim-checks");
+DefaultAzureCredential credential = new();
+var containerClient = new BlobContainerClient(accountUri, credential);
 await containerClient.CreateIfNotExistsAsync();
 ```
 
@@ -29,7 +30,7 @@ var message = new ServiceBusMessage
 
 Finally, we send our message to our Service Bus queue.
 ```C# Snippet:ClaimCheckSendMessage
-var client = new ServiceBusClient("<service bus connection string>");
+ServiceBusClient client = new("<service bus fully qualified namespace>", credential);
 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 await sender.SendMessageAsync(message);
 ```
@@ -43,7 +44,9 @@ ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
 {
-    var blobClient = new BlobClient("<storage connection string>", "claim-checks", (string) blobNameReceived);
+    Uri blobUri = new($"https://<storage account name>.blob.core.windows.net/claim-checks/{(string)blobNameReceived}");
+    var blobClient = new BlobClient(blobUri, credential);
+
     BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
     BinaryData messageBody = downloadResult.Content;
 

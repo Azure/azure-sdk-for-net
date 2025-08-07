@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAppConfigurationModelFactory
     {
-        /// <summary> Initializes a new instance of AppConfigurationStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationStoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,17 +35,38 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
         /// <param name="softDeleteRetentionInDays"> The amount of time in days that the configuration store will be retained when it is soft deleted. </param>
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
+        /// <param name="dataPlaneProxy"> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </param>
         /// <param name="createMode"> Indicates whether the configuration store need to be recovered. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationStoreData"/> instance for mocking. </returns>
-        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string skuName = null, AppConfigurationProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, string endpoint = null, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = null, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = null, AppConfigurationPublicNetworkAccess? publicNetworkAccess = null, bool? disableLocalAuth = null, int? softDeleteRetentionInDays = null, bool? enablePurgeProtection = null, AppConfigurationCreateMode? createMode = null)
+        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string skuName = null, AppConfigurationProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, string endpoint = null, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = null, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = null, AppConfigurationPublicNetworkAccess? publicNetworkAccess = null, bool? disableLocalAuth = null, int? softDeleteRetentionInDays = null, bool? enablePurgeProtection = null, AppConfigurationDataPlaneProxyProperties dataPlaneProxy = null, AppConfigurationCreateMode? createMode = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<AppConfigurationPrivateEndpointConnectionReference>();
 
-            return new AppConfigurationStoreData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new AppConfigurationSku(skuName) : null, provisioningState, createdOn, endpoint, encryptionKeyVaultProperties != null ? new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, disableLocalAuth, softDeleteRetentionInDays, enablePurgeProtection, createMode);
+            return new AppConfigurationStoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                skuName != null ? new AppConfigurationSku(skuName, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                createdOn,
+                endpoint,
+                encryptionKeyVaultProperties != null ? new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, serializedAdditionalRawData: null) : null,
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                disableLocalAuth,
+                softDeleteRetentionInDays,
+                enablePurgeProtection,
+                dataPlaneProxy,
+                createMode,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,30 +77,38 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <returns> A new <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/> instance for mocking. </returns>
         public static AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppConfigurationProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, AppConfigurationPrivateLinkServiceConnectionState connectionState = null)
         {
-            return new AppConfigurationPrivateEndpointConnectionReference(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState);
+            return new AppConfigurationPrivateEndpointConnectionReference(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                connectionState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppConfigurationPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
         /// <returns> A new <see cref="Models.AppConfigurationPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
         public static AppConfigurationPrivateLinkServiceConnectionState AppConfigurationPrivateLinkServiceConnectionState(AppConfigurationPrivateLinkServiceConnectionStatus? status = null, string description = null, AppConfigurationActionsRequired? actionsRequired = null)
         {
-            return new AppConfigurationPrivateLinkServiceConnectionState(status, description, actionsRequired);
+            return new AppConfigurationPrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppConfigurationNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> The value indicating whether the resource name is available. </param>
         /// <param name="message"> If any, the error message that provides more detail for the reason that the name is not available. </param>
         /// <param name="reason"> If any, the reason that the name is not available. </param>
         /// <returns> A new <see cref="Models.AppConfigurationNameAvailabilityResult"/> instance for mocking. </returns>
         public static AppConfigurationNameAvailabilityResult AppConfigurationNameAvailabilityResult(bool? isNameAvailable = null, string message = null, string reason = null)
         {
-            return new AppConfigurationNameAvailabilityResult(isNameAvailable, message, reason);
+            return new AppConfigurationNameAvailabilityResult(isNameAvailable, message, reason, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationStoreApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppConfigurationStoreApiKey"/>. </summary>
         /// <param name="id"> The key ID. </param>
         /// <param name="name"> A name for the key describing its usage. </param>
         /// <param name="value"> The value of the key that is used for authentication purposes. </param>
@@ -90,10 +118,17 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <returns> A new <see cref="Models.AppConfigurationStoreApiKey"/> instance for mocking. </returns>
         public static AppConfigurationStoreApiKey AppConfigurationStoreApiKey(string id = null, string name = null, string value = null, string connectionString = null, DateTimeOffset? lastModifiedOn = null, bool? isReadOnly = null)
         {
-            return new AppConfigurationStoreApiKey(id, name, value, connectionString, lastModifiedOn, isReadOnly);
+            return new AppConfigurationStoreApiKey(
+                id,
+                name,
+                value,
+                connectionString,
+                lastModifiedOn,
+                isReadOnly,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -104,10 +139,18 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static AppConfigurationPrivateEndpointConnectionData AppConfigurationPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppConfigurationProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, AppConfigurationPrivateLinkServiceConnectionState connectionState = null)
         {
-            return new AppConfigurationPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState);
+            return new AppConfigurationPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                connectionState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -121,10 +164,18 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new AppConfigurationPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new AppConfigurationPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationKeyValueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -154,10 +205,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AppConfigurationKeyValueData(id, name, resourceType, systemData, key, label, value, contentType, eTag, lastModifiedOn, isLocked, tags);
+            return new AppConfigurationKeyValueData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                key,
+                label,
+                value,
+                contentType,
+                eTag,
+                lastModifiedOn,
+                isLocked,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DeletedAppConfigurationStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfiguration.DeletedAppConfigurationStoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -173,7 +237,109 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DeletedAppConfigurationStoreData(id, name, resourceType, systemData, configurationStoreId, location, deletedOn, scheduledPurgeOn, tags, isPurgeProtectionEnabled);
+            return new DeletedAppConfigurationStoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                configurationStoreId,
+                location,
+                deletedOn,
+                scheduledPurgeOn,
+                tags,
+                isPurgeProtectionEnabled,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationReplicaData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location of the replica. </param>
+        /// <param name="endpoint"> The URI of the replica where the replica API will be available. </param>
+        /// <param name="provisioningState"> The provisioning state of the replica. </param>
+        /// <returns> A new <see cref="AppConfiguration.AppConfigurationReplicaData"/> instance for mocking. </returns>
+        public static AppConfigurationReplicaData AppConfigurationReplicaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string endpoint = null, AppConfigurationReplicaProvisioningState? provisioningState = null)
+        {
+            return new AppConfigurationReplicaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                endpoint,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationSnapshotData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="snapshotType"> The type of the resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the snapshot. </param>
+        /// <param name="status"> The current status of the snapshot. </param>
+        /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
+        /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
+        /// <param name="createdOn"> The time that the snapshot was created. </param>
+        /// <param name="expireOn"> The time that the snapshot will expire. </param>
+        /// <param name="retentionPeriod"> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </param>
+        /// <param name="size"> The size in bytes of the snapshot. </param>
+        /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
+        /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not Azure Resource Manager (ARM) tags. </param>
+        /// <param name="eTag"> A value representing the current state of the snapshot. </param>
+        /// <returns> A new <see cref="AppConfiguration.AppConfigurationSnapshotData"/> instance for mocking. </returns>
+        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string snapshotType = null, AppConfigurationProvisioningState? provisioningState = null, AppConfigurationSnapshotStatus? status = null, IEnumerable<SnapshotKeyValueFilter> filters = null, SnapshotCompositionType? compositionType = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, long? retentionPeriod = null, long? size = null, long? itemsCount = null, IDictionary<string, string> tags = null, ETag? eTag = null)
+        {
+            filters ??= new List<SnapshotKeyValueFilter>();
+            tags ??= new Dictionary<string, string>();
+
+            return new AppConfigurationSnapshotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                snapshotType,
+                provisioningState,
+                status,
+                filters?.ToList(),
+                compositionType,
+                createdOn,
+                expireOn,
+                retentionPeriod,
+                size,
+                itemsCount,
+                tags,
+                eTag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed identity information, if configured. </param>
+        /// <param name="skuName"> The sku of the configuration store. </param>
+        /// <param name="provisioningState"> The provisioning state of the configuration store. </param>
+        /// <param name="createdOn"> The creation date of configuration store. </param>
+        /// <param name="endpoint"> The DNS endpoint where the configuration store API will be available. </param>
+        /// <param name="encryptionKeyVaultProperties"> The encryption settings of the configuration store. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
+        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
+        /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
+        /// <param name="softDeleteRetentionInDays"> The amount of time in days that the configuration store will be retained when it is soft deleted. </param>
+        /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
+        /// <param name="createMode"> Indicates whether the configuration store need to be recovered. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string skuName, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationCreateMode? createMode)
+        {
+            return AppConfigurationStoreData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, skuName: skuName, provisioningState: provisioningState, createdOn: createdOn, endpoint: endpoint, encryptionKeyVaultProperties: encryptionKeyVaultProperties, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, disableLocalAuth: disableLocalAuth, softDeleteRetentionInDays: softDeleteRetentionInDays, enablePurgeProtection: enablePurgeProtection, dataPlaneProxy: default, createMode: createMode);
         }
     }
 }

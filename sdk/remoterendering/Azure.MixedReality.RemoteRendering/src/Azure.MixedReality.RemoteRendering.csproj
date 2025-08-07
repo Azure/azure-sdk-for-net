@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Mixed Reality ARR Client</AssemblyTitle>
-    <Version>1.2.1</Version>
+    <Version>1.2.1-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure MixedReality</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <Authors>Microsoft</Authors>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
@@ -12,7 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.1" />
+    <PackageReference Include="Azure.MixedReality.Authentication" />
     <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
   

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,15 +14,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm provider specific input for test failover. </summary>
     public partial class InMageRcmTestFailoverContent : TestFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmTestFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmTestFailoverContent"/>. </summary>
         public InMageRcmTestFailoverContent()
         {
             InstanceType = "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmTestFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="networkId"> The test network Id. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        internal InMageRcmTestFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier networkId, ResourceIdentifier recoveryPointId, string osUpgradeVersion) : base(instanceType, serializedAdditionalRawData)
+        {
+            NetworkId = networkId;
+            RecoveryPointId = recoveryPointId;
+            OSUpgradeVersion = osUpgradeVersion;
+            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> The test network Id. </summary>
         public ResourceIdentifier NetworkId { get; set; }
         /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
+        public string OSUpgradeVersion { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The provisioning state. </summary>
+    /// <summary> Workload Network Segment provisioning state. </summary>
     public readonly partial struct WorkloadNetworkSegmentProvisioningState : IEquatable<WorkloadNetworkSegmentProvisioningState>
     {
         private readonly string _value;
@@ -24,28 +24,28 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static WorkloadNetworkSegmentProvisioningState Succeeded { get; } = new WorkloadNetworkSegmentProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static WorkloadNetworkSegmentProvisioningState Failed { get; } = new WorkloadNetworkSegmentProvisioningState(FailedValue);
-        /// <summary> Building. </summary>
-        public static WorkloadNetworkSegmentProvisioningState Building { get; } = new WorkloadNetworkSegmentProvisioningState(BuildingValue);
-        /// <summary> Deleting. </summary>
-        public static WorkloadNetworkSegmentProvisioningState Deleting { get; } = new WorkloadNetworkSegmentProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static WorkloadNetworkSegmentProvisioningState Updating { get; } = new WorkloadNetworkSegmentProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static WorkloadNetworkSegmentProvisioningState Canceled { get; } = new WorkloadNetworkSegmentProvisioningState(CanceledValue);
+        /// <summary> is building. </summary>
+        public static WorkloadNetworkSegmentProvisioningState Building { get; } = new WorkloadNetworkSegmentProvisioningState(BuildingValue);
+        /// <summary> is deleting. </summary>
+        public static WorkloadNetworkSegmentProvisioningState Deleting { get; } = new WorkloadNetworkSegmentProvisioningState(DeletingValue);
+        /// <summary> is updating. </summary>
+        public static WorkloadNetworkSegmentProvisioningState Updating { get; } = new WorkloadNetworkSegmentProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkSegmentProvisioningState left, WorkloadNetworkSegmentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkSegmentProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(WorkloadNetworkSegmentProvisioningState left, WorkloadNetworkSegmentProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadNetworkSegmentProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkSegmentProvisioningState"/>. </summary>
         public static implicit operator WorkloadNetworkSegmentProvisioningState(string value) => new WorkloadNetworkSegmentProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -6,30 +6,114 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSsisTaskOutputProjectLevel
+    public partial class MigrateSsisTaskOutputProjectLevel : IUtf8JsonSerializable, IJsonModel<MigrateSsisTaskOutputProjectLevel>
     {
-        internal static MigrateSsisTaskOutputProjectLevel DeserializeMigrateSsisTaskOutputProjectLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSsisTaskOutputProjectLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MigrateSsisTaskOutputProjectLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputProjectLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(FolderName))
+            {
+                writer.WritePropertyName("folderName"u8);
+                writer.WriteStringValue(FolderName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProjectName))
+            {
+                writer.WritePropertyName("projectName"u8);
+                writer.WriteStringValue(ProjectName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Stage))
+            {
+                writer.WritePropertyName("stage"u8);
+                writer.WriteStringValue(Stage.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            {
+                writer.WritePropertyName("startedOn"u8);
+                writer.WriteStringValue(StartedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            {
+                writer.WritePropertyName("endedOn"u8);
+                writer.WriteStringValue(EndedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
+            {
+                writer.WritePropertyName("exceptionsAndWarnings"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExceptionsAndWarnings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        MigrateSsisTaskOutputProjectLevel IJsonModel<MigrateSsisTaskOutputProjectLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputProjectLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSsisTaskOutputProjectLevel(document.RootElement, options);
+        }
+
+        internal static MigrateSsisTaskOutputProjectLevel DeserializeMigrateSsisTaskOutputProjectLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> folderName = default;
-            Optional<string> projectName = default;
-            Optional<MigrationState> state = default;
-            Optional<SsisMigrationStage> stage = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string folderName = default;
+            string projectName = default;
+            DataMigrationState? state = default;
+            SsisMigrationStage? stage = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string message = default;
+            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
+            string id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("folderName"u8))
@@ -48,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new MigrationState(property.Value.GetString());
+                    state = new DataMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -89,10 +173,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -107,8 +191,55 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSsisTaskOutputProjectLevel(id.Value, resultType, folderName.Value, projectName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSsisTaskOutputProjectLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                folderName,
+                projectName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                message,
+                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>());
         }
+
+        BinaryData IPersistableModel<MigrateSsisTaskOutputProjectLevel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputProjectLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MigrateSsisTaskOutputProjectLevel IPersistableModel<MigrateSsisTaskOutputProjectLevel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputProjectLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMigrateSsisTaskOutputProjectLevel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateSsisTaskOutputProjectLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(IntegrationRuntimeUpdateResult left, IntegrationRuntimeUpdateResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeUpdateResult"/> values are not the same. </summary>
         public static bool operator !=(IntegrationRuntimeUpdateResult left, IntegrationRuntimeUpdateResult right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IntegrationRuntimeUpdateResult"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeUpdateResult"/>. </summary>
         public static implicit operator IntegrationRuntimeUpdateResult(string value) => new IntegrationRuntimeUpdateResult(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

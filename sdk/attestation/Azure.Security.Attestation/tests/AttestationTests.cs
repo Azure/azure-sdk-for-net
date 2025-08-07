@@ -13,6 +13,7 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Security.Attestation.Tests
 {
+    [LiveOnly(Reason = "JWT cannot be stored in recordings.")]
     public class AttestationTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
         // A Base64Url encoded pre-canned OpenEnclave Report, used to test

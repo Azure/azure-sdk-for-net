@@ -33,7 +33,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task CommonGlobalSetup()
         {
             SubscriptionResource sr = await GlobalClient.GetDefaultSubscriptionAsync();
-            var rgLro = await sr.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName($"dbaccount-"),
+            var rgLro = await sr.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Started,
+                CosmosDBTestUtilities.GenerateResourceGroupName(SessionRecording),
                 new ResourceGroupData(AzureLocation.WestUS2));
             _resourceGroupIdentifier = rgLro.Value.Id;
         }
@@ -63,15 +65,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var locations = new List<CosmosDBAccountLocation>()
             {
-                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false, null)
             };
 
             var createParameters = enableContinuousModeBackup ?
                 new CosmosDBAccountCreateOrUpdateContent(AzureLocation.WestUS2, locations)
                 {
                     Kind = kind,
-                    ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
-                    IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120") },
+                    ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds,null),
+                    IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120",null) },
                     IsVirtualNetworkFilterEnabled = true,
                     EnableAutomaticFailover = false,
                     ConnectorOffer = ConnectorOffer.Small,
@@ -81,8 +83,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 : new CosmosDBAccountCreateOrUpdateContent(AzureLocation.WestUS2, locations)
                 {
                     Kind = kind,
-                    ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
-                    IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120") },
+                    ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
+                    IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120", null) },
                     IsVirtualNetworkFilterEnabled = true,
                     EnableAutomaticFailover = false,
                     ConnectorOffer = ConnectorOffer.Small,

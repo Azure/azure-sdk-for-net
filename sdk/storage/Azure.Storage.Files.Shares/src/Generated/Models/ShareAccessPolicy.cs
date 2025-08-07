@@ -12,12 +12,12 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> An Access policy. </summary>
     public partial class ShareAccessPolicy
     {
-        /// <summary> Initializes a new instance of ShareAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareAccessPolicy"/>. </summary>
         public ShareAccessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareAccessPolicy"/>. </summary>
         /// <param name="policyStartsOn"> The date-time the policy is active. </param>
         /// <param name="policyExpiresOn"> The date-time the policy expires. </param>
         /// <param name="permissions"> The permissions for the ACL policy. </param>

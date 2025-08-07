@@ -90,11 +90,11 @@ client.Snooze();
 If you need to call an async method from a synchronous event handler, you have
 two options:
 
-- You can use [`Task.Run`](https://docs.microsoft.com/dotnet/api/system.threading.tasks.task.run)
+- You can use [`Task.Run`](https://learn.microsoft.com/dotnet/api/system.threading.tasks.task.run)
   to queue a task for execution on the ThreadPool without waiting on it to
   complete.  This "fire and forget" approach may not run before your handler
   finishes executing.  Be sure to understand
-  [exception handling in the Task Parallel Library](https://docs.microsoft.com/dotnet/standard/parallel-programming/exception-handling-task-parallel-library)
+  [exception handling in the Task Parallel Library](https://learn.microsoft.com/dotnet/standard/parallel-programming/exception-handling-task-parallel-library)
   to avoid unhandled exceptions tearing down your process.
 - If you absolutely need the async method to execute before returning from your
   handler, you can call `myAsyncTask.GetAwaiter().GetResult()`.  Please be aware
@@ -150,11 +150,11 @@ await client.SnoozeAsync(); // async call that doesn't block
 ## Handling exceptions
 
 Any exceptions thrown by an event handler will be wrapped in a single
-[`AggregateException`](https://docs.microsoft.com/dotnet/api/system.aggregateexception) and thrown from the code that raised the event.  You can check the
-[`AggregateException.InnerExceptions`](https://docs.microsoft.com/dotnet/api/system.aggregateexception.innerexceptions)
+[`AggregateException`](https://learn.microsoft.com/dotnet/api/system.aggregateexception) and thrown from the code that raised the event.  You can check the
+[`AggregateException.InnerExceptions`](https://learn.microsoft.com/dotnet/api/system.aggregateexception.innerexceptions)
 property to see the original exceptions thrown by your event handlers.
 `AggregateException` also provides
-[a number of helpful methods](https://docs.microsoft.com/archive/msdn-magazine/2009/brownfield/aggregating-exceptions)
+[a number of helpful methods](https://learn.microsoft.com/archive/msdn-magazine/2009/brownfield/aggregating-exceptions)
 like `Flatten` and `Handle` to make complex failures easier to work with.
 
 ```C# Snippet:Azure_Core_Samples_EventSamples_Exceptions
@@ -178,7 +178,7 @@ catch (AggregateException ex)
 Executing asynchronous code from a sync code path is commonly referred to as
 sync-over-async because you're getting sync behavior but still invoking all the
 async machinery.  See
-[Diagnosing .NET Core ThreadPool Starvation with PerfView](https://docs.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
+[Diagnosing .NET Core ThreadPool Starvation with PerfView](https://learn.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
 for a detailed explanation of how that can cause serious performance problems.
 We recommend you use the `SyncAsyncEventArgs.IsRunningSynchronously` flag to avoid
 ThreadPool starvation.

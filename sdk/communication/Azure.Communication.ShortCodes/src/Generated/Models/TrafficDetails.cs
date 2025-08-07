@@ -10,12 +10,12 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The TrafficDetails. </summary>
     public partial class TrafficDetails
     {
-        /// <summary> Initializes a new instance of TrafficDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficDetails"/>. </summary>
         public TrafficDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficDetails"/>. </summary>
         /// <param name="totalMonthlyVolume"> Estimated total messages per month. </param>
         /// <param name="monthlyAverageMessagesFromUser"> Estimated number of Mobile-Originated messages likely to be received from a user per month. </param>
         /// <param name="monthlyAverageMessagesToUser"> Estimated number of Mobile-Terminated messages likely to be sent per user per month. </param>

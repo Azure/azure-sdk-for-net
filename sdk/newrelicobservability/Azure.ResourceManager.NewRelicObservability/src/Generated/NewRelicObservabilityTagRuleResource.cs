@@ -9,23 +9,25 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
     /// A Class representing a NewRelicObservabilityTagRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NewRelicObservabilityTagRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNewRelicObservabilityTagRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NewRelicMonitorResource" /> using the GetNewRelicObservabilityTagRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NewRelicObservabilityTagRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNewRelicObservabilityTagRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NewRelicMonitorResource"/> using the GetNewRelicObservabilityTagRule method.
     /// </summary>
     public partial class NewRelicObservabilityTagRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NewRelicObservabilityTagRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="ruleSetName"> The ruleSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly TagRulesRestOperations _newRelicObservabilityTagRuleTagRulesRestClient;
         private readonly NewRelicObservabilityTagRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors/tagRules";
+
         /// <summary> Initializes a new instance of the <see cref="NewRelicObservabilityTagRuleResource"/> class for mocking. </summary>
         protected NewRelicObservabilityTagRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NewRelicObservabilityTagRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NewRelicObservabilityTagRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NewRelicObservabilityTagRuleResource(ArmClient client, NewRelicObservabilityTagRuleData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.NewRelicObservability
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors/tagRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +140,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +179,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TagRules_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +222,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>TagRules_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -230,6 +264,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>TagRules_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
@@ -263,6 +305,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TagRules_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

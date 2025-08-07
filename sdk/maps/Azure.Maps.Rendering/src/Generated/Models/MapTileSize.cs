@@ -33,7 +33,7 @@ namespace Azure.Maps.Rendering
         public static bool operator ==(MapTileSize left, MapTileSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapTileSize"/> values are not the same. </summary>
         public static bool operator !=(MapTileSize left, MapTileSize right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MapTileSize"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MapTileSize"/>. </summary>
         public static implicit operator MapTileSize(string value) => new MapTileSize(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Maps.Rendering
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

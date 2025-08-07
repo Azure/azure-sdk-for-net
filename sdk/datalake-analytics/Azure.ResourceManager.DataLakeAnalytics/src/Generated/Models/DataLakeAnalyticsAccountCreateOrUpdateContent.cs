@@ -18,7 +18,39 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountCreateOrUpdateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location">
         /// The resource location.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.location
@@ -44,6 +76,93 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             StorageAccounts = new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>();
             ComputePolicies = new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>();
             FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
+        /// <param name="location">
+        /// The resource location.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.location
+        /// </param>
+        /// <param name="tags">
+        /// The resource tags.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.tags
+        /// </param>
+        /// <param name="defaultDataLakeStoreAccount">
+        /// The default Data Lake Store account associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.defaultDataLakeStoreAccount
+        /// </param>
+        /// <param name="dataLakeStoreAccounts">
+        /// The list of Data Lake Store accounts associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.dataLakeStoreAccounts
+        /// </param>
+        /// <param name="storageAccounts">
+        /// The list of Azure Blob Storage accounts associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.storageAccounts
+        /// </param>
+        /// <param name="computePolicies">
+        /// The list of compute policies associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.computePolicies
+        /// </param>
+        /// <param name="firewallRules">
+        /// The list of firewall rules associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallRules
+        /// </param>
+        /// <param name="firewallState">
+        /// The current state of the IP address firewall for this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallState
+        /// </param>
+        /// <param name="firewallAllowAzureIPs">
+        /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallAllowAzureIps
+        /// </param>
+        /// <param name="newTier">
+        /// The commitment tier for the next month.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.newTier
+        /// </param>
+        /// <param name="maxJobCount">
+        /// The maximum supported jobs running under the account at the same time.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.maxJobCount
+        /// </param>
+        /// <param name="maxDegreeOfParallelism">
+        /// The maximum supported degree of parallelism for this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.maxDegreeOfParallelism
+        /// </param>
+        /// <param name="maxDegreeOfParallelismPerJob">
+        /// The maximum supported degree of parallelism per job for this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.maxDegreeOfParallelismPerJob
+        /// </param>
+        /// <param name="minPriorityPerJob">
+        /// The minimum supported priority per job for this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.minPriorityPerJob
+        /// </param>
+        /// <param name="queryStoreRetention">
+        /// The number of days that job metadata is retained.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.queryStoreRetention
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, string defaultDataLakeStoreAccount, IList<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts, IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> storageAccounts, IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> computePolicies, IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, int? maxJobCount, int? maxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Location = location;
+            Tags = tags;
+            DefaultDataLakeStoreAccount = defaultDataLakeStoreAccount;
+            DataLakeStoreAccounts = dataLakeStoreAccounts;
+            StorageAccounts = storageAccounts;
+            ComputePolicies = computePolicies;
+            FirewallRules = firewallRules;
+            FirewallState = firewallState;
+            FirewallAllowAzureIPs = firewallAllowAzureIPs;
+            NewTier = newTier;
+            MaxJobCount = maxJobCount;
+            MaxDegreeOfParallelism = maxDegreeOfParallelism;
+            MaxDegreeOfParallelismPerJob = maxDegreeOfParallelismPerJob;
+            MinPriorityPerJob = minPriorityPerJob;
+            QueryStoreRetention = queryStoreRetention;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountCreateOrUpdateContent"/> for deserialization. </summary>
+        internal DataLakeAnalyticsAccountCreateOrUpdateContent()
+        {
         }
 
         /// <summary>

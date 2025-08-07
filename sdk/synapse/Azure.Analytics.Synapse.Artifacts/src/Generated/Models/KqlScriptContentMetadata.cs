@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The KqlScriptContentMetadata. </summary>
     public partial class KqlScriptContentMetadata
     {
-        /// <summary> Initializes a new instance of KqlScriptContentMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScriptContentMetadata"/>. </summary>
         public KqlScriptContentMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of KqlScriptContentMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScriptContentMetadata"/>. </summary>
         /// <param name="language"></param>
         internal KqlScriptContentMetadata(string language)
         {

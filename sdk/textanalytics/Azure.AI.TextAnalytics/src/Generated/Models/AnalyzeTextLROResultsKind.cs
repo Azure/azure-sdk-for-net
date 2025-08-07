@@ -60,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Models
         public static bool operator ==(AnalyzeTextLROResultsKind left, AnalyzeTextLROResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextLROResultsKind"/> values are not the same. </summary>
         public static bool operator !=(AnalyzeTextLROResultsKind left, AnalyzeTextLROResultsKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalyzeTextLROResultsKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeTextLROResultsKind"/>. </summary>
         public static implicit operator AnalyzeTextLROResultsKind(string value) => new AnalyzeTextLROResultsKind(value);
 
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

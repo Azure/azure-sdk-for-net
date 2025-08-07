@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Test;
 using Mono.Unix.Native;
 using NUnit.Framework;
@@ -32,7 +33,7 @@ namespace Azure.Storage.DataMovement.Tests
             "C:\\Users\\user1\\Documents\file.txt",
             "C:\\Users\\user1\\Documents\file",
             "C:\\Users\\user1\\Documents\file\\",
-            "user1\\Documents\file\\",
+            "/user1/Documents/file/",
         };
 
         private void AllowReadData(string path, bool isDirectory, bool allowRead)
@@ -68,9 +69,43 @@ namespace Azure.Storage.DataMovement.Tests
                 LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
                 // Assert
-                Assert.AreEqual(path, storageResource.Path);
-                Assert.IsFalse(storageResource.CanProduceUri);
+                Assert.AreEqual(path, storageResource.Uri.LocalPath);
+                Assert.AreEqual(Uri.UriSchemeFile, storageResource.Uri.Scheme);
             }
+        }
+
+        [Test]
+        [RunOnlyOnPlatforms(Windows = true)]
+        [TestCase("C:\\test\\path=true@&#%", "C:/test/path%3Dtrue%40%26%23%25")]
+        [TestCase("C:\\test\\path%3Dtest%26", "C:/test/path%253Dtest%2526")]
+        [TestCase("C:\\test\\file with spaces", "C:/test/file%20with%20spaces")]
+        public void Ctor_String_Encoding_Windows(string path, string absolutePath)
+        {
+            LocalFileStorageResource storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+        }
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, OSX = true)]
+        [TestCase("/test/path=true@&#%", "/test/path%3Dtrue%40%26%23%25")]
+        [TestCase("/test/path%3Dtest%26", "/test/path%253Dtest%2526")]
+        [TestCase("/test/file with spaces", "/test/file%20with%20spaces")]
+        public void Ctor_String_Encoding_Unix(string path, string absolutePath)
+        {
+            LocalFileStorageResource storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+        }
+
+        public void Ctor_String_Encoding(string path, string absolutePath)
+        {
+            LocalFileStorageResource storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
         }
 
         [Test]
@@ -83,7 +118,10 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource("   "));
 
             Assert.Catch<ArgumentException>(() =>
-                new LocalFileStorageResource(default));
+                new LocalFileStorageResource(path: default));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalFileStorageResource(uri: default));
         }
 
         [Test]
@@ -98,7 +136,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync();
+            StorageResourceReadStreamResult result = await storageResource.ReadStreamAsync();
             using Stream content = result.Content;
 
             // Assert
@@ -120,7 +158,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             var readPosition = 5;
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync(position: readPosition);
+            StorageResourceReadStreamResult result = await storageResource.ReadStreamAsync(position: readPosition);
             using Stream content = result.Content;
 
             // Assert
@@ -163,11 +201,12 @@ namespace Azure.Storage.DataMovement.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(
+                await storageResource.CopyFromStreamAsync(
                     stream,
                     streamLength: length,
                     false,
-                    completeLength: length);
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions() { Initial = true });
             }
 
             // Assert
@@ -192,12 +231,12 @@ namespace Azure.Storage.DataMovement.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(
+                await storageResource.CopyFromStreamAsync(
                     stream,
                     streamLength: length,
                     overwrite: false,
-                    position: writePosition,
-                    completeLength: length);
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions() { Position = writePosition, Initial = false });
             }
 
             // Assert
@@ -216,17 +255,19 @@ namespace Azure.Storage.DataMovement.Tests
             string path = await CreateRandomFileAsync(test.DirectoryPath, size: length);
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
             var data = GetRandomBuffer(length);
-            try
+            Assert.ThrowsAsync<IOException>(async () =>
             {
                 using (var stream = new MemoryStream(data))
                 {
-                    await storageResource.WriteFromStreamAsync(stream, length, false);
+                    await storageResource.CopyFromStreamAsync(
+                        stream: stream,
+                        streamLength: length,
+                        overwrite: false,
+                        completeLength: length,
+                        options: new StorageResourceWriteToOffsetOptions() { Initial = true });
                 }
-            }
-            catch (IOException ex)
-            {
-                Assert.AreEqual(ex.Message, $"File path `{path}` already exists. Cannot overwrite file.");
-            }
+            },
+            $"File path `{path}` already exists. Cannot overwrite file.");
         }
 
         [Test]
@@ -239,12 +280,12 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act
-            StorageResourceProperties result = await storageResource.GetPropertiesAsync();
+            StorageResourceItemProperties result = await storageResource.GetPropertiesAsync();
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(result.ContentLength, size);
-            Assert.NotNull(result.ETag);
+            Assert.AreEqual(result.ResourceLength, size);
+            Assert.NotNull(result.RawProperties);
         }
 
         [Test]

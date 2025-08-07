@@ -6,27 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel. </summary>
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel : MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
         internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel()
         {
             ResultType = "TableLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="cdcInsertCounter"> Number of applied inserts. </param>
         /// <param name="cdcUpdateCounter"> Number of applied updates. </param>
         /// <param name="cdcDeleteCounter"> Number of applied deletes. </param>
-        /// <param name="fullLoadEstFinishOn"> Estimate to finish full load. </param>
+        /// <param name="fullLoadEstFinishedOn"> Estimate to finish full load. </param>
         /// <param name="fullLoadStartedOn"> Full load start time. </param>
         /// <param name="fullLoadEndedOn"> Full load end time. </param>
         /// <param name="fullLoadTotalRows"> Number of rows applied in full load. </param>
@@ -34,14 +36,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalChangesApplied"> Total number of applied changes. </param>
         /// <param name="dataErrorsCounter"> Number of data errors occurred. </param>
         /// <param name="lastModifiedOn"> Last modified time on target. </param>
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(string id, string resultType, string tableName, string databaseName, long? cdcInsertCounter, long? cdcUpdateCounter, long? cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn) : base(id, resultType)
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string tableName, string databaseName, long? cdcInsertCounter, long? cdcUpdateCounter, long? cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishedOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn) : base(id, resultType, serializedAdditionalRawData)
         {
             TableName = tableName;
             DatabaseName = databaseName;
             CdcInsertCounter = cdcInsertCounter;
             CdcUpdateCounter = cdcUpdateCounter;
             CdcDeleteCounter = cdcDeleteCounter;
-            FullLoadEstFinishOn = fullLoadEstFinishOn;
+            FullLoadEstFinishedOn = fullLoadEstFinishedOn;
             FullLoadStartedOn = fullLoadStartedOn;
             FullLoadEndedOn = fullLoadEndedOn;
             FullLoadTotalRows = fullLoadTotalRows;
@@ -63,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Number of applied deletes. </summary>
         public long? CdcDeleteCounter { get; }
         /// <summary> Estimate to finish full load. </summary>
-        public DateTimeOffset? FullLoadEstFinishOn { get; }
+        public DateTimeOffset? FullLoadEstFinishedOn { get; }
         /// <summary> Full load start time. </summary>
         public DateTimeOffset? FullLoadStartedOn { get; }
         /// <summary> Full load end time. </summary>

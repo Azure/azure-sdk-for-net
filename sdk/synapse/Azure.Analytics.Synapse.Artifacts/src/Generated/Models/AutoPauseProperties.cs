@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Auto-pausing properties of a Big Data pool powered by Apache Spark. </summary>
     public partial class AutoPauseProperties
     {
-        /// <summary> Initializes a new instance of AutoPauseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoPauseProperties"/>. </summary>
         public AutoPauseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoPauseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoPauseProperties"/>. </summary>
         /// <param name="delayInMinutes"> Number of minutes of idle time before the Big Data pool is automatically paused. </param>
         /// <param name="enabled"> Whether auto-pausing is enabled for the Big Data pool. </param>
         internal AutoPauseProperties(int? delayInMinutes, bool? enabled)

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -19,12 +17,12 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<CommunicationIdentifierModel> participant = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            CommunicationIdentifierModel participant = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -66,7 +64,21 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RemoveParticipantSucceededInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, participant.Value);
+            return new RemoveParticipantSucceededInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                participant);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RemoveParticipantSucceededInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRemoveParticipantSucceededInternal(document.RootElement);
         }
     }
 }

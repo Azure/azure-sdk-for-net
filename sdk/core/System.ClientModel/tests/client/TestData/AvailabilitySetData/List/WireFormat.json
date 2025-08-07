@@ -1,0 +1,28 @@
+[
+  {
+    "sku": {
+      "name": "Classic"
+    },
+    "tags": {
+      "key": "value"
+    },
+    "location": "eastus",
+    "properties": {
+      "platformUpdateDomainCount": 5,
+      "platformFaultDomainCount": 3
+    }
+  },
+  {
+    "sku": {
+      "name": "Classic"
+    },
+    "tags": {
+      "key": "value"
+    },
+    "location": "eastus",
+    "properties": {
+      "platformUpdateDomainCount": 6,
+      "platformFaultDomainCount": 4
+    }
+  }
+]

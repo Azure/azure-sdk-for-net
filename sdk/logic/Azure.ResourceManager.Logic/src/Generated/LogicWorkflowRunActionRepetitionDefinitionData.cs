@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowRunActionRepetitionDefinitionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionRepetitionDefinitionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LogicWorkflowRunActionRepetitionDefinitionData(AzureLocation location) : base(location)
         {
@@ -27,7 +59,7 @@ namespace Azure.ResourceManager.Logic
             RepetitionIndexes = new ChangeTrackingList<LogicWorkflowRepetitionIndex>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionRepetitionDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +81,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <param name="iterationCount"></param>
         /// <param name="repetitionIndexes"> The repetition indexes. </param>
-        internal LogicWorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowRunActionCorrelation correlation, LogicWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, BinaryData inputs, LogicContentLink inputsLink, BinaryData outputs, LogicContentLink outputsLink, BinaryData trackedProperties, IList<LogicWorkRetryHistory> retryHistory, int? iterationCount, IList<LogicWorkflowRepetitionIndex> repetitionIndexes) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowRunActionCorrelation correlation, LogicWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, BinaryData inputs, LogicContentLink inputsLink, BinaryData outputs, LogicContentLink outputsLink, BinaryData trackedProperties, IList<LogicWorkRetryHistory> retryHistory, int? iterationCount, IList<LogicWorkflowRepetitionIndex> repetitionIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -66,6 +99,12 @@ namespace Azure.ResourceManager.Logic
             RetryHistory = retryHistory;
             IterationCount = iterationCount;
             RepetitionIndexes = repetitionIndexes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionRepetitionDefinitionData"/> for deserialization. </summary>
+        internal LogicWorkflowRunActionRepetitionDefinitionData()
+        {
         }
 
         /// <summary> The start time of the workflow scope repetition. </summary>
@@ -84,7 +123,7 @@ namespace Azure.ResourceManager.Logic
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -117,7 +156,7 @@ namespace Azure.ResourceManager.Logic
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -150,7 +189,7 @@ namespace Azure.ResourceManager.Logic
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -183,7 +222,7 @@ namespace Azure.ResourceManager.Logic
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

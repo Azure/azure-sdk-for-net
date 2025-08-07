@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Describes an available ApiManagement SKU. </summary>
     public partial class ApiManagementSku
     {
-        /// <summary> Initializes a new instance of ApiManagementSku. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSku"/>. </summary>
         internal ApiManagementSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -24,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Restrictions = new ChangeTrackingList<ApiManagementSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </param>
@@ -38,7 +71,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="costs"> Metadata for retrieving price info. </param>
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal ApiManagementSku(string resourceType, string name, string tier, string size, string family, string kind, ApiManagementSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ApiManagementSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ApiManagementSkuCosts> costs, IReadOnlyList<ApiManagementSkuCapabilities> capabilities, IReadOnlyList<ApiManagementSkuRestrictions> restrictions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementSku(string resourceType, string name, string tier, string size, string family, string kind, ApiManagementSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ApiManagementSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ApiManagementSkuCosts> costs, IReadOnlyList<ApiManagementSkuCapabilities> capabilities, IReadOnlyList<ApiManagementSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -53,33 +87,47 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Costs = costs;
             Capabilities = capabilities;
             Restrictions = restrictions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> The name of SKU. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </summary>
+        [WirePath("tier")]
         public string Tier { get; }
         /// <summary> The Size of the SKU. </summary>
+        [WirePath("size")]
         public string Size { get; }
         /// <summary> The Family of this particular SKU. </summary>
+        [WirePath("family")]
         public string Family { get; }
         /// <summary> The Kind of resources that are supported in this SKU. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>
+        [WirePath("capacity")]
         public ApiManagementSkuCapacity Capacity { get; }
         /// <summary> The set of locations that the SKU is available. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
+        [WirePath("locationInfo")]
         public IReadOnlyList<ApiManagementSkuLocationInfo> LocationInfo { get; }
         /// <summary> The api versions that support this SKU. </summary>
+        [WirePath("apiVersions")]
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> Metadata for retrieving price info. </summary>
+        [WirePath("costs")]
         public IReadOnlyList<ApiManagementSkuCosts> Costs { get; }
         /// <summary> A name value pair to describe the capability. </summary>
+        [WirePath("capabilities")]
         public IReadOnlyList<ApiManagementSkuCapabilities> Capabilities { get; }
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
+        [WirePath("restrictions")]
         public IReadOnlyList<ApiManagementSkuRestrictions> Restrictions { get; }
     }
 }

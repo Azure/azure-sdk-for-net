@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningKeyType left, MachineLearningKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningKeyType"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningKeyType left, MachineLearningKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningKeyType"/>. </summary>
         public static implicit operator MachineLearningKeyType(string value) => new MachineLearningKeyType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

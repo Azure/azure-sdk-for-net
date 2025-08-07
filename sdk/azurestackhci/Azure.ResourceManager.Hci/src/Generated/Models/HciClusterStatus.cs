@@ -28,6 +28,12 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DisconnectedValue = "Disconnected";
         private const string ErrorValue = "Error";
         private const string NotSpecifiedValue = "NotSpecified";
+        private const string ValidationInProgressValue = "ValidationInProgress";
+        private const string ValidationSuccessValue = "ValidationSuccess";
+        private const string ValidationFailedValue = "ValidationFailed";
+        private const string DeploymentInProgressValue = "DeploymentInProgress";
+        private const string DeploymentFailedValue = "DeploymentFailed";
+        private const string DeploymentSuccessValue = "DeploymentSuccess";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string InProgressValue = "InProgress";
@@ -44,6 +50,18 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciClusterStatus Error { get; } = new HciClusterStatus(ErrorValue);
         /// <summary> NotSpecified. </summary>
         public static HciClusterStatus NotSpecified { get; } = new HciClusterStatus(NotSpecifiedValue);
+        /// <summary> ValidationInProgress. </summary>
+        public static HciClusterStatus ValidationInProgress { get; } = new HciClusterStatus(ValidationInProgressValue);
+        /// <summary> ValidationSuccess. </summary>
+        public static HciClusterStatus ValidationSuccess { get; } = new HciClusterStatus(ValidationSuccessValue);
+        /// <summary> ValidationFailed. </summary>
+        public static HciClusterStatus ValidationFailed { get; } = new HciClusterStatus(ValidationFailedValue);
+        /// <summary> DeploymentInProgress. </summary>
+        public static HciClusterStatus DeploymentInProgress { get; } = new HciClusterStatus(DeploymentInProgressValue);
+        /// <summary> DeploymentFailed. </summary>
+        public static HciClusterStatus DeploymentFailed { get; } = new HciClusterStatus(DeploymentFailedValue);
+        /// <summary> DeploymentSuccess. </summary>
+        public static HciClusterStatus DeploymentSuccess { get; } = new HciClusterStatus(DeploymentSuccessValue);
         /// <summary> Succeeded. </summary>
         public static HciClusterStatus Succeeded { get; } = new HciClusterStatus(SucceededValue);
         /// <summary> Failed. </summary>
@@ -54,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(HciClusterStatus left, HciClusterStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciClusterStatus"/> values are not the same. </summary>
         public static bool operator !=(HciClusterStatus left, HciClusterStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HciClusterStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciClusterStatus"/>. </summary>
         public static implicit operator HciClusterStatus(string value) => new HciClusterStatus(value);
 
         /// <inheritdoc />
@@ -65,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

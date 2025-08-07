@@ -10,14 +10,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The InfluxDBParameter. </summary>
     internal partial class InfluxDBParameter
     {
-        /// <summary> Initializes a new instance of InfluxDBParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfluxDBParameter"/>. </summary>
         /// <param name="query"> The script to query this database. </param>
         public InfluxDBParameter(string query)
         {
             Query = query;
         }
 
-        /// <summary> Initializes a new instance of InfluxDBParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="InfluxDBParameter"/>. </summary>
         /// <param name="connectionString"> The connection string of this InfluxDB. </param>
         /// <param name="database"> A database name. </param>
         /// <param name="userName"> The user name of the account that can access this database. </param>

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The type of the Security policy to create. </summary>
+    /// <summary>
+    /// The type of the Security policy to create.
+    /// Serialized Name: SecurityPolicyType
+    /// </summary>
     internal readonly partial struct SecurityPolicyType : IEquatable<SecurityPolicyType>
     {
         private readonly string _value;
@@ -24,13 +27,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string WebApplicationFirewallValue = "WebApplicationFirewall";
 
-        /// <summary> WebApplicationFirewall. </summary>
+        /// <summary>
+        /// WebApplicationFirewall
+        /// Serialized Name: SecurityPolicyType.WebApplicationFirewall
+        /// </summary>
         public static SecurityPolicyType WebApplicationFirewall { get; } = new SecurityPolicyType(WebApplicationFirewallValue);
         /// <summary> Determines if two <see cref="SecurityPolicyType"/> values are the same. </summary>
         public static bool operator ==(SecurityPolicyType left, SecurityPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityPolicyType"/> values are not the same. </summary>
         public static bool operator !=(SecurityPolicyType left, SecurityPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityPolicyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityPolicyType"/>. </summary>
         public static implicit operator SecurityPolicyType(string value) => new SecurityPolicyType(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

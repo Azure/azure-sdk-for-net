@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Event Hub ingestion endpoint configuration. </summary>
     public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorEventHubIngestionConfiguration"/>. </summary>
         public HealthcareApisIotConnectorEventHubIngestionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorEventHubIngestionConfiguration"/>. </summary>
         /// <param name="eventHubName"> Event Hub name to connect to. </param>
         /// <param name="consumerGroup"> Consumer group of the event hub to connected to. </param>
         /// <param name="fullyQualifiedEventHubNamespace"> Fully qualified namespace of the Event Hub to connect to. </param>
-        internal HealthcareApisIotConnectorEventHubIngestionConfiguration(string eventHubName, string consumerGroup, string fullyQualifiedEventHubNamespace)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisIotConnectorEventHubIngestionConfiguration(string eventHubName, string consumerGroup, string fullyQualifiedEventHubNamespace, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             FullyQualifiedEventHubNamespace = fullyQualifiedEventHubNamespace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Event Hub name to connect to. </summary>

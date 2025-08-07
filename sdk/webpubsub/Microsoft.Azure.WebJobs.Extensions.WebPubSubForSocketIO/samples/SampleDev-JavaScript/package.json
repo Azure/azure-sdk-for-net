@@ -1,0 +1,24 @@
+{
+  "name": "sampledev-javascript",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "copy-public": "copyfiles -a src/public/* dist",
+    "build": "tsc && npm run copy-public",
+    "watch": "tsc -w",
+    "clean": "rimraf dist",
+    "prestart": "npm run clean && npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@azure/functions": "^4.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "typescript": "^4.0.0",
+    "rimraf": "^5.0.0",
+    "copyfiles": "2.4.1"
+  },
+  "main": "dist/src/{index.js,functions/*.js}"
+}

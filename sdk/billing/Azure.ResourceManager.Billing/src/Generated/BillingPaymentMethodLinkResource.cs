@@ -9,23 +9,23 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A Class representing a BillingPaymentMethodLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingPaymentMethodLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingPaymentMethodLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingPaymentMethodLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingPaymentMethodLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingProfileResource"/> using the GetBillingPaymentMethodLink method.
     /// </summary>
     public partial class BillingPaymentMethodLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingPaymentMethodLinkResource"/> instance. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="billingProfileName"> The billingProfileName. </param>
+        /// <param name="paymentMethodName"> The paymentMethodName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string paymentMethodName)
         {
             var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}";
@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.Billing
         private readonly PaymentMethodsRestOperations _billingPaymentMethodLinkPaymentMethodsRestClient;
         private readonly BillingPaymentMethodLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks";
+
         /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkResource"/> class for mocking. </summary>
         protected BillingPaymentMethodLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingPaymentMethodLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingPaymentMethodLinkResource(ArmClient client, BillingPaymentMethodLinkData data) : this(client, data.Id)
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.Billing
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,74 +159,6 @@ namespace Azure.ResourceManager.Billing
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BillingPaymentMethodLinkResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a payment method link and removes the payment method from a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PaymentMethods_DeleteAtBillingProfile</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.DeleteAtBillingProfileAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(_billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _billingPaymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a payment method link and removes the payment method from a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PaymentMethods_DeleteAtBillingProfile</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _billingPaymentMethodLinkPaymentMethodsRestClient.DeleteAtBillingProfile(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(_billingPaymentMethodLinkPaymentMethodsClientDiagnostics, Pipeline, _billingPaymentMethodLinkPaymentMethodsRestClient.CreateDeleteAtBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

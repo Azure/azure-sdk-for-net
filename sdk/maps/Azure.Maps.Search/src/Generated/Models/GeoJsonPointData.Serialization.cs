@@ -7,32 +7,19 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonPointData : IUtf8JsonSerializable
+    internal partial class GeoJsonPointData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("coordinates"u8);
-            writer.WriteStartArray();
-            foreach (var item in Coordinates)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonPointData DeserializeGeoJsonPointData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<double> coordinates = default;
+            IReadOnlyList<double> coordinates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"u8))
@@ -47,6 +34,14 @@ namespace Azure.Maps.Search.Models
                 }
             }
             return new GeoJsonPointData(coordinates);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GeoJsonPointData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGeoJsonPointData(document.RootElement);
         }
     }
 }

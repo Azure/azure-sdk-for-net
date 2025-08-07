@@ -10,12 +10,12 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> JSON web key parameter. </summary>
     internal partial class JWKHeader
     {
-        /// <summary> Initializes a new instance of JWKHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="JWKHeader"/>. </summary>
         internal JWKHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of JWKHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="JWKHeader"/>. </summary>
         /// <param name="crv"> crv value. </param>
         /// <param name="kid"> kid value. </param>
         /// <param name="kty"> kty value. </param>

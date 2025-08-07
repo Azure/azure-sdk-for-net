@@ -103,6 +103,14 @@ namespace Azure.Security.KeyVault.Keys
         public System.Security.Cryptography.ECDsa ToECDsa(bool includePrivateParameters = false) { throw null; }
         public System.Security.Cryptography.RSA ToRSA(bool includePrivateParameters = false) { throw null; }
     }
+    public partial class KeyAttestation
+    {
+        public KeyAttestation() { }
+        public System.ReadOnlyMemory<byte> CertificatePemFile { get { throw null; } }
+        public System.ReadOnlyMemory<byte> PrivateKeyAttestation { get { throw null; } }
+        public System.ReadOnlyMemory<byte> PublicKeyAttestation { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
     public partial class KeyClient
     {
         protected KeyClient() { }
@@ -126,6 +134,8 @@ namespace Azure.Security.KeyVault.Keys
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Keys.DeletedKey> GetDeletedKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> GetKey(string name, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> GetKeyAsync(string name, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> GetKeyAttestation(string name, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> GetKeyAttestationAsync(string name, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy> GetKeyRotationPolicy(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyRotationPolicy>> GetKeyRotationPolicyAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Keys.KeyProperties> GetPropertiesOfKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -159,7 +169,7 @@ namespace Azure.Security.KeyVault.Keys
     }
     public partial class KeyClientOptions : Azure.Core.ClientOptions
     {
-        public KeyClientOptions(Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion.V7_4) { }
+        public KeyClientOptions(Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion.V7_6) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -169,6 +179,8 @@ namespace Azure.Security.KeyVault.Keys
             V7_2 = 2,
             V7_3 = 3,
             V7_4 = 4,
+            V7_5 = 5,
+            V7_6 = 6,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -248,10 +260,12 @@ namespace Azure.Security.KeyVault.Keys
     {
         public KeyProperties(string name) { }
         public KeyProperties(System.Uri id) { }
+        public Azure.Security.KeyVault.Keys.KeyAttestation Attestation { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public bool? Exportable { get { throw null; } set { } }
+        public string HsmPlatform { get { throw null; } }
         public System.Uri Id { get { throw null; } }
         public bool Managed { get { throw null; } }
         public string Name { get { throw null; } }
@@ -427,7 +441,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     }
     public partial class CryptographyClientOptions : Azure.Core.ClientOptions
     {
-        public CryptographyClientOptions(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion.V7_4) { }
+        public CryptographyClientOptions(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion.V7_6) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -437,6 +451,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             V7_2 = 2,
             V7_3 = 3,
             V7_4 = 4,
+            V7_5 = 5,
+            V7_6 = 6,
         }
     }
     public partial class DecryptParameters
@@ -544,6 +560,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm A128KW { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm A192KW { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm A256KW { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm CkmAesKeyWrap { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm CkmAesKeyWrapPad { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm Rsa15 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm RsaOaep { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm RsaOaep256 { get { throw null; } }
@@ -590,6 +608,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES256K { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES384 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES512 { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm HS256 { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm HS384 { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm HS512 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm PS256 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm PS384 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm PS512 { get { throw null; } }

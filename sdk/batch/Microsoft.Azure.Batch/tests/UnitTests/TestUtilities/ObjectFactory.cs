@@ -35,6 +35,19 @@
                 Type wrappedType = objectType.GetGenericArguments()[0];
                 return this.GenerateNew(wrappedType);
             }
+            else if (objectType.Name.Contains("Dictionary"))
+            {
+                Type dictionaryType = typeof(Dictionary<,>);
+                Type wrappedType = objectType.GetGenericArguments()[0];
+                Type wrappedType2 = objectType.GetGenericArguments()[0];
+                Type genericDictionaryType = dictionaryType.MakeGenericType( wrappedType, wrappedType2);
+                IDictionary genericDictionary = (IDictionary)Activator.CreateInstance(genericDictionaryType);
+
+                genericDictionary.Add("test1", "value1");
+                genericDictionary.Add("test2", "value2");
+
+                return genericDictionary;
+            }
             else if (objectType.GetTypeInfo().IsGenericType && typeof(IEnumerable).IsAssignableFrom(objectType))
             {
                 Type listType = typeof (List<>);

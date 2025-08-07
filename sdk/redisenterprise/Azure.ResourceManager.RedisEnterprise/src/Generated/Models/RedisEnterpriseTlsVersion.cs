@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
+    /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </summary>
     public readonly partial struct RedisEnterpriseTlsVersion : IEquatable<RedisEnterpriseTlsVersion>
     {
         private readonly string _value;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(RedisEnterpriseTlsVersion left, RedisEnterpriseTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseTlsVersion"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterpriseTlsVersion left, RedisEnterpriseTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterpriseTlsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseTlsVersion"/>. </summary>
         public static implicit operator RedisEnterpriseTlsVersion(string value) => new RedisEnterpriseTlsVersion(value);
 
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

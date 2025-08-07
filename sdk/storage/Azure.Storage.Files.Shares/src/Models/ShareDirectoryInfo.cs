@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -31,10 +32,38 @@ namespace Azure.Storage.Files.Shares.Models
         public FileSmbProperties SmbProperties { get; set; }
 
         /// <summary>
+        /// The directory's NFS properties.
+        /// Only applicable to files in a NFS share.
+        /// </summary>
+        public FilePosixProperties PosixProperties { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal ShareDirectoryInfo() { }
 }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageDirectoryInfo instance for mocking.
+        /// </summary>
+        public static ShareDirectoryInfo StorageDirectoryInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            FileSmbProperties smbProperties = default,
+            FilePosixProperties posixProperties = default)
+            => new ShareDirectoryInfo
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                SmbProperties = smbProperties,
+                PosixProperties = posixProperties,
+            };
+    }
 
     /// <summary>
     /// FilesModelFactory provides utilities for mocking.
@@ -44,6 +73,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageDirectoryInfo instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareDirectoryInfo StorageDirectoryInfo(
             ETag eTag,
             DateTimeOffset lastModified,
@@ -60,7 +90,7 @@ namespace Azure.Storage.Files.Shares.Models
                 LastModified = lastModified,
                 SmbProperties = new FileSmbProperties
                 {
-                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FileAttributes = ShareModelExtensions.ToFileAttributes(fileAttributes),
                     FilePermissionKey = filePermissionKey,
                     FileCreatedOn = fileCreationTime,
                     FileLastWrittenOn = fileLastWriteTime,

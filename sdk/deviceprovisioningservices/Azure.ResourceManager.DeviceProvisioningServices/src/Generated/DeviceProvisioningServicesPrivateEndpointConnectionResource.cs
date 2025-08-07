@@ -9,38 +9,43 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
     /// A Class representing a DeviceProvisioningServicesPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceProvisioningServicesPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource" /> using the GetDeviceProvisioningServicesPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceProvisioningServicesPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource"/> using the GetDeviceProvisioningServicesPrivateEndpointConnection method.
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics;
-        private readonly IotDpsResourceRestOperations _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient;
+        private readonly ClientDiagnostics _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly DeviceProvisioningServicesPrivateEndpointConnectionData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/privateEndpointConnections";
 
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected DeviceProvisioningServicesPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceProvisioningServicesPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceProvisioningServicesPrivateEndpointConnectionResource(ArmClient client, DeviceProvisioningServicesPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -54,16 +59,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceProvisioningServicesPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceApiVersion);
-            _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient = new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceApiVersion);
+            _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -95,18 +97,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeviceProvisioningServicesPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Get");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -127,18 +137,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeviceProvisioningServicesPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Get");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -159,7 +177,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_DeletePrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_DeletePrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,12 +193,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Delete");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.DeletePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateDeletePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeletePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeletePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -193,7 +219,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_DeletePrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_DeletePrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,12 +235,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Delete");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.DeletePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateDeletePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeletePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeletePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +261,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_CreateOrUpdatePrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_CreateOrUpdatePrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,12 +281,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Update");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateOrUpdatePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdatePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -265,7 +307,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_CreateOrUpdatePrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_CreateOrUpdatePrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,12 +327,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Update");
+            using var scope = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateOrUpdatePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdatePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(Client), _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _deviceProvisioningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

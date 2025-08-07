@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -75,7 +74,17 @@ namespace Azure.Storage.Blobs.Models
                 }
                 orMetadata = dictionary;
             }
-            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, metadata, blobTags, hasVersionsOnly, orMetadata);
+            return new BlobItemInternal(
+                name,
+                deleted,
+                snapshot,
+                versionId,
+                isCurrentVersion,
+                properties,
+                metadata,
+                blobTags,
+                hasVersionsOnly,
+                orMetadata);
         }
     }
 }

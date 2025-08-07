@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The SentimentTaskResult. </summary>
     internal partial class SentimentTaskResult
     {
-        /// <summary> Initializes a new instance of SentimentTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentTaskResult"/>. </summary>
         internal SentimentTaskResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SentimentTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentTaskResult"/>. </summary>
         /// <param name="results"></param>
         internal SentimentTaskResult(SentimentResponse results)
         {

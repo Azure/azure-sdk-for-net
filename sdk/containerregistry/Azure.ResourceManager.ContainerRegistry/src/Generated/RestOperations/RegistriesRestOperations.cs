@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ContainerRegistry.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-01";
+            _apiVersion = apiVersion ?? "2025-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateImportImageRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryImportImageContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/importImage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateImportImageRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryImportImageContent content)
@@ -55,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -115,6 +129,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, ContainerRegistryNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, ContainerRegistryNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -130,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -154,7 +179,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryNameAvailableResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryNameAvailableResult.DeserializeContainerRegistryNameAvailableResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -181,13 +206,24 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryNameAvailableResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryNameAvailableResult.DeserializeContainerRegistryNameAvailableResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -223,7 +259,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -248,13 +284,26 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -294,7 +343,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,13 +370,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string registryName)
@@ -370,7 +433,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryData.DeserializeContainerRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -401,7 +464,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryData.DeserializeContainerRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -410,6 +473,20 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryData data)
@@ -430,7 +507,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -488,6 +565,20 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string registryName)
@@ -561,6 +652,20 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -579,7 +684,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -639,6 +744,21 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateListUsagesRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/listUsages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListUsagesRequest(string subscriptionId, string resourceGroupName, string registryName)
         {
             var message = _pipeline.CreateMessage();
@@ -680,7 +800,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryUsageListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryUsageListResult.DeserializeContainerRegistryUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -709,13 +829,28 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryUsageListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryUsageListResult.DeserializeContainerRegistryUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPrivateLinkResourcesRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string registryName)
@@ -759,7 +894,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryPrivateLinkResourceListResult.DeserializeContainerRegistryPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -788,13 +923,29 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryPrivateLinkResourceListResult.DeserializeContainerRegistryPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateLinkResourceRequestUri(string subscriptionId, string resourceGroupName, string registryName, string groupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/privateLinkResources/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateLinkResourceRequest(string subscriptionId, string resourceGroupName, string registryName, string groupName)
@@ -841,7 +992,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -874,7 +1025,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -883,6 +1034,21 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCredentialsRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/listCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListCredentialsRequest(string subscriptionId, string resourceGroupName, string registryName)
@@ -926,7 +1092,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListCredentialsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListCredentialsResult.DeserializeContainerRegistryListCredentialsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -955,13 +1121,28 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListCredentialsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListCredentialsResult.DeserializeContainerRegistryListCredentialsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegenerateCredentialRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryCredentialRegenerateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/regenerateCredential", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegenerateCredentialRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryCredentialRegenerateContent content)
@@ -983,7 +1164,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1011,7 +1192,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListCredentialsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListCredentialsResult.DeserializeContainerRegistryListCredentialsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1042,13 +1223,28 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListCredentialsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListCredentialsResult.DeserializeContainerRegistryListCredentialsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGenerateCredentialsRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryGenerateCredentialsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/generateCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateCredentialsRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryGenerateCredentialsContent content)
@@ -1070,7 +1266,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1130,6 +1326,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1162,7 +1366,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1189,13 +1393,21 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1232,7 +1444,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1261,13 +1473,21 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPrivateLinkResourcesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListPrivateLinkResourcesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string registryName)
@@ -1306,7 +1526,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryPrivateLinkResourceListResult.DeserializeContainerRegistryPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1337,7 +1557,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryPrivateLinkResourceListResult.DeserializeContainerRegistryPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

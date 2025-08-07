@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the target splits for Spot and Regular priority VMs within a scale set with flexible orchestration mode. With this property the customer is able to specify the base number of regular priority VMs created as the VMSS flex instance scales out and the split between Spot and Regular priority VMs after this base target has been reached. </summary>
     public partial class VirtualMachineScaleSetPriorityMixPolicy
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetPriorityMixPolicy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPriorityMixPolicy"/>. </summary>
         public VirtualMachineScaleSetPriorityMixPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetPriorityMixPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPriorityMixPolicy"/>. </summary>
         /// <param name="baseRegularPriorityCount"> The base number of regular priority VMs that will be created in this scale set as it scales out. </param>
         /// <param name="regularPriorityPercentageAboveBase"> The percentage of VM instances, after the base regular priority count has been reached, that are expected to use regular priority. </param>
-        internal VirtualMachineScaleSetPriorityMixPolicy(int? baseRegularPriorityCount, int? regularPriorityPercentageAboveBase)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetPriorityMixPolicy(int? baseRegularPriorityCount, int? regularPriorityPercentageAboveBase, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BaseRegularPriorityCount = baseRegularPriorityCount;
             RegularPriorityPercentageAboveBase = regularPriorityPercentageAboveBase;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The base number of regular priority VMs that will be created in this scale set as it scales out. </summary>

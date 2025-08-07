@@ -10,9 +10,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-    [PropertyReferenceType(new string[]{"UserAssignedIdentities"})]
+    [PropertyReferenceType(new string[] { "UserAssignedIdentities" })]
     public partial class ManagedServiceIdentity
     {
+        internal ManagedServiceIdentity()
+        {
+        }
+
         /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
         /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
         [InitializationConstructor]

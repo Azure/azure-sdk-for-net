@@ -15,13 +15,45 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Reservation transaction resource. </summary>
     public partial class ConsumptionReservationTransaction : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionReservationTransaction. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationTransaction"/>. </summary>
         internal ConsumptionReservationTransaction()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationTransaction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationTransaction"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +82,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="monetaryCommitment"> The monetary commitment amount at the enrollment scope. </param>
         /// <param name="overage"> The overage amount at the enrollment scope. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal ConsumptionReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string reservationOrderId, string description, string eventType, decimal? quantity, decimal? amount, string currency, string reservationOrderName, string purchasingEnrollment, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, string armSkuName, string term, string region, string accountName, string accountOwnerEmail, string departmentName, string costCenter, string currentEnrollment, string billingFrequency, int? billingMonth, decimal? monetaryCommitment, decimal? overage, IReadOnlyList<string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string reservationOrderId, string description, string eventType, decimal? quantity, decimal? amount, string currency, string reservationOrderName, string purchasingEnrollment, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, string armSkuName, string term, string region, string accountName, string accountOwnerEmail, string departmentName, string costCenter, string currentEnrollment, string billingFrequency, int? billingMonth, decimal? monetaryCommitment, decimal? overage, IReadOnlyList<string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TransactOn = transactOn;
             ReservationOrderId = reservationOrderId;
@@ -76,6 +109,7 @@ namespace Azure.ResourceManager.Consumption.Models
             MonetaryCommitment = monetaryCommitment;
             Overage = overage;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The date of the transaction. </summary>

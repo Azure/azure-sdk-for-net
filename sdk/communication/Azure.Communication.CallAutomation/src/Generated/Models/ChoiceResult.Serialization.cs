@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,8 +17,9 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> label = default;
-            Optional<string> recognizedPhrase = default;
+            string label = default;
+            string recognizedPhrase = default;
+            double? confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -32,8 +32,25 @@ namespace Azure.Communication.CallAutomation
                     recognizedPhrase = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("confidence"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidence = property.Value.GetDouble();
+                    continue;
+                }
             }
-            return new ChoiceResult(label.Value, recognizedPhrase.Value);
+            return new ChoiceResult(label, recognizedPhrase, confidence);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChoiceResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeChoiceResult(document.RootElement);
         }
     }
 }

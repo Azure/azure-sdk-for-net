@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> DatasourceSet details of datasource to be backed up. </summary>
     public partial class DataSourceSetInfo
     {
-        /// <summary> Initializes a new instance of DataSourceSetInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataSourceSetInfo"/>. </summary>
         /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public DataSourceSetInfo(ResourceIdentifier resourceId)
@@ -23,7 +56,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of DataSourceSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceSetInfo"/>. </summary>
         /// <param name="dataSourceType"> DatasourceType of the resource. </param>
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
@@ -31,7 +64,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceName"> Unique identifier of the resource in the context of parent. </param>
         /// <param name="resourceType"> Resource Type of Datasource. </param>
         /// <param name="resourceUriString"> Uri of the resource. </param>
-        internal DataSourceSetInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString)
+        /// <param name="resourceProperties">
+        /// Properties specific to data source set
+        /// Please note <see cref="BaseResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DefaultResourceProperties"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourceSetInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString, BaseResourceProperties resourceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSourceType = dataSourceType;
             ObjectType = objectType;
@@ -40,6 +79,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceName = resourceName;
             ResourceType = resourceType;
             ResourceUriString = resourceUriString;
+            ResourceProperties = resourceProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataSourceSetInfo"/> for deserialization. </summary>
+        internal DataSourceSetInfo()
+        {
         }
 
         /// <summary> DatasourceType of the resource. </summary>
@@ -56,5 +102,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public ResourceType? ResourceType { get; set; }
         /// <summary> Uri of the resource. </summary>
         public string ResourceUriString { get; set; }
+        /// <summary>
+        /// Properties specific to data source set
+        /// Please note <see cref="BaseResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DefaultResourceProperties"/>.
+        /// </summary>
+        public BaseResourceProperties ResourceProperties { get; set; }
     }
 }

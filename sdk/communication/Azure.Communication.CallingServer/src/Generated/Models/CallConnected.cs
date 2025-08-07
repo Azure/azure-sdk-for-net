@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CallConnectedEvent. </summary>
     public partial class CallConnected
     {
-        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnected"/>. </summary>
         internal CallConnected()
         {
         }
 
-        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnected"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>

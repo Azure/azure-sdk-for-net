@@ -1,0 +1,40 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/storage/ci.datamovement.yml
+    - sdk/storage/Azure.Storage.DataMovement/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs/
+    - sdk/storage/Azure.Storage.DataMovement.Files.Shares/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs.Files.Shares/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: datamovement
+    ServiceDirectory: storage
+    BuildSnippets: false
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Storage.DataMovement
+      safeName: AzureStorageDataMovement
+      skipSmokeTests: true
+    - name: Azure.Storage.DataMovement.Blobs
+      safeName: AzureStorageDataMovementBlobs
+      skipSmokeTests: true
+    - name: Azure.Storage.DataMovement.Files.Shares
+      safeName: AzureStorageDataMovementFilesShares
+      skipSmokeTests: true
+    - name: Azure.Storage.DataMovement.Blobs.Files.Shares
+      safeName: AzureStorageDataMovementBlobsFilesShares
+      skipSmokeTests: true
+    TestSetupSteps:
+    - template: /sdk/storage/tests-install-azurite.yml

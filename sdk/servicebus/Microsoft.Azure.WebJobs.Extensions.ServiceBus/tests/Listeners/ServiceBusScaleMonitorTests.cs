@@ -113,6 +113,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _entityPath,
                 false,
                 _serviceBusOptions.AutoCompleteMessages,
+                _serviceBusOptions.MaxMessageBatchSize,
                 _mockExecutor.Object,
                 _serviceBusOptions,
                 _connection,
@@ -120,7 +121,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                concurrencyManager);
+                concurrencyManager,
+                default);
 
             _scaleMonitor = (ServiceBusScaleMonitor)_listener.GetMonitor();
         }
@@ -532,6 +534,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 entityPath,
                 false,
                 _serviceBusOptions.AutoCompleteMessages,
+                _serviceBusOptions.MaxMessageBatchSize,
                 _mockExecutor.Object,
                 _serviceBusOptions,
                 _connection,
@@ -539,7 +542,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                concurrencyManager);
+                concurrencyManager,
+                default);
         }
 
         [Test]
@@ -691,6 +695,33 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var log = logs[0];
             Assert.AreEqual(LogLevel.Information, log.Level);
             Assert.AreEqual($"Queue time is increasing for '{_entityPath}'.", log.FormattedMessage);
+        }
+
+        [Test]
+        public void GetScaleStatus_QueueTimeIncreasingLessThanMinimumWaitTime_ReturnsScaleVoteNone()
+        {
+            var context = new ScaleStatusContext<ServiceBusTriggerMetrics>
+            {
+                WorkerCount = 1
+            };
+            var timestamp = DateTime.UtcNow;
+            var lastQueueTime = 0.5;
+            context.Metrics = new List<ServiceBusTriggerMetrics>
+                {
+                    new ServiceBusTriggerMetrics { MessageCount = 100, PartitionCount = 0, QueueTime = TimeSpan.FromSeconds(0.1), Timestamp = timestamp.AddSeconds(15) },
+                    new ServiceBusTriggerMetrics { MessageCount = 100, PartitionCount = 0, QueueTime = TimeSpan.FromSeconds(0.2), Timestamp = timestamp.AddSeconds(15) },
+                    new ServiceBusTriggerMetrics { MessageCount = 100, PartitionCount = 0, QueueTime = TimeSpan.FromSeconds(0.3), Timestamp = timestamp.AddSeconds(15) },
+                    new ServiceBusTriggerMetrics { MessageCount = 100, PartitionCount = 0, QueueTime = TimeSpan.FromSeconds(0.4), Timestamp = timestamp.AddSeconds(15) },
+                    new ServiceBusTriggerMetrics { MessageCount = 100, PartitionCount = 0, QueueTime = TimeSpan.FromSeconds(lastQueueTime), Timestamp = timestamp.AddSeconds(15) },
+                };
+
+            var status = _scaleMonitor.GetScaleStatus(context);
+            Assert.AreEqual(ScaleVote.None, status.Vote);
+
+            var logs = _loggerProvider.GetAllLogMessages().ToArray();
+            var log = logs[0];
+            Assert.AreEqual(LogLevel.Information, log.Level);
+            Assert.AreEqual($"Queue time is increasing for '{_entityPath}' but we do not scale out unless queue latency is greater than {ServiceBusScaleMonitor.MinimumLastQueueMessageInSecondsThreshold.TotalSeconds}s. Current queue latency is {lastQueueTime}s.", log.FormattedMessage);
         }
 
         [Test]

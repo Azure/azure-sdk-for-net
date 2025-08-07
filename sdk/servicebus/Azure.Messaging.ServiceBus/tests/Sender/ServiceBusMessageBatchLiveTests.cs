@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 }
                 try
                 {
-                    await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                    await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                     ServiceBusSender sender = client.CreateSender(scope.QueueName);
                     using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
 

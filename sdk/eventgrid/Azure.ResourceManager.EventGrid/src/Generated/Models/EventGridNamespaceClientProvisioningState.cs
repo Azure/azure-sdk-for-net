@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(EventGridNamespaceClientProvisioningState left, EventGridNamespaceClientProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridNamespaceClientProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(EventGridNamespaceClientProvisioningState left, EventGridNamespaceClientProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventGridNamespaceClientProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridNamespaceClientProvisioningState"/>. </summary>
         public static implicit operator EventGridNamespaceClientProvisioningState(string value) => new EventGridNamespaceClientProvisioningState(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string IPPrefixValue = "IPPrefix";
         private const string ServiceTagValue = "ServiceTag";
+        private const string NetworkGroupValue = "NetworkGroup";
 
         /// <summary> IPPrefix. </summary>
         public static AddressPrefixType IPPrefix { get; } = new AddressPrefixType(IPPrefixValue);
         /// <summary> ServiceTag. </summary>
         public static AddressPrefixType ServiceTag { get; } = new AddressPrefixType(ServiceTagValue);
+        /// <summary> NetworkGroup. </summary>
+        public static AddressPrefixType NetworkGroup { get; } = new AddressPrefixType(NetworkGroupValue);
         /// <summary> Determines if two <see cref="AddressPrefixType"/> values are the same. </summary>
         public static bool operator ==(AddressPrefixType left, AddressPrefixType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AddressPrefixType"/> values are not the same. </summary>
         public static bool operator !=(AddressPrefixType left, AddressPrefixType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AddressPrefixType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AddressPrefixType"/>. </summary>
         public static implicit operator AddressPrefixType(string value) => new AddressPrefixType(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -5,17 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Distribution expressions to sweep over values of model settings.
     /// &lt;example&gt;
     /// Some examples are:
-    /// &lt;code&gt;
+    /// ```
     /// ModelName = "choice('seresnext', 'resnest50')";
     /// LearningRate = "uniform(0.001, 0.01)";
     /// LayersToFreeze = "choice(0, 2)";
-    /// &lt;/code&gt;&lt;/example&gt;
+    /// ```&lt;/example&gt;
     /// For more details on how to compose distribution expressions please check the documentation:
     /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-tune-hyperparameters
     /// For more information on the available settings please visit the official documentation:
@@ -23,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelDistributionSettingsClassification : ImageModelDistributionSettings
     {
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsClassification"/>. </summary>
         public ImageModelDistributionSettingsClassification()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsClassification"/>. </summary>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
@@ -43,8 +46,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
         /// </param>
-        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
         /// <param name="evaluationFrequency"> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </param>
+        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
         /// <param name="gradientAccumulationStep">
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using
@@ -76,6 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="warmupCosineLRCycles"> Value of cosine cycle when learning rate scheduler is 'warmup_cosine'. Must be a float in the range [0, 1]. </param>
         /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </param>
         /// <param name="weightDecay"> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="trainingCropSize"> Image crop size that is input to the neural network for the training dataset. Must be a positive integer. </param>
         /// <param name="validationCropSize"> Image crop size that is input to the neural network for the validation dataset. Must be a positive integer. </param>
         /// <param name="validationResizeSize"> Image size to which to resize before cropping for validation dataset. Must be a positive integer. </param>
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Weighted loss. The accepted values are 0 for no weighted loss.
         /// 1 for weighted loss with sqrt.(class_weights). 2 for weighted loss with class_weights. Must be 0 or 1 or 2.
         /// </param>
-        internal ImageModelDistributionSettingsClassification(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, string trainingCropSize, string validationCropSize, string validationResizeSize, string weightedLoss) : base(amsGradient, augmentations, beta1, beta2, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay)
+        internal ImageModelDistributionSettingsClassification(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string evaluationFrequency, string enableOnnxNormalization, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData, string trainingCropSize, string validationCropSize, string validationResizeSize, string weightedLoss) : base(amsGradient, augmentations, beta1, beta2, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, evaluationFrequency, enableOnnxNormalization, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay, serializedAdditionalRawData)
         {
             TrainingCropSize = trainingCropSize;
             ValidationCropSize = validationCropSize;
@@ -92,15 +96,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Image crop size that is input to the neural network for the training dataset. Must be a positive integer. </summary>
+        [WirePath("trainingCropSize")]
         public string TrainingCropSize { get; set; }
         /// <summary> Image crop size that is input to the neural network for the validation dataset. Must be a positive integer. </summary>
+        [WirePath("validationCropSize")]
         public string ValidationCropSize { get; set; }
         /// <summary> Image size to which to resize before cropping for validation dataset. Must be a positive integer. </summary>
+        [WirePath("validationResizeSize")]
         public string ValidationResizeSize { get; set; }
         /// <summary>
         /// Weighted loss. The accepted values are 0 for no weighted loss.
         /// 1 for weighted loss with sqrt.(class_weights). 2 for weighted loss with class_weights. Must be 0 or 1 or 2.
         /// </summary>
+        [WirePath("weightedLoss")]
         public string WeightedLoss { get; set; }
     }
 }

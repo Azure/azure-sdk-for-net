@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> A track selection condition. This property is reserved for future use, any value set on this property will be ignored. </summary>
     public partial class LiveEventInputTrackSelection
     {
-        /// <summary> Initializes a new instance of LiveEventInputTrackSelection. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LiveEventInputTrackSelection"/>. </summary>
         public LiveEventInputTrackSelection()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveEventInputTrackSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventInputTrackSelection"/>. </summary>
         /// <param name="property"> Property name to select. This property is reserved for future use, any value set on this property will be ignored. </param>
         /// <param name="operation"> Comparing operation. This property is reserved for future use, any value set on this property will be ignored. </param>
         /// <param name="value"> Property value to select. This property is reserved for future use, any value set on this property will be ignored. </param>
-        internal LiveEventInputTrackSelection(string property, string operation, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LiveEventInputTrackSelection(string property, string operation, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Property = property;
             Operation = operation;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Property name to select. This property is reserved for future use, any value set on this property will be ignored. </summary>

@@ -6,20 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonObject : IUtf8JsonSerializable
+    internal partial class GeoJsonObject
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonObject DeserializeGeoJsonObject(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -43,6 +35,14 @@ namespace Azure.Maps.Search.Models
                 }
             }
             return UnknownGeoJsonObject.DeserializeUnknownGeoJsonObject(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GeoJsonObject FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGeoJsonObject(document.RootElement);
         }
     }
 }

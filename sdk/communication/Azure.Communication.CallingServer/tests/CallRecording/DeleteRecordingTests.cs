@@ -13,6 +13,7 @@ namespace Azure.Communication.CallingServer
         private const string AmsDeleteUrl = "https://dummyurl.com/v1/objects/documentid";
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DeleteRecording_Returns200Ok()
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
@@ -21,6 +22,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task DeleteRecordingAsync_Returns200Ok()
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
@@ -29,6 +31,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DeleteRecording_Returns404NotFound()
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
@@ -39,6 +42,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void DeleteRecording_Returns401Unauthorized()
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);

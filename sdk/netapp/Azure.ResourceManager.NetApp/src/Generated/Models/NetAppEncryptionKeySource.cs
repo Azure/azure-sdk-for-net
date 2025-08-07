@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppEncryptionKeySource left, NetAppEncryptionKeySource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppEncryptionKeySource"/> values are not the same. </summary>
         public static bool operator !=(NetAppEncryptionKeySource left, NetAppEncryptionKeySource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppEncryptionKeySource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppEncryptionKeySource"/>. </summary>
         public static implicit operator NetAppEncryptionKeySource(string value) => new NetAppEncryptionKeySource(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

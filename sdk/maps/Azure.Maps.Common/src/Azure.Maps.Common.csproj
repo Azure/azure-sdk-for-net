@@ -4,9 +4,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Maps.Common client library</AssemblyTitle>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.0.0-beta.4</Version>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
-    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);AZC0012</NoWarn>
     <PackageTags>Microsoft Azure Maps Common, Microsoft, Azure, Maps, azureofficial</PackageTags>
     <Description>
       This client library enables working with the Microsoft Azure Maps services which provides developers from all industries with powerful geospatial capabilities.
@@ -20,6 +20,5 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 </Project>

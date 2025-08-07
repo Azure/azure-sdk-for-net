@@ -67,7 +67,15 @@ namespace Azure.Core
         {
             // NameValueHeaderValue is too restrictive for boundary.
             // Instead validate it ourselves and then quote it.
-            Argument.AssertNotNullOrWhiteSpace(boundary, nameof(boundary));
+            if (boundary is null)
+            {
+                throw new ArgumentNullException(nameof(boundary));
+            }
+
+            if (string.IsNullOrWhiteSpace(boundary))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(boundary));
+            }
 
             // cspell:disable
             // RFC 2046 Section 5.1.1
@@ -125,7 +133,11 @@ namespace Azure.Core
         /// <param name="content">The Request content to add to the collection.</param>
         public virtual void Add(RequestContent content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content is null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
             AddInternal(content, null);
         }
 
@@ -137,8 +149,14 @@ namespace Azure.Core
         /// <param name="headers">The headers to add to the collection.</param>
         public virtual void Add(RequestContent content, Dictionary<string, string> headers)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(headers, nameof(headers));
+            if (content is null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+            if (headers is null)
+            {
+                throw new ArgumentNullException(nameof(headers));
+            }
 
             AddInternal(content, headers);
         }
@@ -188,7 +206,10 @@ namespace Azure.Core
         ///
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream is null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
 
             try
             {
@@ -234,7 +255,11 @@ namespace Azure.Core
 
         private async Task SerializeToStreamAsync(Stream stream, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream is null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
             try
             {
                 // Write start boundary.

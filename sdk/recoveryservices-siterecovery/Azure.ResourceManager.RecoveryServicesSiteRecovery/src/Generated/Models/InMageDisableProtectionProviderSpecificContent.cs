@@ -5,15 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMage disable protection provider specific input. </summary>
     public partial class InMageDisableProtectionProviderSpecificContent : DisableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageDisableProtectionProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageDisableProtectionProviderSpecificContent"/>. </summary>
         public InMageDisableProtectionProviderSpecificContent()
         {
             InstanceType = "InMage";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageDisableProtectionProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="replicaVmDeletionStatus"> A value indicating whether the replica VM should be destroyed or retained. Values from Delete and Retain. </param>
+        internal InMageDisableProtectionProviderSpecificContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string replicaVmDeletionStatus) : base(instanceType, serializedAdditionalRawData)
+        {
+            ReplicaVmDeletionStatus = replicaVmDeletionStatus;
+            InstanceType = instanceType ?? "InMage";
         }
 
         /// <summary> A value indicating whether the replica VM should be destroyed or retained. Values from Delete and Retain. </summary>

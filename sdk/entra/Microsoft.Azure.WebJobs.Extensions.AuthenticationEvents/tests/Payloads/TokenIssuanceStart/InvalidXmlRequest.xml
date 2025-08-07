@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <type>microsoft.graph.authenticationEvent.tokenIssuanceStart</type>
+  <source>/tenants/00000000-0000-0000-0000-000000000002/applications/00000000-0000-0000-0000-000000000001</source>
+  <data>
+    <odata.type>
+      microsoft.graph.onTokenIssuanceStartCalloutData
+    </odata.type>
+    <tenantId>00000000-0000-0000-0000-000000000002</tenantId>
+    <authenticationEventListenerId>00000000-0000-0000-0000-000000000003</authenticationEventListenerId>
+    <customAuthenticationExtensionId>00000000-0000-0000-0000-000000000004</customAuthenticationExtensionId>
+    <authenticationContext>
+      <correlationId>00000000-0000-0000-0000-000000000005</correlationId>
+      <client>
+        <ip>127.0.0.1</ip>
+        <locale>en-us</locale>
+        <market>en-us</market>
+      </client>
+      <protocol>OAUTH2.0</protocol>
+      <clientServicePrincipal>
+        <id>00000000-0000-0000-0000-000000000005</id>
+        <appId>00000000-0000-0000-0000-000000000001</appId>
+        <appDisplayName>My Test application</appDisplayName>
+        <displayName>My Test application</displayName>
+      </clientServicePrincipal>
+      <resourceServicePrincipal>
+        <id>00000000-0000-0000-0000-000000000006</id>
+        <appId>00000000-0000-0000-0000-000000000001</appId>
+        <appDisplayName>My Test application</appDisplayName>
+        <displayName>My Test application</displayName>
+      </resourceServicePrincipal>
+      <user>
+        <createdDateTime>2016-03-01T15:23:40Z</createdDateTime>
+        <displayName>Bob</displayName>
+        <givenName>Bob Smith</givenName>
+        <id>00000000-0000-0000-0000-000000000007</id>
+        <mail>bob@contoso.com</mail>
+        <preferredLanguage>en-us</preferredLanguage>
+        <surname>Smith</surname>
+        <userPrincipalName>bob@contoso.com</userPrincipalName>
+        <userType>Member</userType>
+      </user>
+    </authenticationContext>
+  </data>
+</root>

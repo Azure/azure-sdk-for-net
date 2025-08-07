@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.Azure.Management.EventGrid" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="System.Net.WebSockets.Client" />
+    <PackageReference Include="System.ValueTuple" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="Polly" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\src\Azure.Messaging.EventGrid.SystemEvents.csproj" />
+  </ItemGroup>
+</Project>

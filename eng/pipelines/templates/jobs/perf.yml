@@ -1,7 +1,8 @@
 parameters:
+# LanguageVersion in context of .NET perf tests corresponds to the .NET framework version and is set in individual perf.yml files
 - name: LanguageVersion
   type: string
-  default: '7'
+  default: ''
 - name: ServiceDirectory
   type: string
   default: ''

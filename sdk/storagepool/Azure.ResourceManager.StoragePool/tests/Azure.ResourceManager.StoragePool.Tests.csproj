@@ -9,4 +9,8 @@
     <Folder Include="SessionRecords\DiskPoolTests\" />
     <Folder Include="SessionRecords\IscsiTargetTests\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
+  </ItemGroup>
 </Project>

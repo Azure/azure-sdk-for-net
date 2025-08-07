@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Paypal Service dataset. </summary>
     public partial class PaypalObjectDataset : Dataset
     {
-        /// <summary> Initializes a new instance of PaypalObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaypalObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public PaypalObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "PaypalObject";
         }
 
-        /// <summary> Initializes a new instance of PaypalObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaypalObjectDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

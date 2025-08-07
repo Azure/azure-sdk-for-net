@@ -35,7 +35,17 @@ namespace Azure.Storage.Queues.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MessageText
         {
-            get => Body?.ToString();
+            get
+            {
+                try
+                {
+                    return Body?.ToString();
+                }
+                catch (ArgumentNullException) // workaround for: https://github.com/dotnet/runtime/issues/68262 which was fixed in 8.0.0, can remove this after upgrade
+                {
+                    return string.Empty;
+                }
+            }
             internal set => Body = value == null ? null : new BinaryData(value);
         }
 

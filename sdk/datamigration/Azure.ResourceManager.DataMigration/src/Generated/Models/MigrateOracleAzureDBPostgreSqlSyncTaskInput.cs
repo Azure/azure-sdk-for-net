@@ -8,19 +8,50 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for the task that migrates Oracle databases to Azure Database for PostgreSQL for online migrations. </summary>
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskInput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source Oracle. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selectedDatabases"/>, <paramref name="targetConnectionInfo"/> or <paramref name="sourceConnectionInfo"/> is null. </exception>
-        public MigrateOracleAzureDBPostgreSqlSyncTaskInput(IEnumerable<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, OracleConnectionInfo sourceConnectionInfo)
+        public MigrateOracleAzureDBPostgreSqlSyncTaskInput(IEnumerable<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, DataMigrationOracleConnectionInfo sourceConnectionInfo)
         {
             Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -31,22 +62,29 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source Oracle. </param>
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskInput(IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, OracleConnectionInfo sourceConnectionInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskInput(IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, DataMigrationOracleConnectionInfo sourceConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SelectedDatabases = selectedDatabases;
             TargetConnectionInfo = targetConnectionInfo;
             SourceConnectionInfo = sourceConnectionInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskInput"/> for deserialization. </summary>
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskInput()
+        {
         }
 
         /// <summary> Databases to migrate. </summary>
         public IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> SelectedDatabases { get; }
         /// <summary> Connection information for target Azure Database for PostgreSQL. </summary>
-        public PostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationPostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Connection information for source Oracle. </summary>
-        public OracleConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationOracleConnectionInfo SourceConnectionInfo { get; set; }
     }
 }

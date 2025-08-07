@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents the fabric replication group task details. </summary>
     public partial class FabricReplicationGroupTaskDetails : SiteRecoveryJobTaskDetails
     {
-        /// <summary> Initializes a new instance of FabricReplicationGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricReplicationGroupTaskDetails"/>. </summary>
         internal FabricReplicationGroupTaskDetails()
         {
             InstanceType = "FabricReplicationGroupTaskDetails";
         }
 
-        /// <summary> Initializes a new instance of FabricReplicationGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricReplicationGroupTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="jobTask"> The job entity. </param>
         /// <param name="skippedReason"> The skipped reason. </param>
         /// <param name="skippedReasonString"> The skipped reason string. </param>
-        internal FabricReplicationGroupTaskDetails(string instanceType, SiteRecoveryJobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, jobTask)
+        internal FabricReplicationGroupTaskDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, SiteRecoveryJobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, serializedAdditionalRawData, jobTask)
         {
             SkippedReason = skippedReason;
             SkippedReasonString = skippedReasonString;

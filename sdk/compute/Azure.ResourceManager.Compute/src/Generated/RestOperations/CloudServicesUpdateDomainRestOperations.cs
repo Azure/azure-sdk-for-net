@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-04";
+            _apiVersion = apiVersion ?? "2024-11-04";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateWalkUpdateDomainRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/updateDomains/", false);
+            uri.AppendPath(updateDomain, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateWalkUpdateDomainRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier)
@@ -59,7 +74,7 @@ namespace Azure.ResourceManager.Compute
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(updateDomainIdentifier);
+                content.JsonWriter.WriteObjectValue(updateDomainIdentifier, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -67,7 +82,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Updates the role instances in the specified update domain. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
@@ -94,7 +109,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Updates the role instances in the specified update domain. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
@@ -120,6 +135,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateGetUpdateDomainRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/updateDomains/", false);
+            uri.AppendPath(updateDomain, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateDomainRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain)
         {
             var message = _pipeline.CreateMessage();
@@ -143,7 +174,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the specified update domain of a cloud service. Use nextLink property in the response to get the next page of update domains. Do this till nextLink is null to fetch all the update domains. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
@@ -163,7 +194,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         UpdateDomainIdentifier value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -173,7 +204,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the specified update domain of a cloud service. Use nextLink property in the response to get the next page of update domains. Do this till nextLink is null to fetch all the update domains. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
@@ -193,13 +224,28 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         UpdateDomainIdentifier value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListUpdateDomainsRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/updateDomains", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListUpdateDomainsRequest(string subscriptionId, string resourceGroupName, string cloudServiceName)
@@ -224,7 +270,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,7 +289,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         UpdateDomainListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UpdateDomainListResult.DeserializeUpdateDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +299,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,13 +318,21 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         UpdateDomainListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UpdateDomainListResult.DeserializeUpdateDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListUpdateDomainsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListUpdateDomainsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName)
@@ -297,7 +351,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,7 +371,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         UpdateDomainListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = UpdateDomainListResult.DeserializeUpdateDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -328,7 +382,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -348,7 +402,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         UpdateDomainListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = UpdateDomainListResult.DeserializeUpdateDomainListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -6,31 +6,37 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> a plain text value execution parameter. </summary>
     public partial class ScriptSecureStringExecutionParameterDetails : ScriptExecutionParameterDetails
     {
-        /// <summary> Initializes a new instance of ScriptSecureStringExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptSecureStringExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScriptSecureStringExecutionParameterDetails(string name) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ParameterType = ScriptExecutionParameterType.SecureValue;
+            Type = ScriptExecutionParameterType.SecureValue;
         }
 
-        /// <summary> Initializes a new instance of ScriptSecureStringExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptSecureStringExecutionParameterDetails"/>. </summary>
+        /// <param name="type"> script execution parameter type. </param>
         /// <param name="name"> The parameter name. </param>
-        /// <param name="parameterType"> The type of execution parameter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secureValue"> A secure value for the passed parameter, not to be stored in logs. </param>
-        internal ScriptSecureStringExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, string secureValue) : base(name, parameterType)
+        internal ScriptSecureStringExecutionParameterDetails(ScriptExecutionParameterType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string secureValue) : base(type, name, serializedAdditionalRawData)
         {
             SecureValue = secureValue;
-            ParameterType = parameterType;
+            Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptSecureStringExecutionParameterDetails"/> for deserialization. </summary>
+        internal ScriptSecureStringExecutionParameterDetails()
+        {
         }
 
         /// <summary> A secure value for the passed parameter, not to be stored in logs. </summary>

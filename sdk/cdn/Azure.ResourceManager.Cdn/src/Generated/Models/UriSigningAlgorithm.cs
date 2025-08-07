@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Algorithm to use for URL signing. </summary>
+    /// <summary>
+    /// Algorithm to use for URL signing
+    /// Serialized Name: Algorithm
+    /// </summary>
     public readonly partial struct UriSigningAlgorithm : IEquatable<UriSigningAlgorithm>
     {
         private readonly string _value;
@@ -24,13 +27,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string Sha256Value = "SHA256";
 
-        /// <summary> SHA256. </summary>
+        /// <summary>
+        /// SHA256
+        /// Serialized Name: Algorithm.SHA256
+        /// </summary>
         public static UriSigningAlgorithm Sha256 { get; } = new UriSigningAlgorithm(Sha256Value);
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are the same. </summary>
         public static bool operator ==(UriSigningAlgorithm left, UriSigningAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are not the same. </summary>
         public static bool operator !=(UriSigningAlgorithm left, UriSigningAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UriSigningAlgorithm"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UriSigningAlgorithm"/>. </summary>
         public static implicit operator UriSigningAlgorithm(string value) => new UriSigningAlgorithm(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

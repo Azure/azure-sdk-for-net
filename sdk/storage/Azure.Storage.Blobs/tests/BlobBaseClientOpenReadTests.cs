@@ -85,6 +85,9 @@ namespace Azure.Storage.Blobs.Tests
                 Conditions = conditions
             });
 
+        protected override async Task<Stream> OpenReadAsyncOverload(TBlobClient client, int? bufferSize = null, long position = 0, bool allowModifications = false)
+            => await client.OpenReadAsync(allowModifications, position, bufferSize);
+
         public override async Task AssertExpectedExceptionOpenReadModifiedAsync(Task readTask)
             => await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 readTask,

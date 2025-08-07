@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(WebApplicationFirewallTransform left, WebApplicationFirewallTransform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallTransform"/> values are not the same. </summary>
         public static bool operator !=(WebApplicationFirewallTransform left, WebApplicationFirewallTransform right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebApplicationFirewallTransform"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallTransform"/>. </summary>
         public static implicit operator WebApplicationFirewallTransform(string value) => new WebApplicationFirewallTransform(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

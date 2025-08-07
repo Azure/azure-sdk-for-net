@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.AI.Personalizer
 {
@@ -24,7 +25,7 @@ namespace Azure.AI.Personalizer
                 {
                      new JsonBinaryDataConverter(),
                 },
-                IgnoreNullValues = true
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
             return JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
         }

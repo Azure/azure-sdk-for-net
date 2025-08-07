@@ -9,23 +9,26 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSqlPoolSecurityAlertPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSqlPoolSecurityAlertPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseSqlPoolSecurityAlertPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSqlPoolSecurityAlertPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseSqlPoolSecurityAlertPolicy method.
     /// </summary>
     public partial class SynapseSqlPoolSecurityAlertPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
+        /// <param name="securityAlertPolicyName"> The securityAlertPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/securityAlertPolicies/{securityAlertPolicyName}";
@@ -36,12 +39,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolSecurityAlertPoliciesRestOperations _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient;
         private readonly SynapseSqlPoolSecurityAlertPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/securityAlertPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> class for mocking. </summary>
         protected SynapseSqlPoolSecurityAlertPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSqlPoolSecurityAlertPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSqlPoolSecurityAlertPolicyResource(ArmClient client, SynapseSqlPoolSecurityAlertPolicyData data) : this(client, data.Id)
@@ -62,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/securityAlertPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +101,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +140,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +181,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -177,7 +204,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseSqlPoolSecurityAlertPolicyResource>(Response.FromValue(new SynapseSqlPoolSecurityAlertPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation<SynapseSqlPoolSecurityAlertPolicyResource>(Response.FromValue(new SynapseSqlPoolSecurityAlertPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -200,6 +229,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -215,7 +252,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseSqlPoolSecurityAlertPolicyResource>(Response.FromValue(new SynapseSqlPoolSecurityAlertPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation<SynapseSqlPoolSecurityAlertPolicyResource>(Response.FromValue(new SynapseSqlPoolSecurityAlertPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

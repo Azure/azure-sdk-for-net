@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 using Azure.ResourceManager.Resources;
-using System.Threading;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
@@ -36,15 +33,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeAnalyticsAccountBasic> GetAccountsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionResourceGetAccountsOptions options = new SubscriptionResourceGetAccountsOptions();
-            options.Filter = filter;
-            options.Top = top;
-            options.Skip = skip;
-            options.Select = select;
-            options.Orderby = orderby;
-            options.Count = count;
-
-            return subscriptionResource.GetAccountsAsync(options, cancellationToken);
+            return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetAccountsAsync(filter, top, skip, select, orderby, count, cancellationToken);
         }
 
         /// <summary>
@@ -71,15 +60,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeAnalyticsAccountBasic> GetAccounts(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionResourceGetAccountsOptions options = new SubscriptionResourceGetAccountsOptions();
-            options.Filter = filter;
-            options.Top = top;
-            options.Skip = skip;
-            options.Select = select;
-            options.Orderby = orderby;
-            options.Count = count;
-
-            return subscriptionResource.GetAccounts(options, cancellationToken);
+            return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetAccounts(filter, top, skip, select, orderby, count, cancellationToken);
         }
     }
 }

@@ -10,14 +10,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MongoDBParameter. </summary>
     internal partial class MongoDBParameter
     {
-        /// <summary> Initializes a new instance of MongoDBParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBParameter"/>. </summary>
         /// <param name="command"> The script to query this database. </param>
         public MongoDBParameter(string command)
         {
             Command = command;
         }
 
-        /// <summary> Initializes a new instance of MongoDBParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBParameter"/>. </summary>
         /// <param name="connectionString"> The connection string of this MongoDB. </param>
         /// <param name="database"> A database name in this MongoDB. </param>
         /// <param name="command"> The script to query this database. </param>

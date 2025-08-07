@@ -8,18 +8,64 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the common attributes for a custom rule that can be included in a waf policy. </summary>
+    /// <summary>
+    /// Defines the common attributes for a custom rule that can be included in a waf policy
+    /// Serialized Name: CustomRule
+    /// </summary>
     public partial class CustomRule
     {
-        /// <summary> Initializes a new instance of CustomRule. </summary>
-        /// <param name="name"> Defines the name of the custom rule. </param>
-        /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
-        /// <param name="matchConditions"> List of match conditions. </param>
-        /// <param name="action"> Describes what action to be applied when rule matches. </param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomRule"/>. </summary>
+        /// <param name="name">
+        /// Defines the name of the custom rule
+        /// Serialized Name: CustomRule.name
+        /// </param>
+        /// <param name="priority">
+        /// Defines in what order this rule be evaluated in the overall list of custom rules
+        /// Serialized Name: CustomRule.priority
+        /// </param>
+        /// <param name="matchConditions">
+        /// List of match conditions.
+        /// Serialized Name: CustomRule.matchConditions
+        /// </param>
+        /// <param name="action">
+        /// Describes what action to be applied when rule matches
+        /// Serialized Name: CustomRule.action
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="matchConditions"/> is null. </exception>
         public CustomRule(string name, int priority, IEnumerable<CustomRuleMatchCondition> matchConditions, OverrideActionType action)
         {
@@ -32,30 +78,67 @@ namespace Azure.ResourceManager.Cdn.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of CustomRule. </summary>
-        /// <param name="name"> Defines the name of the custom rule. </param>
-        /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
-        /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
-        /// <param name="matchConditions"> List of match conditions. </param>
-        /// <param name="action"> Describes what action to be applied when rule matches. </param>
-        internal CustomRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action)
+        /// <summary> Initializes a new instance of <see cref="CustomRule"/>. </summary>
+        /// <param name="name">
+        /// Defines the name of the custom rule
+        /// Serialized Name: CustomRule.name
+        /// </param>
+        /// <param name="enabledState">
+        /// Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified.
+        /// Serialized Name: CustomRule.enabledState
+        /// </param>
+        /// <param name="priority">
+        /// Defines in what order this rule be evaluated in the overall list of custom rules
+        /// Serialized Name: CustomRule.priority
+        /// </param>
+        /// <param name="matchConditions">
+        /// List of match conditions.
+        /// Serialized Name: CustomRule.matchConditions
+        /// </param>
+        /// <param name="action">
+        /// Describes what action to be applied when rule matches
+        /// Serialized Name: CustomRule.action
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EnabledState = enabledState;
             Priority = priority;
             MatchConditions = matchConditions;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Defines the name of the custom rule. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRule"/> for deserialization. </summary>
+        internal CustomRule()
+        {
+        }
+
+        /// <summary>
+        /// Defines the name of the custom rule
+        /// Serialized Name: CustomRule.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
+        /// <summary>
+        /// Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified.
+        /// Serialized Name: CustomRule.enabledState
+        /// </summary>
         public CustomRuleEnabledState? EnabledState { get; set; }
-        /// <summary> Defines in what order this rule be evaluated in the overall list of custom rules. </summary>
+        /// <summary>
+        /// Defines in what order this rule be evaluated in the overall list of custom rules
+        /// Serialized Name: CustomRule.priority
+        /// </summary>
         public int Priority { get; set; }
-        /// <summary> List of match conditions. </summary>
+        /// <summary>
+        /// List of match conditions.
+        /// Serialized Name: CustomRule.matchConditions
+        /// </summary>
         public IList<CustomRuleMatchCondition> MatchConditions { get; }
-        /// <summary> Describes what action to be applied when rule matches. </summary>
+        /// <summary>
+        /// Describes what action to be applied when rule matches
+        /// Serialized Name: CustomRule.action
+        /// </summary>
         public OverrideActionType Action { get; set; }
     }
 }

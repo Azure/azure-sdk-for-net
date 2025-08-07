@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create network mappings input properties/behavior specific to Azure to Azure Network mapping. </summary>
     public partial class A2ACreateNetworkMappingContent : FabricSpecificCreateNetworkMappingContent
     {
-        /// <summary> Initializes a new instance of A2ACreateNetworkMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ACreateNetworkMappingContent"/>. </summary>
         /// <param name="primaryNetworkId"> The primary azure vnet Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryNetworkId"/> is null. </exception>
         public A2ACreateNetworkMappingContent(ResourceIdentifier primaryNetworkId)
@@ -22,6 +23,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             PrimaryNetworkId = primaryNetworkId;
             InstanceType = "AzureToAzure";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2ACreateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="primaryNetworkId"> The primary azure vnet Id. </param>
+        internal A2ACreateNetworkMappingContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier primaryNetworkId) : base(instanceType, serializedAdditionalRawData)
+        {
+            PrimaryNetworkId = primaryNetworkId;
+            InstanceType = instanceType ?? "AzureToAzure";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2ACreateNetworkMappingContent"/> for deserialization. </summary>
+        internal A2ACreateNetworkMappingContent()
+        {
         }
 
         /// <summary> The primary azure vnet Id. </summary>

@@ -11,18 +11,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationCredentialResource" /> and their operations.
-    /// Each <see cref="AutomationCredentialResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get an <see cref="AutomationCredentialCollection" /> instance call the GetAutomationCredentials method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="AutomationCredentialResource"/> and their operations.
+    /// Each <see cref="AutomationCredentialResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get an <see cref="AutomationCredentialCollection"/> instance call the GetAutomationCredentials method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationCredentialCollection : ArmCollection, IEnumerable<AutomationCredentialResource>, IAsyncEnumerable<AutomationCredentialResource>
     {
@@ -64,6 +63,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Credential_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +89,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationCredentialCredentialRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _automationCredentialCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Credential_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +140,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationCredentialCredentialRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _automationCredentialCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +164,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Credential_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +210,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Credential_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialName"> The name of credential. </param>
@@ -220,15 +255,23 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Credential_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationCredentialResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,15 +285,23 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Credential_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationCredentialResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationCredentialResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationCredentialCredentialRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationCredentialResource(Client, AutomationCredentialData.DeserializeAutomationCredentialData(e)), _automationCredentialCredentialClientDiagnostics, Pipeline, "AutomationCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,6 +314,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Credential_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +358,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Credential_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialName"> The name of credential. </param>
@@ -315,6 +382,96 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _automationCredentialCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Credential_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialName"> The name of credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomationCredentialResource>> GetIfExistsAsync(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationCredentialCredentialRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationCredentialResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Credential_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialName"> The name of credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        public virtual NullableResponse<AutomationCredentialResource> GetIfExists(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationCredentialCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationCredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

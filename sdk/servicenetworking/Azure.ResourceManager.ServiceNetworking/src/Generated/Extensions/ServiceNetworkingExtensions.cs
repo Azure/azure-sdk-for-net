@@ -8,110 +8,121 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ServiceNetworking.Mocking;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceNetworking. </summary>
     public static partial class ServiceNetworkingExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableServiceNetworkingArmClient GetMockableServiceNetworkingArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableServiceNetworkingArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableServiceNetworkingResourceGroupResource GetMockableServiceNetworkingResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableServiceNetworkingResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableServiceNetworkingSubscriptionResource GetMockableServiceNetworkingSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableServiceNetworkingSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        /// <summary>
+        /// Gets an object representing a <see cref="TrafficControllerAssociationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficControllerAssociationResource.CreateResourceIdentifier" /> to create a <see cref="TrafficControllerAssociationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetTrafficControllerAssociationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficControllerAssociationResource"/> object. </returns>
+        public static TrafficControllerAssociationResource GetTrafficControllerAssociationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceNetworkingArmClient(client).GetTrafficControllerAssociationResource(id);
         }
-        #region TrafficControllerResource
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TrafficControllerFrontendResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficControllerFrontendResource.CreateResourceIdentifier" /> to create a <see cref="TrafficControllerFrontendResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetTrafficControllerFrontendResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficControllerFrontendResource"/> object. </returns>
+        public static TrafficControllerFrontendResource GetTrafficControllerFrontendResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceNetworkingArmClient(client).GetTrafficControllerFrontendResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationGatewayForContainersSecurityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGatewayForContainersSecurityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayForContainersSecurityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetApplicationGatewayForContainersSecurityPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> object. </returns>
+        public static ApplicationGatewayForContainersSecurityPolicyResource GetApplicationGatewayForContainersSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceNetworkingArmClient(client).GetApplicationGatewayForContainersSecurityPolicyResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="TrafficControllerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TrafficControllerResource.CreateResourceIdentifier" /> to create a <see cref="TrafficControllerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetTrafficControllerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TrafficControllerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficControllerResource"/> object. </returns>
         public static TrafficControllerResource GetTrafficControllerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TrafficControllerResource.ValidateResourceId(id);
-                return new TrafficControllerResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region AssociationResource
+            return GetMockableServiceNetworkingArmClient(client).GetTrafficControllerResource(id);
+        }
+
         /// <summary>
-        /// Gets an object representing an <see cref="AssociationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssociationResource.CreateResourceIdentifier" /> to create an <see cref="AssociationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of TrafficControllerResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingResourceGroupResource.GetTrafficControllers()"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssociationResource" /> object. </returns>
-        public static AssociationResource GetAssociationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AssociationResource.ValidateResourceId(id);
-                return new AssociationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region FrontendResource
-        /// <summary>
-        /// Gets an object representing a <see cref="FrontendResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontendResource.CreateResourceIdentifier" /> to create a <see cref="FrontendResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontendResource" /> object. </returns>
-        public static FrontendResource GetFrontendResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                FrontendResource.ValidateResourceId(id);
-                return new FrontendResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of TrafficControllerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of TrafficControllerResources and their operations over a TrafficControllerResource. </returns>
         public static TrafficControllerCollection GetTrafficControllers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTrafficControllers();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceNetworkingResourceGroupResource(resourceGroupResource).GetTrafficControllers();
         }
 
         /// <summary>
@@ -123,19 +134,33 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingResourceGroupResource.GetTrafficControllerAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="trafficControllerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<TrafficControllerResource>> GetTrafficControllerAsync(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetTrafficControllers().GetAsync(trafficControllerName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableServiceNetworkingResourceGroupResource(resourceGroupResource).GetTrafficControllerAsync(trafficControllerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -147,19 +172,33 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingResourceGroupResource.GetTrafficController(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="trafficControllerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<TrafficControllerResource> GetTrafficController(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetTrafficControllers().Get(trafficControllerName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableServiceNetworkingResourceGroupResource(resourceGroupResource).GetTrafficController(trafficControllerName, cancellationToken);
         }
 
         /// <summary>
@@ -171,16 +210,31 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListBySubscription</description>
+        /// <description>TrafficController_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingSubscriptionResource.GetTrafficControllers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="TrafficControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<TrafficControllerResource> GetTrafficControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrafficControllersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceNetworkingSubscriptionResource(subscriptionResource).GetTrafficControllersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -192,16 +246,31 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListBySubscription</description>
+        /// <description>TrafficController_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingSubscriptionResource.GetTrafficControllers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="TrafficControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<TrafficControllerResource> GetTrafficControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrafficControllers(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableServiceNetworkingSubscriptionResource(subscriptionResource).GetTrafficControllers(cancellationToken);
         }
     }
 }

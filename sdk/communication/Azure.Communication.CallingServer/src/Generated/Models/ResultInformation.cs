@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The ResultInformation. </summary>
     public partial class ResultInformation
     {
-        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResultInformation"/>. </summary>
         internal ResultInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResultInformation"/>. </summary>
         /// <param name="code"></param>
         /// <param name="subCode"></param>
         /// <param name="message"></param>

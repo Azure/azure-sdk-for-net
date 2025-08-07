@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -36,6 +35,17 @@ namespace Azure.ResourceManager.TrafficManager
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         /// <summary> Get the subscription-level key used for Real User Metrics collection. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerUserMetricData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerUserMetricData.DeserializeTrafficManagerUserMetricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -79,7 +89,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                     {
                         TrafficManagerUserMetricData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerUserMetricData.DeserializeTrafficManagerUserMetricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -88,6 +98,17 @@ namespace Azure.ResourceManager.TrafficManager
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         /// <summary> Create or update a subscription-level key used for Real User Metrics collection. </summary>
@@ -106,7 +127,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case 201:
                     {
                         TrafficManagerUserMetricData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TrafficManagerUserMetricData.DeserializeTrafficManagerUserMetricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,13 +152,24 @@ namespace Azure.ResourceManager.TrafficManager
                 case 201:
                     {
                         TrafficManagerUserMetricData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TrafficManagerUserMetricData.DeserializeTrafficManagerUserMetricData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         /// <summary> Delete a subscription-level key used for Real User Metrics collection. </summary>

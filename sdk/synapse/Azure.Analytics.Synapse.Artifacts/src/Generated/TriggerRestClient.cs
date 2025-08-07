@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -27,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Initializes a new instance of TriggerRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         public TriggerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
@@ -61,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         TriggerListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -81,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         TriggerListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +208,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         TriggerResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TriggerResource.DeserializeTriggerResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +238,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         TriggerResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TriggerResource.DeserializeTriggerResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -409,7 +408,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         TriggerSubscriptionOperationStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -436,7 +435,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         TriggerSubscriptionOperationStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -658,7 +657,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         TriggerListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -685,7 +684,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         TriggerListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

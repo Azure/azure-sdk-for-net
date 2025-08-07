@@ -47,9 +47,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task CopyModelToOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient();
-            var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync();
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
@@ -64,15 +63,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)]
         public async Task BuildClassifierOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
             var classifierId = Recording.GenerateId();
 
             var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
+            var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
 
             var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {

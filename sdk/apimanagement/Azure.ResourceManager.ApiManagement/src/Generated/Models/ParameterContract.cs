@@ -7,14 +7,45 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Operation parameters details. </summary>
     public partial class ParameterContract
     {
-        /// <summary> Initializes a new instance of ParameterContract. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
         /// <param name="name"> Parameter name. </param>
         /// <param name="parameterContractType"> Parameter type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameterContractType"/> is null. </exception>
@@ -29,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Examples = new ChangeTrackingDictionary<string, ParameterExampleContract>();
         }
 
-        /// <summary> Initializes a new instance of ParameterContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
         /// <param name="parameterContractType"> Parameter type. </param>
@@ -39,7 +70,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="schemaId"> Schema identifier. </param>
         /// <param name="typeName"> Type name defined by the schema. </param>
         /// <param name="examples"> Exampled defined for the parameter. </param>
-        internal ParameterContract(string name, string description, string parameterContractType, string defaultValue, bool? isRequired, IList<string> values, string schemaId, string typeName, IDictionary<string, ParameterExampleContract> examples)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParameterContract(string name, string description, string parameterContractType, string defaultValue, bool? isRequired, IList<string> values, string schemaId, string typeName, IDictionary<string, ParameterExampleContract> examples, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
@@ -50,25 +82,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
             SchemaId = schemaId;
             TypeName = typeName;
             Examples = examples;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParameterContract"/> for deserialization. </summary>
+        internal ParameterContract()
+        {
         }
 
         /// <summary> Parameter name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Parameter description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Parameter type. </summary>
+        [WirePath("type")]
         public string ParameterContractType { get; set; }
         /// <summary> Default parameter value. </summary>
+        [WirePath("defaultValue")]
         public string DefaultValue { get; set; }
         /// <summary> Specifies whether parameter is required or not. </summary>
+        [WirePath("required")]
         public bool? IsRequired { get; set; }
         /// <summary> Parameter values. </summary>
+        [WirePath("values")]
         public IList<string> Values { get; }
         /// <summary> Schema identifier. </summary>
+        [WirePath("schemaId")]
         public string SchemaId { get; set; }
         /// <summary> Type name defined by the schema. </summary>
+        [WirePath("typeName")]
         public string TypeName { get; set; }
         /// <summary> Exampled defined for the parameter. </summary>
+        [WirePath("examples")]
         public IDictionary<string, ParameterExampleContract> Examples { get; }
     }
 }

@@ -12,6 +12,8 @@ namespace Azure.Messaging.EventHubs.Consumer
     ///   to configure its behavior.
     /// </summary>
     ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    ///
     public class EventHubConsumerClientOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>

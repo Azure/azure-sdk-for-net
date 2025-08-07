@@ -271,6 +271,17 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
+        public void TypeCoercionForStringTypes()
+        {
+            var entity = new TableEntity("partition", "row");
+
+            // Initialize a property to an DateTimeOffset value
+            entity["PartitionKey"] = new DateTime();
+            Assert.DoesNotThrow(() => { string foo = entity.PartitionKey; });
+            Assert.That(entity["PartitionKey"] is string);
+        }
+
+        [Test]
         public void GetBinaryDataRoundtripsBytes()
         {
             TableEntity te = new("a", "b");

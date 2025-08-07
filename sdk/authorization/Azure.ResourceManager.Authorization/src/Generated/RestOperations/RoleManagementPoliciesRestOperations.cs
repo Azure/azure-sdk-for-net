@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Authorization.Models;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.Authorization
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string roleManagementPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleManagementPolicies/", false);
+            uri.AppendPath(roleManagementPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string roleManagementPolicyName)
@@ -73,7 +84,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleManagementPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleManagementPolicyData.DeserializeRoleManagementPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,7 +113,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleManagementPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleManagementPolicyData.DeserializeRoleManagementPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,6 +122,18 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string scope, string roleManagementPolicyName, RoleManagementPolicyData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleManagementPolicies/", false);
+            uri.AppendPath(roleManagementPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string scope, string roleManagementPolicyName, RoleManagementPolicyData data)
@@ -129,7 +152,7 @@ namespace Azure.ResourceManager.Authorization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -155,7 +178,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleManagementPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleManagementPolicyData.DeserializeRoleManagementPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -184,13 +207,24 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleManagementPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleManagementPolicyData.DeserializeRoleManagementPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForScopeRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleManagementPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListForScopeRequest(string scope)
@@ -225,7 +259,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleManagementPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleManagementPolicyListResult.DeserializeRoleManagementPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -249,13 +283,21 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleManagementPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleManagementPolicyListResult.DeserializeRoleManagementPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForScopeNextPageRequestUri(string nextLink, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListForScopeNextPageRequest(string nextLink, string scope)
@@ -289,7 +331,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleManagementPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleManagementPolicyListResult.DeserializeRoleManagementPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -315,7 +357,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleManagementPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleManagementPolicyListResult.DeserializeRoleManagementPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ForecastHorizonMode left, ForecastHorizonMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForecastHorizonMode"/> values are not the same. </summary>
         public static bool operator !=(ForecastHorizonMode left, ForecastHorizonMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ForecastHorizonMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ForecastHorizonMode"/>. </summary>
         public static implicit operator ForecastHorizonMode(string value) => new ForecastHorizonMode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

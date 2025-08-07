@@ -10,7 +10,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automation.Models;
@@ -36,6 +35,23 @@ namespace Azure.ResourceManager.Automation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-06-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetContentRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/runbooks/", false);
+            uri.AppendPath(runbookName, true);
+            uri.AppendPath("/draft/content", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetContentRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName)
@@ -121,6 +137,23 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        internal RequestUriBuilder CreateReplaceContentRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/runbooks/", false);
+            uri.AppendPath(runbookName, true);
+            uri.AppendPath("/draft/content", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         /// <summary> Replaces the runbook draft content. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
@@ -179,6 +212,23 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/runbooks/", false);
+            uri.AppendPath(runbookName, true);
+            uri.AppendPath("/draft", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName)
         {
             var message = _pipeline.CreateMessage();
@@ -224,7 +274,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookDraft value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,13 +305,30 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationRunbookDraft value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUndoEditRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/runbooks/", false);
+            uri.AppendPath(runbookName, true);
+            uri.AppendPath("/draft/undoEdit", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUndoEditRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName)
@@ -309,7 +376,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         RunbookDraftUndoEditResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RunbookDraftUndoEditResult.DeserializeRunbookDraftUndoEditResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -340,7 +407,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         RunbookDraftUndoEditResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RunbookDraftUndoEditResult.DeserializeRunbookDraftUndoEditResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

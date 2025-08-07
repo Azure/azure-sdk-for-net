@@ -11,18 +11,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HybridRunbookWorkerResource" /> and their operations.
-    /// Each <see cref="HybridRunbookWorkerResource" /> in the collection will belong to the same instance of <see cref="HybridRunbookWorkerGroupResource" />.
-    /// To get a <see cref="HybridRunbookWorkerCollection" /> instance call the GetHybridRunbookWorkers method from an instance of <see cref="HybridRunbookWorkerGroupResource" />.
+    /// A class representing a collection of <see cref="HybridRunbookWorkerResource"/> and their operations.
+    /// Each <see cref="HybridRunbookWorkerResource"/> in the collection will belong to the same instance of <see cref="HybridRunbookWorkerGroupResource"/>.
+    /// To get a <see cref="HybridRunbookWorkerCollection"/> instance call the GetHybridRunbookWorkers method from an instance of <see cref="HybridRunbookWorkerGroupResource"/>.
     /// </summary>
     public partial class HybridRunbookWorkerCollection : ArmCollection, IEnumerable<HybridRunbookWorkerResource>, IAsyncEnumerable<HybridRunbookWorkerResource>
     {
@@ -64,6 +63,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkers_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +89,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _hybridRunbookWorkerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hybridRunbookWorkerId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<HybridRunbookWorkerResource>(Response.FromValue(new HybridRunbookWorkerResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridRunbookWorkerRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hybridRunbookWorkerId, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<HybridRunbookWorkerResource>(Response.FromValue(new HybridRunbookWorkerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkers_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +140,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _hybridRunbookWorkerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hybridRunbookWorkerId, content, cancellationToken);
-                var operation = new AutomationArmOperation<HybridRunbookWorkerResource>(Response.FromValue(new HybridRunbookWorkerResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridRunbookWorkerRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hybridRunbookWorkerId, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<HybridRunbookWorkerResource>(Response.FromValue(new HybridRunbookWorkerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +164,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +210,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hybridRunbookWorkerId"> The hybrid runbook worker id. </param>
@@ -220,16 +255,24 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkers_ListByHybridRunbookWorkerGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridRunbookWorkerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HybridRunbookWorkerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridRunbookWorkerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerResource(Client, HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(e)), _hybridRunbookWorkerClientDiagnostics, Pipeline, "HybridRunbookWorkerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerResource(Client, HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(e)), _hybridRunbookWorkerClientDiagnostics, Pipeline, "HybridRunbookWorkerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -243,16 +286,24 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkers_ListByHybridRunbookWorkerGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridRunbookWorkerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridRunbookWorkerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridRunbookWorkerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerResource(Client, HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(e)), _hybridRunbookWorkerClientDiagnostics, Pipeline, "HybridRunbookWorkerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerResource(Client, HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(e)), _hybridRunbookWorkerClientDiagnostics, Pipeline, "HybridRunbookWorkerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -265,6 +316,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +360,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hybridRunbookWorkerId"> The hybrid runbook worker id. </param>
@@ -317,6 +384,96 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _hybridRunbookWorkerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hybridRunbookWorkerId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/hybridRunbookWorkerGroups/{hybridRunbookWorkerGroupName}/hybridRunbookWorkers/{hybridRunbookWorkerId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HybridRunbookWorkers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hybridRunbookWorkerId"> The hybrid runbook worker id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
+        public virtual async Task<NullableResponse<HybridRunbookWorkerResource>> GetIfExistsAsync(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+
+            using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _hybridRunbookWorkerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hybridRunbookWorkerId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HybridRunbookWorkerResource>(response.GetRawResponse());
+                return Response.FromValue(new HybridRunbookWorkerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/hybridRunbookWorkerGroups/{hybridRunbookWorkerGroupName}/hybridRunbookWorkers/{hybridRunbookWorkerId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HybridRunbookWorkers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hybridRunbookWorkerId"> The hybrid runbook worker id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
+        public virtual NullableResponse<HybridRunbookWorkerResource> GetIfExists(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+
+            using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _hybridRunbookWorkerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hybridRunbookWorkerId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HybridRunbookWorkerResource>(response.GetRawResponse());
+                return Response.FromValue(new HybridRunbookWorkerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

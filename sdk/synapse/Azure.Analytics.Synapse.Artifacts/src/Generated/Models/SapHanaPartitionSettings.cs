@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
     public partial class SapHanaPartitionSettings
     {
-        /// <summary> Initializes a new instance of SapHanaPartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapHanaPartitionSettings"/>. </summary>
         public SapHanaPartitionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SapHanaPartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapHanaPartitionSettings"/>. </summary>
         /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         internal SapHanaPartitionSettings(object partitionColumnName)
         {

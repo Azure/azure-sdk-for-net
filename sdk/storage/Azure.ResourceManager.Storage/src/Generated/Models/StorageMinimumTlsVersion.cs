@@ -25,11 +25,12 @@ namespace Azure.ResourceManager.Storage.Models
         private const string Tls1_0Value = "TLS1_0";
         private const string Tls1_1Value = "TLS1_1";
         private const string Tls1_2Value = "TLS1_2";
+        private const string Tls1_3Value = "TLS1_3";
         /// <summary> Determines if two <see cref="StorageMinimumTlsVersion"/> values are the same. </summary>
         public static bool operator ==(StorageMinimumTlsVersion left, StorageMinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageMinimumTlsVersion"/> values are not the same. </summary>
         public static bool operator !=(StorageMinimumTlsVersion left, StorageMinimumTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageMinimumTlsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageMinimumTlsVersion"/>. </summary>
         public static implicit operator StorageMinimumTlsVersion(string value) => new StorageMinimumTlsVersion(value);
 
         /// <inheritdoc />
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

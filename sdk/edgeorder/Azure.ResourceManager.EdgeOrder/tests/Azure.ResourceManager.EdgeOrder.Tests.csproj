@@ -3,8 +3,7 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.EdgeOrder.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Folder>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
 </Project>

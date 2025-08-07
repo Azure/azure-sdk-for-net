@@ -8,8 +8,13 @@
 		<None Remove="Payloads\TokenIssuanceStart\CloudEventActionResponse.json" />
 		<None Remove="Payloads\TokenIssuanceStart\ConversionPayload.json" />
 		<None Remove="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
+		<None Remove="Payloads\TokenIssuanceStart\InvalidJsonRequest.json" />
+		<None Remove="Payloads\TokenIssuanceStart\InvalidXmlRequest.xml" />
 		<None Remove="Payloads\TokenIssuanceStart\NoActionResponse.json" />
 		<None Remove="Payloads\TokenIssuanceStart\QueryParameters.json" />
+		<None Remove="Payloads\TokenIssuanceStart\RequestMissingODataType.json" />
+		<None Remove="Payloads\TokenIssuanceStart\RequestMissingSource.json" />
+		<None Remove="Payloads\TokenIssuanceStart\ValidRequest.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -19,21 +24,22 @@
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ConversionPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NoActionResponse.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\RequestMissingODataType.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\RequestMissingSource.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidJsonRequest.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidXmlRequest.xml" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ValidRequest.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NullResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ExpectedPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\QueryParameters.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
-		
 		<PackageReference Include="nunit" />
 		<PackageReference Include="Moq" />
 		<PackageReference Include="NUnit3TestAdapter" />
-
 		<ProjectReference Include="$(AzureCoreTestFramework)" />
-
 		<ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.csproj" />
 	</ItemGroup>
 

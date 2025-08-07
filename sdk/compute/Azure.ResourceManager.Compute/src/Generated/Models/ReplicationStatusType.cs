@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         private const string ReplicationStatusValue = "ReplicationStatus";
+        private const string UefiSettingsValue = "UefiSettings";
 
         /// <summary> ReplicationStatus. </summary>
         public static ReplicationStatusType ReplicationStatus { get; } = new ReplicationStatusType(ReplicationStatusValue);
+        /// <summary> UefiSettings. </summary>
+        public static ReplicationStatusType UefiSettings { get; } = new ReplicationStatusType(UefiSettingsValue);
         /// <summary> Determines if two <see cref="ReplicationStatusType"/> values are the same. </summary>
         public static bool operator ==(ReplicationStatusType left, ReplicationStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicationStatusType"/> values are not the same. </summary>
         public static bool operator !=(ReplicationStatusType left, ReplicationStatusType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReplicationStatusType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicationStatusType"/>. </summary>
         public static implicit operator ReplicationStatusType(string value) => new ReplicationStatusType(value);
 
         /// <inheritdoc />
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

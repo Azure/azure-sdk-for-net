@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         InstanceFailoverGroupResource IOperationSource<InstanceFailoverGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(document.RootElement);
+            var data = ModelReaderWriter.Read<InstanceFailoverGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new InstanceFailoverGroupResource(_client, data);
         }
 
         async ValueTask<InstanceFailoverGroupResource> IOperationSource<InstanceFailoverGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(document.RootElement);
-            return new InstanceFailoverGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<InstanceFailoverGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new InstanceFailoverGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

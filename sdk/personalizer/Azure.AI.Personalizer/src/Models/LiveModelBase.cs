@@ -7,7 +7,7 @@ using System;
 namespace Azure.AI.Personalizer
 {
     /// <summary> An abstract class for Rl.Net.LiveModel </summary>
-    internal abstract class LiveModelBase
+    internal abstract class LiveModelBase : IDisposable
     {
         /// <summary> Init LiveModel </summary>
         public abstract void Init();
@@ -26,5 +26,40 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Wrapper method of QueueActionTakenEvent </summary>
         public abstract void QueueActionTakenEvent(string eventId);
+
+        #region IDisposable Support
+        protected bool disposed = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                DisposeManagedObjects();
+            }
+
+            DisposeUnmanagedObjects();
+            disposed = true;
+        }
+
+        /// <summary> Free any managed objects </summary>
+        protected virtual void DisposeManagedObjects() { }
+
+        /// <summary> Free any unmanaged objects </summary>
+        protected virtual void DisposeUnmanagedObjects() { }
+        #endregion
+
+        ~LiveModelBase()
+        {
+            Dispose(false);
+        }
     }
 }

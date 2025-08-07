@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.Query.Models;
@@ -57,7 +56,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary> Execute an Analytics query. </summary>
-        /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
+        /// <param name="workspaceId"> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="query"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -81,7 +80,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -91,7 +90,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary> Execute an Analytics query. </summary>
-        /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
+        /// <param name="workspaceId"> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="query"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,7 +114,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -148,12 +147,12 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary> Execute an Analytics query. </summary>
-        /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
+        /// <param name="workspaceId"> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="body"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/request-format) is an example for using POST with an Analytics query. </remarks>
         public async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
@@ -172,7 +171,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -182,12 +181,12 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary> Execute an Analytics query. </summary>
-        /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
+        /// <param name="workspaceId"> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="body"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/request-format) is an example for using POST with an Analytics query. </remarks>
         public Response<LogsQueryResult> Execute(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
@@ -206,7 +205,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +240,7 @@ namespace Azure.Monitor.Query
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="query"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
         public async Task<Response<LogsQueryResult>> ResourceGetAsync(ResourceIdentifier resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -260,7 +259,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +274,7 @@ namespace Azure.Monitor.Query
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="query"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
         public Response<LogsQueryResult> ResourceGet(ResourceIdentifier resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -294,7 +293,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -332,7 +331,7 @@ namespace Azure.Monitor.Query
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="body"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
         public async Task<Response<LogsQueryResult>> ResourceExecuteAsync(ResourceIdentifier resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -351,7 +350,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -366,7 +365,7 @@ namespace Azure.Monitor.Query
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="body"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
         public Response<LogsQueryResult> ResourceExecute(ResourceIdentifier resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -385,7 +384,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -415,7 +414,7 @@ namespace Azure.Monitor.Query
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Executes a batch of Analytics queries for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes a batch of Analytics queries for data. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/batch-queries) is an example for using POST with an Analytics query. </remarks>
         public async Task<Response<BatchResponse>> BatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -430,7 +429,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         BatchResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BatchResponse.DeserializeBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -443,7 +442,7 @@ namespace Azure.Monitor.Query
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Executes a batch of Analytics queries for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes a batch of Analytics queries for data. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/batch-queries) is an example for using POST with an Analytics query. </remarks>
         public Response<BatchResponse> Batch(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -458,7 +457,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         BatchResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BatchResponse.DeserializeBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -493,7 +492,7 @@ namespace Azure.Monitor.Query
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="query"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
         public async Task<Response<LogsQueryResult>> ResourceGetXmsAsync(ResourceIdentifier resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -512,7 +511,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -527,7 +526,7 @@ namespace Azure.Monitor.Query
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="query"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
         public Response<LogsQueryResult> ResourceGetXms(ResourceIdentifier resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -546,7 +545,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -584,7 +583,7 @@ namespace Azure.Monitor.Query
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="body"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
         public async Task<Response<LogsQueryResult>> ResourceExecuteXmsAsync(ResourceIdentifier resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -603,7 +602,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -618,7 +617,7 @@ namespace Azure.Monitor.Query
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="body"/> is null. </exception>
-        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
+        /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://learn.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
         public Response<LogsQueryResult> ResourceExecuteXms(ResourceIdentifier resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
@@ -637,7 +636,7 @@ namespace Azure.Monitor.Query
                 case 200:
                     {
                         LogsQueryResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

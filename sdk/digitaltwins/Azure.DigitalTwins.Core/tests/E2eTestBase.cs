@@ -34,7 +34,9 @@ namespace Azure.DigitalTwins.Core.Tests
         public virtual void SetupE2eTestBase()
         {
             // TODO: set via client options and pipeline instead
+#if NETFRAMEWORK
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+#endif
         }
 
         protected DigitalTwinsClient GetClient(DigitalTwinsClientOptions options = null)
@@ -68,6 +70,11 @@ namespace Azure.DigitalTwins.Core.Tests
         public async Task<string> GetUniqueTwinIdAsync(DigitalTwinsClient dtClient, string baseName)
         {
             return await GetUniqueIdAsync(baseName, (twinId) => dtClient.GetDigitalTwinAsync<BasicDigitalTwin>(twinId)).ConfigureAwait(false);
+        }
+
+        public async Task<string> GetUniqueJobIdAsync(DigitalTwinsClient dtClient, string baseName)
+        {
+            return await GetUniqueIdAsync(baseName, (jobId) => dtClient.GetImportJobAsync(jobId)).ConfigureAwait(false);
         }
 
         private async Task<string> GetUniqueIdAsync(string baseName, Func<string, Task> getResource)

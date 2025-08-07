@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,19 +16,79 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecureScoreControlDefinitionItem : IUtf8JsonSerializable
+    public partial class SecureScoreControlDefinitionItem : IUtf8JsonSerializable, IJsonModel<SecureScoreControlDefinitionItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreControlDefinitionItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecureScoreControlDefinitionItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WriteEndObject();
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static SecureScoreControlDefinitionItem DeserializeSecureScoreControlDefinitionItem(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxScore))
+            {
+                writer.WritePropertyName("maxScore"u8);
+                writer.WriteNumberValue(MaxScore.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
+            {
+                writer.WritePropertyName("assessmentDefinitions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AssessmentDefinitions)
+                {
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
+        SecureScoreControlDefinitionItem IJsonModel<SecureScoreControlDefinitionItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecureScoreControlDefinitionItem(document.RootElement, options);
+        }
+
+        internal static SecureScoreControlDefinitionItem DeserializeSecureScoreControlDefinitionItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,12 +96,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<int> maxScore = default;
-            Optional<SecureScoreControlDefinitionSource> source = default;
-            Optional<IReadOnlyList<SubResource>> assessmentDefinitions = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            int? maxScore = default;
+            SecureScoreControlDefinitionSource source = default;
+            IReadOnlyList<SubResource> assessmentDefinitions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -62,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -99,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            source = SecureScoreControlDefinitionSource.DeserializeSecureScoreControlDefinitionSource(property0.Value);
+                            source = SecureScoreControlDefinitionSource.DeserializeSecureScoreControlDefinitionSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("assessmentDefinitions"u8))
@@ -111,7 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerSecurityCenterContext.Default));
                             }
                             assessmentDefinitions = array;
                             continue;
@@ -119,8 +184,54 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecureScoreControlDefinitionItem(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(maxScore), source.Value, Optional.ToList(assessmentDefinitions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecureScoreControlDefinitionItem(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                description,
+                maxScore,
+                source,
+                assessmentDefinitions ?? new ChangeTrackingList<SubResource>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecureScoreControlDefinitionItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecureScoreControlDefinitionItem IPersistableModel<SecureScoreControlDefinitionItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSecureScoreControlDefinitionItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecureScoreControlDefinitionItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

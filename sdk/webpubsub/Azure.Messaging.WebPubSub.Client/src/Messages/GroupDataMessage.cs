@@ -26,7 +26,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The sequence id. Only availble in reliable protocol.
         /// </summary>
-        public ulong? SequenceId { get; }
+        public long? SequenceId { get; }
 
         /// <summary>
         /// The group name
@@ -46,7 +46,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <param name="data">The data content</param>
         /// <param name="sequenceId">The sequence id. Only availble in reliable protocol.</param>
         /// <param name="fromUserId">fromUserId.</param>
-        public GroupDataMessage(string group, WebPubSubDataType dataType, BinaryData data, ulong? sequenceId, string fromUserId)
+        public GroupDataMessage(string group, WebPubSubDataType dataType, BinaryData data, long? sequenceId, string fromUserId)
         {
             DataType = dataType;
             Data = data;

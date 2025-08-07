@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -20,6 +21,19 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             var endpoint = new Uri("<data_collection_endpoint_uri>");
             var credential = new DefaultAzureCredential();
             var client = new LogsIngestionClient(endpoint, credential);
+            #endregion
+        }
+
+        public void SetUpClientWithOptions()
+        {
+            #region Snippet:CreateLogsIngestionClientWithOptions
+            var endpoint = new Uri("<data_collection_endpoint_uri>");
+            var credential = new DefaultAzureCredential();
+            var clientOptions = new LogsIngestionClientOptions
+            {
+                Audience = LogsIngestionAudience.AzureChina
+            };
+            var client = new LogsIngestionClient(endpoint, credential, clientOptions);
             #endregion
         }
 

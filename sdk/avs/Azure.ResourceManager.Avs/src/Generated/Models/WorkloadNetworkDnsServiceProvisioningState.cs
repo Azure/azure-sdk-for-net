@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The provisioning state. </summary>
+    /// <summary> Workload Network DNS Service provisioning state. </summary>
     public readonly partial struct WorkloadNetworkDnsServiceProvisioningState : IEquatable<WorkloadNetworkDnsServiceProvisioningState>
     {
         private readonly string _value;
@@ -24,28 +24,28 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Succeeded { get; } = new WorkloadNetworkDnsServiceProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Failed { get; } = new WorkloadNetworkDnsServiceProvisioningState(FailedValue);
-        /// <summary> Building. </summary>
-        public static WorkloadNetworkDnsServiceProvisioningState Building { get; } = new WorkloadNetworkDnsServiceProvisioningState(BuildingValue);
-        /// <summary> Deleting. </summary>
-        public static WorkloadNetworkDnsServiceProvisioningState Deleting { get; } = new WorkloadNetworkDnsServiceProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static WorkloadNetworkDnsServiceProvisioningState Updating { get; } = new WorkloadNetworkDnsServiceProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Canceled { get; } = new WorkloadNetworkDnsServiceProvisioningState(CanceledValue);
+        /// <summary> is building. </summary>
+        public static WorkloadNetworkDnsServiceProvisioningState Building { get; } = new WorkloadNetworkDnsServiceProvisioningState(BuildingValue);
+        /// <summary> is deleting. </summary>
+        public static WorkloadNetworkDnsServiceProvisioningState Deleting { get; } = new WorkloadNetworkDnsServiceProvisioningState(DeletingValue);
+        /// <summary> is updating. </summary>
+        public static WorkloadNetworkDnsServiceProvisioningState Updating { get; } = new WorkloadNetworkDnsServiceProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkDnsServiceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkDnsServiceProvisioningState left, WorkloadNetworkDnsServiceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkDnsServiceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(WorkloadNetworkDnsServiceProvisioningState left, WorkloadNetworkDnsServiceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadNetworkDnsServiceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkDnsServiceProvisioningState"/>. </summary>
         public static implicit operator WorkloadNetworkDnsServiceProvisioningState(string value) => new WorkloadNetworkDnsServiceProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

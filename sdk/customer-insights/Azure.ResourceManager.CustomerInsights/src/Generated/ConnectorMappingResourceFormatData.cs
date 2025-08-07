@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,44 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class ConnectorMappingResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConnectorMappingResourceFormatData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingResourceFormatData"/>. </summary>
         public ConnectorMappingResourceFormatData()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +76,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="runId"> The RunId. </param>
         /// <param name="state"> State of connector mapping. </param>
         /// <param name="tenantId"> The hub name. </param>
-        internal ConnectorMappingResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string connectorName, ConnectorType? connectorType, DateTimeOffset? created, DateTimeOffset? lastModified, EntityType? entityType, string entityTypeName, string connectorMappingName, string displayName, string description, string dataFormatId, ConnectorMappingProperties mappingProperties, DateTimeOffset? nextRunOn, string runId, ConnectorMappingState? state, Guid? tenantId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorMappingResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string connectorName, ConnectorType? connectorType, DateTimeOffset? created, DateTimeOffset? lastModified, EntityType? entityType, string entityTypeName, string connectorMappingName, string displayName, string description, string dataFormatId, ConnectorMappingProperties mappingProperties, DateTimeOffset? nextRunOn, string runId, ConnectorMappingState? state, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ConnectorName = connectorName;
             ConnectorType = connectorType;
@@ -60,6 +94,7 @@ namespace Azure.ResourceManager.CustomerInsights
             RunId = runId;
             State = state;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The connector name. </summary>

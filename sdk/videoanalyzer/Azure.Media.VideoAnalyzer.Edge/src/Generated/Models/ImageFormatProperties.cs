@@ -14,12 +14,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class ImageFormatProperties
     {
-        /// <summary> Initializes a new instance of ImageFormatProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatProperties"/>. </summary>
         protected ImageFormatProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageFormatProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatProperties"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         internal ImageFormatProperties(string type)
         {

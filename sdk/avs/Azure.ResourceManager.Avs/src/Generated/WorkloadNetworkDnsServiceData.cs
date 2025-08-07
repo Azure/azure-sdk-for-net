@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -19,13 +20,45 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkDnsServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsServiceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsServiceData"/>. </summary>
         public WorkloadNetworkDnsServiceData()
         {
             FqdnZones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +71,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="status"> DNS Service status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal WorkloadNetworkDnsServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IPAddress dnsServiceIP, string defaultDnsZone, IList<string> fqdnZones, DnsServiceLogLevel? logLevel, DnsServiceStatus? status, WorkloadNetworkDnsServiceProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkDnsServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IPAddress dnsServiceIP, string defaultDnsZone, IList<string> fqdnZones, DnsServiceLogLevel? logLevel, DnsServiceStatus? status, WorkloadNetworkDnsServiceProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             DnsServiceIP = dnsServiceIP;
@@ -48,6 +82,7 @@ namespace Azure.ResourceManager.Avs
             Status = status;
             ProvisioningState = provisioningState;
             Revision = revision;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name of the DNS Service. </summary>

@@ -1,3 +1,5 @@
+#! /bin/env pwsh
+
 # Not defining a default parameter set makes SkipLogin/Subscription required all the time.
 [CmdletBinding(DefaultParameterSetName = 'Default')]
 param(
@@ -10,6 +12,7 @@ param(
     [string]$DeployId,
     [switch]$SkipLogin,
     [string]$Subscription,
+    [string]$Tenant,
 
     # Default to true in Azure Pipelines environments
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
@@ -31,7 +34,10 @@ param(
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
     [Parameter(Mandatory=$False)][array]$MatrixReplace,
-    [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters
+    [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters,
+
+    # Prevent kubernetes from deleting nodes or rebalancing pods related to this test for N days
+    [Parameter(Mandatory=$False)][ValidateRange(1, 14)][int]$LockDeletionForDays
 )
 
 . $PSScriptRoot/stress-test-deployment-lib.ps1

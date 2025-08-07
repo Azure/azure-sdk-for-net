@@ -10,12 +10,12 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Target status. </summary>
     public partial class TargetStatus
     {
-        /// <summary> Initializes a new instance of TargetStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetStatus"/>. </summary>
         internal TargetStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetStatus"/>. </summary>
         /// <param name="id"> Target id. </param>
         /// <param name="currentAvailability"> Target availability. </param>
         /// <param name="averageQueueTime"> Average queue time in seconds. </param>

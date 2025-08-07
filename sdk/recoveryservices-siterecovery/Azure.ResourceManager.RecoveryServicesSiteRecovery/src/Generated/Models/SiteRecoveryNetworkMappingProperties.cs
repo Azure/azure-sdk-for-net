@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,12 +14,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Network Mapping Properties. </summary>
     public partial class SiteRecoveryNetworkMappingProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingProperties"/>. </summary>
         internal SiteRecoveryNetworkMappingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingProperties"/>. </summary>
         /// <param name="state"> The pairing state for network mapping. </param>
         /// <param name="primaryNetworkFriendlyName"> The primary network friendly name. </param>
         /// <param name="primaryNetworkId"> The primary network id for network mapping. </param>
@@ -31,7 +65,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
         /// </param>
-        internal SiteRecoveryNetworkMappingProperties(string state, string primaryNetworkFriendlyName, ResourceIdentifier primaryNetworkId, string primaryFabricFriendlyName, string recoveryNetworkFriendlyName, ResourceIdentifier recoveryNetworkId, ResourceIdentifier recoveryFabricArmId, string recoveryFabricFriendlyName, NetworkMappingFabricSpecificSettings fabricSpecificSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryNetworkMappingProperties(string state, string primaryNetworkFriendlyName, ResourceIdentifier primaryNetworkId, string primaryFabricFriendlyName, string recoveryNetworkFriendlyName, ResourceIdentifier recoveryNetworkId, ResourceIdentifier recoveryFabricArmId, string recoveryFabricFriendlyName, NetworkMappingFabricSpecificSettings fabricSpecificSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             PrimaryNetworkFriendlyName = primaryNetworkFriendlyName;
@@ -42,6 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryFabricArmId = recoveryFabricArmId;
             RecoveryFabricFriendlyName = recoveryFabricFriendlyName;
             FabricSpecificSettings = fabricSpecificSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The pairing state for network mapping. </summary>

@@ -1,0 +1,83 @@
+parameters:
+  - name: ServiceDirectory
+    type: string
+    default: ""
+  - name: DiffDirectory
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/diff
+  - name: PackageInfoDirectory
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: TargetPath
+    type: string
+    default: $(Build.SourcesDirectory)
+  - name: WorkingDirectory
+    type: string
+    default: $(Build.SourcesDirectory)
+  - name: ScriptDirectory
+    type: string
+    default: eng/common/scripts
+  - name: ExcludePaths
+    type: object
+    default: []
+
+steps:
+  # There will be transitory period for every language repo where the <language> - pullrequest build definition will run
+  # alongside the <language> - <service> - ci definitions. These pullrequest build definitions will have the ServiceDirectory parameter
+  # set to 'auto', which will allow the expanding and contracting based on PR Diff.
+
+  # The other public CI builds will pass a real service directory, which will not activate the PR diff logic and as such will operate
+  # as before this change.
+  - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
+      - task: Powershell@2
+        displayName: Generate PR Diff
+        inputs:
+          targetType: inline
+          script: >
+            ${{ parameters.ScriptDirectory }}/Generate-PR-Diff.ps1
+            -TargetPath '${{ parameters.TargetPath }}'
+            -ArtifactPath '${{ parameters.DiffDirectory }}'
+            -ExcludePaths ('${{ convertToJson(parameters.ExcludePaths) }}' | ConvertFrom-Json)
+          pwsh: true
+          workingDirectory: '${{ parameters.WorkingDirectory }}'
+
+      - task: Powershell@2
+        displayName: Save package properties filtered for PR
+        inputs:
+          filePath: ${{ parameters.ScriptDirectory }}/Save-Package-Properties.ps1
+          arguments: >
+            -PrDiff '${{ parameters.DiffDirectory }}/diff.json'
+            -OutDirectory '${{ parameters.PackageInfoDirectory }}'
+          pwsh: true
+          workingDirectory: '${{ parameters.WorkingDirectory }}'
+
+      # When running in PR mode, we want the detected changed services to be attached to the build as tags.
+      # However, the public identity does not have the permissions to attach tags to the build.
+      # Instead, we will save the changed services to a file, attach it as an attachment for PiplineWitness to pick up and utilize.
+      #
+      - pwsh: |
+          $changedPackages = Get-ChildItem -Recurse -Filter *.json "${{ parameters.PackageInfoDirectory }}" `
+            | ForEach-Object { Get-Content -Raw $_ | ConvertFrom-Json }
+
+          $changedServices = $changedPackages | Where-Object { $_.IncludedForValidation -eq $false } `
+            | Select-Object -ExpandProperty ServiceDirectory | Sort-Object -Unique
+
+          if ($changedServices) {
+            Write-Host "Attaching changed service names to the build for additional tag generation."
+            $changedServices | ConvertTo-Json -AsArray | Out-File -FilePath $(System.DefaultWorkingDirectory)/tags.json -Encoding utf8
+            Write-Host '##vso[task.addattachment type=AdditionalTags;name=AdditionalTags;]$(System.DefaultWorkingDirectory)/tags.json'
+          }
+        displayName: Upload tags.json with changed services
+        workingDirectory: '${{ parameters.WorkingDirectory }}'
+
+  - ${{ else }}:
+      - task: Powershell@2
+        displayName: Save package properties
+        inputs:
+          filePath: ${{ parameters.ScriptDirectory }}/Save-Package-Properties.ps1
+          arguments: >
+            -ServiceDirectory '${{parameters.ServiceDirectory}}'
+            -OutDirectory '${{ parameters.PackageInfoDirectory }}'
+            -AddDevVersion:($env:SETDEVVERSION -eq 'true')
+          pwsh: true
+          workingDirectory: '${{ parameters.WorkingDirectory }}'

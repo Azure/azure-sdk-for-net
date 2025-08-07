@@ -35,6 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly ILoggerFactory _loggerFactory;
         private readonly BlobTriggerSource _blobTriggerSource;
         private readonly ConcurrencyManager _concurrencyManager;
+        private readonly IDrainModeManager _drainModeManager;
 
         public SharedBlobQueueListenerFactory(
             QueueServiceClient hostQueueServiceClient,
@@ -46,7 +47,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             IBlobWrittenWatcher blobWrittenWatcher,
             FunctionDescriptor functionDescriptor,
             BlobTriggerSource blobTriggerSource,
-            ConcurrencyManager concurrencyManager)
+            ConcurrencyManager concurrencyManager,
+            IDrainModeManager drainmodeManager)
         {
             _hostQueueServiceClient = hostQueueServiceClient ?? throw new ArgumentNullException(nameof(hostQueueServiceClient));
             _sharedQueueWatcher = sharedQueueWatcher ?? throw new ArgumentNullException(nameof(sharedQueueWatcher));
@@ -58,6 +60,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _functionDescriptor = functionDescriptor;
             _blobTriggerSource = blobTriggerSource;
             _concurrencyManager = concurrencyManager;
+            _drainModeManager = drainmodeManager;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
@@ -78,8 +81,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var queuesOptions = BlobsOptionsToQueuesOptions(_blobsOptions);
             var queueProcessor = new SharedBlobQueueProcessor(triggerExecutor, _hostBlobTriggerQueue, defaultPoisonQueue, _loggerFactory, queuesOptions);
             QueueListener.RegisterSharedWatcherWithQueueProcessor(queueProcessor, _sharedQueueWatcher);
-            IListener listener = new QueueListener(_hostBlobTriggerQueue, defaultPoisonQueue, triggerExecutor, _exceptionHandler, _loggerFactory,
-                _sharedQueueWatcher, queuesOptions, queueProcessor, _functionDescriptor, _concurrencyManager, functionId: SharedBlobQueueListenerFunctionId);
+            IListener listener = new QueueListener(
+                _hostBlobTriggerQueue,
+                defaultPoisonQueue,
+                triggerExecutor,
+                _exceptionHandler,
+                _loggerFactory,
+                _sharedQueueWatcher,
+                queuesOptions,
+                queueProcessor,
+                _functionDescriptor,
+                _concurrencyManager,
+                functionId: SharedBlobQueueListenerFunctionId,
+                drainModeManager: _drainModeManager);
 
             return new SharedBlobQueueListener(listener, triggerExecutor);
         }
@@ -98,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             {
                 BatchSize = batchSize,
                 NewBatchThreshold = newBatchThreshold,
-                MaxDequeueCount = blobsOptions.MaxDequeueCount
+                MaxDequeueCount = blobsOptions.PoisonBlobThreshold
             };
         }
 

@@ -1,30 +1,31 @@
 # Azure Load Testing client library for .NET
+
 Azure Load Testing provides client library in .NET to the user by which they can interact natively with Azure Load Testing service. Azure Load Testing is a fully managed load-testing service that enables you to generate high-scale load. The service simulates traffic for your applications, regardless of where they're hosted. Developers, testers, and quality assurance (QA) engineers can use it to optimize application performance, scalability, or capacity.
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/src) | [Package (NuGet)](https://www.nuget.org/packages?q=Azure.Developer.Loadtesting) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure/load-testing/)
+[Source code][source_code] | [Package (NuGet)][nuget_package] | [API reference documentation][sdk_api_reference] | [Product documentation](https://learn.microsoft.com/azure/load-testing/)
 
 
 ## Documentation
 
 Various documentation is available to help you get started
 
-<!-- - [Source code][source_code] -->
-- [API reference documentation](https://docs.microsoft.com/rest/api/loadtesting/)
+- [Source code][source_code]
+- [REST API reference documentation](https://learn.microsoft.com/rest/api/loadtesting/)
 - [Product Documentation](https://azure.microsoft.com/services/load-testing/)
 
 ## Getting started
 
-
 ### Install the package
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Developer.LoadTesting
 ```
 
 ### Prerequisites
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Load Test Service Resource](https://learn.microsoft.com/azure/load-testing/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Load Test Service Resource](https://learn.microsoft.com/azure/load-testing/) to use this package. You can create the resource via the [Azure Portal](https://portal.azure.com), or the [Azure CLI](https://learn.microsoft.com/cli/azure).
 
 
 ### Authenticate the client
@@ -49,7 +50,7 @@ The following components make up the Azure Load Testing service. The Azure Load 
 
 - `LoadTestRunClient`
 
-These clients are used for managing and using different components of the service. For each method in both of these sub-clients there is a corresponding Async method in the same class, with the same implementation however enabling async functionalities. For example, if there is a method, `CreateOrUpdateTest` as a part of `LoadTestAdministrationClient` then there always exists one more function `CreateOrUpdateTestAsync` in the same client class.
+These clients are used for managing and using different components of the service. For each method in both of these sub-clients there is a corresponding Async method in the same class, with the same implementation however enabling async functionalities. For example, if there is a method, `CreateOrUpdateTest` as a part of `LoadTestAdministrationClient` then there always exists one more method `CreateOrUpdateTestAsync` in the same client class.
 
 ### Load Test Administration Client
 
@@ -73,7 +74,7 @@ During a load test, Azure Load Testing collects metrics about the test execution
 
 ### Test Run Client
 
-The `LoadTestRunClient` client is used to start and stop test runs corresponding to a load test. A test run represents one execution of a load test. It collects the logs associated with running the Apache JMeter script, the load test YAML configuration, the list of app components to monitor, and the results of the test.
+The `LoadTestRunClient` client is used to start and stop test runs corresponding to a load test. A test run represents one execution of a load test. It collects the logs associated with running the test script, the load test configuration, the list of app components to monitor, and the results of the test.
 
 ### Data-Plane Endpoint
 
@@ -83,31 +84,15 @@ Data-plane of Azure Load Testing resources is addressable using the following UR
 
 The first GUID `00000000-0000-0000-0000-000000000000` is the unique identifier used for accessing the Azure Load Testing resource. This is followed by  `aaa` which is the Azure region of the resource.
 
-The data-plane endpoint is obtained from Control Plane APIs.
+The data-plane endpoint is obtained from Control Plane APIs. To obtain the data-plane endpoint for your resource, follow [this documentation][obtaining_data_plane_uri].
 
-**Example:** `1234abcd-12ab-12ab-12ab-123456abcdef.eus.cnt-prod.loadtesting.azure.com`
+**Example:** `1234abcd-12ab-12ab-12ab-123456abcdef.eastus.cnt-prod.loadtesting.azure.com`
 
-In the above example, `eus` represents the Azure region `East US`.
-## Examples
+In the above example, `eastus` represents the Azure region `East US`.
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples).
-
-
-## Troubleshooting
-More about it is coming soon...
-
-
-### Thread safety
+### Thread Safety
 
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
-
-## Next steps
-
-Get started with our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples).
-
-## Contributing
-
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
@@ -120,18 +105,58 @@ This is a template, but your SDK readme should include details on how to contrib
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
+
+## Examples
+
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples).
+
+## Troubleshooting
+
+### Setting up console logging
+
+The simplest way to see the logs is to enable the console logging. To create an Azure SDK log listener that outputs messages to the console, use `AzureEventSourceListener.CreateConsoleLogger` method.
+
+```cs
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+To learn more about other logging mechanisms see [here][azure_core_diagnostics].
+
+## Next steps
+
+For more extensive documentation on Azure Load Testing, see the [Azure Load Testing documentation][product_documentation].
+
+Get started with our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples) that cover common scenarios.
+
+## Contributing
+
+See the [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) file for information about how to onboard and contribute to the overall Azure SDK ecosystem.
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
+
+
 <!-- LINKS -->
-<!-- LINKS -->
-<!-- [source_code]: https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/loadtesting/azure-developer-loadtesting/src -->
-<!-- [sample_code]: https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/loadtesting/azure-developer-loadtesting/src/samples -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[source_code]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/src
+[nuget_package]: https://www.nuget.org/packages/Azure.Developer.LoadTesting
+[sdk_api_reference]: https://azure.github.io/azure-sdk-for-net/loadtesting.html
+[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[cla]: https://cla.microsoft.com
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[email_opencode]: mailto:opencode@microsoft.com
 [authenticate_with_token]: https://learn.microsoft.com/aspnet/core/security/authentication/identity
 [azure_identity_credentials]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#credentials
 [azure_identity_nuget]: https://www.nuget.org/packages/Azure.Identity/1.7.0
 [client_secret_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.clientsecretcredential
 [nuget]: https://www.nuget.org/
 [azure_sub]: https://azure.microsoft.com/free/
-[api_reference_doc]: https://docs.microsoft.com/rest/api/loadtesting/
+[api_reference_doc]: https://learn.microsoft.com/rest/api/loadtesting/
 [product_documentation]: https://azure.microsoft.com/services/load-testing/
+[obtaining_data_plane_uri]: https://learn.microsoft.com/rest/api/loadtesting/data-plane-uri
+[azure_core_diagnostics]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md

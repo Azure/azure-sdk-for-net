@@ -28,9 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\tests.yml" Link="\tests.yml" />
   </ItemGroup>
 

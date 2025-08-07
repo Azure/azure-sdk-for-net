@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -18,12 +19,44 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SoftwareInventoryData : ResourceData
     {
-        /// <summary> Initializes a new instance of SoftwareInventoryData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareInventoryData"/>. </summary>
         public SoftwareInventoryData()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareInventoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareInventoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +70,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="endOfSupportDate"> The end of support date in case the product is upcoming end of support. </param>
         /// <param name="numberOfKnownVulnerabilities"> Number of weaknesses. </param>
         /// <param name="firstSeenOn"> First time that the software was seen in the device. </param>
-        internal SoftwareInventoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceId, string osPlatform, string vendor, string softwareName, string version, EndOfSupportStatus? endOfSupportStatus, string endOfSupportDate, int? numberOfKnownVulnerabilities, DateTimeOffset? firstSeenOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareInventoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceId, string osPlatform, string vendor, string softwareName, string version, EndOfSupportStatus? endOfSupportStatus, string endOfSupportDate, int? numberOfKnownVulnerabilities, DateTimeOffset? firstSeenOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DeviceId = deviceId;
             OSPlatform = osPlatform;
@@ -48,6 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
             EndOfSupportDate = endOfSupportDate;
             NumberOfKnownVulnerabilities = numberOfKnownVulnerabilities;
             FirstSeenOn = firstSeenOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique identifier for the virtual machine in the service. </summary>

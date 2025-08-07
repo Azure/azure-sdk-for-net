@@ -34,17 +34,17 @@ This tutorial has following sections:
 - Install Visual Studio 2022 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
   - Install the **.NET Core cross-platform development** workloads in Visual Studio
-- Install **.NET 6.0 SDK** for your specific platform. (or a higher version)
+- Install **.NET 8.0 SDK** for your specific platform. (or a higher version)
 - Install the latest version of [git](https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
-- Install [NodeJS](https://nodejs.org/) (14.x.x).
+- Install [NodeJS](https://nodejs.org/) (18.x.x).
 
 ## Setup your repository
 
 - Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
 - Create a branch to work in.
 
-## Create starter package  
+## Create starter package
 
 For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. The started project will be under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. The package will contain several folders and files (see following). Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
 
@@ -59,19 +59,19 @@ sdk\<service name>\<package name>\CHANGELOG.md
 
 - `<service name>` - Should be the short name for the azure service. e.g. deviceupdate
 - `<package name>` -  Should be the name of the shipping package, or an abbreviation that distinguishes the given shipping artifact for the given service. It will be `Azure.<group>.<service>`, e.g. Azure.IoT.DeviceUpdate
-  
+
 We will use dotnet project template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to automatically create the project.
 
-You can run `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
+You can run `eng\scripts\automation\Invoke-AutorestDataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
 ```powershell
-eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> [-inputfiles <inputfilelink>] [-readme <readmeFilelink>] [-securityScope <securityScope>] [-securityHeaderName <securityHeaderName>]
+eng/scripts/automation/Invoke-AutorestDataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> [-inputfiles <inputfilelink>] [-readme <readmeFilelink>] [-securityScope <securityScope>] [-securityHeaderName <securityHeaderName>]
 ```
 
 e.g.
 
 ```powershell
-pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service webpubsub -namespace Azure.Messaging.WebPubSub -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
+pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-AutorestDataPlaneGenerateSDKPackage.ps1 -service webpubsub -namespace Azure.Messaging.WebPubSub -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
 ```
 
 **Note**:
@@ -85,7 +85,7 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKP
 - `-securityScope` designates the authentication scope to use if your library supports **Token Credential** authentication.
 - `-securityHeaderName` designates the key to use if your library supports **Azure Key Credential** authentication.
 
-When you run the `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` script, it will:
+When you run the `eng\scripts\automation\Invoke-AutorestDataPlaneGenerateSDKPackage.ps1` script, it will:
 
 - Create a project folder, install template files from `sdk/template/Azure.Template`, and create `.csproj` and `.sln` files for your new library.
 

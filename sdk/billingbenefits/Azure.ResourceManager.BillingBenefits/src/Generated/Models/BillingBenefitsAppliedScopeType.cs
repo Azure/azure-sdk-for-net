@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static bool operator ==(BillingBenefitsAppliedScopeType left, BillingBenefitsAppliedScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsAppliedScopeType"/> values are not the same. </summary>
         public static bool operator !=(BillingBenefitsAppliedScopeType left, BillingBenefitsAppliedScopeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingBenefitsAppliedScopeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitsAppliedScopeType"/>. </summary>
         public static implicit operator BillingBenefitsAppliedScopeType(string value) => new BillingBenefitsAppliedScopeType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

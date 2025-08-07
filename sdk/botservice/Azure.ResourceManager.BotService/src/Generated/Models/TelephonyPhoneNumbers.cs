@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -12,12 +14,44 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A telephone number for the Telephony channel. </summary>
     public partial class TelephonyPhoneNumbers
     {
-        /// <summary> Initializes a new instance of TelephonyPhoneNumbers. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TelephonyPhoneNumbers"/>. </summary>
         public TelephonyPhoneNumbers()
         {
         }
 
-        /// <summary> Initializes a new instance of TelephonyPhoneNumbers. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyPhoneNumbers"/>. </summary>
         /// <param name="id"> The element id. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="acsEndpoint"> The endpoint of ACS. </param>
@@ -28,7 +62,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="cognitiveServiceResourceId"> The resource id of cognitive service. </param>
         /// <param name="defaultLocale"> The default locale of the phone number. </param>
         /// <param name="offerType"> Optional Property that will determine the offering type of the phone. </param>
-        internal TelephonyPhoneNumbers(string id, string phoneNumber, string acsEndpoint, string acsSecret, ResourceIdentifier acsResourceId, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale, string offerType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TelephonyPhoneNumbers(string id, string phoneNumber, string acsEndpoint, string acsSecret, ResourceIdentifier acsResourceId, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, ResourceIdentifier cognitiveServiceResourceId, string defaultLocale, string offerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PhoneNumber = phoneNumber;
@@ -40,6 +75,7 @@ namespace Azure.ResourceManager.BotService.Models
             CognitiveServiceResourceId = cognitiveServiceResourceId;
             DefaultLocale = defaultLocale;
             OfferType = offerType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The element id. </summary>

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.Consumption
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetByBillingAccountRequestUri(string billingAccountId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/balances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountId)
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionBalanceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumptionBalanceResult.DeserializeConsumptionBalanceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,13 +105,26 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionBalanceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumptionBalanceResult.DeserializeConsumptionBalanceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetForBillingPeriodByBillingAccountRequestUri(string billingAccountId, string billingPeriodName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/billingPeriods/", false);
+            uri.AppendPath(billingPeriodName, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/balances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetForBillingPeriodByBillingAccountRequest(string billingAccountId, string billingPeriodName)
@@ -141,7 +164,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionBalanceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumptionBalanceResult.DeserializeConsumptionBalanceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,7 +191,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionBalanceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumptionBalanceResult.DeserializeConsumptionBalanceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

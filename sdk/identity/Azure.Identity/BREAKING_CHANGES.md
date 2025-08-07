@@ -1,5 +1,16 @@
 # Breaking Changes
 
+## 1.11.0
+
+### Behavioral change to `DefaultAzureCredential` in IMDS managed identity scenarios
+
+As of `Azure.Identity` 1.11.0, the `DefaultAzureCredential` makes a couple minor behavioral changes to request timeout and retry behavior in environments where IMDS managed identity is used. The changes are as follows:
+- The first request made to IMDS managed identity will be made with a 1-second timeout, as it did previously, but without the "Metadata" header to expedite validating whether the endpoint is available. This is guaranteed to fail with a 400 error.
+    - If the request times out, indicating that the IMDS endpoint isn't available, no retries will be made. This is a change from the previous behavior, where the request was retried up to 3 times, with exponential backoff.
+    - If the request returns a 400 error, indicating that the IMDS endpoint is available, the request will be retried up to 4 times, with exponential backoff, to allow for transient failures.
+
+If more retries are needed for IMDS managed identity scenarios, a custom `RetryPolicy` can be specified in the `DefaultAzureCredentialOptions`. More information on how to customize the retry policy can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md#setting-a-custom-retry-policy).
+
 ## 1.7.0
 
 ### Behavioral change to credential types supporting multi-tenant authentication

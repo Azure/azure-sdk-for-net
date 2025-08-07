@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/NewProject001?api-version=2025-05-15-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "135",
+        "Content-Type": "application/merge-patch+json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250525.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectKind": "Conversation",
+        "projectName": "NewProject001",
+        "multilingual": true,
+        "description": "Project description",
+        "language": "en-us"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "24885c67-1687-462b-befc-54f7191290d2",
+        "Content-Length": "222",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 May 2025 03:35:46 GMT",
+        "Location": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/NewProject001/NewProject001",
+        "request-id": "24885c67-1687-462b-befc-54f7191290d2",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "221",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2025-05-26T03:35:47Z",
+        "lastModifiedDateTime": "2025-05-26T03:35:47Z",
+        "projectKind": "Conversation",
+        "projectName": "NewProject001",
+        "multilingual": true,
+        "description": "Project description",
+        "language": "en-us"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "2086194722"
+  }
+}

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Analysis
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Analysis
 
         AnalysisServerResource IOperationSource<AnalysisServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);
+            var data = ModelReaderWriter.Read<AnalysisServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAnalysisContext.Default);
             return new AnalysisServerResource(_client, data);
         }
 
         async ValueTask<AnalysisServerResource> IOperationSource<AnalysisServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);
-            return new AnalysisServerResource(_client, data);
+            var data = ModelReaderWriter.Read<AnalysisServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAnalysisContext.Default);
+            return await Task.FromResult(new AnalysisServerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

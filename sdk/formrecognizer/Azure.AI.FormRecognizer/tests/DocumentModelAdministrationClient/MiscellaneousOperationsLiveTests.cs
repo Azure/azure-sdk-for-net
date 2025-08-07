@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -19,12 +18,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// </remarks>
     public class MiscellaneousOperationsLiveTests : DocumentAnalysisLiveTestBase
     {
-        private readonly IReadOnlyDictionary<string, string> _testingTags = new Dictionary<string, string>()
-        {
-            { "ordinary tag", "an ordinary tag" },
-            { "crazy tag", "a CRAZY tag 123!@#$%^&*()[]{}\\/?.,<>" }
-        };
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MiscellaneousOperationsLiveTests"/> class.
         /// </summary>
@@ -34,151 +27,203 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
         }
 
-        [RecordedTest]
-        public async Task GetResourceDetails()
-        {
-            var client = CreateDocumentModelAdministrationClient();
-
-            ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
-
-            Assert.IsNotNull(resourceDetails.CustomDocumentModelCount);
-            Assert.IsNotNull(resourceDetails.CustomDocumentModelLimit);
-        }
+        #region Resource Details
 
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetAndListOperations(bool useTokenCredential)
+        public async Task GetResourceDetails(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
+            var startTime = Recording.UtcNow;
 
-            // Guarantee there is going to be at least one operation
-            var modelId = Recording.GenerateId();
-            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
+            // Ensure we will have at least one custom model to populate the resource details.
+            await using var disposableModel = await BuildDisposableDocumentModelAsync();
 
-            var modelOperationFromList = client.GetOperationsAsync().ToEnumerableAsync().Result;
-            Assert.GreaterOrEqual(modelOperationFromList.Count, 1);
+            ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
-            ValidateOperationSummary(modelOperationFromList.FirstOrDefault());
+            Assert.Greater(resourceDetails.CustomDocumentModelCount, 0);
+            Assert.GreaterOrEqual(resourceDetails.CustomDocumentModelLimit, resourceDetails.CustomDocumentModelCount);
 
-            OperationDetails operationDetails = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
+            ResourceQuotaDetails neuralQuota = resourceDetails.NeuralDocumentModelQuota;
 
-            ValidateOperationDetails(operationDetails);
-        }
-
-        [RecordedTest]
-        public async Task GetAndListOperationsWithTags()
-        {
-            var client = CreateDocumentModelAdministrationClient();
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var modelId = Recording.GenerateId();
-            var options = new BuildDocumentModelOptions();
-
-            foreach (var tag in _testingTags)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
-                options.Tags.Add(tag);
-            }
-
-            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, options: options);
-
-            OperationSummary operationSummary = client.GetOperationsAsync().ToEnumerableAsync().Result
-                .FirstOrDefault(op => op.OperationId == operation.Id);
-
-            Assert.NotNull(operationSummary);
-
-            CollectionAssert.AreEquivalent(_testingTags, operationSummary.Tags);
-
-            OperationDetails operationDetails = await client.GetOperationAsync(operation.Id);
-
-            CollectionAssert.AreEquivalent(_testingTags, operationDetails.Tags);
-
-            await client.DeleteDocumentModelAsync(modelId);
-        }
-
-        [RecordedTest]
-        public void GetOperationWrongId()
-        {
-            var client = CreateDocumentModelAdministrationClient();
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.GetOperationAsync("0000000000000000"));
-            Assert.AreEqual("NotFound", ex.ErrorCode);
-        }
-
-        private void ValidateOperationSummary(OperationSummary operationSummary)
-        {
-            Assert.NotNull(operationSummary.OperationId);
-            Assert.AreNotEqual(default(DateTimeOffset), operationSummary.CreatedOn);
-            Assert.AreNotEqual(default(DateTimeOffset), operationSummary.LastUpdatedOn);
-            Assert.AreNotEqual(default(DocumentOperationKind), operationSummary.Kind);
-            Assert.NotNull(operationSummary.ResourceLocation);
-
-            if (operationSummary.Status == DocumentOperationStatus.Succeeded)
-            {
-                Assert.AreEqual(100, operationSummary.PercentCompleted);
-            }
-        }
-
-        private void ValidateOperationDetails(OperationDetails operationDetails)
-        {
-            Assert.NotNull(operationDetails.OperationId);
-            Assert.AreNotEqual(default(DateTimeOffset), operationDetails.CreatedOn);
-            Assert.AreNotEqual(default(DateTimeOffset), operationDetails.LastUpdatedOn);
-            Assert.AreNotEqual(default(DocumentOperationKind), operationDetails.Kind);
-            Assert.NotNull(operationDetails.ResourceLocation);
-
-            if (operationDetails.Status == DocumentOperationStatus.Succeeded)
-            {
-                Assert.AreEqual(100, operationDetails.PercentCompleted);
-
-                DocumentModelDetails result = operationDetails switch
-                {
-                    DocumentModelBuildOperationDetails buildOp => buildOp.Result,
-                    DocumentModelCopyToOperationDetails copyToOp => copyToOp.Result,
-                    DocumentModelComposeOperationDetails composeOp => composeOp.Result,
-                    _ => null
-                };
-
-                if (result != null)
-                {
-                    ValidateDocumentModelDetails(result);
-                }
-            }
-            else if (operationDetails.Status == DocumentOperationStatus.Failed)
-            {
-                Assert.NotNull(operationDetails.Error);
-                Assert.NotNull(operationDetails.Error.Code);
-                Assert.NotNull(operationDetails.Error.Message);
-            }
-        }
-
-        private void ValidateDocumentModelDetails(DocumentModelDetails model, string description = null, IReadOnlyDictionary<string, string> tags = null)
-        {
-            if (description != null)
-            {
-                Assert.AreEqual(description, model.Description);
-            }
-
-            if (tags != null)
-            {
-                CollectionAssert.AreEquivalent(tags, model.Tags);
-            }
-
-            Assert.IsNotNull(model.ModelId);
-            Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
-
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
-            {
-                if (model.ExpiresOn.HasValue)
-                {
-                    Assert.Greater(model.ExpiresOn, model.CreatedOn);
-                }
+                Assert.GreaterOrEqual(neuralQuota.Used, 0);
+                Assert.GreaterOrEqual(neuralQuota.Quota, neuralQuota.Used);
+                Assert.Greater(neuralQuota.QuotaResetsOn, startTime);
             }
             else
             {
-                Assert.Null(model.ExpiresOn);
+                Assert.Null(neuralQuota);
+            }
+        }
+
+        #endregion
+
+        #region Get Operation
+
+        [RecordedTest]
+        public async Task GetOperationCanAuthenticateWithTokenCredential()
+        {
+            var client = CreateDocumentModelAdministrationClient();
+            await using var disposableModel = await BuildDisposableDocumentModelAsync();
+
+            OperationDetails operationDetails = await client.GetOperationAsync(disposableModel.Operation.Id);
+
+            // Sanity check to make sure we got an actual response back from the service.
+            Assert.AreEqual(disposableModel.Operation.Id, operationDetails.OperationId);
+        }
+
+        [RecordedTest]
+        public async Task GetOperationWithDocumentModelBuild()
+        {
+            var client = CreateDocumentModelAdministrationClient();
+            var startTime = Recording.UtcNow;
+            var options = new BuildDocumentModelOptions()
+            {
+                Description = $"This model was generated by a .NET test.",
+                Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
+            };
+            await using var disposableModel = await BuildDisposableDocumentModelAsync(options: options);
+
+            OperationDetails operationDetails = await client.GetOperationAsync(disposableModel.Operation.Id);
+
+            // The endpoint environment variable may or may not contain a trailing '/' character. Trim the string
+            // to ensure the behavior is consistent.
+
+            var trimmedEndpoint = TestEnvironment.Endpoint.Trim('/');
+            var resourceLocation = $"{trimmedEndpoint}/formrecognizer/documentModels/{disposableModel.ModelId}?api-version={ServiceVersionString}";
+
+            ValidateOperationDetails(operationDetails, disposableModel.Operation.Id,
+                DocumentOperationKind.DocumentModelBuild, resourceLocation, startTime, options.Tags);
+
+            var buildOperationDetails = operationDetails as DocumentModelBuildOperationDetails;
+
+            Assert.IsNotNull(buildOperationDetails);
+
+            DocumentAssert.AreEqual(disposableModel.Value, buildOperationDetails.Result);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)]
+        public async Task GetOperationWithDocumentClassifierBuild()
+        {
+            var client = CreateDocumentModelAdministrationClient();
+            var classifierId = Recording.GenerateId();
+            var description = "This model was generated by a .NET test.";
+            var startTime = Recording.UtcNow;
+            var tags = new Dictionary<string, string>();
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(classifierId, description);
+
+            OperationDetails operationDetails = await client.GetOperationAsync(disposableClassifier.Operation.Id);
+
+            // The endpoint environment variable may or may not contain a trailing '/' character. Trim the string
+            // to ensure the behavior is consistent.
+
+            var trimmedEndpoint = TestEnvironment.Endpoint.Trim('/');
+            var resourceLocation = $"{trimmedEndpoint}/formrecognizer/documentClassifiers/{disposableClassifier.ClassifierId}?api-version={ServiceVersionString}";
+
+            ValidateOperationDetails(operationDetails, disposableClassifier.Operation.Id,
+                DocumentOperationKind.DocumentClassifierBuild, resourceLocation, startTime, tags);
+
+            var buildOperationDetails = operationDetails as DocumentClassifierBuildOperationDetails;
+
+            Assert.IsNotNull(buildOperationDetails);
+
+            DocumentAssert.AreEqual(disposableClassifier.Value, buildOperationDetails.Result);
+        }
+
+        [RecordedTest]
+        public void GetOperationCanParseError()
+        {
+            var client = CreateDocumentModelAdministrationClient();
+            var fakeId = "00000000-0000-0000-0000-000000000000";
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.GetOperationAsync(fakeId));
+            Assert.AreEqual("NotFound", ex.ErrorCode);
+        }
+
+        #endregion
+
+        #region List Operations
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetOperations(bool useTokenCredential)
+        {
+            var client = CreateDocumentModelAdministrationClient(useTokenCredential);
+            var options = new BuildDocumentModelOptions()
+            {
+                Description = $"This model was generated by a .NET test.",
+                Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
+            };
+
+            // Make the models slightly different to make sure the cache won't return copies of the same model.
+            await using var disposableModel0 = await BuildDisposableDocumentModelAsync(ContainerType.Singleforms, options);
+            await using var disposableModel1 = await BuildDisposableDocumentModelAsync(ContainerType.MultipageFiles, options);
+
+            OperationDetails operationDetails0 = await client.GetOperationAsync(disposableModel0.Operation.Id);
+            OperationDetails operationDetails1 = await client.GetOperationAsync(disposableModel1.Operation.Id);
+
+            var idMapping = new Dictionary<string, OperationSummary>();
+            var expectedIdMapping = new Dictionary<string, OperationDetails>()
+            {
+                { disposableModel0.Operation.Id, operationDetails0 },
+                { disposableModel1.Operation.Id, operationDetails1 }
+            };
+
+            await foreach (OperationSummary operationSummary in client.GetOperationsAsync())
+            {
+                if (expectedIdMapping.ContainsKey(operationSummary.OperationId))
+                {
+                    idMapping.Add(operationSummary.OperationId, operationSummary);
+                }
+
+                if (idMapping.Count == expectedIdMapping.Count)
+                {
+                    break;
+                }
             }
 
-            // TODO add validation for Doctypes https://github.com/Azure/azure-sdk-for-net-pr/issues/1432
+            foreach (string id in expectedIdMapping.Keys)
+            {
+                Assert.True(idMapping.ContainsKey(id));
+
+                OperationSummary operationSummary = idMapping[id];
+                OperationDetails expected = expectedIdMapping[id];
+
+                Assert.AreEqual(expected.OperationId, operationSummary.OperationId);
+                Assert.AreEqual(expected.ServiceVersion, operationSummary.ServiceVersion);
+                Assert.AreEqual(expected.Status, operationSummary.Status);
+                Assert.AreEqual(expected.Kind, operationSummary.Kind);
+                Assert.AreEqual(expected.PercentCompleted, operationSummary.PercentCompleted);
+                Assert.AreEqual(expected.ResourceLocation.AbsoluteUri, operationSummary.ResourceLocation.AbsoluteUri);
+                Assert.AreEqual(expected.CreatedOn, operationSummary.CreatedOn);
+                Assert.AreEqual(expected.LastUpdatedOn, operationSummary.LastUpdatedOn);
+
+                CollectionAssert.AreEquivalent(expected.Tags, operationSummary.Tags);
+            }
+        }
+
+        #endregion
+
+        private void ValidateOperationDetails(OperationDetails operationDetails, string id, DocumentOperationKind kind, string resourceLocation, DateTimeOffset startTime, IDictionary<string, string> tags)
+        {
+            Assert.AreEqual(id, operationDetails.OperationId);
+            Assert.AreEqual(DocumentOperationStatus.Succeeded, operationDetails.Status);
+            Assert.AreEqual(kind, operationDetails.Kind);
+            Assert.AreEqual(100, operationDetails.PercentCompleted);
+            Assert.AreEqual(resourceLocation, operationDetails.ResourceLocation.AbsoluteUri);
+            Assert.Null(operationDetails.ServiceVersion);
+            Assert.Null(operationDetails.Error);
+
+            // Add a 4-hour tolerance because model could have been cached before this test.
+            Assert.Greater(operationDetails.CreatedOn, startTime - TimeSpan.FromHours(4));
+            Assert.Greater(operationDetails.LastUpdatedOn, operationDetails.CreatedOn);
+
+            CollectionAssert.AreEquivalent(tags, operationDetails.Tags);
         }
     }
 }

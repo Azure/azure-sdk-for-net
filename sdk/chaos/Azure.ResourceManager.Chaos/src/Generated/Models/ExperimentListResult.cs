@@ -5,33 +5,76 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Chaos;
+using System.Linq;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents a list of Experiment resources and a link for pagination. </summary>
     internal partial class ExperimentListResult
     {
-        /// <summary> Initializes a new instance of ExperimentListResult. </summary>
-        internal ExperimentListResult()
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExperimentListResult"/>. </summary>
+        /// <param name="value"> The Experiment items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ExperimentListResult(IEnumerable<ChaosExperimentData> value)
         {
-            Value = new ChangeTrackingList<ExperimentData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExperimentListResult. </summary>
-        /// <param name="value"> List of Experiment resources. </param>
-        /// <param name="nextLink"> URL to retrieve the next page of Experiment resources. </param>
-        internal ExperimentListResult(IReadOnlyList<ExperimentData> value, string nextLink)
+        /// <summary> Initializes a new instance of <see cref="ExperimentListResult"/>. </summary>
+        /// <param name="value"> The Experiment items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentListResult(IReadOnlyList<ChaosExperimentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Experiment resources. </summary>
-        public IReadOnlyList<ExperimentData> Value { get; }
-        /// <summary> URL to retrieve the next page of Experiment resources. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="ExperimentListResult"/> for deserialization. </summary>
+        internal ExperimentListResult()
+        {
+        }
+
+        /// <summary> The Experiment items on this page. </summary>
+        public IReadOnlyList<ChaosExperimentData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

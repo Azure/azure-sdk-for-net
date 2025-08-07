@@ -42,9 +42,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            await _sqlContainer.DeleteAsync(WaitUntil.Completed);
-            await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await _sqlContainer.DeleteAsync(WaitUntil.Completed);
+                await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [SetUp]
@@ -56,12 +59,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await SqlStoredProcedureCollection.ExistsAsync(_storedProcedureName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = SqlStoredProcedureCollection.Id;
-                id = CosmosDBSqlStoredProcedureResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _storedProcedureName);
-                CosmosDBSqlStoredProcedureResource storedProcedure = this.ArmClient.GetCosmosDBSqlStoredProcedureResource(id);
-                await storedProcedure.DeleteAsync(WaitUntil.Completed);
+                if (await SqlStoredProcedureCollection.ExistsAsync(_storedProcedureName))
+                {
+                    var id = SqlStoredProcedureCollection.Id;
+                    id = CosmosDBSqlStoredProcedureResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _storedProcedureName);
+                    CosmosDBSqlStoredProcedureResource storedProcedure = this.ArmClient.GetCosmosDBSqlStoredProcedureResource(id);
+                    await storedProcedure.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 

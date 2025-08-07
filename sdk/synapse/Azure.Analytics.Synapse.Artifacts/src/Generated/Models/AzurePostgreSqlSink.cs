@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity Azure PostgreSQL sink. </summary>
     public partial class AzurePostgreSqlSink : CopySink
     {
-        /// <summary> Initializes a new instance of AzurePostgreSqlSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlSink"/>. </summary>
         public AzurePostgreSqlSink()
         {
             Type = "AzurePostgreSqlSink";
         }
 
-        /// <summary> Initializes a new instance of AzurePostgreSqlSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlSink"/>. </summary>
         /// <param name="type"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

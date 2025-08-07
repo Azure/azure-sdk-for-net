@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "quota/resource-manager" -AutoRestVersion "v2"

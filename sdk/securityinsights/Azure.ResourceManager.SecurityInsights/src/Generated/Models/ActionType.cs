@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string ModifyPropertiesValue = "ModifyProperties";
         private const string RunPlaybookValue = "RunPlaybook";
+        private const string AddIncidentTaskValue = "AddIncidentTask";
 
         /// <summary> Modify an object's properties. </summary>
         public static ActionType ModifyProperties { get; } = new ActionType(ModifyPropertiesValue);
         /// <summary> Run a playbook on an object. </summary>
         public static ActionType RunPlaybook { get; } = new ActionType(RunPlaybookValue);
+        /// <summary> Add a task to an incident object. </summary>
+        public static ActionType AddIncidentTask { get; } = new ActionType(AddIncidentTaskValue);
         /// <summary> Determines if two <see cref="ActionType"/> values are the same. </summary>
         public static bool operator ==(ActionType left, ActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionType"/> values are not the same. </summary>
         public static bool operator !=(ActionType left, ActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ActionType"/>. </summary>
         public static implicit operator ActionType(string value) => new ActionType(value);
 
         /// <inheritdoc />
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

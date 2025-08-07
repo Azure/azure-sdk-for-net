@@ -12,6 +12,8 @@ Customers with an [Azure support plan](https://azure.microsoft.com/support/optio
 We use [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues/new/choose) to track bugs, questions, and feature requests.
 GitHub issues are free, but **response time is not guaranteed.** See [GitHub issues support process](https://devblogs.microsoft.com/azure-sdk/github-issue-support-process/) for more details.
 
+To ensure the relevance and manageability of our issue queue, we have an automated process that will close issues that are over two years old and have not been updated in the last 30 days. This measure is designed to help us respond to and resolve current issues more efficiently. We appreciate your understanding and cooperation in maintaining a focused and up-to-date issue tracking system.
+
 ### Community resources
 - Take a look at the [Azure SDK blog](https://devblogs.microsoft.com/azure-sdk/).
 - Search for similar issues in [our GitHub repository](https://github.com/Azure/azure-sdk-for-net/issues)

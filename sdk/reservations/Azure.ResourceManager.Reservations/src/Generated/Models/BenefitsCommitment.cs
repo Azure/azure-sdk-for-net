@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Commitment towards the benefit. </summary>
     public partial class BenefitsCommitment : PurchasePrice
     {
-        /// <summary> Initializes a new instance of BenefitsCommitment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitsCommitment"/>. </summary>
         public BenefitsCommitment()
         {
         }
 
-        /// <summary> Initializes a new instance of BenefitsCommitment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitsCommitment"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="grain"> Commitment grain. </param>
-        internal BenefitsCommitment(string currencyCode, double? amount, BenefitsCommitmentGrain? grain) : base(currencyCode, amount)
+        internal BenefitsCommitment(string currencyCode, double? amount, IDictionary<string, BinaryData> serializedAdditionalRawData, BenefitsCommitmentGrain? grain) : base(currencyCode, amount, serializedAdditionalRawData)
         {
             Grain = grain;
         }

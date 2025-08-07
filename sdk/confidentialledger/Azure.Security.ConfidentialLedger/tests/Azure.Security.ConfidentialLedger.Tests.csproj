@@ -22,4 +22,11 @@
     <Folder Include="SessionRecords\ConfidentialLedgerClientLiveTests" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Helper\programmability.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>programmability.js</Link>
+    </None>
+  </ItemGroup>
+
 </Project>

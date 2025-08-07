@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Required if overwrite is set to true, or the underlying
         /// file is being created for the first time.
-        /// Specifies the size of the new Page Blob.
+        /// Specifies the size of the new file in bytes.  The max supported file size is 4 TiB.
         /// </summary>
         public long? MaxSize { get; set; }
 

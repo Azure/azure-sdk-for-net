@@ -15,21 +15,18 @@ namespace Azure.Core.TestFramework.Models
     {
         /// <summary> Initializes a new instance of BodyRegexSanitizer. </summary>
         /// <param name="regex"></param>
-        /// <param name="value"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regex"/> or <paramref name="value"/> is null. </exception>
-        public BodyRegexSanitizer(string regex, string value)
+        /// <exception cref="ArgumentNullException"> <paramref name="regex"/> is null. </exception>
+        public BodyRegexSanitizer(string regex)
         {
             Argument.AssertNotNull(regex, nameof(regex));
-            Argument.AssertNotNull(value, nameof(value));
 
             Regex = regex;
-            Value = value;
         }
 
         /// <summary> Gets the regex. </summary>
         public string Regex { get; }
-        /// <summary> Gets the value. </summary>
-        public string Value { get; }
+        /// <summary> Gets or sets the value. </summary>
+        public string Value { get; set; }
         /// <summary> Gets or sets the group for replace. </summary>
         public string GroupForReplace { get; set; }
         /// <summary> Condition to apply for the sanitization or transform. If the condition is not met, sanitization/transform is not performed. </summary>

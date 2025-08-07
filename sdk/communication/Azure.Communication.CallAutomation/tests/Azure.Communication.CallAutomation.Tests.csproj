@@ -11,7 +11,7 @@
     <PackageReference Include="Azure.Core.Amqp" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj" />
@@ -21,12 +21,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\tests.yml" Link="\tests.yml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecordedEvents\" />
-    <Folder Include="SessionRecordedEvents\CallConnectionAutomatedLiveTests\" />
-    <Folder Include="SessionRecordedEvents\CallRecordingAutomatedLiveTests\" />
-    <Folder Include="SessionRecords\CallConnectionAutomatedLiveTests\" />
-    <Folder Include="SessionRecords\CallRecordingAutomatedLiveTests\" />
   </ItemGroup>
 </Project>

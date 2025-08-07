@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return ResourceGroup.GetAuthorizationRoleDefinitions();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Create()
         {
             var collection = await GetRoleDefinitionCollectionAsync();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.AreEqual(roleDefinition.Value.Data.Name, id);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Get()
         {
             var collection = await GetRoleDefinitionCollectionAsync();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAll()
         {
             var collection = await GetRoleDefinitionCollectionAsync();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(roleDefinitions.Count, 0);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Exists()
         {
             var collection = await GetRoleDefinitionCollectionAsync();

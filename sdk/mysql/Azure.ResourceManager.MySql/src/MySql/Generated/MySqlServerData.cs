@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MySqlServerData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MySqlServerData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<MySqlServerPrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of MySqlServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +82,8 @@ namespace Azure.ResourceManager.MySql
         /// <param name="replicaCapacity"> The maximum number of replicas that a master server can have. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        internal MySqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlSku sku, string administratorLogin, MySqlServerVersion? version, MySqlSslEnforcementEnum? sslEnforcement, MySqlMinimalTlsVersionEnum? minimalTlsVersion, string byokEnforcement, MySqlInfrastructureEncryption? infrastructureEncryption, MySqlServerState? userVisibleState, string fullyQualifiedDomainName, DateTimeOffset? earliestRestoreOn, MySqlStorageProfile storageProfile, string replicationRole, ResourceIdentifier masterServerId, int? replicaCapacity, MySqlPublicNetworkAccessEnum? publicNetworkAccess, IReadOnlyList<MySqlServerPrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlSku sku, string administratorLogin, MySqlServerVersion? version, MySqlSslEnforcementEnum? sslEnforcement, MySqlMinimalTlsVersionEnum? minimalTlsVersion, string byokEnforcement, MySqlInfrastructureEncryption? infrastructureEncryption, MySqlServerState? userVisibleState, string fullyQualifiedDomainName, DateTimeOffset? earliestRestoreOn, MySqlStorageProfile storageProfile, string replicationRole, ResourceIdentifier masterServerId, int? replicaCapacity, MySqlPublicNetworkAccessEnum? publicNetworkAccess, IReadOnlyList<MySqlServerPrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -69,6 +102,12 @@ namespace Azure.ResourceManager.MySql
             ReplicaCapacity = replicaCapacity;
             PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerData"/> for deserialization. </summary>
+        internal MySqlServerData()
+        {
         }
 
         /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>

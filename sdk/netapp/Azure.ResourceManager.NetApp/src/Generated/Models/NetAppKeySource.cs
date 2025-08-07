@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppKeySource left, NetAppKeySource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppKeySource"/> values are not the same. </summary>
         public static bool operator !=(NetAppKeySource left, NetAppKeySource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppKeySource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppKeySource"/>. </summary>
         public static implicit operator NetAppKeySource(string value) => new NetAppKeySource(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

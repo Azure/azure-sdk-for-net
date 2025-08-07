@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PrivateDns.Tests
@@ -29,6 +28,22 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         {
             _resourceGroup = await CreateResourceGroup();
             _privateZoneResource = _resourceGroup.GetPrivateDnsZones();
+        }
+
+        [TearDown]
+        public async Task TearDown()
+        {
+            var list = await _privateZoneResource.GetAllAsync().ToEnumerableAsync();
+            foreach (var item in list)
+            {
+                var vnetLinks = await item.GetVirtualNetworkLinks().GetAllAsync().ToEnumerableAsync();
+                foreach (var vnetLink in vnetLinks)
+                {
+                    await vnetLink.DeleteAsync(WaitUntil.Completed);
+                }
+
+                await item.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [RecordedTest]
@@ -172,6 +187,38 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             }
             privateZone = await _privateZoneResource.GetAsync(privateZoneName);
             Assert.AreEqual(0, privateZone.Data.Tags.Count);
+        }
+
+        [RecordedTest]
+        public async Task AddVnetLinkWithResolutionPolicy()
+        {
+            string privateZoneName = "privatelink.sql.azuresynapse.net";
+            string vnetName = "samplevnet";
+            string vnetLinkName = $"{Recording.GenerateAssetName("samplelink")}";
+            var privateZone = await CreatePrivateZone(_resourceGroup, privateZoneName);
+            var vnet = await CreateVirtualNetwork(_resourceGroup, vnetName);
+
+            // Add NxDomainRedirect resolutionPolicy
+            var virtualNetworkLinkData = new VirtualNetworkLinkData("global")
+            {
+                VirtualNetwork = new WritableSubResource { Id = vnet.Id },
+                RegistrationEnabled = false,
+                PrivateDnsResolutionPolicy = PrivateDnsResolutionPolicy.NxDomainRedirect,
+            };
+
+            await CreateOrUpdateVirtualNetworkLink(privateZone, vnetLinkName, virtualNetworkLinkData);
+
+            var virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
+            var vnetLinkData = virtualNetworkLinkResource.Value.Data;
+            Assert.AreEqual(vnetLinkData.PrivateDnsResolutionPolicy, virtualNetworkLinkData.PrivateDnsResolutionPolicy);
+
+            // Update resolutionPolicy to default
+            virtualNetworkLinkData.PrivateDnsResolutionPolicy = PrivateDnsResolutionPolicy.Default;
+            await CreateOrUpdateVirtualNetworkLink(privateZone, vnetLinkName, virtualNetworkLinkData);
+
+            virtualNetworkLinkResource = await privateZone.GetVirtualNetworkLinks().GetAsync(vnetLinkName);
+            vnetLinkData = virtualNetworkLinkResource.Value.Data;
+            Assert.AreEqual(vnetLinkData.PrivateDnsResolutionPolicy, virtualNetworkLinkData.PrivateDnsResolutionPolicy);
         }
 
         private void ValidatePrivateZone(PrivateDnsZoneResource privateZone, string privateZoneName)

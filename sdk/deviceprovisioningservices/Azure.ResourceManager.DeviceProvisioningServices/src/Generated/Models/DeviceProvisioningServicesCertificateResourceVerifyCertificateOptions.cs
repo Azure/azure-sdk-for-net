@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> The DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions. </summary>
     public partial class DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions"/>. </summary>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="content"> The name of the certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
@@ -24,6 +23,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
             IfMatch = ifMatch;
             Content = content;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions"/> for deserialization. </summary>
+        internal DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions()
+        {
         }
 
         /// <summary> ETag of the certificate. </summary>
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public bool? CertificateIsVerified { get; set; }
         /// <summary> Describe the purpose of the certificate. </summary>
         public DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get; set; }
-        /// <summary> Certificate creation time. </summary>
+        /// <summary> Time the certificate is created. </summary>
         public DateTimeOffset? CertificateCreatedOn { get; set; }
         /// <summary> Certificate last updated time. </summary>
         public DateTimeOffset? CertificateLastUpdatedOn { get; set; }

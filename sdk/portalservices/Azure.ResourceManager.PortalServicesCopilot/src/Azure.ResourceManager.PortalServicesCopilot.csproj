@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.2</Version>
+    <PackageId>Azure.ResourceManager.PortalServicesCopilot</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.PortalServices.</Description>
+    <PackageTags>azure;management;arm;resource manager;portalservices</PackageTags>
+  </PropertyGroup>
+</Project>

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public static bool operator ==(DataLakeAnalyticsResourceType left, DataLakeAnalyticsResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataLakeAnalyticsResourceType"/> values are not the same. </summary>
         public static bool operator !=(DataLakeAnalyticsResourceType left, DataLakeAnalyticsResourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataLakeAnalyticsResourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataLakeAnalyticsResourceType"/>. </summary>
         public static implicit operator DataLakeAnalyticsResourceType(string value) => new DataLakeAnalyticsResourceType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -5,25 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningSasAuthTypeWorkspaceConnection. </summary>
     public partial class MachineLearningSasAuthTypeWorkspaceConnection : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningSasAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>. </summary>
         public MachineLearningSasAuthTypeWorkspaceConnection()
         {
             AuthType = MachineLearningConnectionAuthType.Sas;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSasAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
         /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"></param>
-        internal MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, WorkspaceConnectionSharedAccessSignature credentials) : base(authType, category, target, value, valueFormat)
+        internal MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData, WorkspaceConnectionSharedAccessSignature credentials) : base(authType, category, createdByWorkspaceArmId, expiryOn, group, isSharedToAll, target, metadata, sharedUserList, value, valueFormat, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;
@@ -32,6 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets or sets the credentials. </summary>
         internal WorkspaceConnectionSharedAccessSignature Credentials { get; set; }
         /// <summary> Gets or sets the credentials sas. </summary>
+        [WirePath("credentials.sas")]
         public string CredentialsSas
         {
             get => Credentials is null ? default : Credentials.Sas;

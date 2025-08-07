@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -9,6 +10,8 @@ namespace Azure.Communication
     public class PhoneNumberIdentifier : CommunicationIdentifier
     {
         private string _rawId;
+        private string _assertedId;
+        private const string Anonymous = "anonymous";
 
         /// <summary>
         /// Returns the canonical string representation of the <see cref="PhoneNumberIdentifier"/>.
@@ -24,6 +27,38 @@ namespace Azure.Communication
 
         /// <summary>The phone number in E.164 format.</summary>
         public string PhoneNumber { get; }
+
+        /// <summary>True if the phone number is anonymous, e.g. when used to represent a hidden caller Id.</summary>
+        public bool IsAnonymous => RawId == $"{Phone}{Anonymous}";
+
+        /// <summary>The asserted Id is set on a phone number that is already in the same call to distinguish from other connections made through the same number.</summary>
+        public string AssertedId
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_assertedId))
+                {
+                    return _assertedId;
+                }
+
+                if (_assertedId == "")
+                {
+                    return null;
+                }
+
+                var segments = RawId.Substring(Phone.Length).Split('_');
+                if (segments.Length > 1)
+                {
+                    _assertedId = segments.Last();
+                    return _assertedId;
+                }
+                else
+                {
+                    _assertedId = "";
+                    return null;
+                }
+            }
+        }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifier"/>.</summary>
         /// <param name="phoneNumber">The phone number in E.164 format.</param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt provider specific settings. </summary>
     public partial class VMwareCbtMigrationDetails : MigrationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrationDetails"/>. </summary>
         internal VMwareCbtMigrationDetails()
         {
             TargetVmTags = new ChangeTrackingDictionary<string, string>();
@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
         /// <param name="osType"> The type of the OS on the VM. </param>
         /// <param name="osName"> The name of the OS on the VM. </param>
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetGeneration"> The target generation. </param>
         /// <param name="licenseType"> License Type of the VM to be used. </param>
         /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
         /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
         /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
         /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
@@ -62,16 +64,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="migrationProgressPercentage"> The migration progress percentage. </param>
         /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
         /// <param name="resumeProgressPercentage"> The resume progress percentage. </param>
+        /// <param name="deltaSyncProgressPercentage"> The delta sync progress percentage. </param>
+        /// <param name="isCheckSumResyncCycle"> A value indicating whether checksum resync cycle is in progress. </param>
         /// <param name="initialSeedingRetryCount"> The initial seeding retry count. </param>
         /// <param name="resyncRetryCount"> The resync retry count. </param>
         /// <param name="resumeRetryCount"> The resume retry count. </param>
+        /// <param name="deltaSyncRetryCount"> The delta sync retry count. </param>
         /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
         /// <param name="resyncState"> The resync state. </param>
         /// <param name="performAutoResync"> A value indicating whether auto resync is to be done. </param>
         /// <param name="seedDiskTags"> The tags for the seed disks. </param>
         /// <param name="targetDiskTags"> The tags for the target disks. </param>
-        /// <param name="supportedOSVersions"> List of supported inplace OS Upgrade versions. </param>
-        internal VMwareCbtMigrationDetails(string instanceType, ResourceIdentifier vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, string targetLocation, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, ResourceIdentifier migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, ResourceIdentifier lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, SiteRecoveryResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IReadOnlyList<string> supportedOSVersions) : base(instanceType)
+        /// <param name="supportedOSVersions"> A value indicating the inplace OS Upgrade version. </param>
+        /// <param name="applianceMonitoringDetails"> A value indicating the appliance monitoring details. </param>
+        /// <param name="gatewayOperationDetails"> A value indicating the gateway operation details. </param>
+        /// <param name="operationName"> A value indicating the SRS operation name. </param>
+        internal VMwareCbtMigrationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, string targetLocation, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, ResourceIdentifier migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, ResourceIdentifier lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, int? deltaSyncProgressPercentage, string isCheckSumResyncCycle, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, long? deltaSyncRetryCount, string resyncRequired, SiteRecoveryResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IReadOnlyList<string> supportedOSVersions, ApplianceMonitoringDetails applianceMonitoringDetails, GatewayOperationDetails gatewayOperationDetails, string operationName) : base(instanceType, serializedAdditionalRawData)
         {
             VMwareMachineId = vmwareMachineId;
             OSType = osType;
@@ -80,6 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetGeneration = targetGeneration;
             LicenseType = licenseType;
             SqlServerLicenseType = sqlServerLicenseType;
+            LinuxLicenseType = linuxLicenseType;
             DataMoverRunAsAccountId = dataMoverRunAsAccountId;
             SnapshotRunAsAccountId = snapshotRunAsAccountId;
             StorageAccountId = storageAccountId;
@@ -106,15 +115,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MigrationProgressPercentage = migrationProgressPercentage;
             ResyncProgressPercentage = resyncProgressPercentage;
             ResumeProgressPercentage = resumeProgressPercentage;
+            DeltaSyncProgressPercentage = deltaSyncProgressPercentage;
+            IsCheckSumResyncCycle = isCheckSumResyncCycle;
             InitialSeedingRetryCount = initialSeedingRetryCount;
             ResyncRetryCount = resyncRetryCount;
             ResumeRetryCount = resumeRetryCount;
+            DeltaSyncRetryCount = deltaSyncRetryCount;
             ResyncRequired = resyncRequired;
             ResyncState = resyncState;
             PerformAutoResync = performAutoResync;
             SeedDiskTags = seedDiskTags;
             TargetDiskTags = targetDiskTags;
             SupportedOSVersions = supportedOSVersions;
+            ApplianceMonitoringDetails = applianceMonitoringDetails;
+            GatewayOperationDetails = gatewayOperationDetails;
+            OperationName = operationName;
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
@@ -132,6 +147,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string LicenseType { get; }
         /// <summary> The SQL Server license type. </summary>
         public string SqlServerLicenseType { get; }
+        /// <summary> The license type for Linux VM's. </summary>
+        public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; }
         /// <summary> The data mover run as account Id. </summary>
         public ResourceIdentifier DataMoverRunAsAccountId { get; }
         /// <summary> The snapshot run as account Id. </summary>
@@ -184,12 +201,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public int? ResyncProgressPercentage { get; }
         /// <summary> The resume progress percentage. </summary>
         public int? ResumeProgressPercentage { get; }
+        /// <summary> The delta sync progress percentage. </summary>
+        public int? DeltaSyncProgressPercentage { get; }
+        /// <summary> A value indicating whether checksum resync cycle is in progress. </summary>
+        public string IsCheckSumResyncCycle { get; }
         /// <summary> The initial seeding retry count. </summary>
         public long? InitialSeedingRetryCount { get; }
         /// <summary> The resync retry count. </summary>
         public long? ResyncRetryCount { get; }
         /// <summary> The resume retry count. </summary>
         public long? ResumeRetryCount { get; }
+        /// <summary> The delta sync retry count. </summary>
+        public long? DeltaSyncRetryCount { get; }
         /// <summary> A value indicating whether resync is required. </summary>
         public string ResyncRequired { get; }
         /// <summary> The resync state. </summary>
@@ -200,7 +223,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IReadOnlyDictionary<string, string> SeedDiskTags { get; }
         /// <summary> The tags for the target disks. </summary>
         public IReadOnlyDictionary<string, string> TargetDiskTags { get; }
-        /// <summary> List of supported inplace OS Upgrade versions. </summary>
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
         public IReadOnlyList<string> SupportedOSVersions { get; }
+        /// <summary> A value indicating the appliance monitoring details. </summary>
+        public ApplianceMonitoringDetails ApplianceMonitoringDetails { get; }
+        /// <summary> A value indicating the gateway operation details. </summary>
+        public GatewayOperationDetails GatewayOperationDetails { get; }
+        /// <summary> A value indicating the SRS operation name. </summary>
+        public string OperationName { get; }
     }
 }

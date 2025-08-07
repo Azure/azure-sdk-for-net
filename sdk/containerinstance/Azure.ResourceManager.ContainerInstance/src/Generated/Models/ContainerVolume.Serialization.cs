@@ -6,23 +6,40 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerVolume : IUtf8JsonSerializable
+    public partial class ContainerVolume : IUtf8JsonSerializable, IJsonModel<ContainerVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerVolume>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerVolume)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile);
+                writer.WriteObjectValue(AzureFile, options);
             }
             if (Optional.IsDefined(EmptyDir))
             {
@@ -30,7 +47,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EmptyDir);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EmptyDir.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(EmptyDir, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(Secret))
@@ -44,25 +64,67 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(SecretReference))
+            {
+                writer.WritePropertyName("secretReference"u8);
+                writer.WriteStartObject();
+                foreach (var item in SecretReference)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(GitRepo))
             {
                 writer.WritePropertyName("gitRepo"u8);
-                writer.WriteObjectValue(GitRepo);
+                writer.WriteObjectValue(GitRepo, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static ContainerVolume DeserializeContainerVolume(JsonElement element)
+        ContainerVolume IJsonModel<ContainerVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerVolume>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerVolume)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerVolume(document.RootElement, options);
+        }
+
+        internal static ContainerVolume DeserializeContainerVolume(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<ContainerInstanceAzureFileVolume> azureFile = default;
-            Optional<BinaryData> emptyDir = default;
-            Optional<IDictionary<string, string>> secret = default;
-            Optional<ContainerInstanceGitRepoVolume> gitRepo = default;
+            ContainerInstanceAzureFileVolume azureFile = default;
+            BinaryData emptyDir = default;
+            IDictionary<string, string> secret = default;
+            IDictionary<string, string> secretReference = default;
+            ContainerInstanceGitRepoVolume gitRepo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -76,7 +138,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value);
+                    azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("emptyDir"u8))
@@ -102,17 +164,74 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     secret = dictionary;
                     continue;
                 }
+                if (property.NameEquals("secretReference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    secretReference = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("gitRepo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value);
+                    gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerVolume(name, azureFile.Value, emptyDir.Value, Optional.ToDictionary(secret), gitRepo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerVolume(
+                name,
+                azureFile,
+                emptyDir,
+                secret ?? new ChangeTrackingDictionary<string, string>(),
+                secretReference ?? new ChangeTrackingDictionary<string, string>(),
+                gitRepo,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerVolume>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerVolume>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerVolume IPersistableModel<ContainerVolume>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerVolume>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeContainerVolume(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerVolume>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

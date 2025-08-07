@@ -8,6 +8,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(Days))
+            if (Common.Optional.IsDefined(Days))
             {
                 writer.WriteStartElement("Days");
                 writer.WriteValue(Days.Value);

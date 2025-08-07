@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,56 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Zone and capability info for resource sku. </summary>
     public partial class StoragePoolSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of StoragePoolSkuLocationInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuLocationInfo"/>. </summary>
         internal StoragePoolSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
             ZoneDetails = new ChangeTrackingList<StoragePoolSkuZoneDetails>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
-        internal StoragePoolSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<StoragePoolSkuZoneDetails> zoneDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoragePoolSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<StoragePoolSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the SKU. </summary>

@@ -1,0 +1,1097 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="InferRadiologyInsightsAsync(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call InferRadiologyInsightsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+
+RadiologyInsightsJob resource = new RadiologyInsightsJob();
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource);
+RadiologyInsightsInferenceResult responseData = operation.Value;
+]]></code>
+This sample shows how to call InferRadiologyInsightsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+
+RadiologyInsightsJob resource = new RadiologyInsightsJob
+{
+    JobData = new RadiologyInsightsData(new PatientRecord[]
+    {
+        new PatientRecord("<id>")
+        {
+            Details = new PatientDetails
+            {
+                Sex = PatientSex.Female,
+                BirthDate = DateTimeOffset.Parse("2022-05-10"),
+                ClinicalInfo = {new FhirR4Resource("<resourceType>")
+                {
+                    Id = "<id>",
+                    Meta = new FhirR4Meta
+                    {
+                        VersionId = "<versionId>",
+                        LastUpdated = "<lastUpdated>",
+                        Source = "<source>",
+                        Profile = {"<profile>"},
+                        Security = {new FhirR4Coding
+                        {
+                            System = "<system>",
+                            Version = "<version>",
+                            Code = "<code>",
+                            Display = "<display>",
+                            Id = "<id>",
+                            Extension = {new FhirR4Extension("<url>")
+                            {
+                                ValueQuantity = new FhirR4Quantity
+                                {
+                                    Value = 123.45,
+                                    Comparator = "<comparator>",
+                                    Unit = "<unit>",
+                                    System = "<system>",
+                                    Code = "<code>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueCodeableConcept = new FhirR4CodeableConcept
+                                {
+                                    Coding = {default},
+                                    Text = "<text>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueString = "<valueString>",
+                                ValueBoolean = true,
+                                ValueInteger = 1234,
+                                ValueRange = new FhirR4Range
+                                {
+                                    Low = default,
+                                    High = default,
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueRatio = new FhirR4Ratio
+                                {
+                                    Numerator = default,
+                                    Denominator = default,
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+                                {
+                                    Factor = 123.45,
+                                    LowerLimit = 123.45,
+                                    UpperLimit = 123.45,
+                                    Data = "<data>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueTime = TimeSpan.Parse("01:23:45"),
+                                ValueDateTime = "<valueDateTime>",
+                                ValuePeriod = new FhirR4Period
+                                {
+                                    Start = "<start>",
+                                    End = "<end>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueReference = new FhirR4Reference
+                                {
+                                    Reference = "<reference>",
+                                    Type = "<type>",
+                                    Identifier = new FhirR4Identifier
+                                    {
+                                        Use = "<use>",
+                                        Type = default,
+                                        System = "<system>",
+                                        Value = "<value>",
+                                        Period = default,
+                                        Assigner = default,
+                                        Id = "<id>",
+                                        Extension = {default},
+                                    },
+                                    Display = "<display>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                Id = "<id>",
+                                Extension = {default},
+                            }},
+                        }},
+                        Tag = {default},
+                    },
+                    ImplicitRules = "<implicitRules>",
+                    Language = "<language>",
+                }},
+            },
+            Encounters = {new PatientEncounter("<id>")
+            {
+                Period = new TimePeriod
+                {
+                    Start = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                    End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                },
+                Class = EncounterClass.InPatient,
+            }},
+            PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
+            {
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<language>",
+                CreatedAt = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                Authors = {new ClinicalDocumentAuthor
+                {
+                    Id = "<id>",
+                    FullName = "<fullName>",
+                }},
+                SpecialtyType = SpecialtyType.Pathology,
+                AdministrativeMetadata = new DocumentAdministrativeMetadata
+                {
+                    OrderedProcedures = {new OrderedProcedure
+                    {
+                        Code = default,
+                        Description = "<description>",
+                        Extension = {default},
+                    }},
+                    EncounterId = "<encounterId>",
+                },
+            }},
+        }
+    })
+    {
+        Configuration = new RadiologyInsightsModelConfiguration
+        {
+            Verbose = true,
+            IncludeEvidence = true,
+            InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+            InferenceOptions = new RadiologyInsightsInferenceOptions
+            {
+                FollowupRecommendationOptions = new FollowupRecommendationOptions
+                {
+                    IncludeRecommendationsWithNoSpecifiedModality = true,
+                    IncludeRecommendationsInReferences = true,
+                    ProvideFocusedSentenceEvidence = true,
+                },
+                FindingOptions = new FindingOptions
+                {
+                    ProvideFocusedSentenceEvidence = true,
+                },
+                GuidanceOptions = new GuidanceOptions(true),
+                QualityMeasureOptions = new QualityMeasureOptions(new QualityMeasureType[] { QualityMeasureType.Mips76 }),
+            },
+            Locale = "<locale>",
+        },
+    },
+};
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
+RadiologyInsightsInferenceResult responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="InferRadiologyInsights(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)">
+      <example>
+This sample shows how to call InferRadiologyInsights.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+
+RadiologyInsightsJob resource = new RadiologyInsightsJob();
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource);
+RadiologyInsightsInferenceResult responseData = operation.Value;
+]]></code>
+This sample shows how to call InferRadiologyInsights with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+
+RadiologyInsightsJob resource = new RadiologyInsightsJob
+{
+    JobData = new RadiologyInsightsData(new PatientRecord[]
+    {
+        new PatientRecord("<id>")
+        {
+            Details = new PatientDetails
+            {
+                Sex = PatientSex.Female,
+                BirthDate = DateTimeOffset.Parse("2022-05-10"),
+                ClinicalInfo = {new FhirR4Resource("<resourceType>")
+                {
+                    Id = "<id>",
+                    Meta = new FhirR4Meta
+                    {
+                        VersionId = "<versionId>",
+                        LastUpdated = "<lastUpdated>",
+                        Source = "<source>",
+                        Profile = {"<profile>"},
+                        Security = {new FhirR4Coding
+                        {
+                            System = "<system>",
+                            Version = "<version>",
+                            Code = "<code>",
+                            Display = "<display>",
+                            Id = "<id>",
+                            Extension = {new FhirR4Extension("<url>")
+                            {
+                                ValueQuantity = new FhirR4Quantity
+                                {
+                                    Value = 123.45,
+                                    Comparator = "<comparator>",
+                                    Unit = "<unit>",
+                                    System = "<system>",
+                                    Code = "<code>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueCodeableConcept = new FhirR4CodeableConcept
+                                {
+                                    Coding = {default},
+                                    Text = "<text>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueString = "<valueString>",
+                                ValueBoolean = true,
+                                ValueInteger = 1234,
+                                ValueRange = new FhirR4Range
+                                {
+                                    Low = default,
+                                    High = default,
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueRatio = new FhirR4Ratio
+                                {
+                                    Numerator = default,
+                                    Denominator = default,
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+                                {
+                                    Factor = 123.45,
+                                    LowerLimit = 123.45,
+                                    UpperLimit = 123.45,
+                                    Data = "<data>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueTime = TimeSpan.Parse("01:23:45"),
+                                ValueDateTime = "<valueDateTime>",
+                                ValuePeriod = new FhirR4Period
+                                {
+                                    Start = "<start>",
+                                    End = "<end>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                ValueReference = new FhirR4Reference
+                                {
+                                    Reference = "<reference>",
+                                    Type = "<type>",
+                                    Identifier = new FhirR4Identifier
+                                    {
+                                        Use = "<use>",
+                                        Type = default,
+                                        System = "<system>",
+                                        Value = "<value>",
+                                        Period = default,
+                                        Assigner = default,
+                                        Id = "<id>",
+                                        Extension = {default},
+                                    },
+                                    Display = "<display>",
+                                    Id = "<id>",
+                                    Extension = {default},
+                                },
+                                Id = "<id>",
+                                Extension = {default},
+                            }},
+                        }},
+                        Tag = {default},
+                    },
+                    ImplicitRules = "<implicitRules>",
+                    Language = "<language>",
+                }},
+            },
+            Encounters = {new PatientEncounter("<id>")
+            {
+                Period = new TimePeriod
+                {
+                    Start = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                    End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                },
+                Class = EncounterClass.InPatient,
+            }},
+            PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
+            {
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<language>",
+                CreatedAt = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                Authors = {new ClinicalDocumentAuthor
+                {
+                    Id = "<id>",
+                    FullName = "<fullName>",
+                }},
+                SpecialtyType = SpecialtyType.Pathology,
+                AdministrativeMetadata = new DocumentAdministrativeMetadata
+                {
+                    OrderedProcedures = {new OrderedProcedure
+                    {
+                        Code = default,
+                        Description = "<description>",
+                        Extension = {default},
+                    }},
+                    EncounterId = "<encounterId>",
+                },
+            }},
+        }
+    })
+    {
+        Configuration = new RadiologyInsightsModelConfiguration
+        {
+            Verbose = true,
+            IncludeEvidence = true,
+            InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+            InferenceOptions = new RadiologyInsightsInferenceOptions
+            {
+                FollowupRecommendationOptions = new FollowupRecommendationOptions
+                {
+                    IncludeRecommendationsWithNoSpecifiedModality = true,
+                    IncludeRecommendationsInReferences = true,
+                    ProvideFocusedSentenceEvidence = true,
+                },
+                FindingOptions = new FindingOptions
+                {
+                    ProvideFocusedSentenceEvidence = true,
+                },
+                GuidanceOptions = new GuidanceOptions(true),
+                QualityMeasureOptions = new QualityMeasureOptions(new QualityMeasureType[] { QualityMeasureType.Mips76 }),
+            },
+            Locale = "<locale>",
+        },
+    },
+};
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
+RadiologyInsightsInferenceResult responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="InferRadiologyInsightsAsync(WaitUntil,string,RequestContent,IEnumerable{string},RequestContext)">
+      <example>
+This sample shows how to call InferRadiologyInsightsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+]]></code>
+This sample shows how to call InferRadiologyInsightsAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    jobData = new
+    {
+        patients = new object[]
+        {
+            new
+            {
+                id = "<id>",
+                details = new
+                {
+                    sex = "female",
+                    birthDate = "2022-05-10",
+                    clinicalInfo = new object[]
+                    {
+                        new
+                        {
+                            resourceType = "<resourceType>",
+                            id = "<id>",
+                            meta = new
+                            {
+                                versionId = "<versionId>",
+                                lastUpdated = "<lastUpdated>",
+                                source = "<source>",
+                                profile = new object[]
+                                {
+                                    "<profile>"
+                                },
+                                security = new object[]
+                                {
+                                    new
+                                    {
+                                        system = "<system>",
+                                        version = "<version>",
+                                        code = "<code>",
+                                        display = "<display>",
+                                        id = "<id>",
+                                        extension = new object[]
+                                        {
+                                            new
+                                            {
+                                                url = "<url>",
+                                                valueQuantity = new
+                                                {
+                                                    value = 123.45,
+                                                    comparator = "<comparator>",
+                                                    unit = "<unit>",
+                                                    system = "<system>",
+                                                    code = "<code>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueCodeableConcept = new
+                                                {
+                                                    coding = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                    text = "<text>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueString = "<valueString>",
+                                                valueBoolean = true,
+                                                valueInteger = 1234,
+                                                valueRange = new
+                                                {
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueRatio = new
+                                                {
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueSampledData = new
+                                                {
+                                                    period = 123.45,
+                                                    factor = 123.45,
+                                                    lowerLimit = 123.45,
+                                                    upperLimit = 123.45,
+                                                    dimensions = 1234,
+                                                    data = "<data>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueTime = "01:23:45",
+                                                valueDateTime = "<valueDateTime>",
+                                                valuePeriod = new
+                                                {
+                                                    start = "<start>",
+                                                    end = "<end>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueReference = new
+                                                {
+                                                    reference = "<reference>",
+                                                    type = "<type>",
+                                                    identifier = new
+                                                    {
+                                                        use = "<use>",
+                                                        system = "<system>",
+                                                        value = "<value>",
+                                                        id = "<id>",
+                                                        extension = new object[]
+                                                        {
+                                                            null
+                                                        },
+                                                    },
+                                                    display = "<display>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                id = "<id>",
+                                                extension = new object[]
+                                                {
+                                                    null
+                                                },
+                                            }
+                                        },
+                                    }
+                                },
+                                tag = new object[]
+                                {
+                                    null
+                                },
+                            },
+                            implicitRules = "<implicitRules>",
+                            language = "<language>",
+                        }
+                    },
+                },
+                encounters = new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["id"] = "<id>",
+                        ["period"] = new
+                        {
+                            start = "2022-05-10T18:57:31.2311892Z",
+                            end = "2022-05-10T18:57:31.2311892Z",
+                        },
+                        ["class"] = "inpatient"
+                    }
+                },
+                patientDocuments = new object[]
+                {
+                    new
+                    {
+                        type = "note",
+                        clinicalType = "consultation",
+                        id = "<id>",
+                        language = "<language>",
+                        createdAt = "2022-05-10T18:57:31.2311892Z",
+                        authors = new object[]
+                        {
+                            new
+                            {
+                                id = "<id>",
+                                fullName = "<fullName>",
+                            }
+                        },
+                        specialtyType = "pathology",
+                        administrativeMetadata = new
+                        {
+                            orderedProcedures = new object[]
+                            {
+                                new
+                                {
+                                    description = "<description>",
+                                    extension = new object[]
+                                    {
+                                        null
+                                    },
+                                }
+                            },
+                            encounterId = "<encounterId>",
+                        },
+                        content = new
+                        {
+                            sourceType = "inline",
+                            value = "<value>",
+                        },
+                    }
+                },
+            }
+        },
+        configuration = new
+        {
+            verbose = true,
+            includeEvidence = true,
+            inferenceTypes = new object[]
+            {
+                "ageMismatch"
+            },
+            inferenceOptions = new
+            {
+                followupRecommendationOptions = new
+                {
+                    includeRecommendationsWithNoSpecifiedModality = true,
+                    includeRecommendationsInReferences = true,
+                    provideFocusedSentenceEvidence = true,
+                },
+                findingOptions = new
+                {
+                    provideFocusedSentenceEvidence = true,
+                },
+                guidanceOptions = new
+                {
+                    showGuidanceInHistory = true,
+                },
+                qualityMeasureOptions = new
+                {
+                    measureTypes = new object[]
+                    {
+                        "mips76"
+                    },
+                },
+            },
+            locale = "<locale>",
+        },
+    },
+});
+Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("display").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("factor").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("lowerLimit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("upperLimit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("dimensions").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("data").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueDateTime").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("reference").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("use").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("display").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("display").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+]]></code></example>
+    </member>
+    <member name="InferRadiologyInsights(WaitUntil,string,RequestContent,IEnumerable{string},RequestContext)">
+      <example>
+This sample shows how to call InferRadiologyInsights and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+]]></code>
+This sample shows how to call InferRadiologyInsights with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    jobData = new
+    {
+        patients = new object[]
+        {
+            new
+            {
+                id = "<id>",
+                details = new
+                {
+                    sex = "female",
+                    birthDate = "2022-05-10",
+                    clinicalInfo = new object[]
+                    {
+                        new
+                        {
+                            resourceType = "<resourceType>",
+                            id = "<id>",
+                            meta = new
+                            {
+                                versionId = "<versionId>",
+                                lastUpdated = "<lastUpdated>",
+                                source = "<source>",
+                                profile = new object[]
+                                {
+                                    "<profile>"
+                                },
+                                security = new object[]
+                                {
+                                    new
+                                    {
+                                        system = "<system>",
+                                        version = "<version>",
+                                        code = "<code>",
+                                        display = "<display>",
+                                        id = "<id>",
+                                        extension = new object[]
+                                        {
+                                            new
+                                            {
+                                                url = "<url>",
+                                                valueQuantity = new
+                                                {
+                                                    value = 123.45,
+                                                    comparator = "<comparator>",
+                                                    unit = "<unit>",
+                                                    system = "<system>",
+                                                    code = "<code>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueCodeableConcept = new
+                                                {
+                                                    coding = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                    text = "<text>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueString = "<valueString>",
+                                                valueBoolean = true,
+                                                valueInteger = 1234,
+                                                valueRange = new
+                                                {
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueRatio = new
+                                                {
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueSampledData = new
+                                                {
+                                                    period = 123.45,
+                                                    factor = 123.45,
+                                                    lowerLimit = 123.45,
+                                                    upperLimit = 123.45,
+                                                    dimensions = 1234,
+                                                    data = "<data>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueTime = "01:23:45",
+                                                valueDateTime = "<valueDateTime>",
+                                                valuePeriod = new
+                                                {
+                                                    start = "<start>",
+                                                    end = "<end>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                valueReference = new
+                                                {
+                                                    reference = "<reference>",
+                                                    type = "<type>",
+                                                    identifier = new
+                                                    {
+                                                        use = "<use>",
+                                                        system = "<system>",
+                                                        value = "<value>",
+                                                        id = "<id>",
+                                                        extension = new object[]
+                                                        {
+                                                            null
+                                                        },
+                                                    },
+                                                    display = "<display>",
+                                                    id = "<id>",
+                                                    extension = new object[]
+                                                    {
+                                                        null
+                                                    },
+                                                },
+                                                id = "<id>",
+                                                extension = new object[]
+                                                {
+                                                    null
+                                                },
+                                            }
+                                        },
+                                    }
+                                },
+                                tag = new object[]
+                                {
+                                    null
+                                },
+                            },
+                            implicitRules = "<implicitRules>",
+                            language = "<language>",
+                        }
+                    },
+                },
+                encounters = new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["id"] = "<id>",
+                        ["period"] = new
+                        {
+                            start = "2022-05-10T18:57:31.2311892Z",
+                            end = "2022-05-10T18:57:31.2311892Z",
+                        },
+                        ["class"] = "inpatient"
+                    }
+                },
+                patientDocuments = new object[]
+                {
+                    new
+                    {
+                        type = "note",
+                        clinicalType = "consultation",
+                        id = "<id>",
+                        language = "<language>",
+                        createdAt = "2022-05-10T18:57:31.2311892Z",
+                        authors = new object[]
+                        {
+                            new
+                            {
+                                id = "<id>",
+                                fullName = "<fullName>",
+                            }
+                        },
+                        specialtyType = "pathology",
+                        administrativeMetadata = new
+                        {
+                            orderedProcedures = new object[]
+                            {
+                                new
+                                {
+                                    description = "<description>",
+                                    extension = new object[]
+                                    {
+                                        null
+                                    },
+                                }
+                            },
+                            encounterId = "<encounterId>",
+                        },
+                        content = new
+                        {
+                            sourceType = "inline",
+                            value = "<value>",
+                        },
+                    }
+                },
+            }
+        },
+        configuration = new
+        {
+            verbose = true,
+            includeEvidence = true,
+            inferenceTypes = new object[]
+            {
+                "ageMismatch"
+            },
+            inferenceOptions = new
+            {
+                followupRecommendationOptions = new
+                {
+                    includeRecommendationsWithNoSpecifiedModality = true,
+                    includeRecommendationsInReferences = true,
+                    provideFocusedSentenceEvidence = true,
+                },
+                findingOptions = new
+                {
+                    provideFocusedSentenceEvidence = true,
+                },
+                guidanceOptions = new
+                {
+                    showGuidanceInHistory = true,
+                },
+                qualityMeasureOptions = new
+                {
+                    measureTypes = new object[]
+                    {
+                        "mips76"
+                    },
+                },
+            },
+            locale = "<locale>",
+        },
+    },
+});
+Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("url").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("display").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueString").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueBoolean").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueInteger").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("comparator").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("factor").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("lowerLimit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("upperLimit").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("dimensions").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("data").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueTime").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueDateTime").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("reference").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("use").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("version").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("display").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("start").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("end").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("display").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

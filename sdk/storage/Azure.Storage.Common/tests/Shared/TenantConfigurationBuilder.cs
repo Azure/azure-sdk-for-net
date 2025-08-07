@@ -134,25 +134,6 @@ namespace Azure.Storage.Test.Shared
                     TestConfigHierarchicalNamespace.AccountName,
                     TestConfigHierarchicalNamespace.AccountKey);
 
-        public TokenCredential GetOAuthCredential() =>
-            GetOAuthCredential(TestConfigOAuth);
-
-        public TokenCredential GetOAuthCredential(TenantConfiguration config) =>
-            GetOAuthCredential(
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret,
-                new Uri(config.ActiveDirectoryAuthEndpoint));
-
-        public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret, Uri authorityHost) =>
-            Mode == RecordedTestMode.Playback ?
-                (TokenCredential)new StorageTestTokenCredential() :
-                new ClientSecretCredential(
-                    tenantId,
-                    appId,
-                    secret,
-                    new TokenCredentialOptions() { AuthorityHost = authorityHost });
-
         /// <summary>
         /// Get or create a test configuration tenant to use with our tests.
         ///

@@ -11,12 +11,9 @@ namespace Azure.Communication
     public abstract class CommunicationIdentifier : IEquatable<CommunicationIdentifier>
     {
         internal const string Phone = "4:";
-        internal const string Bot = "28:";
-        internal const string BotPublicCloud = "28:orgid:";
-        internal const string BotDodCloud = "28:dod:";
-        internal const string BotDodCloudGlobal = "28:dod-global:";
-        internal const string BotGcchCloud = "28:gcch:";
-        internal const string BotGcchCloudGlobal = "28:gcch-global:";
+        internal const string TeamsAppPublicCloud = "28:orgid:";
+        internal const string TeamsAppDodCloud = "28:dod:";
+        internal const string TeamsAppGcchCloud = "28:gcch:";
         internal const string TeamUserAnonymous = "8:teamsvisitor:";
         internal const string TeamUserPublicCloud = "8:orgid:";
         internal const string TeamUserDodCloud = "8:dod:";
@@ -65,7 +62,7 @@ namespace Azure.Communication
         /// When storing rawIds, use this function to restore the identifier that was encoded in the rawId.
         /// </summary>
         /// <param name="rawId">The rawId to be translated to its identifier representation.</param>
-        /// <returns>Returns <see cref="CommunicationUserIdentifier"/>, <see cref="PhoneNumberIdentifier"/>, <see cref="MicrosoftTeamsUserIdentifier"/>, or <see cref="UnknownIdentifier"/> based on the identifier type.</returns>
+        /// <returns>Returns <see cref="CommunicationUserIdentifier"/>, <see cref="PhoneNumberIdentifier"/>, <see cref="MicrosoftTeamsUserIdentifier"/>, <see cref="MicrosoftTeamsAppIdentifier"/>, or <see cref="UnknownIdentifier"/> based on the identifier type.</returns>
         public static CommunicationIdentifier FromRawId(string rawId)
         {
             Argument.AssertNotNullOrEmpty(rawId, nameof(rawId));
@@ -78,9 +75,7 @@ namespace Azure.Communication
             var segments = rawId.Split(':');
             if (segments.Length != 3)
             {
-                return segments.Length == 2 && rawId.StartsWith(Bot, StringComparison.OrdinalIgnoreCase)
-                    ? new MicrosoftBotIdentifier(segments[1], false, CommunicationCloudEnvironment.Public)
-                    : new UnknownIdentifier(rawId);
+                return new UnknownIdentifier(rawId);
             }
 
             var prefix = $"{segments[0]}:{segments[1]}:";
@@ -92,14 +87,33 @@ namespace Azure.Communication
                 TeamUserPublicCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
                 TeamUserDodCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
                 TeamUserGcchCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
-                AcsUser or SpoolUser or AcsUserDodCloud or AcsUserGcchCloud => new CommunicationUserIdentifier(rawId),
-                BotGcchCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
-                BotPublicCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Public),
-                BotDodCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
-                BotGcchCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Gcch),
-                BotDodCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Dod),
+                SpoolUser => new CommunicationUserIdentifier(rawId),
+                AcsUser or AcsUserDodCloud or AcsUserGcchCloud => (CommunicationIdentifier)TryCreateTeamsExtensionUser(prefix, suffix) ?? new CommunicationUserIdentifier(rawId),
+                TeamsAppPublicCloud => new MicrosoftTeamsAppIdentifier(suffix, CommunicationCloudEnvironment.Public),
+                TeamsAppGcchCloud => new MicrosoftTeamsAppIdentifier(suffix, CommunicationCloudEnvironment.Gcch),
+                TeamsAppDodCloud => new MicrosoftTeamsAppIdentifier(suffix, CommunicationCloudEnvironment.Dod),
                 _ => new UnknownIdentifier(rawId),
             };
+        }
+
+        private static TeamsExtensionUserIdentifier TryCreateTeamsExtensionUser(string prefix, string suffix)
+        {
+            var segments = suffix.Split('_');
+            if (segments.Length != 3)
+            {
+                return null;
+            }
+            var resourceId = segments[0];
+            var tenantId = segments[1];
+            var userId = segments[2];
+            var cloud = prefix switch
+            {
+                AcsUser => CommunicationCloudEnvironment.Public,
+                AcsUserDodCloud => CommunicationCloudEnvironment.Dod,
+                AcsUserGcchCloud => CommunicationCloudEnvironment.Gcch,
+                _ => throw new ArgumentException($"Invalid prefix {prefix} for TeamsExtensionUserIdentifier")
+            };
+            return new TeamsExtensionUserIdentifier(userId, tenantId, resourceId, cloud);
         }
     }
 }

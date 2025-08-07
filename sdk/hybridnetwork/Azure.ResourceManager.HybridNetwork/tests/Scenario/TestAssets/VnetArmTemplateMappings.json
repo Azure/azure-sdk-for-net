@@ -1,0 +1,5 @@
+{
+    "vnetName": "{deployParameters.vnetName}",
+    "vnetAddressPrefixes": "{deployParameters.vnetAddressPrefixes}",
+    "subnets": "{deployParameters.subnets}"
+}

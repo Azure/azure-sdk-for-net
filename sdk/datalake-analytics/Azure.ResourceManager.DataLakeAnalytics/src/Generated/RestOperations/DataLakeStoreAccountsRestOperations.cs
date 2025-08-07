@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
@@ -35,6 +34,45 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2016-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByAccountRequestUri(string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/dataLakeStoreAccounts", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("$count", count.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByAccountRequest(string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
@@ -108,7 +146,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeStoreAccountInformationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreAccountInformationListResult.DeserializeDataLakeStoreAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -143,13 +181,29 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeStoreAccountInformationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreAccountInformationListResult.DeserializeDataLakeStoreAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAddRequestUri(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName, DataLakeStoreAccountInformationCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/dataLakeStoreAccounts/", false);
+            uri.AppendPath(dataLakeStoreAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddRequest(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName, DataLakeStoreAccountInformationCreateOrUpdateContent content)
@@ -172,7 +226,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -234,6 +288,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/dataLakeStoreAccounts/", false);
+            uri.AppendPath(dataLakeStoreAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -278,7 +348,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeStoreAccountInformationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -311,7 +381,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeStoreAccountInformationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -320,6 +390,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/dataLakeStoreAccounts/", false);
+            uri.AppendPath(dataLakeStoreAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
@@ -398,6 +484,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateListByAccountNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
         {
             var message = _pipeline.CreateMessage();
@@ -440,7 +534,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeStoreAccountInformationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataLakeStoreAccountInformationListResult.DeserializeDataLakeStoreAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +571,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case 200:
                     {
                         DataLakeStoreAccountInformationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataLakeStoreAccountInformationListResult.DeserializeDataLakeStoreAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -10,12 +10,12 @@ namespace Azure.Data.Tables.Models
     /// <summary> The properties for the table response. </summary>
     public partial class TableItem
     {
-        /// <summary> Initializes a new instance of TableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableItem"/>. </summary>
         internal TableItem()
         {
         }
 
-        /// <summary> Initializes a new instance of TableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableItem"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="odataType"> The odata type of the table. </param>
         /// <param name="odataId"> The id of the table. </param>

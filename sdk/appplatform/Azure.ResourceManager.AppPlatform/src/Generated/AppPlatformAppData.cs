@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,44 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformAppData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformAppData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformAppData"/>. </summary>
         public AppPlatformAppData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformAppData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +64,13 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="properties"> Properties of the App resource. </param>
         /// <param name="identity"> The Managed Identity type of the app resource. </param>
         /// <param name="location"> The GEO location of the application, always the same with its parent resource. </param>
-        internal AppPlatformAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformAppProperties properties, ManagedServiceIdentity identity, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformAppProperties properties, ManagedServiceIdentity identity, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Identity = identity;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of the App resource. </summary>

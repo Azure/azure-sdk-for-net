@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the DSC Meta Configuration. </summary>
     public partial class DscMetaConfiguration
     {
-        /// <summary> Initializes a new instance of DscMetaConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscMetaConfiguration"/>. </summary>
         internal DscMetaConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DscMetaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscMetaConfiguration"/>. </summary>
         /// <param name="configurationModeFrequencyMins"> Gets or sets the ConfigurationModeFrequencyMins value of the meta configuration. </param>
         /// <param name="rebootNodeIfNeeded"> Gets or sets the RebootNodeIfNeeded value of the meta configuration. </param>
         /// <param name="configurationMode"> Gets or sets the ConfigurationMode value of the meta configuration. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="certificateId"> Gets or sets the CertificateId value of the meta configuration. </param>
         /// <param name="refreshFrequencyMins"> Gets or sets the RefreshFrequencyMins value of the meta configuration. </param>
         /// <param name="allowModuleOverwrite"> Gets or sets the AllowModuleOverwrite value of the meta configuration. </param>
-        internal DscMetaConfiguration(int? configurationModeFrequencyMins, bool? rebootNodeIfNeeded, string configurationMode, string actionAfterReboot, string certificateId, int? refreshFrequencyMins, bool? allowModuleOverwrite)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscMetaConfiguration(int? configurationModeFrequencyMins, bool? rebootNodeIfNeeded, string configurationMode, string actionAfterReboot, string certificateId, int? refreshFrequencyMins, bool? allowModuleOverwrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationModeFrequencyMins = configurationModeFrequencyMins;
             RebootNodeIfNeeded = rebootNodeIfNeeded;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
             CertificateId = certificateId;
             RefreshFrequencyMins = refreshFrequencyMins;
             AllowModuleOverwrite = allowModuleOverwrite;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the ConfigurationModeFrequencyMins value of the meta configuration. </summary>

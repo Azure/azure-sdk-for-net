@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         private string _applicationName, _scriptActionName;
         private HDInsightApplicationCollection _applicationCollection => _cluster.GetHDInsightApplications();
 
-        public HDInsightApplicationTests(bool isAsync) : base(isAsync)
+        public HDInsightApplicationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -28,24 +26,16 @@ namespace Azure.ResourceManager.HDInsight.Tests
         public async Task SetUp()
         {
             string rgName = Recording.GenerateAssetName(DefaultResourceGroupPrefix);
-            string clusterName = Recording.GenerateAssetName("cluster");
+            //Due to the HDInsightManagementTestBase's previous update, vnet restricts the cluster name have the unique first six characters.
+            string clsusterNamePrefix = "G" + rgName.Substring(DefaultResourceGroupPrefix.Length) + "Cluster";
+            string clusterName = Recording.GenerateAssetName(clsusterNamePrefix);
             string storageAccountName = Recording.GenerateAssetName("azstorageforcluster");
             string containerName = Recording.GenerateAssetName("container");
             _applicationName = Recording.GenerateAssetName("application");
             _scriptActionName = Recording.GenerateAssetName("InstallHue");
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _cluster = Client.GetHDInsightClusterResource(HDInsightClusterResource.CreateResourceIdentifier(Recording.GetVariable("SUBSCRIPTION_ID", null), rgName, clusterName));
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    var resourceGroup = await CreateResourceGroup(rgName);
-                    var accessKey = await CreateStorageResources(resourceGroup, storageAccountName, containerName);
-                    _cluster = await CreateDefaultHadoopCluster(resourceGroup, clusterName, storageAccountName, containerName, accessKey);
-                }
-            }
+            var resourceGroup = await CreateResourceGroup(rgName);
+            var accessKey = await CreateStorageResources(resourceGroup, storageAccountName, containerName);
+            _cluster = await CreateDefaultHadoopCluster(resourceGroup, clusterName, storageAccountName, containerName, accessKey);
         }
 
         private async Task<HDInsightApplicationResource> CreateApplication(string applicationName, string scriptActionName)
@@ -128,6 +118,17 @@ namespace Azure.ResourceManager.HDInsight.Tests
             Assert.IsNotNull(application.Data.Properties.CreatedOn);
             Assert.AreEqual("CustomApplication", application.Data.Properties.ApplicationType);
             Assert.AreEqual(1, application.Data.Properties.InstallScriptActions.Count);
+        }
+        [Test]
+        // regressation test for issue https://github.com/Azure/azure-sdk-for-net/issues/45709  only for not throwing exception
+        public async Task GetHDInsightCluster()
+        {
+            string resourceGroupName = _cluster.Data.Id.ResourceGroupName;
+            string clusterName = _cluster.Data.Name;
+            string subscriptionId = _cluster.Data.Id.SubscriptionId;
+            ResourceIdentifier resourceGroupIdenfier = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroup = await Client.GetResourceGroupResource(resourceGroupIdenfier).GetAsync();
+            Assert.DoesNotThrowAsync(async () => { await resourceGroup.GetHDInsightClusterAsync(clusterName); });
         }
     }
 }

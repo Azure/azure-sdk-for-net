@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.Files.Shares.Models;
 using Azure.Test.Perf;
 
 namespace Azure.Storage.Files.Shares.Perf
@@ -15,11 +16,18 @@ namespace Azure.Storage.Files.Shares.Perf
             ShareClientOptions clientOptions = options is Options.IShareClientOptionsProvider clientOptionsProvider
                 ? clientOptionsProvider.ClientOptions
                 : new ShareClientOptions();
+            clientOptions.ShareTokenIntent = ShareTokenIntent.Backup;
             ShareServiceClient = new ShareServiceClient(
-                PerfTestEnvironment.Instance.FileSharesConnectionString, ConfigureClientOptions(clientOptions));
+                PerfTestEnvironment.Instance.StorageEndpoint,
+                PerfTestEnvironment.Instance.Credential,
+                ConfigureClientOptions(clientOptions));
 
-            StorageSharedKeyCredential = new StorageSharedKeyCredential(
-                PerfTestEnvironment.Instance.FilesSharesAccountName, PerfTestEnvironment.Instance.FilesSharesAccountKey);
+            // Can't do shared key tests if shared key wasn't provided
+            if (PerfTestEnvironment.Instance.StorageAccountKey != null)
+            {
+                StorageSharedKeyCredential = new StorageSharedKeyCredential(
+                    PerfTestEnvironment.Instance.StorageAccountName, PerfTestEnvironment.Instance.StorageAccountKey);
+            }
         }
     }
 }

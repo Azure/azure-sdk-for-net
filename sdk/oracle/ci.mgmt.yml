@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/oracle/ci.mgmt.yml
+    - sdk/oracle/Azure.ResourceManager.OracleDatabase/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: oracle
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.OracleDatabase
+      safeName: AzureResourceManagerOracleDatabase

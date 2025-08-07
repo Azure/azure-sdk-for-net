@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Filter and return results from input array based on the conditions. </summary>
     public partial class FilterActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of FilterActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="items"> Input array on which filter should be applied. </param>
         /// <param name="condition"> Condition to be used for filtering the input. </param>
@@ -30,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Filter";
         }
 
-        /// <summary> Initializes a new instance of FilterActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

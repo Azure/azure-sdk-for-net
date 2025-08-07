@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         ManagedServerDnsAliasResource IOperationSource<ManagedServerDnsAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedServerDnsAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedServerDnsAliasResource(_client, data);
         }
 
         async ValueTask<ManagedServerDnsAliasResource> IOperationSource<ManagedServerDnsAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(document.RootElement);
-            return new ManagedServerDnsAliasResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedServerDnsAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new ManagedServerDnsAliasResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

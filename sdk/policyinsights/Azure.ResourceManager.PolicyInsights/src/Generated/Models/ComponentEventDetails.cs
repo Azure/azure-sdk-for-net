@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Component event details. </summary>
     public partial class ComponentEventDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of ComponentEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentEventDetails"/>. </summary>
         internal ComponentEventDetails()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ComponentEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentEventDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

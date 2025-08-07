@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeCollection = _capacityPool.GetNetAppVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id);
+            VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id, serializedAdditionalRawData: null);
             NetAppVolumeDataProtection dataProtectionProperties = new() {Snapshot = snapshotPolicyProperties };
             await CreateVirtualNetwork();
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeCollection = _capacityPool.GetNetAppVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id);
+            VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id, serializedAdditionalRawData: null);
             NetAppVolumeDataProtection dataProtectionProperties = new() { Snapshot = snapshotPolicyProperties };
             await CreateVirtualNetwork(DefaultLocationString);
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);

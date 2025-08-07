@@ -6,15 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Properties needed for refund request including the session id from calculate refund, the scope, the reservation to be returned and the return reason. </summary>
     public partial class ReservationRefundRequestProperties
     {
-        /// <summary> Initializes a new instance of ReservationRefundRequestProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundRequestProperties"/>. </summary>
         public ReservationRefundRequestProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundRequestProperties"/>. </summary>
+        /// <param name="sessionId"> SessionId that was returned by CalculateRefund API. </param>
+        /// <param name="scope"> The scope of the refund, e.g. Reservation. </param>
+        /// <param name="reservationToReturn"> Reservation to return. </param>
+        /// <param name="returnReason"> The reason of returning the reservation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationRefundRequestProperties(Guid? sessionId, string scope, ReservationToReturn reservationToReturn, string returnReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SessionId = sessionId;
+            Scope = scope;
+            ReservationToReturn = reservationToReturn;
+            ReturnReason = returnReason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SessionId that was returned by CalculateRefund API. </summary>

@@ -274,7 +274,7 @@
                         };
                 });
 
-            CloudPool pool = batchClient.PoolOperations.CreatePool("dummy", "small", default(CloudServiceConfiguration), targetDedicatedComputeNodes: 0);
+            CloudPool pool = batchClient.PoolOperations.CreatePool("dummy", "small", default(VirtualMachineConfiguration), targetDedicatedComputeNodes: 0);
             await pool.CommitAsync(additionalBehaviors: new[] { interceptor });
         }
 

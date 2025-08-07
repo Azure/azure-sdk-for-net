@@ -91,22 +91,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
-                writer.WriteObjectValue(ExecutorSize);
+                writer.WriteObjectValue<object>(ExecutorSize);
             }
             if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
-                writer.WriteObjectValue(Conf);
+                writer.WriteObjectValue<object>(Conf);
             }
             if (Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
-                writer.WriteObjectValue(DriverSize);
+                writer.WriteObjectValue<object>(DriverSize);
             }
             if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
-                writer.WriteObjectValue(NumExecutors);
+                writer.WriteObjectValue<object>(NumExecutors);
             }
             if (Optional.IsDefined(ConfigurationType))
             {
@@ -130,15 +130,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Authentication))
+            {
+                writer.WritePropertyName("authentication"u8);
+                writer.WriteObjectValue(Authentication);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -149,25 +154,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             SynapseNotebookReference notebook = default;
-            Optional<BigDataPoolParametrizationReference> sparkPool = default;
-            Optional<IDictionary<string, NotebookParameter>> parameters = default;
-            Optional<object> executorSize = default;
-            Optional<object> conf = default;
-            Optional<object> driverSize = default;
-            Optional<object> numExecutors = default;
-            Optional<ConfigurationType> configurationType = default;
-            Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
-            Optional<IDictionary<string, object>> sparkConfig = default;
+            BigDataPoolParametrizationReference sparkPool = default;
+            IDictionary<string, NotebookParameter> parameters = default;
+            object executorSize = default;
+            object conf = default;
+            object driverSize = default;
+            object numExecutors = default;
+            ConfigurationType? configurationType = default;
+            SparkConfigurationParametrizationReference targetSparkConfiguration = default;
+            IDictionary<string, object> sparkConfig = default;
+            SynapseActivityAuthentication authentication = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -363,13 +369,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             sparkConfig = dictionary;
                             continue;
                         }
+                        if (property0.NameEquals("authentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authentication = SynapseActivityAuthentication.DeserializeSynapseActivityAuthentication(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseNotebookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, notebook, sparkPool.Value, Optional.ToDictionary(parameters), executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
+            return new SynapseNotebookActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                notebook,
+                sparkPool,
+                parameters ?? new ChangeTrackingDictionary<string, NotebookParameter>(),
+                executorSize,
+                conf,
+                driverSize,
+                numExecutors,
+                configurationType,
+                targetSparkConfiguration,
+                sparkConfig ?? new ChangeTrackingDictionary<string, object>(),
+                authentication);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SynapseNotebookActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSynapseNotebookActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SynapseNotebookActivityConverter : JsonConverter<SynapseNotebookActivity>
@@ -378,6 +430,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SynapseNotebookActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearningCompute
 {
@@ -20,28 +20,54 @@ namespace Azure.ResourceManager.MachineLearningCompute
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
+        private readonly RehydrationToken? _completeRehydrationToken;
+        private readonly NextLinkOperationImplementation _nextLinkOperation;
+        private readonly string _operationId;
 
         /// <summary> Initializes a new instance of MachineLearningComputeArmOperation for mocking. </summary>
         protected MachineLearningComputeArmOperation()
         {
         }
 
-        internal MachineLearningComputeArmOperation(Response<T> response)
+        internal MachineLearningComputeArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
         {
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
+            _completeRehydrationToken = rehydrationToken;
+            _operationId = GetOperationId(rehydrationToken);
         }
 
         internal MachineLearningComputeArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
-            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "MachineLearningComputeArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)
+            {
+                _nextLinkOperation = nextLinkOperationValue;
+                _operationId = _nextLinkOperation.OperationId;
+            }
+            else
+            {
+                _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
+                _operationId = GetOperationId(_completeRehydrationToken);
+            }
+            _operation = new OperationInternal<T>(NextLinkOperationImplementation.Create(source, nextLinkOperation), clientDiagnostics, response, "MachineLearningComputeArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
+        private string GetOperationId(RehydrationToken? rehydrationToken)
+        {
+            if (rehydrationToken is null)
+            {
+                return null;
+            }
+            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningComputeContext.Default);
+            using var document = JsonDocument.Parse(data);
+            var lroDetails = document.RootElement;
+            return lroDetails.GetProperty("id").GetString();
+        }
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;
+
+        /// <inheritdoc />
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _completeRehydrationToken;
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

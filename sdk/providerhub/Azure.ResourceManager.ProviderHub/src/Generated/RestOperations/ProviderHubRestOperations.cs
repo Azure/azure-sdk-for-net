@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ProviderHub.Models;
@@ -35,6 +34,19 @@ namespace Azure.ResourceManager.ProviderHub
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-11-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGenerateManifestRequestUri(string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/generateManifest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateManifestRequest(string subscriptionId, string providerNamespace)
@@ -74,7 +86,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceProviderManifest value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceProviderManifest.DeserializeResourceProviderManifest(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,13 +113,26 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         ResourceProviderManifest value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceProviderManifest.DeserializeResourceProviderManifest(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckinManifestRequestUri(string subscriptionId, string providerNamespace, CheckinManifestContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/checkinManifest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckinManifestRequest(string subscriptionId, string providerNamespace, CheckinManifestContent content)
@@ -127,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -153,7 +178,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CheckinManifestInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CheckinManifestInfo.DeserializeCheckinManifestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -182,7 +207,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CheckinManifestInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CheckinManifestInfo.DeserializeCheckinManifestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

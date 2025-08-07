@@ -6,15 +6,21 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the HostName condition for the delivery rule. </summary>
+    /// <summary>
+    /// Defines the HostName condition for the delivery rule.
+    /// Serialized Name: DeliveryRuleHostNameCondition
+    /// </summary>
     public partial class DeliveryRuleHostNameCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleHostNameCondition. </summary>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleHostNameCondition"/>. </summary>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleHostNameCondition.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleHostNameCondition(HostNameMatchCondition properties)
         {
@@ -24,16 +30,31 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.HostName;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleHostNameCondition. </summary>
-        /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleHostNameCondition(MatchVariable name, HostNameMatchCondition properties) : base(name)
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleHostNameCondition"/>. </summary>
+        /// <param name="name">
+        /// The name of the condition for the delivery rule.
+        /// Serialized Name: DeliveryRuleCondition.name
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleHostNameCondition.parameters
+        /// </param>
+        internal DeliveryRuleHostNameCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, HostNameMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;
         }
 
-        /// <summary> Defines the parameters for the condition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleHostNameCondition"/> for deserialization. </summary>
+        internal DeliveryRuleHostNameCondition()
+        {
+        }
+
+        /// <summary>
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleHostNameCondition.parameters
+        /// </summary>
         public HostNameMatchCondition Properties { get; set; }
     }
 }

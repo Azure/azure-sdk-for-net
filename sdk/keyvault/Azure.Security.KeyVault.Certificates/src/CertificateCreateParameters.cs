@@ -12,17 +12,20 @@ namespace Azure.Security.KeyVault.Certificates
         private const string AttributesPropertyName = "attributes";
         private const string EnabledPropertyName = "enabled";
         private const string TagsPropertyName = "tags";
+        private const string PreserveCertificateOrderPropertyName = "preserveCertOrder";
 
         private static readonly JsonEncodedText s_policyPropertyNameBytes = JsonEncodedText.Encode(PolicyPropertyName);
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+        private static readonly JsonEncodedText s_preserveCertificateOrderPropertyNameBytes = JsonEncodedText.Encode(PreserveCertificateOrderPropertyName);
 
-        public CertificateCreateParameters(CertificatePolicy policy, bool? enabled, IDictionary<string, string> tags)
+        public CertificateCreateParameters(CertificatePolicy policy, bool? enabled, IDictionary<string, string> tags, bool? preserveCertificateOrder = null)
         {
             Policy = policy;
             Enabled = enabled;
             Tags = tags;
+            PreserveCertificateOrder = preserveCertificateOrder;
         }
 
         public CertificatePolicy Policy { get; }
@@ -30,6 +33,8 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; }
 
         public IDictionary<string, string> Tags { get; }
+
+        public bool? PreserveCertificateOrder { get; }
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
@@ -61,6 +66,11 @@ namespace Azure.Security.KeyVault.Certificates
                 }
 
                 json.WriteEndObject();
+            }
+
+            if (PreserveCertificateOrder.HasValue)
+            {
+                json.WriteBoolean(s_preserveCertificateOrderPropertyNameBytes, PreserveCertificateOrder.Value);
             }
         }
     }

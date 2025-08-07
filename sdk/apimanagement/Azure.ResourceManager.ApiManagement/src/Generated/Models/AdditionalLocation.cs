@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Description of an additional API Management resource location. </summary>
     public partial class AdditionalLocation
     {
-        /// <summary> Initializes a new instance of AdditionalLocation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalLocation"/>. </summary>
         /// <param name="location"> The location name of the additional region among Azure Data center regions. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -28,9 +60,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Zones = new ChangeTrackingList<string>();
             PublicIPAddresses = new ChangeTrackingList<IPAddress>();
             PrivateIPAddresses = new ChangeTrackingList<IPAddress>();
+            OutboundPublicIPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AdditionalLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalLocation"/>. </summary>
         /// <param name="location"> The location name of the additional region among Azure Data center regions. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
@@ -39,9 +72,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="publicIPAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the location. Supported only for Premium SKU being deployed in Virtual Network. </param>
         /// <param name="virtualNetworkConfiguration"> Virtual network configuration for the location. </param>
         /// <param name="gatewayRegionalUri"> Gateway URL of the API Management service in the Region. </param>
+        /// <param name="natGatewayState"> Property can be used to enable NAT Gateway for this API Management service. </param>
+        /// <param name="outboundPublicIPAddresses"> Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform. </param>
         /// <param name="disableGateway"> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location. </param>
         /// <param name="platformVersion"> Compute Platform Version running the service. </param>
-        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, bool? disableGateway, PlatformVersion? platformVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, PlatformVersion? platformVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Sku = sku;
@@ -51,29 +87,53 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PublicIPAddressId = publicIPAddressId;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             GatewayRegionalUri = gatewayRegionalUri;
+            NatGatewayState = natGatewayState;
+            OutboundPublicIPAddresses = outboundPublicIPAddresses;
             DisableGateway = disableGateway;
             PlatformVersion = platformVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalLocation"/> for deserialization. </summary>
+        internal AdditionalLocation()
+        {
         }
 
         /// <summary> The location name of the additional region among Azure Data center regions. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; set; }
         /// <summary> SKU properties of the API Management service. </summary>
+        [WirePath("sku")]
         public ApiManagementServiceSkuProperties Sku { get; set; }
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> Public Static Load Balanced IP addresses of the API Management service in the additional location. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
+        [WirePath("publicIPAddresses")]
         public IReadOnlyList<IPAddress> PublicIPAddresses { get; }
         /// <summary> Private Static Load Balanced IP addresses of the API Management service which is deployed in an Internal Virtual Network in a particular additional location. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
+        [WirePath("privateIPAddresses")]
         public IReadOnlyList<IPAddress> PrivateIPAddresses { get; }
         /// <summary> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the location. Supported only for Premium SKU being deployed in Virtual Network. </summary>
+        [WirePath("publicIpAddressId")]
         public ResourceIdentifier PublicIPAddressId { get; set; }
         /// <summary> Virtual network configuration for the location. </summary>
+        [WirePath("virtualNetworkConfiguration")]
         public VirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
         /// <summary> Gateway URL of the API Management service in the Region. </summary>
+        [WirePath("gatewayRegionalUrl")]
         public Uri GatewayRegionalUri { get; }
+        /// <summary> Property can be used to enable NAT Gateway for this API Management service. </summary>
+        [WirePath("natGatewayState")]
+        public ApiManagementNatGatewayState? NatGatewayState { get; set; }
+        /// <summary> Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform. </summary>
+        [WirePath("outboundPublicIPAddresses")]
+        public IReadOnlyList<string> OutboundPublicIPAddresses { get; }
         /// <summary> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location. </summary>
+        [WirePath("disableGateway")]
         public bool? DisableGateway { get; set; }
         /// <summary> Compute Platform Version running the service. </summary>
+        [WirePath("platformVersion")]
         public PlatformVersion? PlatformVersion { get; }
     }
 }

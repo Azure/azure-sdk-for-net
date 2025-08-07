@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Notebook root-level metadata. </summary>
     public partial class NotebookMetadata
     {
-        /// <summary> Initializes a new instance of NotebookMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookMetadata"/>. </summary>
         public NotebookMetadata()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of NotebookMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookMetadata"/>. </summary>
         /// <param name="kernelspec"> Kernel information. </param>
         /// <param name="languageInfo"> Language info. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

@@ -6,47 +6,77 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the request header action. </summary>
-    public partial class HeaderActionProperties
+    /// <summary>
+    /// Defines the parameters for the request header action.
+    /// Serialized Name: HeaderActionParameters
+    /// </summary>
+    public partial class HeaderActionProperties : DeliveryRuleActionProperties
     {
-        /// <summary> Initializes a new instance of HeaderActionProperties. </summary>
-        /// <param name="actionType"></param>
-        /// <param name="headerAction"> Action to perform. </param>
-        /// <param name="headerName"> Name of the header to modify. </param>
+        /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
+        /// <param name="headerAction">
+        /// Action to perform
+        /// Serialized Name: HeaderActionParameters.headerAction
+        /// </param>
+        /// <param name="headerName">
+        /// Name of the header to modify
+        /// Serialized Name: HeaderActionParameters.headerName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
-        public HeaderActionProperties(HeaderActionType actionType, HeaderAction headerAction, string headerName)
+        public HeaderActionProperties(HeaderAction headerAction, string headerName)
         {
             Argument.AssertNotNull(headerName, nameof(headerName));
 
-            ActionType = actionType;
             HeaderAction = headerAction;
             HeaderName = headerName;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters;
         }
 
-        /// <summary> Initializes a new instance of HeaderActionProperties. </summary>
-        /// <param name="actionType"></param>
-        /// <param name="headerAction"> Action to perform. </param>
-        /// <param name="headerName"> Name of the header to modify. </param>
-        /// <param name="value"> Value for the specified action. </param>
-        internal HeaderActionProperties(HeaderActionType actionType, HeaderAction headerAction, string headerName, string value)
+        /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="headerAction">
+        /// Action to perform
+        /// Serialized Name: HeaderActionParameters.headerAction
+        /// </param>
+        /// <param name="headerName">
+        /// Name of the header to modify
+        /// Serialized Name: HeaderActionParameters.headerName
+        /// </param>
+        /// <param name="value">
+        /// Value for the specified action
+        /// Serialized Name: HeaderActionParameters.value
+        /// </param>
+        internal HeaderActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderAction headerAction, string headerName, string value) : base(typeName, serializedAdditionalRawData)
         {
-            ActionType = actionType;
             HeaderAction = headerAction;
             HeaderName = headerName;
             Value = value;
+            TypeName = typeName;
         }
 
-        /// <summary> Gets or sets the action type. </summary>
-        public HeaderActionType ActionType { get; set; }
-        /// <summary> Action to perform. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/> for deserialization. </summary>
+        internal HeaderActionProperties()
+        {
+        }
+
+        /// <summary>
+        /// Action to perform
+        /// Serialized Name: HeaderActionParameters.headerAction
+        /// </summary>
         public HeaderAction HeaderAction { get; set; }
-        /// <summary> Name of the header to modify. </summary>
+        /// <summary>
+        /// Name of the header to modify
+        /// Serialized Name: HeaderActionParameters.headerName
+        /// </summary>
         public string HeaderName { get; set; }
-        /// <summary> Value for the specified action. </summary>
+        /// <summary>
+        /// Value for the specified action
+        /// Serialized Name: HeaderActionParameters.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

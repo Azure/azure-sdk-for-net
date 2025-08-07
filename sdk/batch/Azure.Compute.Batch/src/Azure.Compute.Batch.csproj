@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Azure.Compute.Batch client library, enabling the creation and management of Batch objects such as Pools, Jobs, and Tasks. For more information about Azure Batch, see https://learn.microsoft.com/azure/batch/batch-technical-overview </Description>
+    <AssemblyTitle>The Azure Batch client library</AssemblyTitle>
+    <Version>1.0.0-beta.4</Version>
+    <PackageTags>Azure.Compute.Batch</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+</Project>

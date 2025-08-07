@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A single usage result. </summary>
     public partial class ContainerInstanceUsage
     {
-        /// <summary> Initializes a new instance of ContainerInstanceUsage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsage"/>. </summary>
         internal ContainerInstanceUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsage"/>. </summary>
         /// <param name="id"> Id of the usage result. </param>
         /// <param name="unit"> Unit of the usage result. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name object of the resource. </param>
-        internal ContainerInstanceUsage(string id, string unit, int? currentValue, int? limit, ContainerInstanceUsageName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerInstanceUsage(string id, string unit, int? currentValue, int? limit, ContainerInstanceUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Id of the usage result. </summary>

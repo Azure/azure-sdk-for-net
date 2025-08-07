@@ -33,31 +33,31 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string DeletedValue = "Deleted";
         private const string OtherValue = "Other";
 
-        /// <summary> None. </summary>
+        /// <summary> The resource does not have a provisioning state. </summary>
         public static ServiceFabricManagedResourceProvisioningState None { get; } = new ServiceFabricManagedResourceProvisioningState(NoneValue);
-        /// <summary> Creating. </summary>
+        /// <summary> The resource is being created. </summary>
         public static ServiceFabricManagedResourceProvisioningState Creating { get; } = new ServiceFabricManagedResourceProvisioningState(CreatingValue);
-        /// <summary> Created. </summary>
+        /// <summary> The resource is created. </summary>
         public static ServiceFabricManagedResourceProvisioningState Created { get; } = new ServiceFabricManagedResourceProvisioningState(CreatedValue);
-        /// <summary> Updating. </summary>
+        /// <summary> The resource is being updated. </summary>
         public static ServiceFabricManagedResourceProvisioningState Updating { get; } = new ServiceFabricManagedResourceProvisioningState(UpdatingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The resource provisioning has succeeded. </summary>
         public static ServiceFabricManagedResourceProvisioningState Succeeded { get; } = new ServiceFabricManagedResourceProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The resource provisioning has failed. </summary>
         public static ServiceFabricManagedResourceProvisioningState Failed { get; } = new ServiceFabricManagedResourceProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> The resource provisioning has been canceled. </summary>
         public static ServiceFabricManagedResourceProvisioningState Canceled { get; } = new ServiceFabricManagedResourceProvisioningState(CanceledValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> The resource is being deleted. </summary>
         public static ServiceFabricManagedResourceProvisioningState Deleting { get; } = new ServiceFabricManagedResourceProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+        /// <summary> The resource has been deleted. </summary>
         public static ServiceFabricManagedResourceProvisioningState Deleted { get; } = new ServiceFabricManagedResourceProvisioningState(DeletedValue);
-        /// <summary> Other. </summary>
+        /// <summary> The resource provisioning state is a state other than the previously specified states. </summary>
         public static ServiceFabricManagedResourceProvisioningState Other { get; } = new ServiceFabricManagedResourceProvisioningState(OtherValue);
         /// <summary> Determines if two <see cref="ServiceFabricManagedResourceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedResourceProvisioningState left, ServiceFabricManagedResourceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedResourceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedResourceProvisioningState left, ServiceFabricManagedResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedResourceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedResourceProvisioningState"/>. </summary>
         public static implicit operator ServiceFabricManagedResourceProvisioningState(string value) => new ServiceFabricManagedResourceProvisioningState(value);
 
         /// <inheritdoc />
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

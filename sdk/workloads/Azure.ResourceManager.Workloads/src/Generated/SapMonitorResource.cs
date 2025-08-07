@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Workloads.Models;
@@ -22,13 +20,16 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A Class representing a SapMonitor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SapMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSapMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSapMonitor method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSapMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSapMonitor method.
     /// </summary>
     public partial class SapMonitorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SapMonitorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}";
@@ -39,12 +40,15 @@ namespace Azure.ResourceManager.Workloads
         private readonly MonitorsRestOperations _sapMonitormonitorsRestClient;
         private readonly SapMonitorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="SapMonitorResource"/> class for mocking. </summary>
         protected SapMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SapMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SapMonitorResource(ArmClient client, SapMonitorData data) : this(client, data.Id)
@@ -65,9 +69,6 @@ namespace Azure.ResourceManager.Workloads
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapProviderInstanceResources and their operations over a SapProviderInstanceResource. </returns>
         public virtual SapProviderInstanceCollection GetSapProviderInstances()
         {
-            return GetCachedClient(Client => new SapProviderInstanceCollection(Client, Id));
+            return GetCachedClient(client => new SapProviderInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -108,12 +109,20 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerInstanceName"> Name of the provider instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SapProviderInstanceResource>> GetSapProviderInstanceAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
@@ -131,12 +140,20 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerInstanceName"> Name of the provider instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SapProviderInstanceResource> GetSapProviderInstance(string providerInstanceName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +161,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary> Gets an object representing a SapLandscapeMonitorResource along with the instance operations that can be performed on it in the SapMonitor. </summary>
-        /// <returns> Returns a <see cref="SapLandscapeMonitorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapLandscapeMonitorResource"/> object. </returns>
         public virtual SapLandscapeMonitorResource GetSapLandscapeMonitor()
         {
             return new SapLandscapeMonitorResource(Client, Id.AppendChildResource("sapLandscapeMonitor", "default"));
@@ -160,6 +177,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,6 +218,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,6 +257,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -259,6 +300,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>monitors_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -292,6 +341,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,6 +384,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>monitors_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The Update SAP workload monitor request body. </param>
@@ -360,6 +425,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,6 +488,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -469,6 +550,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -518,6 +607,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -566,6 +663,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -618,6 +723,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

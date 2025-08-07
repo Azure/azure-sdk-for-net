@@ -7,12 +7,14 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples
     {
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task RecognizeCustomFormsFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;

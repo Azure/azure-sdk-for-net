@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation
         {
             Targets = targets;
             CallbackUri = callbackUri;
-            CustomContext = new CustomContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -53,13 +52,20 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
-        /// The endpoint URL of the Azure Cognitive Services resource attached
+        /// Live Transcription Configuration.
         /// </summary>
-        public Uri AzureCognitiveServicesEndpointUri { get; set; }
+        public TranscriptionOptions TranscriptionOptions { get; set; }
 
         /// <summary>
-        /// The Custom Context which contains SIP and voip headers.
+        /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
         /// </summary>
-        public CustomContext CustomContext { get; }
+        public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
+
+        /// <summary>
+        /// Overrides default client source by a MicrosoftTeamsAppIdentifier type source.
+        /// Required for creating call with Teams resource account ID.
+        /// This is per-operation setting and does not change the client's default source.
+        /// </summary>
+        public MicrosoftTeamsAppIdentifier TeamsAppSource { get; set; }
     }
 }

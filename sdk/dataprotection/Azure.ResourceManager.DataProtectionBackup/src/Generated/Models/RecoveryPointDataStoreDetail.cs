@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> RecoveryPoint datastore details. </summary>
     public partial class RecoveryPointDataStoreDetail
     {
-        /// <summary> Initializes a new instance of RecoveryPointDataStoreDetail. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreDetail"/>. </summary>
         public RecoveryPointDataStoreDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointDataStoreDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreDetail"/>. </summary>
         /// <param name="createdOn"></param>
         /// <param name="expireOn"></param>
         /// <param name="recoveryPointDataStoreId"></param>
@@ -27,7 +60,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="isVisible"></param>
         /// <param name="rehydrationExpireOn"></param>
         /// <param name="rehydrationStatus"></param>
-        internal RecoveryPointDataStoreDetail(DateTimeOffset? createdOn, DateTimeOffset? expireOn, Guid? recoveryPointDataStoreId, string metadata, string state, string recoveryPointDataStoreType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointDataStoreDetail(DateTimeOffset? createdOn, DateTimeOffset? expireOn, Guid? recoveryPointDataStoreId, string metadata, string state, string recoveryPointDataStoreType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
             ExpireOn = expireOn;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IsVisible = isVisible;
             RehydrationExpireOn = rehydrationExpireOn;
             RehydrationStatus = rehydrationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the created on. </summary>

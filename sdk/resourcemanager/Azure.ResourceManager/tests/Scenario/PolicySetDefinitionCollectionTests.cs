@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
+        [LiveOnly(Reason = "Test regularly times out in playback mode.")]
         public async Task ListByTenant()
         {
             await foreach (var tenant in Client.GetTenants().GetAllAsync())

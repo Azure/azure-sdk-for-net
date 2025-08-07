@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(H264VideoProfile left, H264VideoProfile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="H264VideoProfile"/> values are not the same. </summary>
         public static bool operator !=(H264VideoProfile left, H264VideoProfile right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="H264VideoProfile"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="H264VideoProfile"/>. </summary>
         public static implicit operator H264VideoProfile(string value) => new H264VideoProfile(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

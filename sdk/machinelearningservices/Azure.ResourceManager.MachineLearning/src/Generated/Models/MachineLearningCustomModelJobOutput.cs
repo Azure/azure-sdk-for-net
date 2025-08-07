@@ -6,33 +6,37 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningCustomModelJobOutput. </summary>
     public partial class MachineLearningCustomModelJobOutput : MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningCustomModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCustomModelJobOutput"/>. </summary>
         public MachineLearningCustomModelJobOutput()
         {
             JobOutputType = JobOutputType.CustomModel;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCustomModelJobOutput. </summary>
-        /// <param name="description"> Description for the output. </param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCustomModelJobOutput"/>. </summary>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
-        /// <param name="mode"> Output Asset Delivery Mode. </param>
+        /// <param name="description"> Description for the output. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        internal MachineLearningCustomModelJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
+        /// <param name="mode"> Output Asset Delivery Mode. </param>
+        internal MachineLearningCustomModelJobOutput(JobOutputType jobOutputType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, MachineLearningOutputDeliveryMode? mode) : base(jobOutputType, description, serializedAdditionalRawData)
         {
-            Mode = mode;
             Uri = uri;
+            Mode = mode;
             JobOutputType = jobOutputType;
         }
 
-        /// <summary> Output Asset Delivery Mode. </summary>
-        public MachineLearningOutputDeliveryMode? Mode { get; set; }
         /// <summary> Output Asset URI. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
+        /// <summary> Output Asset Delivery Mode. </summary>
+        [WirePath("mode")]
+        public MachineLearningOutputDeliveryMode? Mode { get; set; }
     }
 }

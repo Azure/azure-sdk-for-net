@@ -10,23 +10,26 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing an ElasticPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetElasticPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetElasticPool method.
     /// </summary>
     public partial class ElasticPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ElasticPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="elasticPoolName"> The elasticPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}";
@@ -35,26 +38,21 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _elasticPoolClientDiagnostics;
         private readonly ElasticPoolsRestOperations _elasticPoolRestClient;
-        private readonly ClientDiagnostics _metricsClientDiagnostics;
-        private readonly MetricsRestOperations _metricsRestClient;
-        private readonly ClientDiagnostics _metricDefinitionsClientDiagnostics;
-        private readonly MetricDefinitionsRestOperations _metricDefinitionsRestClient;
-        private readonly ClientDiagnostics _elasticPoolActivitiesClientDiagnostics;
-        private readonly ElasticPoolActivitiesRestOperations _elasticPoolActivitiesRestClient;
-        private readonly ClientDiagnostics _elasticPoolDatabaseActivitiesClientDiagnostics;
-        private readonly ElasticPoolDatabaseActivitiesRestOperations _elasticPoolDatabaseActivitiesRestClient;
-        private readonly ClientDiagnostics _elasticPoolOperationsClientDiagnostics;
-        private readonly ElasticPoolRestOperations _elasticPoolOperationsRestClient;
         private readonly ClientDiagnostics _sqlDatabaseDatabasesClientDiagnostics;
         private readonly DatabasesRestOperations _sqlDatabaseDatabasesRestClient;
+        private readonly ClientDiagnostics _elasticPoolOperationsClientDiagnostics;
+        private readonly ElasticPoolRestOperations _elasticPoolOperationsRestClient;
         private readonly ElasticPoolData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/elasticPools";
 
         /// <summary> Initializes a new instance of the <see cref="ElasticPoolResource"/> class for mocking. </summary>
         protected ElasticPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticPoolResource(ArmClient client, ElasticPoolData data) : this(client, data.Id)
@@ -71,26 +69,15 @@ namespace Azure.ResourceManager.Sql
             _elasticPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string elasticPoolApiVersion);
             _elasticPoolRestClient = new ElasticPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticPoolApiVersion);
-            _metricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _metricsRestClient = new MetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _metricDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _metricDefinitionsRestClient = new MetricDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _elasticPoolActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _elasticPoolActivitiesRestClient = new ElasticPoolActivitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _elasticPoolDatabaseActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _elasticPoolDatabaseActivitiesRestClient = new ElasticPoolDatabaseActivitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _elasticPoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _elasticPoolOperationsRestClient = new ElasticPoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlDatabaseResource.ResourceType, out string sqlDatabaseDatabasesApiVersion);
             _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseDatabasesApiVersion);
+            _elasticPoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _elasticPoolOperationsRestClient = new ElasticPoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/elasticPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -124,6 +111,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -156,6 +151,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,6 +190,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +233,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -255,6 +274,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +321,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -322,179 +357,115 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Returns elastic pool  metrics.
+        /// Gets a list of databases in an elastic pool.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/metrics</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/databases</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Metrics_ListElasticPool</description>
+        /// <description>Databases_ListByElasticPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlMetric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlDatabaseResource> GetDatabasesAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseDatabasesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseDatabasesRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseResource(Client, SqlDatabaseData.DeserializeSqlDatabaseData(e)), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "ElasticPoolResource.GetDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Returns elastic pool  metrics.
+        /// Gets a list of databases in an elastic pool.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/metrics</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/databases</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Metrics_ListElasticPool</description>
+        /// <description>Databases_ListByElasticPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="SqlMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlMetric> GetMetrics(string filter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlDatabaseResource> GetDatabases(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseDatabasesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseDatabasesRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseResource(Client, SqlDatabaseData.DeserializeSqlDatabaseData(e)), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "ElasticPoolResource.GetDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Returns elastic pool metric definitions.
+        /// Gets a list of operations performed on the elastic pool.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/metricDefinitions</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricDefinitions_ListElasticPool</description>
+        /// <description>ElasticPoolOperations_ListByElasticPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ElasticPoolOperationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ElasticPoolOperationData> GetElasticPoolOperationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolOperationsRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticPoolOperationsRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ElasticPoolOperationData.DeserializeElasticPoolOperationData(e), _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Returns elastic pool metric definitions.
+        /// Gets a list of operations performed on the elastic pool.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/metricDefinitions</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricDefinitions_ListElasticPool</description>
+        /// <description>ElasticPoolOperations_ListByElasticPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ElasticPoolOperationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ElasticPoolOperationData> GetElasticPoolOperations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns elastic pool activities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/elasticPoolActivity</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPoolActivities_ListByElasticPool</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticPoolActivity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPoolActivity> GetElasticPoolActivitiesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticPoolActivity.DeserializeElasticPoolActivity, _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns elastic pool activities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/elasticPoolActivity</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPoolActivities_ListByElasticPool</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticPoolActivity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPoolActivity> GetElasticPoolActivities(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ElasticPoolActivity.DeserializeElasticPoolActivity, _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns activity on databases inside of an elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/elasticPoolDatabaseActivity</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPoolDatabaseActivities_ListByElasticPool</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticPoolDatabaseActivity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivitiesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolDatabaseActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity, _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns activity on databases inside of an elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/elasticPoolDatabaseActivity</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPoolDatabaseActivities_ListByElasticPool</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticPoolDatabaseActivity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivities(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolDatabaseActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity, _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolOperationsRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticPoolOperationsRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ElasticPoolOperationData.DeserializeElasticPoolOperationData(e), _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -507,6 +478,10 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticPoolOperations_Cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,6 +514,10 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ElasticPoolOperations_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The operation identifier. </param>
@@ -560,94 +539,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of operations performed on the elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPoolOperations_ListByElasticPool</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticPoolOperationData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPoolOperationData> GetElasticPoolOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolOperationsRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticPoolOperationsRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ElasticPoolOperationData.DeserializeElasticPoolOperationData, _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of operations performed on the elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticPoolOperations_ListByElasticPool</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticPoolOperationData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPoolOperationData> GetElasticPoolOperations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolOperationsRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticPoolOperationsRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ElasticPoolOperationData.DeserializeElasticPoolOperationData, _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of databases in an elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/databases</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_ListByElasticPool</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlDatabaseResource> GetDatabasesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseDatabasesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseDatabasesRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseResource(Client, SqlDatabaseData.DeserializeSqlDatabaseData(e)), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "ElasticPoolResource.GetDatabases", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of databases in an elastic pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/databases</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_ListByElasticPool</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlDatabaseResource> GetDatabases(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseDatabasesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseDatabasesRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseResource(Client, SqlDatabaseData.DeserializeSqlDatabaseData(e)), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "ElasticPoolResource.GetDatabases", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Failovers an elastic pool.
         /// <list type="bullet">
         /// <item>
@@ -657,6 +548,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Failover</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -692,6 +591,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Failover</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -725,6 +632,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -780,6 +695,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -834,6 +757,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -883,6 +814,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -931,6 +870,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -983,6 +930,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

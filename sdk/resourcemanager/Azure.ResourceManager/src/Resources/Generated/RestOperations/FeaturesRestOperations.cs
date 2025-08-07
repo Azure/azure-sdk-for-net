@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.Resources
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListAllRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Features/features", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAllRequest(string subscriptionId)
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureOperationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,13 +105,26 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureOperationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceProviderNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Features/providers/", false);
+            uri.AppendPath(resourceProviderNamespace, true);
+            uri.AppendPath("/features", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceProviderNamespace)
@@ -141,7 +164,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureOperationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,13 +191,27 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureOperationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceProviderNamespace, string featureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Features/providers/", false);
+            uri.AppendPath(resourceProviderNamespace, true);
+            uri.AppendPath("/features/", false);
+            uri.AppendPath(featureName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceProviderNamespace, string featureName)
@@ -217,7 +254,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -248,7 +285,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -257,6 +294,21 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterRequestUri(string subscriptionId, string resourceProviderNamespace, string featureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Features/providers/", false);
+            uri.AppendPath(resourceProviderNamespace, true);
+            uri.AppendPath("/features/", false);
+            uri.AppendPath(featureName, true);
+            uri.AppendPath("/register", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterRequest(string subscriptionId, string resourceProviderNamespace, string featureName)
@@ -300,7 +352,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -329,13 +381,28 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUnregisterRequestUri(string subscriptionId, string resourceProviderNamespace, string featureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Features/providers/", false);
+            uri.AppendPath(resourceProviderNamespace, true);
+            uri.AppendPath("/features/", false);
+            uri.AppendPath(featureName, true);
+            uri.AppendPath("/unregister", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUnregisterRequest(string subscriptionId, string resourceProviderNamespace, string featureName)
@@ -379,7 +446,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -408,13 +475,21 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FeatureData.DeserializeFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAllNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAllNextPageRequest(string nextLink, string subscriptionId)
@@ -449,7 +524,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureOperationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -476,13 +551,21 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureOperationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceProviderNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceProviderNamespace)
@@ -519,7 +602,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureOperationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -548,7 +631,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         FeatureOperationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FeatureOperationsListResult.DeserializeFeatureOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

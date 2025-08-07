@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The provisioning state. </summary>
+    /// <summary> Workload Network DHCP provisioning state. </summary>
     public readonly partial struct WorkloadNetworkDhcpProvisioningState : IEquatable<WorkloadNetworkDhcpProvisioningState>
     {
         private readonly string _value;
@@ -24,28 +24,28 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static WorkloadNetworkDhcpProvisioningState Succeeded { get; } = new WorkloadNetworkDhcpProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static WorkloadNetworkDhcpProvisioningState Failed { get; } = new WorkloadNetworkDhcpProvisioningState(FailedValue);
-        /// <summary> Building. </summary>
-        public static WorkloadNetworkDhcpProvisioningState Building { get; } = new WorkloadNetworkDhcpProvisioningState(BuildingValue);
-        /// <summary> Deleting. </summary>
-        public static WorkloadNetworkDhcpProvisioningState Deleting { get; } = new WorkloadNetworkDhcpProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static WorkloadNetworkDhcpProvisioningState Updating { get; } = new WorkloadNetworkDhcpProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static WorkloadNetworkDhcpProvisioningState Canceled { get; } = new WorkloadNetworkDhcpProvisioningState(CanceledValue);
+        /// <summary> is building. </summary>
+        public static WorkloadNetworkDhcpProvisioningState Building { get; } = new WorkloadNetworkDhcpProvisioningState(BuildingValue);
+        /// <summary> is deleting. </summary>
+        public static WorkloadNetworkDhcpProvisioningState Deleting { get; } = new WorkloadNetworkDhcpProvisioningState(DeletingValue);
+        /// <summary> is updating. </summary>
+        public static WorkloadNetworkDhcpProvisioningState Updating { get; } = new WorkloadNetworkDhcpProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkDhcpProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkDhcpProvisioningState left, WorkloadNetworkDhcpProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkDhcpProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(WorkloadNetworkDhcpProvisioningState left, WorkloadNetworkDhcpProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadNetworkDhcpProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkDhcpProvisioningState"/>. </summary>
         public static implicit operator WorkloadNetworkDhcpProvisioningState(string value) => new WorkloadNetworkDhcpProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

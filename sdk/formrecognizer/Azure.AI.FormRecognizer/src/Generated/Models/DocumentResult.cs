@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> A set of extracted fields corresponding to the input document. </summary>
     internal partial class DocumentResult
     {
-        /// <summary> Initializes a new instance of DocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentResult"/>. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
@@ -31,7 +30,7 @@ namespace Azure.AI.FormRecognizer.Models
             Fields = fields;
         }
 
-        /// <summary> Initializes a new instance of DocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentResult"/>. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>

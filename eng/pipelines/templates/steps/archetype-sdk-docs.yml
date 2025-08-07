@@ -1,36 +1,32 @@
+parameters:
+  - name: Artifacts
+    type: object
+    default: []
+  - name: ServiceDirectory
+    type: string
+  - name: DocGenerationDir
+    type: string
+    default: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
+  - name: LibType
+    type: string
+    default: client
+  - name: PackageInfoFolder
+    type: string
+
+
 steps:
-  - pwsh: |
-      # Download and Extract or restore Packages required for Doc Generation
-      Write-Host "Download and Extract mdoc to Build.BinariesDirectory/mdoc"
-      try {
-        # Currently having issues downloading from github on windows 2022 so moved to a blob account
-        # https://github.com/mono/api-doc-tools/releases/download/mdoc-5.7.4.9/mdoc-5.7.4.9.zip
-        Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://azuresdkdocs.blob.core.windows.net/tools/mdoc/5.7.4.9/mdoc-5.7.4.9.zip" `
-          -OutFile "mdoc.zip" | Wait-Process; Expand-Archive -Path "mdoc.zip" -DestinationPath "./mdoc/"
-      } catch {
-        $_.Exception | Format-List | Out-Host
-        throw
-      }
-
-      Write-Host "Download and Extract docfx to Build.BinariesDirectory/docfx"
-      try {
-        # Currently having issues downloading from github on windows 2022 so moved to a blob account
-        # https://github.com/dotnet/docfx/releases/download/$(DocFxVersion)/docfx.zip
-        Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://azuresdkdocs.blob.core.windows.net/tools/docfx/$(DocFxVersion)/docfx.zip" `
-        -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
-      } catch {
-        $_.Exception | Format-List | Out-Host
-        throw
-      }
-
-      Write-Host "Restore ${{parameters.DocGenerationDir}}/assets/docgen.csproj, to get ECMA2Yml and popimport"
-      dotnet restore "${{parameters.DocGenerationDir}}/assets/docgen.csproj" /p:BuildBinariesDirectory=$(Build.BinariesDirectory)
-    workingDirectory: $(Build.BinariesDirectory)
+  - task: PowerShell@2
     displayName: Download and Extract Required Software
+    inputs:
+      pwsh: true
+      filePath: eng/scripts/doc-generation.ps1
+      workingDirectory: $(Build.BinariesDirectory)
+    env:
+      DOC_GENERATION_DIR: ${{ parameters.DocGenerationDir }}
 
   - ${{ each artifact in parameters.Artifacts }}:
     - task: PowerShell@2
-      displayName: Build DocFx Documenttion Site for ${{artifact.name}}
+      displayName: Build DocFx Documentation Site for ${{artifact.name}}
       inputs:
         pwsh: true
         filePath: $(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-Api-Docs.ps1
@@ -38,9 +34,47 @@ steps:
           -ArtifactName '${{artifact.name}}'
           -ServiceDirectory '${{parameters.ServiceDirectory}}'
           -ArtifactsDirectoryName '${{artifact.directoryName}}'
-          -LibType '${{parameters.LibType}}'
           -RepoRoot $(Build.SourcesDirectory)
           -BinDirectory $(Build.BinariesDirectory)
           -DocGenDir ${{parameters.DocGenerationDir}}
           -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)'
           -verbose
+
+  # artifacts will only be blank if the template is called with no Artifact parameter,
+  # which should only happen in the case of a PR build. In this case we locate all that were directly
+  # changed and build their docs.
+  - ${{ if not(parameters.Artifacts) }}:
+    - pwsh: |
+        $failedBuild = $false
+
+        $targetedPackages = Get-ChildItem -Recurse "${{ parameters.PackageInfoFolder }}" *.json
+          | ForEach-Object { Get-Content -Raw _ | ConvertFrom-Json }
+          | Where-Object { $_.IncludedForValidation -ne $true }
+
+        if ($targetedPackages) {
+          foreach($pkg in $targetedPackages) {
+            $artifactDirectory = ($pkg.DirectoryPath -split '\\|/')[-1]
+
+            &"$(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-Api-Docs.ps1" `
+              -ArtifactName '$($pkg.name)' `
+              -ServiceDirectory '$($pkg.ServiceDirectory)' `
+              -ArtifactsDirectoryName '$artifactDirectory' `
+              -RepoRoot $(Build.SourcesDirectory) `
+              -BinDirectory $(Build.BinariesDirectory) `
+              -DocGenDir ${{parameters.DocGenerationDir}} `
+              -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)' `
+              -verbose
+
+            if ($LASTEXITCODE -ne 0) {
+              $failedBuild = $true
+            }
+          }
+        }
+        else {
+          Write-Host "No directly targeted packages found. Skipping doc generation."
+        }
+
+        if ($failedBuild) {
+          exit 1
+        }
+      displayName: Generate Docs for Pull Request

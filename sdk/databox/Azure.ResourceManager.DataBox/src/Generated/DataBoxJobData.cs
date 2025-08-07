@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Models;
@@ -20,7 +19,39 @@ namespace Azure.ResourceManager.DataBox
     /// </summary>
     public partial class DataBoxJobData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxJobData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="transferType"> Type of the data transfer. </param>
         /// <param name="sku"> The sku type. </param>
@@ -33,7 +64,7 @@ namespace Azure.ResourceManager.DataBox
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,6 +79,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
         /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
         /// <param name="status"> Name of the stage which is in progress. </param>
+        /// <param name="delayedStage"> Name of the stage where delay might be present. </param>
         /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="details">
@@ -59,9 +91,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="deliveryType"> Delivery type of Job. </param>
         /// <param name="deliveryInfo"> Delivery Info of Job. </param>
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
+        /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
         /// <param name="sku"> The sku type. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, DataBoxSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DataBoxStageName? delayedStage, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, bool? areAllDevicesLost, DataBoxSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TransferType = transferType;
             IsCancellable = isCancellable;
@@ -71,6 +105,7 @@ namespace Azure.ResourceManager.DataBox
             ReverseTransportPreferenceUpdate = reverseTransportPreferenceUpdate;
             IsPrepareToShipEnabled = isPrepareToShipEnabled;
             Status = status;
+            DelayedStage = delayedStage;
             StartOn = startOn;
             Error = error;
             Details = details;
@@ -78,8 +113,15 @@ namespace Azure.ResourceManager.DataBox
             DeliveryType = deliveryType;
             DeliveryInfo = deliveryInfo;
             IsCancellableWithoutFee = isCancellableWithoutFee;
+            AreAllDevicesLost = areAllDevicesLost;
             Sku = sku;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobData"/> for deserialization. </summary>
+        internal DataBoxJobData()
+        {
         }
 
         /// <summary> Type of the data transfer. </summary>
@@ -98,6 +140,8 @@ namespace Azure.ResourceManager.DataBox
         public bool? IsPrepareToShipEnabled { get; }
         /// <summary> Name of the stage which is in progress. </summary>
         public DataBoxStageName? Status { get; }
+        /// <summary> Name of the stage where delay might be present. </summary>
+        public DataBoxStageName? DelayedStage { get; }
         /// <summary> Time at which the job was started in UTC ISO 8601 format. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> Top level error for the job. </summary>
@@ -128,6 +172,8 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary> Flag to indicate cancellation of scheduled job. </summary>
         public bool? IsCancellableWithoutFee { get; }
+        /// <summary> Flag to indicate if all devices associated with the job are lost. </summary>
+        public bool? AreAllDevicesLost { get; }
         /// <summary> The sku type. </summary>
         public DataBoxSku Sku { get; set; }
         /// <summary> Msi identity of the resource. </summary>

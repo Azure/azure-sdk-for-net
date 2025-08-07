@@ -10,23 +10,27 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The RecordingStateResponse. </summary>
     public partial class RecordingStateResult
     {
-        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingStateResult"/>. </summary>
         internal RecordingStateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingStateResult"/>. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
-        internal RecordingStateResult(string recordingId, RecordingState? recordingState)
+        /// <param name="recordingKind"></param>
+        internal RecordingStateResult(string recordingId, RecordingState? recordingState, RecordingKind? recordingKind)
         {
             RecordingId = recordingId;
             RecordingState = recordingState;
+            RecordingKind = recordingKind;
         }
 
         /// <summary> Gets the recording id. </summary>
         public string RecordingId { get; }
         /// <summary> Gets the recording state. </summary>
         public RecordingState? RecordingState { get; }
+        /// <summary> Gets the recording kind. </summary>
+        public RecordingKind? RecordingKind { get; }
     }
 }

@@ -6,22 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a raw output data source. This data source type is only applicable/usable when using the query testing API. You cannot create a job with this data source type or add an output of this data source type to an existing job. </summary>
     public partial class RawOutputDatasource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of RawOutputDatasource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RawOutputDatasource"/>. </summary>
         public RawOutputDatasource()
         {
             OutputDataSourceType = "Raw";
         }
 
-        /// <summary> Initializes a new instance of RawOutputDatasource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RawOutputDatasource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="payloadUri"> The SAS URL to a blob where the output should be written. If this property is not set, output data will be written into a temporary storage, and a SAS URL to that temporary storage will be included in the result. </param>
-        internal RawOutputDatasource(string outputDataSourceType, Uri payloadUri) : base(outputDataSourceType)
+        internal RawOutputDatasource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri payloadUri) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             PayloadUri = payloadUri;
             OutputDataSourceType = outputDataSourceType ?? "Raw";

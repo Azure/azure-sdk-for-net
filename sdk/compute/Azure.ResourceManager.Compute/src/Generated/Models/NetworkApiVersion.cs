@@ -22,15 +22,13 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TwoThousandTwenty1101Value = "2020-11-01";
-
-        /// <summary> 2020-11-01. </summary>
-        public static NetworkApiVersion TwoThousandTwenty1101 { get; } = new NetworkApiVersion(TwoThousandTwenty1101Value);
+        private const string v2020_11_01Value = "2020-11-01";
+        private const string v2022_11_01Value = "2022-11-01";
         /// <summary> Determines if two <see cref="NetworkApiVersion"/> values are the same. </summary>
         public static bool operator ==(NetworkApiVersion left, NetworkApiVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkApiVersion"/> values are not the same. </summary>
         public static bool operator !=(NetworkApiVersion left, NetworkApiVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkApiVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkApiVersion"/>. </summary>
         public static implicit operator NetworkApiVersion(string value) => new NetworkApiVersion(value);
 
         /// <inheritdoc />
@@ -41,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

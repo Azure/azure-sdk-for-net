@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -25,7 +26,12 @@ namespace Microsoft.Extensions.Azure
             return ClientFactory.CreateCredential(configuration) ?? _globalOptions.CurrentValue.CredentialFactory(_serviceProvider);
         }
 
-        public override object CreateClientOptions(Type optionsType, object serviceVersion, IConfiguration configuration)
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        public override object CreateClientOptions(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type optionsType,
+            object serviceVersion,
+            IConfiguration configuration)
         {
             if (optionsType == null) throw new ArgumentNullException(nameof(optionsType));
             var options = ClientFactory.CreateClientOptions(serviceVersion, optionsType);
@@ -41,7 +47,12 @@ namespace Microsoft.Extensions.Azure
             return options;
         }
 
-        public override object CreateClient(Type clientType, IConfiguration configuration, TokenCredential credential, object clientOptions)
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        public override object CreateClient(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type clientType,
+            IConfiguration configuration,
+            TokenCredential credential,
+            object clientOptions)
         {
             if (clientType == null) throw new ArgumentNullException(nameof(clientType));
             if (configuration == null) throw new ArgumentNullException(nameof(configuration));

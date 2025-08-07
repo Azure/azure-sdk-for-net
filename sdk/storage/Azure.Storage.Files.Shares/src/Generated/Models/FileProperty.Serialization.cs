@@ -50,7 +50,14 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 etag = (string)etagElement;
             }
-            return new FileProperty(contentLength, creationTime, lastAccessTime, lastWriteTime, changeTime, lastModified, etag);
+            return new FileProperty(
+                contentLength,
+                creationTime,
+                lastAccessTime,
+                lastWriteTime,
+                changeTime,
+                lastModified,
+                etag);
         }
     }
 }

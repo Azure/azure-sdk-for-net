@@ -787,11 +787,9 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftextanalytics%2FAzure.AI.TextAnalytics%2FREADME.png)
-
 <!-- LINKS -->
 [textanalytics_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/src
-[language_service_docs]: https://docs.microsoft.com/azure/cognitive-services/language-service/
+[language_service_docs]: https://learn.microsoft.com/azure/cognitive-services/language-service/
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
@@ -802,21 +800,21 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
 [mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
 
-[healthcare]: https://docs.microsoft.com/azure/cognitive-services/language-service/text-analytics-for-health/overview?tabs=ner
-[language_detection]: https://docs.microsoft.com/azure/cognitive-services/language-service/language-detection/overview
-[sentiment_analysis]: https://docs.microsoft.com/azure/cognitive-services/language-service/sentiment-opinion-mining/overview
-[key_phrase_extraction]: https://docs.microsoft.com/azure/cognitive-services/language-service/key-phrase-extraction/overview
-[named_entity_recognition]: https://docs.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/overview
-[entity_linking]: https://docs.microsoft.com/azure/cognitive-services/language-service/entity-linking/overview
-[named_entities_categories]: https://docs.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories
-[pii_entity]:https://docs.microsoft.com/azure/cognitive-services/language-service/personally-identifiable-information/overview
+[healthcare]: https://learn.microsoft.com/azure/cognitive-services/language-service/text-analytics-for-health/overview?tabs=ner
+[language_detection]: https://learn.microsoft.com/azure/cognitive-services/language-service/language-detection/overview
+[sentiment_analysis]: https://learn.microsoft.com/azure/cognitive-services/language-service/sentiment-opinion-mining/overview
+[key_phrase_extraction]: https://learn.microsoft.com/azure/cognitive-services/language-service/key-phrase-extraction/overview
+[named_entity_recognition]: https://learn.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/overview
+[entity_linking]: https://learn.microsoft.com/azure/cognitive-services/language-service/entity-linking/overview
+[named_entities_categories]: https://learn.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories
+[pii_entity]:https://learn.microsoft.com/azure/cognitive-services/language-service/personally-identifiable-information/overview
 
 [textanalytics_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/src/TextAnalyticsClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
-[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
-[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
-[aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
-[custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[cognitive_auth]: https://learn.microsoft.com/azure/cognitive-services/authentication
+[register_aad_app]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[aad_grant_access]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[custom_subdomain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [data_limits]: https://aka.ms/azsdk/textanalytics/data-limits
@@ -835,7 +833,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [extractive_summarize_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_ExtractiveSummarize.md
 [abstractive_summarize_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_AbstractiveSummarize.md
 
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [service_access]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [create_ta_resource_azure_portal]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account

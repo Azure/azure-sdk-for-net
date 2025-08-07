@@ -12,30 +12,38 @@ namespace Azure.ResourceManager.Blueprint.Tests
 {
     public class BlueprintManagementTestBase : ManagementRecordedTestBase<BlueprintManagementTestEnvironment>
     {
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected ArmClient Client { get; private set; }
-
-        protected BlueprintManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        protected SubscriptionResource DefaultSubscription { get; private set; }
+        public BlueprintManagementTestBase(bool isAsync) : base(isAsync)
         {
         }
 
-        protected BlueprintManagementTestBase(bool isAsync)
-            : base(isAsync)
+        public BlueprintManagementTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(DefaultLocation)
+                {
+                    Tags =
+                    {
+                        { "test", "env" }
+                    }
+                });
+            return rgOp.Value;
         }
     }
 }

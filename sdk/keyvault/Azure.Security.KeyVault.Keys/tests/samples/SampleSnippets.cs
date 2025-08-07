@@ -187,10 +187,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
             // encrypt the data using the algorithm RSAOAEP
-            EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RsaOaep, plaintext);
+            EncryptResult encryptResult = cryptoClient.Encrypt(EncryptionAlgorithm.RsaOaep256, plaintext);
 
             // decrypt the encrypted data.
-            DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
+            DecryptResult decryptResult = cryptoClient.Decrypt(EncryptionAlgorithm.RsaOaep256, encryptResult.Ciphertext);
             #endregion
         }
 

@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
             string resourceName = Recording.GenerateAssetName("resource");
-            FirmwareWorkspaceCollection resource = rg.GetFirmwareWorkspaces();
+            FirmwareAnalysisWorkspaceCollection resource = rg.GetFirmwareAnalysisWorkspaces();
             var newWorkspaceData = await resource.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceName,
-                new FirmwareWorkspaceData(AzureLocation.EastUS));
+                new FirmwareAnalysisWorkspaceData(AzureLocation.EastUS));
             newWorkspaceData.Value.Data.Name.Should().Be(resourceName);
         }
 
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.EastUS);
             string resourceName = Recording.GenerateAssetName("resource");
-            FirmwareWorkspaceCollection resource = rg.GetFirmwareWorkspaces();
+            FirmwareAnalysisWorkspaceCollection resource = rg.GetFirmwareAnalysisWorkspaces();
             await resource.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceName,
-                new FirmwareWorkspaceData(AzureLocation.EastUS));
+                new FirmwareAnalysisWorkspaceData(AzureLocation.EastUS));
 
-            var retrievedWorkspace = await rg.GetFirmwareWorkspaceAsync(resourceName);
+            var retrievedWorkspace = await rg.GetFirmwareAnalysisWorkspaceAsync(resourceName);
             retrievedWorkspace.Value.Data.Name.Should().Be(resourceName);
         }
 
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.EastUS);
             string resourceName = Recording.GenerateAssetName("resource");
-            FirmwareWorkspaceCollection resource = rg.GetFirmwareWorkspaces();
+            FirmwareAnalysisWorkspaceCollection resource = rg.GetFirmwareAnalysisWorkspaces();
             await resource.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceName,
-                new FirmwareWorkspaceData(AzureLocation.EastUS));
+                new FirmwareAnalysisWorkspaceData(AzureLocation.EastUS));
 
-            var retrievedWorkspace = await rg.GetFirmwareWorkspaceAsync(resourceName);
+            var retrievedWorkspace = await rg.GetFirmwareAnalysisWorkspaceAsync(resourceName);
             await retrievedWorkspace.Value.DeleteAsync(WaitUntil.Completed);
-            var action = async () => await rg.GetFirmwareWorkspaceAsync(resourceName);
+            var action = async () => await rg.GetFirmwareAnalysisWorkspaceAsync(resourceName);
             await action.Should ().ThrowAsync<Exception> ();
         }
     }

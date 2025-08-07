@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(EdgeKeyVaultSyncStatus left, EdgeKeyVaultSyncStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeKeyVaultSyncStatus"/> values are not the same. </summary>
         public static bool operator !=(EdgeKeyVaultSyncStatus left, EdgeKeyVaultSyncStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EdgeKeyVaultSyncStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeKeyVaultSyncStatus"/>. </summary>
         public static implicit operator EdgeKeyVaultSyncStatus(string value) => new EdgeKeyVaultSyncStatus(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

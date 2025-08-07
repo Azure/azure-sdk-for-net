@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.WebJobs.Host.Listeners;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Azure.WebJobs.Host.Listeners;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -19,12 +20,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>Gets or sets the attribute.</summary>
         /// <value>The event trigger attribute assigned to the function that the listener is attached to.</value>
-        internal AuthenticationEventsTriggerAttribute Attribute { get; set; }
+        internal WebJobsAuthenticationEventsTriggerAttribute Attribute { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AuthenticationEventListener" /> class.</summary>
         /// <param name="executor">The executor.</param>
         /// <param name="attribute">The attribute to assign to the listener.</param>
-        internal AuthenticationEventListener(ITriggeredFunctionExecutor executor, AuthenticationEventsTriggerAttribute attribute)
+        internal AuthenticationEventListener(ITriggeredFunctionExecutor executor, WebJobsAuthenticationEventsTriggerAttribute attribute)
         {
             FunctionExecutor = executor;
             Attribute = attribute;

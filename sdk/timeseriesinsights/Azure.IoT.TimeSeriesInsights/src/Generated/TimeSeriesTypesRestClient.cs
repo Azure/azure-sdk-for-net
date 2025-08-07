@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -74,7 +73,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         GetTypesPage value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetTypesPage.DeserializeGetTypesPage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -96,7 +95,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         GetTypesPage value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetTypesPage.DeserializeGetTypesPage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -147,7 +146,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         TypesBatchResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TypesBatchResponse.DeserializeTypesBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -175,7 +174,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         TypesBatchResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TypesBatchResponse.DeserializeTypesBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

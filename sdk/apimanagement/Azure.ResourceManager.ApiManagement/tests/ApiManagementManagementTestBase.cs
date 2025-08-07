@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 {
     public class ApiManagementManagementTestBase : ManagementRecordedTestBase<ApiManagementManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+        protected AzureLocation DefaultLocation => AzureLocation.WestUS2;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
@@ -31,6 +31,22 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+        }
+
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(AzureLocation location)
+        {
+            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(location)
+                {
+                    Tags =
+                    {
+                        { "test", "env" }
+                    }
+                });
+            return rgOp.Value;
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()

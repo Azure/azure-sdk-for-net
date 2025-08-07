@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="VerifyWithoutCodeAsync(string,NumberVerificationWithoutCodeContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyWithoutCodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("ipv4", "12.12.12.12"), new Uri("https://www.contoso.com"))
+{
+    PhoneNumber = "+14424318793",
+    HashedPhoneNumber = "bwsl",
+};
+Response response = await client.VerifyWithoutCodeAsync("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="VerifyWithoutCode(string,NumberVerificationWithoutCodeContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyWithoutCode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("ipv4", "12.12.12.12"), new Uri("https://www.contoso.com"))
+{
+    PhoneNumber = "+14424318793",
+    HashedPhoneNumber = "bwsl",
+};
+Response response = client.VerifyWithoutCode("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="VerifyWithoutCodeAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyWithoutCodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    networkIdentifier = new
+    {
+        identifierType = "ipv4",
+        identifier = "12.12.12.12",
+    },
+    phoneNumber = "+14424318793",
+    hashedPhoneNumber = "bwsl",
+    redirectUri = "https://www.contoso.com",
+});
+Response response = await client.VerifyWithoutCodeAsync("zdgrzzaxlodrvewbksn", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="VerifyWithoutCode(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyWithoutCode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    networkIdentifier = new
+    {
+        identifierType = "ipv4",
+        identifier = "12.12.12.12",
+    },
+    phoneNumber = "+14424318793",
+    hashedPhoneNumber = "bwsl",
+    redirectUri = "https://www.contoso.com",
+});
+Response response = client.VerifyWithoutCode("zdgrzzaxlodrvewbksn", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="VerifyWithCodeAsync(string,NumberVerificationWithCodeContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyWithCodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("yn");
+Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="VerifyWithCode(string,NumberVerificationWithCodeContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyWithCode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("yn");
+Response<NumberVerificationResult> response = client.VerifyWithCode("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="VerifyWithCodeAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyWithCodeAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    apcCode = "yn",
+});
+Response response = await client.VerifyWithCodeAsync("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code></example>
+    </member>
+    <member name="VerifyWithCode(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyWithCode and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    apcCode = "yn",
+});
+Response response = client.VerifyWithCode("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

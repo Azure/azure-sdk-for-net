@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test.Shared;
 using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
@@ -56,8 +58,8 @@ namespace Azure.Storage.DataMovement.Tests
         public static BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey(this BlobsClientBuilder clientBuilder)
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumBlob);
 
-        public static BlobServiceClient GetServiceClient_OAuth(this BlobsClientBuilder clientBuilder)
-            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth);
+        public static BlobServiceClient GetServiceClient_OAuth(this BlobsClientBuilder clientBuilder, TokenCredential tokenCredential)
+            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, tokenCredential);
 
         public static BlobServiceClient GetServiceClient_OAuthAccount_SharedKey(this BlobsClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigOAuth);
@@ -71,7 +73,7 @@ namespace Azure.Storage.DataMovement.Tests
         public static BlobServiceClient GetServiceClient_SoftDelete(this BlobsClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigSoftDelete);
 
-        public static async Task<DisposingBlobContainer> GetTestContainerAsync(
+        public static async Task<DisposingContainer> GetTestContainerAsync(
             this BlobsClientBuilder clientBuilder,
             BlobServiceClient service = default,
             string containerName = default,
@@ -89,7 +91,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
-            return new DisposingBlobContainer(container);
+            return new DisposingContainer(container);
         }
 
         public static async Task<BlobContainerClient> GetContainerAsync(

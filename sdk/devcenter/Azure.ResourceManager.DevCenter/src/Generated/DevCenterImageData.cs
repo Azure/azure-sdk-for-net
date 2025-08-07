@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,44 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterImageData : ResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterImageData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageData"/>. </summary>
         public DevCenterImageData()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +68,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="recommendedMachineConfiguration"> The recommended machine configuration to use with the image. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="hibernateSupport"> Indicates whether this image has hibernate enabled. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
-        internal DevCenterImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, DevCenterProvisioningState? provisioningState, DevCenterHibernateSupport? hibernateSupport) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, DevCenterProvisioningState? provisioningState, DevCenterHibernateSupport? hibernateSupport, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Publisher = publisher;
@@ -43,6 +78,7 @@ namespace Azure.ResourceManager.DevCenter
             RecommendedMachineConfiguration = recommendedMachineConfiguration;
             ProvisioningState = provisioningState;
             HibernateSupport = hibernateSupport;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The description of the image. </summary>

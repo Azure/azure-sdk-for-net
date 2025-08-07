@@ -5,12 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify which protocols are enabled. </summary>
     public partial class MediaEnabledProtocols
     {
-        /// <summary> Initializes a new instance of MediaEnabledProtocols. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/>. </summary>
         /// <param name="isDownloadEnabled"> Enable Download protocol or not. </param>
         /// <param name="isDashEnabled"> Enable DASH protocol or not. </param>
         /// <param name="isHlsEnabled"> Enable HLS protocol or not. </param>
@@ -21,6 +56,26 @@ namespace Azure.ResourceManager.Media.Models
             IsDashEnabled = isDashEnabled;
             IsHlsEnabled = isHlsEnabled;
             IsSmoothStreamingEnabled = isSmoothStreamingEnabled;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/>. </summary>
+        /// <param name="isDownloadEnabled"> Enable Download protocol or not. </param>
+        /// <param name="isDashEnabled"> Enable DASH protocol or not. </param>
+        /// <param name="isHlsEnabled"> Enable HLS protocol or not. </param>
+        /// <param name="isSmoothStreamingEnabled"> Enable SmoothStreaming protocol or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaEnabledProtocols(bool isDownloadEnabled, bool isDashEnabled, bool isHlsEnabled, bool isSmoothStreamingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IsDownloadEnabled = isDownloadEnabled;
+            IsDashEnabled = isDashEnabled;
+            IsHlsEnabled = isHlsEnabled;
+            IsSmoothStreamingEnabled = isSmoothStreamingEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/> for deserialization. </summary>
+        internal MediaEnabledProtocols()
+        {
         }
 
         /// <summary> Enable Download protocol or not. </summary>

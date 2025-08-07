@@ -5,25 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMage Azure v2 specific protection profile details. </summary>
     public partial class InMageAzureV2PolicyDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2PolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2PolicyDetails"/>. </summary>
         internal InMageAzureV2PolicyDetails()
         {
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2PolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2PolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
         /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
         /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. </param>
-        internal InMageAzureV2PolicyDetails(string instanceType, int? crashConsistentFrequencyInMinutes, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? appConsistentFrequencyInMinutes, string multiVmSyncStatus) : base(instanceType)
+        internal InMageAzureV2PolicyDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? crashConsistentFrequencyInMinutes, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? appConsistentFrequencyInMinutes, string multiVmSyncStatus) : base(instanceType, serializedAdditionalRawData)
         {
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
             RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutes;

@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformBuildResource" /> and their operations.
-    /// Each <see cref="AppPlatformBuildResource" /> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource" />.
-    /// To get an <see cref="AppPlatformBuildCollection" /> instance call the GetAppPlatformBuilds method from an instance of <see cref="AppPlatformBuildServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformBuildResource"/> and their operations.
+    /// Each <see cref="AppPlatformBuildResource"/> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource"/>.
+    /// To get an <see cref="AppPlatformBuildCollection"/> instance call the GetAppPlatformBuilds method from an instance of <see cref="AppPlatformBuildServiceResource"/>.
     /// </summary>
     public partial class AppPlatformBuildCollection : ArmCollection, IEnumerable<AppPlatformBuildResource>, IAsyncEnumerable<AppPlatformBuildResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_CreateOrUpdateBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,9 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformBuildBuildServiceRestClient.CreateOrUpdateBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()));
+                var uri = _appPlatformBuildBuildServiceRestClient.CreateCreateOrUpdateBuildRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_CreateOrUpdateBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +139,9 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformBuildBuildServiceRestClient.CreateOrUpdateBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()));
+                var uri = _appPlatformBuildBuildServiceRestClient.CreateCreateOrUpdateBuildRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +163,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +209,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildName"> The name of the build resource. </param>
@@ -219,15 +254,23 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_ListBuilds</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformBuildResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformBuildResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformBuildResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildBuildServiceRestClient.CreateListBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildBuildServiceRestClient.CreateListBuildsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResource(Client, AppPlatformBuildData.DeserializeAppPlatformBuildData(e)), _appPlatformBuildBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResource(Client, AppPlatformBuildData.DeserializeAppPlatformBuildData(e)), _appPlatformBuildBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,15 +284,23 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_ListBuilds</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformBuildResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformBuildResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformBuildResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildBuildServiceRestClient.CreateListBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildBuildServiceRestClient.CreateListBuildsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResource(Client, AppPlatformBuildData.DeserializeAppPlatformBuildData(e)), _appPlatformBuildBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResource(Client, AppPlatformBuildData.DeserializeAppPlatformBuildData(e)), _appPlatformBuildBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,6 +313,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +357,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildName"> The name of the build resource. </param>
@@ -314,6 +381,96 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 var response = _appPlatformBuildBuildServiceRestClient.GetBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="buildName"> The name of the build resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformBuildResource>> GetIfExistsAsync(string buildName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
+
+            using var scope = _appPlatformBuildBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformBuildBuildServiceRestClient.GetBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformBuildResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="buildName"> The name of the build resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformBuildResource> GetIfExists(string buildName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
+
+            using var scope = _appPlatformBuildBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformBuildBuildServiceRestClient.GetBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformBuildResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

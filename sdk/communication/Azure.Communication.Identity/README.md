@@ -50,7 +50,7 @@ Clients also have the option to authenticate using a valid Active Directory toke
 
 ```C# Snippet:CreateCommunicationIdentityFromToken
 var endpoint = new Uri("https://my-resource.communication.azure.com");
-TokenCredential tokenCredential = new DefaultAzureCredential();
+TokenCredential tokenCredential = TestEnvironment.Credential;
 var client = new CommunicationIdentityClient(endpoint, tokenCredential);
 ```
 
@@ -82,6 +82,31 @@ CommunicationUserIdentifier user = userResponse.Value;
 Console.WriteLine($"User id: {user.Id}");
 ```
 
+## Create a user with an associated customId
+
+The `CommunicationIdentityClient` allows you to create users with an associated customId. This customId can be used to map your application's user identities with Azure Communication Services identities.
+
+```C# Snippet:CreateCommunicationUserWithCustomIdAsync
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
+CommunicationUserIdentifier user = userResponse.Value;
+Console.WriteLine($"User id: {user.Id}");
+```
+
+If you call the CreateUser method again with the same customId, it will return the same user.Id. Therefore, you do not need to store this mapping yourself.
+
+## Get user detail
+
+The CommunicationIdentityClient can be used to retrieve details about a user. This includes the user's ID, customId ID, and the last time a token was issued for the user.
+
+```C# Snippet:GetUserDetailAsync
+Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
+CommunicationUserIdentifier user = userResponse.Value;
+var userDetails = await client.GetUserDetailAsync(user);
+Console.WriteLine($"User id: {userDetails.Value.User.Id}");
+Console.WriteLine($"Custom id: {userDetails.Value.CustomId}");
+Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
+```
+
 ### Getting a token for an existing user
 
 ```C# Snippet:CreateCommunicationTokenAsync
@@ -91,6 +116,14 @@ DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
 Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
+
+The `GetToken` function takes in a list of `CommunicationTokenScope`. Scope options include:
+- `Chat` (Use this for full access to Chat APIs)
+- `VoIP` (Use this for full access to Calling APIs)
+- `ChatJoin` (Access to Chat APIs but without the authorization to create, delete or update chat threads)
+- `ChatJoinLimited` (A more limited version of ChatJoin that doesn't allow to add or remove participants)
+- `VoIPJoin` (Access to Calling APIs but without the authorization to start new calls)
+
 
 It's also possible to create a Communication Identity access token by customizing the expiration time. Validity period of the token must be within [1,24] hours range. If not provided, the default value of 24 hours will be used.
 
@@ -190,10 +223,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 <!--[package]: https://www.nuget.org/packages/Azure.Communication.Identity-->
-[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
+[product_docs]: https://learn.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
-[user_access_token]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
-[communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_portal]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
-[communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[user_access_token]: https://learn.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[communication_resource_docs]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://learn.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
+[communication_resource_create_net]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator ==(ResourceTypeName left, ResourceTypeName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceTypeName"/> values are not the same. </summary>
         public static bool operator !=(ResourceTypeName left, ResourceTypeName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceTypeName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeName"/>. </summary>
         public static implicit operator ResourceTypeName(string value) => new ResourceTypeName(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

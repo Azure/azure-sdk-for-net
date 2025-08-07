@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
+    /// <summary> The indicator of whether the console access is enabled. </summary>
     public readonly partial struct ConsoleEnabled : IEquatable<ConsoleEnabled>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ConsoleEnabled left, ConsoleEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConsoleEnabled"/> values are not the same. </summary>
         public static bool operator !=(ConsoleEnabled left, ConsoleEnabled right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConsoleEnabled"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsoleEnabled"/>. </summary>
         public static implicit operator ConsoleEnabled(string value) => new ConsoleEnabled(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApplicationInsights.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.ApplicationInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2015-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/WorkItemConfigs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -78,7 +92,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfigurationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkItemConfigurationsListResult.DeserializeWorkItemConfigurationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +121,28 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfigurationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkItemConfigurationsListResult.DeserializeWorkItemConfigurationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, WorkItemCreateConfiguration workItemConfigurationProperties)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/WorkItemConfigs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, WorkItemCreateConfiguration workItemConfigurationProperties)
@@ -135,7 +164,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(workItemConfigurationProperties);
+            content.JsonWriter.WriteObjectValue(workItemConfigurationProperties, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -163,7 +192,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkItemConfiguration.DeserializeWorkItemConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -194,13 +223,28 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkItemConfiguration.DeserializeWorkItemConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDefaultRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/DefaultWorkItemConfig", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDefaultRequest(string subscriptionId, string resourceGroupName, string resourceName)
@@ -244,7 +288,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkItemConfiguration.DeserializeWorkItemConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -273,13 +317,29 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkItemConfiguration.DeserializeWorkItemConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string workItemConfigId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/WorkItemConfigs/", false);
+            uri.AppendPath(workItemConfigId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string workItemConfigId)
@@ -355,6 +415,22 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
+        internal RequestUriBuilder CreateGetItemRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string workItemConfigId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/WorkItemConfigs/", false);
+            uri.AppendPath(workItemConfigId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetItemRequest(string subscriptionId, string resourceGroupName, string resourceName, string workItemConfigId)
         {
             var message = _pipeline.CreateMessage();
@@ -399,7 +475,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkItemConfiguration.DeserializeWorkItemConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -430,13 +506,29 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkItemConfiguration.DeserializeWorkItemConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateItemRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string workItemConfigId, WorkItemCreateConfiguration workItemConfigurationProperties)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/WorkItemConfigs/", false);
+            uri.AppendPath(workItemConfigId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateItemRequest(string subscriptionId, string resourceGroupName, string resourceName, string workItemConfigId, WorkItemCreateConfiguration workItemConfigurationProperties)
@@ -459,7 +551,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(workItemConfigurationProperties);
+            content.JsonWriter.WriteObjectValue(workItemConfigurationProperties, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -489,7 +581,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WorkItemConfiguration.DeserializeWorkItemConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -522,7 +614,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case 200:
                     {
                         WorkItemConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WorkItemConfiguration.DeserializeWorkItemConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

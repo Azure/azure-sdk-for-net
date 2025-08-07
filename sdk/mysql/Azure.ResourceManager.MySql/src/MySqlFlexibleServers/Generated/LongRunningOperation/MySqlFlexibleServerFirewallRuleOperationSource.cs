@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         MySqlFlexibleServerFirewallRuleResource IOperationSource<MySqlFlexibleServerFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(document.RootElement);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlFlexibleServerFirewallRuleResource(_client, data);
         }
 
         async ValueTask<MySqlFlexibleServerFirewallRuleResource> IOperationSource<MySqlFlexibleServerFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(document.RootElement);
-            return new MySqlFlexibleServerFirewallRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
+            return await Task.FromResult(new MySqlFlexibleServerFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

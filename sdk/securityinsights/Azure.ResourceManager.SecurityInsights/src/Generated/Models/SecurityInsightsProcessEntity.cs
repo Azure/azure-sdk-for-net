@@ -15,19 +15,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a process entity. </summary>
     public partial class SecurityInsightsProcessEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsProcessEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsProcessEntity"/>. </summary>
         public SecurityInsightsProcessEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Process;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsProcessEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsProcessEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="accountEntityId"> The account entity id running the processes. </param>
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="imageFileEntityId"> Image file entity id. </param>
         /// <param name="parentProcessEntityId"> The parent process entity id. </param>
         /// <param name="processId"> The process ID. </param>
-        internal SecurityInsightsProcessEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string accountEntityId, string commandLine, DateTimeOffset? createdOn, SecurityInsightsProcessElevationToken? elevationToken, string hostEntityId, string hostLogonSessionEntityId, string imageFileEntityId, string parentProcessEntityId, string processId) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsProcessEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string accountEntityId, string commandLine, DateTimeOffset? createdOn, SecurityInsightsProcessElevationToken? elevationToken, string hostEntityId, string hostLogonSessionEntityId, string imageFileEntityId, string parentProcessEntityId, string processId) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -85,26 +86,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The account entity id running the processes. </summary>
+        [WirePath("properties.accountEntityId")]
         public string AccountEntityId { get; }
         /// <summary> The command line used to create the process. </summary>
+        [WirePath("properties.commandLine")]
         public string CommandLine { get; }
         /// <summary> The time when the process started to run. </summary>
+        [WirePath("properties.creationTimeUtc")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The elevation token associated with the process. </summary>
+        [WirePath("properties.elevationToken")]
         public SecurityInsightsProcessElevationToken? ElevationToken { get; set; }
         /// <summary> The host entity id on which the process was running. </summary>
+        [WirePath("properties.hostEntityId")]
         public string HostEntityId { get; }
         /// <summary> The session entity id in which the process was running. </summary>
+        [WirePath("properties.hostLogonSessionEntityId")]
         public string HostLogonSessionEntityId { get; }
         /// <summary> Image file entity id. </summary>
+        [WirePath("properties.imageFileEntityId")]
         public string ImageFileEntityId { get; }
         /// <summary> The parent process entity id. </summary>
+        [WirePath("properties.parentProcessEntityId")]
         public string ParentProcessEntityId { get; }
         /// <summary> The process ID. </summary>
+        [WirePath("properties.processId")]
         public string ProcessId { get; }
     }
 }

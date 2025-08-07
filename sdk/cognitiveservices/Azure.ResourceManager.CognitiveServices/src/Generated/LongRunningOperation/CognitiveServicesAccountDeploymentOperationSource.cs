@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.CognitiveServices
 
         CognitiveServicesAccountDeploymentResource IOperationSource<CognitiveServicesAccountDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(document.RootElement);
+            var data = ModelReaderWriter.Read<CognitiveServicesAccountDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
             return new CognitiveServicesAccountDeploymentResource(_client, data);
         }
 
         async ValueTask<CognitiveServicesAccountDeploymentResource> IOperationSource<CognitiveServicesAccountDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(document.RootElement);
-            return new CognitiveServicesAccountDeploymentResource(_client, data);
+            var data = ModelReaderWriter.Read<CognitiveServicesAccountDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
+            return await Task.FromResult(new CognitiveServicesAccountDeploymentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

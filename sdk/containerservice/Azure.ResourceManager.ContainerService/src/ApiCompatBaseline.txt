@@ -1,0 +1,6 @@
+# Baselining these until the next GA as they are not actual compat issues.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile.IsBlobCsiDriverEnabled' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile.IsDiskCsiDriverEnabled' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile.IsDiskCsiDriverEnabled' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile.IsFileCsiDriverEnabled' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.ResourceManager.ContainerService.Models.ManagedClusterStorageProfile.IsSnapshotControllerEnabled' in the contract but not the implementation.

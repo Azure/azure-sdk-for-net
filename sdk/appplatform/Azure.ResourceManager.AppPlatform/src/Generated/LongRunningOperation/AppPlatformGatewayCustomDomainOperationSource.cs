@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformGatewayCustomDomainResource IOperationSource<AppPlatformGatewayCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(document.RootElement);
+            var data = ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return new AppPlatformGatewayCustomDomainResource(_client, data);
         }
 
         async ValueTask<AppPlatformGatewayCustomDomainResource> IOperationSource<AppPlatformGatewayCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(document.RootElement);
-            return new AppPlatformGatewayCustomDomainResource(_client, data);
+            var data = ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
+            return await Task.FromResult(new AppPlatformGatewayCustomDomainResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

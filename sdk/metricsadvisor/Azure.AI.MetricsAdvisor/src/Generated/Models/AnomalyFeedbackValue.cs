@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyFeedbackValue. </summary>
     internal partial class AnomalyFeedbackValue
     {
-        /// <summary> Initializes a new instance of AnomalyFeedbackValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyFeedbackValue"/>. </summary>
         /// <param name="anomalyValue"></param>
         public AnomalyFeedbackValue(AnomalyValue anomalyValue)
         {

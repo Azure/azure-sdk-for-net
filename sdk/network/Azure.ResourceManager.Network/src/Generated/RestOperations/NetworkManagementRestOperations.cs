@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -33,8 +32,114 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2024-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteBastionShareableLinkByTokenRequestUri(string subscriptionId, string resourceGroupName, string bastionHostName, BastionShareableLinkTokenListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/bastionHosts/", false);
+            uri.AppendPath(bastionHostName, true);
+            uri.AppendPath("/deleteShareableLinksByToken", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteBastionShareableLinkByTokenRequest(string subscriptionId, string resourceGroupName, string bastionHostName, BastionShareableLinkTokenListContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/bastionHosts/", false);
+            uri.AppendPath(bastionHostName, true);
+            uri.AppendPath("/deleteShareableLinksByToken", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes the Bastion Shareable Links for all the tokens specified in the request. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
+        /// <param name="content"> Post request for Delete Bastion Shareable Link By Token endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteBastionShareableLinkByTokenAsync(string subscriptionId, string resourceGroupName, string bastionHostName, BastionShareableLinkTokenListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateDeleteBastionShareableLinkByTokenRequest(subscriptionId, resourceGroupName, bastionHostName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes the Bastion Shareable Links for all the tokens specified in the request. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
+        /// <param name="content"> Post request for Delete Bastion Shareable Link By Token endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteBastionShareableLinkByToken(string subscriptionId, string resourceGroupName, string bastionHostName, BastionShareableLinkTokenListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateDeleteBastionShareableLinkByTokenRequest(subscriptionId, resourceGroupName, bastionHostName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCheckDnsNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, string domainNameLabel)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/CheckDnsNameAvailability", false);
+            uri.AppendQuery("domainNameLabel", domainNameLabel, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckDnsNameAvailabilityRequest(string subscriptionId, AzureLocation location, string domainNameLabel)
@@ -76,7 +181,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         DnsNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DnsNameAvailabilityResult.DeserializeDnsNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -104,13 +209,25 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         DnsNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DnsNameAvailabilityResult.DeserializeDnsNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExpressRouteProviderPortRequestUri(string subscriptionId, string providerport)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteProviderPorts/", false);
+            uri.AppendPath(providerport, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExpressRouteProviderPortRequest(string subscriptionId, string providerport)
@@ -149,7 +266,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ExpressRouteProviderPortData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -178,7 +295,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ExpressRouteProviderPortData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -187,6 +304,25 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListActiveConnectivityConfigurationsRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, ActiveConfigurationContent content, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
+            uri.AppendPath(networkManagerName, true);
+            uri.AppendPath("/listActiveConnectivityConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListActiveConnectivityConfigurationsRequest(string subscriptionId, string resourceGroupName, string networkManagerName, ActiveConfigurationContent content, int? top)
@@ -212,7 +348,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -241,7 +377,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ActiveConnectivityConfigurationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ActiveConnectivityConfigurationsListResult.DeserializeActiveConnectivityConfigurationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -273,13 +409,32 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ActiveConnectivityConfigurationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ActiveConnectivityConfigurationsListResult.DeserializeActiveConnectivityConfigurationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListActiveSecurityAdminRulesRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, ActiveConfigurationContent content, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
+            uri.AppendPath(networkManagerName, true);
+            uri.AppendPath("/listActiveSecurityAdminRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListActiveSecurityAdminRulesRequest(string subscriptionId, string resourceGroupName, string networkManagerName, ActiveConfigurationContent content, int? top)
@@ -305,7 +460,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -334,7 +489,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ActiveSecurityAdminRulesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ActiveSecurityAdminRulesListResult.DeserializeActiveSecurityAdminRulesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -366,13 +521,32 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         ActiveSecurityAdminRulesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ActiveSecurityAdminRulesListResult.DeserializeActiveSecurityAdminRulesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNetworkManagerEffectiveConnectivityConfigurationsRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, NetworkManagementQueryContent content, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
+            uri.AppendPath(virtualNetworkName, true);
+            uri.AppendPath("/listNetworkManagerEffectiveConnectivityConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListNetworkManagerEffectiveConnectivityConfigurationsRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, NetworkManagementQueryContent content, int? top)
@@ -398,7 +572,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -427,7 +601,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerEffectiveConnectivityConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkManagerEffectiveConnectivityConfigurationListResult.DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -459,13 +633,32 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerEffectiveConnectivityConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkManagerEffectiveConnectivityConfigurationListResult.DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNetworkManagerEffectiveSecurityAdminRulesRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, NetworkManagementQueryContent content, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
+            uri.AppendPath(virtualNetworkName, true);
+            uri.AppendPath("/listNetworkManagerEffectiveSecurityAdminRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListNetworkManagerEffectiveSecurityAdminRulesRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, NetworkManagementQueryContent content, int? top)
@@ -491,7 +684,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -520,7 +713,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerEffectiveSecurityAdminRulesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkManagerEffectiveSecurityAdminRulesListResult.DeserializeNetworkManagerEffectiveSecurityAdminRulesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -552,13 +745,28 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         NetworkManagerEffectiveSecurityAdminRulesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkManagerEffectiveSecurityAdminRulesListResult.DeserializeNetworkManagerEffectiveSecurityAdminRulesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSupportedSecurityProvidersRequestUri(string subscriptionId, string resourceGroupName, string virtualWanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
+            uri.AppendPath(virtualWanName, true);
+            uri.AppendPath("/supportedSecurityProviders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSupportedSecurityProvidersRequest(string subscriptionId, string resourceGroupName, string virtualWanName)
@@ -602,7 +810,7 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualWanSecurityProviders value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualWanSecurityProviders.DeserializeVirtualWanSecurityProviders(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -631,13 +839,28 @@ namespace Azure.ResourceManager.Network
                 case 200:
                     {
                         VirtualWanSecurityProviders value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualWanSecurityProviders.DeserializeVirtualWanSecurityProviders(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequestUri(string subscriptionId, string resourceGroupName, string virtualWanName, VirtualWanVpnProfileContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
+            uri.AppendPath(virtualWanName, true);
+            uri.AppendPath("/GenerateVpnProfile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(string subscriptionId, string resourceGroupName, string virtualWanName, VirtualWanVpnProfileContent content)
@@ -659,7 +882,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;

@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/attestation/Azure.ResourceManager.Attestation",
-  "Tag": ""
+  "Tag": "net/attestation/Azure.ResourceManager.Attestation_68e2f40d08"
 }

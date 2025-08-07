@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(TemplateDeploymentPreflightOption left, TemplateDeploymentPreflightOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemplateDeploymentPreflightOption"/> values are not the same. </summary>
         public static bool operator !=(TemplateDeploymentPreflightOption left, TemplateDeploymentPreflightOption right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TemplateDeploymentPreflightOption"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TemplateDeploymentPreflightOption"/>. </summary>
         public static implicit operator TemplateDeploymentPreflightOption(string value) => new TemplateDeploymentPreflightOption(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

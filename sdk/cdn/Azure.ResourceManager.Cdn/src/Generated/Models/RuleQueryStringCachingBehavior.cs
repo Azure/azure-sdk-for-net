@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </summary>
+    /// <summary>
+    /// Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings.
+    /// Serialized Name: RuleQueryStringCachingBehavior
+    /// </summary>
     public readonly partial struct RuleQueryStringCachingBehavior : IEquatable<RuleQueryStringCachingBehavior>
     {
         private readonly string _value;
@@ -27,19 +30,31 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string IgnoreSpecifiedQueryStringsValue = "IgnoreSpecifiedQueryStrings";
         private const string IncludeSpecifiedQueryStringsValue = "IncludeSpecifiedQueryStrings";
 
-        /// <summary> IgnoreQueryString. </summary>
+        /// <summary>
+        /// IgnoreQueryString
+        /// Serialized Name: RuleQueryStringCachingBehavior.IgnoreQueryString
+        /// </summary>
         public static RuleQueryStringCachingBehavior IgnoreQueryString { get; } = new RuleQueryStringCachingBehavior(IgnoreQueryStringValue);
-        /// <summary> UseQueryString. </summary>
+        /// <summary>
+        /// UseQueryString
+        /// Serialized Name: RuleQueryStringCachingBehavior.UseQueryString
+        /// </summary>
         public static RuleQueryStringCachingBehavior UseQueryString { get; } = new RuleQueryStringCachingBehavior(UseQueryStringValue);
-        /// <summary> IgnoreSpecifiedQueryStrings. </summary>
+        /// <summary>
+        /// IgnoreSpecifiedQueryStrings
+        /// Serialized Name: RuleQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings
+        /// </summary>
         public static RuleQueryStringCachingBehavior IgnoreSpecifiedQueryStrings { get; } = new RuleQueryStringCachingBehavior(IgnoreSpecifiedQueryStringsValue);
-        /// <summary> IncludeSpecifiedQueryStrings. </summary>
+        /// <summary>
+        /// IncludeSpecifiedQueryStrings
+        /// Serialized Name: RuleQueryStringCachingBehavior.IncludeSpecifiedQueryStrings
+        /// </summary>
         public static RuleQueryStringCachingBehavior IncludeSpecifiedQueryStrings { get; } = new RuleQueryStringCachingBehavior(IncludeSpecifiedQueryStringsValue);
         /// <summary> Determines if two <see cref="RuleQueryStringCachingBehavior"/> values are the same. </summary>
         public static bool operator ==(RuleQueryStringCachingBehavior left, RuleQueryStringCachingBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleQueryStringCachingBehavior"/> values are not the same. </summary>
         public static bool operator !=(RuleQueryStringCachingBehavior left, RuleQueryStringCachingBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RuleQueryStringCachingBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleQueryStringCachingBehavior"/>. </summary>
         public static implicit operator RuleQueryStringCachingBehavior(string value) => new RuleQueryStringCachingBehavior(value);
 
         /// <inheritdoc />
@@ -50,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public static bool operator ==(DataLakeAnalyticsSubscriptionState left, DataLakeAnalyticsSubscriptionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataLakeAnalyticsSubscriptionState"/> values are not the same. </summary>
         public static bool operator !=(DataLakeAnalyticsSubscriptionState left, DataLakeAnalyticsSubscriptionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataLakeAnalyticsSubscriptionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataLakeAnalyticsSubscriptionState"/>. </summary>
         public static implicit operator DataLakeAnalyticsSubscriptionState(string value) => new DataLakeAnalyticsSubscriptionState(value);
 
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

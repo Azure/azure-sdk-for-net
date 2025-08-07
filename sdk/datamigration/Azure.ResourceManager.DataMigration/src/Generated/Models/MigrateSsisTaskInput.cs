@@ -6,25 +6,40 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for task that migrates SSIS packages from SQL Server to Azure SQL Database Managed Instance. </summary>
     public partial class MigrateSsisTaskInput : SqlMigrationTaskInput
     {
-        /// <summary> Initializes a new instance of MigrateSsisTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="ssisMigrationInfo"> SSIS package migration information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="ssisMigrationInfo"/> is null. </exception>
-        public MigrateSsisTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, SsisMigrationInfo ssisMigrationInfo) : base(sourceConnectionInfo, targetConnectionInfo)
+        public MigrateSsisTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, SsisMigrationInfo ssisMigrationInfo) : base(sourceConnectionInfo, targetConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
             Argument.AssertNotNull(ssisMigrationInfo, nameof(ssisMigrationInfo));
 
             SsisMigrationInfo = ssisMigrationInfo;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskInput"/>. </summary>
+        /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
+        /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="ssisMigrationInfo"> SSIS package migration information. </param>
+        internal MigrateSsisTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData, SsisMigrationInfo ssisMigrationInfo) : base(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData)
+        {
+            SsisMigrationInfo = ssisMigrationInfo;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskInput"/> for deserialization. </summary>
+        internal MigrateSsisTaskInput()
+        {
         }
 
         /// <summary> SSIS package migration information. </summary>

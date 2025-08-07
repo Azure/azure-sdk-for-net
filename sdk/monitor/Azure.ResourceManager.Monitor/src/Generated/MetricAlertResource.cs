@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +20,16 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a MetricAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MetricAlertResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMetricAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMetricAlert method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MetricAlertResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMetricAlertResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMetricAlert method.
     /// </summary>
     public partial class MetricAlertResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MetricAlertResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ruleName"> The ruleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ruleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}";
@@ -40,12 +42,15 @@ namespace Azure.ResourceManager.Monitor
         private readonly MetricAlertsStatusRestOperations _metricAlertsStatusRestClient;
         private readonly MetricAlertData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/metricAlerts";
+
         /// <summary> Initializes a new instance of the <see cref="MetricAlertResource"/> class for mocking. </summary>
         protected MetricAlertResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MetricAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MetricAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MetricAlertResource(ArmClient client, MetricAlertData data) : this(client, data.Id)
@@ -68,9 +73,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/metricAlerts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -104,6 +106,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +145,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +186,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -179,7 +205,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _metricAlertRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation(response);
+                var uri = _metricAlertRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -202,6 +230,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -213,7 +249,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _metricAlertRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MonitorArmOperation(response);
+                var uri = _metricAlertRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -235,6 +273,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +316,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The parameters of the rule to update. </param>
@@ -304,14 +358,18 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlertsStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricAlertStatus> GetAllMetricAlertsStatusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MetricAlertStatus.DeserializeMetricAlertStatus(e), _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -325,14 +383,18 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlertsStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricAlertStatus> GetAllMetricAlertsStatus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MetricAlertStatus.DeserializeMetricAlertStatus(e), _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -346,19 +408,23 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlertsStatus_ListByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="statusName"> The name of the status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="statusName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricAlertStatus> GetAllMetricAlertsStatusByNameAsync(string statusName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MetricAlertStatus.DeserializeMetricAlertStatus(e), _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -372,19 +438,23 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlertsStatus_ListByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="statusName"> The name of the status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="statusName"/> is null. </exception>
-        /// <returns> A collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricAlertStatus> GetAllMetricAlertsStatusByName(string statusName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MetricAlertStatus.DeserializeMetricAlertStatus(e), _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -397,6 +467,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,6 +530,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -506,6 +592,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -555,6 +649,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -603,6 +705,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -655,6 +765,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetricAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

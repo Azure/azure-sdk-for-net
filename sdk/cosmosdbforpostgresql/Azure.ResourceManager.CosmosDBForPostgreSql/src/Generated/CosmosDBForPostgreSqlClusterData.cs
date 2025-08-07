@@ -19,16 +19,48 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CosmosDBForPostgreSqlClusterData(AzureLocation location) : base(location)
         {
-            ServerNames = new ChangeTrackingList<ServerNameItem>();
+            ServerNames = new ChangeTrackingList<CosmosDBForPostgreSqlServerNameItem>();
             ReadReplicas = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="citusVersion"> The Citus extension version on all cluster servers. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
         /// <param name="preferredPrimaryZone"> Preferred primary availability zone (AZ) for all cluster servers. </param>
-        /// <param name="isShardsOnCoordinatorEnabled"> If shards on coordinator is enabled or not for the cluster. </param>
+        /// <param name="isShardsOnCoordinatorEnabled"> If distributed tables are placed on coordinator or not. Should be set to 'true' on single node clusters. Requires shard rebalancing after value is changed. </param>
         /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the cluster. </param>
         /// <param name="coordinatorServerEdition"> The edition of a coordinator server (default: GeneralPurpose). Required for creation. </param>
         /// <param name="coordinatorStorageQuotaInMb"> The storage of a server in MB. Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
@@ -61,7 +93,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="readReplicas"> The array of read replica clusters. </param>
         /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for the cluster. </param>
         /// <param name="privateEndpointConnections"> The private endpoint connections for a cluster. </param>
-        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<ServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string provisioningState, string state, string postgresqlVersion, string citusVersion, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow, string preferredPrimaryZone, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> serverNames, ResourceIdentifier sourceResourceId, AzureLocation? sourceLocation, DateTimeOffset? pointInTimeUTC, IReadOnlyList<string> readReplicas, DateTimeOffset? earliestRestoreOn, IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -89,6 +122,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ReadReplicas = readReplicas;
             EarliestRestoreOn = earliestRestoreOn;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterData"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlClusterData()
+        {
         }
 
         /// <summary> The administrator's login name of the servers in the cluster. </summary>
@@ -107,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public CosmosDBForPostgreSqlMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> Preferred primary availability zone (AZ) for all cluster servers. </summary>
         public string PreferredPrimaryZone { get; set; }
-        /// <summary> If shards on coordinator is enabled or not for the cluster. </summary>
+        /// <summary> If distributed tables are placed on coordinator or not. Should be set to 'true' on single node clusters. Requires shard rebalancing after value is changed. </summary>
         public bool? IsShardsOnCoordinatorEnabled { get; set; }
         /// <summary> If high availability (HA) is enabled or not for the cluster. </summary>
         public bool? IsHAEnabled { get; set; }
@@ -130,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> If public access is enabled on worker nodes. </summary>
         public bool? IsNodePublicIPAccessEnabled { get; set; }
         /// <summary> The list of server names in the cluster. </summary>
-        public IReadOnlyList<ServerNameItem> ServerNames { get; }
+        public IReadOnlyList<CosmosDBForPostgreSqlServerNameItem> ServerNames { get; }
         /// <summary> The resource id of source cluster for read replica clusters. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary> The Azure region of source cluster for read replica clusters. </summary>

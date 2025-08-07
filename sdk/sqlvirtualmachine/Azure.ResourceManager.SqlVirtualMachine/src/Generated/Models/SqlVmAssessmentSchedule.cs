@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> The SqlVmAssessmentSchedule. </summary>
     public partial class SqlVmAssessmentSchedule
     {
-        /// <summary> Initializes a new instance of SqlVmAssessmentSchedule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmAssessmentSchedule"/>. </summary>
         public SqlVmAssessmentSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmAssessmentSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAssessmentSchedule"/>. </summary>
         /// <param name="isEnabled"> Enable or disable assessment schedule on SQL virtual machine. </param>
         /// <param name="weeklyInterval"> Number of weeks to schedule between 2 assessment runs. Takes value from 1-6. </param>
         /// <param name="monthlyOccurrence"> Occurrence of the DayOfWeek day within a month to schedule assessment. Takes values: 1,2,3,4 and -1. Use -1 for last DayOfWeek day of the month. </param>
         /// <param name="dayOfWeek"> Day of the week to run assessment. </param>
         /// <param name="startTime"> Time of the day in HH:mm format. Eg. 17:30. </param>
-        internal SqlVmAssessmentSchedule(bool? isEnabled, int? weeklyInterval, int? monthlyOccurrence, SqlVmAssessmentDayOfWeek? dayOfWeek, string startTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmAssessmentSchedule(bool? isEnabled, int? weeklyInterval, int? monthlyOccurrence, SqlVmAssessmentDayOfWeek? dayOfWeek, string startTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             WeeklyInterval = weeklyInterval;
             MonthlyOccurrence = monthlyOccurrence;
             DayOfWeek = dayOfWeek;
             StartTime = startTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable or disable assessment schedule on SQL virtual machine. </summary>

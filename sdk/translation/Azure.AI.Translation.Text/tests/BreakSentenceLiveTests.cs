@@ -31,8 +31,8 @@ namespace Azure.AI.Translation.Text.Tests
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("en", response.Value[0].DetectedLanguage.Language);
-            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
-            Assert.AreEqual(11, response.Value[0].SentLen[0]);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Confidence);
+            Assert.AreEqual(11, response.Value[0].SentencesLengths[0]);
         }
 
         [RecordedTest]
@@ -49,7 +49,7 @@ namespace Azure.AI.Translation.Text.Tests
             int[] expectedLengths = new[] { 78, 41, 110, 46 };
             for (int i = 0; i < expectedLengths.Length; i++)
             {
-                Assert.AreEqual(expectedLengths[i], response.Value[0].SentLen[i]);
+                Assert.AreEqual(expectedLengths[i], response.Value[0].SentencesLengths[i]);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Azure.AI.Translation.Text.Tests
             var response = await client.FindSentenceBoundariesAsync(inputText, language: "zh-Hans", script: "Latn").ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(18, response.Value[0].SentLen[0]);
+            Assert.AreEqual(18, response.Value[0].SentencesLengths[0]);
         }
 
         [RecordedTest]
@@ -81,8 +81,8 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("en", response.Value[0].DetectedLanguage.Language);
             Assert.AreEqual("ar", response.Value[1].DetectedLanguage.Language);
-            Assert.AreEqual(11, response.Value[0].SentLen[0]);
-            Assert.AreEqual(32, response.Value[1].SentLen[0]);
+            Assert.AreEqual(11, response.Value[0].SentencesLengths[0]);
+            Assert.AreEqual(32, response.Value[1].SentencesLengths[0]);
         }
     }
 }

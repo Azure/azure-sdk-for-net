@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeeringData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PeeringData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU that defines the tier and kind of the peering. </param>
         /// <param name="kind"> The kind of the peering. </param>
@@ -32,7 +64,7 @@ namespace Azure.ResourceManager.Peering
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of PeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +77,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="exchange"> The properties that define an exchange peering. </param>
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, DirectPeeringProperties direct, ExchangePeeringProperties exchange, string peeringLocation, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, DirectPeeringProperties direct, ExchangePeeringProperties exchange, string peeringLocation, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -53,6 +86,12 @@ namespace Azure.ResourceManager.Peering
             Exchange = exchange;
             PeeringLocation = peeringLocation;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeeringData"/> for deserialization. </summary>
+        internal PeeringData()
+        {
         }
 
         /// <summary> The SKU that defines the tier and kind of the peering. </summary>

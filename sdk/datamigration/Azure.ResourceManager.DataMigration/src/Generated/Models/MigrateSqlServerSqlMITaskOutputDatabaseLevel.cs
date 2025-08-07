@@ -7,23 +7,23 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSqlServerSqlMITaskOutputDatabaseLevel. </summary>
     public partial class MigrateSqlServerSqlMITaskOutputDatabaseLevel : MigrateSqlServerSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>. </summary>
         internal MigrateSqlServerSqlMITaskOutputDatabaseLevel()
         {
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "DatabaseLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="sizeMB"> Size of the database in megabytes. </param>
         /// <param name="state"> Current state of migration. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id, string resultType, string databaseName, double? sizeMB, MigrationState? state, DatabaseMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        internal MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, double? sizeMB, DataMigrationState? state, DatabaseMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             SizeMB = sizeMB;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Size of the database in megabytes. </summary>
         public double? SizeMB { get; }
         /// <summary> Current state of migration. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Current stage of migration. </summary>
         public DatabaseMigrationStage? Stage { get; }
         /// <summary> Migration start time. </summary>
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration progress message. </summary>
         public string Message { get; }
         /// <summary> Migration exceptions and warnings. </summary>
-        public IReadOnlyList<ReportableException> ExceptionsAndWarnings { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
     }
 }

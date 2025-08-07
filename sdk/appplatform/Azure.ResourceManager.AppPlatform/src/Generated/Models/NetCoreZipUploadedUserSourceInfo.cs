@@ -5,24 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Uploaded Jar binary for a deployment. </summary>
     public partial class NetCoreZipUploadedUserSourceInfo : AppPlatformUploadedUserSourceInfo
     {
-        /// <summary> Initializes a new instance of NetCoreZipUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetCoreZipUploadedUserSourceInfo"/>. </summary>
         public NetCoreZipUploadedUserSourceInfo()
         {
             UserSourceInfoType = "NetCoreZip";
         }
 
-        /// <summary> Initializes a new instance of NetCoreZipUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetCoreZipUploadedUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="relativePath"> Relative path of the storage which stores the source. </param>
         /// <param name="netCoreMainEntryPath"> The path to the .NET executable relative to zip root. </param>
         /// <param name="runtimeVersion"> Runtime version of the .Net file. </param>
-        internal NetCoreZipUploadedUserSourceInfo(string userSourceInfoType, string version, string relativePath, string netCoreMainEntryPath, string runtimeVersion) : base(userSourceInfoType, version, relativePath)
+        internal NetCoreZipUploadedUserSourceInfo(string userSourceInfoType, string version, IDictionary<string, BinaryData> serializedAdditionalRawData, string relativePath, string netCoreMainEntryPath, string runtimeVersion) : base(userSourceInfoType, version, serializedAdditionalRawData, relativePath)
         {
             NetCoreMainEntryPath = netCoreMainEntryPath;
             RuntimeVersion = runtimeVersion;

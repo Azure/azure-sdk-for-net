@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ResourceHealthEventImpactedResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceData"/>. </summary>
         internal ResourceHealthEventImpactedResourceData()
         {
             Info = new ChangeTrackingList<ResourceHealthKeyValueItem>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +65,25 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
         /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
         /// <param name="targetRegion"> Impacted resource region name. </param>
+        /// <param name="resourceName"> Resource name of the impacted resource. </param>
+        /// <param name="resourceGroup"> Resource group name of the impacted resource. </param>
+        /// <param name="status"> Status of the impacted resource. </param>
+        /// <param name="maintenanceStartTime"> Start time of maintenance for the impacted resource. </param>
+        /// <param name="maintenanceEndTime"> End time of maintenance for the impacted resource. </param>
         /// <param name="info"> Additional information. </param>
-        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, IReadOnlyList<ResourceHealthKeyValueItem> info) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, string resourceName, string resourceGroup, string status, string maintenanceStartTime, string maintenanceEndTime, IReadOnlyList<ResourceHealthKeyValueItem> info, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TargetResourceType = targetResourceType;
             TargetResourceId = targetResourceId;
             TargetRegion = targetRegion;
+            ResourceName = resourceName;
+            ResourceGroup = resourceGroup;
+            Status = status;
+            MaintenanceStartTime = maintenanceStartTime;
+            MaintenanceEndTime = maintenanceEndTime;
             Info = info;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource type within Microsoft cloud. </summary>
@@ -47,6 +92,16 @@ namespace Azure.ResourceManager.ResourceHealth
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary> Impacted resource region name. </summary>
         public string TargetRegion { get; }
+        /// <summary> Resource name of the impacted resource. </summary>
+        public string ResourceName { get; }
+        /// <summary> Resource group name of the impacted resource. </summary>
+        public string ResourceGroup { get; }
+        /// <summary> Status of the impacted resource. </summary>
+        public string Status { get; }
+        /// <summary> Start time of maintenance for the impacted resource. </summary>
+        public string MaintenanceStartTime { get; }
+        /// <summary> End time of maintenance for the impacted resource. </summary>
+        public string MaintenanceEndTime { get; }
         /// <summary> Additional information. </summary>
         public IReadOnlyList<ResourceHealthKeyValueItem> Info { get; }
     }

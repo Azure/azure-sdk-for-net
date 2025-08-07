@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Qumulo
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Qumulo
 
         QumuloFileSystemResource IOperationSource<QumuloFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<QumuloFileSystemResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQumuloContext.Default);
             return new QumuloFileSystemResource(_client, data);
         }
 
         async ValueTask<QumuloFileSystemResource> IOperationSource<QumuloFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(document.RootElement);
-            return new QumuloFileSystemResource(_client, data);
+            var data = ModelReaderWriter.Read<QumuloFileSystemResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQumuloContext.Default);
+            return await Task.FromResult(new QumuloFileSystemResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

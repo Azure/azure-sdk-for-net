@@ -2,77 +2,169 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
+    /// <summary>
+    /// Configuration manager for loading up token validations.
+    /// </summary>
     internal class ConfigurationManager
     {
-        public static Dictionary<string, ServiceInfo> SERVICES = new Dictionary<string, ServiceInfo>()
-        {
-            { "99045fe1-7639-4a75-9d4a-577b6ca3810f", new ServiceInfo("https://login.microsoftonline.com","https://sts.windows.net/{0}/","https://login.microsoftonline.com/{0}/v2.0"){DefaultService=true } } //Public cloud
-        };
+        private const string OpenIdConfigurationPath = "/.well-known/openid-configuration";
+        private const string OpenIdConfigurationPathV2 = "/v2.0/.well-known/openid-configuration";
 
-        private const string BYPASS_VALIDATION = "AuthenticationEvents__BypassTokenValidation";
-        private const string CUSTOM_CALLER_APPID = "AuthenticationEvents__CustomCallerAppId";
-        internal const string TENANT_ID = "AuthenticationEvents__TenantId";
-        internal const string AUDIENCE_APPID = "AuthenticationEvents__AudienceAppId";
-        internal const string TOKEN_V1_VERIFY = "appid";
-        internal const string TOKEN_V2_VERIFY = "azp";
+        private const string AuthenticationEventsKeyPrefix = "AuthenticationEvents__";
+        private const string AuthorityUrlKey = AuthenticationEventsKeyPrefix + "AuthorityUrl";
+        private const string AuthorizedPartyAppIdKey = AuthenticationEventsKeyPrefix + "AuthorizedPartyAppId";
+        private const string AudienceAppIdKey = AuthenticationEventsKeyPrefix + "AudienceAppId";
+        private const string BypassTokenValidationKey = AuthenticationEventsKeyPrefix + "BypassTokenValidation";
+        private const string IsUnsafeSupportLoggingEnabledKey = AuthenticationEventsKeyPrefix + "IsUnsafeSupportLoggingEnabled";
+
         private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
+
+        internal const string AppIdKey = "appid";
+        internal const string AzpKey = "azp";
+
         internal const string HEADER_EZAUTH_ICP = "X-MS-CLIENT-PRINCIPAL-IDP";
         internal const string HEADER_EZAUTH_ICP_VERIFY = "aad";
         internal const string HEADER_EZAUTH_PRINCIPAL = "X-MS-CLIENT-PRINCIPAL";
 
-        private readonly AuthenticationEventsTriggerAttribute triggerAttribute;
-        internal ConfigurationManager(AuthenticationEventsTriggerAttribute triggerAttribute)
+        /// <summary>
+        /// Annotation for the trigger attribute.
+        /// </summary>
+        private readonly WebJobsAuthenticationEventsTriggerAttribute triggerAttribute;
+
+        internal ConfigurationManager(WebJobsAuthenticationEventsTriggerAttribute triggerAttribute)
         {
             this.triggerAttribute = triggerAttribute;
         }
 
-        internal static bool BypassValidation => GetConfigValue(BYPASS_VALIDATION, false);
+        /// <summary>
+        /// Get the audience app id from the environment variable or use the default value from the trigger attribute.
+        /// REQUIRED FEILD
+        /// </summary>
+        internal string AudienceAppId
+        {
+            get
+            {
+                string value = GetConfigValue(AudienceAppIdKey, triggerAttribute?.AudienceAppId);
+
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new MissingFieldException(
+                        string.Format(
+                            provider: CultureInfo.CurrentCulture,
+                            format: AuthenticationEventResource.Ex_Trigger_ApplicationId_Required,
+                            arg0: AudienceAppIdKey));
+                }
+
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Get the OpenId connection host from the environment variable or use the default value.
+        /// REQUIRD FEILD
+        /// </summary>
+        internal string AuthorityUrl
+        {
+            get
+            {
+                string value = GetConfigValue(AuthorityUrlKey, triggerAttribute?.AuthorityUrl);
+
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new MissingFieldException(
+                        string.Format(
+                            provider: CultureInfo.CurrentCulture,
+                            format: AuthenticationEventResource.Ex_Trigger_AuthorityUrl_Required,
+                            arg0: AuthorityUrlKey));
+                }
+
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Get the OpenId connection host from the environment variable or use the default value.
+        /// OPTIONAL FEILD, defaults to public cloud id.
+        /// </summary>
+        internal string AuthorizedPartyAppId
+        {
+            get
+            {
+                string value = GetConfigValue(AuthorizedPartyAppIdKey, triggerAttribute?.AuthorizedPartyAppId);
+
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new MissingFieldException(
+                        string.Format(
+                            provider: CultureInfo.CurrentCulture,
+                            format: AuthenticationEventResource.Ex_Trigger_AuthorizedPartyApplicationId_Required,
+                            arg0: AuthorizedPartyAppIdKey));
+                }
+
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Show PII data in logs.
+        /// </summary>
+        internal static bool IsUnsafeSupportLoggingEnabled => GetConfigValue(IsUnsafeSupportLoggingEnabledKey, false);
+
+        /// <summary>
+        /// If we should bypass the token validation.
+        /// Use only for testing and development.
+        /// </summary>
+        internal static bool BypassValidation => GetConfigValue(BypassTokenValidationKey, false);
+
+        /// <summary>
+        /// If the EZAuth is enabled.
+        /// </summary>
         internal static bool EZAuthEnabled => GetConfigValue(EZAUTH_ENABLED, false);
-        internal static string CallerAppId => GetConfigValue(CUSTOM_CALLER_APPID, null);
-        internal string TenantId => GetConfigValue(TENANT_ID, triggerAttribute.TenantId);
-        internal string AudienceAppId => GetConfigValue(AUDIENCE_APPID, triggerAttribute.AudienceAppId);
 
-        internal static bool GetService(string serviceId, out ServiceInfo serviceInfo)
+        /// <summary>
+        /// Get the issuer string based on the token schema version.
+        /// </summary>
+        /// <param name="tokenSchemaVersion">v2 will return v2 odic url, v1 will return v1</param>
+        /// <returns></returns>
+        internal string GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions tokenSchemaVersion)
         {
-            serviceInfo = null;
-            if (serviceId is null)
-            {
-                throw new ArgumentNullException(nameof(serviceId));
-            }
-
-            if (CallerAppId != null && serviceId.Equals(CallerAppId))
-            {
-                serviceInfo = SERVICES.Values.FirstOrDefault(x => x.DefaultService);
-            }
-            else if (SERVICES.ContainsKey(serviceId))
-            {
-                serviceInfo = SERVICES[serviceId];
-            }
-
-            return serviceInfo != null;
+            return tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
+                AuthorityUrl + OpenIdConfigurationPathV2 :
+                AuthorityUrl + OpenIdConfigurationPath;
         }
 
-        internal static bool VerifyServiceId(string testId)
-        {
-            return GetService(testId, out _);
-        }
-
+        /// <summary>
+        /// Get config value from environment variable or use the default value.
+        /// </summary>
+        /// <param name="environmentVariable">Definied Azure function application settings</param>
+        /// <param name="defaultValue">Default value, most likely from auth trigger anotation</param>
+        /// <returns>Config Value found or default</returns>
         private static string GetConfigValue(string environmentVariable, string defaultValue)
         {
             return Environment.GetEnvironmentVariable(environmentVariable) ?? defaultValue;
         }
 
+        /// <summary>
+        /// Get config value from environment variable or use the default value.
+        /// </summary>
+        /// <typeparam name="T">Type the config value would be</typeparam>
+        /// <param name="environmentVariable">Definied Azure function application settings</param>
+        /// <param name="defaultValue">Default value, most likely from auth trigger anotation</param>
+        /// <returns>Config Value found or default</returns>
         private static T GetConfigValue<T>(string environmentVariable, T defaultValue) where T : struct
         {
-            return Environment.GetEnvironmentVariable(environmentVariable) == null ?
+            string value = GetConfigValue(environmentVariable, null);
+
+            return value == null ?
                 defaultValue :
-                (T)Convert.ChangeType(Environment.GetEnvironmentVariable(environmentVariable), typeof(T), CultureInfo.CurrentCulture);
+                (T)Convert.ChangeType(
+                    value: Environment.GetEnvironmentVariable(environmentVariable),
+                    conversionType: typeof(T),
+                    provider: CultureInfo.CurrentCulture);
         }
     }
 }

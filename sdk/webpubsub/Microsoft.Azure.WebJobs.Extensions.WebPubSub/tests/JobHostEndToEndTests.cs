@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Messaging.WebPubSub;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
@@ -53,6 +54,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var host = TestHelpers.NewHost(typeof(WebPubSubFuncs), configuration: FuncConfiguration);
 
             await host.GetJobHost().CallAsync("WebPubSubFuncs.TestWebPubSubInputConnection");
+
+            await host.GetJobHost().CallAsync("WebPubSubFuncs.TestMqttInputConnection");
         }
 
         [TestCase]
@@ -108,6 +111,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             {
                 // Valid case use default url for verification.
                 Assert.AreEqual("wss://abc/client/hubs/chat", connection.BaseUri.AbsoluteUri);
+            }
+            public static void TestMqttInputConnection(
+                [WebPubSubConnection(Hub = "chat", UserId = "aaa", ClientProtocol = WebPubSubClientProtocol.Mqtt)] WebPubSubConnection connection)
+            {
+                // Valid case use default url for verification.
+                Assert.AreEqual("wss://abc/clients/mqtt/hubs/chat", connection.BaseUri.AbsoluteUri);
             }
 
             public static async Task TestWebPubSubOutput(

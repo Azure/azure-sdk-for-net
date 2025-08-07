@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Logic.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.Logic
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, int? top, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, int? top, string filter)
@@ -80,7 +98,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +125,34 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, int? top, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, int? top, string filter)
@@ -163,7 +202,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,13 +231,27 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workflowName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workflowName)
@@ -241,7 +294,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowData.DeserializeLogicWorkflowData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -272,7 +325,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowData.DeserializeLogicWorkflowData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -281,6 +334,20 @@ namespace Azure.ResourceManager.Logic
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data)
@@ -301,7 +368,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -330,7 +397,7 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         LogicWorkflowData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowData.DeserializeLogicWorkflowData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -362,13 +429,27 @@ namespace Azure.ResourceManager.Logic
                 case 201:
                     {
                         LogicWorkflowData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowData.DeserializeLogicWorkflowData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string workflowName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workflowName)
@@ -441,6 +522,21 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateDisableRequestUri(string subscriptionId, string resourceGroupName, string workflowName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/disable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDisableRequest(string subscriptionId, string resourceGroupName, string workflowName)
         {
             var message = _pipeline.CreateMessage();
@@ -508,6 +604,21 @@ namespace Azure.ResourceManager.Logic
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateEnableRequestUri(string subscriptionId, string resourceGroupName, string workflowName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/enable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateEnableRequest(string subscriptionId, string resourceGroupName, string workflowName)
@@ -579,6 +690,21 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateGenerateUpgradedDefinitionRequestUri(string subscriptionId, string resourceGroupName, string workflowName, GenerateUpgradedDefinitionContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/generateUpgradedDefinition", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGenerateUpgradedDefinitionRequest(string subscriptionId, string resourceGroupName, string workflowName, GenerateUpgradedDefinitionContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -598,7 +724,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -664,6 +790,21 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateListCallbackUrlRequestUri(string subscriptionId, string resourceGroupName, string workflowName, ListOperationCallbackUrlParameterInfo info)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/listCallbackUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListCallbackUrlRequest(string subscriptionId, string resourceGroupName, string workflowName, ListOperationCallbackUrlParameterInfo info)
         {
             var message = _pipeline.CreateMessage();
@@ -683,7 +824,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
+            content.JsonWriter.WriteObjectValue(info, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -711,7 +852,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowTriggerCallbackUri value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowTriggerCallbackUri.DeserializeLogicWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -742,13 +883,28 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowTriggerCallbackUri value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowTriggerCallbackUri.DeserializeLogicWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSwaggerRequestUri(string subscriptionId, string resourceGroupName, string workflowName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/listSwagger", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSwaggerRequest(string subscriptionId, string resourceGroupName, string workflowName)
@@ -828,6 +984,21 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateMoveRequestUri(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowReference move)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/move", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMoveRequest(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowReference move)
         {
             var message = _pipeline.CreateMessage();
@@ -847,7 +1018,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(move);
+            content.JsonWriter.WriteObjectValue(move, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -907,6 +1078,21 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateRegenerateAccessKeyRequestUri(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowRegenerateActionContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/regenerateAccessKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRegenerateAccessKeyRequest(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowRegenerateActionContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -926,7 +1112,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -984,6 +1170,21 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateValidateByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateByResourceGroupRequest(string subscriptionId, string resourceGroupName, string workflowName, LogicWorkflowData data)
         {
             var message = _pipeline.CreateMessage();
@@ -1003,7 +1204,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1061,6 +1262,23 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateValidateByLocationRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, string workflowName, LogicWorkflowData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateByLocationRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string workflowName, LogicWorkflowData data)
         {
             var message = _pipeline.CreateMessage();
@@ -1082,7 +1300,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1142,6 +1360,14 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, int? top, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, int? top, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -1176,7 +1402,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1205,13 +1431,21 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, int? top, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, int? top, string filter)
@@ -1250,7 +1484,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1281,7 +1515,7 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                     {
                         LogicWorkflowListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LogicWorkflowListResult.DeserializeLogicWorkflowListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

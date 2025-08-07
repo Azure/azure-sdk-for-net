@@ -11,6 +11,10 @@ namespace Azure.Core
     /// </summary>
     public class RetryOptions
     {
+        internal const int DefaultMaxRetries = 3;
+        internal static readonly TimeSpan DefaultMaxDelay = TimeSpan.FromMinutes(1);
+        internal static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
+
         /// <summary>
         /// Creates a new <see cref="RetryOptions"/> instance with default values.
         /// </summary>

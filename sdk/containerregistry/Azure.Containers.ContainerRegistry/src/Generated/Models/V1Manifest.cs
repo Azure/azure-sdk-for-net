@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested V1 manifest file. </summary>
     internal partial class V1Manifest : Manifest
     {
-        /// <summary> Initializes a new instance of V1Manifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="V1Manifest"/>. </summary>
         internal V1Manifest()
         {
             FsLayers = new ChangeTrackingList<FsLayer>();
@@ -21,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
             Signatures = new ChangeTrackingList<ImageSignature>();
         }
 
-        /// <summary> Initializes a new instance of V1Manifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="V1Manifest"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="name"> Image name. </param>

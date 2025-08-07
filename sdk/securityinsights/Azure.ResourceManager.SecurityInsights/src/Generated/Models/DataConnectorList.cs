@@ -8,19 +8,49 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> List all the data connectors. </summary>
     internal partial class DataConnectorList
     {
-        /// <summary> Initializes a new instance of DataConnectorList. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataConnectorList"/>. </summary>
         /// <param name="value">
         /// Array of data connectors.
         /// Please note <see cref="SecurityInsightsDataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/> and <see cref="SecurityInsightsTIDataConnector"/>.
+        /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="CodelessApiPollingDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="GcpDataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="IotDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MtpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeAtpDataConnector"/>, <see cref="OfficeIrmDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="RestApiPollerDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/> and <see cref="ThreatIntelligenceTaxiiDataConnector"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataConnectorList(IEnumerable<SecurityInsightsDataConnectorData> value)
@@ -30,17 +60,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataConnectorList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectorList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of data connectors. </param>
         /// <param name="value">
         /// Array of data connectors.
         /// Please note <see cref="SecurityInsightsDataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/> and <see cref="SecurityInsightsTIDataConnector"/>.
+        /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="CodelessApiPollingDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="GcpDataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="IotDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MtpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeAtpDataConnector"/>, <see cref="OfficeIrmDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="RestApiPollerDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/> and <see cref="ThreatIntelligenceTaxiiDataConnector"/>.
         /// </param>
-        internal DataConnectorList(string nextLink, IReadOnlyList<SecurityInsightsDataConnectorData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataConnectorList(string nextLink, IReadOnlyList<SecurityInsightsDataConnectorData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataConnectorList"/> for deserialization. </summary>
+        internal DataConnectorList()
+        {
         }
 
         /// <summary> URL to fetch the next set of data connectors. </summary>
@@ -48,7 +85,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary>
         /// Array of data connectors.
         /// Please note <see cref="SecurityInsightsDataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/> and <see cref="SecurityInsightsTIDataConnector"/>.
+        /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="CodelessApiPollingDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="GcpDataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="IotDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MtpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeAtpDataConnector"/>, <see cref="OfficeIrmDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="RestApiPollerDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/> and <see cref="ThreatIntelligenceTaxiiDataConnector"/>.
         /// </summary>
         public IReadOnlyList<SecurityInsightsDataConnectorData> Value { get; }
     }

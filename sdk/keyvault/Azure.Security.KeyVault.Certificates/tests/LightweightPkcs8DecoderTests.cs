@@ -82,7 +82,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 if (cer != null)
                 {
                     byte[] publicKeyData = Convert.FromBase64String(cer);
+#if NET9_0_OR_GREATER
+                    using X509Certificate2 certificate = X509CertificateLoader.LoadCertificate(publicKeyData);
+#else
                     using X509Certificate2 certificate = new X509Certificate2(publicKeyData);
+#endif
 
                     publicKey = certificate.GetECDsaPublicKey();
                 }

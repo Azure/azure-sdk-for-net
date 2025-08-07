@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ProviderHub.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.ProviderHub
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-11-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string providerNamespace, string rolloutName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/customRollouts/", false);
+            uri.AppendPath(rolloutName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string providerNamespace, string rolloutName)
@@ -77,7 +90,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CustomRolloutData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,7 +121,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CustomRolloutData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -117,6 +130,20 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string providerNamespace, string rolloutName, CustomRolloutData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/customRollouts/", false);
+            uri.AppendPath(rolloutName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string rolloutName, CustomRolloutData data)
@@ -137,7 +164,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -165,7 +192,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CustomRolloutData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -196,13 +223,26 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CustomRolloutData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomRolloutData.DeserializeCustomRolloutData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProviderRegistrationRequestUri(string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/customRollouts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByProviderRegistrationRequest(string subscriptionId, string providerNamespace)
@@ -242,7 +282,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CustomRolloutListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomRolloutListResult.DeserializeCustomRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,13 +309,21 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CustomRolloutListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomRolloutListResult.DeserializeCustomRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProviderRegistrationNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByProviderRegistrationNextPageRequest(string nextLink, string subscriptionId, string providerNamespace)
@@ -312,7 +360,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CustomRolloutListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CustomRolloutListResult.DeserializeCustomRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -341,7 +389,7 @@ namespace Azure.ResourceManager.ProviderHub
                 case 200:
                     {
                         CustomRolloutListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CustomRolloutListResult.DeserializeCustomRolloutListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

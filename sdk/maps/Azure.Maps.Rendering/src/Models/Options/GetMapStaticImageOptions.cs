@@ -37,13 +37,6 @@ namespace Azure.Maps.Rendering
             ImagePathStyles = imagePathStyles;
         }
 
-        /// <summary>
-        /// Map layer requested. Possible value: <c>StaticMapLayer.Basic</c>, <c>StaticMapLayer.Labels</c> or <c>StaticMapLayer.Hybrid</c>
-        /// If layer is set to <c>StaticMapLayer.Labels</c> or <c>StaticMapLayer.Hybrid</c>, the format should be png.
-        /// </summary>
-        public MapImageLayer? MapImageLayer { get; set; }
-        /// <summary> Map style to be returned. Possible values are <see cref="MapImageStyle.Main"/> and <see cref="MapImageStyle.Dark"/>. </summary>
-        public MapImageStyle? MapImageStyle { get; set; }
         /// <summary> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12. Please see <see href="https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid">Zoom Levels and Tile Grid</see> for details. </summary>
         public int? ZoomLevel { get; set; }
         /// <summary>

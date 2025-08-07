@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,19 +15,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Describes Forwarding Route. </summary>
     public partial class ForwardingConfiguration : RouteConfiguration
     {
-        /// <summary> Initializes a new instance of ForwardingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardingConfiguration"/>. </summary>
         public ForwardingConfiguration()
         {
             OdataType = "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration";
         }
 
-        /// <summary> Initializes a new instance of ForwardingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardingConfiguration"/>. </summary>
         /// <param name="odataType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customForwardingPath"> A custom path used to rewrite resource paths matched by this rule. Leave empty to use incoming path. </param>
         /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
         /// <param name="cacheConfiguration"> The caching configuration associated with this rule. </param>
         /// <param name="backendPool"> A reference to the BackendPool which this rule routes to. </param>
-        internal ForwardingConfiguration(string odataType, string customForwardingPath, FrontDoorForwardingProtocol? forwardingProtocol, FrontDoorCacheConfiguration cacheConfiguration, WritableSubResource backendPool) : base(odataType)
+        internal ForwardingConfiguration(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, string customForwardingPath, FrontDoorForwardingProtocol? forwardingProtocol, FrontDoorCacheConfiguration cacheConfiguration, WritableSubResource backendPool) : base(odataType, serializedAdditionalRawData)
         {
             CustomForwardingPath = customForwardingPath;
             ForwardingProtocol = forwardingProtocol;

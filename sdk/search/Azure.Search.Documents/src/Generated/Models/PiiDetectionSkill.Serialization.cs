@@ -5,17 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PiiDetectionSkill : IUtf8JsonSerializable
+    public partial class PiiDetectionSkill : IUtf8JsonSerializable, IJsonModel<PiiDetectionSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiDetectionSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PiiDetectionSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PiiDetectionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PiiDetectionSkill)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DefaultLanguageCode))
             {
                 if (DefaultLanguageCode != null)
@@ -28,12 +47,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(MinimumPrecision))
+            if (Optional.IsDefined(MinPrecision))
             {
-                if (MinimumPrecision != null)
+                if (MinPrecision != null)
                 {
                     writer.WritePropertyName("minimumPrecision"u8);
-                    writer.WriteNumberValue(MinimumPrecision.Value);
+                    writer.WriteNumberValue(MinPrecision.Value);
                 }
                 else
                 {
@@ -45,12 +64,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maskingMode"u8);
                 writer.WriteStringValue(MaskingMode.Value.ToString());
             }
-            if (Optional.IsDefined(MaskingCharacter))
+            if (Optional.IsDefined(Mask))
             {
-                if (MaskingCharacter != null)
+                if (Mask != null)
                 {
                     writer.WritePropertyName("maskingCharacter"u8);
-                    writer.WriteStringValue(MaskingCharacter);
+                    writer.WriteStringValue(Mask);
                 }
                 else
                 {
@@ -91,59 +110,43 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("domain");
                 }
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(Context))
-            {
-                writer.WritePropertyName("context"u8);
-                writer.WriteStringValue(Context);
-            }
-            writer.WritePropertyName("inputs"u8);
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs"u8);
-            writer.WriteStartArray();
-            foreach (var item in Outputs)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
         }
 
-        internal static PiiDetectionSkill DeserializePiiDetectionSkill(JsonElement element)
+        PiiDetectionSkill IJsonModel<PiiDetectionSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PiiDetectionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PiiDetectionSkill)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePiiDetectionSkill(document.RootElement, options);
+        }
+
+        internal static PiiDetectionSkill DeserializePiiDetectionSkill(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> defaultLanguageCode = default;
-            Optional<double?> minimumPrecision = default;
-            Optional<PiiDetectionSkillMaskingMode> maskingMode = default;
-            Optional<string> maskingCharacter = default;
-            Optional<string> modelVersion = default;
-            Optional<IList<string>> piiCategories = default;
-            Optional<string> domain = default;
+            string defaultLanguageCode = default;
+            double? minimumPrecision = default;
+            PiiDetectionSkillMaskingMode? maskingMode = default;
+            string maskingCharacter = default;
+            string modelVersion = default;
+            IList<string> piiCategories = default;
+            string domain = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultLanguageCode"u8))
@@ -244,7 +247,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
@@ -254,13 +257,79 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PiiDetectionSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                serializedAdditionalRawData,
+                defaultLanguageCode,
+                minimumPrecision,
+                maskingMode,
+                maskingCharacter,
+                modelVersion,
+                piiCategories ?? new ChangeTrackingList<string>(),
+                domain);
+        }
+
+        BinaryData IPersistableModel<PiiDetectionSkill>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PiiDetectionSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PiiDetectionSkill)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PiiDetectionSkill IPersistableModel<PiiDetectionSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PiiDetectionSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePiiDetectionSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PiiDetectionSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PiiDetectionSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PiiDetectionSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePiiDetectionSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

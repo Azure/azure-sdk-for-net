@@ -1,4 +1,4 @@
-﻿# Guide for migrating from Microsoft.Azure.OperationalInsights v1.1.0 to Azure.Monitor.Query v1.0.x
+# Guide for migrating from Microsoft.Azure.OperationalInsights v1.1.0 to Azure.Monitor.Query v1.0.x
 
 This guide assists you in the migration from [Microsoft.Azure.OperationalInsights](https://www.nuget.org/packages/Microsoft.Azure.OperationalInsights/) v1.1.0 to [Azure.Monitor.Query](https://www.nuget.org/packages/Azure.Monitor.Query/) v1.0.x. Side-by-side comparisons are provided for similar operations between the two client libraries.
 
@@ -39,7 +39,7 @@ There are a variety of new features in version 1.0 of the `Azure.Monitor.Query` 
 - The ability to configure the retry policy used by the operations on the client.
 - The ability to map a Logs query result to a strongly typed model.
 - The ability to retrieve by column name instead of by column index.
-- Authentication with Azure Active Directory (Azure AD) credentials using [`Azure.Identity`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#readme).
+- Authentication with Microsoft Entra credentials using [`Azure.Identity`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#readme).
 
 For more new features, changes, and bug fixes, see the [CHANGELOG](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Monitor.Query_1.0.1/sdk/monitor/Azure.Monitor.Query/CHANGELOG.md).
 
@@ -47,7 +47,7 @@ For more new features, changes, and bug fixes, see the [CHANGELOG](https://githu
 
 ### The client
 
-To provide a more intuitive experience, the top-level client to query logs was renamed to `LogsQueryClient` from `OperationalInsightsDataClient`. `LogsQueryClient` can be authenticated using Azure AD. This client is the single entry point to execute a single Kusto query or a batch of Kusto queries.
+To provide a more intuitive experience, the top-level client to query logs was renamed to `LogsQueryClient` from `OperationalInsightsDataClient`. `LogsQueryClient` can be authenticated using Microsoft Entra ID. This client is the single entry point to execute a single Kusto query or a batch of Kusto queries.
 
 #### Consistency
 
@@ -164,7 +164,7 @@ IReadOnlyList<LogsTableRow> rows = table.Rows;
 foreach (LogsTableRow row in rows)
 {
     Console.WriteLine(row.GetString(0)); // Access a particular element with index
-    Console.WriteLine(row.GetTimeSpan(1)); 
+    Console.WriteLine(row.GetTimeSpan(1));
     Console.WriteLine(row.ToString());
 }
 ```

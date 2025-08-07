@@ -9,17 +9,16 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-/// <summary>
-/// The suite of tests for the `StartRecognizeInvoices` methods in the <see cref="FormRecognizerClient"/> class.
-/// </summary>
-/// <remarks>
-/// These tests have a dependency on live Azure services and may incur costs for the associated
-/// Azure subscription.
-/// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
+    /// <summary>
+    /// The suite of tests for the `StartRecognizeInvoices` methods in the <see cref="FormRecognizerClient"/> class.
+    /// </summary>
+    /// <remarks>
+    /// These tests have a dependency on live Azure services and may incur costs for the associated
+    /// Azure subscription.
+    /// </remarks>
     [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1)]
-
     public class RecognizeInvoicesLiveTests : FormRecognizerLiveTestBase
     {
         public RecognizeInvoicesLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)

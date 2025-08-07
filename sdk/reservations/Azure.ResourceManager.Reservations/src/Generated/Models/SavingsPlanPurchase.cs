@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
@@ -12,12 +14,44 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Request body for savings plan purchase. </summary>
     public partial class SavingsPlanPurchase
     {
-        /// <summary> Initializes a new instance of SavingsPlanPurchase. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanPurchase"/>. </summary>
         public SavingsPlanPurchase()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanPurchase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanPurchase"/>. </summary>
         /// <param name="sku"> The name of sku. </param>
         /// <param name="displayName"> Friendly name of the savings plan. </param>
         /// <param name="billingScopeId"> Subscription that will be charged for purchasing reservation or savings plan. </param>
@@ -26,7 +60,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
         /// <param name="commitment"> Commitment towards the benefit. </param>
-        internal SavingsPlanPurchase(ReservationsSkuName sku, string displayName, ResourceIdentifier billingScopeId, SavingsPlanTerm? term, SavingsPlanBillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, BenefitsCommitment commitment)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanPurchase(ReservationsSkuName sku, string displayName, ResourceIdentifier billingScopeId, SavingsPlanTerm? term, SavingsPlanBillingPlan? billingPlan, AppliedScopeType? appliedScopeType, AppliedScopeProperties appliedScopeProperties, BenefitsCommitment commitment, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -36,6 +71,7 @@ namespace Azure.ResourceManager.Reservations.Models
             AppliedScopeType = appliedScopeType;
             AppliedScopeProperties = appliedScopeProperties;
             Commitment = commitment;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of sku. </summary>

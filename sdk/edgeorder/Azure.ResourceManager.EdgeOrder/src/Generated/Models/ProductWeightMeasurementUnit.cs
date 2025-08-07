@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(ProductWeightMeasurementUnit left, ProductWeightMeasurementUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductWeightMeasurementUnit"/> values are not the same. </summary>
         public static bool operator !=(ProductWeightMeasurementUnit left, ProductWeightMeasurementUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProductWeightMeasurementUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProductWeightMeasurementUnit"/>. </summary>
         public static implicit operator ProductWeightMeasurementUnit(string value) => new ProductWeightMeasurementUnit(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

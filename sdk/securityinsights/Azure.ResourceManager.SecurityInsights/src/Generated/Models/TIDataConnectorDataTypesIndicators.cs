@@ -5,19 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for indicators connection. </summary>
     internal partial class TIDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon
     {
-        /// <summary> Initializes a new instance of TIDataConnectorDataTypesIndicators. </summary>
-        public TIDataConnectorDataTypesIndicators()
+        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/>. </summary>
+        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        public TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState state) : base(state)
         {
         }
 
-        /// <summary> Initializes a new instance of TIDataConnectorDataTypesIndicators. </summary>
+        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        internal TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState? state) : base(state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/> for deserialization. </summary>
+        internal TIDataConnectorDataTypesIndicators()
         {
         }
     }

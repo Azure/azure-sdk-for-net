@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class HubData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HubData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HubData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HubData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,13 +69,20 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="provisioningState"> Provisioning state of the hub. </param>
         /// <param name="tenantFeatures"> The bit flags for enabled hub features. Bit 0 is set to 1 indicates graph is enabled, or disabled if set to 0. Bit 1 is set to 1 indicates the hub is disabled, or enabled if set to 0. </param>
         /// <param name="hubBillingInfo"> Billing settings of the hub. </param>
-        internal HubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string apiEndpoint, string webEndpoint, string provisioningState, int? tenantFeatures, HubBillingInfoFormat hubBillingInfo) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string apiEndpoint, string webEndpoint, string provisioningState, int? tenantFeatures, HubBillingInfoFormat hubBillingInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ApiEndpoint = apiEndpoint;
             WebEndpoint = webEndpoint;
             ProvisioningState = provisioningState;
             TenantFeatures = tenantFeatures;
             HubBillingInfo = hubBillingInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HubData"/> for deserialization. </summary>
+        internal HubData()
+        {
         }
 
         /// <summary> API endpoint URL of the hub. </summary>

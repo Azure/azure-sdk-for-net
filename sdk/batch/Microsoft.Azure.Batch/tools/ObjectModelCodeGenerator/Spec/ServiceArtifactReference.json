@@ -1,0 +1,20 @@
+{
+  "Name": "ServiceArtifactReference",
+  "ProtocolName": "Models.ServiceArtifactReference",
+  "SummaryComment": "Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version.",
+  "Properties": [
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "Id",
+        "SummaryComment": "The service artifact reference id of ServiceArtifactReference",
+        "RemarksComment": "The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}",
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Required",
+        "HideSetter": false
+      },
+      "Value": null
+    }
+  ]
+}

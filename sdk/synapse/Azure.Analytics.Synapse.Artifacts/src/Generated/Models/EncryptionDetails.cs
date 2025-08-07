@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Details of the encryption associated with the workspace. </summary>
     public partial class EncryptionDetails
     {
-        /// <summary> Initializes a new instance of EncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionDetails"/>. </summary>
         public EncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionDetails"/>. </summary>
         /// <param name="doubleEncryptionEnabled"> Double Encryption enabled. </param>
         /// <param name="cmk"> Customer Managed Key Details. </param>
         internal EncryptionDetails(bool? doubleEncryptionEnabled, CustomerManagedKeyDetails cmk)

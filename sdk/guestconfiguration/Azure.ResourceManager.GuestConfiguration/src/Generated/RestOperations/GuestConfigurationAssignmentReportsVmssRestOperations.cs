@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.GuestConfiguration.Models;
@@ -33,8 +32,25 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-01-25";
+            _apiVersion = apiVersion ?? "2024-04-05";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string vmssName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(vmssName, true);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/reports", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string vmssName, string name)
@@ -82,7 +98,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentReportList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GuestConfigurationAssignmentReportList.DeserializeGuestConfigurationAssignmentReportList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,13 +129,31 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentReportList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GuestConfigurationAssignmentReportList.DeserializeGuestConfigurationAssignmentReportList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string vmssName, string name, string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(vmssName, true);
+            uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/reports/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmssName, string name, string id)
@@ -170,7 +204,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentReport value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -203,7 +237,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentReport value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

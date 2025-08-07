@@ -12,5 +12,12 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureEventHubsParameterPatch : IUtf8JsonSerializable
     {
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

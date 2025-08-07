@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             BatchStorageAccountType.StandardLrs => "Standard_LRS",
             BatchStorageAccountType.PremiumLrs => "Premium_LRS",
+            BatchStorageAccountType.StandardSsdLrs => "StandardSSD_LRS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchStorageAccountType value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_LRS")) return BatchStorageAccountType.StandardLrs;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_LRS")) return BatchStorageAccountType.PremiumLrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StandardSSD_LRS")) return BatchStorageAccountType.StandardSsdLrs;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchStorageAccountType value.");
         }
     }

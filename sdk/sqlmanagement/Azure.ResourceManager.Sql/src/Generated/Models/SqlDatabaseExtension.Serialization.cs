@@ -6,17 +6,37 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlDatabaseExtension : IUtf8JsonSerializable
+    public partial class SqlDatabaseExtension : IUtf8JsonSerializable, IJsonModel<SqlDatabaseExtension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseExtension>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SqlDatabaseExtension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseExtension>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseExtension)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OperationMode))
@@ -39,12 +59,60 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("storageUri"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(AdministratorLogin))
+            {
+                writer.WritePropertyName("administratorLogin"u8);
+                writer.WriteStringValue(AdministratorLogin);
+            }
+            if (Optional.IsDefined(AdministratorLoginPassword))
+            {
+                writer.WritePropertyName("administratorLoginPassword"u8);
+                writer.WriteStringValue(AdministratorLoginPassword);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType);
+            }
+            if (Optional.IsDefined(DatabaseEdition))
+            {
+                writer.WritePropertyName("databaseEdition"u8);
+                writer.WriteStringValue(DatabaseEdition);
+            }
+            if (Optional.IsDefined(ServiceObjectiveName))
+            {
+                writer.WritePropertyName("serviceObjectiveName"u8);
+                writer.WriteStringValue(ServiceObjectiveName);
+            }
+            if (Optional.IsDefined(MaxSizeBytes))
+            {
+                writer.WritePropertyName("maxSizeBytes"u8);
+                writer.WriteStringValue(MaxSizeBytes);
+            }
+            if (Optional.IsDefined(NetworkIsolation))
+            {
+                writer.WritePropertyName("networkIsolation"u8);
+                writer.WriteObjectValue(NetworkIsolation, options);
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDatabaseExtension DeserializeSqlDatabaseExtension(JsonElement element)
+        SqlDatabaseExtension IJsonModel<SqlDatabaseExtension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseExtension>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseExtension)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDatabaseExtension(document.RootElement, options);
+        }
+
+        internal static SqlDatabaseExtension DeserializeSqlDatabaseExtension(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,11 +120,20 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DatabaseExtensionOperationMode> operationMode = default;
-            Optional<StorageKeyType> storageKeyType = default;
-            Optional<string> storageKey = default;
-            Optional<Uri> storageUri = default;
+            SystemData systemData = default;
+            DatabaseExtensionOperationMode? operationMode = default;
+            StorageKeyType? storageKeyType = default;
+            string storageKey = default;
+            Uri storageUri = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            string authenticationType = default;
+            string databaseEdition = default;
+            string serviceObjectiveName = default;
+            string maxSizeBytes = default;
+            NetworkIsolationSettings networkIsolation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -80,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -124,11 +201,396 @@ namespace Azure.ResourceManager.Sql.Models
                             storageUri = new Uri(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("administratorLogin"u8))
+                        {
+                            administratorLogin = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("administratorLoginPassword"u8))
+                        {
+                            administratorLoginPassword = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            authenticationType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseEdition"u8))
+                        {
+                            databaseEdition = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("serviceObjectiveName"u8))
+                        {
+                            serviceObjectiveName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("maxSizeBytes"u8))
+                        {
+                            maxSizeBytes = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("networkIsolation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlDatabaseExtension(id, name, type, systemData.Value, Optional.ToNullable(operationMode), Optional.ToNullable(storageKeyType), storageKey.Value, storageUri.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlDatabaseExtension(
+                id,
+                name,
+                type,
+                systemData,
+                operationMode,
+                storageKeyType,
+                storageKey,
+                storageUri,
+                administratorLogin,
+                administratorLoginPassword,
+                authenticationType,
+                databaseEdition,
+                serviceObjectiveName,
+                maxSizeBytes,
+                networkIsolation,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operationMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationMode))
+                {
+                    builder.Append("    operationMode: ");
+                    builder.AppendLine($"'{OperationMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageKeyType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageKeyType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageKeyType))
+                {
+                    builder.Append("    storageKeyType: ");
+                    builder.AppendLine($"'{StorageKeyType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageKey))
+                {
+                    builder.Append("    storageKey: ");
+                    if (StorageKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageUri))
+                {
+                    builder.Append("    storageUri: ");
+                    builder.AppendLine($"'{StorageUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorLogin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    administratorLogin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorLogin))
+                {
+                    builder.Append("    administratorLogin: ");
+                    if (AdministratorLogin.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdministratorLogin}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdministratorLogin}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorLoginPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    administratorLoginPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorLoginPassword))
+                {
+                    builder.Append("    administratorLoginPassword: ");
+                    if (AdministratorLoginPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdministratorLoginPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdministratorLoginPassword}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authenticationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthenticationType))
+                {
+                    builder.Append("    authenticationType: ");
+                    if (AuthenticationType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthenticationType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthenticationType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseEdition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    databaseEdition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatabaseEdition))
+                {
+                    builder.Append("    databaseEdition: ");
+                    if (DatabaseEdition.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseEdition}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseEdition}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceObjectiveName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceObjectiveName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceObjectiveName))
+                {
+                    builder.Append("    serviceObjectiveName: ");
+                    if (ServiceObjectiveName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceObjectiveName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceObjectiveName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxSizeBytes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maxSizeBytes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxSizeBytes))
+                {
+                    builder.Append("    maxSizeBytes: ");
+                    if (MaxSizeBytes.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxSizeBytes}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxSizeBytes}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkIsolation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    networkIsolation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkIsolation))
+                {
+                    builder.Append("    networkIsolation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkIsolation, options, 4, false, "    networkIsolation: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SqlDatabaseExtension>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseExtension>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlDatabaseExtension)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlDatabaseExtension IPersistableModel<SqlDatabaseExtension>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseExtension>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSqlDatabaseExtension(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlDatabaseExtension)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlDatabaseExtension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

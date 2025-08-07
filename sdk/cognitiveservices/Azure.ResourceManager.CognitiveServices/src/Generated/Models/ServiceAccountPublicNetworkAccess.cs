@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator ==(ServiceAccountPublicNetworkAccess left, ServiceAccountPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(ServiceAccountPublicNetworkAccess left, ServiceAccountPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceAccountPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAccountPublicNetworkAccess"/>. </summary>
         public static implicit operator ServiceAccountPublicNetworkAccess(string value) => new ServiceAccountPublicNetworkAccess(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

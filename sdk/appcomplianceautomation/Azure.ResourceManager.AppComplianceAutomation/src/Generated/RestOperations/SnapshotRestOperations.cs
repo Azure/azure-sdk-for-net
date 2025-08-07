@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
@@ -33,8 +32,168 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-16-preview";
+            _apiVersion = apiVersion ?? "2024-06-27";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the AppComplianceAutomation snapshot list. </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SnapshotResourceListResult>> ListAsync(string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var message = CreateListRequest(reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SnapshotResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the AppComplianceAutomation snapshot list. </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SnapshotResourceListResult> List(string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var message = CreateListRequest(reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SnapshotResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string reportName, string snapshotName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(snapshotName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string reportName, string snapshotName)
@@ -61,7 +220,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SnapshotResourceData>> GetAsync(string reportName, string snapshotName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppComplianceReportSnapshotData>> GetAsync(string reportName, string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
@@ -72,13 +231,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 case 200:
                     {
-                        SnapshotResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SnapshotResourceData.DeserializeSnapshotResourceData(document.RootElement);
+                        AppComplianceReportSnapshotData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = AppComplianceReportSnapshotData.DeserializeAppComplianceReportSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SnapshotResourceData)null, message.Response);
+                    return Response.FromValue((AppComplianceReportSnapshotData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -90,7 +249,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SnapshotResourceData> Get(string reportName, string snapshotName, CancellationToken cancellationToken = default)
+        public Response<AppComplianceReportSnapshotData> Get(string reportName, string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
@@ -101,19 +260,32 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 case 200:
                     {
-                        SnapshotResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SnapshotResourceData.DeserializeSnapshotResourceData(document.RootElement);
+                        AppComplianceReportSnapshotData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = AppComplianceReportSnapshotData.DeserializeAppComplianceReportSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SnapshotResourceData)null, message.Response);
+                    return Response.FromValue((AppComplianceReportSnapshotData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDownloadRequest(string reportName, string snapshotName, SnapshotDownloadContent content)
+        internal RequestUriBuilder CreateDownloadRequestUri(string reportName, string snapshotName, SnapshotDownloadRequestContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(snapshotName, true);
+            uri.AppendPath("/download", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDownloadRequest(string reportName, string snapshotName, SnapshotDownloadRequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,7 +302,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -143,7 +315,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="snapshotName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DownloadAsync(string reportName, string snapshotName, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> DownloadAsync(string reportName, string snapshotName, SnapshotDownloadRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
@@ -168,7 +340,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="snapshotName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Download(string reportName, string snapshotName, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
+        public Response Download(string reportName, string snapshotName, SnapshotDownloadRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
@@ -181,6 +353,96 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                 case 202:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the AppComplianceAutomation snapshot list. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SnapshotResourceListResult>> ListNextPageAsync(string nextLink, string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var message = CreateListNextPageRequest(nextLink, reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SnapshotResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the AppComplianceAutomation snapshot list. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SnapshotResourceListResult> ListNextPage(string nextLink, string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var message = CreateListNextPageRequest(nextLink, reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SnapshotResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

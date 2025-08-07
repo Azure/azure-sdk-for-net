@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper V Replica Azure provider specific settings. </summary>
     public partial class HyperVReplicaAzureReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureReplicationDetails"/>. </summary>
         internal HyperVReplicaAzureReplicationDetails()
         {
             AzureVmDiskDetails = new ChangeTrackingList<SiteRecoveryVmDiskDetails>();
@@ -24,11 +24,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetManagedDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetNicTags = new ChangeTrackingDictionary<string, string>();
             ProtectedManagedDisks = new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>();
+            AllAvailableOSUpgradeConfigurations = new ChangeTrackingList<OSUpgradeSupportedVersions>();
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureVmDiskDetails"> Azure VM Disk details. </param>
         /// <param name="recoveryAzureVmName"> Recovery Azure given name. </param>
         /// <param name="recoveryAzureVmSize"> The Recovery Azure VM size. </param>
@@ -56,13 +58,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
         /// <param name="licenseType"> License Type of the VM to be used. </param>
         /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
         /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
         /// <param name="targetVmTags"> The target VM tags. </param>
         /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
         /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
         /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
-        internal HyperVReplicaAzureReplicationDetails(string instanceType, IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, DateTimeOffset? lastReplicatedOn, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, string selectedSourceNicId, string encryption, SiteRecoveryOSDetails osDetails, int? sourceVmRamSizeInMB, int? sourceVmCpuCount, string enableRdpOnTargetOption, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, DateTimeOffset? lastRecoveryPointReceived, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IReadOnlyList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks) : base(instanceType)
+        /// <param name="allAvailableOSUpgradeConfigurations"> A value indicating all available inplace OS Upgrade configurations. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
+        internal HyperVReplicaAzureReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails, string recoveryAzureVmName, string recoveryAzureVmSize, string recoveryAzureStorageAccount, ResourceIdentifier recoveryAzureLogStorageAccountId, DateTimeOffset? lastReplicatedOn, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<VmNicDetails> vmNics, ResourceIdentifier selectedRecoveryAzureNetworkId, string selectedSourceNicId, string encryption, SiteRecoveryOSDetails osDetails, int? sourceVmRamSizeInMB, int? sourceVmCpuCount, string enableRdpOnTargetOption, ResourceIdentifier recoveryAzureResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, string useManagedDisks, string licenseType, string sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, DateTimeOffset? lastRecoveryPointReceived, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyDictionary<string, string> seedManagedDiskTags, IReadOnlyDictionary<string, string> targetManagedDiskTags, IReadOnlyDictionary<string, string> targetNicTags, IReadOnlyList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks, IReadOnlyList<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile) : base(instanceType, serializedAdditionalRawData)
         {
             AzureVmDiskDetails = azureVmDiskDetails;
             RecoveryAzureVmName = recoveryAzureVmName;
@@ -91,12 +96,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             UseManagedDisks = useManagedDisks;
             LicenseType = licenseType;
             SqlServerLicenseType = sqlServerLicenseType;
+            LinuxLicenseType = linuxLicenseType;
             LastRecoveryPointReceived = lastRecoveryPointReceived;
             TargetVmTags = targetVmTags;
             SeedManagedDiskTags = seedManagedDiskTags;
             TargetManagedDiskTags = targetManagedDiskTags;
             TargetNicTags = targetNicTags;
             ProtectedManagedDisks = protectedManagedDisks;
+            AllAvailableOSUpgradeConfigurations = allAvailableOSUpgradeConfigurations;
+            TargetVmSecurityProfile = targetVmSecurityProfile;
             InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
@@ -154,6 +162,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string LicenseType { get; }
         /// <summary> The SQL Server license type. </summary>
         public string SqlServerLicenseType { get; }
+        /// <summary> The license type for Linux VM's. </summary>
+        public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; }
         /// <summary> The last recovery point received time. </summary>
         public DateTimeOffset? LastRecoveryPointReceived { get; }
         /// <summary> The target VM tags. </summary>
@@ -166,5 +176,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IReadOnlyDictionary<string, string> TargetNicTags { get; }
         /// <summary> The list of protected managed disks. </summary>
         public IReadOnlyList<HyperVReplicaAzureManagedDiskDetails> ProtectedManagedDisks { get; }
+        /// <summary> A value indicating all available inplace OS Upgrade configurations. </summary>
+        public IReadOnlyList<OSUpgradeSupportedVersions> AllAvailableOSUpgradeConfigurations { get; }
+        /// <summary> The target VM security profile. </summary>
+        public RecoveryServicesSiteRecoverySecurityProfileProperties TargetVmSecurityProfile { get; }
     }
 }

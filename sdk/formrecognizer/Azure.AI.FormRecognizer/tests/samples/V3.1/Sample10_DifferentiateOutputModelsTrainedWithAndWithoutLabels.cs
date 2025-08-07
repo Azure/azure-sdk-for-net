@@ -9,6 +9,7 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
@@ -78,6 +79,7 @@ namespace Azure.AI.FormRecognizer.Samples
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task OutputModelsTrainedWithoutLabels()
         {
             string endpoint = TestEnvironment.Endpoint;

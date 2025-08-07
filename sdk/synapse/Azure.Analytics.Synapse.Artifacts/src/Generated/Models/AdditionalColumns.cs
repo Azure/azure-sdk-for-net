@@ -10,9 +10,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Specify the column name and value of additional columns. </summary>
     internal partial class AdditionalColumns
     {
-        /// <summary> Initializes a new instance of AdditionalColumns. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalColumns"/>. </summary>
         internal AdditionalColumns()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalColumns"/>. </summary>
+        /// <param name="name"> Additional column name. Type: string (or Expression with resultType string). </param>
+        /// <param name="value"> Additional column value. Type: string (or Expression with resultType string). </param>
+        internal AdditionalColumns(object name, object value)
+        {
+            Name = name;
+            Value = value;
         }
 
         /// <summary> Additional column name. Type: string (or Expression with resultType string). </summary>

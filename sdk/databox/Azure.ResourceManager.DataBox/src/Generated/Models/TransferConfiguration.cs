@@ -5,27 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Configuration for defining the transfer of data. </summary>
     public partial class TransferConfiguration
     {
-        /// <summary> Initializes a new instance of TransferConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransferConfiguration"/>. </summary>
         /// <param name="transferConfigurationType"> Type of the configuration for transfer. </param>
         public TransferConfiguration(TransferConfigurationType transferConfigurationType)
         {
             TransferConfigurationType = transferConfigurationType;
         }
 
-        /// <summary> Initializes a new instance of TransferConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferConfiguration"/>. </summary>
         /// <param name="transferConfigurationType"> Type of the configuration for transfer. </param>
         /// <param name="transferFilterDetails"> Map of filter type and the details to filter. This field is required only if the TransferConfigurationType is given as TransferUsingFilter. </param>
         /// <param name="transferAllDetails"> Map of filter type and the details to transfer all data. This field is required only if the TransferConfigurationType is given as TransferAll. </param>
-        internal TransferConfiguration(TransferConfigurationType transferConfigurationType, TransferConfigurationTransferFilterDetails transferFilterDetails, TransferConfigurationTransferAllDetails transferAllDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransferConfiguration(TransferConfigurationType transferConfigurationType, TransferConfigurationTransferFilterDetails transferFilterDetails, TransferConfigurationTransferAllDetails transferAllDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TransferConfigurationType = transferConfigurationType;
             TransferFilterDetails = transferFilterDetails;
             TransferAllDetails = transferAllDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransferConfiguration"/> for deserialization. </summary>
+        internal TransferConfiguration()
+        {
         }
 
         /// <summary> Type of the configuration for transfer. </summary>

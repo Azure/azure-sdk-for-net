@@ -6,24 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Fields for tracking resource move. </summary>
     public partial class DataBoxEdgeResourceMoveDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeResourceMoveDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeResourceMoveDetails"/>. </summary>
         internal DataBoxEdgeResourceMoveDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeResourceMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeResourceMoveDetails"/>. </summary>
         /// <param name="operationInProgress"> Denotes whether move operation is in progress. </param>
         /// <param name="operationInProgressLockTimeoutInUtc"> Denotes the timeout of the operation to finish. </param>
-        internal DataBoxEdgeResourceMoveDetails(DataBoxEdgeResourceMoveStatus? operationInProgress, DateTimeOffset? operationInProgressLockTimeoutInUtc)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeResourceMoveDetails(DataBoxEdgeResourceMoveStatus? operationInProgress, DateTimeOffset? operationInProgressLockTimeoutInUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationInProgress = operationInProgress;
             OperationInProgressLockTimeoutInUtc = operationInProgressLockTimeoutInUtc;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Denotes whether move operation is in progress. </summary>

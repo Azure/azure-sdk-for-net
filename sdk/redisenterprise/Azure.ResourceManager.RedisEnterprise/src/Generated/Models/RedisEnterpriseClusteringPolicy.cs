@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Clustering policy - default is OSSCluster. Specified at create time. </summary>
+    /// <summary> Clustering policy - default is OSSCluster. This property must be chosen at create time, and cannot be changed without deleting the database. </summary>
     public readonly partial struct RedisEnterpriseClusteringPolicy : IEquatable<RedisEnterpriseClusteringPolicy>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private const string EnterpriseClusterValue = "EnterpriseCluster";
         private const string OssClusterValue = "OSSCluster";
 
-        /// <summary> EnterpriseCluster. </summary>
+        /// <summary> Enterprise clustering policy uses only the classic redis protocol, which does not support redis cluster commands. </summary>
         public static RedisEnterpriseClusteringPolicy EnterpriseCluster { get; } = new RedisEnterpriseClusteringPolicy(EnterpriseClusterValue);
-        /// <summary> OSSCluster. </summary>
+        /// <summary> OSS clustering policy follows the redis cluster specification, and requires all clients to support redis clustering. </summary>
         public static RedisEnterpriseClusteringPolicy OssCluster { get; } = new RedisEnterpriseClusteringPolicy(OssClusterValue);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseClusteringPolicy left, RedisEnterpriseClusteringPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterpriseClusteringPolicy left, RedisEnterpriseClusteringPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterpriseClusteringPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseClusteringPolicy"/>. </summary>
         public static implicit operator RedisEnterpriseClusteringPolicy(string value) => new RedisEnterpriseClusteringPolicy(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

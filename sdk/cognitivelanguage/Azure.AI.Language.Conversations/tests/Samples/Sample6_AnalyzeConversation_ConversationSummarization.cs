@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Serialization;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -21,97 +21,103 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             List<string> aspects = new();
 
-            #region Snippet:AnalyzeConversation_ConversationSummarization
-            var data = new
-            {
-                AnalysisInput = new
+            MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+                new List<ConversationInput>
                 {
-                    Conversations = new[]
+                    new TextConversation("1", "en", new List<TextConversationItem>()
                     {
-                        new
-                        {
-                            ConversationItems = new[]
+                        new TextConversationItem(
+                            id: "1",
+                            participantId: "Agent_1",
+                            text: "Hello, how can I help you?")
                             {
-                                new
-                                {
-                                    Text = "Hello, how can I help you?",
-                                    Id = "1",
-                                    Role = "Agent",
-                                    ParticipantId = "Agent_1",
-                                },
-                                new
-                                {
-                                    Text = "How to upgrade Office? I am getting error messages the whole day.",
-                                    Id = "2",
-                                    Role = "Customer",
-                                    ParticipantId = "Customer_1",
-                                },
-                                new
-                                {
-                                    Text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                                    Id = "3",
-                                    Role = "Agent",
-                                    ParticipantId = "Agent_1",
-                                },
+                                Role = ParticipantRole.Agent
                             },
-                            Id = "1",
-                            Language = "en",
-                            Modality = "text",
+                        new TextConversationItem(
+                            id: "2",
+                            participantId: "Customer_1",
+                            text: "How to upgrade Office? I am getting error messages the whole day.")
+                        {
+                            Role = ParticipantRole.Customer
                         },
-                    }
-                },
-                Tasks = new[]
+                        new TextConversationItem(
+                            id : "3",
+                            participantId : "Agent_1",
+                            text : "Press the upgrade button please. Then sign in and follow the instructions.")
+                        {
+                            Role = ParticipantRole.Agent
+                        }
+                    })
+                });
+            List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
                 {
-                    new
+                    new SummarizationOperationAction()
                     {
-                        TaskName = "Issue task",
-                        Kind = "ConversationalSummarizationTask",
-                        Parameters = new
+                        ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
                         {
-                            SummaryAspects = new[]
-                            {
-                                "issue",
-                            }
-                        },
+                            SummaryAspect.Issue,
+                        }),
+                        Name = "Issue task",
                     },
-                    new
+                    new SummarizationOperationAction()
                     {
-                        TaskName = "Resolution task",
-                        Kind = "ConversationalSummarizationTask",
-                        Parameters = new
+                        ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
                         {
-                            SummaryAspects = new[]
-                            {
-                                "resolution",
-                            }
-                        },
-                    },
-                },
-            };
+                            SummaryAspect.Resolution,
+                        }),
+                        Name = "Resolution task",
+                    }
+                };
 
-            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
+            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            foreach (dynamic task in jobResults.Tasks.Items)
+            #region Snippet:AnalyzeConversation_ConversationSummarizationSync
+
+            Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data);
+
+            #endregion
+
+            AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+
+            foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
-                Console.WriteLine($"Task name: {task.TaskName}");
-                dynamic results = task.Results;
-                foreach (dynamic conversation in results.Conversations)
+                Console.WriteLine($"Operation action name: {operationResult.Name}");
+                if (operationResult is SummarizationOperationResult summarizationOperationResult)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.Id}");
-                    Console.WriteLine("Summaries:");
-                    foreach (dynamic summary in conversation.Summaries)
+                    SummaryResult results = summarizationOperationResult.Results;
+                    foreach (ConversationsSummaryResult conversation in results.Conversations)
                     {
-                        Console.WriteLine($"Text: {summary.Text}");
-                        Console.WriteLine($"Aspect: {summary.Aspect}");
+                        Console.WriteLine($"Conversation: #{conversation.Id}");
+                        Console.WriteLine("Summaries:");
+                        foreach (SummaryResultItem summary in conversation.Summaries)
+                        {
+                            Console.WriteLine($"Text: {summary.Text}");
+                            Console.WriteLine($"Aspect: {summary.Aspect}");
 #if !SNIPPET
-                        aspects.Add(summary.Aspect);
+                            aspects.Add(summary.Aspect);
 #endif
+                        }
+                        if (conversation.Warnings != null && conversation.Warnings.Any())
+                        {
+                            Console.WriteLine("Warnings:");
+                            foreach (InputWarning warning in conversation.Warnings)
+                            {
+                                Console.WriteLine($"Code: {warning.Code}");
+                                Console.WriteLine($"Message: {warning.Message}");
+                            }
+                        }
+                        Console.WriteLine();
                     }
-                    Console.WriteLine();
+                }
+                if (operationState.Errors != null && operationState.Errors.Any())
+                {
+                    Console.WriteLine("Errors:");
+                    foreach (ConversationError error in operationState.Errors)
+                    {
+                        Console.WriteLine($"Error: {error.Code} - {error}");
+                    }
                 }
             }
-            #endregion
 
             Assert.That(aspects, Contains.Item("issue").And.Contains("resolution"));
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
@@ -124,99 +130,82 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
             List<string> aspects = new();
+            #region Snippet:AnalyzeConversation_ConversationSummarization
 
-            var data = new
-            {
-                AnalysisInput = new
+            MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+                new List<ConversationInput>
                 {
-                    Conversations = new[]
+                    new TextConversation("1", "en", new List<TextConversationItem>()
                     {
-                        new
+                        new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
+                        new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
+                        new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.")
+                    })
+                });
+            List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+                {
+                    new SummarizationOperationAction()
+                    {
+                        ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
                         {
-                            ConversationItems = new[]
-                            {
-                                new
-                                {
-                                    Text = "Hello, how can I help you?",
-                                    Id = "1",
-                                    Role = "Agent",
-                                    ParticipantId = "Agent_1",
-                                },
-                                new
-                                {
-                                    Text = "How to upgrade Office? I am getting error messages the whole day.",
-                                    Id = "2",
-                                    Role = "Customer",
-                                    ParticipantId = "Customer_1",
-                                },
-                                new
-                                {
-                                    Text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                                    Id = "3",
-                                    Role = "Agent",
-                                    ParticipantId = "Agent_1",
-                                },
-                            },
-                            Id = "1",
-                            Language = "en",
-                            Modality = "text",
-                        },
+                            SummaryAspect.Issue,
+                        }),
+                        Name = "Issue task",
+                    },
+                    new SummarizationOperationAction()
+                    {
+                        ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+                        {
+                            SummaryAspect.Resolution,
+                        }),
+                        Name = "Resolution task",
                     }
-                },
-                Tasks = new[]
-                {
-                    new
-                    {
-                        TaskName = "Issue task",
-                        Kind = "ConversationalSummarizationTask",
-                        Parameters = new
-                        {
-                            SummaryAspects = new[]
-                            {
-                                "issue",
-                            }
-                        },
-                    },
-                    new
-                    {
-                        TaskName = "Resolution task",
-                        Kind = "ConversationalSummarizationTask",
-                        Parameters = new
-                        {
-                            SummaryAspects = new[]
-                            {
-                                "resolution",
-                            }
-                        },
-                    },
-                },
-            };
+                };
+            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
 
-            #region Snippet:AnalyzeConversationAsync_ConversationSummarization
-            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
-            #endregion
+            AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            foreach (dynamic task in jobResults.Tasks.Items)
+            foreach (var operationResult in operationState.Actions.Items)
             {
-                Console.WriteLine($"Task name: {task.TaskName}");
-                dynamic results = task.Results;
-                foreach (dynamic conversation in results.Conversations)
+                Console.WriteLine($"Operation action name: {operationResult.Name}");
+                if (operationResult is SummarizationOperationResult summarizationOperationResult)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.Id}");
-                    Console.WriteLine("Summaries:");
-                    foreach (dynamic summary in conversation.Summaries)
+                    SummaryResult results = summarizationOperationResult.Results;
+                    foreach (ConversationsSummaryResult conversation in results.Conversations)
                     {
-                        Console.WriteLine($"Text: {summary.Text}");
-                        Console.WriteLine($"Aspect: {summary.Aspect}");
+                        Console.WriteLine($"Conversation: #{conversation.Id}");
+                        Console.WriteLine("Summaries:");
+                        foreach (SummaryResultItem summary in conversation.Summaries)
+                        {
+                            Console.WriteLine($"Text: {summary.Text}");
+                            Console.WriteLine($"Aspect: {summary.Aspect}");
 #if !SNIPPET
-                        aspects.Add(summary.Aspect);
+                            aspects.Add(summary.Aspect);
 #endif
+                        }
+                        if (conversation.Warnings != null && conversation.Warnings.Any())
+                        {
+                            Console.WriteLine("Warnings:");
+                            foreach (InputWarning warning in conversation.Warnings)
+                            {
+                                Console.WriteLine($"Code: {warning.Code}");
+                                Console.WriteLine($"Message: {warning.Message}");
+                            }
+                        }
+                        Console.WriteLine();
                     }
-                    Console.WriteLine();
+                }
+                if (operationState.Errors != null && operationState.Errors.Any())
+                {
+                    Console.WriteLine("Errors:");
+                    foreach (ConversationError error in operationState.Errors)
+                    {
+                        Console.WriteLine($"Error: {error.Code} - {error}");
+                    }
                 }
             }
-
+            #endregion
             Assert.That(aspects, Contains.Item("issue").And.Contains("resolution"));
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }

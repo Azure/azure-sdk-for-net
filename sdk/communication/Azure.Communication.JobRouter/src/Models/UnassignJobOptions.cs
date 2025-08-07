@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,32 +9,40 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Options for unassigning a job.
     /// </summary>
-    public class UnassignJobOptions
+    public partial class UnassignJobOptions
     {
-        /// <summary>
-        /// Public constructor.
-        /// </summary>
-        /// <param name="jobId"> Id of the job. </param>
-        /// <param name="assignmentId"> Id of the assignment. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
+        /// <summary> Initializes a new instance of UnassignJobOptions. </summary>
+        internal UnassignJobOptions()
+        {
+        }
+
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment to unassign. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+
         public UnassignJobOptions(string jobId, string assignmentId)
         {
-            Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
-            Argument.AssertNotNullOrWhiteSpace(assignmentId, nameof(assignmentId));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             JobId = jobId;
             AssignmentId = assignmentId;
         }
 
         /// <summary>
-        /// Unique key that identifies this job.
+        /// Id of a job to unassign.
         /// </summary>
         public string JobId { get; }
 
         /// <summary>
-        /// Unique key that identifies this job assignment.
+        /// Id of a job assignment to unassign.
         /// </summary>
         public string AssignmentId { get; }
+
+        /// <summary>
+        /// If SuspendMatching is true, then the job is not queued for rematching with a worker.
+        /// </summary>
+        public bool? SuspendMatching { get; set; }
     }
 }

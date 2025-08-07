@@ -36,7 +36,7 @@ namespace Azure.Batch.Unit.Tests
                         Body = new FakePage<Models.CloudPool>(new List<Models.CloudPool>
                                     {
                                             new Models.CloudPool { DisplayName = "batch-test"},
-                                            new Models.CloudPool { DisplayName = "foobar", CloudServiceConfiguration = new Models.CloudServiceConfiguration("3"), AllocationState = Models.AllocationState.Steady},
+                                            new Models.CloudPool { DisplayName = "foobar", VirtualMachineConfiguration = new Models.VirtualMachineConfiguration(imageReference: new Models.ImageReference(), nodeAgentSKUId: "df"), AllocationState = Models.AllocationState.Steady},
                                     })
                     };
 
@@ -97,7 +97,7 @@ namespace Azure.Batch.Unit.Tests
                                                             }
                                                 },
                             CreationTime = dateTimeMinusAnHour,
-                            CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily: "4", osVersion: "*"),
+                            VirtualMachineConfiguration = new Models.VirtualMachineConfiguration(imageReference: new Models.ImageReference(), nodeAgentSKUId: "df"),
                             CurrentDedicatedNodes = 3,
                             ETag = "eTag=0x8D250D98B5D78AA",
                             EnableAutoScale = false,
@@ -123,12 +123,11 @@ namespace Azure.Batch.Unit.Tests
             Assert.Equal(AllocationState.Steady, pool.AllocationState);
             Assert.Equal(dateTimeMinusAnHour, pool.AllocationStateTransitionTime);
             Assert.Equal(dateTimeMinusAnHour, pool.CreationTime);
-            Assert.Equal("*", pool.CloudServiceConfiguration.OSVersion);
+            Assert.Equal("df", pool.VirtualMachineConfiguration.NodeAgentSkuId);
             Assert.Equal(3, pool.CurrentDedicatedComputeNodes);
             Assert.Equal(false, pool.AutoScaleEnabled);
             Assert.Equal(currentDateTime, pool.LastModified);
             Assert.Equal(4, pool.TaskSlotsPerNode);
-            Assert.Equal("4", pool.CloudServiceConfiguration.OSFamily);
             Assert.Equal(PoolState.Active, pool.State);
             Assert.Equal(currentDateTime, pool.StateTransitionTime);
             Assert.Equal(ComputeNodeFillType.Pack, pool.TaskSchedulingPolicy.ComputeNodeFillType);

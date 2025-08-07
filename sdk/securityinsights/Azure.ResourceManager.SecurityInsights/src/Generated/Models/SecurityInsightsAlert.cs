@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a security alert entity. </summary>
     public partial class SecurityInsightsAlert : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlert. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlert"/>. </summary>
         public SecurityInsightsAlert()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -26,12 +26,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.SecurityAlert;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlert. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlert"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="alertDisplayName"> The display name of the alert. </param>
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="vendorName"> The name of the vendor that raise the alert. </param>
         /// <param name="alertLink"> The uri link of the alert. </param>
         /// <param name="resourceIdentifiers"> The list of resource identifiers of the alert. </param>
-        internal SecurityInsightsAlert(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string alertDisplayName, string alertType, string compromisedEntity, SecurityInsightsAlertConfidenceLevel? confidenceLevel, IReadOnlyList<SecurityInsightsAlertConfidenceReason> confidenceReasons, double? confidenceScore, SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus, string description, DateTimeOffset? endOn, SecurityInsightsKillChainIntent? intent, string providerAlertId, DateTimeOffset? processingEndOn, string productComponentName, string productName, string productVersion, IReadOnlyList<string> remediationSteps, SecurityInsightsAlertSeverity? severity, DateTimeOffset? startOn, SecurityInsightsAlertStatus? status, string systemAlertId, IReadOnlyList<SecurityInsightsAttackTactic> tactics, DateTimeOffset? alertGeneratedOn, string vendorName, string alertLink, IReadOnlyList<BinaryData> resourceIdentifiers) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsAlert(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string alertDisplayName, string alertType, string compromisedEntity, SecurityInsightsAlertConfidenceLevel? confidenceLevel, IReadOnlyList<SecurityInsightsAlertConfidenceReason> confidenceReasons, double? confidenceScore, SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus, string description, DateTimeOffset? endOn, SecurityInsightsKillChainIntent? intent, string providerAlertId, DateTimeOffset? processingEndOn, string productComponentName, string productName, string productVersion, IReadOnlyList<string> remediationSteps, SecurityInsightsAlertSeverity? severity, DateTimeOffset? startOn, SecurityInsightsAlertStatus? status, string systemAlertId, IReadOnlyList<SecurityInsightsAttackTactic> tactics, DateTimeOffset? alertGeneratedOn, string vendorName, string alertLink, IReadOnlyList<BinaryData> resourceIdentifiers) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -121,56 +122,82 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The display name of the alert. </summary>
+        [WirePath("properties.alertDisplayName")]
         public string AlertDisplayName { get; }
         /// <summary> The type name of the alert. </summary>
+        [WirePath("properties.alertType")]
         public string AlertType { get; }
         /// <summary> Display name of the main entity being reported on. </summary>
+        [WirePath("properties.compromisedEntity")]
         public string CompromisedEntity { get; }
         /// <summary> The confidence level of this alert. </summary>
+        [WirePath("properties.confidenceLevel")]
         public SecurityInsightsAlertConfidenceLevel? ConfidenceLevel { get; }
         /// <summary> The confidence reasons. </summary>
+        [WirePath("properties.confidenceReasons")]
         public IReadOnlyList<SecurityInsightsAlertConfidenceReason> ConfidenceReasons { get; }
         /// <summary> The confidence score of the alert. </summary>
+        [WirePath("properties.confidenceScore")]
         public double? ConfidenceScore { get; }
         /// <summary> The confidence score calculation status, i.e. indicating if score calculation is pending for this alert, not applicable or final. </summary>
+        [WirePath("properties.confidenceScoreStatus")]
         public SecurityInsightsAlertConfidenceScoreStatus? ConfidenceScoreStatus { get; }
         /// <summary> Alert description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> The impact end time of the alert (the time of the last event contributing to the alert). </summary>
+        [WirePath("properties.endTimeUtc")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Holds the alert intent stage(s) mapping for this alert. </summary>
+        [WirePath("properties.intent")]
         public SecurityInsightsKillChainIntent? Intent { get; }
         /// <summary> The identifier of the alert inside the product which generated the alert. </summary>
+        [WirePath("properties.providerAlertId")]
         public string ProviderAlertId { get; }
         /// <summary> The time the alert was made available for consumption. </summary>
+        [WirePath("properties.processingEndTime")]
         public DateTimeOffset? ProcessingEndOn { get; }
         /// <summary> The name of a component inside the product which generated the alert. </summary>
+        [WirePath("properties.productComponentName")]
         public string ProductComponentName { get; }
         /// <summary> The name of the product which published this alert. </summary>
+        [WirePath("properties.productName")]
         public string ProductName { get; }
         /// <summary> The version of the product generating the alert. </summary>
+        [WirePath("properties.productVersion")]
         public string ProductVersion { get; }
         /// <summary> Manual action items to take to remediate the alert. </summary>
+        [WirePath("properties.remediationSteps")]
         public IReadOnlyList<string> RemediationSteps { get; }
         /// <summary> The severity of the alert. </summary>
+        [WirePath("properties.severity")]
         public SecurityInsightsAlertSeverity? Severity { get; set; }
         /// <summary> The impact start time of the alert (the time of the first event contributing to the alert). </summary>
+        [WirePath("properties.startTimeUtc")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The lifecycle status of the alert. </summary>
+        [WirePath("properties.status")]
         public SecurityInsightsAlertStatus? Status { get; }
         /// <summary> Holds the product identifier of the alert for the product. </summary>
+        [WirePath("properties.systemAlertId")]
         public string SystemAlertId { get; }
         /// <summary> The tactics of the alert. </summary>
+        [WirePath("properties.tactics")]
         public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
         /// <summary> The time the alert was generated. </summary>
+        [WirePath("properties.timeGenerated")]
         public DateTimeOffset? AlertGeneratedOn { get; }
         /// <summary> The name of the vendor that raise the alert. </summary>
+        [WirePath("properties.vendorName")]
         public string VendorName { get; }
         /// <summary> The uri link of the alert. </summary>
+        [WirePath("properties.alertLink")]
         public string AlertLink { get; }
         /// <summary>
         /// The list of resource identifiers of the alert.
@@ -178,7 +205,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -202,6 +229,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.resourceIdentifiers")]
         public IReadOnlyList<BinaryData> ResourceIdentifiers { get; }
     }
 }

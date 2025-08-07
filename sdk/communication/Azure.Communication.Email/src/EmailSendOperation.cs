@@ -184,6 +184,10 @@ namespace Azure.Communication.Email
             return OperationState<EmailSendResult>.Pending(rawResponse);
         }
 
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<EmailSendResult>.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
+
         private static IDictionary<string, string> CreateAdditionalInformation(ErrorDetail error)
         {
             if (string.IsNullOrEmpty(error.ToString()))

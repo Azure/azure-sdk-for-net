@@ -6,8 +6,6 @@ using Azure.Messaging;
 using Azure.Messaging.EventGrid;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid.Config;
 using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -23,6 +21,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 {
@@ -106,6 +105,40 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName={functionName}");
             var response = await ext.ConvertAsync(request, CancellationToken.None);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            // no WebHook-Request-Origin header, should fallback to public cloud
+            Assert.AreEqual("eventgrid.azure.net", response.Headers.GetValues("Webhook-Allowed-Origin").First());
+        }
+
+        [TestCase("eventgrid.azure.net")]
+        [TestCase("eventgrid.azure.us")]
+        [TestCase("eventgrid.azure.eaglex.ic.gov")]
+        [TestCase("eventgrid.azure.microsoft.scloud")]
+        [TestCase("eventgrid.azure.cn")]
+        public async Task TestSubscribeOptionsKnownAllowedOrigin(string origin)
+        {
+            using var host = TestHelpers.NewHost<MyProg1>(CreateConfigProvider);
+            var ext = host.Services.GetServices<IExtensionConfigProvider>().OfType<EventGridExtensionConfigProvider>().Single();
+            await host.StartAsync(); // add listener
+
+            var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName=TestCloudEvent");
+            request.Headers.Add("WebHook-Request-Origin", origin);
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(origin, response.Headers.GetValues("Webhook-Allowed-Origin").First());
+        }
+
+        [Test]
+        public async Task TestSubscribeOptionsUnknownAllowedOrigin()
+        {
+            using var host = TestHelpers.NewHost<MyProg1>(CreateConfigProvider);
+            var ext = host.Services.GetServices<IExtensionConfigProvider>().OfType<EventGridExtensionConfigProvider>().Single();
+            await host.StartAsync(); // add listener
+
+            var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName=TestCloudEvent");
+            request.Headers.Add("WebHook-Request-Origin", "someunknown.origin.com");
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            // Unknown origin, should fallback to public cloud
             Assert.AreEqual("eventgrid.azure.net", response.Headers.GetValues("Webhook-Allowed-Origin").First());
         }
 
@@ -173,14 +206,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var ext = host.Services.GetServices<IExtensionConfigProvider>().OfType<EventGridExtensionConfigProvider>().Single();
             await host.StartAsync(); // add listener
 
-            var request = CreateSingleRequest("TestCloudEvent",
-                JObject.Parse(@"{'id':'one','source':'one','type':'t','data':'','specversion':'1.0','data':{'prop':'alpha'}}"));
+            var dateTime = "2024-08-15T12:34:56.0000000-08:00";
+            var jObject = JsonConvert.DeserializeObject<JObject>(
+                $"{{'id':'one', 'time':'{dateTime}', 'source':'one','type':'t','data':'','specversion':'1.0','data':{{'prop':'alpha'}}}}",
+                new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+            var request = CreateSingleRequest("TestCloudEvent", jObject);
             var response = await ext.ConvertAsync(request, CancellationToken.None);
 
             // verifies each instance gets its own proper binding data (from FakePayload.Prop)
             _log.TryGetValue("one", out string alpha);
             Assert.AreEqual("alpha", alpha);
-            Assert.AreEqual(1, _log.Count);
+
+            // validate that the time matches exactly - i.e. it should not have been translated to UTC or local time of the machine
+            _log.TryGetValue("time", out string time);
+            Assert.AreEqual(dateTime, time);
+
+            Assert.AreEqual(2, _log.Count);
             Assert.AreEqual(HttpStatusCode.Accepted, response.StatusCode);
         }
 
@@ -551,6 +592,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 if (!_log.TryAdd(value.Id, prop))
                 {
                     throw new InvalidOperationException($"duplicate subject '{value.Id}'");
+                }
+
+                if (!_log.TryAdd("time", value.Time.Value.ToString("o")))
+                {
+                    throw new InvalidOperationException($"duplicate time '{value.Time}'");
                 }
             }
 

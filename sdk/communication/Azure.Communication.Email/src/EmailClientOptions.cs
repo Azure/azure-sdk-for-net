@@ -17,7 +17,7 @@ namespace Azure.Communication.Email
         /// The latest version of the Email service.
         /// </summary>
         ///
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_03_31;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01_Preview;
 
         internal string ApiVersion { get; }
 
@@ -28,9 +28,8 @@ namespace Azure.Communication.Email
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2021_10_01_Preview => "2021-10-01-preview",
-                ServiceVersion.V2023_01_15_Preview => "2023-01-15-preview",
                 ServiceVersion.V2023_03_31 => "2023-03-31",
+                ServiceVersion.V2024_07_01_Preview => "2024-07-01-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -53,6 +52,10 @@ namespace Azure.Communication.Email
             /// The GA version of the Email service.
             /// </summary>
             V2023_03_31 = 3,
+            /// <summary>
+            /// The Inline Attachments preview version of the Email service.
+            /// </summary>
+            V2024_07_01_Preview = 4,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

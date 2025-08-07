@@ -15,6 +15,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task CreateCallToACSGetCallAndHangUpCallTest()
         {
             /* Test case: ACS to ACS call
@@ -65,6 +66,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task CreateCallToPSTNGetCallAndHangUpCallTest()
         {
             /* Test case: ACS to PSTN call

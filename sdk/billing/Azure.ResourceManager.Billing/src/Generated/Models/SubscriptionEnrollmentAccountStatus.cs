@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement billing accounts. </summary>
+    /// <summary> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </summary>
     public readonly partial struct SubscriptionEnrollmentAccountStatus : IEquatable<SubscriptionEnrollmentAccountStatus>
     {
         private readonly string _value;
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Billing.Models
         private const string DeletedValue = "Deleted";
         private const string TransferredOutValue = "TransferredOut";
         private const string TransferringValue = "Transferring";
+        private const string InactiveValue = "Inactive";
 
         /// <summary> Active. </summary>
         public static SubscriptionEnrollmentAccountStatus Active { get; } = new SubscriptionEnrollmentAccountStatus(ActiveValue);
@@ -41,11 +42,13 @@ namespace Azure.ResourceManager.Billing.Models
         public static SubscriptionEnrollmentAccountStatus TransferredOut { get; } = new SubscriptionEnrollmentAccountStatus(TransferredOutValue);
         /// <summary> Transferring. </summary>
         public static SubscriptionEnrollmentAccountStatus Transferring { get; } = new SubscriptionEnrollmentAccountStatus(TransferringValue);
+        /// <summary> Inactive. </summary>
+        public static SubscriptionEnrollmentAccountStatus Inactive { get; } = new SubscriptionEnrollmentAccountStatus(InactiveValue);
         /// <summary> Determines if two <see cref="SubscriptionEnrollmentAccountStatus"/> values are the same. </summary>
         public static bool operator ==(SubscriptionEnrollmentAccountStatus left, SubscriptionEnrollmentAccountStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionEnrollmentAccountStatus"/> values are not the same. </summary>
         public static bool operator !=(SubscriptionEnrollmentAccountStatus left, SubscriptionEnrollmentAccountStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SubscriptionEnrollmentAccountStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionEnrollmentAccountStatus"/>. </summary>
         public static implicit operator SubscriptionEnrollmentAccountStatus(string value) => new SubscriptionEnrollmentAccountStatus(value);
 
         /// <inheritdoc />
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

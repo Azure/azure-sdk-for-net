@@ -903,7 +903,8 @@
         "unknown",
         "communicationUser",
         "phoneNumber",
-        "microsoftTeamsUser"
+        "microsoftTeamsUser",
+        "microsoftTeamsApp"
       ],
       "type": "string",
       "x-ms-enum": {
@@ -932,6 +933,10 @@
         "microsoftTeamsUser": {
           "$ref": "#/definitions/MicrosoftTeamsUserIdentifierModel",
           "description": "The Microsoft Teams user."
+        },
+        "microsoftTeamsApp": {
+          "$ref": "#/definitions/MicrosoftTeamsAppIdentifierModel",
+          "description": "The Microsoft Teams application."
         }
       }
     },
@@ -1061,6 +1066,23 @@
         },
         "cloud": {
           "$ref": "#/definitions/CommunicationCloudEnvironmentModel"
+        }
+      }
+    },
+    "MicrosoftTeamsAppIdentifierModel": {
+      "description": "A Microsoft Teams application.",
+      "type": "object",
+      "required": [
+        "appId"
+      ],
+      "properties": {
+        "appId": {
+          "type": "string",
+          "description": "The Id of the Microsoft Teams application."
+        },
+        "cloud": {
+          "$ref": "#/definitions/CommunicationCloudEnvironmentModel",
+          "description": "The cloud that the Microsoft Teams application belongs to. By default 'public' if missing."
         }
       }
     },

@@ -13,12 +13,12 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The deleted storage account item containing metadata about the deleted storage account. </summary>
     public partial class DeletedStorageAccountItem : StorageAccountItem
     {
-        /// <summary> Initializes a new instance of DeletedStorageAccountItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedStorageAccountItem"/>. </summary>
         internal DeletedStorageAccountItem()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedStorageAccountItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedStorageAccountItem"/>. </summary>
         /// <param name="id"> Storage identifier. </param>
         /// <param name="resourceId"> Storage account resource Id. </param>
         /// <param name="attributes"> The storage account management attributes. </param>

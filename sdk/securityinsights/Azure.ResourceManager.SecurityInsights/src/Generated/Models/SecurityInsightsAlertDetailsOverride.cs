@@ -5,36 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Settings for how to dynamically override alert static details. </summary>
     public partial class SecurityInsightsAlertDetailsOverride
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertDetailsOverride. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertDetailsOverride"/>. </summary>
         public SecurityInsightsAlertDetailsOverride()
         {
+            AlertDynamicProperties = new ChangeTrackingList<SecurityInsightsAlertPropertyMapping>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertDetailsOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertDetailsOverride"/>. </summary>
         /// <param name="alertDisplayNameFormat"> the format containing columns name(s) to override the alert name. </param>
         /// <param name="alertDescriptionFormat"> the format containing columns name(s) to override the alert description. </param>
         /// <param name="alertTacticsColumnName"> the column name to take the alert tactics from. </param>
         /// <param name="alertSeverityColumnName"> the column name to take the alert severity from. </param>
-        internal SecurityInsightsAlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName)
+        /// <param name="alertDynamicProperties"> List of additional dynamic properties to override. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName, IList<SecurityInsightsAlertPropertyMapping> alertDynamicProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertDisplayNameFormat = alertDisplayNameFormat;
             AlertDescriptionFormat = alertDescriptionFormat;
             AlertTacticsColumnName = alertTacticsColumnName;
             AlertSeverityColumnName = alertSeverityColumnName;
+            AlertDynamicProperties = alertDynamicProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the format containing columns name(s) to override the alert name. </summary>
+        [WirePath("alertDisplayNameFormat")]
         public string AlertDisplayNameFormat { get; set; }
         /// <summary> the format containing columns name(s) to override the alert description. </summary>
+        [WirePath("alertDescriptionFormat")]
         public string AlertDescriptionFormat { get; set; }
         /// <summary> the column name to take the alert tactics from. </summary>
+        [WirePath("alertTacticsColumnName")]
         public string AlertTacticsColumnName { get; set; }
         /// <summary> the column name to take the alert severity from. </summary>
+        [WirePath("alertSeverityColumnName")]
         public string AlertSeverityColumnName { get; set; }
+        /// <summary> List of additional dynamic properties to override. </summary>
+        [WirePath("alertDynamicProperties")]
+        public IList<SecurityInsightsAlertPropertyMapping> AlertDynamicProperties { get; }
     }
 }

@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Defines whether to send email notifications about new security alerts. </summary>
     public partial class SecurityContactPropertiesAlertNotifications
     {
-        /// <summary> Initializes a new instance of SecurityContactPropertiesAlertNotifications. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesAlertNotifications"/>. </summary>
         public SecurityContactPropertiesAlertNotifications()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityContactPropertiesAlertNotifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesAlertNotifications"/>. </summary>
         /// <param name="state"> Defines if email notifications will be sent about new security alerts. </param>
         /// <param name="minimalSeverity"> Defines the minimal alert severity which will be sent as email notifications. </param>
-        internal SecurityContactPropertiesAlertNotifications(SecurityAlertNotificationState? state, SecurityAlertMinimalSeverity? minimalSeverity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityContactPropertiesAlertNotifications(SecurityAlertNotificationState? state, SecurityAlertMinimalSeverity? minimalSeverity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             MinimalSeverity = minimalSeverity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines if email notifications will be sent about new security alerts. </summary>

@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The folder that this SQL script is in. If not specified, this SQL script will appear at the root level. </summary>
     public partial class SqlScriptFolder
     {
-        /// <summary> Initializes a new instance of SqlScriptFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlScriptFolder"/>. </summary>
         public SqlScriptFolder()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlScriptFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlScriptFolder"/>. </summary>
         /// <param name="name"> The name of the folder that this SQL script is in. </param>
         internal SqlScriptFolder(string name)
         {

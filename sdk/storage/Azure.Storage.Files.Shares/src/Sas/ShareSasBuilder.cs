@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Sas
@@ -280,34 +281,36 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The <see cref="SasQueryParameters"/> used for authenticating requests.
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
+            => ToSasQueryParameters(sharedKeyCredential, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SasQueryParameters"/> used for authenticating requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential, out string stringToSign)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            stringToSign = ToStringToSign(sharedKeyCredential);
 
-            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = string.Join("\n",
-                Permissions,
-                startTime,
-                expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, ShareName ?? string.Empty, FilePath ?? string.Empty),
-                Identifier,
-                IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
-                Version,
-                CacheControl,
-                ContentDisposition,
-                ContentEncoding,
-                ContentLanguage,
-                ContentType);
+            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
-            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
-
-            var p = SasQueryParametersInternals.Create(
+            SasQueryParameters p = SasQueryParametersInternals.Create(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -325,6 +328,28 @@ namespace Azure.Storage.Sas
                 contentLanguage: ContentLanguage,
                 contentType: ContentType);
             return p;
+        }
+
+        private string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        {
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+
+            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            return string.Join("\n",
+                Permissions,
+                startTime,
+                expiryTime,
+                GetCanonicalName(sharedKeyCredential.AccountName, ShareName ?? string.Empty, FilePath ?? string.Empty),
+                Identifier,
+                IPRange.ToString(),
+                SasExtensions.ToProtocolString(Protocol),
+                Version,
+                CacheControl,
+                ContentDisposition,
+                ContentEncoding,
+                ContentLanguage,
+                ContentType);
         }
 
         /// <summary>

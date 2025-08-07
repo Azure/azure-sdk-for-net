@@ -9,10 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownStoreReadSettings. </summary>
+    /// <summary> Unknown version of StoreReadSettings. </summary>
     internal partial class UnknownStoreReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of UnknownStoreReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownStoreReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

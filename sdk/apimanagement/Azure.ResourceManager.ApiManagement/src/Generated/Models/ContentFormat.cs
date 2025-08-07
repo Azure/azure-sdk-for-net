@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Format of the Content in which the API is getting imported. </summary>
+    /// <summary> Format of the Content in which the API is getting imported. New formats can be added in the future. </summary>
     public readonly partial struct ContentFormat : IEquatable<ContentFormat>
     {
         private readonly string _value;
@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string OpenApiLinkValue = "openapi-link";
         private const string OpenApiJsonLinkValue = "openapi+json-link";
         private const string GraphQLLinkValue = "graphql-link";
+        private const string OdataValue = "odata";
+        private const string OdataLinkValue = "odata-link";
+        private const string GrpcValue = "grpc";
+        private const string GrpcLinkValue = "grpc-link";
 
         /// <summary> The contents are inline and Content type is a WADL document. </summary>
         public static ContentFormat WadlXml { get; } = new ContentFormat(WadlXmlValue);
@@ -56,11 +60,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ContentFormat OpenApiJsonLink { get; } = new ContentFormat(OpenApiJsonLinkValue);
         /// <summary> The GraphQL API endpoint hosted on a publicly accessible internet address. </summary>
         public static ContentFormat GraphQLLink { get; } = new ContentFormat(GraphQLLinkValue);
+        /// <summary> The contents are inline and Content Type is a OData XML Document. </summary>
+        public static ContentFormat Odata { get; } = new ContentFormat(OdataValue);
+        /// <summary> The OData metadata document hosted on a publicly accessible internet address. </summary>
+        public static ContentFormat OdataLink { get; } = new ContentFormat(OdataLinkValue);
+        /// <summary> The contents are inline and Content Type is a gRPC protobuf file. </summary>
+        public static ContentFormat Grpc { get; } = new ContentFormat(GrpcValue);
+        /// <summary> The gRPC protobuf file is hosted on a publicly accessible internet address. </summary>
+        public static ContentFormat GrpcLink { get; } = new ContentFormat(GrpcLinkValue);
         /// <summary> Determines if two <see cref="ContentFormat"/> values are the same. </summary>
         public static bool operator ==(ContentFormat left, ContentFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentFormat"/> values are not the same. </summary>
         public static bool operator !=(ContentFormat left, ContentFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContentFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentFormat"/>. </summary>
         public static implicit operator ContentFormat(string value) => new ContentFormat(value);
 
         /// <inheritdoc />
@@ -71,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

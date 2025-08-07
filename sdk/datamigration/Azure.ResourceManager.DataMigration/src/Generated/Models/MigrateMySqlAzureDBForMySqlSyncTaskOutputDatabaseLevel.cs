@@ -6,21 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel. </summary>
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel : MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>. </summary>
         internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel()
         {
             ResultType = "DatabaseLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(string id, string resultType, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SyncDatabaseMigrationReportingState? migrationState, long? incomingChanges, long? appliedChanges, long? cdcInsertCounter, long? cdcDeleteCounter, long? cdcUpdateCounter, long? fullLoadCompletedTables, long? fullLoadLoadingTables, long? fullLoadQueuedTables, long? fullLoadErroredTables, bool? initializationCompleted, long? latency) : base(id, resultType)
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SyncDatabaseMigrationReportingState? migrationState, long? incomingChanges, long? appliedChanges, long? cdcInsertCounter, long? cdcDeleteCounter, long? cdcUpdateCounter, long? fullLoadCompletedTables, long? fullLoadLoadingTables, long? fullLoadQueuedTables, long? fullLoadErroredTables, bool? isInitializationCompleted, long? latency) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;
@@ -51,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             FullLoadLoadingTables = fullLoadLoadingTables;
             FullLoadQueuedTables = fullLoadQueuedTables;
             FullLoadErroredTables = fullLoadErroredTables;
-            InitializationCompleted = initializationCompleted;
+            IsInitializationCompleted = isInitializationCompleted;
             Latency = latency;
             ResultType = resultType ?? "DatabaseLevelOutput";
         }
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Number of tables errored in full load. </summary>
         public long? FullLoadErroredTables { get; }
         /// <summary> Indicates if initial load (full load) has been completed. </summary>
-        public bool? InitializationCompleted { get; }
+        public bool? IsInitializationCompleted { get; }
         /// <summary> CDC apply latency. </summary>
         public long? Latency { get; }
     }

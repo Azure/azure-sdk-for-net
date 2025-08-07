@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The AddParticipantsResponse. </summary>
     internal partial class AddParticipantsResponseInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantsResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsResponseInternal"/>. </summary>
         internal AddParticipantsResponseInternal()
         {
             Participants = new ChangeTrackingList<AcsCallParticipantInternal>();
         }
 
-        /// <summary> Initializes a new instance of AddParticipantsResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsResponseInternal"/>. </summary>
         /// <param name="participants"></param>
         /// <param name="operationContext"> The operation context provided by client. </param>
         internal AddParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantInternal> participants, string operationContext)

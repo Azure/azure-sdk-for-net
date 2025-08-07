@@ -27,7 +27,7 @@ In order to Record/Playback a test, you need to setup a connection string that c
 
 > TEST_CSM_ORGID_AUTHENTICATION
 
-Value of the env. variable is the connection string that determines how to connect to Azure. This includes authentiation and the Azure environment to connect to.
+Value of the env. variable is the connection string that determines how to connect to Azure. This includes authentication and the Azure environment to connect to.
 
 > AZURE_TEST_MODE
 

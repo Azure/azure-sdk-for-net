@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DigitalTwins
 
         DigitalTwinsDescriptionResource IOperationSource<DigitalTwinsDescriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(document.RootElement);
+            var data = ModelReaderWriter.Read<DigitalTwinsDescriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDigitalTwinsContext.Default);
             return new DigitalTwinsDescriptionResource(_client, data);
         }
 
         async ValueTask<DigitalTwinsDescriptionResource> IOperationSource<DigitalTwinsDescriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(document.RootElement);
-            return new DigitalTwinsDescriptionResource(_client, data);
+            var data = ModelReaderWriter.Read<DigitalTwinsDescriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDigitalTwinsContext.Default);
+            return await Task.FromResult(new DigitalTwinsDescriptionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

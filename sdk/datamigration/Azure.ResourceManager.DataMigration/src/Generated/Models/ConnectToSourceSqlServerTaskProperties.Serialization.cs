@@ -5,57 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceSqlServerTaskProperties : IUtf8JsonSerializable
+    public partial class ConnectToSourceSqlServerTaskProperties : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConnectToSourceSqlServerTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                writer.WriteObjectValue(Input, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStartArray();
+                foreach (var item in Output)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsCollectionDefined(ClientData))
-            {
-                writer.WritePropertyName("clientData"u8);
-                writer.WriteStartObject();
-                foreach (var item in ClientData)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
         }
 
-        internal static ConnectToSourceSqlServerTaskProperties DeserializeConnectToSourceSqlServerTaskProperties(JsonElement element)
+        ConnectToSourceSqlServerTaskProperties IJsonModel<ConnectToSourceSqlServerTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToSourceSqlServerTaskProperties(document.RootElement, options);
+        }
+
+        internal static ConnectToSourceSqlServerTaskProperties DeserializeConnectToSourceSqlServerTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ConnectToSourceSqlServerTaskInput> input = default;
-            Optional<IReadOnlyList<ConnectToSourceSqlServerTaskOutput>> output = default;
-            Optional<string> taskId = default;
-            TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            ConnectToSourceSqlServerTaskInput input = default;
+            IReadOnlyList<ConnectToSourceSqlServerTaskOutput> output = default;
+            string taskId = default;
+            DataMigrationTaskType taskType = default;
+            IReadOnlyList<DataMigrationODataError> errors = default;
+            DataMigrationTaskState? state = default;
+            IReadOnlyList<DataMigrationCommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -64,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = ConnectToSourceSqlServerTaskInput.DeserializeConnectToSourceSqlServerTaskInput(property.Value);
+                    input = ConnectToSourceSqlServerTaskInput.DeserializeConnectToSourceSqlServerTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -76,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ConnectToSourceSqlServerTaskOutput> array = new List<ConnectToSourceSqlServerTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectToSourceSqlServerTaskOutput.DeserializeConnectToSourceSqlServerTaskOutput(item));
+                        array.Add(ConnectToSourceSqlServerTaskOutput.DeserializeConnectToSourceSqlServerTaskOutput(item, options));
                     }
                     output = array;
                     continue;
@@ -88,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("taskType"u8))
                 {
-                    taskType = new TaskType(property.Value.GetString());
+                    taskType = new DataMigrationTaskType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -97,10 +128,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ODataError> array = new List<ODataError>();
+                    List<DataMigrationODataError> array = new List<DataMigrationODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -111,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new TaskState(property.Value.GetString());
+                    state = new DataMigrationTaskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commands"u8))
@@ -120,10 +151,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<CommandProperties> array = new List<CommandProperties>();
+                    List<DataMigrationCommandProperties> array = new List<DataMigrationCommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -142,8 +173,53 @@ namespace Azure.ResourceManager.DataMigration.Models
                     clientData = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectToSourceSqlServerTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output), taskId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectToSourceSqlServerTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<DataMigrationODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<DataMigrationCommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<ConnectToSourceSqlServerTaskOutput>(),
+                taskId);
         }
+
+        BinaryData IPersistableModel<ConnectToSourceSqlServerTaskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectToSourceSqlServerTaskProperties IPersistableModel<ConnectToSourceSqlServerTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeConnectToSourceSqlServerTaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectToSourceSqlServerTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

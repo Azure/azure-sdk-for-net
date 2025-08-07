@@ -5,14 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Governance rule execution parameters. </summary>
     public partial class ExecuteGovernanceRuleParams
     {
-        /// <summary> Initializes a new instance of ExecuteGovernanceRuleParams. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteGovernanceRuleParams"/>. </summary>
         public ExecuteGovernanceRuleParams()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteGovernanceRuleParams"/>. </summary>
+        /// <param name="override"> Describe if governance rule should be override. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExecuteGovernanceRuleParams(bool? @override, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Override = @override;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describe if governance rule should be override. </summary>

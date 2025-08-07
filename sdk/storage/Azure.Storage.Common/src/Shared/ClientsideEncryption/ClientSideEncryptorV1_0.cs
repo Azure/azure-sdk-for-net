@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Cryptography

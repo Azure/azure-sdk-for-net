@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a direct connection. </summary>
     public partial class PeeringDirectConnection
     {
-        /// <summary> Initializes a new instance of PeeringDirectConnection. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringDirectConnection"/>. </summary>
         public PeeringDirectConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringDirectConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringDirectConnection"/>. </summary>
         /// <param name="bandwidthInMbps"> The bandwidth of the connection. </param>
         /// <param name="provisionedBandwidthInMbps"> The bandwidth that is actually provisioned. </param>
         /// <param name="sessionAddressProvider"> The field indicating if Microsoft provides session ip addresses. </param>
@@ -26,7 +61,8 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="bgpSession"> The BGP session associated with the connection. </param>
         /// <param name="connectionIdentifier"> The unique identifier (GUID) for the connection. </param>
         /// <param name="errorMessage"> The error message related to the connection state, if any. </param>
-        internal PeeringDirectConnection(int? bandwidthInMbps, int? provisionedBandwidthInMbps, PeeringSessionAddressProvider? sessionAddressProvider, bool? useForPeeringService, string microsoftTrackingId, int? peeringDBFacilityId, PeeringConnectionState? connectionState, PeeringBgpSession bgpSession, string connectionIdentifier, string errorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringDirectConnection(int? bandwidthInMbps, int? provisionedBandwidthInMbps, PeeringSessionAddressProvider? sessionAddressProvider, bool? useForPeeringService, string microsoftTrackingId, int? peeringDBFacilityId, PeeringConnectionState? connectionState, PeeringBgpSession bgpSession, string connectionIdentifier, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BandwidthInMbps = bandwidthInMbps;
             ProvisionedBandwidthInMbps = provisionedBandwidthInMbps;
@@ -38,6 +74,7 @@ namespace Azure.ResourceManager.Peering.Models
             BgpSession = bgpSession;
             ConnectionIdentifier = connectionIdentifier;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The bandwidth of the connection. </summary>

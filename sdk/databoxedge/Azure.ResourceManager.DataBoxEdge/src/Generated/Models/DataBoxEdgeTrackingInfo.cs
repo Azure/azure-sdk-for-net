@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Tracking courier information. </summary>
     public partial class DataBoxEdgeTrackingInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeTrackingInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeTrackingInfo"/>. </summary>
         internal DataBoxEdgeTrackingInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeTrackingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeTrackingInfo"/>. </summary>
         /// <param name="serialNumber"> Serial number of the device being tracked. </param>
         /// <param name="carrierName"> Name of the carrier used in the delivery. </param>
         /// <param name="trackingId"> Tracking ID of the shipment. </param>
         /// <param name="trackingUri"> Tracking URL of the shipment. </param>
-        internal DataBoxEdgeTrackingInfo(string serialNumber, string carrierName, string trackingId, Uri trackingUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeTrackingInfo(string serialNumber, string carrierName, string trackingId, Uri trackingUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
             CarrierName = carrierName;
             TrackingId = trackingId;
             TrackingUri = trackingUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Serial number of the device being tracked. </summary>

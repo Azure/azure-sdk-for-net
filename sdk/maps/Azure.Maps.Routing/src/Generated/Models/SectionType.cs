@@ -37,7 +37,7 @@ namespace Azure.Maps.Routing
 
         /// <summary> Sections of the route that are cars or trains. </summary>
         public static SectionType CarOrTrain { get; } = new SectionType(CarOrTrainValue);
-        /// <summary> Sections indicating which countries the route is in. </summary>
+        /// <summary> Sections indicating which countries/regions the route is in. </summary>
         public static SectionType Country { get; } = new SectionType(CountryValue);
         /// <summary> Sections of the route that are ferries. </summary>
         public static SectionType Ferry { get; } = new SectionType(FerryValue);
@@ -45,7 +45,7 @@ namespace Azure.Maps.Routing
         public static SectionType Motorway { get; } = new SectionType(MotorwayValue);
         /// <summary> Sections of the route that are only suited for pedestrians. </summary>
         public static SectionType Pedestrian { get; } = new SectionType(PedestrianValue);
-        /// <summary> Sections of the route that require a toll to be payed. </summary>
+        /// <summary> Sections of the route that require a toll to be paid. </summary>
         public static SectionType TollRoad { get; } = new SectionType(TollRoadValue);
         /// <summary> Sections of the route that require a toll vignette to be present. </summary>
         public static SectionType TollVignette { get; } = new SectionType(TollVignetteValue);
@@ -63,7 +63,7 @@ namespace Azure.Maps.Routing
         public static bool operator ==(SectionType left, SectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SectionType"/> values are not the same. </summary>
         public static bool operator !=(SectionType left, SectionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SectionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SectionType"/>. </summary>
         public static implicit operator SectionType(string value) => new SectionType(value);
 
         /// <inheritdoc />
@@ -74,7 +74,7 @@ namespace Azure.Maps.Routing
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

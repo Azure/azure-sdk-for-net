@@ -5,18 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerBackendAddress : IUtf8JsonSerializable
+    public partial class LoadBalancerBackendAddress : IUtf8JsonSerializable, IJsonModel<LoadBalancerBackendAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerBackendAddress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<LoadBalancerBackendAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -27,22 +46,37 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
-                JsonSerializer.Serialize(writer, VirtualNetwork);
+                ((IJsonModel<WritableSubResource>)VirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                JsonSerializer.Serialize(writer, Subnet);
+                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
+            if (options.Format != "W" && Optional.IsDefined(NetworkInterfaceIPConfiguration))
+            {
+                writer.WritePropertyName("networkInterfaceIPConfiguration"u8);
+                ((IJsonModel<WritableSubResource>)NetworkInterfaceIPConfiguration).Write(writer, options);
+            }
             if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
             {
                 writer.WritePropertyName("loadBalancerFrontendIPConfiguration"u8);
-                JsonSerializer.Serialize(writer, LoadBalancerFrontendIPConfiguration);
+                ((IJsonModel<WritableSubResource>)LoadBalancerFrontendIPConfiguration).Write(writer, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRulesPortMapping))
+            {
+                writer.WritePropertyName("inboundNatRulesPortMapping"u8);
+                writer.WriteStartArray();
+                foreach (var item in InboundNatRulesPortMapping)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AdminState))
             {
@@ -50,23 +84,53 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(AdminState.Value.ToString());
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element)
+        LoadBalancerBackendAddress IJsonModel<LoadBalancerBackendAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerBackendAddress(document.RootElement, options);
+        }
+
+        internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<string> ipAddress = default;
-            Optional<WritableSubResource> networkInterfaceIPConfiguration = default;
-            Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
-            Optional<IReadOnlyList<NatRulePortMapping>> inboundNatRulesPortMapping = default;
-            Optional<LoadBalancerBackendAddressAdminState> adminState = default;
+            string name = default;
+            WritableSubResource virtualNetwork = default;
+            WritableSubResource subnet = default;
+            string ipAddress = default;
+            WritableSubResource networkInterfaceIPConfiguration = default;
+            WritableSubResource loadBalancerFrontendIPConfiguration = default;
+            IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping = default;
+            LoadBalancerBackendAddressAdminState? adminState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -89,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("subnet"u8))
@@ -98,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"u8))
@@ -112,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            networkInterfaceIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            networkInterfaceIPConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("loadBalancerFrontendIPConfiguration"u8))
@@ -121,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            loadBalancerFrontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadBalancerFrontendIPConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("inboundNatRulesPortMapping"u8))
@@ -133,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<NatRulePortMapping> array = new List<NatRulePortMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NatRulePortMapping.DeserializeNatRulePortMapping(item));
+                                array.Add(NatRulePortMapping.DeserializeNatRulePortMapping(item, options));
                             }
                             inboundNatRulesPortMapping = array;
                             continue;
@@ -150,8 +214,53 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, Optional.ToList(inboundNatRulesPortMapping), Optional.ToNullable(adminState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LoadBalancerBackendAddress(
+                name,
+                virtualNetwork,
+                subnet,
+                ipAddress,
+                networkInterfaceIPConfiguration,
+                loadBalancerFrontendIPConfiguration,
+                inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>(),
+                adminState,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LoadBalancerBackendAddress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LoadBalancerBackendAddress IPersistableModel<LoadBalancerBackendAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLoadBalancerBackendAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoadBalancerBackendAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

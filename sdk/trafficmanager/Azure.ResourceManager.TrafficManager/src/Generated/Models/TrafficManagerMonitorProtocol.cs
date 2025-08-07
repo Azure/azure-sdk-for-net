@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator ==(TrafficManagerMonitorProtocol left, TrafficManagerMonitorProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficManagerMonitorProtocol"/> values are not the same. </summary>
         public static bool operator !=(TrafficManagerMonitorProtocol left, TrafficManagerMonitorProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrafficManagerMonitorProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficManagerMonitorProtocol"/>. </summary>
         public static implicit operator TrafficManagerMonitorProtocol(string value) => new TrafficManagerMonitorProtocol(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

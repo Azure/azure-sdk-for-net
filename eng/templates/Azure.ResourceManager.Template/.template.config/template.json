@@ -46,13 +46,37 @@
       "description": "The Azure provider name. ie. Microsoft.Network or Microsoft.Compute",
       "replaces": "ProviderFullName"
     },
-    "tagVersion": {
+    "TypeSpecDirectory": {
       "type": "parameter",
       "datatype":"text",
       "isRequired": false,
-      "description": "The optional parameter specifies the tag in the README.MD. If empty, the default tag in the README.MD is used.",
+      "description": "TypeSpecDirectory under sdk/providername.",
+      "defaultValue": "TypeSpecDirectory",
+      "replaces": "TypeSpecDirectory"
+    },
+    "CommitId": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "the commit id of Azure spec repo.",
+      "defaultValue": "CommitId",
+      "replaces": "CommitId"
+    },
+    "ChangeLogH2Title": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "the H2 title of Changelog",
+      "defaultValue": "1.0.0-beta.1 (Unreleased)",
+      "replaces": "ChangeLogH2Title"
+    },
+    "ChangeLogSdkDescription": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "Sdk description",
       "defaultValue": "",
-      "replaces": "SwaggerVersionTag"
+      "replaces": "ChangeLogSdkDescription"
     },
     "includeCI": {
       "type": "parameter",
@@ -61,12 +85,12 @@
       "description": "The optional parameter specifies whether generate related pipline ci.yml and test-resources.json in parent folder.",
       "defaultValue": "false"
     },
-    "ProviderShortNameLowercase": {
+    "LowercaseProviderShortName": {
       "type": "derived",
       "datatype": "text",
       "valueSource": "provider",
       "valueTransform": "ProviderShortNameLowerForm",
-      "replaces": "ProviderNameLowercase"
+      "replaces": "LowercaseProviderShortName"
     },
     "ProviderShortName": {
       "type": "derived",
@@ -86,25 +110,6 @@
         "source": "name",
         "steps": [
           { "regex": "\\.", "replacement": "" }
-        ]
-      }
-    },
-    "tagPrefix": {
-      "type": "generated",
-      "generator": "switch",
-      "replaces": "tagPrefix",
-      "parameters": {
-        "evaluator": "MSBUILD",
-        "datatype": "string",
-        "cases": [
-          {
-            "condition": "('tagVersion' == '')",
-            "value": ""
-          },
-          {
-            "condition": "('tagVersion' != '')",
-            "value": "tag:"
-          }
         ]
       }
     }

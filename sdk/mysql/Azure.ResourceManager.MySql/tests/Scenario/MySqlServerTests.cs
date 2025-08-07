@@ -15,12 +15,13 @@ namespace Azure.ResourceManager.MySql.Tests
     public class MySqlServerTests: MySqlManagementTestBase
     {
         public MySqlServerTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//,RecordedTestMode.Record)
         {
         }
 
         [TestCase]
         [RecordedTest]
+        [Ignore("The server type 'Azure Database for MySQL Single Server' has been deactivated")]
         public async Task CreateGetList()
         {
             // Create
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.MySql.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("The server type 'Azure Database for MySQL Single Server' has been deactivated")]
         public async Task CreateUpdateGetDelete()
         {
             // Create

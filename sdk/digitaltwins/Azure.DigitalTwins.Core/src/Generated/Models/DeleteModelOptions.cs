@@ -10,9 +10,18 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class DeleteModelOptions
     {
-        /// <summary> Initializes a new instance of DeleteModelOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteModelOptions"/>. </summary>
         public DeleteModelOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeleteModelOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        internal DeleteModelOptions(string traceParent, string traceState)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
         }
     }
 }

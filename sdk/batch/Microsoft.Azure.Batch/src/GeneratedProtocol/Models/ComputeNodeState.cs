@@ -96,7 +96,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// rescheduled when another Compute Node becomes available.
         /// </summary>
         [EnumMember(Value = "preempted")]
-        Preempted
+        Preempted,
+        /// <summary>
+        /// The Compute Node is undergoing an OS upgrade operation.
+        /// </summary>
+        [EnumMember(Value = "upgradingos")]
+        UpgradingOS,
+        /// <summary>
+        /// The Compute Node is deallocated.
+        /// </summary>
+        [EnumMember(Value = "deallocated")]
+        Deallocated,
+        /// <summary>
+        /// The Compute Node is deallocating.
+        /// </summary>
+        [EnumMember(Value = "deallocating")]
+        Deallocating
     }
     internal static class ComputeNodeStateEnumExtension
     {
@@ -135,6 +150,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return "offline";
                 case ComputeNodeState.Preempted:
                     return "preempted";
+                case ComputeNodeState.UpgradingOS:
+                    return "upgradingos";
+                case ComputeNodeState.Deallocated:
+                    return "deallocated";
+                case ComputeNodeState.Deallocating:
+                    return "deallocating";
             }
             return null;
         }
@@ -169,6 +190,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return ComputeNodeState.Offline;
                 case "preempted":
                     return ComputeNodeState.Preempted;
+                case "upgradingos":
+                    return ComputeNodeState.UpgradingOS;
+                case "deallocated":
+                    return ComputeNodeState.Deallocated;
+                case "deallocating":
+                    return ComputeNodeState.Deallocating;
             }
             return null;
         }

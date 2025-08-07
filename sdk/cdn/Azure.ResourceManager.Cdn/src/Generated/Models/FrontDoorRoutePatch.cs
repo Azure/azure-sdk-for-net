@@ -5,16 +5,52 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The domain JSON object required for domain creation or update. </summary>
+    /// <summary>
+    /// The domain JSON object required for domain creation or update.
+    /// Serialized Name: RouteUpdateParameters
+    /// </summary>
     public partial class FrontDoorRoutePatch
     {
-        /// <summary> Initializes a new instance of FrontDoorRoutePatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRoutePatch"/>. </summary>
         public FrontDoorRoutePatch()
         {
             CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
@@ -23,11 +59,87 @@ namespace Azure.ResourceManager.Cdn.Models
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The name of the endpoint which holds the route. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRoutePatch"/>. </summary>
+        /// <param name="endpointName">
+        /// The name of the endpoint which holds the route.
+        /// Serialized Name: RouteUpdateParameters.properties.endpointName
+        /// </param>
+        /// <param name="customDomains">
+        /// Domains referenced by this endpoint.
+        /// Serialized Name: RouteUpdateParameters.properties.customDomains
+        /// </param>
+        /// <param name="originGroup">
+        /// A reference to the origin group.
+        /// Serialized Name: RouteUpdateParameters.properties.originGroup
+        /// </param>
+        /// <param name="originPath">
+        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+        /// Serialized Name: RouteUpdateParameters.properties.originPath
+        /// </param>
+        /// <param name="ruleSets">
+        /// rule sets referenced by this endpoint.
+        /// Serialized Name: RouteUpdateParameters.properties.ruleSets
+        /// </param>
+        /// <param name="supportedProtocols">
+        /// List of supported protocols for this route.
+        /// Serialized Name: RouteUpdateParameters.properties.supportedProtocols
+        /// </param>
+        /// <param name="patternsToMatch">
+        /// The route patterns of the rule.
+        /// Serialized Name: RouteUpdateParameters.properties.patternsToMatch
+        /// </param>
+        /// <param name="cacheConfiguration">
+        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
+        /// Serialized Name: RouteUpdateParameters.properties.cacheConfiguration
+        /// </param>
+        /// <param name="forwardingProtocol">
+        /// Protocol this rule will use when forwarding traffic to backends.
+        /// Serialized Name: RouteUpdateParameters.properties.forwardingProtocol
+        /// </param>
+        /// <param name="linkToDefaultDomain">
+        /// whether this route will be linked to the default endpoint domain.
+        /// Serialized Name: RouteUpdateParameters.properties.linkToDefaultDomain
+        /// </param>
+        /// <param name="httpsRedirect">
+        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
+        /// Serialized Name: RouteUpdateParameters.properties.httpsRedirect
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: RouteUpdateParameters.properties.enabledState
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorRoutePatch(string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EndpointName = endpointName;
+            CustomDomains = customDomains;
+            OriginGroup = originGroup;
+            OriginPath = originPath;
+            RuleSets = ruleSets;
+            SupportedProtocols = supportedProtocols;
+            PatternsToMatch = patternsToMatch;
+            CacheConfiguration = cacheConfiguration;
+            ForwardingProtocol = forwardingProtocol;
+            LinkToDefaultDomain = linkToDefaultDomain;
+            HttpsRedirect = httpsRedirect;
+            EnabledState = enabledState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary>
+        /// The name of the endpoint which holds the route.
+        /// Serialized Name: RouteUpdateParameters.properties.endpointName
+        /// </summary>
         public string EndpointName { get; }
-        /// <summary> Domains referenced by this endpoint. </summary>
+        /// <summary>
+        /// Domains referenced by this endpoint.
+        /// Serialized Name: RouteUpdateParameters.properties.customDomains
+        /// </summary>
         public IList<FrontDoorActivatedResourceInfo> CustomDomains { get; }
-        /// <summary> A reference to the origin group. </summary>
+        /// <summary>
+        /// A reference to the origin group.
+        /// Serialized Name: RouteUpdateParameters.properties.originGroup
+        /// </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginGroupId
@@ -41,23 +153,50 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
+        /// <summary>
+        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+        /// Serialized Name: RouteUpdateParameters.properties.originPath
+        /// </summary>
         public string OriginPath { get; set; }
-        /// <summary> rule sets referenced by this endpoint. </summary>
+        /// <summary>
+        /// rule sets referenced by this endpoint.
+        /// Serialized Name: RouteUpdateParameters.properties.ruleSets
+        /// </summary>
         public IList<WritableSubResource> RuleSets { get; }
-        /// <summary> List of supported protocols for this route. </summary>
+        /// <summary>
+        /// List of supported protocols for this route.
+        /// Serialized Name: RouteUpdateParameters.properties.supportedProtocols
+        /// </summary>
         public IList<FrontDoorEndpointProtocol> SupportedProtocols { get; }
-        /// <summary> The route patterns of the rule. </summary>
+        /// <summary>
+        /// The route patterns of the rule.
+        /// Serialized Name: RouteUpdateParameters.properties.patternsToMatch
+        /// </summary>
         public IList<string> PatternsToMatch { get; }
-        /// <summary> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </summary>
+        /// <summary>
+        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
+        /// Serialized Name: RouteUpdateParameters.properties.cacheConfiguration
+        /// </summary>
         public FrontDoorRouteCacheConfiguration CacheConfiguration { get; set; }
-        /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
+        /// <summary>
+        /// Protocol this rule will use when forwarding traffic to backends.
+        /// Serialized Name: RouteUpdateParameters.properties.forwardingProtocol
+        /// </summary>
         public ForwardingProtocol? ForwardingProtocol { get; set; }
-        /// <summary> whether this route will be linked to the default endpoint domain. </summary>
+        /// <summary>
+        /// whether this route will be linked to the default endpoint domain.
+        /// Serialized Name: RouteUpdateParameters.properties.linkToDefaultDomain
+        /// </summary>
         public LinkToDefaultDomain? LinkToDefaultDomain { get; set; }
-        /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
+        /// <summary>
+        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
+        /// Serialized Name: RouteUpdateParameters.properties.httpsRedirect
+        /// </summary>
         public HttpsRedirect? HttpsRedirect { get; set; }
-        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        /// <summary>
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: RouteUpdateParameters.properties.enabledState
+        /// </summary>
         public EnabledState? EnabledState { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.Maps.Rendering
     /// <summary> This object is returned from a successful copyright call. </summary>
     public partial class CopyrightCaption
     {
-        /// <summary> Initializes a new instance of CopyrightCaption. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyrightCaption"/>. </summary>
         internal CopyrightCaption()
         {
         }

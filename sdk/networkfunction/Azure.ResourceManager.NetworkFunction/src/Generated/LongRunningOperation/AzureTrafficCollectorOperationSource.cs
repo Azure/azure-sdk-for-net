@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.NetworkFunction
 
         AzureTrafficCollectorResource IOperationSource<AzureTrafficCollectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement);
+            var data = ModelReaderWriter.Read<AzureTrafficCollectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkFunctionContext.Default);
             return new AzureTrafficCollectorResource(_client, data);
         }
 
         async ValueTask<AzureTrafficCollectorResource> IOperationSource<AzureTrafficCollectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement);
-            return new AzureTrafficCollectorResource(_client, data);
+            var data = ModelReaderWriter.Read<AzureTrafficCollectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkFunctionContext.Default);
+            return await Task.FromResult(new AzureTrafficCollectorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

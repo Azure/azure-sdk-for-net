@@ -25,6 +25,7 @@ namespace Azure.Communication.Rooms
         private const string PresenterValue = "Presenter";
         private const string AttendeeValue = "Attendee";
         private const string ConsumerValue = "Consumer";
+        private const string CollaboratorValue = "Collaborator";
 
         /// <summary> Presenter. </summary>
         public static ParticipantRole Presenter { get; } = new ParticipantRole(PresenterValue);
@@ -32,11 +33,13 @@ namespace Azure.Communication.Rooms
         public static ParticipantRole Attendee { get; } = new ParticipantRole(AttendeeValue);
         /// <summary> Consumer. </summary>
         public static ParticipantRole Consumer { get; } = new ParticipantRole(ConsumerValue);
+        /// <summary> Collaborator. </summary>
+        public static ParticipantRole Collaborator { get; } = new ParticipantRole(CollaboratorValue);
         /// <summary> Determines if two <see cref="ParticipantRole"/> values are the same. </summary>
         public static bool operator ==(ParticipantRole left, ParticipantRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParticipantRole"/> values are not the same. </summary>
         public static bool operator !=(ParticipantRole left, ParticipantRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ParticipantRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ParticipantRole"/>. </summary>
         public static implicit operator ParticipantRole(string value) => new ParticipantRole(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.Communication.Rooms
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("anomalyDetectorDirection"u8);
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
             writer.WritePropertyName("suppressCondition"u8);
-            writer.WriteObjectValue(SuppressCondition);
+            writer.WriteObjectValue<SuppressCondition>(SuppressCondition);
             writer.WriteEndObject();
         }
 
@@ -52,6 +52,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new SmartDetectionCondition(sensitivity, anomalyDetectorDirection, suppressCondition);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SmartDetectionCondition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSmartDetectionCondition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

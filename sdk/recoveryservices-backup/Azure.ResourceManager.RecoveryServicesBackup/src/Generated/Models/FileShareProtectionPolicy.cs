@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,16 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> AzureStorage backup policy. </summary>
     public partial class FileShareProtectionPolicy : BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of FileShareProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareProtectionPolicy"/>. </summary>
         public FileShareProtectionPolicy()
         {
             BackupManagementType = "AzureStorage";
         }
 
-        /// <summary> Initializes a new instance of FileShareProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workLoadType"> Type of workload for the backup management. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.
@@ -33,12 +35,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
+        /// <param name="vaultRetentionPolicy"> Retention policy with the details on hardened backup copy retention ranges. </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
-        internal FileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        internal FileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupWorkloadType? workLoadType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, VaultRetentionPolicy vaultRetentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
         {
             WorkLoadType = workLoadType;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
+            VaultRetentionPolicy = vaultRetentionPolicy;
             TimeZone = timeZone;
             BackupManagementType = backupManagementType ?? "AzureStorage";
         }
@@ -57,6 +61,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </summary>
         public BackupRetentionPolicy RetentionPolicy { get; set; }
+        /// <summary> Retention policy with the details on hardened backup copy retention ranges. </summary>
+        public VaultRetentionPolicy VaultRetentionPolicy { get; set; }
         /// <summary> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </summary>
         public string TimeZone { get; set; }
     }

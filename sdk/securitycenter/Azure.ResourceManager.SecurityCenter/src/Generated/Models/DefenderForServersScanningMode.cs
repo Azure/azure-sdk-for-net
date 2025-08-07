@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The scanning mode for the vm scan. </summary>
+    /// <summary> The scanning mode for the VM scan. </summary>
     public readonly partial struct DefenderForServersScanningMode : IEquatable<DefenderForServersScanningMode>
     {
         private readonly string _value;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(DefenderForServersScanningMode left, DefenderForServersScanningMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DefenderForServersScanningMode"/> values are not the same. </summary>
         public static bool operator !=(DefenderForServersScanningMode left, DefenderForServersScanningMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DefenderForServersScanningMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DefenderForServersScanningMode"/>. </summary>
         public static implicit operator DefenderForServersScanningMode(string value) => new DefenderForServersScanningMode(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

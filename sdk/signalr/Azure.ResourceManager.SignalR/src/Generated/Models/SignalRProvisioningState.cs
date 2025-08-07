@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator ==(SignalRProvisioningState left, SignalRProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SignalRProvisioningState left, SignalRProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SignalRProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRProvisioningState"/>. </summary>
         public static implicit operator SignalRProvisioningState(string value) => new SignalRProvisioningState(value);
 
         /// <inheritdoc />
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

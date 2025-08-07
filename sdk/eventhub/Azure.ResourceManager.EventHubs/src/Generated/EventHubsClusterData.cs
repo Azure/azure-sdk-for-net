@@ -19,13 +19,45 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsClusterData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EventHubsClusterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,31 +66,49 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of the cluster SKU. </param>
         /// <param name="createdOn"> The UTC time when the Event Hubs Cluster was created. </param>
+        /// <param name="provisioningState"> Provisioning state of the Cluster. </param>
         /// <param name="updatedOn"> The UTC time when the Event Hubs Cluster was last updated. </param>
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
         /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
-        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, EventHubsClusterProvisioningState? provisioningState, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             CreatedOn = createdOn;
+            ProvisioningState = provisioningState;
             UpdatedOn = updatedOn;
             MetricId = metricId;
             Status = status;
             SupportsScaling = supportsScaling;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsClusterData"/> for deserialization. </summary>
+        internal EventHubsClusterData()
+        {
         }
 
         /// <summary> Properties of the cluster SKU. </summary>
+        [WirePath("sku")]
         public EventHubsClusterSku Sku { get; set; }
         /// <summary> The UTC time when the Event Hubs Cluster was created. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Provisioning state of the Cluster. </summary>
+        [WirePath("properties.provisioningState")]
+        public EventHubsClusterProvisioningState? ProvisioningState { get; }
         /// <summary> The UTC time when the Event Hubs Cluster was last updated. </summary>
+        [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </summary>
+        [WirePath("properties.metricId")]
         public string MetricId { get; }
         /// <summary> Status of the Cluster resource. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> A value that indicates whether Scaling is Supported. </summary>
+        [WirePath("properties.supportsScaling")]
         public bool? SupportsScaling { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
@@ -37,6 +38,8 @@ namespace Microsoft.Extensions.Azure
         ///   Registers a <see cref="ServiceBusClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
         ///
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static IAzureClientBuilder<ServiceBusClient, ServiceBusClientOptions> AddServiceBusClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
@@ -78,6 +81,8 @@ namespace Microsoft.Extensions.Azure
         ///   Registers a <see cref="ServiceBusAdministrationClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
         ///
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static IAzureClientBuilder<ServiceBusAdministrationClient, ServiceBusAdministrationClientOptions> AddServiceBusAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {

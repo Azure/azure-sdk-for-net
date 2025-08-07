@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBox
 {
@@ -20,28 +20,54 @@ namespace Azure.ResourceManager.DataBox
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal _operation;
+        private readonly RehydrationToken? _completeRehydrationToken;
+        private readonly NextLinkOperationImplementation _nextLinkOperation;
+        private readonly string _operationId;
 
         /// <summary> Initializes a new instance of DataBoxArmOperation for mocking. </summary>
         protected DataBoxArmOperation()
         {
         }
 
-        internal DataBoxArmOperation(Response response)
+        internal DataBoxArmOperation(Response response, RehydrationToken? rehydrationToken = null)
         {
             _operation = OperationInternal.Succeeded(response);
+            _completeRehydrationToken = rehydrationToken;
+            _operationId = GetOperationId(rehydrationToken);
         }
 
         internal DataBoxArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)
+            {
+                _nextLinkOperation = nextLinkOperationValue;
+                _operationId = _nextLinkOperation.OperationId;
+            }
+            else
+            {
+                _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
+                _operationId = GetOperationId(_completeRehydrationToken);
+            }
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "DataBoxArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
+        private string GetOperationId(RehydrationToken? rehydrationToken)
+        {
+            if (rehydrationToken is null)
+            {
+                return null;
+            }
+            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxContext.Default);
+            using var document = JsonDocument.Parse(data);
+            var lroDetails = document.RootElement;
+            return lroDetails.GetProperty("id").GetString();
+        }
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;
+
+        /// <inheritdoc />
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _completeRehydrationToken;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

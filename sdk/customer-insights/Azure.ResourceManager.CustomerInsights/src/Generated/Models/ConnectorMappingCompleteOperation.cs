@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The complete operation. </summary>
     public partial class ConnectorMappingCompleteOperation
     {
-        /// <summary> Initializes a new instance of ConnectorMappingCompleteOperation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingCompleteOperation"/>. </summary>
         public ConnectorMappingCompleteOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingCompleteOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingCompleteOperation"/>. </summary>
         /// <param name="completionOperationType"> The type of completion operation. </param>
         /// <param name="destinationFolder"> The destination folder where files will be moved to once the import is done. </param>
-        internal ConnectorMappingCompleteOperation(CompletionOperationType? completionOperationType, string destinationFolder)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorMappingCompleteOperation(CompletionOperationType? completionOperationType, string destinationFolder, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CompletionOperationType = completionOperationType;
             DestinationFolder = destinationFolder;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of completion operation. </summary>

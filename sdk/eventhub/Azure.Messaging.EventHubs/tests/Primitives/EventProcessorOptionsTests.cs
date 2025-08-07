@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 PartitionOwnershipExpirationInterval = TimeSpan.FromHours(16),
                 Identifier = "Rick Springfield is a bad friend",
                 TrackLastEnqueuedEventProperties = false,
-                DefaultStartingPosition = EventPosition.FromOffset(555)
+                DefaultStartingPosition = EventPosition.FromOffset("555")
             };
 
             EventProcessorOptions clone = options.Clone();

@@ -42,7 +42,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             TestDiagnostics = false;
 
             // TODO: set via client options and pipeline instead
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete, there's already a TODO to fix this above
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+#pragma warning restore SYSLib0014
         }
 
         protected TimeSeriesInsightsClient GetClient(TimeSeriesInsightsClientOptions options = null)

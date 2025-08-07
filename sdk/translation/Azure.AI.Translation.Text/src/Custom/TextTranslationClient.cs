@@ -9,14 +9,36 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 using System.Text.Json;
+using System.Security.Principal;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> The Translator service client. </summary>
+    // Methods are replaced by the version where clientTraceId parameter is of type System.Guid
+    [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(TextType?), typeof(string), typeof(ProfanityAction?), typeof(ProfanityMarker?), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(TextType?), typeof(string), typeof(ProfanityAction?), typeof(ProfanityMarker?), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("TransliterateAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("Transliterate", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("TransliterateAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("Transliterate", typeof(string), typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("FindSentenceBoundariesAsync", typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("FindSentenceBoundaries", typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("FindSentenceBoundariesAsync", typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("FindSentenceBoundaries", typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("LookupDictionaryEntriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("LookupDictionaryEntries", typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("LookupDictionaryEntriesAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("LookupDictionaryEntries", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("LookupDictionaryExamplesAsync", typeof(string), typeof(string), typeof(IEnumerable<DictionaryExampleTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("LookupDictionaryExamples", typeof(string), typeof(string), typeof(IEnumerable<DictionaryExampleTextItem>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("LookupDictionaryExamplesAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("LookupDictionaryExamples", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class TextTranslationClient
     {
         private const string KEY_HEADER_NAME = "Ocp-Apim-Subscription-Key";
-        private const string TOKEN_SCOPE = "https://cognitiveservices.azure.com/.default";
+        private const string DEFAULT_TOKEN_SCOPE = "https://cognitiveservices.azure.com/.default";
         private const string PLATFORM_PATH = "/translator/text/v3.0";
         private const string DEFAULT_REGION = "global";
 
@@ -28,7 +50,7 @@ namespace Azure.AI.Translation.Text
         ///     https://api.cognitive.microsofttranslator.com).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        protected TextTranslationClient(Uri endpoint) : this(endpoint, new TextTranslationClientOptions())
+        public TextTranslationClient(Uri endpoint) : this(endpoint, new TextTranslationClientOptions())
         {
         }
 
@@ -39,7 +61,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        protected TextTranslationClient(Uri endpoint, TextTranslationClientOptions options)
+        public TextTranslationClient(Uri endpoint, TextTranslationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new TextTranslationClientOptions();
@@ -94,7 +116,7 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         /// <param name="credential">Cognitive Services Token</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(TokenCredential credential, TextTranslationClientOptions options = default) : this(credential, DEFAULT_ENDPOINT, options)
+        public TextTranslationClient(TokenCredential credential, TextTranslationClientOptions options = default) : this(credential, DEFAULT_ENDPOINT, DEFAULT_TOKEN_SCOPE, options)
         {
         }
 
@@ -103,10 +125,11 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         /// <param name="credential">Cognitive Services Token</param>
         /// <param name="endpoint">Service Endpoint</param>
+        /// <param name="tokenScope">Token Scopes</param>
         /// <param name="options">Translate Client Options</param>
-        public TextTranslationClient(TokenCredential credential, Uri endpoint, TextTranslationClientOptions options = default) : this(endpoint, options)
+        public TextTranslationClient(TokenCredential credential, Uri endpoint, string tokenScope = DEFAULT_TOKEN_SCOPE, TextTranslationClientOptions options = default) : this(endpoint, options)
         {
-            var policy = new BearerTokenAuthenticationPolicy(credential, TOKEN_SCOPE);
+            var policy = new BearerTokenAuthenticationPolicy(credential, tokenScope);
             options = options ?? new TextTranslationClientOptions();
 
             this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
@@ -115,6 +138,39 @@ namespace Azure.AI.Translation.Text
             {
                 this._endpoint = new Uri(endpoint, PLATFORM_PATH);
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
+        /// </summary>
+        /// <param name="credential">Cognitive Services Token</param>
+        /// <param name="resourceId">The value is the Resource ID for your Translator resource instance.</param>
+        /// <param name="region">Azure Resource Region</param>
+        /// <param name="tokenScope">Token Scopes</param>
+        /// <param name="options">Translate Client Options</param>
+        public TextTranslationClient(TokenCredential credential, string resourceId, string region = DEFAULT_REGION, string tokenScope = DEFAULT_TOKEN_SCOPE, TextTranslationClientOptions options = default) : this(DEFAULT_ENDPOINT, options)
+        {
+            var policy = new TextTranslationAADAuthenticationPolicy(credential, tokenScope, region, resourceId);
+            options = options ?? new TextTranslationClientOptions();
+
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
+        /// </summary>
+        /// <param name="credential">Cognitive Services Token</param>
+        /// <param name="endpoint">Service Endpoint</param>
+        /// <param name="resourceId">The value is the Resource ID for your Translator resource instance.</param>
+        /// <param name="region">Azure Resource Region</param>
+        /// <param name="tokenScope">Token Scopes</param>
+        /// <param name="options">Translate Client Options</param>
+        public TextTranslationClient(TokenCredential credential, Uri endpoint, string resourceId, string region = DEFAULT_REGION, string tokenScope = DEFAULT_TOKEN_SCOPE, TextTranslationClientOptions options = default) : this(endpoint, options)
+        {
+            var policy = new TextTranslationAADAuthenticationPolicy(credential, tokenScope, region, resourceId);
+            options = options ?? new TextTranslationClientOptions();
+
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary> Translate Text. </summary>
@@ -178,12 +234,23 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguages"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(IEnumerable<string> targetLanguages, IEnumerable<string> content, string clientTraceId = null, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(IEnumerable<string> targetLanguages, IEnumerable<string> content, Guid clientTraceId = default, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguages, nameof(targetLanguages));
             Argument.AssertNotNull(content, nameof(content));
 
             return this.TranslateAsync(targetLanguages, content.Select(input => new InputTextItem(input)), clientTraceId, sourceLanguage, textType?.ToString(), category, profanityAction?.ToString(), profanityMarker?.ToString(), includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, cancellationToken);
+        }
+
+        /// <summary> Translate Text. </summary>
+        /// <param name="options">The client translation options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null. </exception>
+        public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(TextTranslationTranslateOptions options, CancellationToken cancellationToken = default)
+       {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.TranslateAsync(options.TargetLanguages, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, options.SourceLanguage, options.TextType?.ToString(), options.Category, options.ProfanityAction?.ToString(), options.ProfanityMarker?.ToString(), options.IncludeAlignment, options.IncludeSentenceLength, options.SuggestedFrom, options.FromScript, options.ToScript, options.AllowFallback, cancellationToken);
         }
 
         /// <summary> Translate Text. </summary>
@@ -299,12 +366,23 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguages"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(IEnumerable<string> targetLanguages, IEnumerable<string> content, string clientTraceId = null, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(IEnumerable<string> targetLanguages, IEnumerable<string> content, Guid clientTraceId = default, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguages, nameof(targetLanguages));
             Argument.AssertNotNull(content, nameof(content));
 
             return this.Translate(targetLanguages, content.Select(input => new InputTextItem(input)), clientTraceId, sourceLanguage, textType?.ToString(), category, profanityAction?.ToString(), profanityMarker?.ToString(), includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, cancellationToken);
+        }
+
+        /// <summary> Translate Text. </summary>
+        /// <param name="options">The client translation options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null. </exception>
+        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(TextTranslationTranslateOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.Translate(options.TargetLanguages, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, options.SourceLanguage, options.TextType?.ToString(), options.Category, options.ProfanityAction?.ToString(), options.ProfanityMarker?.ToString(), options.IncludeAlignment, options.IncludeSentenceLength, options.SuggestedFrom, options.FromScript, options.ToScript, options.AllowFallback, cancellationToken);
         }
 
         /// <summary> Translate Text. </summary>
@@ -377,7 +455,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<string> content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -385,6 +463,17 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(content, nameof(content));
 
             return this.TransliterateAsync(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
+        }
+
+        /// <summary>Transliterate Text. </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
+       {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.TransliterateAsync(options.Language, options.FromScript, options.ToScript, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -432,7 +521,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<string> content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -440,6 +529,17 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(content, nameof(content));
 
             return this.Transliterate(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="options">The configuration options for the transliterate call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.Transliterate(options.Language, options.FromScript, options.ToScript, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -482,7 +582,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(IEnumerable<string> content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(IEnumerable<string> content, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -502,7 +602,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(string text, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(string text, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -522,7 +622,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(IEnumerable<string> content, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(IEnumerable<string> content, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -542,7 +642,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(string text, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(string text, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -562,7 +662,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="words"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, IEnumerable<string> words, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, IEnumerable<string> words, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -584,7 +684,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="word"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, string word, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, string word, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -606,7 +706,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="words"/> is null. </exception>
-        public virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, IEnumerable<string> words, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, IEnumerable<string> words, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -628,7 +728,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="word"/> is null. </exception>
-        public virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, string word, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, string word, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -650,7 +750,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, IEnumerable<InputTextWithTranslation> content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, IEnumerable<InputTextWithTranslation> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -672,7 +772,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, InputTextWithTranslation content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, InputTextWithTranslation content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -694,7 +794,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, IEnumerable<InputTextWithTranslation> content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, IEnumerable<InputTextWithTranslation> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -716,161 +816,13 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, InputTextWithTranslation content, string clientTraceId = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, InputTextWithTranslation content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
 
             return this.LookupDictionaryExamples(from, to, new[] { new DictionaryExampleTextItem(content.Text, content.Translation) }, clientTraceId, cancellationToken);
-        }
-
-        /// <summary> Gets the set of languages currently supported by other operations of the Translator. </summary>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="scope">
-        /// A comma-separated list of names defining the group of languages to return.
-        /// Allowed group names are: `translation`, `transliteration` and `dictionary`.
-        /// If no scope is given, then all groups are returned, which is equivalent to passing
-        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages
-        /// is appropriate for your scenario, see the description of the [response object](#response-body).
-        /// </param>
-        /// <param name="acceptLanguage">
-        /// The language to use for user interface strings. Some of the fields in the response are names of languages or
-        /// names of regions. Use this parameter to define the language in which these names are returned.
-        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr`
-        /// to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
-        /// Names are provided in the English language when a target language is not specified or when localization
-        /// is not available.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response.
-        /// If the resource has not been modified, the service will return status code 304 and an empty response body.
-        /// </param>
-        /// <param name="context"> Request context. </param>
-        internal virtual async Task<Response> GetLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, RequestContext context = default)
-        {
-            ETag? eTag = null;
-            if (ifNoneMatch != null)
-            {
-                eTag = new ETag(ifNoneMatch);
-            }
-
-            return await this.GetLanguagesAsync(clientTraceId, scope, acceptLanguage, eTag, context).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the set of languages currently supported by other operations of the Translator. </summary>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="scope">
-        /// A comma-separated list of names defining the group of languages to return.
-        /// Allowed group names are: `translation`, `transliteration` and `dictionary`.
-        /// If no scope is given, then all groups are returned, which is equivalent to passing
-        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages
-        /// is appropriate for your scenario, see the description of the [response object](#response-body).
-        /// </param>
-        /// <param name="acceptLanguage">
-        /// The language to use for user interface strings. Some of the fields in the response are names of languages or
-        /// names of regions. Use this parameter to define the language in which these names are returned.
-        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr`
-        /// to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
-        /// Names are provided in the English language when a target language is not specified or when localization
-        /// is not available.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response.
-        /// If the resource has not been modified, the service will return status code 304 and an empty response body.
-        /// </param>
-        /// <param name="context"> Request context. </param>
-        internal virtual Response GetLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, string ifNoneMatch = null, RequestContext context = default)
-        {
-            ETag? eTag = null;
-            if (ifNoneMatch != null)
-            {
-                eTag = new ETag(ifNoneMatch);
-            }
-
-            return this.GetLanguages(clientTraceId, scope, acceptLanguage, eTag, context);
-        }
-
-        // Overrides for generated class
-
-        /// <summary> Gets the set of languages currently supported by other operations of the Translator. </summary>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="scope">
-        /// A comma-separated list of names defining the group of languages to return.
-        /// Allowed group names are: `translation`, `transliteration` and `dictionary`.
-        /// If no scope is given, then all groups are returned, which is equivalent to passing
-        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages
-        /// is appropriate for your scenario, see the description of the [response object](#response-body).
-        /// </param>
-        /// <param name="acceptLanguage">
-        /// The language to use for user interface strings. Some of the fields in the response are names of languages or
-        /// names of regions. Use this parameter to define the language in which these names are returned.
-        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr`
-        /// to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
-        /// Names are provided in the English language when a target language is not specified or when localization
-        /// is not available.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response.
-        /// If the resource has not been modified, the service will return status code 304 and an empty response body.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual async Task<Response> GetLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, ETag? ifNoneMatch = null, RequestContext context = null)
-        {
-            using var scope0 = ClientDiagnostics.CreateScope("TextTranslationClient.GetLanguages");
-            scope0.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLanguagesRequest(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the set of languages currently supported by other operations of the Translator. </summary>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="scope">
-        /// A comma-separated list of names defining the group of languages to return.
-        /// Allowed group names are: `translation`, `transliteration` and `dictionary`.
-        /// If no scope is given, then all groups are returned, which is equivalent to passing
-        /// `scope=translation,transliteration,dictionary`. To decide which set of supported languages
-        /// is appropriate for your scenario, see the description of the [response object](#response-body).
-        /// </param>
-        /// <param name="acceptLanguage">
-        /// The language to use for user interface strings. Some of the fields in the response are names of languages or
-        /// names of regions. Use this parameter to define the language in which these names are returned.
-        /// The language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr`
-        /// to request names in French or use the value `zh-Hant` to request names in Chinese Traditional.
-        /// Names are provided in the English language when a target language is not specified or when localization
-        /// is not available.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response.
-        /// If the resource has not been modified, the service will return status code 304 and an empty response body.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual Response GetLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, ETag? ifNoneMatch = null, RequestContext context = null)
-        {
-            using var scope0 = ClientDiagnostics.CreateScope("TextTranslationClient.GetLanguages");
-            scope0.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLanguagesRequest(clientTraceId, scope, acceptLanguage, ifNoneMatch, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Translate Text. </summary>
@@ -934,7 +886,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(IEnumerable<string> to, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(IEnumerable<string> to, IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(requestBody, nameof(requestBody));
@@ -1013,7 +965,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(IEnumerable<string> to, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(IEnumerable<string> to, IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(requestBody, nameof(requestBody));
@@ -1094,7 +1046,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual async Task<Response> TranslateAsync(IEnumerable<string> to, RequestContent content, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, RequestContext context = null)
+        internal virtual async Task<Response> TranslateAsync(IEnumerable<string> to, RequestContent content, Guid clientTraceId = default, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
@@ -1103,7 +1055,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTranslateRequest(to, content, clientTraceId, @from, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context);
+                using HttpMessage message = CreateTranslateRequest(to, content, GetClientTraceId(clientTraceId), @from, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1176,7 +1128,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual Response Translate(IEnumerable<string> to, RequestContent content, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, RequestContext context = null)
+        internal virtual Response Translate(IEnumerable<string> to, RequestContent content, Guid clientTraceId = default, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
@@ -1185,7 +1137,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTranslateRequest(to, content, clientTraceId, @from, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context);
+                using HttpMessage message = CreateTranslateRequest(to, content, GetClientTraceId(clientTraceId), @from, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1213,7 +1165,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -1251,7 +1203,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -1291,7 +1243,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual async Task<Response> TransliterateAsync(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
+        internal virtual async Task<Response> TransliterateAsync(string language, string fromScript, string toScript, RequestContent content, Guid clientTraceId = default, RequestContext context = null)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -1302,7 +1254,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
+                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, GetClientTraceId(clientTraceId), context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1332,7 +1284,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual Response Transliterate(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
+        internal virtual Response Transliterate(string language, string fromScript, string toScript, RequestContent content, Guid clientTraceId = default, RequestContext context = null)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -1343,7 +1295,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
+                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, GetClientTraceId(clientTraceId), context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1366,7 +1318,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestBody"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(IEnumerable<InputTextItem> requestBody, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(requestBody, nameof(requestBody));
 
@@ -1396,7 +1348,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestBody"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(IEnumerable<InputTextItem> requestBody, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(requestBody, nameof(requestBody));
 
@@ -1428,7 +1380,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual async Task<Response> FindSentenceBoundariesAsync(RequestContent content, string clientTraceId = null, string language = null, string script = null, RequestContext context = null)
+        internal virtual async Task<Response> FindSentenceBoundariesAsync(RequestContent content, Guid clientTraceId = default, string language = null, string script = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1436,7 +1388,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateFindSentenceBoundariesRequest(content, clientTraceId, language, script, context);
+                using HttpMessage message = CreateFindSentenceBoundariesRequest(content, GetClientTraceId(clientTraceId), language, script, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1461,7 +1413,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual Response FindSentenceBoundaries(RequestContent content, string clientTraceId = null, string language = null, string script = null, RequestContext context = null)
+        internal virtual Response FindSentenceBoundaries(RequestContent content, Guid clientTraceId = default, string language = null, string script = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1469,7 +1421,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateFindSentenceBoundariesRequest(content, clientTraceId, language, script, context);
+                using HttpMessage message = CreateFindSentenceBoundariesRequest(content, GetClientTraceId(clientTraceId), language, script, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1492,7 +1444,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -1524,7 +1476,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -1558,7 +1510,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual async Task<Response> LookupDictionaryEntriesAsync(string @from, string to, RequestContent content, string clientTraceId = null, RequestContext context = null)
+        internal virtual async Task<Response> LookupDictionaryEntriesAsync(string @from, string to, RequestContent content, Guid clientTraceId = default, RequestContext context = null)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -1568,7 +1520,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateLookupDictionaryEntriesRequest(@from, to, content, clientTraceId, context);
+                using HttpMessage message = CreateLookupDictionaryEntriesRequest(@from, to, content, GetClientTraceId(clientTraceId), context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1593,7 +1545,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual Response LookupDictionaryEntries(string @from, string to, RequestContent content, string clientTraceId = null, RequestContext context = null)
+        internal virtual Response LookupDictionaryEntries(string @from, string to, RequestContent content, Guid clientTraceId = default, RequestContext context = null)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -1603,7 +1555,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateLookupDictionaryEntriesRequest(@from, to, content, clientTraceId, context);
+                using HttpMessage message = CreateLookupDictionaryEntriesRequest(@from, to, content, GetClientTraceId(clientTraceId), context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1626,7 +1578,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, IEnumerable<DictionaryExampleTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, IEnumerable<DictionaryExampleTextItem> requestBody, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -1658,7 +1610,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, IEnumerable<DictionaryExampleTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, IEnumerable<DictionaryExampleTextItem> requestBody, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -1692,7 +1644,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual async Task<Response> LookupDictionaryExamplesAsync(string @from, string to, RequestContent content, string clientTraceId = null, RequestContext context = null)
+        internal virtual async Task<Response> LookupDictionaryExamplesAsync(string @from, string to, RequestContent content, Guid clientTraceId = default, RequestContext context = null)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -1702,7 +1654,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateLookupDictionaryExamplesRequest(@from, to, content, clientTraceId, context);
+                using HttpMessage message = CreateLookupDictionaryExamplesRequest(@from, to, content, GetClientTraceId(clientTraceId), context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1727,7 +1679,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual Response LookupDictionaryExamples(string @from, string to, RequestContent content, string clientTraceId = null, RequestContext context = null)
+        internal virtual Response LookupDictionaryExamples(string @from, string to, RequestContent content, Guid clientTraceId = default, RequestContext context = null)
         {
             Argument.AssertNotNull(@from, nameof(@from));
             Argument.AssertNotNull(to, nameof(to));
@@ -1737,7 +1689,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateLookupDictionaryExamplesRequest(@from, to, content, clientTraceId, context);
+                using HttpMessage message = CreateLookupDictionaryExamplesRequest(@from, to, content, GetClientTraceId(clientTraceId), context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1745,6 +1697,16 @@ namespace Azure.AI.Translation.Text
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the value of Client Trace Id.
+        /// </summary>
+        /// <param name="clientTraceId">Client Trace Id</param>
+        /// <returns>Value of Client Trace Id.</returns>
+        private static string GetClientTraceId(Guid clientTraceId)
+        {
+            return clientTraceId == default ? null : clientTraceId.ToString();
         }
     }
 }

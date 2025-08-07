@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The device registry operation error details. </summary>
     public partial class DeviceRegistryOperationError
     {
-        /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryOperationError"/>. </summary>
         internal DeviceRegistryOperationError()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryOperationError"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorStatus"> The details of the error. </param>

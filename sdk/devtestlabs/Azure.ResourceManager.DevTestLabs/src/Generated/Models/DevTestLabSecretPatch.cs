@@ -5,13 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A secret. </summary>
     public partial class DevTestLabSecretPatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabSecretPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSecretPatch"/>. </summary>
         public DevTestLabSecretPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabSecretPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabSecretPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

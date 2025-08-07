@@ -7,6 +7,25 @@ namespace Azure.Data.Tables
         string RowKey { get; set; }
         System.DateTimeOffset? Timestamp { get; set; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TableAudience : System.IEquatable<Azure.Data.Tables.TableAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TableAudience(string value) { throw null; }
+        public static Azure.Data.Tables.TableAudience AzureChina { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzureGovernment { get { throw null; } }
+        public static Azure.Data.Tables.TableAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Data.Tables.TableAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.Tables.TableAudience left, Azure.Data.Tables.TableAudience right) { throw null; }
+        public static implicit operator Azure.Data.Tables.TableAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Data.Tables.TableAudience left, Azure.Data.Tables.TableAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class TableClient
     {
         protected TableClient() { }
@@ -30,7 +49,9 @@ namespace Azure.Data.Tables
         public static string CreateQueryFilter<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter) { throw null; }
         public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteEntity(Azure.Data.Tables.ITableEntity entity, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteEntity(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteEntityAsync(Azure.Data.Tables.ITableEntity entity, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteEntityAsync(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Uri GenerateSasUri(Azure.Data.Tables.Sas.TableSasBuilder builder) { throw null; }
         public virtual System.Uri GenerateSasUri(Azure.Data.Tables.Sas.TableSasPermissions permissions, System.DateTimeOffset expiresOn) { throw null; }
@@ -58,6 +79,7 @@ namespace Azure.Data.Tables
     public partial class TableClientOptions : Azure.Core.ClientOptions
     {
         public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2020_12_06) { }
+        public Azure.Data.Tables.TableAudience? Audience { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public enum ServiceVersion
         {
@@ -281,8 +303,12 @@ namespace Azure.Data.Tables.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.Tables.Models.TableErrorCode left, Azure.Data.Tables.Models.TableErrorCode right) { throw null; }
+        public static bool operator ==(Azure.Data.Tables.Models.TableErrorCode code, string value) { throw null; }
+        public static bool operator ==(string value, Azure.Data.Tables.Models.TableErrorCode code) { throw null; }
         public static implicit operator Azure.Data.Tables.Models.TableErrorCode (string value) { throw null; }
         public static bool operator !=(Azure.Data.Tables.Models.TableErrorCode left, Azure.Data.Tables.Models.TableErrorCode right) { throw null; }
+        public static bool operator !=(Azure.Data.Tables.Models.TableErrorCode code, string value) { throw null; }
+        public static bool operator !=(string value, Azure.Data.Tables.Models.TableErrorCode code) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class TableGeoReplicationInfo
@@ -327,6 +353,7 @@ namespace Azure.Data.Tables.Models
     {
         public static Azure.Data.Tables.Models.TableGeoReplicationInfo TableGeoReplicationInfo(Azure.Data.Tables.Models.TableGeoReplicationStatus status = default(Azure.Data.Tables.Models.TableGeoReplicationStatus), System.DateTimeOffset lastSyncedOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Data.Tables.Models.TableItem TableItem(string name = null, string odataType = null, string odataId = null, string odataEditLink = null) { throw null; }
+        public static Azure.Data.Tables.Models.TableServiceProperties TableServiceProperties(Azure.Data.Tables.Models.TableAnalyticsLoggingSettings logging = null, Azure.Data.Tables.Models.TableMetrics hourMetrics = null, Azure.Data.Tables.Models.TableMetrics minuteMetrics = null, System.Collections.Generic.IList<Azure.Data.Tables.Models.TableCorsRule> cors = null) { throw null; }
         public static Azure.Data.Tables.Models.TableServiceStatistics TableServiceStatistics(Azure.Data.Tables.Models.TableGeoReplicationInfo geoReplication = null) { throw null; }
     }
     public partial class TableServiceProperties
@@ -416,6 +443,7 @@ namespace Azure.Data.Tables.Sas
     }
     public partial class TableSasBuilder
     {
+        public TableSasBuilder() { }
         public TableSasBuilder(string tableName, Azure.Data.Tables.Sas.TableSasPermissions permissions, System.DateTimeOffset expiresOn) { }
         public TableSasBuilder(string tableName, string rawPermissions, System.DateTimeOffset expiresOn) { }
         public TableSasBuilder(System.Uri sasUri) { }

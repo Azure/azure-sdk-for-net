@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryRunResource IOperationSource<ContainerRegistryRunResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ContainerRegistryRunData.DeserializeContainerRegistryRunData(document.RootElement);
+            var data = ModelReaderWriter.Read<ContainerRegistryRunData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
             return new ContainerRegistryRunResource(_client, data);
         }
 
         async ValueTask<ContainerRegistryRunResource> IOperationSource<ContainerRegistryRunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ContainerRegistryRunData.DeserializeContainerRegistryRunData(document.RootElement);
-            return new ContainerRegistryRunResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerRegistryRunData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            return await Task.FromResult(new ContainerRegistryRunResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -14,9 +14,6 @@ The Name of the servicedirectory, usually the name of the service e.g. core
 .PARAMETER ArtifactsDirectoryName
 Used in the case where the package directory name is different from the package name. e.g in cognitiveservice packages
 
-.PARAMETER LibType
-Specifies if its a client or management library
-
 .PARAMETER RepoRoot
 The root of the Azure-SDK-for-Net Repo
 
@@ -32,7 +29,7 @@ Directory Name: PopImport: https://azuresdkartifacts.blob.core.windows.net/azure
 RepoRoot\doc\ApiDocGeneration
 
 #>
- 
+
 [CmdletBinding()]
 Param (
     [Parameter(Mandatory = $True)]
@@ -40,14 +37,16 @@ Param (
     [Parameter(Mandatory = $True)]
     $ServiceDirectory,
     $ArtifactsDirectoryName,
-    [ValidateSet('client', 'management')]
-    $LibType = "client",
     $RepoRoot = "${PSScriptRoot}/../..",
     [Parameter(Mandatory = $True)]
     $BinDirectory,
     $DocGenDir = "${PSScriptRoot}",
     $ArtifactStagingDirectory
 )
+
+function Log-Warning($message) {
+    Write-Host "##vso[task.logissue type=warning;]$message"
+}
 
 function UpdateDocIndexFiles([string]$docPath, [string] $mainJsPath) {
     # Update docfx.json
@@ -64,7 +63,9 @@ function UpdateDocIndexFiles([string]$docPath, [string] $mainJsPath) {
 }
 
 Write-Verbose "Name Reccuring paths with variable names"
-if ([System.String]::IsNullOrEmpty($ArtifactsDirectoryName)) {$ArtifactsDirectoryName = $ArtifactName}
+if ([System.String]::IsNullOrEmpty($ArtifactsDirectoryName)) {
+    $ArtifactsDirectoryName = $ArtifactName
+}
 $PackageLocation = "${ServiceDirectory}/${ArtifactsDirectoryName}"
 $FrameworkDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-docs"
 $ApiDir = "${FrameworkDir}/my-api"
@@ -79,38 +80,38 @@ $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
 $DocCommonGenDir = "${RepoRoot}/eng/common/docgeneration"
 $GACampaignId = "UA-62780441-41"
 
-if ($LibType -eq 'management') {
-    $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
-}
-
 Write-Verbose "Package Location ${PackageLocation}"
 
 Write-Verbose "Create Directories Required for Doc Generation"
+Write-Verbose "Creating ApiDir '$ApiDir'"
 mkdir $ApiDir
+Write-Verbose "Creating ApiDependenciesDir '$ApiDependenciesDir'"
 mkdir $ApiDependenciesDir
+Write-Verbose "Creating XmlOutDir '$XmlOutDir'"
 mkdir $XmlOutDir
+Write-Verbose "Creating YamlOutDir '$YamlOutDir'"
 mkdir $YamlOutDir
+Write-Verbose "Creating DocOutDir '$DocOutDir'"
 mkdir $DocOutDir
 
-if ($LibType -eq 'client') { 
-    Write-Verbose "Build Packages for Doc Generation - Client"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0
-
-    Write-Verbose "Include client Dependencies"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
+Write-Verbose "Build Packages for Doc Generation - Client"
+Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir"
+dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir
+if ($LASTEXITCODE -ne 0) {
+    Log-Warning "Build Packages for Doc Generation - Client failed with $LASTEXITCODE please see output above"
+    exit 0
 }
 
-if ($LibType -eq 'management') {
-    # Management Package
-    Write-Verbose "Build Packages for Doc Generation - Management"
-    dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false
-
-    Write-Verbose "Include Management Dependencies"
-    dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
+Write-Verbose "Include Client Dependencies"
+Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true"
+dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true
+if ($LASTEXITCODE -ne 0) {
+    Log-Warning "Include Client Dependencies build failed with $LASTEXITCODE please see output above"
+    exit 0
 }
 
 Write-Verbose "Remove all unneeded artifacts from build output directory"
-Remove-Item –Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml"
+Remove-Item -Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml" -Recurse -Force
 
 Write-Verbose "Initialize Frameworks File"
 & "${MDocTool}" fx-bootstrap "${FrameworkDir}"
@@ -182,4 +183,4 @@ $mutatedContent = $mutatedContent -replace $hrefRegex, '"./$1"'
 Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
 
 Write-Verbose "Compress and copy HTML into the staging Area"
-Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest  
+Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest

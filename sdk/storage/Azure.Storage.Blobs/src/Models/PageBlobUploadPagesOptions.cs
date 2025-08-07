@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary>
         /// Optional <see cref="PageBlobRequestConditions"/> to add
-        /// conditions on the upload of this Append Blob.
+        /// conditions on the upload of this Page Blob.
         /// </summary>
         public PageBlobRequestConditions Conditions { get; set; }
 

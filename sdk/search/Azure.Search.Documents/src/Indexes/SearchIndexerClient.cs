@@ -24,9 +24,25 @@ namespace Azure.Search.Documents.Indexes
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
-
         private IndexersRestClient _indexersClient;
         private string _serviceName;
+
+        /// <summary>
+        /// The HTTP pipeline for sending and receiving REST requests and responses.
+        /// </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// Gets the URI endpoint of the Search service.  This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// </summary>
+        public virtual Uri Endpoint { get; }
+
+        /// <summary>
+        /// Gets the name of the Search service.
+        /// </summary>
+        public virtual string ServiceName =>
+            _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchIndexerClient"/> class for mocking.
@@ -103,7 +119,6 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="options">Client configuration options for connecting to Azure Cognitive Search.</param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0006:DO provide constructor overloads that allow specifying additional options.", Justification = "Avoid ambiguous method definition")]
         public SearchIndexerClient(
             Uri endpoint,
             TokenCredential tokenCredential,
@@ -119,18 +134,6 @@ namespace Azure.Search.Documents.Indexes
             _pipeline = options.Build(tokenCredential);
             _version = options.Version;
         }
-
-        /// <summary>
-        /// Gets the URI endpoint of the Search service.  This is likely
-        /// to be similar to "https://{search_service}.search.windows.net".
-        /// </summary>
-        public virtual Uri Endpoint { get; }
-
-        /// <summary>
-        /// Gets the name of the Search service.
-        /// </summary>
-        public virtual string ServiceName =>
-            _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
         /// Gets the generated <see cref="IndexersRestClient"/> to make requests.
@@ -948,6 +951,53 @@ namespace Azure.Search.Documents.Indexes
                     indexerName,
                     overwrite,
                     resetDocumentOptions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Resync selective options from the datasource to be re-ingested by the indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer to resync for. </param>
+        /// <param name="indexerResync"> The <see cref="IndexerResyncBody"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        public virtual Response Resync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(Resync)}");
+            scope.Start();
+            try
+            {
+                return IndexersClient.Resync(
+                    indexerName,
+                    indexerResync,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Resync selective options from the datasource to be re-ingested by the indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer to resync for. </param>
+        /// <param name="indexerResync"> The <see cref="IndexerResyncBody"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        public virtual async Task<Response> ResyncAsync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(Resync)}");
+            scope.Start();
+            try
+            {
+                return await IndexersClient.ResyncAsync(
+                    indexerName,
+                    indexerResync,
                     cancellationToken)
                     .ConfigureAwait(false);
             }

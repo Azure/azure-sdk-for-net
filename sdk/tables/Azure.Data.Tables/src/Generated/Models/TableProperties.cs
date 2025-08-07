@@ -10,9 +10,16 @@ namespace Azure.Data.Tables.Models
     /// <summary> The properties for creating a table. </summary>
     internal partial class TableProperties
     {
-        /// <summary> Initializes a new instance of TableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableProperties"/>. </summary>
         public TableProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableProperties"/>. </summary>
+        /// <param name="tableName"> The name of the table to create. </param>
+        internal TableProperties(string tableName)
+        {
+            TableName = tableName;
         }
 
         /// <summary> The name of the table to create. </summary>

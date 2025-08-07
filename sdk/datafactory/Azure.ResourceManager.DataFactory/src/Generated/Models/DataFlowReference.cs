@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Data flow reference type. </summary>
     public partial class DataFlowReference
     {
-        /// <summary> Initializes a new instance of DataFlowReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowReference"/>. </summary>
         /// <param name="referenceType"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowReference"/>. </summary>
         /// <param name="referenceType"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <param name="datasetParameters"> Reference data flow parameters from dataset. </param>
@@ -43,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFlowReference"/> for deserialization. </summary>
+        internal DataFlowReference()
+        {
+        }
+
         /// <summary> Data flow reference type. </summary>
         public DataFlowReferenceType ReferenceType { get; set; }
         /// <summary> Reference data flow name. </summary>
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The DocumentKeyPhrases. </summary>
     internal partial class DocumentKeyPhrases
     {
-        /// <summary> Initializes a new instance of DocumentKeyPhrases. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyPhrases"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
@@ -31,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentKeyPhrases. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyPhrases"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>

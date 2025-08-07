@@ -13,6 +13,7 @@ using System.Threading;
 using System.Linq;
 using System.ComponentModel;
 using Azure.Core.Pipeline;
+using System.Text.Json.Serialization;
 
 namespace Azure.Security.Attestation
 {
@@ -447,7 +448,11 @@ namespace Azure.Security.Attestation
             {
                 // The leaf certificate is defined as the certificate which signed the token, so we just need to look
                 // at the first certificate in the chain.
+#if NET6_0_OR_GREATER
+                AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].GetRSAPublicKey();
+#else
                 AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].PublicKey.Key;
+#endif
                 if (asymmetricAlgorithm is RSA rsaKey)
                 {
                     signatureValidated = rsaKey.VerifyData(
@@ -644,7 +649,11 @@ namespace Azure.Security.Attestation
             AsymmetricAlgorithm signer;
             if (signingKey.Certificate.HasPrivateKey)
             {
+#if NET6_0_OR_GREATER
+                signer = signingKey.Certificate.GetRSAPrivateKey();
+#else
                 signer = signingKey.Certificate.PrivateKey;
+#endif
             }
             else
             {
@@ -658,7 +667,7 @@ namespace Azure.Security.Attestation
             };
             var serializationOptions = new JsonSerializerOptions
             {
-                IgnoreNullValues = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
             byte[] jwtHeader = JsonSerializer.SerializeToUtf8Bytes<JsonWebTokenHeader>(header, serializationOptions);
             string encodedHeader = Base64Url.Encode(jwtHeader);

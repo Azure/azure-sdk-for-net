@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Version>0.0.0-beta.1</Version>
+    <UserSecretsId>08f35a00-c4b1-4085-b513-1549a4adf635</UserSecretsId>
+    <IsPackable>false</IsPackable>
+    <IsSample>true</IsSample>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Azure.Projects.AI\src\Azure.Projects.AI.csproj" />
+    <ProjectReference Include="..\..\src\Azure.Projects.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Projects.Provisioning\src\Azure.Projects.Provisioning.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Resources.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EnforcedValue = "Enforced";
+        private const string DefaultValue = "Default";
         private const string DoNotEnforceValue = "DoNotEnforce";
 
         /// <summary> The policy effect is enforced during resource creation or update. </summary>
-        public static EnforcementMode Enforced { get; } = new EnforcementMode(EnforcedValue);
+        public static EnforcementMode Default { get; } = new EnforcementMode(DefaultValue);
         /// <summary> The policy effect is not enforced during resource creation or update. </summary>
         public static EnforcementMode DoNotEnforce { get; } = new EnforcementMode(DoNotEnforceValue);
         /// <summary> Determines if two <see cref="EnforcementMode"/> values are the same. </summary>
         public static bool operator ==(EnforcementMode left, EnforcementMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnforcementMode"/> values are not the same. </summary>
         public static bool operator !=(EnforcementMode left, EnforcementMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnforcementMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnforcementMode"/>. </summary>
         public static implicit operator EnforcementMode(string value) => new EnforcementMode(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

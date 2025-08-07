@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Server endpoint cloud tiering status object. </summary>
     public partial class CloudTieringCachePerformance
     {
-        /// <summary> Initializes a new instance of CloudTieringCachePerformance. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudTieringCachePerformance"/>. </summary>
         internal CloudTieringCachePerformance()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringCachePerformance. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringCachePerformance"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="cacheHitBytes"> Count of bytes that were served from the local server. </param>
         /// <param name="cacheMissBytes"> Count of bytes that were served from the cloud. </param>
         /// <param name="cacheHitBytesPercent"> Percentage of total bytes (hit + miss) that were served from the local server. </param>
-        internal CloudTieringCachePerformance(DateTimeOffset? lastUpdatedOn, long? cacheHitBytes, long? cacheMissBytes, int? cacheHitBytesPercent)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudTieringCachePerformance(DateTimeOffset? lastUpdatedOn, long? cacheHitBytes, long? cacheMissBytes, int? cacheHitBytesPercent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             CacheHitBytes = cacheHitBytes;
             CacheMissBytes = cacheMissBytes;
             CacheHitBytesPercent = cacheHitBytesPercent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Last updated timestamp. </summary>

@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Perf", "Azur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{D181301A-2FA4-420D-963F-529445E61409}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.BrokeredAuthentication", "Azure.Identity.BrokeredAuthentication\src\Azure.Identity.BrokeredAuthentication.csproj", "{2337B615-724F-4ED7-8929-B1AF89815D30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Broker", "Azure.Identity.Broker\src\Azure.Identity.Broker.csproj", "{2337B615-724F-4ED7-8929-B1AF89815D30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.BrokeredAuthentication.Tests", "Azure.Identity.BrokeredAuthentication\tests\Azure.Identity.BrokeredAuthentication.Tests.csproj", "{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Broker.Tests", "Azure.Identity.Broker\tests\Azure.Identity.Broker.Tests.csproj", "{5F72962A-E4A5-4DBD-BA00-AB5B7725CACA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{B8BF1ED4-DD68-4504-9060-008D1A980958}"
 EndProject

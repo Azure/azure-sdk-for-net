@@ -24,11 +24,14 @@ namespace Azure.Search.Documents.Indexes.Models
 
         private const string AllDocumentsValue = "indexingAllDocs";
         private const string ResetDocumentsValue = "indexingResetDocs";
+        private const string IndexingResyncValue = "indexingResync";
+        /// <summary> The indexer is resyncing and indexing selective option(s) from the datasource. </summary>
+        public static IndexingMode IndexingResync { get; } = new IndexingMode(IndexingResyncValue);
         /// <summary> Determines if two <see cref="IndexingMode"/> values are the same. </summary>
         public static bool operator ==(IndexingMode left, IndexingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexingMode"/> values are not the same. </summary>
         public static bool operator !=(IndexingMode left, IndexingMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IndexingMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IndexingMode"/>. </summary>
         public static implicit operator IndexingMode(string value) => new IndexingMode(value);
 
         /// <inheritdoc />
@@ -39,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

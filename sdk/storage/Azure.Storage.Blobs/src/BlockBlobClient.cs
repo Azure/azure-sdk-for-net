@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -326,6 +327,15 @@ namespace Azure.Storage.Blobs.Specialized
             _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
         }
 
+        internal BlockBlobClient(
+            Uri blobUri,
+            BlobClientConfiguration clientConfiguration,
+            ClientSideEncryptionOptions clientSideEncryption)
+            : base(blobUri, clientConfiguration, clientSideEncryption)
+        {
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBlobClient"/>
         /// class.
@@ -353,12 +363,7 @@ namespace Azure.Storage.Blobs.Specialized
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientDiagnostics: new ClientDiagnostics(options),
-                    version: options.Version,
-                    customerProvidedKey: options.CustomerProvidedKey,
-                    transferValidation: options.TransferValidation,
-                    encryptionScope: null,
-                    trimBlobNameSlashes: options.TrimBlobNameSlashes));
+                    clientOptions: options));
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -468,6 +473,60 @@ namespace Azure.Storage.Blobs.Specialized
                 clientConfiguration: newClientConfiguration);
         }
 
+        #region internal static accessors for Azure.Storage.DataMovement.Blobs
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class with identical configurations but with additional Http Pipeline Policies.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client which to clone the configurations from.
+        /// </param>
+        /// <param name="policies">
+        /// The additional policies and its pipeline position to add to the client.
+        /// </param>
+        /// <returns></returns>
+        protected static BlockBlobClient WithAdditionalPolicies(
+            BlockBlobClient client,
+            params (HttpPipelinePolicy Policy, HttpPipelinePosition Position)[] policies)
+        {
+            Argument.AssertNotNullOrEmpty(policies, nameof(policies));
+
+            // Update the client options with the provided additional policies.
+            BlobClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
+            BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
+            foreach ((HttpPipelinePolicy policy, HttpPipelinePosition position) in policies)
+            {
+                options.AddPolicy(policy, position);
+            }
+
+            // Create a deep copy of the BlobBaseClient but with updated client options
+            // and the provided additional pipeline policies.
+            if (client.ClientConfiguration?.TokenCredential != default)
+            {
+                return new BlockBlobClient(
+                    client.Uri,
+                    client.ClientConfiguration.TokenCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration?.SasCredential != default)
+            {
+                return new BlockBlobClient(
+                    client.Uri,
+                    client.ClientConfiguration.SasCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration?.SharedKeyCredential != default)
+            {
+                return new BlockBlobClient(
+                    client.Uri,
+                    client.ClientConfiguration.SharedKeyCredential,
+                    options);
+            }
+
+            return new BlockBlobClient(client.Uri, options);
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
+
         ///// <summary>
         ///// Creates a new BlockBlobURL object identical to the source but with the specified version ID.
         ///// </summary>
@@ -522,6 +581,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
@@ -537,7 +598,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 expectedContentLength: default,
                 options,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 async: false,
                 cancellationToken).EnsureCompleted();
         }
@@ -579,6 +640,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
@@ -594,7 +657,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 expectedContentLength: default,
                 options,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -653,6 +716,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContentInfo> Upload(
@@ -728,6 +793,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
@@ -825,6 +892,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal virtual async Task<Response<BlobContentInfo>> UploadInternal(
             Stream content,
@@ -876,6 +945,12 @@ namespace Azure.Storage.Blobs.Specialized
                     content = content?.WithNoDispose().WithProgress(progressHandler);
 
                     ResponseWithHeaders<BlockBlobUploadHeaders> response;
+
+                    using DisposableBucket disposableBucket = new();
+                    if (ClientSideEncryption != default)
+                    {
+                        disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
+                    }
 
                     if (async)
                     {
@@ -977,10 +1052,11 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="transactionalContentHash">
         /// An optional MD5 hash of the block <paramref name="content"/>.
@@ -1010,6 +1086,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -1049,10 +1127,11 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="transactionalContentHash">
         /// An optional MD5 hash of the block <paramref name="content"/>.
@@ -1082,6 +1161,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -1121,10 +1202,11 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -1140,6 +1222,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlockInfo> StageBlock(
             string base64BlockId,
@@ -1172,10 +1256,11 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -1191,6 +1276,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlockInfo>> StageBlockAsync(
             string base64BlockId,
@@ -1223,10 +1310,11 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For a given blob, the length of the value specified for the
         /// blockid parameter must be the same size for each block. Note that
-        /// the Base64 string must be URL-encoded.
+        /// the Base64 string will be URL-encoded.
         /// </param>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
+        /// The <see cref="Stream"/> must be seekable.
         /// </param>
         /// <param name="conditions">
         /// Access conditions for staging the block.
@@ -1251,6 +1339,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal virtual async Task<Response<BlockInfo>> StageBlockInternal(
             string base64BlockId,
@@ -1374,7 +1464,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="options">
@@ -1391,6 +1481,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlockInfo> StageBlockFromUri(
             Uri sourceUri,
@@ -1405,6 +1497,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.SourceAuthentication,
+                options?.SourceShareTokenIntent,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1430,7 +1523,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="options">
@@ -1447,6 +1540,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
             Uri sourceUri,
@@ -1461,6 +1556,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.SourceAuthentication,
+                options?.SourceShareTokenIntent,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1486,7 +1582,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="sourceRange">
@@ -1524,6 +1620,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -1544,6 +1642,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 conditions,
                 sourceAuthentication: default,
+                sourceShareTokenIntent: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1569,7 +1668,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="sourceRange">
@@ -1607,6 +1706,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -1627,6 +1728,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 conditions,
                 sourceAuthentication: default,
+                sourceShareTokenIntent: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1652,7 +1754,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
         /// the <paramref name="base64BlockId"/> parameter must be the same
-        /// size for each block.  Note that the Base64 string must be
+        /// size for each block.  Note that the Base64 string will be
         /// URL-encoded.
         /// </param>
         /// <param name="sourceRange">
@@ -1682,6 +1784,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="sourceAuthentication">
         /// Optional. Source bearer token used to access the source blob.
         /// </param>
+        /// <param name="sourceShareTokenIntent">
+        /// Optional, only applicable (but required) when the source is Azure Storage Files and using token authentication.
+        /// Used to indicate the intent of the request.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1696,6 +1802,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<BlockInfo>> StageBlockFromUriInternal(
             Uri sourceUri,
@@ -1705,6 +1813,7 @@ namespace Azure.Storage.Blobs.Specialized
             RequestConditions sourceConditions,
             BlobRequestConditions conditions,
             HttpAuthorization sourceAuthentication,
+            FileShareTokenIntent? sourceShareTokenIntent,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1759,6 +1868,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            fileRequestIntent: sourceShareTokenIntent,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1780,6 +1890,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            fileRequestIntent: sourceShareTokenIntent,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1814,8 +1925,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
@@ -1842,6 +1956,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobContentInfo> CommitBlockList(
             IEnumerable<string> base64BlockIds,
@@ -1871,8 +1987,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
@@ -1911,6 +2030,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContentInfo> CommitBlockList(
@@ -1944,8 +2065,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
@@ -1972,6 +2096,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
             IEnumerable<string> base64BlockIds,
@@ -2001,8 +2127,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
@@ -2041,6 +2170,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
@@ -2074,8 +2205,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
         /// most recently uploaded version of the block, whichever list it
-        /// may belong to.  Any blocks not specified in the block list and
+        /// may belong to.  Any blocks not specified in the block list are
         /// permanently deleted.
+        ///
+        /// Note: Uncommitted blocks will expire and be permanently deleted after 7 days.
+        /// Blocks that are committed to a blob do not expire.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list">
@@ -2130,6 +2264,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal virtual async Task<Response<BlobContentInfo>> CommitBlockListInternal(
             IEnumerable<string> base64BlockIds,
@@ -2167,6 +2303,12 @@ namespace Azure.Storage.Blobs.Specialized
                     BlockLookupList blocks = new BlockLookupList() { Latest = base64BlockIds.ToList() };
 
                     ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response;
+
+                    using DisposableBucket disposableBucket = new();
+                    if (ClientSideEncryption != default)
+                    {
+                        disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
+                    }
 
                     if (async)
                     {
@@ -2283,6 +2425,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlockList> GetBlockList(
             BlockListTypes blockListTypes = BlockListTypes.All,
@@ -2334,6 +2478,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlockList>> GetBlockListAsync(
             BlockListTypes blockListTypes = BlockListTypes.All,
@@ -2388,6 +2534,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<BlockList>> GetBlockListInternal(
             BlockListTypes blockListTypes,
@@ -2483,6 +2631,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         /// <returns>
         /// A <see cref="Response{BlobDownloadInfo}"/>.
@@ -2519,6 +2669,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         /// <returns>
         /// A <see cref="Response{BlobDownloadInfo}"/>.
@@ -2558,6 +2710,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         /// <returns>
         /// A <see cref="Response{BlobDownloadInfo}"/>.
@@ -2667,6 +2821,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        ///
+        /// During the disposal of the returned write stream, an exception may be thrown.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenWrite(
@@ -2701,6 +2859,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        ///
+        /// During the disposal of the returned write stream, an exception may be thrown.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Stream> OpenWriteAsync(
@@ -2738,6 +2900,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        ///
+        /// During the disposal of the returned write stream, an exception may be thrown.
         /// </remarks>
         internal async Task<Stream> OpenWriteInternal(
             bool overwrite,
@@ -2819,9 +2985,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="overwrite">
         /// Whether the upload should overwrite the existing blob.  The
@@ -2838,6 +3004,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobContentInfo> SyncUploadFromUri(
             Uri copySource,
@@ -2863,9 +3031,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="overwrite">
         /// Whether the upload should overwrite the existing blob.  The
@@ -2882,6 +3050,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
             Uri copySource,
@@ -2907,9 +3077,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -2925,6 +3095,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobContentInfo> SyncUploadFromUri(
             Uri copySource,
@@ -2949,9 +3121,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -2967,6 +3139,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
             Uri copySource,
@@ -2991,9 +3165,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
         /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
-        /// in a request URI.  The source blob must either be public or must be authorized via a
-        /// shared access signature.  If the source blob is public, no authorization is required
-        /// to perform the operation.
+        /// in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -3012,6 +3186,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         internal virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriInternal(
             Uri copySource,
@@ -3079,6 +3255,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
                             copySourceTags: options?.CopySourceTagsMode,
+                            fileRequestIntent: options?.SourceShareTokenIntent,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3115,6 +3292,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
                             copySourceTags: options?.CopySourceTagsMode,
+                            fileRequestIntent: options?.SourceShareTokenIntent,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3217,14 +3395,18 @@ namespace Azure.Storage.Blobs.Specialized
                             LeaseId = args.Conditions.LeaseId
                         };
                     }
-                    await client.StageBlockInternal(
-                            Shared.StorageExtensions.GenerateBlockId(offset),
-                            content.ToStream(),
-                            validationOptions,
-                            conditions,
-                            progressHandler,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
+
+                    using (var stream = content.ToStream())
+                    {
+                        await client.StageBlockInternal(
+                                Shared.StorageExtensions.GenerateBlockId(offset),
+                                stream,
+                                validationOptions,
+                                conditions,
+                                progressHandler,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
+                    }
                 },
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(

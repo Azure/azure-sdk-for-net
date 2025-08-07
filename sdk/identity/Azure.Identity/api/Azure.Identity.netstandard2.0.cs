@@ -46,6 +46,7 @@ namespace Azure.Identity
     public static partial class AzureAuthorityHosts
     {
         public static System.Uri AzureChina { get { throw null; } }
+        [System.ObsoleteAttribute("Microsoft Cloud Germany was closed on October 29th, 2021.")]
         public static System.Uri AzureGermany { get { throw null; } }
         public static System.Uri AzureGovernment { get { throw null; } }
         public static System.Uri AzurePublicCloud { get { throw null; } }
@@ -62,6 +63,7 @@ namespace Azure.Identity
         public AzureCliCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
+        public string Subscription { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential
@@ -77,6 +79,20 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
+    }
+    public partial class AzurePipelinesCredential : Azure.Core.TokenCredential
+    {
+        protected AzurePipelinesCredential() { }
+        public AzurePipelinesCredential(string tenantId, string clientId, string serviceConnectionId, string systemAccessToken, Azure.Identity.AzurePipelinesCredentialOptions options = null) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class AzurePipelinesCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public AzurePipelinesCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
     {
@@ -94,13 +110,14 @@ namespace Azure.Identity
     }
     public partial class BrowserCustomizationOptions
     {
-        public bool? UseEmbeddedWebView;
         public BrowserCustomizationOptions() { }
-        public string HtmlMessageError { get { throw null; } set { } }
-        public string HtmlMessageSuccess { get { throw null; } set { } }
+        public string ErrorMessage { get { throw null; } set { } }
+        public string SuccessMessage { get { throw null; } set { } }
+        public bool? UseEmbeddedWebView { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
+        protected ChainedTokenCredential() { }
         public ChainedTokenCredential(params Azure.Core.TokenCredential[] sources) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -118,6 +135,7 @@ namespace Azure.Identity
         public ClientAssertionCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
@@ -165,6 +183,7 @@ namespace Azure.Identity
     }
     public partial class DefaultAzureCredential : Azure.Core.TokenCredential
     {
+        protected DefaultAzureCredential() { }
         public DefaultAzureCredential(Azure.Identity.DefaultAzureCredentialOptions options) { }
         public DefaultAzureCredential(bool includeInteractiveCredentials = false) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -179,9 +198,12 @@ namespace Azure.Identity
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
         public bool ExcludeAzureDeveloperCliCredential { get { throw null; } set { } }
         public bool ExcludeAzurePowerShellCredential { get { throw null; } set { } }
+        public bool ExcludeBrokerCredential { get { throw null; } set { } }
         public bool ExcludeEnvironmentCredential { get { throw null; } set { } }
         public bool ExcludeInteractiveBrowserCredential { get { throw null; } set { } }
         public bool ExcludeManagedIdentityCredential { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
         public bool ExcludeSharedTokenCacheCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCodeCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCredential { get { throw null; } set { } }
@@ -193,6 +215,8 @@ namespace Azure.Identity
         public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SharedTokenCacheTenantId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
         public string SharedTokenCacheUsername { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -281,7 +305,7 @@ namespace Azure.Identity
         public InteractiveBrowserCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
-        public Azure.Identity.BrowserCustomizationOptions BrowserCustomizedOptions { get { throw null; } set { } }
+        public Azure.Identity.BrowserCustomizationOptions BrowserCustomization { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
@@ -293,14 +317,33 @@ namespace Azure.Identity
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
         protected ManagedIdentityCredential() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ManagedIdentityCredential(Azure.Core.ResourceIdentifier resourceId, Azure.Identity.TokenCredentialOptions options = null) { }
+        public ManagedIdentityCredential(Azure.Identity.ManagedIdentityCredentialOptions options) { }
+        public ManagedIdentityCredential(Azure.Identity.ManagedIdentityId id) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ManagedIdentityCredential(string clientId = null, Azure.Identity.TokenCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ManagedIdentityCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public ManagedIdentityCredentialOptions(Azure.Identity.ManagedIdentityId managedIdentityId = null) { }
+    }
+    public partial class ManagedIdentityId
+    {
+        internal ManagedIdentityId() { }
+        public static Azure.Identity.ManagedIdentityId SystemAssigned { get { throw null; } }
+        public static Azure.Identity.ManagedIdentityId FromUserAssignedClientId(string id) { throw null; }
+        public static Azure.Identity.ManagedIdentityId FromUserAssignedObjectId(string id) { throw null; }
+        public static Azure.Identity.ManagedIdentityId FromUserAssignedResourceId(Azure.Core.ResourceIdentifier id) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
     {
         protected OnBehalfOfCredential() { }
+        public OnBehalfOfCredential(string tenantId, string clientId, System.Func<string> clientAssertionCallback, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
+        public OnBehalfOfCredential(string tenantId, string clientId, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<string>> clientAssertionCallback, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
         public OnBehalfOfCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, string userAssertion) { }
         public OnBehalfOfCredential(string tenantId, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, string userAssertion, Azure.Identity.OnBehalfOfCredentialOptions options) { }
         public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, string userAssertion) { }
@@ -316,6 +359,8 @@ namespace Azure.Identity
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This credential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential
     {
         public SharedTokenCacheCredential() { }
@@ -325,6 +370,8 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
     public partial class SharedTokenCacheCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public SharedTokenCacheCredentialOptions() { }
@@ -373,7 +420,7 @@ namespace Azure.Identity
         public TokenCredentialOptions() { }
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
-        public bool IsSupportLoggingEnabled { get { throw null; } set { } }
+        public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {
@@ -382,6 +429,8 @@ namespace Azure.Identity
         protected internal virtual System.Threading.Tasks.Task<Azure.Identity.TokenCacheData> RefreshCacheAsync(Azure.Identity.TokenCacheRefreshArgs args, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {
         protected UsernamePasswordCredential() { }
@@ -395,6 +444,8 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
     public partial class UsernamePasswordCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public UsernamePasswordCredentialOptions() { }
@@ -402,12 +453,12 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
-    public partial class VisualStudioCodeCredential : Azure.Core.TokenCredential
+    public partial class VisualStudioCodeCredential : Azure.Identity.InteractiveBrowserCredential
     {
         public VisualStudioCodeCredential() { }
         public VisualStudioCodeCredential(Azure.Identity.VisualStudioCodeCredentialOptions options) { }
-        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VisualStudioCodeCredentialOptions : Azure.Identity.TokenCredentialOptions
     {

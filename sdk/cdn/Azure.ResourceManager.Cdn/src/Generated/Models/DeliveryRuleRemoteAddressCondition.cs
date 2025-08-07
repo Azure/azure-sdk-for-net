@@ -6,15 +6,21 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the RemoteAddress condition for the delivery rule. </summary>
+    /// <summary>
+    /// Defines the RemoteAddress condition for the delivery rule.
+    /// Serialized Name: DeliveryRuleRemoteAddressCondition
+    /// </summary>
     public partial class DeliveryRuleRemoteAddressCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleRemoteAddressCondition. </summary>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRemoteAddressCondition"/>. </summary>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleRemoteAddressCondition.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleRemoteAddressCondition(RemoteAddressMatchCondition properties)
         {
@@ -24,16 +30,31 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.RemoteAddress;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleRemoteAddressCondition. </summary>
-        /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleRemoteAddressCondition(MatchVariable name, RemoteAddressMatchCondition properties) : base(name)
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRemoteAddressCondition"/>. </summary>
+        /// <param name="name">
+        /// The name of the condition for the delivery rule.
+        /// Serialized Name: DeliveryRuleCondition.name
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleRemoteAddressCondition.parameters
+        /// </param>
+        internal DeliveryRuleRemoteAddressCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, RemoteAddressMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;
         }
 
-        /// <summary> Defines the parameters for the condition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRemoteAddressCondition"/> for deserialization. </summary>
+        internal DeliveryRuleRemoteAddressCondition()
+        {
+        }
+
+        /// <summary>
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleRemoteAddressCondition.parameters
+        /// </summary>
         public RemoteAddressMatchCondition Properties { get; set; }
     }
 }

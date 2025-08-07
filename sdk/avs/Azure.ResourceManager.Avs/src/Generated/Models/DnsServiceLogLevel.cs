@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> DNS Service log level. </summary>
+    /// <summary> DNS service log level. </summary>
     public readonly partial struct DnsServiceLogLevel : IEquatable<DnsServiceLogLevel>
     {
         private readonly string _value;
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Avs.Models
         private const string ErrorValue = "ERROR";
         private const string FatalValue = "FATAL";
 
-        /// <summary> DEBUG. </summary>
+        /// <summary> is debug. </summary>
         public static DnsServiceLogLevel Debug { get; } = new DnsServiceLogLevel(DebugValue);
-        /// <summary> INFO. </summary>
+        /// <summary> is info. </summary>
         public static DnsServiceLogLevel Info { get; } = new DnsServiceLogLevel(InfoValue);
-        /// <summary> WARNING. </summary>
+        /// <summary> is warning. </summary>
         public static DnsServiceLogLevel Warning { get; } = new DnsServiceLogLevel(WarningValue);
-        /// <summary> ERROR. </summary>
+        /// <summary> is error. </summary>
         public static DnsServiceLogLevel Error { get; } = new DnsServiceLogLevel(ErrorValue);
-        /// <summary> FATAL. </summary>
+        /// <summary> is fatal. </summary>
         public static DnsServiceLogLevel Fatal { get; } = new DnsServiceLogLevel(FatalValue);
         /// <summary> Determines if two <see cref="DnsServiceLogLevel"/> values are the same. </summary>
         public static bool operator ==(DnsServiceLogLevel left, DnsServiceLogLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsServiceLogLevel"/> values are not the same. </summary>
         public static bool operator !=(DnsServiceLogLevel left, DnsServiceLogLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DnsServiceLogLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsServiceLogLevel"/>. </summary>
         public static implicit operator DnsServiceLogLevel(string value) => new DnsServiceLogLevel(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

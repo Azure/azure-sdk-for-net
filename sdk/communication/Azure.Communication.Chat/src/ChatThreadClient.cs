@@ -63,7 +63,55 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, null, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the thread's properties. </summary>
+        /// <param name="options"> Update chat thread options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response UpdateProperties(UpdateChatThreadPropertiesOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateProperties)}");
+            scope.Start();
+            try
+            {
+                return _chatThreadRestClient.UpdateChatThreadProperties(
+                    Id,
+                    options.Topic,
+                    options.Metadata?.ToDictionary(pair => pair.Key, pair => pair.Value),
+                    ChatRetentionPolicyConverter.ConvertBack(options.RetentionPolicy),
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the thread's properties asynchronously. </summary>
+        /// <param name="options"> Update chat thread options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> UpdatePropertiesAsync(UpdateChatThreadPropertiesOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateProperties)}");
+            scope.Start();
+            try
+            {
+                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(
+                    Id,
+                    options.Topic,
+                    options.Metadata,
+                    ChatRetentionPolicyConverter.ConvertBack(options.RetentionPolicy),
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -82,7 +130,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, cancellationToken);
+                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, null, null, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -596,10 +644,13 @@ namespace Azure.Communication.Chat
             try
             {
                 CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
-                return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, communicationIdentifierModel.RawId,
+                return await _chatThreadRestClient.RemoveChatParticipantAsync(Id,
+                    communicationIdentifierModel.Kind,
+                    communicationIdentifierModel.RawId,
                     communicationIdentifierModel.CommunicationUser,
                     communicationIdentifierModel.PhoneNumber,
                     communicationIdentifierModel.MicrosoftTeamsUser,
+                    communicationIdentifierModel.MicrosoftTeamsApp,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -620,10 +671,13 @@ namespace Azure.Communication.Chat
             try
             {
                 CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
-                return _chatThreadRestClient.RemoveChatParticipant(Id, communicationIdentifierModel.RawId,
+                return _chatThreadRestClient.RemoveChatParticipant(Id,
+                    communicationIdentifierModel.Kind,
+                    communicationIdentifierModel.RawId,
                     communicationIdentifierModel.CommunicationUser,
                     communicationIdentifierModel.PhoneNumber,
                     communicationIdentifierModel.MicrosoftTeamsUser,
+                    communicationIdentifierModel.MicrosoftTeamsApp,
                     cancellationToken);
             }
             catch (Exception ex)

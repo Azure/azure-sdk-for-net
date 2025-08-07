@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleEligibilityScheduleRequests();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Get()
         {
             var collection = await GetRoleEligibilityScheduleRequestCollectionAsync();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Update()
         {
             var collection = await GetRoleEligibilityScheduleRequestCollectionAsync();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Validate()
         {
             var collection = await GetRoleEligibilityScheduleRequestCollectionAsync();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Cancel()
         {
             var collection = await GetRoleEligibilityScheduleRequestCollectionAsync();

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapLandscapeMonitorProvisioningState left, SapLandscapeMonitorProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapLandscapeMonitorProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SapLandscapeMonitorProvisioningState left, SapLandscapeMonitorProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapLandscapeMonitorProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapLandscapeMonitorProvisioningState"/>. </summary>
         public static implicit operator SapLandscapeMonitorProvisioningState(string value) => new SapLandscapeMonitorProvisioningState(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

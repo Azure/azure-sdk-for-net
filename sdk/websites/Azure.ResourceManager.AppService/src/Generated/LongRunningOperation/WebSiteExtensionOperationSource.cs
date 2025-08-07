@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.AppService
 
         WebSiteExtensionResource IOperationSource<WebSiteExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
+            var data = ModelReaderWriter.Read<SiteExtensionInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return new WebSiteExtensionResource(_client, data);
         }
 
         async ValueTask<WebSiteExtensionResource> IOperationSource<WebSiteExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new WebSiteExtensionResource(_client, data);
+            var data = ModelReaderWriter.Read<SiteExtensionInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            return await Task.FromResult(new WebSiteExtensionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

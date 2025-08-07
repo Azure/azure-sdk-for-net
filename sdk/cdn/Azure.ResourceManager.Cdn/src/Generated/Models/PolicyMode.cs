@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes if it is in detection mode or prevention mode at policy level. </summary>
+    /// <summary>
+    /// Describes if it is in detection mode or prevention mode at policy level.
+    /// Serialized Name: PolicyMode
+    /// </summary>
     public readonly partial struct PolicyMode : IEquatable<PolicyMode>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string PreventionValue = "Prevention";
         private const string DetectionValue = "Detection";
 
-        /// <summary> Prevention. </summary>
+        /// <summary>
+        /// Prevention
+        /// Serialized Name: PolicyMode.Prevention
+        /// </summary>
         public static PolicyMode Prevention { get; } = new PolicyMode(PreventionValue);
-        /// <summary> Detection. </summary>
+        /// <summary>
+        /// Detection
+        /// Serialized Name: PolicyMode.Detection
+        /// </summary>
         public static PolicyMode Detection { get; } = new PolicyMode(DetectionValue);
         /// <summary> Determines if two <see cref="PolicyMode"/> values are the same. </summary>
         public static bool operator ==(PolicyMode left, PolicyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyMode"/> values are not the same. </summary>
         public static bool operator !=(PolicyMode left, PolicyMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyMode"/>. </summary>
         public static implicit operator PolicyMode(string value) => new PolicyMode(value);
 
         /// <inheritdoc />
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

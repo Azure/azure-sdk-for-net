@@ -10,39 +10,46 @@ using NUnit.Framework;
 namespace Azure.Storage.DataMovement.Tests
 {
     /// <summary>
-    /// These tests aim to test the <see cref="TransferManager.GetTransfers(StorageTransferStatus)"/>.
+    /// These tests aim to test the <see cref="TransferManager.GetTransfers(TransferStatus)"/>.
     /// </summary>
     public class GetTransfersTests
     {
+        private static TransferStatus QueuedStatus => new TransferStatus(TransferState.Queued, false, false);
+        private static TransferStatus InProgressStatus => new TransferStatus(TransferState.InProgress, false, false);
+        private static TransferStatus PausedStatus => new TransferStatus(TransferState.Paused, false, false);
+        private static TransferStatus SuccessfulCompletedStatus => new TransferStatus(TransferState.Completed, false, false);
+        private static TransferStatus FailedCompletedStatus => new TransferStatus(TransferState.Completed, true, false);
+        private static TransferStatus SkippedCompletedStatus => new TransferStatus(TransferState.Completed, true, false);
+        private static TransferStatus FailedSkippedCompletedStatus => new TransferStatus(TransferState.Completed, true, false);
+
         private TransferManagerOptions GetDefaultManagerOptions(string checkpointerPath) =>
             new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerPath)
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerPath)
             };
 
-        private void AssertListTransfersEquals(IList<DataTransfer> expected, IList<DataTransfer> actual)
+        private void AssertListTransfersEquals(IList<TransferOperation> expected, IList<TransferOperation> actual)
         {
             Assert.AreEqual(expected.Count, actual.Count);
 
             // Sort
-            IList<DataTransfer> expectedSorted = expected.OrderBy(a => a.Id).ToList();
-            IList<DataTransfer> actualSorted = actual.OrderBy(a => a.Id).ToList();
+            IList<TransferOperation> expectedSorted = expected.OrderBy(a => a.Id).ToList();
+            IList<TransferOperation> actualSorted = actual.OrderBy(a => a.Id).ToList();
 
             for (int i = 0; i < expectedSorted.Count; i++)
             {
-                DataTransfer expectedValue = expectedSorted.ElementAt(i);
-                DataTransfer actualValue = actualSorted.ElementAt(i);
+                TransferOperation expectedValue = expectedSorted.ElementAt(i);
+                TransferOperation actualValue = actualSorted.ElementAt(i);
                 Assert.AreEqual(expectedValue.Id, actualValue.Id);
-                Assert.AreEqual(expectedValue.TransferStatus, actualValue.TransferStatus);
+                Assert.AreEqual(expectedValue.Status, actualValue.Status);
             }
         }
 
-        private DataTransfer GetNewDataTransfer(
-            StorageTransferStatus status = StorageTransferStatus.Queued)
+        private TransferOperation GetNewTransferOperation(
+            TransferStatus status = default)
         {
-            return new DataTransfer(
+            return new TransferOperation(
                 id: Guid.NewGuid().ToString(),
-                transferManager: new(),
                 status: status);
         }
 
@@ -54,7 +61,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager = new TransferManager(GetDefaultManagerOptions(testDirectory.DirectoryPath));
 
             // Act
-            IList<DataTransfer> transfers = await manager.GetTransfersAsync().ToListAsync();
+            IList<TransferOperation> transfers = await manager.GetTransfersAsync().ToListAsync();
 
             // Assert
             Assert.IsEmpty(transfers);
@@ -65,59 +72,62 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             // Arrange - Set up transfer manager with multiple transfers
-            List<DataTransfer> storedTransfers = new List<DataTransfer>
+            List<TransferOperation> storedTransfers = new List<TransferOperation>
             {
-                GetNewDataTransfer(),
-                GetNewDataTransfer(),
-                GetNewDataTransfer(),
+                GetNewTransferOperation(),
+                GetNewTransferOperation(),
+                GetNewTransferOperation(),
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
-            IList<DataTransfer> result = await manager.GetTransfersAsync().ToListAsync();
+            IList<TransferOperation> result = await manager.GetTransfersAsync().ToListAsync();
 
             // Assert
             AssertListTransfersEquals(storedTransfers, result);
         }
 
         [Test]
-        [TestCase(StorageTransferStatus.Queued)]
-        [TestCase(StorageTransferStatus.InProgress)]
-        [TestCase(StorageTransferStatus.Paused)]
-        [TestCase(StorageTransferStatus.Completed)]
-        [TestCase(StorageTransferStatus.CompletedWithFailedTransfers)]
-        public async Task GetTransfers_Filtered(StorageTransferStatus status)
+        [TestCase(TransferState.Queued, false, false)]
+        [TestCase(TransferState.InProgress, false, false)]
+        [TestCase(TransferState.Paused, false, false)]
+        [TestCase(TransferState.Completed, false, false)]
+        [TestCase(TransferState.Completed, true, false)]
+        public async Task GetTransfers_Filtered(
+            TransferState state,
+            bool hasFailedItems,
+            bool hasSkippedItems)
         {
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             // Arrange - Set up transfer manager with multiple transfers
-            List<DataTransfer> storedTransfers = new List<DataTransfer>
+            List<TransferOperation> storedTransfers = new List<TransferOperation>
             {
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.InProgress),
-                GetNewDataTransfer(StorageTransferStatus.InProgress),
-                GetNewDataTransfer(StorageTransferStatus.Paused),
-                GetNewDataTransfer(StorageTransferStatus.Paused),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(StorageTransferStatus.Completed),
-                GetNewDataTransfer(StorageTransferStatus.Completed),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(InProgressStatus),
+                GetNewTransferOperation(InProgressStatus),
+                GetNewTransferOperation(PausedStatus),
+                GetNewTransferOperation(PausedStatus),
+                GetNewTransferOperation(FailedCompletedStatus),
+                GetNewTransferOperation(FailedCompletedStatus),
+                GetNewTransferOperation(FailedCompletedStatus),
+                GetNewTransferOperation(SuccessfulCompletedStatus),
+                GetNewTransferOperation(SuccessfulCompletedStatus),
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
-            StorageTransferStatus[] statuses = new StorageTransferStatus[] { status };
-            IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
+            TransferStatus[] status = { new TransferStatus(state, hasFailedItems, hasSkippedItems) };
+            IList<TransferOperation> result = await manager.GetTransfersAsync(status).ToListAsync();
 
             // Assert
-            AssertListTransfersEquals(storedTransfers.Where( d => d.TransferStatus == status).ToList(), result);
+            AssertListTransfersEquals(storedTransfers.Where(d => d.Status == status.First()).ToList(), result);
         }
 
         [Test]
@@ -125,36 +135,36 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             // Arrange - Set up transfer manager with multiple transfers
-            List<DataTransfer> storedTransfers = new List<DataTransfer>
+            List<TransferOperation> storedTransfers = new List<TransferOperation>
             {
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.InProgress),
-                GetNewDataTransfer(StorageTransferStatus.InProgress),
-                GetNewDataTransfer(StorageTransferStatus.Paused),
-                GetNewDataTransfer(StorageTransferStatus.Paused),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(StorageTransferStatus.Completed),
-                GetNewDataTransfer(StorageTransferStatus.Completed),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithSkippedTransfers)
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(InProgressStatus),
+                GetNewTransferOperation(InProgressStatus),
+                GetNewTransferOperation(PausedStatus),
+                GetNewTransferOperation(PausedStatus),
+                GetNewTransferOperation(FailedCompletedStatus),
+                GetNewTransferOperation(FailedCompletedStatus),
+                GetNewTransferOperation(FailedCompletedStatus),
+                GetNewTransferOperation(SuccessfulCompletedStatus),
+                GetNewTransferOperation(SuccessfulCompletedStatus),
+                GetNewTransferOperation(SkippedCompletedStatus)
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
-            StorageTransferStatus[] statuses = new StorageTransferStatus[] {
-                StorageTransferStatus.Completed,
-                StorageTransferStatus.CompletedWithFailedTransfers,
-                StorageTransferStatus.CompletedWithSkippedTransfers };
-            IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
+            TransferStatus[] statuses = new TransferStatus[] {
+                SuccessfulCompletedStatus,
+                FailedCompletedStatus,
+                SkippedCompletedStatus };
+            IList<TransferOperation> result = await manager.GetTransfersAsync(statuses).ToListAsync();
 
             // Assert
-            AssertListTransfersEquals(storedTransfers.Where(d => statuses.Contains(d.TransferStatus)).ToList(), result);
+            AssertListTransfersEquals(storedTransfers.Where(d => statuses.Contains(d.Status)).ToList(), result);
         }
 
         [Test]
@@ -162,29 +172,29 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             // Arrange - Set up transfer manager with multiple transfers
-            List<DataTransfer> storedTransfers = new List<DataTransfer>
+            List<TransferOperation> storedTransfers = new List<TransferOperation>
             {
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.Queued),
-                GetNewDataTransfer(StorageTransferStatus.InProgress),
-                GetNewDataTransfer(StorageTransferStatus.InProgress),
-                GetNewDataTransfer(StorageTransferStatus.Paused),
-                GetNewDataTransfer(StorageTransferStatus.Paused),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(StorageTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(StorageTransferStatus.Completed),
-                GetNewDataTransfer(StorageTransferStatus.Completed),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(QueuedStatus),
+                GetNewTransferOperation(InProgressStatus),
+                GetNewTransferOperation(InProgressStatus),
+                GetNewTransferOperation(PausedStatus),
+                GetNewTransferOperation(PausedStatus),
+                GetNewTransferOperation(FailedCompletedStatus),
+                GetNewTransferOperation(FailedCompletedStatus),
+                GetNewTransferOperation(FailedCompletedStatus),
+                GetNewTransferOperation(SuccessfulCompletedStatus),
+                GetNewTransferOperation(SuccessfulCompletedStatus),
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act - With a transfer status not in the above stored transfers
-            StorageTransferStatus[] statuses = new StorageTransferStatus[] { StorageTransferStatus.CancellationInProgress };
-            IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
+            TransferStatus[] statuses = new TransferStatus[] { new TransferStatus(TransferState.Stopping, true, false) };
+            IList<TransferOperation> result = await manager.GetTransfersAsync(statuses).ToListAsync();
 
             // Assert
             Assert.IsEmpty(result);
@@ -206,15 +216,16 @@ namespace Azure.Storage.DataMovement.Tests
             // Build TransferManager with the stored transfers
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointerOptions(test.DirectoryPath)
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(test.DirectoryPath)
             };
             TransferManager manager = new TransferManager(options);
 
             // Act
-            IList<DataTransfer> result = await manager.GetTransfersAsync().ToListAsync();
+            IList<TransferOperation> result = await manager.GetTransfersAsync().ToListAsync();
+            List<string> resultIds = result.Select(t => t.Id).ToList();
 
             // Assert
-            Assert.AreEqual(checkpointerTransfers, result.Select(d => d.Id).ToList());
+            Assert.IsTrue(Enumerable.SequenceEqual(checkpointerTransfers.OrderBy(id => id), result.Select(t => t.Id).OrderBy(id => id)));
         }
 
         [Test]
@@ -222,43 +233,43 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            string parentRemotePath = "https://account.blob.core.windows.net/resume-test/";
-            string parentLocalPath1 = "/resume-test/";
-            string parentLocalPath2 = @"C:\Windows\Path\";
+            Uri parentRemoteUri = new("https://account.blob.core.windows.net/resume-test/");
+            Uri parentLocalUri1 = new("file://resume-test/");
+            Uri parentLocalUri2 = new(@"file:///C:\Windows\Path\");
 
             LocalTransferCheckpointerFactory factory = new LocalTransferCheckpointerFactory(test.DirectoryPath);
 
             // Build expected results first to use to populate checkpointer
-            DataTransferProperties[] expectedResults = new DataTransferProperties[]
+            TransferProperties[] expectedResults = new TransferProperties[]
             {
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "LocalFile", SourcePath = parentLocalPath1 + "file1", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file1", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file2/", DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1 + "file2/", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file3", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file3", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath, DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1, IsContainer = true },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "LocalFile", SourcePath = parentLocalPath2, DestinationTypeId = "AppendBlob", DestinationPath = parentRemotePath, IsContainer = true },
+                new TransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "local", SourceUri = new Uri(parentLocalUri1, "file1"), DestinationProviderId = "blob", DestinationUri = new Uri(parentRemoteUri, "file1"), IsContainer = false },
+                new TransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceUri = new Uri(parentRemoteUri, "file2/"), DestinationProviderId = "local", DestinationUri = new Uri(parentLocalUri1, "file2/"), IsContainer = false },
+                new TransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceUri = new Uri(parentRemoteUri, "file3"), DestinationProviderId = "blob", DestinationUri = new Uri(parentRemoteUri, "file3"), IsContainer = false },
+                new TransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "blob", SourceUri = parentRemoteUri, DestinationProviderId = "local", DestinationUri = parentLocalUri1, IsContainer = true },
+                new TransferProperties { TransferId = Guid.NewGuid().ToString(), SourceProviderId = "local", SourceUri = parentLocalUri2, DestinationProviderId = "blob", DestinationUri = parentRemoteUri, IsContainer = true },
             };
 
             // Add a transfer for each expected result
-            foreach (DataTransferProperties props in expectedResults)
+            foreach (TransferProperties props in expectedResults)
             {
-                AddTransferFromDataTransferProperties(factory, test.DirectoryPath, props);
+                AddTransferFromTransferProperties(factory, test.DirectoryPath, props);
             }
 
             // Build TransferManager with the stored transfers
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointerOptions(test.DirectoryPath)
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(test.DirectoryPath)
             };
             TransferManager manager = new TransferManager(options);
 
             // Act
-            IList<DataTransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
+            IList<TransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
 
             // Assert
             Assert.AreEqual(5, result.Count);
-            foreach (DataTransferProperties props in result)
+            foreach (TransferProperties props in result)
             {
-                DataTransferProperties expected = expectedResults.Where(p => p.TransferId == props.TransferId).First();
+                TransferProperties expected = expectedResults.Where(p => p.TransferId == props.TransferId).First();
                 AssertTransferProperties(expected, props);
             }
         }
@@ -270,39 +281,51 @@ namespace Azure.Storage.DataMovement.Tests
             LocalTransferCheckpointerFactory factory = new LocalTransferCheckpointerFactory(test.DirectoryPath);
 
             string transferId1 = Guid.NewGuid().ToString();
+            factory.CreateStubJobPlanFile(test.DirectoryPath, transferId1, status: SuccessfulCompletedStatus);
             factory.CreateStubJobPartPlanFilesAsync(
                 test.DirectoryPath,
                 transferId1,
-                3 /* jobPartCount */,
-                StorageTransferStatus.Completed);
+                3 /* jobPartCount */);
 
             string transferId2 = Guid.NewGuid().ToString();
+            factory.CreateStubJobPlanFile(test.DirectoryPath, transferId2, status: QueuedStatus);
             factory.CreateStubJobPartPlanFilesAsync(
                 test.DirectoryPath,
                 transferId2,
-                3 /* jobPartCount */,
-                StorageTransferStatus.Queued);
+                3 /* jobPartCount */);
 
             // Build TransferManager with the stored transfers
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointerOptions(test.DirectoryPath)
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(test.DirectoryPath)
             };
             TransferManager manager = new TransferManager(options);
 
             // Act
-            IList<DataTransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
+            IList<TransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
 
             // Assert
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(transferId2, result.First().TransferId);
         }
 
-        private void AddTransferFromDataTransferProperties(
+        private void AddTransferFromTransferProperties(
             LocalTransferCheckpointerFactory factory,
             string checkpointerPath,
-            DataTransferProperties properties)
+            TransferProperties properties)
         {
+            // First add the job plan file for the transfer
+            factory.CreateStubJobPlanFile(
+                checkpointerPath,
+                properties.TransferId,
+                parentSourcePath: properties.SourceUri.AbsoluteUri,
+                parentDestinationPath: properties.DestinationUri.AbsoluteUri,
+                sourceProviderId: properties.SourceProviderId,
+                destinationProviderId: properties.DestinationProviderId,
+                isContainer: properties.IsContainer,
+                sourceCheckpointDetails: MockResourceCheckpointDetails.DefaultInstance,
+                destinationCheckpointDetails: MockResourceCheckpointDetails.DefaultInstance);
+
             if (properties.IsContainer)
             {
                 int numParts = 3;
@@ -313,24 +336,25 @@ namespace Azure.Storage.DataMovement.Tests
                     // Put extra slash on end of last part for testing
                     if (i == numParts - 1)
                     {
-                        sourcePaths.Add(properties.SourcePath + $"file{i}/");
-                        destinationPaths.Add(properties.DestinationPath + $"file{i}/");
+                        sourcePaths.Add(properties.SourceUri + $"file{i}/");
+                        destinationPaths.Add(properties.DestinationUri + $"file{i}/");
                         continue;
                     }
 
-                    sourcePaths.Add(properties.SourcePath + $"file{i}");
-                    destinationPaths.Add(properties.DestinationPath + $"file{i}");
+                    sourcePaths.Add(properties.SourceUri + $"file{i}");
+                    destinationPaths.Add(properties.DestinationUri + $"file{i}");
                 }
 
+                // Because type ID is null on container transfers, derive a type from provider id
+                string sourceTypeId = GetTypeIdForProvider(properties.SourceProviderId);
+                string destinationTypeId = GetTypeIdForProvider(properties.DestinationProviderId);
                 factory.CreateStubJobPartPlanFilesAsync(
                     checkpointerPath,
                     properties.TransferId,
                     numParts, /* jobPartCount */
-                    StorageTransferStatus.InProgress,
+                    InProgressStatus,
                     sourcePaths,
-                    destinationPaths,
-                    sourceResourceId: properties.SourceTypeId,
-                    destinationResourceId: properties.DestinationTypeId);
+                    destinationPaths);
             }
             else
             {
@@ -338,22 +362,31 @@ namespace Azure.Storage.DataMovement.Tests
                     checkpointerPath,
                     properties.TransferId,
                     1, /* jobPartCount */
-                    StorageTransferStatus.InProgress,
-                    new List<string> { properties.SourcePath },
-                    new List<string> { properties.DestinationPath },
-                    sourceResourceId: properties.SourceTypeId,
-                    destinationResourceId: properties.DestinationTypeId);
+                    InProgressStatus,
+                    new List<string> { properties.SourceUri.AbsoluteUri },
+                    new List<string> { properties.DestinationUri.AbsoluteUri });
             }
         }
 
-        private void AssertTransferProperties(DataTransferProperties expected, DataTransferProperties actual)
+        private void AssertTransferProperties(TransferProperties expected, TransferProperties actual)
         {
             Assert.AreEqual(expected.TransferId, actual.TransferId);
-            Assert.AreEqual(expected.SourceTypeId, actual.SourceTypeId);
-            Assert.AreEqual(expected.SourcePath.TrimEnd('\\', '/'), actual.SourcePath.TrimEnd('\\', '/'));
-            Assert.AreEqual(expected.DestinationTypeId, actual.DestinationTypeId);
-            Assert.AreEqual(expected.DestinationPath.TrimEnd('\\', '/'), actual.DestinationPath.TrimEnd('\\', '/'));
+            Assert.AreEqual(expected.SourceProviderId, actual.SourceProviderId);
+            Assert.AreEqual(expected.SourceUri.AbsoluteUri.TrimEnd('\\', '/'), actual.SourceUri.AbsoluteUri.TrimEnd('\\', '/'));
+            Assert.AreEqual(expected.DestinationProviderId, actual.DestinationProviderId);
+            Assert.AreEqual(expected.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'), actual.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'));
             Assert.AreEqual(expected.IsContainer, actual.IsContainer);
+
+            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, actual.SourceCheckpointDetails);
+            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, actual.DestinationCheckpointDetails);
         }
+
+        private string GetTypeIdForProvider(string providerId)
+            => providerId switch
+            {
+                "blob" => "BlockBlob",
+                "local" => "LocalFile",
+                _ => "Unknown"
+            };
     }
 }

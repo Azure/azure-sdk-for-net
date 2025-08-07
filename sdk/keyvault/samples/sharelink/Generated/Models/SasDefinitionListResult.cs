@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The storage account SAS definition list result. </summary>
     internal partial class SasDefinitionListResult
     {
-        /// <summary> Initializes a new instance of SasDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionListResult"/>. </summary>
         internal SasDefinitionListResult()
         {
             Value = new ChangeTrackingList<SasDefinitionItem>();
         }
 
-        /// <summary> Initializes a new instance of SasDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionListResult"/>. </summary>
         /// <param name="value"> A response message containing a list of SAS definitions along with a link to the next page of SAS definitions. </param>
         /// <param name="nextLink"> The URL to get the next set of SAS definitions. </param>
         internal SasDefinitionListResult(IReadOnlyList<SasDefinitionItem> value, string nextLink)

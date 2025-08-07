@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,10 +17,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public partial class HyperVReplicaPolicyContent : PolicyProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaPolicyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaPolicyContent"/>. </summary>
         public HyperVReplicaPolicyContent()
         {
             InstanceType = "HyperVReplica2012";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaPolicyContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
+        /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
+        /// <param name="compression"> A value indicating whether compression has to be enabled. </param>
+        /// <param name="initialReplicationMethod"> A value indicating whether IR is online. </param>
+        /// <param name="onlineReplicationStartTime"> A value indicating the online IR start time. </param>
+        /// <param name="offlineReplicationImportPath"> A value indicating the offline IR import path. </param>
+        /// <param name="offlineReplicationExportPath"> A value indicating the offline IR export path. </param>
+        /// <param name="replicationPort"> A value indicating the recovery HTTPS port. </param>
+        /// <param name="allowedAuthenticationType"> A value indicating the authentication type. </param>
+        /// <param name="replicaDeletion"> A value indicating whether the VM has to be auto deleted. </param>
+        internal HyperVReplicaPolicyContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? recoveryPoints, int? applicationConsistentSnapshotFrequencyInHours, string compression, string initialReplicationMethod, string onlineReplicationStartTime, string offlineReplicationImportPath, string offlineReplicationExportPath, int? replicationPort, int? allowedAuthenticationType, string replicaDeletion) : base(instanceType, serializedAdditionalRawData)
+        {
+            RecoveryPoints = recoveryPoints;
+            ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHours;
+            Compression = compression;
+            InitialReplicationMethod = initialReplicationMethod;
+            OnlineReplicationStartTime = onlineReplicationStartTime;
+            OfflineReplicationImportPath = offlineReplicationImportPath;
+            OfflineReplicationExportPath = offlineReplicationExportPath;
+            ReplicationPort = replicationPort;
+            AllowedAuthenticationType = allowedAuthenticationType;
+            ReplicaDeletion = replicaDeletion;
+            InstanceType = instanceType ?? "HyperVReplica2012";
         }
 
         /// <summary> A value indicating the number of recovery points. </summary>

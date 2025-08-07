@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout. </summary>
+    /// <summary>
+    /// Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout.
+    /// Serialized Name: SharedPrivateLinkResourceStatus
+    /// </summary>
     public enum SharedPrivateLinkResourceStatus
     {
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: SharedPrivateLinkResourceStatus.Pending
+        /// </summary>
         Pending,
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: SharedPrivateLinkResourceStatus.Approved
+        /// </summary>
         Approved,
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: SharedPrivateLinkResourceStatus.Rejected
+        /// </summary>
         Rejected,
-        /// <summary> Disconnected. </summary>
+        /// <summary>
+        /// Disconnected
+        /// Serialized Name: SharedPrivateLinkResourceStatus.Disconnected
+        /// </summary>
         Disconnected,
-        /// <summary> Timeout. </summary>
+        /// <summary>
+        /// Timeout
+        /// Serialized Name: SharedPrivateLinkResourceStatus.Timeout
+        /// </summary>
         Timeout
     }
 }

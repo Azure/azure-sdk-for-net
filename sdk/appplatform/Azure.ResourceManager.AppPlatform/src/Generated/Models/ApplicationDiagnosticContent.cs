@@ -5,14 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Diagnostic parameters of diagnostic operations. </summary>
     public partial class ApplicationDiagnosticContent
     {
-        /// <summary> Initializes a new instance of ApplicationDiagnosticContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationDiagnosticContent"/>. </summary>
         public ApplicationDiagnosticContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationDiagnosticContent"/>. </summary>
+        /// <param name="appInstance"> App instance name. </param>
+        /// <param name="filePath"> Your target file path in your own BYOS. </param>
+        /// <param name="durationValue"> Duration of your JFR. 1 min can be represented by 1m or 60s. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationDiagnosticContent(string appInstance, string filePath, string durationValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AppInstance = appInstance;
+            FilePath = filePath;
+            DurationValue = durationValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> App instance name. </summary>

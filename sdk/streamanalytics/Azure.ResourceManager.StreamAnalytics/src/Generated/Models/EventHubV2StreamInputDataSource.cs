@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Event Hub input data source that contains stream data. </summary>
     public partial class EventHubV2StreamInputDataSource : StreamInputDataSource
     {
-        /// <summary> Initializes a new instance of EventHubV2StreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubV2StreamInputDataSource"/>. </summary>
         public EventHubV2StreamInputDataSource()
         {
             StreamInputDataSourceType = "Microsoft.EventHub/EventHub";
         }
 
-        /// <summary> Initializes a new instance of EventHubV2StreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubV2StreamInputDataSource"/>. </summary>
         /// <param name="streamInputDataSourceType"> Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serviceBusNamespace"> The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="sharedAccessPolicyName"> The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="sharedAccessPolicyKey"> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </param>
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="partitionCount"> The partition count of the event hub data source. Range 1 - 256. </param>
         /// <param name="consumerGroupName"> The name of an Event Hub Consumer Group that should be used to read events from the Event Hub. Specifying distinct consumer group names for multiple inputs allows each of those inputs to receive the same events from the Event Hub. If not specified, the input uses the Event Hub’s default consumer group. </param>
         /// <param name="prefetchCount"> The number of messages that the message receiver can simultaneously request. </param>
-        internal EventHubV2StreamInputDataSource(string streamInputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string eventHubName, int? partitionCount, string consumerGroupName, int? prefetchCount) : base(streamInputDataSourceType)
+        internal EventHubV2StreamInputDataSource(string streamInputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string eventHubName, int? partitionCount, string consumerGroupName, int? prefetchCount) : base(streamInputDataSourceType, serializedAdditionalRawData)
         {
             ServiceBusNamespace = serviceBusNamespace;
             SharedAccessPolicyName = sharedAccessPolicyName;

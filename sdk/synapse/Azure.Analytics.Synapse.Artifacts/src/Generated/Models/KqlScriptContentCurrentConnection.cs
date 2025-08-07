@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The KqlScriptContentCurrentConnection. </summary>
     public partial class KqlScriptContentCurrentConnection
     {
-        /// <summary> Initializes a new instance of KqlScriptContentCurrentConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScriptContentCurrentConnection"/>. </summary>
         public KqlScriptContentCurrentConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of KqlScriptContentCurrentConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScriptContentCurrentConnection"/>. </summary>
         /// <param name="name"></param>
         /// <param name="poolName"></param>
         /// <param name="databaseName"></param>

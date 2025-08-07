@@ -7,21 +7,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Office365 linked service. </summary>
-    public partial class Office365LinkedService : DataFactoryLinkedServiceDefinition
+    public partial class Office365LinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of Office365LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/>. </summary>
         /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey"> Specify the application's key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
-        public Office365LinkedService(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey)
+        public Office365LinkedService(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey)
         {
             Argument.AssertNotNull(office365TenantId, nameof(office365TenantId));
             Argument.AssertNotNull(servicePrincipalTenantId, nameof(servicePrincipalTenantId));
@@ -35,8 +34,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Office365";
         }
 
-        /// <summary> Initializes a new instance of Office365LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -46,15 +46,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey"> Specify the application's key. </param>
+        /// <param name="servicePrincipalCredentialType"> The service principal credential type for authentication.'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. If not specified, 'ServicePrincipalKey' is in use. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCert"> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCertPassword"> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal Office365LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal Office365LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalEmbeddedCert, DataFactorySecret servicePrincipalEmbeddedCertPassword, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Office365TenantId = office365TenantId;
             ServicePrincipalTenantId = servicePrincipalTenantId;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
+            ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalEmbeddedCert = servicePrincipalEmbeddedCert;
+            ServicePrincipalEmbeddedCertPassword = servicePrincipalEmbeddedCertPassword;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Office365";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/> for deserialization. </summary>
+        internal Office365LinkedService()
+        {
         }
 
         /// <summary> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </summary>
@@ -64,37 +75,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Specify the application's client ID. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> Specify the application's key. </summary>
-        public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        public DataFactorySecret ServicePrincipalKey { get; set; }
+        /// <summary> The service principal credential type for authentication.'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. If not specified, 'ServicePrincipalKey' is in use. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
+        /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
+        /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
     }
 }

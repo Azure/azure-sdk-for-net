@@ -5,42 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class SecretValueReference : IUtf8JsonSerializable
+    public partial class SecretValueReference : IUtf8JsonSerializable, IJsonModel<SecretValueReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretValueReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecretValueReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretValueReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecretValueReference)} does not support writing '{format}' format.");
+            }
+
             writer.WritePropertyName("keyVault"u8);
-            JsonSerializer.Serialize(writer, KeyVault); writer.WritePropertyName("secretName"u8);
+            ((IJsonModel<WritableSubResource>)KeyVault).Write(writer, options);
+            writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
             if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SecretValueReference DeserializeSecretValueReference(JsonElement element)
+        SecretValueReference IJsonModel<SecretValueReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretValueReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecretValueReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretValueReference(document.RootElement, options);
+        }
+
+        internal static SecretValueReference DeserializeSecretValueReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             WritableSubResource keyVault = default;
             string secretName = default;
-            Optional<string> secretVersion = default;
+            string secretVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVault"u8))
                 {
-                    keyVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    keyVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerBlueprintContext.Default);
                     continue;
                 }
                 if (property.NameEquals("secretName"u8))
@@ -53,8 +104,44 @@ namespace Azure.ResourceManager.Blueprint.Models
                     secretVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecretValueReference(keyVault, secretName, secretVersion.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecretValueReference(keyVault, secretName, secretVersion, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecretValueReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretValueReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBlueprintContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecretValueReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecretValueReference IPersistableModel<SecretValueReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretValueReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSecretValueReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecretValueReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecretValueReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

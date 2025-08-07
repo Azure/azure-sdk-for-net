@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private const string DeployingValue = "Deploying";
         private const string RunningValue = "Running";
         private const string UpdatingValue = "Updating";
+        private const string UpdatePausedValue = "UpdatePaused";
         private const string DegradedValue = "Degraded";
         private const string DeletingValue = "Deleting";
         private const string DisconnectedValue = "Disconnected";
@@ -39,6 +40,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static ClusterDetailedStatus Running { get; } = new ClusterDetailedStatus(RunningValue);
         /// <summary> Updating. </summary>
         public static ClusterDetailedStatus Updating { get; } = new ClusterDetailedStatus(UpdatingValue);
+        /// <summary> UpdatePaused. </summary>
+        public static ClusterDetailedStatus UpdatePaused { get; } = new ClusterDetailedStatus(UpdatePausedValue);
         /// <summary> Degraded. </summary>
         public static ClusterDetailedStatus Degraded { get; } = new ClusterDetailedStatus(DegradedValue);
         /// <summary> Deleting. </summary>
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ClusterDetailedStatus left, ClusterDetailedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterDetailedStatus"/> values are not the same. </summary>
         public static bool operator !=(ClusterDetailedStatus left, ClusterDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterDetailedStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterDetailedStatus"/>. </summary>
         public static implicit operator ClusterDetailedStatus(string value) => new ClusterDetailedStatus(value);
 
         /// <inheritdoc />
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

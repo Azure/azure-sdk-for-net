@@ -6,15 +6,43 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Extension. </summary>
     public partial class VirtualMachineExtensionPatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of VirtualMachineExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionPatch"/>. </summary>
         public VirtualMachineExtensionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        internal VirtualMachineExtensionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings) : base(tags, serializedAdditionalRawData)
+        {
+            ForceUpdateTag = forceUpdateTag;
+            Publisher = publisher;
+            ExtensionType = extensionType;
+            TypeHandlerVersion = typeHandlerVersion;
+            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            EnableAutomaticUpgrade = enableAutomaticUpgrade;
+            Settings = settings;
+            ProtectedSettings = protectedSettings;
+            SuppressFailures = suppressFailures;
+            KeyVaultProtectedSettings = keyVaultProtectedSettings;
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
@@ -35,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -66,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

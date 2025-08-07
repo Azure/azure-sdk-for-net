@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.HealthBot
     /// </summary>
     public partial class HealthBotData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HealthBotData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthBotData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU of the Azure Health Bot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -30,7 +62,7 @@ namespace Azure.ResourceManager.HealthBot
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of HealthBotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthBotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,11 +72,18 @@ namespace Azure.ResourceManager.HealthBot
         /// <param name="sku"> SKU of the Azure Health Bot. </param>
         /// <param name="identity"> The identity of the Azure Health Bot. </param>
         /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
-        internal HealthBotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthBotSku sku, ManagedServiceIdentity identity, HealthBotProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthBotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthBotSku sku, ManagedServiceIdentity identity, HealthBotProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthBotData"/> for deserialization. </summary>
+        internal HealthBotData()
+        {
         }
 
         /// <summary> SKU of the Azure Health Bot. </summary>

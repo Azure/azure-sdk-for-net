@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         GraphResourceGetResultResource IOperationSource<GraphResourceGetResultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GraphResourceGetResultData.DeserializeGraphResourceGetResultData(document.RootElement);
+            var data = ModelReaderWriter.Read<GraphResourceGetResultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new GraphResourceGetResultResource(_client, data);
         }
 
         async ValueTask<GraphResourceGetResultResource> IOperationSource<GraphResourceGetResultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GraphResourceGetResultData.DeserializeGraphResourceGetResultData(document.RootElement);
-            return new GraphResourceGetResultResource(_client, data);
+            var data = ModelReaderWriter.Read<GraphResourceGetResultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            return await Task.FromResult(new GraphResourceGetResultResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

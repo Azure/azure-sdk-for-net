@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Net;
+using System.Net.Security;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 
@@ -86,10 +87,24 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// The set of options to use for determining whether a failed operation should be retried and,
-        /// if so, the amount of time to wait between retry attempts.  These options also control the
-        /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
+        ///   A <see cref="RemoteCertificateValidationCallback" /> delegate allowing custom logic to be considered for
+        ///   validation of the remote certificate responsible for encrypting communication.
         /// </summary>
+        ///
+        /// <value>The callback will be invoked any time a connection is established, including any reconnect attempts.</value>
+        ///
+        public RemoteCertificateValidationCallback CertificateValidationCallback { get; set; }
+
+        /// <summary>
+        /// The set of options to use for determining whether a failed service operation should be retried and,
+        /// if so, the amount of time to wait between retry attempts.  These options also control the
+        /// amount of time allowed for the individual network operations used for interactions with the Service Bus service.
+        /// </summary>
+        /// <remarks>
+        /// The retry options are only considered for interactions with the Service Bus service. They do not apply to failures in the
+        /// <see cref="ServiceBusProcessor.ProcessMessageAsync" /> handler. Developers are responsible for error handling and retries
+        /// as part of their event handler.
+        ///</remarks>
         public ServiceBusRetryOptions RetryOptions
         {
             get => _retryOptions;
@@ -154,7 +169,8 @@ namespace Azure.Messaging.ServiceBus
                 EnableCrossEntityTransactions = EnableCrossEntityTransactions,
                 CustomEndpointAddress = CustomEndpointAddress,
                 ConnectionIdleTimeout = ConnectionIdleTimeout,
-                Identifier = Identifier
+                Identifier = Identifier,
+                CertificateValidationCallback = CertificateValidationCallback
             };
     }
 }

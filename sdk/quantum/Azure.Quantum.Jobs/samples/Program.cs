@@ -7,10 +7,12 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading;
+using Azure.Core;
 using Azure.Identity;
 using Azure.Quantum.Jobs.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Azure.Quantum.Jobs.Samples
 {
@@ -64,54 +66,27 @@ namespace Azure.Quantum.Jobs.Samples
 
             Console.WriteLine($@"Uploading data into a blob...");
 
-            #region Snippet:Azure_Quantum_Jobs_UploadInputData
-            string problemFilePath = "./problem.json";
+            #region Snippet:Azure_Quantum_Jobs_UploadQIRBitCode
+            string qirFilePath = "./BellState.bc";
 
             // Get input data blob Uri with SAS key
-            string blobName = Path.GetFileName(problemFilePath);
+            string blobName = Path.GetFileName(qirFilePath);
             var inputDataUri = (quantumJobClient.GetStorageSasUri(
                 new BlobDetails(storageContainerName)
                 {
                     BlobName = blobName,
                 })).Value.SasUri;
 
-            using (var problemStreamToUpload = new MemoryStream())
+            // Upload QIR bitcode to blob storage
+            var blobClient = new BlobClient(new Uri(inputDataUri));
+            var blobHeaders = new BlobHttpHeaders
             {
-                using (FileStream problemFileStream = File.OpenRead(problemFilePath))
-                {
-                    // Check if problem file is a gzip file.
-                    // If it is, just read its contents.
-                    // If not, read and compress the content.
-                    var fileExtension = Path.GetExtension(problemFilePath).ToLower();
-                    if (fileExtension == ".gz" ||
-                        fileExtension == ".gzip")
-                    {
-                        problemFileStream.CopyTo(problemStreamToUpload);
-                    }
-                    else
-                    {
-                        using (var gzip = new GZipStream(problemStreamToUpload, CompressionMode.Compress, leaveOpen: true))
-                        {
-                            byte[] buffer = new byte[8192];
-                            int count;
-                            while ((count = problemFileStream.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                gzip.Write(buffer, 0, count);
-                            }
-                        }
-                    }
-                }
-                problemStreamToUpload.Position = 0;
-
-                // Upload input data to blob
-                var blobClient = new BlobClient(new Uri(inputDataUri));
-                var blobHeaders = new BlobHttpHeaders
-                {
-                    ContentType = "application/json",
-                    ContentEncoding = "gzip"
-                };
-                var blobUploadOptions = new BlobUploadOptions { HttpHeaders = blobHeaders };
-                blobClient.Upload(problemStreamToUpload, options: blobUploadOptions);
+                ContentType = "qir.v1"
+            };
+            var blobUploadOptions = new BlobUploadOptions { HttpHeaders = blobHeaders };
+            using (FileStream qirFileStream = File.OpenRead(qirFilePath))
+            {
+                blobClient.Upload(qirFileStream, options: blobUploadOptions);
             }
             #endregion
 
@@ -125,11 +100,16 @@ namespace Azure.Quantum.Jobs.Samples
             // Submit job
             var jobId = $"job-{Guid.NewGuid():N}";
             var jobName = $"jobName-{Guid.NewGuid():N}";
-            var inputDataFormat = "microsoft.qio.v2";
-            var outputDataFormat = "microsoft.qio-results.v2";
-            var providerId = "microsoft";
-            var target = "microsoft.paralleltempering-parameterfree.cpu";
-            var inputParams = new Dictionary<string, object>() { { "params", new Dictionary<string, object>() } };
+            var inputDataFormat = "qir.v1";
+            var outputDataFormat = "microsoft.quantum-results.v1";
+            var providerId = "quantinuum";
+            var target = "quantinuum.sim.h1-1e";
+            var inputParams = new Dictionary<string, object>()
+            {
+                { "entryPoint", "ENTRYPOINT__BellState" },
+                { "arguments", new string[] { } },
+                { "targetCapability", "AdaptiveExecution" },
+            };
             var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId, target)
             {
                 Id = jobId,

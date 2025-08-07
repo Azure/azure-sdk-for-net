@@ -5,16 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanVolumeGroupPatch : IUtf8JsonSerializable
+    public partial class ElasticSanVolumeGroupPatch : IUtf8JsonSerializable, IJsonModel<ElasticSanVolumeGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanVolumeGroupPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ElasticSanVolumeGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProtocolType))
@@ -27,13 +53,196 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption.Value.ToString());
             }
+            if (Optional.IsDefined(EncryptionProperties))
+            {
+                writer.WritePropertyName("encryptionProperties"u8);
+                writer.WriteObjectValue(EncryptionProperties, options);
+            }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue(NetworkAcls, options);
+            }
+            if (Optional.IsDefined(EnforceDataIntegrityCheckForIscsi))
+            {
+                writer.WritePropertyName("enforceDataIntegrityCheckForIscsi"u8);
+                writer.WriteBooleanValue(EnforceDataIntegrityCheckForIscsi.Value);
+            }
+            if (Optional.IsDefined(DeleteRetentionPolicy))
+            {
+                writer.WritePropertyName("deleteRetentionPolicy"u8);
+                writer.WriteObjectValue(DeleteRetentionPolicy, options);
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
+
+        ElasticSanVolumeGroupPatch IJsonModel<ElasticSanVolumeGroupPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticSanVolumeGroupPatch(document.RootElement, options);
+        }
+
+        internal static ElasticSanVolumeGroupPatch DeserializeElasticSanVolumeGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ManagedServiceIdentity identity = default;
+            ElasticSanStorageTargetType? protocolType = default;
+            ElasticSanEncryptionType? encryption = default;
+            ElasticSanEncryptionProperties encryptionProperties = default;
+            ElasticSanNetworkRuleSet networkAcls = default;
+            bool? enforceDataIntegrityCheckForIscsi = default;
+            ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerElasticSanContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("protocolType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            protocolType = new ElasticSanStorageTargetType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = new ElasticSanEncryptionType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionProperties = ElasticSanEncryptionProperties.DeserializeElasticSanEncryptionProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAcls"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkAcls = ElasticSanNetworkRuleSet.DeserializeElasticSanNetworkRuleSet(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("enforceDataIntegrityCheckForIscsi"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enforceDataIntegrityCheckForIscsi = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("deleteRetentionPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(property0.Value, options);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ElasticSanVolumeGroupPatch(
+                identity,
+                protocolType,
+                encryption,
+                encryptionProperties,
+                networkAcls,
+                enforceDataIntegrityCheckForIscsi,
+                deleteRetentionPolicy,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ElasticSanVolumeGroupPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ElasticSanVolumeGroupPatch IPersistableModel<ElasticSanVolumeGroupPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeElasticSanVolumeGroupPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticSanVolumeGroupPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

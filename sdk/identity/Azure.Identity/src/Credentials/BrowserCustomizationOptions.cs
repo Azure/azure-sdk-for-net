@@ -17,7 +17,7 @@ namespace Azure.Identity
         /// Specifies if the public client application should used an embedded web browser
         /// or the system default browser
         /// </summary>
-        public bool? UseEmbeddedWebView;
+        public bool? UseEmbeddedWebView { get; set; }
 
         internal SystemWebViewOptions SystemBrowserOptions;
 
@@ -34,7 +34,7 @@ namespace Azure.Identity
         /// Property to set HtmlMessageSuccess of SystemWebViewOptions from MSAL,
         /// which the browser will show to the user when the user finishes authenticating successfully.
         /// </summary>
-        public string HtmlMessageSuccess
+        public string SuccessMessage
         {
             get
             {
@@ -52,7 +52,7 @@ namespace Azure.Identity
         /// which the browser will show to the user when the user finishes authenticating, but an error occurred.
         /// You can use a string format e.g. "An error has occurred: {0} details: {1}".
         /// </summary>
-        public string HtmlMessageError
+        public string ErrorMessage
         {
             get
             {

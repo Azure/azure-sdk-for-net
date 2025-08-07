@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The api properties for special APIs. </summary>
     public partial class ServiceAccountApiProperties
     {
-        /// <summary> Initializes a new instance of ServiceAccountApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountApiProperties"/>. </summary>
         public ServiceAccountApiProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountApiProperties"/>. </summary>
         /// <param name="qnaRuntimeEndpoint"> (QnAMaker Only) The runtime endpoint of QnAMaker. </param>
         /// <param name="qnaAzureSearchEndpointKey"> (QnAMaker Only) The Azure Search endpoint key of QnAMaker. </param>
         /// <param name="qnaAzureSearchEndpointId"> (QnAMaker Only) The Azure Search endpoint id of QnAMaker. </param>
@@ -48,24 +48,34 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> (QnAMaker Only) The runtime endpoint of QnAMaker. </summary>
+        [WirePath("qnaRuntimeEndpoint")]
         public string QnaRuntimeEndpoint { get; set; }
         /// <summary> (QnAMaker Only) The Azure Search endpoint key of QnAMaker. </summary>
+        [WirePath("qnaAzureSearchEndpointKey")]
         public string QnaAzureSearchEndpointKey { get; set; }
         /// <summary> (QnAMaker Only) The Azure Search endpoint id of QnAMaker. </summary>
+        [WirePath("qnaAzureSearchEndpointId")]
         public ResourceIdentifier QnaAzureSearchEndpointId { get; set; }
         /// <summary> (Bing Search Only) The flag to enable statistics of Bing Search. </summary>
+        [WirePath("statisticsEnabled")]
         public bool? EnableStatistics { get; set; }
         /// <summary> (Personalization Only) The flag to enable statistics of Bing Search. </summary>
+        [WirePath("eventHubConnectionString")]
         public string EventHubConnectionString { get; set; }
         /// <summary> (Personalization Only) The storage account connection string. </summary>
+        [WirePath("storageAccountConnectionString")]
         public string StorageAccountConnectionString { get; set; }
         /// <summary> (Metrics Advisor Only) The Azure AD Client Id (Application Id). </summary>
+        [WirePath("aadClientId")]
         public Guid? AadClientId { get; set; }
         /// <summary> (Metrics Advisor Only) The Azure AD Tenant Id. </summary>
+        [WirePath("aadTenantId")]
         public Guid? AadTenantId { get; set; }
         /// <summary> (Metrics Advisor Only) The super user of Metrics Advisor. </summary>
+        [WirePath("superUser")]
         public string SuperUser { get; set; }
         /// <summary> (Metrics Advisor Only) The website name of Metrics Advisor. </summary>
+        [WirePath("websiteName")]
         public string WebsiteName { get; set; }
         /// <summary>
         /// Additional Properties
@@ -73,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -97,6 +107,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

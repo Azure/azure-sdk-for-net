@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,44 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class UserSessionData : ResourceData
     {
-        /// <summary> Initializes a new instance of UserSessionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserSessionData"/>. </summary>
         public UserSessionData()
         {
         }
 
-        /// <summary> Initializes a new instance of UserSessionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSessionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +67,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sessionState"> State of user session. </param>
         /// <param name="activeDirectoryUserName"> The active directory user name. </param>
         /// <param name="createOn"> The timestamp of the user session create. </param>
-        internal UserSessionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string userPrincipalName, VirtualApplicationType? applicationType, UserSessionState? sessionState, string activeDirectoryUserName, DateTimeOffset? createOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserSessionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string userPrincipalName, VirtualApplicationType? applicationType, UserSessionState? sessionState, string activeDirectoryUserName, DateTimeOffset? createOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             UserPrincipalName = userPrincipalName;
@@ -42,19 +76,26 @@ namespace Azure.ResourceManager.DesktopVirtualization
             SessionState = sessionState;
             ActiveDirectoryUserName = activeDirectoryUserName;
             CreateOn = createOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ObjectId of user session. (internal use). </summary>
+        [WirePath("properties.objectId")]
         public string ObjectId { get; }
         /// <summary> The user principal name. </summary>
+        [WirePath("properties.userPrincipalName")]
         public string UserPrincipalName { get; set; }
         /// <summary> Application type of application. </summary>
+        [WirePath("properties.applicationType")]
         public VirtualApplicationType? ApplicationType { get; set; }
         /// <summary> State of user session. </summary>
+        [WirePath("properties.sessionState")]
         public UserSessionState? SessionState { get; set; }
         /// <summary> The active directory user name. </summary>
+        [WirePath("properties.activeDirectoryUserName")]
         public string ActiveDirectoryUserName { get; set; }
         /// <summary> The timestamp of the user session create. </summary>
+        [WirePath("properties.createTime")]
         public DateTimeOffset? CreateOn { get; set; }
     }
 }

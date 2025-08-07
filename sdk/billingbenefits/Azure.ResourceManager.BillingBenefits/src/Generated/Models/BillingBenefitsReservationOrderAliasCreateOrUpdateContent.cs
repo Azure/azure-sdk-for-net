@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,39 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Reservation order alias. </summary>
     public partial class BillingBenefitsReservationOrderAliasCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasCreateOrUpdateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasCreateOrUpdateContent"/>. </summary>
         /// <param name="sku"> Reservation order SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public BillingBenefitsReservationOrderAliasCreateOrUpdateContent(BillingBenefitsSku sku)
@@ -24,7 +57,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +75,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
         /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        internal BillingBenefitsReservationOrderAliasCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, int? quantity, bool? isRenewed, BillingBenefitsReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasRequestPropertiesReservedResourceProperties reservedResourceProperties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsReservationOrderAliasCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, AzureLocation? location, string displayName, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, int? quantity, bool? isRenewed, BillingBenefitsReservedResourceType? reservedResourceType, DateTimeOffset? reviewOn, ReservationOrderAliasRequestPropertiesReservedResourceProperties reservedResourceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Location = location;
@@ -57,6 +91,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             ReservedResourceType = reservedResourceType;
             ReviewOn = reviewOn;
             ReservedResourceProperties = reservedResourceProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservationOrderAliasCreateOrUpdateContent"/> for deserialization. </summary>
+        internal BillingBenefitsReservationOrderAliasCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Reservation order SKU. </summary>

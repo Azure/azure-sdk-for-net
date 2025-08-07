@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test.Shared;
@@ -54,8 +55,8 @@ namespace Azure.Storage.Blobs.Tests
         public static BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey(this BlobsClientBuilder clientBuilder)
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumBlob);
 
-        public static BlobServiceClient GetServiceClient_OAuth(this BlobsClientBuilder clientBuilder)
-            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth);
+        public static BlobServiceClient GetServiceClient_OAuth(this BlobsClientBuilder clientBuilder, TokenCredential tokenCredential)
+            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, tokenCredential);
 
         public static BlobServiceClient GetServiceClient_OAuthAccount_SharedKey(this BlobsClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigOAuth);
@@ -82,7 +83,7 @@ namespace Azure.Storage.Blobs.Tests
 
             if (publicAccessType == default)
             {
-                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+                publicAccessType = PublicAccessType.None;
             }
 
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));

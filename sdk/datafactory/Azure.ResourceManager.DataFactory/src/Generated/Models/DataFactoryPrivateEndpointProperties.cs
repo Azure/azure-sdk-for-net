@@ -5,41 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A remote private endpoint connection. </summary>
+    /// <summary> Properties of a managed private endpoint. </summary>
     public partial class DataFactoryPrivateEndpointProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointProperties"/>. </summary>
         public DataFactoryPrivateEndpointProperties()
         {
+            Fqdns = new ChangeTrackingList<string>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="privateEndpoint"> PrivateEndpoint of a remote private endpoint connection. </param>
-        /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
-        internal DataFactoryPrivateEndpointProperties(string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState)
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointProperties"/>. </summary>
+        /// <param name="connectionState"> The managed private endpoint connection state. </param>
+        /// <param name="fqdns"> Fully qualified domain names. </param>
+        /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>
+        /// <param name="isReserved"> Denotes whether the managed private endpoint is reserved. </param>
+        /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
+        /// <param name="provisioningState"> The managed private endpoint provisioning state. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal DataFactoryPrivateEndpointProperties(ConnectionStateProperties connectionState, IList<string> fqdns, string groupId, bool? isReserved, ResourceIdentifier privateLinkResourceId, string provisioningState, IDictionary<string, BinaryData> additionalProperties)
         {
+            ConnectionState = connectionState;
+            Fqdns = fqdns;
+            GroupId = groupId;
+            IsReserved = isReserved;
+            PrivateLinkResourceId = privateLinkResourceId;
             ProvisioningState = provisioningState;
-            PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
+        /// <summary> The managed private endpoint connection state. </summary>
+        public ConnectionStateProperties ConnectionState { get; set; }
+        /// <summary> Fully qualified domain names. </summary>
+        public IList<string> Fqdns { get; }
+        /// <summary> The groupId to which the managed private endpoint is created. </summary>
+        public string GroupId { get; set; }
+        /// <summary> Denotes whether the managed private endpoint is reserved. </summary>
+        public bool? IsReserved { get; }
+        /// <summary> The ARM resource ID of the resource to which the managed private endpoint is created. </summary>
+        public ResourceIdentifier PrivateLinkResourceId { get; set; }
+        /// <summary> The managed private endpoint provisioning state. </summary>
         public string ProvisioningState { get; }
-        /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
-        internal SubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-        }
-
-        /// <summary> The state of a private link connection. </summary>
-        public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

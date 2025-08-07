@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for starting data flow debug session. </summary>
     public partial class DataFlowDebugPackage
     {
-        /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugPackage"/>. </summary>
         public DataFlowDebugPackage()
         {
             DataFlows = new ChangeTrackingList<DataFlowDebugResource>();
@@ -22,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugPackage"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="dataFlow"> Data flow instance. </param>
         /// <param name="dataFlows"> List of Data flows. </param>

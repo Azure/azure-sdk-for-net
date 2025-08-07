@@ -22,10 +22,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NotSpecifiedValue = "NotSpecified";
         private const string StandardValue = "Standard";
         private const string DedicatedValue = "Dedicated";
         private const string ConfidentialValue = "Confidential";
 
+        /// <summary> NotSpecified. </summary>
+        public static ContainerGroupSku NotSpecified { get; } = new ContainerGroupSku(NotSpecifiedValue);
         /// <summary> Standard. </summary>
         public static ContainerGroupSku Standard { get; } = new ContainerGroupSku(StandardValue);
         /// <summary> Dedicated. </summary>
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static bool operator ==(ContainerGroupSku left, ContainerGroupSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupSku"/> values are not the same. </summary>
         public static bool operator !=(ContainerGroupSku left, ContainerGroupSku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerGroupSku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupSku"/>. </summary>
         public static implicit operator ContainerGroupSku(string value) => new ContainerGroupSku(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

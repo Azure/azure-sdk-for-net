@@ -27,6 +27,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         [CodeGenMember("DocTypes")]
         public IReadOnlyDictionary<string, DocumentTypeDetails> DocumentTypes { get; }
 
-        internal string ApiVersion { get; }
+        /// <summary>
+        /// Service version used to create this document model.
+        /// </summary>
+        [CodeGenMember("ApiVersion")]
+        public string ServiceVersion { get; }
     }
 }

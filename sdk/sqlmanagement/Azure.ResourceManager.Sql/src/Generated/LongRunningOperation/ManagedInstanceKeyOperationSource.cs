@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceKeyResource IOperationSource<ManagedInstanceKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedInstanceKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceKeyResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceKeyResource> IOperationSource<ManagedInstanceKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(document.RootElement);
-            return new ManagedInstanceKeyResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedInstanceKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new ManagedInstanceKeyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

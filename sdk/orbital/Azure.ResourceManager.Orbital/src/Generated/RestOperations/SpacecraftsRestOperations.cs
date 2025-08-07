@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Orbital.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.Orbital
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string skiptoken)
@@ -75,7 +89,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrbitalSpacecraftListResult.DeserializeOrbitalSpacecraftListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,13 +115,30 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrbitalSpacecraftListResult.DeserializeOrbitalSpacecraftListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string skiptoken)
@@ -152,7 +183,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrbitalSpacecraftListResult.DeserializeOrbitalSpacecraftListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -180,13 +211,27 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrbitalSpacecraftListResult.DeserializeOrbitalSpacecraftListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string spacecraftName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts/", false);
+            uri.AppendPath(spacecraftName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string spacecraftName)
@@ -229,7 +274,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -260,7 +305,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,6 +314,20 @@ namespace Azure.ResourceManager.Orbital
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalSpacecraftData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts/", false);
+            uri.AppendPath(spacecraftName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalSpacecraftData data)
@@ -289,7 +348,7 @@ namespace Azure.ResourceManager.Orbital
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -347,6 +406,20 @@ namespace Azure.ResourceManager.Orbital
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string spacecraftName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts/", false);
+            uri.AppendPath(spacecraftName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string spacecraftName)
@@ -421,6 +494,20 @@ namespace Azure.ResourceManager.Orbital
             }
         }
 
+        internal RequestUriBuilder CreateUpdateTagsRequestUri(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalSpacecraftTags orbitalSpacecraftTags)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts/", false);
+            uri.AppendPath(spacecraftName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalSpacecraftTags orbitalSpacecraftTags)
         {
             var message = _pipeline.CreateMessage();
@@ -439,7 +526,7 @@ namespace Azure.ResourceManager.Orbital
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(orbitalSpacecraftTags);
+            content.JsonWriter.WriteObjectValue(orbitalSpacecraftTags, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -499,6 +586,21 @@ namespace Azure.ResourceManager.Orbital
             }
         }
 
+        internal RequestUriBuilder CreateListAvailableContactsRequestUri(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalAvailableContactsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts/", false);
+            uri.AppendPath(spacecraftName, true);
+            uri.AppendPath("/listAvailableContacts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAvailableContactsRequest(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalAvailableContactsContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -518,7 +620,7 @@ namespace Azure.ResourceManager.Orbital
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -578,6 +680,14 @@ namespace Azure.ResourceManager.Orbital
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string skiptoken)
         {
             var message = _pipeline.CreateMessage();
@@ -611,7 +721,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrbitalSpacecraftListResult.DeserializeOrbitalSpacecraftListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -639,13 +749,21 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrbitalSpacecraftListResult.DeserializeOrbitalSpacecraftListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string skiptoken)
@@ -683,7 +801,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrbitalSpacecraftListResult.DeserializeOrbitalSpacecraftListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -713,7 +831,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         OrbitalSpacecraftListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrbitalSpacecraftListResult.DeserializeOrbitalSpacecraftListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> Dto for tenant domain registration. </summary>
     public partial class DataShareEmailRegistration
     {
-        /// <summary> Initializes a new instance of DataShareEmailRegistration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareEmailRegistration"/>. </summary>
         public DataShareEmailRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of DataShareEmailRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareEmailRegistration"/>. </summary>
         /// <param name="activationCode"> Activation code for the registration. </param>
         /// <param name="activationExpireOn"> Date of the activation expiration. </param>
         /// <param name="email"> The email to register. </param>
         /// <param name="registrationStatus"> Registration status. </param>
         /// <param name="tenantId"> The tenant to register. </param>
-        internal DataShareEmailRegistration(string activationCode, DateTimeOffset? activationExpireOn, string email, DataShareEmailRegistrationStatus? registrationStatus, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareEmailRegistration(string activationCode, DateTimeOffset? activationExpireOn, string email, DataShareEmailRegistrationStatus? registrationStatus, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActivationCode = activationCode;
             ActivationExpireOn = activationExpireOn;
             Email = email;
             RegistrationStatus = registrationStatus;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Activation code for the registration. </summary>

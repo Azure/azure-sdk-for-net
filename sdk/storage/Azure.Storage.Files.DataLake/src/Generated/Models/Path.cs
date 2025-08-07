@@ -12,12 +12,12 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> The Path. </summary>
     internal partial class Path
     {
-        /// <summary> Initializes a new instance of Path. </summary>
+        /// <summary> Initializes a new instance of <see cref="Path"/>. </summary>
         internal Path()
         {
         }
 
-        /// <summary> Initializes a new instance of Path. </summary>
+        /// <summary> Initializes a new instance of <see cref="Path"/>. </summary>
         /// <param name="name"></param>
         /// <param name="lastModified"></param>
         /// <param name="owner"></param>

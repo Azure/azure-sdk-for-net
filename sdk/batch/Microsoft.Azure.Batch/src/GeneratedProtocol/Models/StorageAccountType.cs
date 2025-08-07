@@ -22,15 +22,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum StorageAccountType
     {
         /// <summary>
-        /// The data disk should use standard locally redundant storage.
+        /// The data disk / OS disk should use standard locally redundant
+        /// storage.
         /// </summary>
         [EnumMember(Value = "standard_lrs")]
         StandardLRS,
         /// <summary>
-        /// The data disk should use premium locally redundant storage.
+        /// The data disk / OS disk should use premium locally redundant
+        /// storage.
         /// </summary>
         [EnumMember(Value = "premium_lrs")]
-        PremiumLRS
+        PremiumLRS,
+        /// <summary>
+        /// The data disk / OS disk should use standard SSD locally redundant
+        /// storage.
+        /// </summary>
+        [EnumMember(Value = "standardssd_lrs")]
+        StandardSSDLRS
     }
     internal static class StorageAccountTypeEnumExtension
     {
@@ -47,6 +55,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return "standard_lrs";
                 case StorageAccountType.PremiumLRS:
                     return "premium_lrs";
+                case StorageAccountType.StandardSSDLRS:
+                    return "standardssd_lrs";
             }
             return null;
         }
@@ -59,6 +69,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return StorageAccountType.StandardLRS;
                 case "premium_lrs":
                     return StorageAccountType.PremiumLRS;
+                case "standardssd_lrs":
+                    return StorageAccountType.StandardSSDLRS;
             }
             return null;
         }

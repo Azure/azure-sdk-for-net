@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionDetailedStatus. </summary>
     public partial class LinkConnectionDetailedStatus
     {
-        /// <summary> Initializes a new instance of LinkConnectionDetailedStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionDetailedStatus"/>. </summary>
         internal LinkConnectionDetailedStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionDetailedStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionDetailedStatus"/>. </summary>
         /// <param name="id"> Link connection id. </param>
         /// <param name="name"> Link connection name. </param>
         /// <param name="isApplyingChanges"> Is link connection applying changes. </param>

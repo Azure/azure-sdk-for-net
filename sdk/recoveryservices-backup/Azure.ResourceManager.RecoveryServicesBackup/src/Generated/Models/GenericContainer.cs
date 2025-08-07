@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Base class for generic container of backup items. </summary>
     public partial class GenericContainer : BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of GenericContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericContainer"/>. </summary>
         public GenericContainer()
         {
             ContainerType = ProtectableContainerType.GenericContainer;
         }
 
-        /// <summary> Initializes a new instance of GenericContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
@@ -28,9 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricName"> Name of the container's fabric. </param>
         /// <param name="extendedInformation"> Extended information (not returned in List container API calls). </param>
-        internal GenericContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string fabricName, GenericContainerExtendedInfo extendedInformation) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
+        internal GenericContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string fabricName, GenericContainerExtendedInfo extendedInformation) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData)
         {
             FabricName = fabricName;
             ExtendedInformation = extendedInformation;

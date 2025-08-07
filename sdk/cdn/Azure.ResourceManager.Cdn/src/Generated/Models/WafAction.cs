@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafAction. </summary>
+    /// <summary>
+    /// The WafAction.
+    /// Serialized Name: WafAction
+    /// </summary>
     public readonly partial struct WafAction : IEquatable<WafAction>
     {
         private readonly string _value;
@@ -27,19 +30,31 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string LogValue = "log";
         private const string RedirectValue = "redirect";
 
-        /// <summary> allow. </summary>
+        /// <summary>
+        /// allow
+        /// Serialized Name: WafAction.allow
+        /// </summary>
         public static WafAction Allow { get; } = new WafAction(AllowValue);
-        /// <summary> block. </summary>
+        /// <summary>
+        /// block
+        /// Serialized Name: WafAction.block
+        /// </summary>
         public static WafAction Block { get; } = new WafAction(BlockValue);
-        /// <summary> log. </summary>
+        /// <summary>
+        /// log
+        /// Serialized Name: WafAction.log
+        /// </summary>
         public static WafAction Log { get; } = new WafAction(LogValue);
-        /// <summary> redirect. </summary>
+        /// <summary>
+        /// redirect
+        /// Serialized Name: WafAction.redirect
+        /// </summary>
         public static WafAction Redirect { get; } = new WafAction(RedirectValue);
         /// <summary> Determines if two <see cref="WafAction"/> values are the same. </summary>
         public static bool operator ==(WafAction left, WafAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafAction"/> values are not the same. </summary>
         public static bool operator !=(WafAction left, WafAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WafAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WafAction"/>. </summary>
         public static implicit operator WafAction(string value) => new WafAction(value);
 
         /// <inheritdoc />
@@ -50,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

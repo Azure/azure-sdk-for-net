@@ -32,10 +32,10 @@ This troubleshooting guide covers failure investigation techniques, common error
   - [Session processor takes too long to switch sessions](#session-processor-takes-too-long-to-switch-sessions)
   - [Processor stops immediately](#processor-stops-immediately)
 - [Troubleshoot transaction issues](#troubleshoot-transactions)
-  - [Supported operations](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#operations-within-a-transaction-scope)
+  - [Supported operations](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-transactions#operations-within-a-transaction-scope)
   - [Operations in transactions are not retried](#operations-in-a-transaction-are-not-retried)
   - [Transactions across entities are not working](#transactions-across-entities-are-not-working)
-- [Quotas](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-quotas)
+- [Quotas](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas)
 
 ## Handle Service Bus Exceptions
 The Service Bus client library will surface exceptions when an error is encountered by a service operation or within the client. When possible, standard .NET exception types are used to convey error information. For scenarios specific to Service Bus, a [ServiceBusException][ServiceBusException] is thrown; this is the most common exception type that applications will encounter.
@@ -226,7 +226,27 @@ When attempting to do a batch receive, i.e. passing a `maxMessages` value of 2 o
 
 ### Message or session lock is lost before lock expiration time
 
-The Service Bus service leverages the AMQP protocol, which is stateful. Due to the nature of the protocol, if the link that connects the client and the service is detached after a message is received, but before the message is settled, the message is not able to be settled on reconnecting the link. Links can be detached due to a short-term transient network failure, a network outage, or due to the service enforced 10-minute idle timeout. The reconnection of the link happens automatically as a part of any operation that requires the link, i.e. settling or receiving messages. Because of this, you may encounter `ServiceBusException` with `Reason` of `MessageLockLost` or `SessionLockLost` even if the lock expiration time has not yet passed. 
+A Service Bus queue or topic subscription has a lock duration set at the resource level. When the receiver client pulls a message from the resource, the Service Bus broker applies an initial lock to the message. The initial lock lasts for the lock duration set at the resource level. If the message lock isn't renewed before it expires, then the Service Bus broker releases the message to make it available for other receivers. If the application tries to complete or abandon a message after the lock expiration, the call fails.
+
+Service Bus leverages the AMQP protocol, which is stateful. Due to the nature of the protocol, if the link that connects the client and the service is detached after a message is received, but before the message is settled, the message is not able to be settled on reconnecting the link. Links can be detached due to a short-term transient network failure, a network outage, or due to the service enforced 10-minute idle timeout. The reconnection of the link happens automatically as a part of any operation that requires the link, i.e. settling or receiving messages. Because of this, you may encounter `ServiceBusException` with `Reason` of `MessageLockLost` or `SessionLockLost` even if the lock expiration time has not yet passed. 
+
+In addition, the following usage patterns and scenarios may cause locks to be lost:
+
+- When using a receiver type, the application's message processing time exceeds the lock duration set at the resource level and the lock has not been renewed.  Locks are renewed by calling [RenewMessageLockAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceiver.renewmessagelockasync?view=azure-dotnet) or [RenewSessionLockAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionreceiver.renewsessionlockasync?view=azure-dotnet) on the receiver.
+
+- The application's message processing time exceeds both the lock duration set at the resource level and the [MaxAutoLockRenewalDuration](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusprocessoroptions.maxautolockrenewalduration?view=azure-dotnet) configured for your `ServiceBusProcessor` or [MaxAutoLockRenewalDuration](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessoroptions.maxautolockrenewalduration?view=azure-dotnet) for your `ServiceBusSessionProcessor`.  Note that if the lock renew duration is not set explicitly, it defaults to 5 minutes.
+
+  This can be mitigated by manually renewing locks by calling [RenewMessageLockAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.processmessageeventargs.renewmessagelockasync?view=azure-dotnet#azure-messaging-servicebus-processmessageeventargs-renewmessagelockasync(azure-messaging-servicebus-servicebusreceivedmessage-system-threading-cancellationtoken)) or [RenewSessionLockAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.processsessionmessageeventargs.renewsessionlockasync?view=azure-dotnet) on the event arguments passed to your handler.  
+
+- The application has turned on the Prefetch feature by setting the `PrefetchCount` property in the options to a non-zero value. When Prefetch is enabled, the client will retrieve the number of messages equal to the count from Service Bus and store them in a memory buffer. The messages stay in the prefetch buffer until they're read by the application. The client cannot access messages in the prefetch buffer and is unable to extend their locks. If the application processing takes long enough that message locks expire while held in prefetch, the application will read the messages with an already expired lock. For more information, see [Why is Prefetch not the default option?](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-prefetch?tabs=net#why-is-prefetch-not-the-default-option)
+
+- The host environment lacks enough CPUs or has shortages of CPU cycles intermittently that delays the lock renew task from running on time.
+
+- The host system time isn't accurate - for example, the clock is skewed - delaying the lock renew task and keeping it from running on time.
+
+- The application has configured a degree of concurrency too aggressive for the host's resources using the [MaxConcurrentCals](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusprocessoroptions.maxconcurrentcalls?view=azure-dotnet) option for `ServiceBusProcessor` or a combination of [MaxConcurrentSessions](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessoroptions.maxconcurrentsessions?view=azure-dotnet) and [MaxConcurrentCallsPerSession](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessoroptions.maxconcurrentcallspersession?view=azure-dotnet) for `ServiceBusSessionProcessor`.  This will cause a high number of concurrent background network operations to run, competing for resources and potentially either being queued on the client or triggering Service Bus throttles.
+
+  **NOTE:** If the application host environment is not sufficiently resourced, locks can still be lost even if there are only a few lock renew tasks running.  When using processor types, we recommend at least two full CPU cores.  For more context and discussion, see [Processor appears to hang or have latency issues when using high concurrency](#processor-appears-to-hang-or-have-latency-issues-when-using-high-concurrency).
 
 ### How to browse scheduled or deferred messages
 
@@ -254,7 +274,7 @@ This is often caused by thread starvation, particularly when using the session p
 
 Further reading:
 - [Debug ThreadPool Starvation][DebugThreadPoolStarvation]
-- [Diagnosing .NET Core ThreadPool Starvation with PerfView (Why my service is not saturating all cores or seems to stall)](https://docs.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
+- [Diagnosing .NET Core ThreadPool Starvation with PerfView (Why my service is not saturating all cores or seems to stall)](https://learn.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
 - [Diagnosing ThreadPool Exhaustion Issues in .NET Core Apps][DiagnoseThreadPoolExhaustion] _(video)_
 
 ### Session processor takes too long to switch sessions
@@ -289,50 +309,50 @@ In order to perform transactions that involve multiple entities, you'll need to 
 
 Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 
-[ServiceBusException]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusexception?view=azure-dotnet
-[ServiceBusRetryOptions]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusretryoptions?view=azure-dotnet
-[ServiceBusQuotas]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-quotas
-[UnauthorizedAccessException]: https://docs.microsoft.com/dotnet/api/system.unauthorizedaccessexception
+[ServiceBusException]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusexception?view=azure-dotnet
+[ServiceBusRetryOptions]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusretryoptions?view=azure-dotnet
+[ServiceBusQuotas]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas
+[UnauthorizedAccessException]: https://learn.microsoft.com/dotnet/api/system.unauthorizedaccessexception
 [RetryOptionsSample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample13_AdvancedConfiguration.md#customizing-the-retry-options
 [TransportSample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample13_AdvancedConfiguration.md#configuring-the-transport
-[ServiceBusMessagingExceptions]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messaging-exceptions
-[AmqpSpec]: https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-types-v1.0-os.html
-[GetConnectionString]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-quickstart-portal#get-the-connection-string
-[AuthorizeSAS]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas
-[RBAC]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-managed-service-identity
-[TroubleshootingGuide]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-troubleshooting-guide
-[ServiceBusIPAddresses]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-faq#what-ip-addresses-do-i-need-to-add-to-allowlist-
-[ServiceBusProcessor]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusprocessor?view=azure-dotnet
-[ServiceBusSessionProcessor]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessor?view=azure-dotnet
-[MaxConcurrentSessions]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessoroptions.maxconcurrentsessions?view=azure-dotnet
-[SessionIdleTimeout]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessoroptions.sessionidletimeout?view=azure-dotnet
-[ServiceBusClient]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclient?view=azure-dotnet
-[TryTimeout]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusretryoptions.trytimeout?view=azure-dotnet
-[ServiceBusReceiver]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceiver?view=azure-dotnet
-[ServiceBusSessionReceiver]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionreceiver?view=azure-dotnet
-[ServiceBusSender]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussender?view=azure-dotnet
-[ServiceBusMessageBatch]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusmessagebatch?view=azure-dotnet
-[ServiceBusMessage]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusmessage?view=azure-dotnet
-[SendMessages]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussender.sendmessagesasync?view=azure-dotnet#azure-messaging-servicebus-servicebussender-sendmessagesasync(system-collections-generic-ienumerable((azure-messaging-servicebus-servicebusmessage))-system-threading-cancellationtoken)
-[ReceiveMessages]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceiver.receivemessagesasync?view=azure-dotnet#azure-messaging-servicebus-servicebusreceiver-receivemessagesasync(system-int32-system-nullable((system-timespan))-system-threading-cancellationtoken)
-[ReceiveDeferredMessages]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceiver.receivedeferredmessagesasync?view=azure-dotnet
-[MessageState]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceivedmessage.state?view=azure-dotnet#azure-messaging-servicebus-servicebusreceivedmessage-state
-[SequenceNumber]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceivedmessage.sequencenumber?view=azure-dotnet
-[Logging]: https://docs.microsoft.com/dotnet/azure/sdk/logging
+[ServiceBusMessagingExceptions]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-messaging-exceptions
+[AmqpSpec]: https://www.amqp.org/resources/specifications
+[GetConnectionString]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quickstart-portal#get-the-connection-string
+[AuthorizeSAS]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas
+[RBAC]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-managed-service-identity
+[TroubleshootingGuide]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-troubleshooting-guide
+[ServiceBusIPAddresses]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-faq#what-ip-addresses-do-i-need-to-add-to-allowlist-
+[ServiceBusProcessor]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusprocessor?view=azure-dotnet
+[ServiceBusSessionProcessor]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessor?view=azure-dotnet
+[MaxConcurrentSessions]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessoroptions.maxconcurrentsessions?view=azure-dotnet
+[SessionIdleTimeout]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionprocessoroptions.sessionidletimeout?view=azure-dotnet
+[ServiceBusClient]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclient?view=azure-dotnet
+[TryTimeout]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusretryoptions.trytimeout?view=azure-dotnet
+[ServiceBusReceiver]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceiver?view=azure-dotnet
+[ServiceBusSessionReceiver]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussessionreceiver?view=azure-dotnet
+[ServiceBusSender]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussender?view=azure-dotnet
+[ServiceBusMessageBatch]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusmessagebatch?view=azure-dotnet
+[ServiceBusMessage]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusmessage?view=azure-dotnet
+[SendMessages]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebussender.sendmessagesasync?view=azure-dotnet#azure-messaging-servicebus-servicebussender-sendmessagesasync(system-collections-generic-ienumerable((azure-messaging-servicebus-servicebusmessage))-system-threading-cancellationtoken)
+[ReceiveMessages]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceiver.receivemessagesasync?view=azure-dotnet#azure-messaging-servicebus-servicebusreceiver-receivemessagesasync(system-int32-system-nullable((system-timespan))-system-threading-cancellationtoken)
+[ReceiveDeferredMessages]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceiver.receivedeferredmessagesasync?view=azure-dotnet
+[MessageState]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceivedmessage.state?view=azure-dotnet#azure-messaging-servicebus-servicebusreceivedmessage-state
+[SequenceNumber]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusreceivedmessage.sequencenumber?view=azure-dotnet
+[Logging]: https://learn.microsoft.com/dotnet/azure/sdk/logging
 [ActivitySourceSupport]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#activitysource-support
-[ActivitySource]: https://docs.microsoft.com/dotnet/api/system.diagnostics.activitysource?view=dotnet
-[ApplicationProperties]: https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusmessage.applicationproperties?view=azure-dotnet
+[ActivitySource]: https://learn.microsoft.com/dotnet/api/system.diagnostics.activitysource?view=dotnet
+[ApplicationProperties]: https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusmessage.applicationproperties?view=azure-dotnet
 [AppInsights]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#applicationinsights-with-azure-monitor
-[TransactionOperations]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#operations-within-a-transaction-scope
-[Transactions]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions
+[TransactionOperations]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-transactions#operations-within-a-transaction-scope
+[Transactions]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-transactions
 [CrossEntityTransactions]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample06_Transactions.md#transactions-across-entities
-[LargeMessageSupport]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging#large-messages-support
+[LargeMessageSupport]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging#large-messages-support
 [GitHubDiscussionOnBatching]: https://github.com/Azure/azure-sdk-for-net/issues/25381#issuecomment-1227917960
-[BackgroundService]: https://docs.microsoft.com/dotnet/api/microsoft.extensions.hosting.backgroundservice?view=dotnet
+[BackgroundService]: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.backgroundservice?view=dotnet
 [AuthenticationAndTheAzureSDK]: https://devblogs.microsoft.com/azure-sdk/authentication-and-the-azure-sdk
 [IdentitySample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus#authenticating-with-azureidentity
-[DebugThreadPoolStarvation]: https://docs.microsoft.com/dotnet/core/diagnostics/debug-threadpool-starvation
-[DiagnoseThreadPoolExhaustion]: https://docs.microsoft.com/shows/on-net/diagnosing-thread-pool-exhaustion-issues-in-net-core-apps
-[TransactionTimeout]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#timeout
+[DebugThreadPoolStarvation]: https://learn.microsoft.com/dotnet/core/diagnostics/debug-threadpool-starvation
+[DiagnoseThreadPoolExhaustion]: https://learn.microsoft.com/shows/on-net/diagnosing-thread-pool-exhaustion-issues-in-net-core-apps
+[TransactionTimeout]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-transactions#timeout
 [MessageBody]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample14_AMQPMessage.md#message-body
 [Throttling]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-throttling

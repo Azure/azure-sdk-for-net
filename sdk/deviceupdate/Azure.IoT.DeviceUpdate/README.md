@@ -2,7 +2,7 @@
 
 The library provides access to the Device Update for IoT Hub service that enables customers to publish updates for their IoT devices to the cloud, and then deploy these updates to their devices (approve updates to groups of devices managed and provisioned in IoT Hub). 
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src) | [Package](https://www.nuget.org) | [Product documentation](https://docs.microsoft.com/azure/iot-hub-device-update/understand-device-update)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src) | [Package](https://www.nuget.org) | [Product documentation](https://learn.microsoft.com/azure/iot-hub-device-update/understand-device-update)
 
 
 ## Getting started
@@ -27,7 +27,7 @@ dotnet add package Azure.IoT.DeviceUpdate
 
 ### Authenticate the Client
 
-In order to interact with the Device Update for IoT Hub service, you will need to create an instance of a [TokenCredential class](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) and pass it to the constructor of your DeviceUpdateClient and DeviceManagementClient class.
+In order to interact with the Device Update for IoT Hub service, you will need to create an instance of a [TokenCredential class](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) and pass it to the constructor of your DeviceUpdateClient and DeviceManagementClient class.
 
 ## Key concepts
 
@@ -45,7 +45,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 All Device Update for IoT Hub service operations will throw a RequestFailedException on failure with helpful ErrorCodes.
 
-For example, if you use the `GetUpdateAsync` operation and the model you are looking for doesn't exist, you can catch that specific [HttpStatusCode](https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1) to decide the operation that follows in that case.
+For example, if you use the `GetUpdateAsync` operation and the model you are looking for doesn't exist, you can catch that specific [HttpStatusCode](https://learn.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1) to decide the operation that follows in that case.
 
 ```csharp
 try

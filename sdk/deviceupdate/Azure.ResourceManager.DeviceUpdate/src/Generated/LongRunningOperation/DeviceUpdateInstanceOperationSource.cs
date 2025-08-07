@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         DeviceUpdateInstanceResource IOperationSource<DeviceUpdateInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
+            var data = ModelReaderWriter.Read<DeviceUpdateInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceUpdateContext.Default);
             return new DeviceUpdateInstanceResource(_client, data);
         }
 
         async ValueTask<DeviceUpdateInstanceResource> IOperationSource<DeviceUpdateInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(document.RootElement);
-            return new DeviceUpdateInstanceResource(_client, data);
+            var data = ModelReaderWriter.Read<DeviceUpdateInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceUpdateContext.Default);
+            return await Task.FromResult(new DeviceUpdateInstanceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

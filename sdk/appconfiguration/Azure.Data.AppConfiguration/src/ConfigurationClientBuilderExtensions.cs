@@ -2,19 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Data.AppConfiguration;
 
-//TODO: there is no way to only suppress a single member of a static class so we need to have everything custom here.
-//The issue here is that the custom code made one of the constructors internal and we aren't catching ExistingType correctly for low level client
-[assembly: CodeGenSuppressType("DataAppConfigurationClientBuilderExtensions")]
-
 namespace Microsoft.Extensions.Azure
 {
+    // CUSTOM:
+    // - Rename.
     /// <summary>
     /// Extension methods to add <see cref="ConfigurationClient"/> client to clients builder.
     /// </summary>
+    [CodeGenType("AppConfigurationClientBuilderExtensions")]
     public static partial class ConfigurationClientBuilderExtensions
     {
         /// <summary>
@@ -33,15 +31,6 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<ConfigurationClient, ConfigurationClientOptions>((options, cred) => new ConfigurationClient(configurationUri, cred, options));
-        }
-
-        /// <summary> Registers a <see cref="ConfigurationClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<ConfigurationClient, ConfigurationClientOptions> AddConfigurationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<ConfigurationClient, ConfigurationClientOptions>(configuration);
         }
     }
 }

@@ -43,11 +43,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 for (count = 6; count < 37; count += 6)
                 {
+#pragma warning disable CA2022 // This test is specifically testing the behavior of ReadAsync
                     await lazyStream.ReadAsync(actualData, offset, count);
+#pragma warning restore CA2022
                     offset += count;
                 }
             }
+#pragma warning disable CA2022 // This test is specifically testing the behavior of ReadAsync
             await lazyStream.ReadAsync(actualData, offset, length - offset);
+#pragma warning restore CA2022
 
             // Assert
             TestHelper.AssertSequenceEqual(exectedData, actualData);

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.ElasticSan
 
         ElasticSanResource IOperationSource<ElasticSanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ElasticSanData.DeserializeElasticSanData(document.RootElement);
+            var data = ModelReaderWriter.Read<ElasticSanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
             return new ElasticSanResource(_client, data);
         }
 
         async ValueTask<ElasticSanResource> IOperationSource<ElasticSanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ElasticSanData.DeserializeElasticSanData(document.RootElement);
-            return new ElasticSanResource(_client, data);
+            var data = ModelReaderWriter.Read<ElasticSanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
+            return await Task.FromResult(new ElasticSanResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

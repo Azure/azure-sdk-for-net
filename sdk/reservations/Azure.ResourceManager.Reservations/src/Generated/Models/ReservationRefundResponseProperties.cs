@@ -6,25 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The refund properties of reservation. </summary>
     public partial class ReservationRefundResponseProperties
     {
-        /// <summary> Initializes a new instance of ReservationRefundResponseProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundResponseProperties"/>. </summary>
         internal ReservationRefundResponseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundResponseProperties"/>. </summary>
         /// <param name="sessionId"> Refund session identifier. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
         /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="pricingRefundAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="policyResult"> Refund policy result. </param>
         /// <param name="billingInformation"> billing information. </param>
-        internal ReservationRefundResponseProperties(Guid? sessionId, int? quantity, PurchasePrice billingRefundAmount, PurchasePrice pricingRefundAmount, RefundPolicyResult policyResult, ReservationRefundBillingInformation billingInformation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationRefundResponseProperties(Guid? sessionId, int? quantity, PurchasePrice billingRefundAmount, PurchasePrice pricingRefundAmount, RefundPolicyResult policyResult, ReservationRefundBillingInformation billingInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             Quantity = quantity;
@@ -32,6 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
             PricingRefundAmount = pricingRefundAmount;
             PolicyResult = policyResult;
             BillingInformation = billingInformation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Refund session identifier. </summary>

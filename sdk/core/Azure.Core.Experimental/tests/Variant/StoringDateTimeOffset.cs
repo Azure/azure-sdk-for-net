@@ -4,7 +4,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringDateTimeOffset
     {
@@ -19,7 +19,7 @@ namespace Azure
         [Test]
         public void DateTimeOffsetImplicit([ValueSource("DateTimeOffsetData")] DateTimeOffset testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<DateTimeOffset>());
             Assert.AreEqual(typeof(DateTimeOffset), value.Type);
 
@@ -32,7 +32,7 @@ namespace Azure
         [Test]
         public void DateTimeOffsetInOut([ValueSource("DateTimeOffsetData")] DateTimeOffset testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out DateTimeOffset result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -45,7 +45,7 @@ namespace Azure
         public void NullableDateTimeOffsetInDateTimeOffsetOut([ValueSource("DateTimeOffsetData")] DateTimeOffset? testValue)
         {
             DateTimeOffset? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out DateTimeOffset result);
             Assert.True(success);
@@ -60,7 +60,7 @@ namespace Azure
         public void DateTimeOffsetInNullableDateTimeOffsetOut([ValueSource("DateTimeOffsetData")] DateTimeOffset testValue)
         {
             DateTimeOffset source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out DateTimeOffset? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -72,7 +72,7 @@ namespace Azure
         public void NullDateTimeOffset()
         {
             DateTimeOffset? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<DateTimeOffset?>());
             Assert.False(value.As<DateTimeOffset?>().HasValue);
@@ -81,7 +81,7 @@ namespace Azure
         [Test]
         public void OutAsObject([ValueSource("DateTimeOffsetData")] DateTimeOffset testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(DateTimeOffset), o.GetType());
             Assert.AreEqual(testValue, (DateTimeOffset)o);

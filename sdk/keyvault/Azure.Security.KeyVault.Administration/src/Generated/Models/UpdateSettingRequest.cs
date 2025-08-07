@@ -6,14 +6,17 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> The update settings request object. </summary>
     internal partial class UpdateSettingRequest
     {
-        /// <summary> Initializes a new instance of UpdateSettingRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
         /// <param name="value"> The value of the pool setting. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpdateSettingRequest(string value)
@@ -21,6 +24,15 @@ namespace Azure.Security.KeyVault.Administration.Models
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
+        /// <param name="value"> The value of the pool setting. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateSettingRequest(string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Value = value;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The value of the pool setting. </summary>

@@ -10,14 +10,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> An item of the notebook cell execution output. </summary>
     public partial class NotebookCellOutputItem
     {
-        /// <summary> Initializes a new instance of NotebookCellOutputItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookCellOutputItem"/>. </summary>
         /// <param name="outputType"> Execution, display, or stream outputs. </param>
         public NotebookCellOutputItem(CellOutputType outputType)
         {
             OutputType = outputType;
         }
 
-        /// <summary> Initializes a new instance of NotebookCellOutputItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookCellOutputItem"/>. </summary>
         /// <param name="name"> For output_type=stream, determines the name of stream (stdout / stderr). </param>
         /// <param name="executionCount"> Execution sequence number. </param>
         /// <param name="outputType"> Execution, display, or stream outputs. </param>

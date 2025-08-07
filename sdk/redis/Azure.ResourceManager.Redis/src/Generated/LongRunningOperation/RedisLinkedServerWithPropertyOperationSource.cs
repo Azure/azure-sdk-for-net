@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Redis
 
         RedisLinkedServerWithPropertyResource IOperationSource<RedisLinkedServerWithPropertyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
+            var data = ModelReaderWriter.Read<RedisLinkedServerWithPropertyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
             return new RedisLinkedServerWithPropertyResource(_client, data);
         }
 
         async ValueTask<RedisLinkedServerWithPropertyResource> IOperationSource<RedisLinkedServerWithPropertyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
-            return new RedisLinkedServerWithPropertyResource(_client, data);
+            var data = ModelReaderWriter.Read<RedisLinkedServerWithPropertyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
+            return await Task.FromResult(new RedisLinkedServerWithPropertyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

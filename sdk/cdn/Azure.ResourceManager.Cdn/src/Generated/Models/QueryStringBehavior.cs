@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Caching behavior for the requests. </summary>
+    /// <summary>
+    /// Caching behavior for the requests
+    /// Serialized Name: QueryStringBehavior
+    /// </summary>
     public readonly partial struct QueryStringBehavior : IEquatable<QueryStringBehavior>
     {
         private readonly string _value;
@@ -27,19 +30,31 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ExcludeValue = "Exclude";
         private const string ExcludeAllValue = "ExcludeAll";
 
-        /// <summary> Include. </summary>
+        /// <summary>
+        /// Include
+        /// Serialized Name: QueryStringBehavior.Include
+        /// </summary>
         public static QueryStringBehavior Include { get; } = new QueryStringBehavior(IncludeValue);
-        /// <summary> IncludeAll. </summary>
+        /// <summary>
+        /// IncludeAll
+        /// Serialized Name: QueryStringBehavior.IncludeAll
+        /// </summary>
         public static QueryStringBehavior IncludeAll { get; } = new QueryStringBehavior(IncludeAllValue);
-        /// <summary> Exclude. </summary>
+        /// <summary>
+        /// Exclude
+        /// Serialized Name: QueryStringBehavior.Exclude
+        /// </summary>
         public static QueryStringBehavior Exclude { get; } = new QueryStringBehavior(ExcludeValue);
-        /// <summary> ExcludeAll. </summary>
+        /// <summary>
+        /// ExcludeAll
+        /// Serialized Name: QueryStringBehavior.ExcludeAll
+        /// </summary>
         public static QueryStringBehavior ExcludeAll { get; } = new QueryStringBehavior(ExcludeAllValue);
         /// <summary> Determines if two <see cref="QueryStringBehavior"/> values are the same. </summary>
         public static bool operator ==(QueryStringBehavior left, QueryStringBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryStringBehavior"/> values are not the same. </summary>
         public static bool operator !=(QueryStringBehavior left, QueryStringBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryStringBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryStringBehavior"/>. </summary>
         public static implicit operator QueryStringBehavior(string value) => new QueryStringBehavior(value);
 
         /// <inheritdoc />
@@ -50,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

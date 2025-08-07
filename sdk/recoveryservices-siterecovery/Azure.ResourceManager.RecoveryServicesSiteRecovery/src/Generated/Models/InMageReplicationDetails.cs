@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMage provider specific settings. </summary>
     public partial class InMageReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of InMageReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageReplicationDetails"/>. </summary>
         internal InMageReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageProtectedDiskDetails>();
@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMage";
         }
 
-        /// <summary> Initializes a new instance of InMageReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="activeSiteType"> The active location of the VM. If the VM is being protected from Azure, this field will take values from { Azure, OnPrem }. If the VM is being protected between two data-centers, this field will be OnPrem always. </param>
         /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>
         /// <param name="sourceVmRamSizeInMB"> The RAM size of the VM on the primary side. </param>
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="isAdditionalStatsAvailable"> A value indicating whether additional IR stats are available or not. </param>
         /// <param name="totalDataTransferred"> The total transferred data in bytes. </param>
         /// <param name="totalProgressHealth"> The progress health. </param>
-        internal InMageReplicationDetails(string instanceType, string activeSiteType, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, SiteRecoveryOSDiskDetails osDetails, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails resyncDetails, DateTimeOffset? retentionWindowStartOn, DateTimeOffset? retentionWindowEndOn, double? compressedDataRateInMB, double? uncompressedDataRateInMB, long? rpoInSeconds, IReadOnlyList<InMageProtectedDiskDetails> protectedDisks, IPAddress ipAddress, DateTimeOffset? lastHeartbeatReceivedOn, Guid? processServerId, string masterTargetId, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints, string diskResized, string rebootAfterUpdateStatus, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, InMageAgentDetails agentDetails, string vCenterInfrastructureId, string infrastructureVmId, IReadOnlyList<VmNicDetails> vmNics, string discoveryType, ResourceIdentifier azureStorageAccountId, IReadOnlyList<string> datastores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth) : base(instanceType)
+        internal InMageReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string activeSiteType, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, SiteRecoveryOSDiskDetails osDetails, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails resyncDetails, DateTimeOffset? retentionWindowStartOn, DateTimeOffset? retentionWindowEndOn, double? compressedDataRateInMB, double? uncompressedDataRateInMB, long? rpoInSeconds, IReadOnlyList<InMageProtectedDiskDetails> protectedDisks, IPAddress ipAddress, DateTimeOffset? lastHeartbeatReceivedOn, Guid? processServerId, string masterTargetId, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints, string diskResized, string rebootAfterUpdateStatus, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, InMageAgentDetails agentDetails, string vCenterInfrastructureId, string infrastructureVmId, IReadOnlyList<VmNicDetails> vmNics, string discoveryType, ResourceIdentifier azureStorageAccountId, IReadOnlyList<string> datastores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth) : base(instanceType, serializedAdditionalRawData)
         {
             ActiveSiteType = activeSiteType;
             SourceVmCpuCount = sourceVmCpuCount;

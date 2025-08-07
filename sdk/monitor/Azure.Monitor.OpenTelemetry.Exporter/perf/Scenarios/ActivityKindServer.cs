@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Perf
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
 
-            activity?.SetStatus(Status.Ok);
+            activity?.SetStatus(ActivityStatusCode.Ok);
             activity?.SetTag(SemanticConventions.AttributeHttpMethod, "Get");
             activity?.SetTag(SemanticConventions.AttributeHttpScheme, "https");
             activity?.SetTag(SemanticConventions.AttributeHttpTarget, "api/123");

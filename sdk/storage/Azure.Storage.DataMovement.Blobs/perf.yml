@@ -1,0 +1,42 @@
+parameters:
+- name: LanguageVersion
+  displayName: LanguageVersion (6, 8)
+  type: string
+  default: '8'
+- name: PackageVersions
+  displayName: PackageVersions (regex of package versions to run)
+  type: string
+  default: 'source'
+- name: Tests
+  displayName: Tests (regex of tests to run)
+  type: string
+  default: '^(upload|download|copy)$'
+- name: Arguments
+  displayName: Arguments (regex of arguments to run)
+  type: string
+  default: '.*'
+- name: Iterations
+  displayName: Iterations (times to run each test)
+  type: number
+  default: '5'
+- name: Profile
+  type: boolean
+  default: false
+- name: AdditionalArguments
+  displayName: AdditionalArguments (passed to PerfAutomation)
+  type: string
+  default: '--no-sync'
+
+extends:
+  template: /eng/pipelines/templates/jobs/perf.yml
+  parameters:
+    LanguageVersion: ${{ parameters.LanguageVersion }}
+    ServiceDirectory: storage/Azure.Storage.DataMovement.Blobs
+    PackageVersions: ${{ parameters.PackageVersions }}
+    Tests: ${{ parameters.Tests }}
+    Arguments: ${{ parameters.Arguments }}
+    Iterations: ${{ parameters.Iterations }}
+    Profile: ${{ parameters.Profile }}
+    AdditionalArguments: ${{ parameters.AdditionalArguments }}
+    EnvVars:
+      AZURE_AUTHORITY_HOST: $(AZURE_STORAGE_DATAMOVEMENT_BLOBS_AZURE_AUTHORITY_HOST)

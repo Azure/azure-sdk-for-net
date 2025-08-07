@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Tests
             ResourceIdentifier subnetId = SubnetResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, vnetName, "ManagedInstance");
             InstancePoolData data = new InstancePoolData(AzureLocation.WestUS2)
             {
-                Sku = new SqlSku("GP_Gen5", "GeneralPurpose", null, "Gen5", null),
+                Sku = new SqlSku("GP_Gen5", "GeneralPurpose", null, "Gen5", null, null),
                 LicenseType = InstancePoolLicenseType.LicenseIncluded,
                 Location = AzureLocation.WestUS2,
                 SubnetId = subnetId,

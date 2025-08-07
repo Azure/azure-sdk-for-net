@@ -1,0 +1,24 @@
+<Project>
+<ItemGroup Condition="'$(IsTestProject)' != 'true'">
+		 <!--When parsing the None Item, output path doesn't include the TFM as part of the path
+		 The tfm gets added when building the target, so CopyIconFile has to specify the parent
+		 folder to have it be the same location-->
+		<None Include="$(OutputPath)\Icon.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<Target Condition="('$(IsTestProject)' != 'true') and ('$(IsSamplesProject)' != 'true')" Name="CopyIconFile" AfterTargets="AfterCompile">
+		<ItemGroup>
+			<SystemServiceModelIconFile Include="$(PkgSystem_ServiceModel_Primitives)\Icon.png"/>
+		</ItemGroup>
+		<Copy SourceFiles="@(SystemServiceModelIconFile)"
+						DestinationFolder="$(OutputPath)\.." />
+	</Target>
+  <!-- Need to set IsClientLibrary for CentralPackageManagement versions file in $(root)\eng\Packages.Data.props -->
+  <PropertyGroup>
+    <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.'))">true</IsClientLibrary>
+    <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+    <IsWcfLibrary>true</IsWcfLibrary>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))" Condition="'$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))' != ''"/>
+</Project>

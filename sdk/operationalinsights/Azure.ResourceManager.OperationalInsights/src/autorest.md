@@ -7,12 +7,20 @@ azure-arm: true
 csharp: true
 library-name: OperationalInsights
 namespace: Azure.ResourceManager.OperationalInsights
-require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/operationalinsights/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b713df239eb640a56fb4b4db9648ad4bf1388e3b/specification/operationalinsights/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../tests/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
+use-model-reader-writer: true
+enable-bicep-serialization: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -27,7 +35,7 @@ format-by-name-rules:
   'customerId': 'uuid'
   'azureAsyncOperationId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -62,6 +70,8 @@ prepend-rp-prefix:
   - BillingType
   - CapacityReservationProperties
   - ClusterEntityStatus
+  - ClusterReplicationProperties
+  - ClusterReplicationState
   - ClusterSku
   - Column
   - DataIngestionStatus
@@ -81,7 +91,11 @@ prepend-rp-prefix:
   - UsageMetric
   - WorkspaceCapping
   - WorkspaceEntityStatus
+  - WorkspaceFailoverProperties
+  - WorkspaceFailoverState
   - WorkspaceFeatures
+  - WorkspaceReplicationProperties
+  - WorkspaceReplicationState
   - WorkspaceSku
 
 rename-mapping:
@@ -105,6 +119,7 @@ rename-mapping:
   WorkspaceFeatures.disableLocalAuth: IsLocalAuthDisabled
   WorkspaceFeatures.enableDataExport: IsDataExportEnabled
   WorkspaceFeatures.enableLogAccessUsingOnlyResourcePermissions: IsLogAccessUsingOnlyResourcePermissionsEnabled
+  WorkspaceFeatures.unifiedSentinelBillingOnly: IsUnifiedSentinelBillingOnly
   PrivateLinkScopedResource: OperationalInsightsPrivateLinkScopedResourceInfo
   LogAnalyticsQueryPack.properties.timeCreated: CreatedOn
   LogAnalyticsQueryPack.properties.timeModified: ModifiedOn
@@ -112,6 +127,7 @@ rename-mapping:
   LogAnalyticsQueryPackQuery.properties.timeCreated: CreatedOn
   LogAnalyticsQueryPackQuery.properties.timeModified: ModifiedOn
   LogAnalyticsQueryPackQuery: LogAnalyticsQuery
+  ClusterReplicationProperties.enabled: IsReplicationEnabled
   ClusterSkuNameEnum: OperationalInsightsClusterSkuName
   ColumnDataTypeHintEnum: OperationalInsightsColumnDataTypeHint
   ColumnTypeEnum: OperationalInsightsColumnType
@@ -131,17 +147,18 @@ rename-mapping:
   SharedKeys: OperationalInsightsWorkspaceSharedKeys
   WorkspacePurgeResponse: OperationalInsightsWorkspacePurgeResult
   WorkspacePurgeStatusResponse: OperationalInsightsWorkspacePurgeStatusResult
+  WorkspaceReplicationProperties.enabled: IsReplicationEnabled
   RestoredLogs: OperationalInsightsTableRestoredLogs
   SearchResults: OperationalInsightsTableSearchResults
   ResultStatistics: OperationalInsightsTableResultStatistics
   ResultStatistics.scannedGb: ScannedGB
   WorkspaceCapping.dailyQuotaGb: DailyQuotaInGB
-  RetentionInDaysAsDefault: RetentionInDaysAsDefaultState
-  TotalRetentionInDaysAsDefault: TotalRetentionInDaysAsDefaultState
+  Table.properties.retentionInDaysAsDefault: IsRetentionInDaysAsDefault
+  Table.properties.totalRetentionInDaysAsDefault: IsTotalRetentionInDaysAsDefault
   ManagementGroup.properties.created: CreatedOn
   ManagementGroup.properties.dataReceived: DataReceivedOn
   StorageAccount.id: -|arm-id
-  WorkspacePurgeResponse.operationId: -|uuid
+  WorkspacePurgeResponse.operationId: OperationStringId
   WorkspacePurgeBody: OperationalInsightsWorkspacePurgeContent
   WorkspacePurgeBodyFilters: OperationalInsightsWorkspacePurgeFilter
   Capacity: OperationalInsightsClusterCapacity
@@ -157,15 +174,11 @@ override-operation-name:
   DeletedWorkspaces_List: GetDeletedWorkspaces
   DeletedWorkspaces_ListByResourceGroup: GetDeletedWorkspaces
 
+operations-to-skip-lro-api-version-override:
+- Clusters_CreateOrUpdate
+
 directive:
   - remove-operation: OperationStatuses_Get
-  # Dup model `SystemData` in this RP, should use the common type
-  - from: QueryPackQueries.json
-    where: $.definitions
-    transform: >
-      delete $.SystemData;
-      delete $.IdentityType;
-      $.AzureResourceProperties.properties.systemData['$ref'] = '../../../../../common-types/resource-management/v2/types.json#/definitions/systemData';
   # The `type` is reserved name
   - from: Tables.json
     where: $.definitions

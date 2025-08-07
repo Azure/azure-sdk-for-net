@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
@@ -12,9 +14,27 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The network connection properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterNetworkConnectionPatch : DevCenterTrackedResourceUpdate
     {
-        /// <summary> Initializes a new instance of DevCenterNetworkConnectionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionPatch"/>. </summary>
         public DevCenterNetworkConnectionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterNetworkConnectionPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="subnetId"> The subnet to attach Virtual Machines to. </param>
+        /// <param name="domainName"> Active Directory domain name. </param>
+        /// <param name="organizationUnit"> Active Directory domain Organization Unit (OU). </param>
+        /// <param name="domainUsername"> The username of an Active Directory account (user or service account) that has permissions to create computer objects in Active Directory. Required format: admin@contoso.com. </param>
+        /// <param name="domainPassword"> The password for the account used to join domain. </param>
+        internal DevCenterNetworkConnectionPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier subnetId, string domainName, string organizationUnit, string domainUsername, string domainPassword) : base(tags, location, serializedAdditionalRawData)
+        {
+            SubnetId = subnetId;
+            DomainName = domainName;
+            OrganizationUnit = organizationUnit;
+            DomainUsername = domainUsername;
+            DomainPassword = domainPassword;
         }
 
         /// <summary> The subnet to attach Virtual Machines to. </summary>

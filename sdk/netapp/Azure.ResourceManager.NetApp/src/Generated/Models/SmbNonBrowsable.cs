@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Enables non browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+    /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
     public readonly partial struct SmbNonBrowsable : IEquatable<SmbNonBrowsable>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(SmbNonBrowsable left, SmbNonBrowsable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmbNonBrowsable"/> values are not the same. </summary>
         public static bool operator !=(SmbNonBrowsable left, SmbNonBrowsable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SmbNonBrowsable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SmbNonBrowsable"/>. </summary>
         public static implicit operator SmbNonBrowsable(string value) => new SmbNonBrowsable(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

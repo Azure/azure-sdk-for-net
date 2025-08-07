@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Category used in categorical variables. A category is defined by 'label' and the 'values' that are assigned this label. </summary>
     public partial class TimeSeriesAggregateCategory
     {
-        /// <summary> Initializes a new instance of TimeSeriesAggregateCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesAggregateCategory"/>. </summary>
         /// <param name="label"> The name of the category which will be used in constructing the output variable names. </param>
         /// <param name="values"> The list of values that a category maps to. Can be either a unique list of string or list of long. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> or <paramref name="values"/> is null. </exception>
@@ -28,7 +27,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesAggregateCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesAggregateCategory"/>. </summary>
         /// <param name="label"> The name of the category which will be used in constructing the output variable names. </param>
         /// <param name="values"> The list of values that a category maps to. Can be either a unique list of string or list of long. </param>
         internal TimeSeriesAggregateCategory(string label, IList<object> values)

@@ -5,36 +5,91 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes a managed rule group. </summary>
+    /// <summary>
+    /// Describes a managed rule group.
+    /// Serialized Name: ManagedRuleGroupDefinition
+    /// </summary>
     public partial class ManagedRuleGroupDefinition
     {
-        /// <summary> Initializes a new instance of ManagedRuleGroupDefinition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupDefinition"/>. </summary>
         internal ManagedRuleGroupDefinition()
         {
             Rules = new ChangeTrackingList<ManagedRuleDefinition>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleGroupDefinition. </summary>
-        /// <param name="ruleGroupName"> Name of the managed rule group. </param>
-        /// <param name="description"> Description of the managed rule group. </param>
-        /// <param name="rules"> List of rules within the managed rule group. </param>
-        internal ManagedRuleGroupDefinition(string ruleGroupName, string description, IReadOnlyList<ManagedRuleDefinition> rules)
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupDefinition"/>. </summary>
+        /// <param name="ruleGroupName">
+        /// Name of the managed rule group.
+        /// Serialized Name: ManagedRuleGroupDefinition.ruleGroupName
+        /// </param>
+        /// <param name="description">
+        /// Description of the managed rule group.
+        /// Serialized Name: ManagedRuleGroupDefinition.description
+        /// </param>
+        /// <param name="rules">
+        /// List of rules within the managed rule group.
+        /// Serialized Name: ManagedRuleGroupDefinition.rules
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleGroupDefinition(string ruleGroupName, string description, IReadOnlyList<ManagedRuleDefinition> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleGroupName = ruleGroupName;
             Description = description;
             Rules = rules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the managed rule group. </summary>
+        /// <summary>
+        /// Name of the managed rule group.
+        /// Serialized Name: ManagedRuleGroupDefinition.ruleGroupName
+        /// </summary>
         public string RuleGroupName { get; }
-        /// <summary> Description of the managed rule group. </summary>
+        /// <summary>
+        /// Description of the managed rule group.
+        /// Serialized Name: ManagedRuleGroupDefinition.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> List of rules within the managed rule group. </summary>
+        /// <summary>
+        /// List of rules within the managed rule group.
+        /// Serialized Name: ManagedRuleGroupDefinition.rules
+        /// </summary>
         public IReadOnlyList<ManagedRuleDefinition> Rules { get; }
     }
 }

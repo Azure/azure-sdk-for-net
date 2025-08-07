@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafMetricsResponseSeriesItemUnit. </summary>
+    /// <summary>
+    /// The WafMetricsResponseSeriesItemUnit.
+    /// Serialized Name: WafMetricsSeriesUnit
+    /// </summary>
     public readonly partial struct WafMetricsResponseSeriesItemUnit : IEquatable<WafMetricsResponseSeriesItemUnit>
     {
         private readonly string _value;
@@ -24,13 +27,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CountValue = "count";
 
-        /// <summary> count. </summary>
+        /// <summary>
+        /// count
+        /// Serialized Name: WafMetricsSeriesUnit.count
+        /// </summary>
         public static WafMetricsResponseSeriesItemUnit Count { get; } = new WafMetricsResponseSeriesItemUnit(CountValue);
         /// <summary> Determines if two <see cref="WafMetricsResponseSeriesItemUnit"/> values are the same. </summary>
         public static bool operator ==(WafMetricsResponseSeriesItemUnit left, WafMetricsResponseSeriesItemUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafMetricsResponseSeriesItemUnit"/> values are not the same. </summary>
         public static bool operator !=(WafMetricsResponseSeriesItemUnit left, WafMetricsResponseSeriesItemUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WafMetricsResponseSeriesItemUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WafMetricsResponseSeriesItemUnit"/>. </summary>
         public static implicit operator WafMetricsResponseSeriesItemUnit(string value) => new WafMetricsResponseSeriesItemUnit(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

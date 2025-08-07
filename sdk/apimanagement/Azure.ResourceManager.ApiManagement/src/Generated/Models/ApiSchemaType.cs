@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string XmlValue = "xml";
         private const string JsonValue = "json";
 
-        /// <summary> Xml schema type. </summary>
+        /// <summary> XML schema type. </summary>
         public static ApiSchemaType Xml { get; } = new ApiSchemaType(XmlValue);
         /// <summary> Json schema type. </summary>
         public static ApiSchemaType Json { get; } = new ApiSchemaType(JsonValue);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ApiSchemaType left, ApiSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiSchemaType"/> values are not the same. </summary>
         public static bool operator !=(ApiSchemaType left, ApiSchemaType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiSchemaType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiSchemaType"/>. </summary>
         public static implicit operator ApiSchemaType(string value) => new ApiSchemaType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

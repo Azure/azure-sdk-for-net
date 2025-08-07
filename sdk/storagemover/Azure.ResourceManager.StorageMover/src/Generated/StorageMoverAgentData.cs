@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class StorageMoverAgentData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageMoverAgentData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentData"/>. </summary>
         /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
         /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arcResourceId"/> or <paramref name="arcVmUuid"/> is null. </exception>
@@ -31,7 +64,7 @@ namespace Azure.ResourceManager.StorageMover
             ArcVmUuid = arcVmUuid;
         }
 
-        /// <summary> Initializes a new instance of StorageMoverAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,9 +79,12 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
         /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
         /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
+        /// <param name="timeZone"> The agent's local time zone represented in Windows format. </param>
+        /// <param name="uploadLimitSchedule"> The WAN-link upload limit schedule that applies to any Job Run the agent executes. Data plane operations (migrating files) are affected. Control plane operations ensure seamless migration functionality and are not limited by this schedule. The schedule is interpreted with the agent's local time. </param>
         /// <param name="errorDetails"></param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, string timeZone, UploadLimitSchedule uploadLimitSchedule, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AgentVersion = agentVersion;
@@ -60,8 +96,16 @@ namespace Azure.ResourceManager.StorageMover
             MemoryInMB = memoryInMB;
             NumberOfCores = numberOfCores;
             UptimeInSeconds = uptimeInSeconds;
+            TimeZone = timeZone;
+            UploadLimitSchedule = uploadLimitSchedule;
             ErrorDetails = errorDetails;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentData"/> for deserialization. </summary>
+        internal StorageMoverAgentData()
+        {
         }
 
         /// <summary> A description for the Agent. </summary>
@@ -84,6 +128,21 @@ namespace Azure.ResourceManager.StorageMover
         public long? NumberOfCores { get; }
         /// <summary> Uptime of the Agent in seconds. </summary>
         public long? UptimeInSeconds { get; }
+        /// <summary> The agent's local time zone represented in Windows format. </summary>
+        public string TimeZone { get; }
+        /// <summary> The WAN-link upload limit schedule that applies to any Job Run the agent executes. Data plane operations (migrating files) are affected. Control plane operations ensure seamless migration functionality and are not limited by this schedule. The schedule is interpreted with the agent's local time. </summary>
+        internal UploadLimitSchedule UploadLimitSchedule { get; set; }
+        /// <summary> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </summary>
+        public IList<UploadLimitWeeklyRecurrence> UploadLimitScheduleWeeklyRecurrences
+        {
+            get
+            {
+                if (UploadLimitSchedule is null)
+                    UploadLimitSchedule = new UploadLimitSchedule();
+                return UploadLimitSchedule.WeeklyRecurrences;
+            }
+        }
+
         /// <summary> Gets the error details. </summary>
         public StorageMoverAgentPropertiesErrorDetails ErrorDetails { get; }
         /// <summary> The provisioning state of this resource. </summary>

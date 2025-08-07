@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> SAP Business Warehouse Open Hub Destination Linked Service. </summary>
     public partial class SapOpenHubLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SapOpenHubLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubLinkedService"/>. </summary>
         /// <param name="server"> Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string). </param>
         /// <param name="systemNumber"> System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
         /// <param name="clientId"> Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
@@ -31,8 +30,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SapOpenHub";
         }
 
-        /// <summary> Initializes a new instance of SapOpenHubLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SapOpenHubLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object systemNumber, object clientId, object language, object systemId, object userName, SecretBase password, object messageServer, object messageServerService, object logonGroup, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapOpenHubLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object systemNumber, object clientId, object language, object systemId, object userName, SecretBase password, object messageServer, object messageServerService, object logonGroup, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             SystemNumber = systemNumber;

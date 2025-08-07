@@ -10,23 +10,25 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
     /// A Class representing a NotificationHub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NotificationHubResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNotificationHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NotificationHubNamespaceResource" /> using the GetNotificationHub method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NotificationHubResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNotificationHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NotificationHubNamespaceResource"/> using the GetNotificationHub method.
     /// </summary>
     public partial class NotificationHubResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NotificationHubResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="notificationHubName"> The notificationHubName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}";
@@ -37,12 +39,15 @@ namespace Azure.ResourceManager.NotificationHubs
         private readonly NotificationHubsRestOperations _notificationHubRestClient;
         private readonly NotificationHubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NotificationHubs/namespaces/notificationHubs";
+
         /// <summary> Initializes a new instance of the <see cref="NotificationHubResource"/> class for mocking. </summary>
         protected NotificationHubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NotificationHubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NotificationHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NotificationHubResource(ArmClient client, NotificationHubData data) : this(client, data.Id)
@@ -63,9 +68,6 @@ namespace Azure.ResourceManager.NotificationHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NotificationHubs/namespaces/notificationHubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +94,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An object representing collection of NotificationHubAuthorizationRuleResources and their operations over a NotificationHubAuthorizationRuleResource. </returns>
         public virtual NotificationHubAuthorizationRuleCollection GetNotificationHubAuthorizationRules()
         {
-            return GetCachedClient(Client => new NotificationHubAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new NotificationHubAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -100,18 +102,26 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> authorization rule name. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NotificationHubAuthorizationRuleResource>> GetNotificationHubAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -123,18 +133,26 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationRuleName"> authorization rule name. </param>
+        /// <param name="authorizationRuleName"> Authorization Rule Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NotificationHubAuthorizationRuleResource> GetNotificationHubAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -142,7 +160,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Lists the notification hubs associated with a namespace.
+        /// Gets the notification hub.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -151,6 +169,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,7 +200,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Lists the notification hubs associated with a namespace.
+        /// Gets the notification hub.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -183,6 +209,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +250,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -227,7 +269,9 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = await _notificationHubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NotificationHubsArmOperation(response);
+                var uri = _notificationHubRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NotificationHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -250,6 +294,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -261,7 +313,9 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = _notificationHubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NotificationHubsArmOperation(response);
+                var uri = _notificationHubRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NotificationHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -274,75 +328,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Patch a NotificationHub in a namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Patch</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Parameters supplied to patch a NotificationHub Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<NotificationHubResource>> UpdateAsync(NotificationHubPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _notificationHubRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Patch a NotificationHub in a namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Patch</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Parameters supplied to patch a NotificationHub Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<NotificationHubResource> Update(NotificationHubPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _notificationHubRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// test send a push notification
+        /// Test send a push notification.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -352,17 +338,24 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_DebugSend</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="anyObject"> Debug send parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotificationHubTestSendResult>> DebugSendAsync(BinaryData anyObject = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHubTestSendResult>> DebugSendAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.DebugSend");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.DebugSendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, anyObject, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubRestClient.DebugSendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -373,7 +366,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// test send a push notification
+        /// Test send a push notification.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -383,17 +376,24 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_DebugSend</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="anyObject"> Debug send parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotificationHubTestSendResult> DebugSend(BinaryData anyObject = null, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHubTestSendResult> DebugSend(CancellationToken cancellationToken = default)
         {
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.DebugSend");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.DebugSend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, anyObject, cancellationToken);
+                var response = _notificationHubRestClient.DebugSend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Lists the PNS Credentials associated with a notification hub .
+        /// Lists the PNS Credentials associated with a notification hub.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -413,6 +413,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_GetPnsCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -434,7 +442,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Lists the PNS Credentials associated with a notification hub .
+        /// Lists the PNS Credentials associated with a notification hub.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -443,6 +451,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_GetPnsCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,6 +489,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,6 +552,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -582,6 +614,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -631,6 +671,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -679,6 +727,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -731,6 +787,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

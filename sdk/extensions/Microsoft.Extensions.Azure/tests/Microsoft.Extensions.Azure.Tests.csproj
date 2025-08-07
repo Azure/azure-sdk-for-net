@@ -2,19 +2,50 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="aspnet-host\AspNetHostRoot.sln" />
+  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="System.Net.WebSockets.Client" />
-    <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" />
+    <PackageReference Include="System.Net.WebSockets.Client" />
+    <PackageReference Include="System.ValueTuple" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Microsoft.Extensions.Azure.csproj" />
+  </ItemGroup>
+
+  <!-- Include ASPNET content for testing compatibility with the integration framework on net8+ only -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+
+    <!--
+      Override the ASPNET Core testing package locally until the 8.x bump in the engineering system.
+      Tracked by: #48425
+    -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="8.0.13" />
+  </ItemGroup>
+
+  <!-- Don't include the generated entry point for net8+ because one is explicitly defined in the ASPNET content -->
+  <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+
+  <!-- Include the solution and content root markers for the ASPNET Core application -->
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+    <Copy SourceFiles="aspnet-host\AspNetHostRoot.sln" DestinationFolder="$(OutDir)" />
+  </Target>
+
+  <ItemGroup>
+    <None Update="aspnet-host\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

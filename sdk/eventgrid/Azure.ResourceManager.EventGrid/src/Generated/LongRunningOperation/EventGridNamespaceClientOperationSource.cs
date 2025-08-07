@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.EventGrid
 
         EventGridNamespaceClientResource IOperationSource<EventGridNamespaceClientResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(document.RootElement);
+            var data = ModelReaderWriter.Read<EventGridNamespaceClientData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return new EventGridNamespaceClientResource(_client, data);
         }
 
         async ValueTask<EventGridNamespaceClientResource> IOperationSource<EventGridNamespaceClientResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(document.RootElement);
-            return new EventGridNamespaceClientResource(_client, data);
+            var data = ModelReaderWriter.Read<EventGridNamespaceClientData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            return await Task.FromResult(new EventGridNamespaceClientResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

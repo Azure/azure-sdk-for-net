@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> An object representing the location and content of a table cell. </summary>
     public partial class DocumentTableCell
     {
-        /// <summary> Initializes a new instance of DocumentTableCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
         /// <param name="content"> Concatenated content of the table cell in reading order. </param>
@@ -33,7 +32,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentTableCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
         /// <param name="kindPrivate"> Table cell kind. </param>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>

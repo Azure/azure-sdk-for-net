@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         GlobalRulestackPrefixResource IOperationSource<GlobalRulestackPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GlobalRulestackPrefixData.DeserializeGlobalRulestackPrefixData(document.RootElement);
+            var data = ModelReaderWriter.Read<GlobalRulestackPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
             return new GlobalRulestackPrefixResource(_client, data);
         }
 
         async ValueTask<GlobalRulestackPrefixResource> IOperationSource<GlobalRulestackPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GlobalRulestackPrefixData.DeserializeGlobalRulestackPrefixData(document.RootElement);
-            return new GlobalRulestackPrefixResource(_client, data);
+            var data = ModelReaderWriter.Read<GlobalRulestackPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+            return await Task.FromResult(new GlobalRulestackPrefixResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

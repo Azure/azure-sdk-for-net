@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,9 +14,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Configure pairing input properties. </summary>
     public partial class SiteRecoveryCreateProtectionContainerMappingProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreateProtectionContainerMappingProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionContainerMappingProperties"/>. </summary>
         public SiteRecoveryCreateProtectionContainerMappingProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionContainerMappingProperties"/>. </summary>
+        /// <param name="targetProtectionContainerId"> The target unique protection container name. </param>
+        /// <param name="policyId"> Applicable policy. </param>
+        /// <param name="providerSpecificContent">
+        /// Provider specific input for pairing.
+        /// Please note <see cref="ReplicationProviderSpecificContainerMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AContainerMappingContent"/> and <see cref="VMwareCbtContainerMappingContent"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryCreateProtectionContainerMappingProperties(ResourceIdentifier targetProtectionContainerId, ResourceIdentifier policyId, ReplicationProviderSpecificContainerMappingContent providerSpecificContent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetProtectionContainerId = targetProtectionContainerId;
+            PolicyId = policyId;
+            ProviderSpecificContent = providerSpecificContent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The target unique protection container name. </summary>

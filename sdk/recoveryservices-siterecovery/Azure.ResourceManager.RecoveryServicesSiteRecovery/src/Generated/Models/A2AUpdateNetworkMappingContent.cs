@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,10 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Updates network mappings input. </summary>
     public partial class A2AUpdateNetworkMappingContent : FabricSpecificUpdateNetworkMappingContent
     {
-        /// <summary> Initializes a new instance of A2AUpdateNetworkMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AUpdateNetworkMappingContent"/>. </summary>
         public A2AUpdateNetworkMappingContent()
         {
             InstanceType = "AzureToAzure";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AUpdateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="primaryNetworkId"> The primary azure vnet Id. </param>
+        internal A2AUpdateNetworkMappingContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier primaryNetworkId) : base(instanceType, serializedAdditionalRawData)
+        {
+            PrimaryNetworkId = primaryNetworkId;
+            InstanceType = instanceType ?? "AzureToAzure";
         }
 
         /// <summary> The primary azure vnet Id. </summary>

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(CostManagementAlertOperator left, CostManagementAlertOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CostManagementAlertOperator"/> values are not the same. </summary>
         public static bool operator !=(CostManagementAlertOperator left, CostManagementAlertOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CostManagementAlertOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CostManagementAlertOperator"/>. </summary>
         public static implicit operator CostManagementAlertOperator(string value) => new CostManagementAlertOperator(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

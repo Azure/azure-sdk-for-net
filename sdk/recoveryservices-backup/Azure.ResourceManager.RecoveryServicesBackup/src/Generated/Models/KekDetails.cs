@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -13,20 +14,54 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> KEK is encryption key for BEK. </summary>
     public partial class KekDetails
     {
-        /// <summary> Initializes a new instance of KekDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KekDetails"/>. </summary>
         public KekDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of KekDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KekDetails"/>. </summary>
         /// <param name="keyUri"> Key is KEK. </param>
         /// <param name="keyVaultId"> Key Vault ID where this Key is stored. </param>
         /// <param name="keyBackupData"> KEK data. </param>
-        internal KekDetails(Uri keyUri, ResourceIdentifier keyVaultId, string keyBackupData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KekDetails(Uri keyUri, ResourceIdentifier keyVaultId, string keyBackupData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyUri = keyUri;
             KeyVaultId = keyVaultId;
             KeyBackupData = keyBackupData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Key is KEK. </summary>

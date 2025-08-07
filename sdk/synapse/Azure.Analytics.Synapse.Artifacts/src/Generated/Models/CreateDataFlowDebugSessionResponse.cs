@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Response body structure for creating data flow debug session. </summary>
     public partial class CreateDataFlowDebugSessionResponse
     {
-        /// <summary> Initializes a new instance of CreateDataFlowDebugSessionResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateDataFlowDebugSessionResponse"/>. </summary>
         internal CreateDataFlowDebugSessionResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of CreateDataFlowDebugSessionResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateDataFlowDebugSessionResponse"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         internal CreateDataFlowDebugSessionResponse(string sessionId)
         {

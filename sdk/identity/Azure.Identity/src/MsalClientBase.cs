@@ -44,7 +44,7 @@ namespace Azure.Identity
             DisableInstanceDiscovery = options is ISupportsDisableInstanceDiscovery supportsDisableInstanceDiscovery && supportsDisableInstanceDiscovery.DisableInstanceDiscovery;
             ISupportsTokenCachePersistenceOptions cacheOptions = options as ISupportsTokenCachePersistenceOptions;
             _tokenCachePersistenceOptions = cacheOptions?.TokenCachePersistenceOptions;
-            IsSupportLoggingEnabled = options?.IsSupportLoggingEnabled ?? false;
+            IsSupportLoggingEnabled = options?.IsUnsafeSupportLoggingEnabled ?? false;
             Pipeline = pipeline;
             TenantId = tenantId;
             ClientId = clientId;
@@ -107,6 +107,21 @@ namespace Azure.Identity
                 await _clientAsyncLock.GetLockOrValueAsync(true, default).ConfigureAwait(false);
 
             return asyncLock.HasValue ? asyncLock.Value.Cache : null;
+        }
+
+        public UriBuilder BuildTenantIdWithAuthorityHost(string tenantId)
+        {
+            UriBuilder uriBuilder = new(AuthorityHost);
+            if (uriBuilder.Path.EndsWith("/"))
+            {
+                uriBuilder.Path += tenantId;
+            }
+            else
+            {
+                uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
+            }
+
+            return uriBuilder;
         }
     }
 }

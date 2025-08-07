@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
                 "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27",
                 "22c8efd2-0d44-436a-8c0f-0a31c8a25a84",
                 "",
-                ""
-                );
-            FirewallLogDestination commonDestination = new FirewallLogDestination(null, null, monitorConfigurations);
-            FirewallLogSettings logSettings = new FirewallLogSettings(FirewallLogType.Traffic, FirewallLogOption.SameDestination, new FirewallApplicationInsights(null, null), commonDestination, null, null, null);
+                "",
+                null);
+            FirewallLogDestination commonDestination = new FirewallLogDestination(null, null, monitorConfigurations, null);
+            FirewallLogSettings logSettings = new FirewallLogSettings(FirewallLogType.Traffic, FirewallLogOption.SameDestination, new FirewallApplicationInsights(null, null, null), commonDestination, null, null, null, null);
             await DefaultResource1.SaveLogProfileAsync(logSettings);
             PaloAltoNetworksFirewallResource updatedResource = await ResGroup.GetPaloAltoNetworksFirewalls().GetAsync("dotnetSdkTest-default-1");
             FirewallLogSettings updatedlogProfile = await updatedResource.GetLogProfileAsync();
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
                 "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27",
                 "22c8efd2-0d44-436a-8c0f-0a31c8a25a84",
                 "jLX7mBxd7KV4h3redpprhvLUNhghoEGC7SARTkcf/viX17d0YCgV+AUs2tPvNAZm6bKUVl0K0fUiTryN0SRcXQ==",
-                "qtNFUdejZrGVn5hKj/az1tiKMBC/oODFFKoOFQ+Qi4RVwoaM5H+ON4gQyrZJhserFOTdWhnPzP7szPufL1xP7A=="
-                );
-            FirewallLogDestination commonDestination = new FirewallLogDestination(null, null, monitorConfigurations);
-            FirewallLogSettings logSettings = new FirewallLogSettings(FirewallLogType.Traffic, FirewallLogOption.SameDestination, new FirewallApplicationInsights(null, null), commonDestination, null, null, null);
+                "qtNFUdejZrGVn5hKj/az1tiKMBC/oODFFKoOFQ+Qi4RVwoaM5H+ON4gQyrZJhserFOTdWhnPzP7szPufL1xP7A==",
+                null);
+            FirewallLogDestination commonDestination = new FirewallLogDestination(null, null, monitorConfigurations, null);
+            FirewallLogSettings logSettings = new FirewallLogSettings(FirewallLogType.Traffic, FirewallLogOption.SameDestination, new FirewallApplicationInsights(null, null, null), commonDestination, null, null, null, null);
             await DefaultResource1.SaveLogProfileAsync(logSettings);
             PaloAltoNetworksFirewallResource updatedResource = await ResGroup.GetPaloAltoNetworksFirewalls().GetAsync("dotnetSdkTest-default-1");
             FirewallLogSettings updatedlogProfile = await updatedResource.GetLogProfileAsync();

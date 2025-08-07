@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobIdentitySas_AllPermissions()
         {
             // Arrange
-            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
@@ -119,7 +119,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobVersionIdentitySas_AllPermissions()
         {
             // Arrange
-            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
@@ -189,7 +189,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSnapshotIdentitySas_AllPermissions()
         {
             // Arrange
-            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
@@ -253,7 +253,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task ContainerIdentitySas_AllPermissions()
         {
             // Arrange
-            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);

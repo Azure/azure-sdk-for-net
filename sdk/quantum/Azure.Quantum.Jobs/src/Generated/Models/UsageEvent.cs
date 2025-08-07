@@ -10,12 +10,12 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Usage event details. </summary>
     public partial class UsageEvent
     {
-        /// <summary> Initializes a new instance of UsageEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageEvent"/>. </summary>
         internal UsageEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of UsageEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageEvent"/>. </summary>
         /// <param name="dimensionId"> The dimension id. </param>
         /// <param name="dimensionName"> The dimension name. </param>
         /// <param name="measureUnit"> The unit of measure. </param>

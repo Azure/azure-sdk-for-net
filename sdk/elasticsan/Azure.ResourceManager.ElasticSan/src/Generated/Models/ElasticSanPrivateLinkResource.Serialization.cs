@@ -5,20 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanPrivateLinkResource : IUtf8JsonSerializable
+    public partial class ElasticSanPrivateLinkResource : IUtf8JsonSerializable, IJsonModel<ElasticSanPrivateLinkResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanPrivateLinkResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ElasticSanPrivateLinkResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticSanPrivateLinkResource)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
+            {
+                writer.WritePropertyName("requiredMembers"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequiredMembers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
@@ -30,11 +65,24 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        internal static ElasticSanPrivateLinkResource DeserializeElasticSanPrivateLinkResource(JsonElement element)
+        ElasticSanPrivateLinkResource IJsonModel<ElasticSanPrivateLinkResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticSanPrivateLinkResource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticSanPrivateLinkResource(document.RootElement, options);
+        }
+
+        internal static ElasticSanPrivateLinkResource DeserializeElasticSanPrivateLinkResource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,10 +90,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
+            SystemData systemData = default;
+            string groupId = default;
+            IReadOnlyList<string> requiredMembers = default;
+            IList<string> requiredZoneNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -69,7 +119,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerElasticSanContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -117,8 +167,52 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticSanPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ElasticSanPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticSanPrivateLinkResource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanPrivateLinkResource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ElasticSanPrivateLinkResource IPersistableModel<ElasticSanPrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeElasticSanPrivateLinkResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanPrivateLinkResource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticSanPrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System.Xml;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "BlockList");
-            if (Optional.IsCollectionDefined(Committed))
+            if (Common.Optional.IsCollectionDefined(Committed))
             {
                 foreach (var item in Committed)
                 {
@@ -24,7 +25,7 @@ namespace Azure.Storage.Blobs.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(Uncommitted))
+            if (Common.Optional.IsCollectionDefined(Uncommitted))
             {
                 foreach (var item in Uncommitted)
                 {
@@ -33,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(Latest))
+            if (Common.Optional.IsCollectionDefined(Latest))
             {
                 foreach (var item in Latest)
                 {

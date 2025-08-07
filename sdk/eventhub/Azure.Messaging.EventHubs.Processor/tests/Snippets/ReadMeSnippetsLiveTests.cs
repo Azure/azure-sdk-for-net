@@ -67,18 +67,23 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #region Snippet:EventHubs_Processor_ReadMe_ConfigureHandlers
 
 #if SNIPPET
-            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var credential = new DefaultAzureCredential();
+
+            var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 #else
-            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            var blobContainerName = "not-real";
-            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = "fakeHub";
-            var consumerGroup = "fakeConsumer";
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = "fake-hub";
+            var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+
+            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var blobContainerName = "fake";
 #endif
 
             async Task processEventHandler(ProcessEventArgs eventArgs)
@@ -111,8 +116,23 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 }
             }
 
-            var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
-            var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
+            var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+            {
+                BlobContainerName = blobContainerName
+            };
+
+            var storageClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                credential);
+
+            var processor = new EventProcessorClient
+            (
+                storageClient,
+                consumerGroup,
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential
+            );
 
             processor.ProcessEventAsync += processEventHandler;
             processor.ProcessErrorAsync += processErrorHandler;
@@ -139,25 +159,45 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
 #if SNIPPET
-            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+            var credential = new DefaultAzureCredential();
+
+            var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 #else
-            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            var blobContainerName = storageScope.ContainerName;
-            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = eventHubScope.EventHubName;
-            var consumerGroup = eventHubScope.ConsumerGroups.First();
+            var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+
+            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var blobContainerName = storageScope.ContainerName;
 #endif
 
             Task processEventHandler(ProcessEventArgs eventArgs) => Task.CompletedTask;
             Task processErrorHandler(ProcessErrorEventArgs eventArgs) => Task.CompletedTask;
 
-            var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
-            var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
+            var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+            {
+                BlobContainerName = blobContainerName
+            };
+
+            var storageClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                credential);
+
+            var processor = new EventProcessorClient
+            (
+                storageClient,
+                consumerGroup,
+                fullyQualifiedNamespace,
+                eventHubName,
+                credential
+            );
 
             processor.ProcessEventAsync += processEventHandler;
             processor.ProcessErrorAsync += processErrorHandler;
@@ -202,20 +242,32 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var blobStorageUrl ="<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>";
 
-            var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+            var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 #else
             var credential = EventHubsTestEnvironment.Instance.Credential;
-            var blobStorageUrl = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.{ StorageTestEnvironment.Instance.StorageEndpointSuffix }/{ "fake-container" }";
+
             var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            var eventHubName = "fakeHub";
-            var consumerGroup = "fakeConsumer";
+            var eventHubName = "fake-hub";
+            var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+
+            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var blobContainerName = "fake";
 #endif
 
-            var storageClient = new BlobContainerClient(new Uri(blobStorageUrl), credential);
+            var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))
+            {
+                BlobContainerName = blobContainerName
+            };
+
+            var storageClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                credential);
 
             var processor = new EventProcessorClient
             (

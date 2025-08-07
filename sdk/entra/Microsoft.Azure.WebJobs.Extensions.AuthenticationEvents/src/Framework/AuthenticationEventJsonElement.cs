@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Class to wrap System.Json.Text.JsonElement.</summary>
     internal class AuthenticationEventJsonElement : ICloneable

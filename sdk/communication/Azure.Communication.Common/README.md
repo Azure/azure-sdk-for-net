@@ -38,6 +38,7 @@ Depending on your scenario, you may want to initialize the `CommunicationTokenCr
 
 - a static token (suitable for short-lived clients used to e.g. send one-off Chat messages) or
 - a callback function that ensures a continuous authentication state (ideal e.g. for long Calling sessions).
+- a token credential capable of obtaining an Entra user token. You can provide any implementation of [Azure.Core.TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It is suitable for scenarios where Entra user access tokens are needed to authenticate with Communication Services.
 
 The tokens supplied to the `CommunicationTokenCredential` either through the constructor or via the token refresher callback can be obtained using the Azure Communication Identity library.
 
@@ -101,6 +102,57 @@ using var tokenCredential = new CommunicationTokenCredential(
     });
 ```
 
+### Create a credential with a token credential capable of obtaining an Entra user token
+
+For scenarios where an Entra user can be used with Communication Services, you need to initialize any implementation of [Azure.Core.TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) and provide it to the ``EntraCommunicationTokenCredentialOptions``.
+Along with this, you must provide the URI of the Azure Communication Services resource and the scopes required for the Entra user token. These scopes determine the permissions granted to the token.
+
+This approach needs to be used for authorizing an Entra user with a Teams license to use Teams Phone Extensibility features through your Azure Communication Services resource.
+This requires providing the `https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls` scope.
+```C# 
+var options = new InteractiveBrowserCredentialOptions
+    {
+        TenantId = "<your-tenant-id>",
+        ClientId = "<your-client-id>",
+        RedirectUri = new Uri("<your-redirect-uri>")
+    };
+var entraTokenCredential = new InteractiveBrowserCredential(options);
+
+var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
+    resourceEndpoint: "https://<your-resource>.communication.azure.com",
+    entraTokenCredential: entraTokenCredential)
+    )
+    {
+      Scopes = new[] { "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls" }
+    };
+
+var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
+
+```
+
+Other scenarios for Entra users to utilize Azure Communication Services are currently in the **preview stage only and should not be used in production**.
+The scopes for these scenarios follow the format `https://communication.azure.com/clients/<Azure Communication Services Clients API permission>`.
+If specific scopes are not provided, the default scopes will be set to `https://communication.azure.com/clients/.default`.
+```C# 
+var options = new InteractiveBrowserCredentialOptions
+    {
+        TenantId = "<your-tenant-id>",
+        ClientId = "<your-client-id>",
+        RedirectUri = new Uri("<your-redirect-uri>")
+    };
+var entraTokenCredential = new InteractiveBrowserCredential(options);
+
+var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
+    resourceEndpoint: "https://<your-resource>.communication.azure.com",
+    entraTokenCredential: entraTokenCredential)
+    {
+      Scopes = new[] { "https://communication.azure.com/clients/VoIP" }
+    };
+
+var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
+
+```
+
 ## Troubleshooting
 The proactive refreshing failures happen in a background thread and to avoid crashing your app the exceptions will be silently handled.
 All the other failures will happen during your request using other clients such as chat where you can catch the exception using `RequestFailedException`.
@@ -121,11 +173,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Common/src
 [package]: https://www.nuget.org/packages/Azure.Communication.Common/
-[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
+[product_docs]: https://learn.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
-[user_access_token]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
-[communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
-[communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[user_access_token]: https://learn.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[communication_resource_docs]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]:  https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://learn.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
+[communication_resource_create_net]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
 

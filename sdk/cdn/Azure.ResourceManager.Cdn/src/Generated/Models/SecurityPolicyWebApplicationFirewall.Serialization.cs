@@ -5,22 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecurityPolicyWebApplicationFirewall : IUtf8JsonSerializable
+    public partial class SecurityPolicyWebApplicationFirewall : IUtf8JsonSerializable, IJsonModel<SecurityPolicyWebApplicationFirewall>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyWebApplicationFirewall>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SecurityPolicyWebApplicationFirewall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewall>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(WafPolicy))
             {
                 writer.WritePropertyName("wafPolicy"u8);
-                JsonSerializer.Serialize(writer, WafPolicy);
+                ((IJsonModel<WritableSubResource>)WafPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Associations))
             {
@@ -28,24 +48,37 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(PolicyType.ToString());
-            writer.WriteEndObject();
         }
 
-        internal static SecurityPolicyWebApplicationFirewall DeserializeSecurityPolicyWebApplicationFirewall(JsonElement element)
+        SecurityPolicyWebApplicationFirewall IJsonModel<SecurityPolicyWebApplicationFirewall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewall>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityPolicyWebApplicationFirewall(document.RootElement, options);
+        }
+
+        internal static SecurityPolicyWebApplicationFirewall DeserializeSecurityPolicyWebApplicationFirewall(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<WritableSubResource> wafPolicy = default;
-            Optional<IList<SecurityPolicyWebApplicationFirewallAssociation>> associations = default;
+            WritableSubResource wafPolicy = default;
+            IList<SecurityPolicyWebApplicationFirewallAssociation> associations = default;
             SecurityPolicyType type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("wafPolicy"u8))
@@ -54,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    wafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    wafPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("associations"u8))
@@ -66,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<SecurityPolicyWebApplicationFirewallAssociation> array = new List<SecurityPolicyWebApplicationFirewallAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityPolicyWebApplicationFirewallAssociation.DeserializeSecurityPolicyWebApplicationFirewallAssociation(item));
+                        array.Add(SecurityPolicyWebApplicationFirewallAssociation.DeserializeSecurityPolicyWebApplicationFirewallAssociation(item, options));
                     }
                     associations = array;
                     continue;
@@ -76,8 +109,44 @@ namespace Azure.ResourceManager.Cdn.Models
                     type = new SecurityPolicyType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityPolicyWebApplicationFirewall(type, wafPolicy, Optional.ToList(associations));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityPolicyWebApplicationFirewall(type, serializedAdditionalRawData, wafPolicy, associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>());
         }
+
+        BinaryData IPersistableModel<SecurityPolicyWebApplicationFirewall>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewall>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityPolicyWebApplicationFirewall IPersistableModel<SecurityPolicyWebApplicationFirewall>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewall>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSecurityPolicyWebApplicationFirewall(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityPolicyWebApplicationFirewall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

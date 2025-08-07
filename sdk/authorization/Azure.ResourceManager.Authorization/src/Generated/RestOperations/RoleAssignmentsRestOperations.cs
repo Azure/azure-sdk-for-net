@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Authorization.Models;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.Authorization
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string roleAssignmentName, string tenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments/", false);
+            uri.AppendPath(roleAssignmentName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (tenantId != null)
+            {
+                uri.AppendQuery("tenantId", tenantId, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string roleAssignmentName, string tenantId)
@@ -77,7 +92,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -106,7 +121,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,6 +130,18 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string scope, string roleAssignmentName, RoleAssignmentCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments/", false);
+            uri.AppendPath(roleAssignmentName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string scope, string roleAssignmentName, RoleAssignmentCreateOrUpdateContent content)
@@ -133,7 +160,7 @@ namespace Azure.ResourceManager.Authorization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -159,7 +186,7 @@ namespace Azure.ResourceManager.Authorization
                 case 201:
                     {
                         RoleAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -188,13 +215,29 @@ namespace Azure.ResourceManager.Authorization
                 case 201:
                     {
                         RoleAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string roleAssignmentName, string tenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments/", false);
+            uri.AppendPath(roleAssignmentName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (tenantId != null)
+            {
+                uri.AppendQuery("tenantId", tenantId, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string scope, string roleAssignmentName, string tenantId)
@@ -237,7 +280,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -266,7 +309,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,6 +318,29 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForScopeRequestUri(string scope, string filter, string tenantId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (tenantId != null)
+            {
+                uri.AppendQuery("tenantId", tenantId, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, false);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListForScopeRequest(string scope, string filter, string tenantId, string skipToken)
@@ -324,7 +390,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -351,13 +417,21 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForScopeNextPageRequestUri(string nextLink, string scope, string filter, string tenantId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListForScopeNextPageRequest(string nextLink, string scope, string filter, string tenantId, string skipToken)
@@ -394,7 +468,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -423,7 +497,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         RoleAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(PartnerEndpointType left, PartnerEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerEndpointType"/> values are not the same. </summary>
         public static bool operator !=(PartnerEndpointType left, PartnerEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PartnerEndpointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerEndpointType"/>. </summary>
         public static implicit operator PartnerEndpointType(string value) => new PartnerEndpointType(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

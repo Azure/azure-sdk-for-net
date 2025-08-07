@@ -57,7 +57,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.AreEqual("group", msg.Group);
             Assert.AreEqual(1u, msg.AckId);
 
-            _ = _wpsClient.JoinGroupAttemptAsync("group", 214578694245u);
+            _ = _wpsClient.JoinGroupAttemptAsync("group", 214578694245);
             msg = (JoinGroupMessage)await _tcs.VerifyCalledTimesAsync(2).OrTimeout();
             Assert.AreEqual("group", msg.Group);
             Assert.AreEqual(214578694245u, msg.AckId.Value);
@@ -71,7 +71,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.AreEqual("group", msg.Group);
             Assert.AreEqual(1u, msg.AckId);
 
-            _ = _wpsClient.LeaveGroupAttemptAsync("group", 214578694245u);
+            _ = _wpsClient.LeaveGroupAttemptAsync("group", 214578694245);
             msg = (LeaveGroupMessage)await _tcs.VerifyCalledTimesAsync(2).OrTimeout();
             Assert.AreEqual("group", msg.Group);
             Assert.AreEqual(214578694245u, msg.AckId);
@@ -88,7 +88,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.AreEqual(1u, msg.AckId);
             Assert.False(msg.NoEcho);
 
-            _ = _wpsClient.SendToGroupAttemptAsync("group", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245u);
+            _ = _wpsClient.SendToGroupAttemptAsync("group", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245);
             msg = (SendToGroupMessage)await _tcs.VerifyCalledTimesAsync(2).OrTimeout();
             Assert.AreEqual("group", msg.Group);
             Assert.AreEqual("text", msg.Data.ToString());
@@ -96,7 +96,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.AreEqual(214578694245u, msg.AckId);
             Assert.False(msg.NoEcho);
 
-            _ = _wpsClient.SendToGroupAttemptAsync("group", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245u, true, true);
+            _ = _wpsClient.SendToGroupAttemptAsync("group", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245, true, true);
             msg = (SendToGroupMessage)await _tcs.VerifyCalledTimesAsync(3).OrTimeout();
             Assert.AreEqual("group", msg.Group);
             Assert.AreEqual("text", msg.Data.ToString());
@@ -115,19 +115,28 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
             Assert.AreEqual(1u, msg.AckId);
 
-            _ = _wpsClient.SendEventAttemptAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245u);
+            _ = _wpsClient.SendEventAttemptAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245);
             msg = (SendEventMessage)await _tcs.VerifyCalledTimesAsync(2).OrTimeout();
             Assert.AreEqual("event", msg.EventName);
             Assert.AreEqual("text", msg.Data.ToString());
             Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
             Assert.AreEqual(214578694245u, msg.AckId);
 
-            _ = _wpsClient.SendEventAttemptAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245u, true);
+            _ = _wpsClient.SendEventAttemptAsync("event", BinaryData.FromString("text"), WebPubSubDataType.Text, 214578694245, true);
             msg = (SendEventMessage)await _tcs.VerifyCalledTimesAsync(3).OrTimeout();
             Assert.AreEqual("event", msg.EventName);
             Assert.AreEqual("text", msg.Data.ToString());
             Assert.AreEqual(WebPubSubDataType.Text, msg.DataType);
             Assert.Null(msg.AckId);
+        }
+
+        [Test]
+        public void OperationWithInvalidAckIdTest()
+        {
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await _wpsClient.JoinGroupAsync("group", -1));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await _wpsClient.LeaveGroupAsync("group", -1));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await _wpsClient.SendToGroupAsync("group", BinaryData.FromString("test"), WebPubSubDataType.Text, -1));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await _wpsClient.SendEventAsync("event", BinaryData.FromString("test"), WebPubSubDataType.Text, -1));
         }
     }
 }

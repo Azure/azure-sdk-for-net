@@ -8,7 +8,6 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
@@ -18,13 +17,13 @@ namespace Azure.ResourceManager.Compute
     {
         VirtualMachineAssessPatchesResult IOperationSource<VirtualMachineAssessPatchesResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return VirtualMachineAssessPatchesResult.DeserializeVirtualMachineAssessPatchesResult(document.RootElement);
         }
 
         async ValueTask<VirtualMachineAssessPatchesResult> IOperationSource<VirtualMachineAssessPatchesResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return VirtualMachineAssessPatchesResult.DeserializeVirtualMachineAssessPatchesResult(document.RootElement);
         }
     }

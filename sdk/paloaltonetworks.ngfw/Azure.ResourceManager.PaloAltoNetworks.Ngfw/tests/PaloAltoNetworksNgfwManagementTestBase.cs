@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests
 
         protected async Task<PaloAltoNetworksFirewallResource> CreateDefaultFirewallResource(ResourceGroupResource resourceGroup, AzureLocation location, string firewallName)
         {
-            IEnumerable<IPAddressInfo> ipAddresses = new IPAddressInfo[] { new IPAddressInfo(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-public-ip-default"), "20.22.147.20") };
+            IEnumerable<IPAddressInfo> ipAddresses = new IPAddressInfo[] { new IPAddressInfo(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-public-ip-default"), "20.22.147.20", null) };
 
             FirewallVnetConfiguration vnetConfiguration = new FirewallVnetConfiguration(
-                new IPAddressSpaceInfo(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetsSdkTest-vnet-default"), "10.162.0.0/16"),
-                new IPAddressSpaceInfo(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetsSdkTest-vnet-default/subnets/subnet1"), "10.162.1.0/26"),
-                new IPAddressSpaceInfo(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetsSdkTest-vnet-default/subnets/subnet2"), "10.162.0.0/26"));
+                new IPAddressSpaceInfo(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetsSdkTest-vnet-default"), "10.162.0.0/16", null),
+                new IPAddressSpaceInfo(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetsSdkTest-vnet-default/subnets/subnet1"), "10.162.1.0/26", null),
+                new IPAddressSpaceInfo(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetsSdkTest-vnet-default/subnets/subnet2"), "10.162.0.0/26", null));
             FirewallNetworkProfile np = new FirewallNetworkProfile(FirewallNetworkType.Vnet, ipAddresses, AllowEgressNatType.Disabled);
             np.VnetConfiguration = vnetConfiguration;
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests
             FirewallBillingPlanInfo planData = new FirewallBillingPlanInfo(FirewallBillingCycle.Monthly, "cloud-ngfw-payg-test");
             PanFirewallMarketplaceDetails mpDetails = new PanFirewallMarketplaceDetails("pan_swfw_cloud_ngfw", "paloaltonetworks");
             PaloAltoNetworksFirewallData data = new PaloAltoNetworksFirewallData(location, np, dnsSettings,  planData, mpDetails);
-            data.AssociatedRulestack = new RulestackDetails(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-lrs-default"), "", AzureLocation.EastUS2);
+            data.AssociatedRulestack = new RulestackDetails(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-lrs-default"), "", AzureLocation.EastUS2, null);
             var lro = await resourceGroup.GetPaloAltoNetworksFirewalls().CreateOrUpdateAsync(WaitUntil.Completed, firewallName, data);
             return lro.Value;
         }

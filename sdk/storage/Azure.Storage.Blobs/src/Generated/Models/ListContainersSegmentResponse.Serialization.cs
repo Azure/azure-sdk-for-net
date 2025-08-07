@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -50,7 +49,13 @@ namespace Azure.Storage.Blobs.Models
                 }
                 containerItems = array;
             }
-            return new ListContainersSegmentResponse(serviceEndpoint, prefix, marker, maxResults, containerItems, nextMarker);
+            return new ListContainersSegmentResponse(
+                serviceEndpoint,
+                prefix,
+                marker,
+                maxResults,
+                containerItems,
+                nextMarker);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppVolumeQuotaType left, NetAppVolumeQuotaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppVolumeQuotaType"/> values are not the same. </summary>
         public static bool operator !=(NetAppVolumeQuotaType left, NetAppVolumeQuotaType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppVolumeQuotaType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppVolumeQuotaType"/>. </summary>
         public static implicit operator NetAppVolumeQuotaType(string value) => new NetAppVolumeQuotaType(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

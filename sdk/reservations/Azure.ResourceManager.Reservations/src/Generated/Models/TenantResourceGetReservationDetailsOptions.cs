@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The TenantResourceGetReservationDetailsOptions. </summary>
     public partial class TenantResourceGetReservationDetailsOptions
     {
-        /// <summary> Initializes a new instance of TenantResourceGetReservationDetailsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantResourceGetReservationDetailsOptions"/>. </summary>
         public TenantResourceGetReservationDetailsOptions()
         {
         }

@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ReadyToInstallValue = "ReadyToInstall";
         private const string ScanInProgressValue = "ScanInProgress";
         private const string ScanFailedValue = "ScanFailed";
+        private const string AdditionalContentRequiredValue = "AdditionalContentRequired";
 
         /// <summary> HasPrerequisite. </summary>
         public static HciUpdateState HasPrerequisite { get; } = new HciUpdateState(HasPrerequisiteValue);
@@ -77,11 +78,13 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciUpdateState ScanInProgress { get; } = new HciUpdateState(ScanInProgressValue);
         /// <summary> ScanFailed. </summary>
         public static HciUpdateState ScanFailed { get; } = new HciUpdateState(ScanFailedValue);
+        /// <summary> AdditionalContentRequired. </summary>
+        public static HciUpdateState AdditionalContentRequired { get; } = new HciUpdateState(AdditionalContentRequiredValue);
         /// <summary> Determines if two <see cref="HciUpdateState"/> values are the same. </summary>
         public static bool operator ==(HciUpdateState left, HciUpdateState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciUpdateState"/> values are not the same. </summary>
         public static bool operator !=(HciUpdateState left, HciUpdateState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HciUpdateState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciUpdateState"/>. </summary>
         public static implicit operator HciUpdateState(string value) => new HciUpdateState(value);
 
         /// <inheritdoc />
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

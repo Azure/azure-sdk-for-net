@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(UpdateSeverity left, UpdateSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateSeverity"/> values are not the same. </summary>
         public static bool operator !=(UpdateSeverity left, UpdateSeverity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UpdateSeverity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdateSeverity"/>. </summary>
         public static implicit operator UpdateSeverity(string value) => new UpdateSeverity(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

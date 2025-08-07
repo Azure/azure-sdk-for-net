@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,18 +14,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Route policy statement condition properties. </summary>
     public partial class StatementConditionProperties : IPCommunityIdList
     {
-        /// <summary> Initializes a new instance of StatementConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         public StatementConditionProperties()
         {
             IPExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of StatementConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="routePolicyConditionType"> Type of the condition used. </param>
         /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>
         /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
-        internal StatementConditionProperties(IList<ResourceIdentifier> ipCommunityIds, RoutePolicyConditionType? routePolicyConditionType, ResourceIdentifier ipPrefixId, IList<ResourceIdentifier> ipExtendedCommunityIds) : base(ipCommunityIds)
+        internal StatementConditionProperties(IList<ResourceIdentifier> ipCommunityIds, IDictionary<string, BinaryData> serializedAdditionalRawData, RoutePolicyConditionType? routePolicyConditionType, ResourceIdentifier ipPrefixId, IList<ResourceIdentifier> ipExtendedCommunityIds) : base(ipCommunityIds, serializedAdditionalRawData)
         {
             RoutePolicyConditionType = routePolicyConditionType;
             IPPrefixId = ipPrefixId;

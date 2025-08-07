@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> DatabricksSparkPython activity. </summary>
     public partial class DatabricksSparkPythonActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DatabricksSparkPythonActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pythonFile"/> is null. </exception>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "DatabricksSparkPython";
         }
 
-        /// <summary> Initializes a new instance of DatabricksSparkPythonActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -44,12 +43,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
         /// <param name="parameters"> Command line parameters that will be passed to the Python file. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
-        internal DatabricksSparkPythonActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFactoryElement<string> pythonFile, IList<BinaryData> parameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DatabricksSparkPythonActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> pythonFile, IList<BinaryData> parameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             PythonFile = pythonFile;
             Parameters = parameters;
             Libraries = libraries;
             ActivityType = activityType ?? "DatabricksSparkPython";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/> for deserialization. </summary>
+        internal DatabricksSparkPythonActivity()
+        {
         }
 
         /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -85,7 +89,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> Parameters { get; }
-        /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
+        /// <summary>
+        /// A list of libraries to be installed on the cluster that will execute the job.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<IDictionary<string, BinaryData>> Libraries { get; }
     }
 }

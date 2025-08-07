@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> IP Prefix Type. </summary>
+    /// <summary> IP Prefix Type that needs to be matched. </summary>
     public readonly partial struct IPMatchConditionPrefixType : IEquatable<IPMatchConditionPrefixType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(IPMatchConditionPrefixType left, IPMatchConditionPrefixType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPMatchConditionPrefixType"/> values are not the same. </summary>
         public static bool operator !=(IPMatchConditionPrefixType left, IPMatchConditionPrefixType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IPMatchConditionPrefixType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IPMatchConditionPrefixType"/>. </summary>
         public static implicit operator IPMatchConditionPrefixType(string value) => new IPMatchConditionPrefixType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

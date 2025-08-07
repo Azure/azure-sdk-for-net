@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Parameters object for a text analysis task using pre-built models. </summary>
     internal partial class PreBuiltTaskParameters : TaskParameters
     {
-        /// <summary> Initializes a new instance of PreBuiltTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreBuiltTaskParameters"/>. </summary>
         public PreBuiltTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of PreBuiltTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreBuiltTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="modelVersion"></param>
         internal PreBuiltTaskParameters(bool? loggingOptOut, string modelVersion) : base(loggingOptOut)

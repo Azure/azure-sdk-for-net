@@ -276,7 +276,7 @@ namespace Azure.Messaging.EventGrid
                     request.Headers.Add("aeg-channel-name", channelName);
                 }
 
-                CloudEventRequestContent content = new CloudEventRequestContent(events, _clientDiagnostics.IsActivityEnabled);
+                CloudEventsRequestContent content = new CloudEventsRequestContent(events, _clientDiagnostics.IsActivityEnabled);
                 request.Content = content;
 
                 if (async)

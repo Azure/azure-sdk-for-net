@@ -315,6 +315,17 @@ namespace Azure.Messaging.EventHubs.Primitives
         public virtual void ReportPartitionStolen(string partitionId) => InstanceOwnership.TryRemove(partitionId, out _);
 
         /// <summary>
+        ///   Determines whether the specified partition is owned by the load balancer.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition to consider.</param>
+        ///
+        /// <returns>
+        ///   <c>true</c> if <paramref name="partitionId"/> is owned; otherwise, <c>false</c>.</returns>
+        ///
+        public virtual bool IsPartitionOwned(string partitionId) => InstanceOwnership.ContainsKey(partitionId);
+
+        /// <summary>
         ///   Finds and tries to claim an ownership if this processor instance is eligible to increase its ownership list.
         /// </summary>
         ///
@@ -339,10 +350,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             var unevenPartitionDistribution = (partitionCount % ActiveOwnershipWithDistribution.Keys.Count) > 0;
             var minimumOwnedPartitionsCount = partitionCount / ActiveOwnershipWithDistribution.Keys.Count;
-            Logger.MinimumPartitionsPerEventProcessor(minimumOwnedPartitionsCount);
+            Logger.MinimumPartitionsPerEventProcessor(minimumOwnedPartitionsCount, EventHubName);
 
             var ownedPartitionsCount = ActiveOwnershipWithDistribution[OwnerIdentifier].Count;
-            Logger.CurrentOwnershipCount(ownedPartitionsCount, OwnerIdentifier);
+            Logger.CurrentOwnershipCount(ownedPartitionsCount, OwnerIdentifier, EventHubName);
 
             // There are two possible situations in which we may need to claim a partition ownership:
             //
@@ -363,7 +374,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
 
-                Logger.UnclaimedPartitions(unclaimedPartitions);
+                Logger.UnclaimedPartitions(unclaimedPartitions, EventHubName);
 
                 if (unclaimedPartitions.Count > 0)
                 {
@@ -412,7 +423,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 if ((ownedPartitionsCount < minimumOwnedPartitionsCount)
                     || (ownedPartitionsCount < maximumOwnedPartitionsCount && partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count > 0))
                 {
-                    Logger.ShouldStealPartition(OwnerIdentifier);
+                    Logger.ShouldStealPartition(OwnerIdentifier, EventHubName);
 
                     // Prefer stealing from a processor that owns more than the maximum number of partitions.
 
@@ -420,12 +431,23 @@ namespace Azure.Messaging.EventHubs.Primitives
                     {
                         // If any partitions that can be stolen were found, randomly pick one of them to claim.
 
-                        Logger.StealPartition(OwnerIdentifier);
-
                         var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count);
+                        var partitionToSteal = partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount[index];
+                        var stealingFrom = default(string);
+
+                        foreach (var ownership in completeOwnershipEnumerable)
+                        {
+                            if (ownership.PartitionId == partitionToSteal)
+                            {
+                                stealingFrom = ownership.OwnerIdentifier;
+                                break;
+                            }
+                        }
+
+                        Logger.StealPartition(partitionToSteal, stealingFrom, OwnerIdentifier, EventHubName);
 
                         var returnTask = ClaimOwnershipAsync(
-                            partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount[index],
+                            partitionToSteal,
                             completeOwnershipEnumerable,
                             cancellationToken);
 
@@ -437,14 +459,25 @@ namespace Azure.Messaging.EventHubs.Primitives
                         // need to steal from the processors that have exactly the maximum amount to enforce balancing.  If this instance has
                         // already reached the minimum, there's no benefit to stealing, because the distribution wouldn't change.
 
-                        Logger.StealPartition(OwnerIdentifier);
-
                         // Randomly pick a processor to steal from.
 
                         var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count);
+                        var partitionToSteal = partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount[index];
+                        var stealingFrom = default(string);
+
+                        foreach (var ownership in completeOwnershipEnumerable)
+                        {
+                            if (ownership.PartitionId == partitionToSteal)
+                            {
+                                stealingFrom = ownership.OwnerIdentifier;
+                                break;
+                            }
+                        }
+
+                        Logger.StealPartition(partitionToSteal, stealingFrom, OwnerIdentifier, EventHubName);
 
                         var returnTask = ClaimOwnershipAsync(
-                            partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount[index],
+                            partitionToSteal,
                             completeOwnershipEnumerable,
                             cancellationToken);
 
@@ -468,7 +501,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            Logger.RenewOwnershipStart(OwnerIdentifier);
+            Logger.RenewOwnershipStart(OwnerIdentifier, EventHubName);
 
             var utcNow = GetDateTimeOffsetNow();
 
@@ -510,7 +543,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // If ownership renewal fails just give up and try again in the next cycle.  The processor may
                 // end up losing some of its ownership.
 
-                Logger.RenewOwnershipError(OwnerIdentifier, ex.Message);
+                Logger.RenewOwnershipError(OwnerIdentifier, ex.Message, EventHubName);
 
                 // Set the EventHubName to null so it doesn't modify the exception message. This exception message is
                 // used so the processor can retrieve the raw Operation string, and adding the EventHubName would append
@@ -520,7 +553,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
-                Logger.RenewOwnershipComplete(OwnerIdentifier);
+                Logger.RenewOwnershipComplete(OwnerIdentifier, EventHubName);
             }
         }
 
@@ -539,7 +572,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                                                                             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.ClaimOwnershipStart(partitionId);
+            Logger.ClaimOwnershipStart(partitionId, EventHubName);
 
             // We need the eTag from the most recent ownership of this partition, even if it's expired.  We want to keep the offset and
             // the sequence number as well.
@@ -569,7 +602,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 // If ownership claim fails, just treat it as a usual ownership claim failure.
 
-                Logger.ClaimOwnershipError(partitionId, ex.Message);
+                Logger.ClaimOwnershipError(partitionId, ex.Message, EventHubName);
 
                 // Set the EventHubName to null so it doesn't modify the exception message. This exception message is
                 // used so the processor can retrieve the raw Operation string, and adding the EventHubName would append

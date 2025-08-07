@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 
 namespace Azure.Identity
 {
@@ -22,10 +21,6 @@ namespace Azure.Identity
 
         public static string IdentityEndpoint => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT"));
         public static string IdentityHeader => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("IDENTITY_HEADER"));
-        public static string MsiEndpoint => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("MSI_ENDPOINT"));
-        public static string MsiSecret => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("MSI_SECRET"));
-        public static string ImdsEndpoint => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("IMDS_ENDPOINT"));
-        public static string IdentityServerThumbprint => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("IDENTITY_SERVER_THUMBPRINT"));
         public static string PodIdentityEndpoint => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_POD_IDENTITY_AUTHORITY_HOST"));
 
         public static string Path => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("PATH"));
@@ -37,6 +32,8 @@ namespace Azure.Identity
         public static string AzureRegionalAuthorityName => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_REGIONAL_AUTHORITY_NAME"));
 
         public static string AzureFederatedTokenFile => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_FEDERATED_TOKEN_FILE"));
+
+        public static string CredentialSelection => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS"));
 
         private static string GetNonEmptyStringOrNull(string str)
         {

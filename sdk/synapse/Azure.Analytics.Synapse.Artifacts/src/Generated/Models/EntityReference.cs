@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The entity reference. </summary>
     public partial class EntityReference
     {
-        /// <summary> Initializes a new instance of EntityReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityReference"/>. </summary>
         public EntityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of EntityReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityReference"/>. </summary>
         /// <param name="type"> The type of this referenced entity. </param>
         /// <param name="referenceName"> The name of this referenced entity. </param>
         internal EntityReference(IntegrationRuntimeEntityReferenceType? type, string referenceName)

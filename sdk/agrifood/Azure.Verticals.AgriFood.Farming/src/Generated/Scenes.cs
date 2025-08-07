@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -380,7 +380,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -423,7 +423,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScenesRequest(provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScenesNextPageRequest(nextLink, provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Scenes.GetScenes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -530,21 +530,21 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxDarkPixelCoveragePercentage", maxDarkPixelCoveragePercentage.Value, true);
             }
-            if (imageNames != null && Optional.IsCollectionDefined(imageNames))
+            if (imageNames != null && !(imageNames is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in imageNames)
                 {
                     uri.AppendQuery("imageNames", param, true);
                 }
             }
-            if (imageResolutions != null && Optional.IsCollectionDefined(imageResolutions))
+            if (imageResolutions != null && !(imageResolutions is ChangeTrackingList<double> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in imageResolutions)
                 {
                     uri.AppendQuery("imageResolutions", param, true);
                 }
             }
-            if (imageFormats != null && Optional.IsCollectionDefined(imageFormats))
+            if (imageFormats != null && !(imageFormats is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in imageFormats)
                 {

@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
     /// <summary> The SparkJobListViewResponse. </summary>
     public partial class SparkJobListViewResponse
     {
-        /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobListViewResponse"/>. </summary>
         internal SparkJobListViewResponse()
         {
             SparkJobs = new ChangeTrackingList<SparkJob>();
         }
 
-        /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobListViewResponse"/>. </summary>
         /// <param name="nJobs"></param>
         /// <param name="sparkJobs"></param>
         internal SparkJobListViewResponse(int? nJobs, IReadOnlyList<SparkJob> sparkJobs)

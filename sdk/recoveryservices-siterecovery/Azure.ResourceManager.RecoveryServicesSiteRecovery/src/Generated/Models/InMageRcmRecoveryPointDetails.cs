@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm provider specific recovery point details. </summary>
     public partial class InMageRcmRecoveryPointDetails : ProviderSpecificRecoveryPointDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmRecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmRecoveryPointDetails"/>. </summary>
         internal InMageRcmRecoveryPointDetails()
         {
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmRecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmRecoveryPointDetails"/>. </summary>
         /// <param name="instanceType"> Gets the provider type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isMultiVmSyncPoint"> A value indicating whether the recovery point is multi VM consistent. </param>
-        internal InMageRcmRecoveryPointDetails(string instanceType, string isMultiVmSyncPoint) : base(instanceType)
+        internal InMageRcmRecoveryPointDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string isMultiVmSyncPoint) : base(instanceType, serializedAdditionalRawData)
         {
             IsMultiVmSyncPoint = isMultiVmSyncPoint;
             InstanceType = instanceType ?? "InMageRcm";

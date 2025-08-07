@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -25,8 +26,8 @@ namespace Azure.Messaging.EventHubs.Amqp
     internal class AmqpSystemProperties : IReadOnlyDictionary<string, object>
     {
         /// <summary>The set of system properties that are sourced from the Properties section of the <see cref="AmqpAnnotatedMessage" />.</summary>
-        private static readonly string[] PropertySectionNames = new[]
-        {
+        private static readonly string[] PropertySectionNames =
+        [
            Properties.MessageIdName,
            Properties.UserIdName,
            Properties.ToName,
@@ -40,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Amqp
            Properties.GroupIdName,
            Properties.GroupSequenceName,
            Properties.ReplyToGroupIdName
-        };
+        ];
 
         /// <summary>The AMQP message to use as the source for the system properties data.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -64,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     if (key == Properties.MessageIdName)
                     {
-                        return _amqpMessage.Properties.MessageId;
+                        return _amqpMessage.Properties.MessageId?.ToString();
                     }
 
                     if (key == Properties.UserIdName)
@@ -74,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                     if (key == Properties.ToName)
                     {
-                        return _amqpMessage.Properties.To;
+                        return _amqpMessage.Properties.To?.ToString();
                     }
 
                     if (key == Properties.SubjectName)
@@ -84,12 +85,12 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                     if (key == Properties.ReplyToName)
                     {
-                        return _amqpMessage.Properties.ReplyTo;
+                        return _amqpMessage.Properties.ReplyTo?.ToString();
                     }
 
                     if (key == Properties.CorrelationIdName)
                     {
-                        return _amqpMessage.Properties.CorrelationId;
+                        return _amqpMessage.Properties.CorrelationId?.ToString();
                     }
 
                     if (key == Properties.ContentTypeName)
@@ -130,7 +131,15 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (_amqpMessage.HasSection(AmqpMessageSection.MessageAnnotations))
                 {
-                   return _amqpMessage.MessageAnnotations[key];
+                    var annotationValue = _amqpMessage.GetMessageAnnotationNormalizedValue(key);
+
+                    // If the value came back as null, only return it if the key exists.  Otherwise, allow
+                    // the KeyNotFoundException to be thrown.
+
+                    if ((annotationValue != null) || (_amqpMessage.MessageAnnotations.ContainsKey(key)))
+                    {
+                        return annotationValue;
+                    }
                 }
 
                 // If no section was available to delegate to, mimic the behavior of the standard dictionary implementation.
@@ -191,7 +200,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     foreach (var name in _amqpMessage.MessageAnnotations.Keys)
                     {
-                        yield return _amqpMessage.MessageAnnotations[name];
+                        yield return _amqpMessage.GetMessageAnnotationNormalizedValue(name);
                     }
                 }
             }

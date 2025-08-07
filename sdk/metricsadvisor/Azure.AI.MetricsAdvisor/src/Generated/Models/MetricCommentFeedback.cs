@@ -7,14 +7,13 @@
 
 using System;
 using Azure.AI.MetricsAdvisor.Models;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The CommentFeedback. </summary>
     public partial class MetricCommentFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricCommentFeedback. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricCommentFeedback"/>. </summary>
         /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
         /// <param name="createdOn"> feedback created time. </param>

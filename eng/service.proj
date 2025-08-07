@@ -9,17 +9,49 @@
     <IncludeSamples Condition="'$(IncludeSamples)' == ''">true</IncludeSamples>
     <IncludePerf Condition="'$(IncludePerf)' == ''">true</IncludePerf>
     <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
+    <IncludeSourceGeneration Condition="'$(IncludeSourceGeneration)' == ''">false</IncludeSourceGeneration>
+    <IncludeIntegrationTests Condition="'$(IncludeIntegrationTests)' == ''">true</IncludeIntegrationTests>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
   </PropertyGroup>
 
+  <ItemGroup>
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
+      <!-- because this project is using the project below -->
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitivelanguage\Azure.AI.Language.QuestionAnswering\tests\Azure.AI.Language.QuestionAnswering.Tests.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Knowledge.QnAMaker\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.CustomVision.Prediction\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingWebSearch\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.ComputerVision\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.ContentModerator\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingNewsSearch\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingLocalSearch\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingImageSearch\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingVisualSearch\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingVideoSearch\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingAutoSuggest\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingEntitySearch\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingCustomSearch\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Search.BingCustomImageSearch\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\AnomalyDetector\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Language.LUIS.Authoring\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Language.LUIS.Runtime\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Language.TextAnalytics\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Language.SpellCheck\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\FormRecognizer\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.Face\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.CustomVision.Training\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Personalizer\**\*.csproj" />
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\hdinsight\Microsoft.Azure.HDInsight.Job\**\*.csproj" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(ProjectListOverrideFile)' == '' ">
-    <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" />
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" />
     <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
+    <SourceGenerationProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\gen\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(PerfProjects);@(StressProjects)" />
     <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
     <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
@@ -27,10 +59,32 @@
     <ProjectReference Include="@(StressProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeStress)' == 'true'" />
     <ProjectReference Include="@(SampleApplications)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
     <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
+    <ProjectReference Include="@(SourceGenerationProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSourceGeneration)' == 'true'" />
   </ItemGroup>
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
+
+  <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(EnableOverrideExclusions)' != ''">
+    <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
+    <SourceGenerationProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\gen\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
+    <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
+    <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" Exclude="@(MgmtExcludePaths)" />
+    <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
+    <IntegrationTestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\integration\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
+    <SampleApplications Include="..\samples\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
+    <SharedProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\shared\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
+    <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(PerfProjects);@(StressProjects)" />
+    <ProjectReference Remove="@(TestProjects)" Condition="'$(IncludeTests)' == 'false'" />
+    <ProjectReference Remove="@(SamplesProjects)" Condition="'$(IncludeSamples)' == 'false'" />
+    <ProjectReference Remove="@(PerfProjects)" Condition="'$(IncludePerf)' == 'false'" />
+    <ProjectReference Remove="@(StressProjects)" Condition="'$(IncludeStress)' == 'false'" />
+    <ProjectReference Remove="@(SampleApplications)" Condition="'$(IncludeSamplesApplications)' == 'false'"/>
+    <ProjectReference Remove="@(SrcProjects)" Condition="'$(IncludeSrc)' == 'false'" />
+    <ProjectReference Remove="@(IntegrationTestProjects)" Condition="'$(IncludeIntegrationTests)' == 'false'" />
+    <ProjectReference Remove="@(SharedProjects)" Condition="'$(IncludeSrc)' == 'false'" />
+    <ProjectReference Remove="@(SourceGenerationProjects)" Condition="'$(IncludeSourceGeneration)' == 'false'" />
+  </ItemGroup>
 
   <!-- Remove all projects except the ones included by the SDKType filter -->
   <ItemGroup Condition="'$(SDKType)' != 'all'">
@@ -43,6 +97,7 @@
     <Error Condition="'$(Scope)' == '' and '@(ProjectReference)' == ''"
         Text="No Projects found with patttern [..\sdk\$(ServiceDirectory)\$(Project)\*.csproj], please make sure you have passed in the correct ServiceDirectory." />
   </Target>
+
 
   <Target Name="GenerateCode">
     <MSBuild Projects="@(ProjectReference)"
@@ -78,7 +133,20 @@
             Targets="GetPackageInfo"
             BuildInParallel="$(BuildInParallel)"
             SkipNonexistentProjects="false"
-            SkipNonexistentTargets="true" />
+            SkipNonexistentTargets="true">
+      <Output ItemName="PackageInfoLines" TaskParameter="TargetOutputs" />
+    </MSBuild>
+    
+    <!-- Deduplicate package info lines -->
+    <RemoveDuplicates Inputs="@(PackageInfoLines)">
+      <Output TaskParameter="Filtered" ItemName="PackageInfoLinesFiltered"/>
+    </RemoveDuplicates>
+    
+    <!-- Write aggregated package info to file if OutputProjectInfoListFilePath is specified -->
+    <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''" 
+                      File="$(OutputProjectInfoListFilePath)" 
+                      Lines="@(PackageInfoLinesFiltered)" 
+                      Overwrite="true" />
   </Target>
 
   <Target Name="GetCodeGenProjects">
@@ -108,13 +176,13 @@
             SkipNonexistentTargets="true">
       <Output ItemName="ProjectsToInclude" TaskParameter="TargetOutputs"/>
     </MSBuild>
-    <RemoveDuplicates Inputs="@(ProjectsToInclude->Replace($(RepoRoot), ''))">
+    <RemoveDuplicates Inputs="@(ProjectsToInclude)">
       <Output TaskParameter="Filtered" ItemName="ProjectsToIncludeFitered"/>
     </RemoveDuplicates>
     <Message Text="Write to file $(OutputProjectFilePath)" Importance="high"/>
-    <Message Text="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" Importance="high"/>
+    <Message Text="%(ProjectsToIncludeFitered.Identity)" Importance="high"/>
     <ItemGroup>
-      <_WriteToLines Include="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" />
+      <_WriteToLines Include="%(ProjectsToIncludeFitered.Identity)" />
     </ItemGroup>
     <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
   </Target>

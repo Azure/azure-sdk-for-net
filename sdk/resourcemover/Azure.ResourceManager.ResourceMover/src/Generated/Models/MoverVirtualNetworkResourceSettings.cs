@@ -7,20 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the virtual network resource settings. </summary>
     public partial class MoverVirtualNetworkResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of MoverVirtualNetworkResourceSettings. </summary>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
-        public MoverVirtualNetworkResourceSettings(string targetResourceName) : base(targetResourceName)
+        /// <summary> Initializes a new instance of <see cref="MoverVirtualNetworkResourceSettings"/>. </summary>
+        public MoverVirtualNetworkResourceSettings()
         {
-            Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-
             Tags = new ChangeTrackingDictionary<string, string>();
             AddressSpace = new ChangeTrackingList<string>();
             DnsServers = new ChangeTrackingList<string>();
@@ -28,9 +23,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceType = "Microsoft.Network/virtualNetworks";
         }
 
-        /// <summary> Initializes a new instance of MoverVirtualNetworkResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverVirtualNetworkResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="enableDdosProtection">
         /// Gets or sets a value indicating whether gets or sets whether the
@@ -42,7 +39,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// deployed in the virtual network.
         /// </param>
         /// <param name="subnets"> Gets or sets List of subnets in a VirtualNetwork. </param>
-        internal MoverVirtualNetworkResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, bool? enableDdosProtection, IList<string> addressSpace, IList<string> dnsServers, IList<SubnetResourceSettings> subnets) : base(resourceType, targetResourceName)
+        internal MoverVirtualNetworkResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, bool? enableDdosProtection, IList<string> addressSpace, IList<string> dnsServers, IList<SubnetResourceSettings> subnets) : base(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData)
         {
             Tags = tags;
             EnableDdosProtection = enableDdosProtection;

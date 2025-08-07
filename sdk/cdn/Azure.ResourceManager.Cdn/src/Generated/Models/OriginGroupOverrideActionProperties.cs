@@ -6,29 +6,54 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the origin group override action. </summary>
-    public partial class OriginGroupOverrideActionProperties
+    /// <summary>
+    /// Defines the parameters for the origin group override action.
+    /// Serialized Name: OriginGroupOverrideActionParameters
+    /// </summary>
+    public partial class OriginGroupOverrideActionProperties : DeliveryRuleActionProperties
     {
-        /// <summary> Initializes a new instance of OriginGroupOverrideActionProperties. </summary>
-        /// <param name="actionType"></param>
-        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
+        /// <param name="originGroup">
+        /// defines the OriginGroup that would override the DefaultOriginGroup.
+        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
-        public OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup)
+        public OriginGroupOverrideActionProperties(WritableSubResource originGroup)
         {
             Argument.AssertNotNull(originGroup, nameof(originGroup));
 
-            ActionType = actionType;
             OriginGroup = originGroup;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters;
         }
 
-        /// <summary> Gets or sets the action type. </summary>
-        public OriginGroupOverrideActionType ActionType { get; set; }
-        /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="originGroup">
+        /// defines the OriginGroup that would override the DefaultOriginGroup.
+        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
+        /// </param>
+        internal OriginGroupOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource originGroup) : base(typeName, serializedAdditionalRawData)
+        {
+            OriginGroup = originGroup;
+            TypeName = typeName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/> for deserialization. </summary>
+        internal OriginGroupOverrideActionProperties()
+        {
+        }
+
+        /// <summary>
+        /// defines the OriginGroup that would override the DefaultOriginGroup.
+        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
+        /// </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginGroupId

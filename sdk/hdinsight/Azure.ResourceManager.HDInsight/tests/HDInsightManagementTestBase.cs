@@ -1,20 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
-using System.Collections.Generic;
-using System;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
-using System.Linq;
-using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Network;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Tests
 {
@@ -22,10 +20,11 @@ namespace Azure.ResourceManager.HDInsight.Tests
     {
         protected ArmClient Client { get; private set; }
         protected const string DefaultResourceGroupPrefix = "HDInsightRG-";
-        protected AzureLocation DefaultLocation = AzureLocation.JapanEast;
-        protected const string Common_User = "sshuser5951";
-        protected const string Common_Password = "Password!5951";
-
+        protected AzureLocation DefaultLocation = AzureLocation.EastAsia;
+        protected const string Common_User = "sshusername";
+        protected const string Common_Password = "ValidPassword";
+        protected const string Common_VNet_Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hdi-ps-test/providers/Microsoft.Network/virtualNetworks/hditestvnet";
+        protected const string Common_SubNet = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hdi-ps-test/providers/Microsoft.Network/virtualNetworks/hditestvnet/subnets/default";
         protected HDInsightManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
         protected HDInsightClusterCreateOrUpdateProperties PrepareClusterCreateParams(string storageAccountName, string containerName, string accessKey)
         {
-            string clusterDeifnitionConfigurations = "{         \"gateway\": {             \"restAuthCredential.isEnabled\": \"true\",             \"restAuthCredential.username\": \"admin4468\",             \"restAuthCredential.password\": \"Password1!9688\"         }     } ";
+            string clusterDeifnitionConfigurations = "{         \"gateway\": {             \"restAuthCredential.isEnabled\": \"true\",             \"restAuthCredential.username\": \"admin\",             \"restAuthCredential.password\": \"Password\"         }     } ";
             var properties = new HDInsightClusterCreateOrUpdateProperties()
             {
                 ClusterVersion = "4.0",
@@ -96,33 +95,48 @@ namespace Azure.ResourceManager.HDInsight.Tests
             {
                 Name = "headnode",
                 TargetInstanceCount = 2,
-                HardwareVmSize = "Large",
+                HardwareVmSize = "standard_e8_v3",
                 OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
                     Username = Common_User,
                     Password = Common_Password
+                },
+                VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
+                {
+                    Id = new ResourceIdentifier(Common_VNet_Id),
+                    Subnet = Common_SubNet
                 }
             });
             properties.ComputeRoles.Add(new HDInsightClusterRole()
             {
                 Name = "workernode",
                 TargetInstanceCount = 3,
-                HardwareVmSize = "Large",
+                HardwareVmSize = "standard_e8_v3",
                 OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
                     Username = Common_User,
                     Password = Common_Password
+                },
+                VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
+                {
+                    Id = new ResourceIdentifier(Common_VNet_Id),
+                    Subnet = Common_SubNet
                 }
             });
             properties.ComputeRoles.Add(new HDInsightClusterRole()
             {
                 Name = "zookeepernode",
                 TargetInstanceCount = 3,
-                HardwareVmSize = "Small",
+                HardwareVmSize = "standard_a2_v2",
                 OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
                     Username = Common_User,
                     Password = Common_Password
+                },
+                VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
+                {
+                    Id = new ResourceIdentifier(Common_VNet_Id),
+                    Subnet = Common_SubNet
                 }
             });
             properties.StorageAccounts.Add(new HDInsightStorageAccountInfo()

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere.Models;
@@ -15,49 +16,60 @@ namespace Azure.ResourceManager.Sphere
     /// <summary>
     /// A class representing the SphereCertificate data model.
     /// An certificate resource belonging to a catalog resource.
-    /// Serialized Name: Certificate
     /// </summary>
     public partial class SphereCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereCertificateData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateData"/>. </summary>
         public SphereCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="certificate">
-        /// The certificate as a UTF-8 encoded base 64 string.
-        /// Serialized Name: Certificate.properties.certificate
-        /// </param>
-        /// <param name="status">
-        /// The certificate status.
-        /// Serialized Name: Certificate.properties.status
-        /// </param>
-        /// <param name="subject">
-        /// The certificate subject.
-        /// Serialized Name: Certificate.properties.subject
-        /// </param>
-        /// <param name="thumbprint">
-        /// The certificate thumbprint.
-        /// Serialized Name: Certificate.properties.thumbprint
-        /// </param>
-        /// <param name="expiryUtc">
-        /// The certificate expiry date.
-        /// Serialized Name: Certificate.properties.expiryUtc
-        /// </param>
-        /// <param name="notBeforeUtc">
-        /// The certificate not before date.
-        /// Serialized Name: Certificate.properties.notBeforeUtc
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: Certificate.properties.provisioningState
-        /// </param>
-        internal SphereCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
+        /// <param name="status"> The certificate status. </param>
+        /// <param name="subject"> The certificate subject. </param>
+        /// <param name="thumbprint"> The certificate thumbprint. </param>
+        /// <param name="expiryUtc"> The certificate expiry date. </param>
+        /// <param name="notBeforeUtc"> The certificate not before date. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Certificate = certificate;
             Status = status;
@@ -66,42 +78,22 @@ namespace Azure.ResourceManager.Sphere
             ExpiryUtc = expiryUtc;
             NotBeforeUtc = notBeforeUtc;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The certificate as a UTF-8 encoded base 64 string.
-        /// Serialized Name: Certificate.properties.certificate
-        /// </summary>
+        /// <summary> The certificate as a UTF-8 encoded base 64 string. </summary>
         public string Certificate { get; }
-        /// <summary>
-        /// The certificate status.
-        /// Serialized Name: Certificate.properties.status
-        /// </summary>
+        /// <summary> The certificate status. </summary>
         public SphereCertificateStatus? Status { get; }
-        /// <summary>
-        /// The certificate subject.
-        /// Serialized Name: Certificate.properties.subject
-        /// </summary>
+        /// <summary> The certificate subject. </summary>
         public string Subject { get; }
-        /// <summary>
-        /// The certificate thumbprint.
-        /// Serialized Name: Certificate.properties.thumbprint
-        /// </summary>
+        /// <summary> The certificate thumbprint. </summary>
         public string Thumbprint { get; }
-        /// <summary>
-        /// The certificate expiry date.
-        /// Serialized Name: Certificate.properties.expiryUtc
-        /// </summary>
+        /// <summary> The certificate expiry date. </summary>
         public DateTimeOffset? ExpiryUtc { get; }
-        /// <summary>
-        /// The certificate not before date.
-        /// Serialized Name: Certificate.properties.notBeforeUtc
-        /// </summary>
+        /// <summary> The certificate not before date. </summary>
         public DateTimeOffset? NotBeforeUtc { get; }
-        /// <summary>
-        /// The status of the last operation.
-        /// Serialized Name: Certificate.properties.provisioningState
-        /// </summary>
+        /// <summary> The status of the last operation. </summary>
         public SphereProvisioningState? ProvisioningState { get; }
     }
 }

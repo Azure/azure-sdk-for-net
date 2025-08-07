@@ -1,7 +1,0 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <IsLegacyMgmtProject>true</IsLegacyMgmtProject>
-    <SkipBaselineTargetFxMatching>true</SkipBaselineTargetFxMatching>
-  </PropertyGroup>
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
-</Project>

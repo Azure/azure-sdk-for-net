@@ -9,13 +9,9 @@ You can set `endpoint`, `username`, `password` etc. based on an environment vari
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_CreateClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
-string clientId = Environment.GetEnvironmentVariable("ClientId");
-string tenantId = Environment.GetEnvironmentVariable("TenantId");
-string username = Environment.GetEnvironmentVariable("Username");
-string password = Environment.GetEnvironmentVariable("Password");
+TokenCredential credential = new DefaultAzureCredential();
 
-TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
-var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
+var client = new WorkflowsClient(endpoint, credential);
 ```
 
 ## Cancel a workflow run
@@ -26,5 +22,5 @@ Guid workflowRunId = new Guid("4f8d70c3-c09b-4e56-bfd1-8b86c79bd4d9");
 
 string request = "{\"comment\":\"Thanks!\"}";
 
-Response cancelResult = await client.CancelWorkflowRunAsync(workflowRunId, RequestContent.Create(request));
+Response cancelResult = await client.CancelAsync(workflowRunId, RequestContent.Create(request));
 ```

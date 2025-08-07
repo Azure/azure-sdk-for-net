@@ -70,6 +70,31 @@ namespace Azure.Core.Tests
             }
         };
 
+        private const string PopChallenge = "PoP realm=\"\", authorization_uri=\"https://login.microsoftonline.com/common/oauth2/authorize\", client_id=\"00000003-0000-0000-c000-000000000000\", nonce=\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjY3NDYyMDhENkQ5RTgyMkI3NzIxNjcyODg3MTg5OUIwREMzRTU4M0MifQ.eyJ0cyI6MTY5OTkwMDY5OH0.nvO9sU5EY5rQW_b1mElzUKflSKA_sWPPeeGzLAhRPdp9fcxz3HJGJbySvRgMhJCJDKxbveNBG7XrDh-jgKFggw32pAB6N7dCFQcs3Eyh8TEQoj2S303pvk1Hajw0YCcJRH_7GdqNdxyPk8UTip9vkEyOjXRj8YvYO2O8_CKcMJb7-PCaNDh9JBDVAysV8bhZS3wvUw4G--Mi1DZkaFn12kGSm_0odK1ROp11s0U2-5PW7M5gyRL9mU5EX96L9aiICseCipolm1e2tlmy_YpLOGS5oTy2qKukWiZv9cDylrgerbt8tOlO4VETH5hGZC6wken4MM2oTEIwOBZtaXIirg\", Bearer realm=\"\", authorization_uri=\"https://login.microsoftonline.com/common/oauth2/authorize\", client_id=\"00000003-0000-0000-c000-000000000001\"";
+        private static Challenge[] ParsedPopChallenge = {
+            new Challenge()
+            {
+                Scheme = "PoP",
+                Parameters =
+                {
+                    ("realm", ""),
+                    ("authorization_uri", "https://login.microsoftonline.com/common/oauth2/authorize"),
+                    ("client_id", "00000003-0000-0000-c000-000000000000"),
+                    ("nonce", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjY3NDYyMDhENkQ5RTgyMkI3NzIxNjcyODg3MTg5OUIwREMzRTU4M0MifQ.eyJ0cyI6MTY5OTkwMDY5OH0.nvO9sU5EY5rQW_b1mElzUKflSKA_sWPPeeGzLAhRPdp9fcxz3HJGJbySvRgMhJCJDKxbveNBG7XrDh-jgKFggw32pAB6N7dCFQcs3Eyh8TEQoj2S303pvk1Hajw0YCcJRH_7GdqNdxyPk8UTip9vkEyOjXRj8YvYO2O8_CKcMJb7-PCaNDh9JBDVAysV8bhZS3wvUw4G--Mi1DZkaFn12kGSm_0odK1ROp11s0U2-5PW7M5gyRL9mU5EX96L9aiICseCipolm1e2tlmy_YpLOGS5oTy2qKukWiZv9cDylrgerbt8tOlO4VETH5hGZC6wken4MM2oTEIwOBZtaXIirg")
+                }
+            },
+            new Challenge()
+            {
+                Scheme = "Bearer",
+                Parameters =
+                {
+                    ("realm", ""),
+                    ("authorization_uri", "https://login.microsoftonline.com/common/oauth2/authorize"),
+                    ("client_id", "00000003-0000-0000-c000-000000000001")
+                }
+            }
+        };
+
         private static readonly Dictionary<string, string> ChallengeStrings = new Dictionary<string, string>()
         {
             { "CaeInsufficientClaims", CaeInsufficientClaimsChallenge },
@@ -77,6 +102,7 @@ namespace Azure.Core.Tests
             { "KeyVault", KeyVaultChallenge },
             { "Arm", ArmChallenge },
             { "Storage", StorageChallenge },
+            { "PopWithBearer", PopChallenge}
         };
 
         private static readonly Dictionary<string, Challenge> ParsedChallenges = new Dictionary<string, Challenge>()
@@ -85,7 +111,8 @@ namespace Azure.Core.Tests
             { "CaeSessionsRevoked", ParsedCaeSessionsRevokedClaimsChallenge },
             { "KeyVault", ParsedKeyVaultChallenge },
             { "Arm", ParsedArmChallenge },
-            { "Storage", ParsedStorageChallenge }
+            { "Storage", ParsedStorageChallenge },
+            { "PopWithBearer", ParsedPopChallenge[0] }
         };
 
         private static readonly List<Challenge> MultipleParsedChallenges = new List<Challenge>()
@@ -155,6 +182,36 @@ namespace Azure.Core.Tests
             for (int i = 0; i < parsedChallenges.Count; i++)
             {
                 ValidateParsedChallenge(MultipleParsedChallenges[i], parsedChallenges[i]);
+            }
+        }
+
+        [Test]
+        public void ValidateChallengeParsingWithPopAndBearerChallenge()
+        {
+            var challenge = PopChallenge.AsSpan();
+
+            List<Challenge> parsedChallenges = new List<Challenge>();
+
+            while (AuthorizationChallengeParser.TryGetNextChallenge(ref challenge, out var scheme))
+            {
+                Challenge parsedChallenge = new Challenge
+                {
+                    Scheme = scheme.ToString()
+                };
+
+                while (AuthorizationChallengeParser.TryGetNextParameter(ref challenge, out var key, out var value))
+                {
+                    parsedChallenge.Parameters.Add((key.ToString(), value.ToString()));
+                }
+
+                parsedChallenges.Add(parsedChallenge);
+            }
+
+            Assert.AreEqual(2, parsedChallenges.Count);
+
+            for (int i = 0; i < parsedChallenges.Count; i++)
+            {
+                ValidateParsedChallenge(ParsedPopChallenge[i], parsedChallenges[i]);
             }
         }
 

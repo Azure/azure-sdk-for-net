@@ -5,28 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Reverse Shipping Address and contact details for a job. </summary>
     public partial class ReverseShippingDetails
     {
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReverseShippingDetails"/>. </summary>
         public ReverseShippingDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseShippingDetails"/>. </summary>
         /// <param name="contactDetails"> Contact Info. </param>
         /// <param name="shippingAddress"> Shipping address where customer wishes to receive the device. </param>
         /// <param name="isUpdated">
         /// A flag to indicate whether Reverse Shipping details are updated or not after device has been prepared.
         /// Read only field
         /// </param>
-        internal ReverseShippingDetails(ContactInfo contactDetails, DataBoxShippingAddress shippingAddress, bool? isUpdated)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReverseShippingDetails(ContactInfo contactDetails, DataBoxShippingAddress shippingAddress, bool? isUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactDetails = contactDetails;
             ShippingAddress = shippingAddress;
             IsUpdated = isUpdated;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Contact Info. </summary>

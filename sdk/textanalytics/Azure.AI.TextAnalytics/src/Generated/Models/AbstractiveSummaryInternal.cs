@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> An object representing a single summary with context for given document. </summary>
     internal partial class AbstractiveSummaryInternal
     {
-        /// <summary> Initializes a new instance of AbstractiveSummaryInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummaryInternal"/>. </summary>
         /// <param name="text"> The text of the summary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AbstractiveSummaryInternal(string text)
@@ -25,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             Contexts = new ChangeTrackingList<SummaryContextInternal>();
         }
 
-        /// <summary> Initializes a new instance of AbstractiveSummaryInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummaryInternal"/>. </summary>
         /// <param name="text"> The text of the summary. </param>
         /// <param name="contexts"> The context list of the summary. </param>
         internal AbstractiveSummaryInternal(string text, IList<SummaryContextInternal> contexts)

@@ -32,5 +32,13 @@ namespace Azure.Storage.Files.Shares
                     throw new ArgumentException($"{nameof(StorageChecksumAlgorithm)} does not support value {Enum.GetName(typeof(StorageChecksumAlgorithm), resolved) ?? ((int)resolved).ToString(CultureInfo.InvariantCulture)}.");
             }
         }
+
+        public static void AssertNotDevelopment(StorageConnectionString conn, string argumentName)
+        {
+            if (conn.IsDevStoreAccount)
+            {
+                throw new ArgumentException("Connection string for emulator is not valid for Azure File Shares", argumentName);
+            }
+        }
     }
 }

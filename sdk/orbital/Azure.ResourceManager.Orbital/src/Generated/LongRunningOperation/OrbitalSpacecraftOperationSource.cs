@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Orbital
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Orbital
 
         OrbitalSpacecraftResource IOperationSource<OrbitalSpacecraftResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(document.RootElement);
+            var data = ModelReaderWriter.Read<OrbitalSpacecraftData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOrbitalContext.Default);
             return new OrbitalSpacecraftResource(_client, data);
         }
 
         async ValueTask<OrbitalSpacecraftResource> IOperationSource<OrbitalSpacecraftResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(document.RootElement);
-            return new OrbitalSpacecraftResource(_client, data);
+            var data = ModelReaderWriter.Read<OrbitalSpacecraftData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOrbitalContext.Default);
+            return await Task.FromResult(new OrbitalSpacecraftResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

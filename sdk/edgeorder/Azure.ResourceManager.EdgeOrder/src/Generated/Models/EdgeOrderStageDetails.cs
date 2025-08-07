@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Resource stage details. </summary>
     public partial class EdgeOrderStageDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderStageDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderStageDetails"/>. </summary>
         internal EdgeOrderStageDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderStageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderStageDetails"/>. </summary>
         /// <param name="stageStatus"> Stage status. </param>
         /// <param name="stageName"> Stage name. </param>
         /// <param name="displayName"> Display name of the resource stage. </param>
         /// <param name="startOn"> Stage start time. </param>
-        internal EdgeOrderStageDetails(EdgeOrderStageStatus? stageStatus, EdgeOrderStageName? stageName, string displayName, DateTimeOffset? startOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderStageDetails(EdgeOrderStageStatus? stageStatus, EdgeOrderStageName? stageName, string displayName, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StageStatus = stageStatus;
             StageName = stageName;
             DisplayName = displayName;
             StartOn = startOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Stage status. </summary>

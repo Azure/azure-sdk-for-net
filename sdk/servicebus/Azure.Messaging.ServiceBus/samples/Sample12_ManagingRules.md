@@ -1,13 +1,16 @@
 # Managing rules
 
-As shown in the [CRUD operations sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample07_CrudOperations.md), rules can be created, deleted, and retrieved using the `ServiceBusAdministrationClient`. In order to perform these operations, you need to have `Manage` rights to the Service Bus namespace. When using Azure Identity, this translates to requiring the [Service Bus Data Owner role](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-service-bus-data-owner) be granted to your identity. It is also possible to perform these rule management operations using the `ServiceBusRuleManager` type. The major benefit to using this type is that you only need `Listen` rights for the subscription you wish to manage rules for, which corresponds to the [Service Bus Data Receiver role](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-service-bus-data-receiver). The following snippet provides an example of how to use this type.
+As shown in the article on [Topic filters and actions](https://learn.microsoft.com/azure/service-bus-messaging/topic-filters), rules can be managed using the `ServiceBusAdministrationClient`. In order to perform these operations, you need to have `Manage` rights to the Service Bus namespace. When using Azure Identity, this translates to requiring the [Service Bus Data Owner role](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#azure-service-bus-data-owner) be granted to your identity.
+
+It is also possible to perform these rule management operations using the `ServiceBusRuleManager` type. The major benefit to using this type is that you only need `Listen` rights for the subscription you wish to manage rules for, which corresponds to the [Service Bus Data Receiver role](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#azure-service-bus-data-receiver). The following snippet provides an example of how to use this type.
 
 ```C# Snippet:ServiceBusManageRules
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string topicName = "<topic_name>";
 string subscriptionName = "<subscription_name>";
+DefaultAzureCredential credential = new();
 
-await using var client = new ServiceBusClient(connectionString);
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
 await using ServiceBusRuleManager ruleManager = client.CreateRuleManager(topicName, subscriptionName);
 
@@ -22,9 +25,9 @@ ServiceBusSender sender = client.CreateSender(topicName);
 
 ServiceBusMessage[] messages =
 {
-    new ServiceBusMessage { Subject = "Ford", ApplicationProperties = { { "Price", 25000 } } },
-    new ServiceBusMessage { Subject = "Toyota", ApplicationProperties = { { "Price", 28000 } } },
-    new ServiceBusMessage { Subject = "Honda", ApplicationProperties = { { "Price", 35000 } } }
+    new ServiceBusMessage() { Subject = "Ford", ApplicationProperties = { { "Price", 25000 } } },
+    new ServiceBusMessage() { Subject = "Toyota", ApplicationProperties = { { "Price", 28000 } } },
+    new ServiceBusMessage() { Subject = "Honda", ApplicationProperties = { { "Price", 35000 } } }
 };
 
 // send the messages

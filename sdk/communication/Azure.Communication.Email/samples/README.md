@@ -19,14 +19,14 @@ This client library allows to do following operations:
  - Send a simple email message with manual polling for status
  - Specify optional paramters while sending Emails
  - Send an email message to multiple recipients
- - Send an email message with attachments
+ - Send an email message with attachments and inline attachments
 
  #### You can find samples for each of these functions below.
  - Send simple email message with automatic polling for status [synchronously][sample_simpleemail_autopolling] or [asynchronously][sample_simpleemail_autopolling_async]
  - Send simple email message with manual polling for status [asynchronously][sample_simpleemail_manualpolling_async]
  - Specify optional paramters while sending Emails [synchronously][sample_emailwithoptions] or [asynchronously][sample_emailwithoptions_async]
  - Send an email message to multiple recipients [synchronously][sample_email_multiplerecipients] or [asynchronously][sample_email_multiplerecipients_async]
- - Send an email message with attachments [synchronously][sample_email_attachments] or [asynchronously][sample_email_attachments_async]
+ - Send an email message with attachments and inline attachments [synchronously][sample_email_attachments] or [asynchronously][sample_email_attachments_async]
 
 <!-- LINKS -->
 [sample_simpleemail_autopolling]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Email/samples/Sample1_SendSimpleEmailWithAutomaticPollingForStatus.md

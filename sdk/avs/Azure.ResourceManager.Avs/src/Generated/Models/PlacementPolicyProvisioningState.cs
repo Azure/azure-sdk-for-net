@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The provisioning state. </summary>
+    /// <summary> Placement Policy provisioning state. </summary>
     public readonly partial struct PlacementPolicyProvisioningState : IEquatable<PlacementPolicyProvisioningState>
     {
         private readonly string _value;
@@ -24,28 +24,28 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static PlacementPolicyProvisioningState Succeeded { get; } = new PlacementPolicyProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static PlacementPolicyProvisioningState Failed { get; } = new PlacementPolicyProvisioningState(FailedValue);
-        /// <summary> Building. </summary>
-        public static PlacementPolicyProvisioningState Building { get; } = new PlacementPolicyProvisioningState(BuildingValue);
-        /// <summary> Deleting. </summary>
-        public static PlacementPolicyProvisioningState Deleting { get; } = new PlacementPolicyProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static PlacementPolicyProvisioningState Updating { get; } = new PlacementPolicyProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static PlacementPolicyProvisioningState Canceled { get; } = new PlacementPolicyProvisioningState(CanceledValue);
+        /// <summary> is building. </summary>
+        public static PlacementPolicyProvisioningState Building { get; } = new PlacementPolicyProvisioningState(BuildingValue);
+        /// <summary> is deleting. </summary>
+        public static PlacementPolicyProvisioningState Deleting { get; } = new PlacementPolicyProvisioningState(DeletingValue);
+        /// <summary> is updating. </summary>
+        public static PlacementPolicyProvisioningState Updating { get; } = new PlacementPolicyProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="PlacementPolicyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PlacementPolicyProvisioningState left, PlacementPolicyProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlacementPolicyProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(PlacementPolicyProvisioningState left, PlacementPolicyProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlacementPolicyProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlacementPolicyProvisioningState"/>. </summary>
         public static implicit operator PlacementPolicyProvisioningState(string value) => new PlacementPolicyProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

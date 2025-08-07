@@ -30,6 +30,12 @@ namespace Azure.ResourceManager.Storage.Models
         private const string PremiumZrsValue = "Premium_ZRS";
         private const string StandardGzrsValue = "Standard_GZRS";
         private const string StandardRagzrsValue = "Standard_RAGZRS";
+        private const string StandardV2LrsValue = "StandardV2_LRS";
+        private const string StandardV2GrsValue = "StandardV2_GRS";
+        private const string StandardV2ZrsValue = "StandardV2_ZRS";
+        private const string StandardV2GzrsValue = "StandardV2_GZRS";
+        private const string PremiumV2LrsValue = "PremiumV2_LRS";
+        private const string PremiumV2ZrsValue = "PremiumV2_ZRS";
 
         /// <summary> Standard_LRS. </summary>
         public static StorageSkuName StandardLrs { get; } = new StorageSkuName(StandardLrsValue);
@@ -47,11 +53,23 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageSkuName StandardGzrs { get; } = new StorageSkuName(StandardGzrsValue);
         /// <summary> Standard_RAGZRS. </summary>
         public static StorageSkuName StandardRagzrs { get; } = new StorageSkuName(StandardRagzrsValue);
+        /// <summary> StandardV2_LRS. </summary>
+        public static StorageSkuName StandardV2Lrs { get; } = new StorageSkuName(StandardV2LrsValue);
+        /// <summary> StandardV2_GRS. </summary>
+        public static StorageSkuName StandardV2Grs { get; } = new StorageSkuName(StandardV2GrsValue);
+        /// <summary> StandardV2_ZRS. </summary>
+        public static StorageSkuName StandardV2Zrs { get; } = new StorageSkuName(StandardV2ZrsValue);
+        /// <summary> StandardV2_GZRS. </summary>
+        public static StorageSkuName StandardV2Gzrs { get; } = new StorageSkuName(StandardV2GzrsValue);
+        /// <summary> PremiumV2_LRS. </summary>
+        public static StorageSkuName PremiumV2Lrs { get; } = new StorageSkuName(PremiumV2LrsValue);
+        /// <summary> PremiumV2_ZRS. </summary>
+        public static StorageSkuName PremiumV2Zrs { get; } = new StorageSkuName(PremiumV2ZrsValue);
         /// <summary> Determines if two <see cref="StorageSkuName"/> values are the same. </summary>
         public static bool operator ==(StorageSkuName left, StorageSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSkuName"/> values are not the same. </summary>
         public static bool operator !=(StorageSkuName left, StorageSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSkuName"/>. </summary>
         public static implicit operator StorageSkuName(string value) => new StorageSkuName(value);
 
         /// <inheritdoc />
@@ -62,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

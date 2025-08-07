@@ -12,12 +12,12 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An Access policy. </summary>
     public partial class BlobAccessPolicy
     {
-        /// <summary> Initializes a new instance of BlobAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobAccessPolicy"/>. </summary>
         public BlobAccessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobAccessPolicy"/>. </summary>
         /// <param name="policyStartsOn"> the date-time the policy is active. </param>
         /// <param name="policyExpiresOn"> the date-time the policy expires. </param>
         /// <param name="permissions"> the permissions for the acl policy. </param>

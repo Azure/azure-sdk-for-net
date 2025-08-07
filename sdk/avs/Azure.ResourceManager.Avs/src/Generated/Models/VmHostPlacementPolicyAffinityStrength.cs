@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> VM-Host placement policy affinity strength (should/must). </summary>
+    /// <summary> Affinity Strength. </summary>
     public readonly partial struct VmHostPlacementPolicyAffinityStrength : IEquatable<VmHostPlacementPolicyAffinityStrength>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string ShouldValue = "Should";
         private const string MustValue = "Must";
 
-        /// <summary> Should. </summary>
+        /// <summary> is should. </summary>
         public static VmHostPlacementPolicyAffinityStrength Should { get; } = new VmHostPlacementPolicyAffinityStrength(ShouldValue);
-        /// <summary> Must. </summary>
+        /// <summary> is must. </summary>
         public static VmHostPlacementPolicyAffinityStrength Must { get; } = new VmHostPlacementPolicyAffinityStrength(MustValue);
         /// <summary> Determines if two <see cref="VmHostPlacementPolicyAffinityStrength"/> values are the same. </summary>
         public static bool operator ==(VmHostPlacementPolicyAffinityStrength left, VmHostPlacementPolicyAffinityStrength right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmHostPlacementPolicyAffinityStrength"/> values are not the same. </summary>
         public static bool operator !=(VmHostPlacementPolicyAffinityStrength left, VmHostPlacementPolicyAffinityStrength right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VmHostPlacementPolicyAffinityStrength"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VmHostPlacementPolicyAffinityStrength"/>. </summary>
         public static implicit operator VmHostPlacementPolicyAffinityStrength(string value) => new VmHostPlacementPolicyAffinityStrength(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

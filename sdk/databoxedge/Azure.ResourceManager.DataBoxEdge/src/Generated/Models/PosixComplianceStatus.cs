@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(PosixComplianceStatus left, PosixComplianceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PosixComplianceStatus"/> values are not the same. </summary>
         public static bool operator !=(PosixComplianceStatus left, PosixComplianceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PosixComplianceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PosixComplianceStatus"/>. </summary>
         public static implicit operator PosixComplianceStatus(string value) => new PosixComplianceStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

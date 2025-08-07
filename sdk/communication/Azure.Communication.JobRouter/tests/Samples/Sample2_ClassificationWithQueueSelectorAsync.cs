@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -23,7 +20,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionById
             // In this scenario we are going to use a classification policy while submitting a job.
-            // We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
+            // We are going to utilize the 'QueueSelectorAttachments' attribute on the classification policy to determine
             // which queue a job should be enqueued in. For this scenario, we are going to demonstrate
             // StaticLabelSelector to select a queue directly by its unique ID through the classification policy
             // Steps
@@ -42,13 +39,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 }
                 );
 
-            Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId: "Queue-1", distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_365",
                 });
 
-            Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId: "Queue-2", distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_XBox",
@@ -58,9 +55,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-o365")
                 {
                     Name = "Classification_Policy_O365",
-                    QueueSelectors =
+                    QueueSelectorAttachments =
                     {
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new RouterValue(queue1.Value.Id)))
                     },
                 });
 
@@ -68,9 +65,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-xbox")
                 {
                     Name = "Classification_Policy_XBox",
-                    QueueSelectors =
+                    QueueSelectorAttachments =
                     {
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new RouterValue(queue2.Value.Id)))
                     }
                 });
 
@@ -124,7 +121,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionByConditionalLabelAttachments
             // In this scenario we are going to use a classification policy while submitting a job.
-            // We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
+            // We are going to utilize the 'QueueSelectorAttachments' attribute on the classification policy to determine
             // which queue a job should be enqueued in. For this scenario, we are going to demonstrate
             // ConditionalLabelSelector to select a queue based on labels associated with a queue
             // Steps
@@ -152,7 +149,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 }
             );
 
-            Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-1",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -160,11 +157,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_365",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("Office_Support")
+                        ["ProductDetail"] = new RouterValue("Office_Support")
                     }
                 });
 
-            Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-2",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -172,7 +169,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_XBox",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("XBox_Support")
+                        ["ProductDetail"] = new RouterValue("XBox_Support")
                     }
                 });
 
@@ -180,18 +177,18 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
                 {
                     Name = "Classification_Policy_O365_And_XBox",
-                    QueueSelectors = {
+                    QueueSelectorAttachments = {
                         new ConditionalQueueSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
-                                new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("Office_Support"))
+                                new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new RouterValue("Office_Support"))
                             }),
                         new ConditionalQueueSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.Product = \"XBx\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
-                                new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("XBox_Support"))
+                                new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new RouterValue("XBox_Support"))
                             })
                     }
                 });
@@ -205,9 +202,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en"),
-                        ["Product"] = new LabelValue("O365"),
-                        ["Geo"] = new LabelValue("North America"),
+                        ["Language"] = new RouterValue("en"),
+                        ["Product"] = new RouterValue("O365"),
+                        ["Geo"] = new RouterValue("North America"),
                     },
                 });
 
@@ -220,9 +217,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en"),
-                        ["Product"] = new LabelValue("XBx"),
-                        ["Geo"] = new LabelValue("North America"),
+                        ["Language"] = new RouterValue("en"),
+                        ["Product"] = new RouterValue("XBx"),
+                        ["Geo"] = new RouterValue("North America"),
                     },
                 });
 
@@ -258,7 +255,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionByPassThroughLabelAttachments
             // cSpell:ignore EMEA, Emea
             // In this scenario we are going to use a classification policy while submitting a job.
-            // We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
+            // We are going to utilize the 'QueueSelectorAttachments' attribute on the classification policy to determine
             // which queue a job should be enqueued in. For this scenario, we are going to demonstrate
             // PassThroughLabelSelector to select a queue based on labels associated with a queue and the incoming job
             // Steps
@@ -288,7 +285,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 }
                 );
 
-            Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-1",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -296,13 +293,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_365_EN_EMEA",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Language"] = new LabelValue("en"),
-                        ["Region"] = new LabelValue("EMEA"),
+                        ["ProductDetail"] = new RouterValue("Office_Support"),
+                        ["Language"] = new RouterValue("en"),
+                        ["Region"] = new RouterValue("EMEA"),
                     },
                 });
 
-            Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-2",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -310,13 +307,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_365_FR_EMEA",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Language"] = new LabelValue("fr"),
-                        ["Region"] = new LabelValue("EMEA"),
+                        ["ProductDetail"] = new RouterValue("Office_Support"),
+                        ["Language"] = new RouterValue("fr"),
+                        ["Region"] = new RouterValue("EMEA"),
                     },
                 });
 
-            Response<Models.RouterQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "Queue-3",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -324,9 +321,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_365_EN_NA",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Language"] = new LabelValue("en"),
-                        ["Region"] = new LabelValue("NA"),
+                        ["ProductDetail"] = new RouterValue("Office_Support"),
+                        ["Language"] = new RouterValue("en"),
+                        ["Region"] = new RouterValue("NA"),
                     },
                 });
 
@@ -334,7 +331,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
                 {
                     Name = "Classification_Policy_O365_EMEA_NA",
-                    QueueSelectors = {
+                    QueueSelectorAttachments = {
                         new PassThroughQueueSelectorAttachment("ProductDetail", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
@@ -350,11 +347,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en"),
-                        ["Product"] = new LabelValue("O365"),
-                        ["Geo"] = new LabelValue("Europe, Middle East, Africa"),
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Region"] = new LabelValue("EMEA"),
+                        ["Language"] = new RouterValue("en"),
+                        ["Product"] = new RouterValue("O365"),
+                        ["Geo"] = new RouterValue("Europe, Middle East, Africa"),
+                        ["ProductDetail"] = new RouterValue("Office_Support"),
+                        ["Region"] = new RouterValue("EMEA"),
                     },
                 });
 
@@ -367,11 +364,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("fr"),
-                        ["Product"] = new LabelValue("O365"),
-                        ["Geo"] = new LabelValue("Europe, Middle East, Africa"),
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Region"] = new LabelValue("EMEA"),
+                        ["Language"] = new RouterValue("fr"),
+                        ["Product"] = new RouterValue("O365"),
+                        ["Geo"] = new RouterValue("Europe, Middle East, Africa"),
+                        ["ProductDetail"] = new RouterValue("Office_Support"),
+                        ["Region"] = new RouterValue("EMEA"),
                     },
                 });
 
@@ -384,11 +381,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en"),
-                        ["Product"] = new LabelValue("O365"),
-                        ["Geo"] = new LabelValue("North America"),
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Region"] = new LabelValue("NA"),
+                        ["Language"] = new RouterValue("en"),
+                        ["Product"] = new RouterValue("O365"),
+                        ["Geo"] = new RouterValue("North America"),
+                        ["ProductDetail"] = new RouterValue("Office_Support"),
+                        ["Region"] = new RouterValue("NA"),
                     },
                 });
 

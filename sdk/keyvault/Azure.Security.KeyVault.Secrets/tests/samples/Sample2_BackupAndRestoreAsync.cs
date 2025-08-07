@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             using (FileStream sourceStream = File.Open(backupPath, FileMode.Open))
             {
                 byte[] result = new byte[sourceStream.Length];
-                await sourceStream.ReadAsync(result, 0, (int)sourceStream.Length);
+                int numBytesRead = await sourceStream.ReadAsync(result, 0, (int)sourceStream.Length);
                 restoreSecret = await client.RestoreSecretBackupAsync(result);
             }
 

@@ -214,11 +214,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
-            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.OcrFormula } };
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas } };
             await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
-            var expectedSubstring = $"features=ocr.formula";
+            var expectedSubstring = $"features=formulas";
 
             Assert.True(requestUriQuery.Contains(expectedSubstring));
         }
@@ -234,11 +234,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateInstrumentedClient(options);
 
             var uri = new Uri("https://fakeuri.com/");
-            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.OcrFormula } };
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas } };
             await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
-            var expectedSubstring = $"features=ocr.formula";
+            var expectedSubstring = $"features=formulas";
 
             Assert.True(requestUriQuery.Contains(expectedSubstring));
         }
@@ -254,11 +254,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
-            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.OcrFormula, DocumentAnalysisFeature.OcrFont } };
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas, DocumentAnalysisFeature.FontStyling } };
             await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
-            var expectedSubstring = $"features=ocr.formula%2Cocr.font";
+            var expectedSubstring = $"features=formulas%2CstyleFont";
 
             Assert.True(requestUriQuery.Contains(expectedSubstring));
         }
@@ -274,91 +274,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateInstrumentedClient(options);
 
             var uri = new Uri("https://fakeuri.com/");
-            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.OcrFormula, DocumentAnalysisFeature.OcrFont } };
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas, DocumentAnalysisFeature.FontStyling } };
             await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
-            var expectedSubstring = $"features=ocr.formula%2Cocr.font";
-
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
-        }
-
-        [Test]
-        public async Task AnalyzeDocumentSendsSingleQueryField()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
-            var client = CreateInstrumentedClient(options);
-
-            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
-            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1" } };
-            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
-
-            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
-            var expectedSubstring = $"queryFields=field1";
-
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
-        }
-
-        [Test]
-        public async Task AnalyzeDocumentFromUriSendsSingleQueryField()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
-            var client = CreateInstrumentedClient(options);
-
-            var uri = new Uri("https://fakeuri.com/");
-            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1" } };
-            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
-
-            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
-            var expectedSubstring = $"queryFields=field1";
-
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
-        }
-
-        [Test]
-        public async Task AnalyzeDocumentSendsMultipleQueryFields()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
-            var client = CreateInstrumentedClient(options);
-
-            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
-            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1", "field2" } };
-            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
-
-            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
-            var expectedSubstring = $"queryFields=field1%2Cfield2";
-
-            Assert.True(requestUriQuery.Contains(expectedSubstring));
-        }
-
-        [Test]
-        public async Task AnalyzeDocumentFromUriSendsMultipleQueryFields()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
-            var client = CreateInstrumentedClient(options);
-
-            var uri = new Uri("https://fakeuri.com/");
-            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1", "field2" } };
-            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
-
-            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
-            var expectedSubstring = $"queryFields=field1%2Cfield2";
+            var expectedSubstring = $"features=formulas%2CstyleFont";
 
             Assert.True(requestUriQuery.Contains(expectedSubstring));
         }
@@ -541,49 +461,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var style = result.Styles[0];
 
             Assert.AreEqual("similarFontFamilyValue", style.SimilarFontFamily);
-            Assert.AreEqual(FontStyle.Italic, style.FontStyle);
-            Assert.AreEqual(FontWeight.Bold, style.FontWeight);
+            Assert.AreEqual(DocumentFontStyle.Italic, style.FontStyle);
+            Assert.AreEqual(DocumentFontWeight.Bold, style.FontWeight);
             Assert.AreEqual("colorValue", style.Color);
             Assert.AreEqual("backgroundColorValue", style.BackgroundColor);
-        }
-
-        [Test]
-        public async Task AnalyzeDocumentCanParseDocumentAnnotation()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
-                {
-                    "status": "succeeded",
-                    "analyzeResult": {
-                        "pages": [
-                            {
-                                "annotations": [
-                                    {
-                                        "kind": "cross",
-                                        "polygon": [1, 2, 3, 4, 5, 6, 7, 8],
-                                        "confidence": 0.75
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-                """));
-
-            var mockResponse = new MockResponse(200) { ContentStream = stream };
-            var mockTransport = new MockTransport(mockResponse);
-            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
-            var client = CreateDocumentAnalysisClient(options);
-            var operation = new AnalyzeDocumentOperation(OperationId, client);
-
-            await operation.UpdateStatusAsync();
-
-            var result = operation.Value;
-            var annotation = result.Pages[0].Annotations[0];
-            var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
-
-            Assert.AreEqual(DocumentAnnotationKind.Cross, annotation.Kind);
-            CollectionAssert.AreEqual(expectedPolygon, annotation.BoundingPolygon);
-            Assert.AreEqual(0.75f, annotation.Confidence);
         }
 
         [Test]
@@ -625,7 +506,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var barcode = result.Pages[0].Barcodes[0];
             var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
 
-            Assert.AreEqual(DocumentBarcodeKind.QRCode, barcode.Kind);
+            Assert.AreEqual(DocumentBarcodeKind.QrCode, barcode.Kind);
             Assert.AreEqual("barcodeValue", barcode.Value);
             CollectionAssert.AreEqual(expectedPolygon, barcode.BoundingPolygon);
             Assert.AreEqual(10, barcode.Span.Index);
@@ -678,51 +559,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(10, formula.Span.Index);
             Assert.AreEqual(12, formula.Span.Length);
             Assert.AreEqual(0.75f, formula.Confidence);
-        }
-
-        [Test]
-        public async Task AnalyzeDocumentCanParseDocumentImage()
-        {
-            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
-                {
-                    "status": "succeeded",
-                    "analyzeResult": {
-                        "pages": [
-                            {
-                                "images": [
-                                    {
-                                        "polygon": [1, 2, 3, 4, 5, 6, 7, 8],
-                                        "span": {
-                                            "offset": 10,
-                                            "length": 12
-                                        },
-                                        "pageNumber": 1,
-                                        "confidence": 0.75
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-                """));
-
-            var mockResponse = new MockResponse(200) { ContentStream = stream };
-            var mockTransport = new MockTransport(mockResponse);
-            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
-            var client = CreateDocumentAnalysisClient(options);
-            var operation = new AnalyzeDocumentOperation(OperationId, client);
-
-            await operation.UpdateStatusAsync();
-
-            var result = operation.Value;
-            var image = result.Pages[0].Images[0];
-            var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
-
-            CollectionAssert.AreEqual(expectedPolygon, image.BoundingPolygon);
-            Assert.AreEqual(10, image.Span.Index);
-            Assert.AreEqual(12, image.Span.Length);
-            Assert.AreEqual(1, image.PageNumber);
-            Assert.AreEqual(0.75f, image.Confidence);
         }
 
         #endregion

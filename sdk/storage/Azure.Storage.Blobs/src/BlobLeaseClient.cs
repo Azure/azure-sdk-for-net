@@ -176,6 +176,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobLease> Acquire(
             TimeSpan duration,
@@ -225,6 +227,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobLease>> AcquireAsync(
             TimeSpan duration,
@@ -288,10 +292,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response Acquire(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             TimeSpan duration,
             RequestConditions conditions,
             RequestContext context) =>
@@ -338,6 +342,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response> AcquireAsync(
@@ -390,6 +396,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response> AcquireInternal(
             TimeSpan duration,
@@ -524,6 +532,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobLease> Renew(
             RequestConditions conditions = default,
@@ -562,6 +572,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobLease>> RenewAsync(
             RequestConditions conditions = default,
@@ -603,6 +615,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<BlobLease>> RenewInternal(
             RequestConditions conditions,
@@ -743,6 +757,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<ReleasedObjectInfo> Release(
             RequestConditions conditions = default,
@@ -781,6 +797,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
             RequestConditions conditions = default,
@@ -822,14 +840,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseInternal(
             RequestConditions conditions,
 #pragma warning disable AZC0105 // DO NOT add 'async' parameter to public methods. This method is published, so it can't be modified.
             bool async,
 #pragma warning restore AZC0105 // DO NOT add 'async' parameter to public methods.
             CancellationToken cancellationToken)
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         {
             EnsureClient();
             using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
@@ -963,6 +985,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobLease> Change(
             string proposedId,
@@ -1003,6 +1027,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobLease>> ChangeAsync(
             string proposedId,
@@ -1046,6 +1072,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<BlobLease>> ChangeInternal(
             string proposedId,
@@ -1212,6 +1240,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobLease> Break(
             TimeSpan? breakPeriod = default,
@@ -1271,6 +1301,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobLease>> BreakAsync(
             TimeSpan? breakPeriod = default,
@@ -1333,6 +1365,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         private async Task<Response<BlobLease>> BreakInternal(
             TimeSpan? breakPeriod,

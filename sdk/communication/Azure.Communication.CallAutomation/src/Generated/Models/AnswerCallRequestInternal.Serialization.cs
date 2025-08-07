@@ -24,22 +24,35 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(MediaStreamingConfiguration))
+            if (Optional.IsDefined(CallIntelligenceOptions))
             {
-                writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
+                writer.WritePropertyName("callIntelligenceOptions"u8);
+                writer.WriteObjectValue(CallIntelligenceOptions);
             }
-            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            if (Optional.IsDefined(AnsweredBy))
             {
-                writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
-                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+                writer.WritePropertyName("answeredBy"u8);
+                writer.WriteObjectValue(AnsweredBy);
             }
-            if (Optional.IsDefined(AnsweredByIdentifier))
+            if (Optional.IsDefined(MediaStreamingOptions))
             {
-                writer.WritePropertyName("answeredByIdentifier"u8);
-                writer.WriteObjectValue(AnsweredByIdentifier);
+                writer.WritePropertyName("mediaStreamingOptions"u8);
+                writer.WriteObjectValue(MediaStreamingOptions);
+            }
+            if (Optional.IsDefined(TranscriptionOptions))
+            {
+                writer.WritePropertyName("transcriptionOptions"u8);
+                writer.WriteObjectValue(TranscriptionOptions);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

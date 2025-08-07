@@ -5,32 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Output of custom domain validation. </summary>
+    /// <summary>
+    /// Output of custom domain validation.
+    /// Serialized Name: ValidateCustomDomainOutput
+    /// </summary>
     public partial class ValidateCustomDomainResult
     {
-        /// <summary> Initializes a new instance of ValidateCustomDomainResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidateCustomDomainResult"/>. </summary>
         internal ValidateCustomDomainResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidateCustomDomainResult. </summary>
-        /// <param name="isCustomDomainValid"> Indicates whether the custom domain is valid or not. </param>
-        /// <param name="reason"> The reason why the custom domain is not valid. </param>
-        /// <param name="message"> Error message describing why the custom domain is not valid. </param>
-        internal ValidateCustomDomainResult(bool? isCustomDomainValid, string reason, string message)
+        /// <summary> Initializes a new instance of <see cref="ValidateCustomDomainResult"/>. </summary>
+        /// <param name="isCustomDomainValid">
+        /// Indicates whether the custom domain is valid or not.
+        /// Serialized Name: ValidateCustomDomainOutput.customDomainValidated
+        /// </param>
+        /// <param name="reason">
+        /// The reason why the custom domain is not valid.
+        /// Serialized Name: ValidateCustomDomainOutput.reason
+        /// </param>
+        /// <param name="message">
+        /// Error message describing why the custom domain is not valid.
+        /// Serialized Name: ValidateCustomDomainOutput.message
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateCustomDomainResult(bool? isCustomDomainValid, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsCustomDomainValid = isCustomDomainValid;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates whether the custom domain is valid or not. </summary>
+        /// <summary>
+        /// Indicates whether the custom domain is valid or not.
+        /// Serialized Name: ValidateCustomDomainOutput.customDomainValidated
+        /// </summary>
         public bool? IsCustomDomainValid { get; }
-        /// <summary> The reason why the custom domain is not valid. </summary>
+        /// <summary>
+        /// The reason why the custom domain is not valid.
+        /// Serialized Name: ValidateCustomDomainOutput.reason
+        /// </summary>
         public string Reason { get; }
-        /// <summary> Error message describing why the custom domain is not valid. </summary>
+        /// <summary>
+        /// Error message describing why the custom domain is not valid.
+        /// Serialized Name: ValidateCustomDomainOutput.message
+        /// </summary>
         public string Message { get; }
     }
 }

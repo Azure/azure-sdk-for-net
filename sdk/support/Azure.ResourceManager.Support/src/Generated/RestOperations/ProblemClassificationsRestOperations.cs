@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Support.Models;
@@ -33,8 +32,19 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-04-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/problemClassifications", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string serviceName)
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProblemClassificationsListResult.DeserializeProblemClassificationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,13 +105,25 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProblemClassificationsListResult.DeserializeProblemClassificationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string serviceName, string problemClassificationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/problemClassifications/", false);
+            uri.AppendPath(problemClassificationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string serviceName, string problemClassificationName)
@@ -140,7 +162,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProblemClassificationData.DeserializeProblemClassificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +191,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         ProblemClassificationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProblemClassificationData.DeserializeProblemClassificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

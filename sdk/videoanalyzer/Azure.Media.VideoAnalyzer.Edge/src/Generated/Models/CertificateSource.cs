@@ -14,12 +14,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class CertificateSource
     {
-        /// <summary> Initializes a new instance of CertificateSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateSource"/>. </summary>
         protected CertificateSource()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateSource"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         internal CertificateSource(string type)
         {

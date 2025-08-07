@@ -11,18 +11,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TrafficControllerResource" /> and their operations.
-    /// Each <see cref="TrafficControllerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="TrafficControllerCollection" /> instance call the GetTrafficControllers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="TrafficControllerResource"/> and their operations.
+    /// Each <see cref="TrafficControllerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="TrafficControllerCollection"/> instance call the GetTrafficControllers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class TrafficControllerCollection : ArmCollection, IEnumerable<TrafficControllerResource>, IAsyncEnumerable<TrafficControllerResource>
     {
@@ -62,7 +61,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_CreateOrUpdate</description>
+        /// <description>TrafficController_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,7 +110,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_CreateOrUpdate</description>
+        /// <description>TrafficController_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,7 +159,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,7 +204,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,17 +249,25 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListByResourceGroup</description>
+        /// <description>TrafficController_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TrafficControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrafficControllerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficControllerTrafficControllerInterfaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trafficControllerTrafficControllerInterfaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TrafficControllerResource(Client, TrafficControllerData.DeserializeTrafficControllerData(e)), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, "TrafficControllerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TrafficControllerResource(Client, TrafficControllerData.DeserializeTrafficControllerData(e)), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, "TrafficControllerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,17 +279,25 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_ListByResourceGroup</description>
+        /// <description>TrafficController_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TrafficControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrafficControllerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficControllerTrafficControllerInterfaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trafficControllerTrafficControllerInterfaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TrafficControllerResource(Client, TrafficControllerData.DeserializeTrafficControllerData(e)), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, "TrafficControllerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TrafficControllerResource(Client, TrafficControllerData.DeserializeTrafficControllerData(e)), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, "TrafficControllerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +309,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +352,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrafficControllerInterface_Get</description>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,6 +378,96 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 var response = _trafficControllerTrafficControllerInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trafficControllerName"> traffic controller name for path. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<TrafficControllerResource>> GetIfExistsAsync(string trafficControllerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
+
+            using var scope = _trafficControllerTrafficControllerInterfaceClientDiagnostics.CreateScope("TrafficControllerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _trafficControllerTrafficControllerInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TrafficControllerResource>(response.GetRawResponse());
+                return Response.FromValue(new TrafficControllerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrafficController_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trafficControllerName"> traffic controller name for path. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trafficControllerName"/> is null. </exception>
+        public virtual NullableResponse<TrafficControllerResource> GetIfExists(string trafficControllerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
+
+            using var scope = _trafficControllerTrafficControllerInterfaceClientDiagnostics.CreateScope("TrafficControllerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _trafficControllerTrafficControllerInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TrafficControllerResource>(response.GetRawResponse());
+                return Response.FromValue(new TrafficControllerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

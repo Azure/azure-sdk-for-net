@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HDInsight.Models;
@@ -33,8 +32,22 @@ namespace Azure.ResourceManager.HDInsight
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-15-preview";
+            _apiVersion = apiVersion ?? "2025-01-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterCreateOrUpdateContent content)
@@ -55,7 +68,7 @@ namespace Azure.ResourceManager.HDInsight
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -113,6 +126,20 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -131,7 +158,7 @@ namespace Azure.ResourceManager.HDInsight
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -159,7 +186,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,13 +217,27 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName)
@@ -271,6 +312,20 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
@@ -311,7 +366,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -342,7 +397,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightClusterData.DeserializeHDInsightClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -351,6 +406,19 @@ namespace Azure.ResourceManager.HDInsight
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -390,7 +458,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -417,13 +485,30 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResizeRequestUri(string subscriptionId, string resourceGroupName, string clusterName, HDInsightRoleName roleName, HDInsightClusterResizeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/roles/", false);
+            uri.AppendPath(roleName.ToString(), true);
+            uri.AppendPath("/resize", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResizeRequest(string subscriptionId, string resourceGroupName, string clusterName, HDInsightRoleName roleName, HDInsightClusterResizeContent content)
@@ -447,7 +532,7 @@ namespace Azure.ResourceManager.HDInsight
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -509,6 +594,23 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
+        internal RequestUriBuilder CreateUpdateAutoScaleConfigurationRequestUri(string subscriptionId, string resourceGroupName, string clusterName, HDInsightRoleName roleName, HDInsightAutoScaleConfigurationUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/roles/", false);
+            uri.AppendPath(roleName.ToString(), true);
+            uri.AppendPath("/autoscale", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateAutoScaleConfigurationRequest(string subscriptionId, string resourceGroupName, string clusterName, HDInsightRoleName roleName, HDInsightAutoScaleConfigurationUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -530,7 +632,7 @@ namespace Azure.ResourceManager.HDInsight
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -592,6 +694,17 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -625,7 +738,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -650,13 +763,28 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRotateDiskEncryptionKeyRequestUri(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterDiskEncryptionContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/rotatediskencryptionkey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRotateDiskEncryptionKeyRequest(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterDiskEncryptionContent content)
@@ -678,7 +806,7 @@ namespace Azure.ResourceManager.HDInsight
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -738,6 +866,21 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
+        internal RequestUriBuilder CreateGetGatewaySettingsRequestUri(string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/getGatewaySettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetGatewaySettingsRequest(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
@@ -779,7 +922,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightClusterGatewaySettings value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightClusterGatewaySettings.DeserializeHDInsightClusterGatewaySettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -808,13 +951,28 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightClusterGatewaySettings value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightClusterGatewaySettings.DeserializeHDInsightClusterGatewaySettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateGatewaySettingsRequestUri(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterUpdateGatewaySettingsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/updateGatewaySettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateGatewaySettingsRequest(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterUpdateGatewaySettingsContent content)
@@ -836,7 +994,7 @@ namespace Azure.ResourceManager.HDInsight
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -896,6 +1054,22 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
+        internal RequestUriBuilder CreateGetAzureAsyncOperationStatusRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/azureasyncoperations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAzureAsyncOperationStatusRequest(string subscriptionId, string resourceGroupName, string clusterName, string operationId)
         {
             var message = _pipeline.CreateMessage();
@@ -940,7 +1114,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightAsyncOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HDInsightAsyncOperationResult.DeserializeHDInsightAsyncOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -971,13 +1145,28 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         HDInsightAsyncOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HDInsightAsyncOperationResult.DeserializeHDInsightAsyncOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateIdentityCertificateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterUpdateIdentityCertificateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/updateClusterIdentityCertificate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateIdentityCertificateRequest(string subscriptionId, string resourceGroupName, string clusterName, HDInsightClusterUpdateIdentityCertificateContent content)
@@ -999,7 +1188,7 @@ namespace Azure.ResourceManager.HDInsight
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1059,6 +1248,21 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
+        internal RequestUriBuilder CreateExecuteScriptActionsRequestUri(string subscriptionId, string resourceGroupName, string clusterName, ExecuteScriptActionContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/executeScriptActions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExecuteScriptActionsRequest(string subscriptionId, string resourceGroupName, string clusterName, ExecuteScriptActionContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1078,7 +1282,7 @@ namespace Azure.ResourceManager.HDInsight
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1138,6 +1342,14 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -1172,7 +1384,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1201,13 +1413,21 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
@@ -1242,7 +1462,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1269,7 +1489,7 @@ namespace Azure.ResourceManager.HDInsight
                 case 200:
                     {
                         ClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ClusterListResult.DeserializeClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

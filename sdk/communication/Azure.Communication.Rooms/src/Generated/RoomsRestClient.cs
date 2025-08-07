@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -31,7 +30,7 @@ namespace Azure.Communication.Rooms
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RoomsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-06-14")
+        public RoomsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-03-13")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -39,7 +38,7 @@ namespace Azure.Communication.Rooms
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateRequest(DateTimeOffset? validFrom, DateTimeOffset? validUntil, IDictionary<string, ParticipantProperties> participants)
+        internal HttpMessage CreateCreateRequest(DateTimeOffset? validFrom, DateTimeOffset? validUntil, bool? pstnDialOutEnabled, IDictionary<string, ParticipantProperties> participants)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +55,8 @@ namespace Azure.Communication.Rooms
             CreateRoomRequest createRoomRequest = new CreateRoomRequest()
             {
                 ValidFrom = validFrom,
-                ValidUntil = validUntil
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled
             };
             if (participants != null)
             {
@@ -75,18 +75,19 @@ namespace Azure.Communication.Rooms
         /// <summary> Creates a new room. </summary>
         /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time. </param>
         /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </param>
+        /// <param name="pstnDialOutEnabled"> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </param>
         /// <param name="participants"> (Optional) Participants to be invited to the room. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationRoom>> CreateAsync(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationRoom>> CreateAsync(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, bool? pstnDialOutEnabled = null, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(validFrom, validUntil, participants);
+            using var message = CreateCreateRequest(validFrom, validUntil, pstnDialOutEnabled, participants);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 201:
                     {
                         CommunicationRoom value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -98,18 +99,19 @@ namespace Azure.Communication.Rooms
         /// <summary> Creates a new room. </summary>
         /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time. </param>
         /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </param>
+        /// <param name="pstnDialOutEnabled"> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </param>
         /// <param name="participants"> (Optional) Participants to be invited to the room. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationRoom> Create(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationRoom> Create(DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, bool? pstnDialOutEnabled = null, IDictionary<string, ParticipantProperties> participants = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(validFrom, validUntil, participants);
+            using var message = CreateCreateRequest(validFrom, validUntil, pstnDialOutEnabled, participants);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 201:
                     {
                         CommunicationRoom value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -143,7 +145,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         RoomsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoomsCollection.DeserializeRoomsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -163,7 +165,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         RoomsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoomsCollection.DeserializeRoomsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +207,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         CommunicationRoom value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -232,7 +234,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         CommunicationRoom value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +243,7 @@ namespace Azure.Communication.Rooms
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string roomId, DateTimeOffset? validFrom, DateTimeOffset? validUntil)
+        internal HttpMessage CreateUpdateRequest(string roomId, DateTimeOffset? validFrom, DateTimeOffset? validUntil, bool? pstnDialOutEnabled)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -257,7 +259,8 @@ namespace Azure.Communication.Rooms
             var model = new UpdateRoomRequest()
             {
                 ValidFrom = validFrom,
-                ValidUntil = validUntil
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -269,23 +272,24 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room requested. </param>
         /// <param name="validFrom"> (Optional) The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="validUntil"> (Optional) The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="pstnDialOutEnabled"> (Optional) Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public async Task<Response<CommunicationRoom>> UpdateAsync(string roomId, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationRoom>> UpdateAsync(string roomId, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, bool? pstnDialOutEnabled = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
             {
                 throw new ArgumentNullException(nameof(roomId));
             }
 
-            using var message = CreateUpdateRequest(roomId, validFrom, validUntil);
+            using var message = CreateUpdateRequest(roomId, validFrom, validUntil, pstnDialOutEnabled);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CommunicationRoom value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -298,23 +302,24 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"> The id of the room requested. </param>
         /// <param name="validFrom"> (Optional) The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="validUntil"> (Optional) The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="pstnDialOutEnabled"> (Optional) Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public Response<CommunicationRoom> Update(string roomId, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationRoom> Update(string roomId, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, bool? pstnDialOutEnabled = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
             {
                 throw new ArgumentNullException(nameof(roomId));
             }
 
-            using var message = CreateUpdateRequest(roomId, validFrom, validUntil);
+            using var message = CreateUpdateRequest(roomId, validFrom, validUntil, pstnDialOutEnabled);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         CommunicationRoom value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationRoom.DeserializeCommunicationRoom(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +418,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         RoomsCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RoomsCollection.DeserializeRoomsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -440,7 +445,7 @@ namespace Azure.Communication.Rooms
                 case 200:
                     {
                         RoomsCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RoomsCollection.DeserializeRoomsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

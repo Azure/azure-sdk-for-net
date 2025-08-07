@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
                     {
                         PurchaseProperties = new BillingBenefitsPurchaseContent
                         {
-                            Sku = new BillingBenefitsSku("Compute_Savings_Plan"),
+                            Sku = new BillingBenefitsSku("Compute_Savings_Plan", null),
                             DisplayName = "TestRenewSP",
                             BillingScopeId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"),
                             Term = new BillingBenefitsTerm("P1Y"),

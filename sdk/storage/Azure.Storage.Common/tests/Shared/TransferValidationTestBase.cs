@@ -368,8 +368,8 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await UploadPartitionAsync(client, stream, validationOptions);
             }
 
@@ -416,8 +416,8 @@ namespace Azure.Storage.Test.Shared
                 createResource: true,
                 options: clientOptions);
 
-            checksumPipelineAssertion.CheckRequest = true;
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
                 // Act
                 AsyncTestDelegate operation = async () => await UploadPartitionAsync(client, stream, validationOptions);
@@ -486,8 +486,8 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await UploadPartitionAsync(client, stream, transferValidation: null);
             }
 
@@ -525,8 +525,8 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await UploadPartitionAsync(client, stream, overrideValidationOptions);
             }
 
@@ -572,8 +572,8 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await UploadPartitionAsync(client, stream, overrideValidationOptions);
             }
 
@@ -616,13 +616,14 @@ namespace Azure.Storage.Test.Shared
             using var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
             // Assert
-            checksumPipelineAssertion.CheckRequest = true;
-            foreach (var _ in Enumerable.Range(0, streamWrites))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                // triggers pipeline assertion
-                await writeStream.WriteAsync(data, 0, data.Length);
+                foreach (var _ in Enumerable.Range(0, streamWrites))
+                {
+                    // triggers pipeline assertion
+                    await writeStream.WriteAsync(data, 0, data.Length);
+                }
             }
-            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [TestCaseSource(nameof(GetValidationAlgorithms))]
@@ -696,13 +697,14 @@ namespace Azure.Storage.Test.Shared
             using var writeStream = await OpenWriteAsync(client, default, streamBufferSize);
 
             // Assert
-            checksumPipelineAssertion.CheckRequest = true;
-            foreach (var _ in Enumerable.Range(0, streamWrites))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                // triggers pipeline assertion
-                await writeStream.WriteAsync(data, 0, data.Length);
+                foreach (var _ in Enumerable.Range(0, streamWrites))
+                {
+                    // triggers pipeline assertion
+                    await writeStream.WriteAsync(data, 0, data.Length);
+                }
             }
-            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [Test]
@@ -739,13 +741,14 @@ namespace Azure.Storage.Test.Shared
             using var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
 
             // Assert
-            checksumPipelineAssertion.CheckRequest = true;
-            foreach (var _ in Enumerable.Range(0, streamWrites))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                // triggers pipeline assertion
-                await writeStream.WriteAsync(data, 0, data.Length);
+                foreach (var _ in Enumerable.Range(0, streamWrites))
+                {
+                    // triggers pipeline assertion
+                    await writeStream.WriteAsync(data, 0, data.Length);
+                }
             }
-            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [Test]
@@ -790,13 +793,14 @@ namespace Azure.Storage.Test.Shared
             using var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
 
             // Assert
-            checksumPipelineAssertion.CheckRequest = true;
-            foreach (var _ in Enumerable.Range(0, streamWrites))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                // triggers pipeline assertion
-                await writeStream.WriteAsync(data, 0, data.Length);
+                foreach (var _ in Enumerable.Range(0, streamWrites))
+                {
+                    // triggers pipeline assertion
+                    await writeStream.WriteAsync(data, 0, data.Length);
+                }
             }
-            checksumPipelineAssertion.CheckRequest = false;
         }
 
         [Test]
@@ -890,8 +894,8 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await ParallelUploadAsync(client, stream, validationOptions, transferOptions);
             }
 
@@ -928,8 +932,8 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await ParallelUploadAsync(client, stream, validationOptions, transferOptions);
             }
 
@@ -1021,8 +1025,8 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await ParallelUploadAsync(client, stream, default, transferOptions);
             }
 
@@ -1073,8 +1077,8 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await ParallelUploadAsync(client, stream, overrideValidationOptions, transferOptions);
             }
 
@@ -1132,8 +1136,8 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await ParallelUploadAsync(client, stream, overrideValidationOptions, transferOptions);
             }
 
@@ -1180,9 +1184,11 @@ namespace Azure.Storage.Test.Shared
             };
 
             // Act
-            checksumPipelineAssertion.CheckResponse = true;
             var dest = new MemoryStream();
-            await ParallelDownloadAsync(client, dest, validationOptions, transferOptions);
+            using (checksumPipelineAssertion.CheckRequestScope())
+            {
+                await ParallelDownloadAsync(client, dest, validationOptions, transferOptions);
+            }
 
             // Assert
             // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
@@ -1235,9 +1241,11 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            checksumPipelineAssertion.CheckResponse = true;
             var dest = new MemoryStream();
-            await ParallelDownloadAsync(client, dest, default, transferOptions);
+            using (checksumPipelineAssertion.CheckRequestScope())
+            {
+                await ParallelDownloadAsync(client, dest, default, transferOptions);
+            }
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
@@ -1296,9 +1304,11 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            checksumPipelineAssertion.CheckResponse = true;
             var dest = new MemoryStream();
-            await ParallelDownloadAsync(client, dest, overrideValidationOptions, transferOptions);
+            using (checksumPipelineAssertion.CheckResponseScope())
+            {
+                await ParallelDownloadAsync(client, dest, overrideValidationOptions, transferOptions);
+            }
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
@@ -1364,9 +1374,11 @@ namespace Azure.Storage.Test.Shared
                 options: clientOptions);
 
             // Act
-            checksumPipelineAssertion.CheckResponse = true;
             var dest = new MemoryStream();
-            await ParallelDownloadAsync(client, dest, overrideValidationOptions, transferOptions);
+            using (checksumPipelineAssertion.CheckResponseScope())
+            {
+                await ParallelDownloadAsync(client, dest, overrideValidationOptions, transferOptions);
+            }
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
@@ -1417,9 +1429,11 @@ namespace Azure.Storage.Test.Shared
             var readStream = await OpenReadAsync(client, validationOptions, bufferSize);
 
             // Assert
-            checksumPipelineAssertion.CheckResponse = true;
             var dest = new MemoryStream();
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            using (checksumPipelineAssertion.CheckResponseScope())
+            {
+                await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            }
             Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
@@ -1460,9 +1474,11 @@ namespace Azure.Storage.Test.Shared
             var readStream = await OpenReadAsync(client, default, bufferSize);
 
             // Assert
-            checksumPipelineAssertion.CheckResponse = true;
             var dest = new MemoryStream();
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            using (checksumPipelineAssertion.CheckResponseScope())
+            {
+                await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            }
             Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
@@ -1510,9 +1526,11 @@ namespace Azure.Storage.Test.Shared
             var readStream = await OpenReadAsync(client, overrideValidationOptions, bufferSize);
 
             // Assert
-            checksumPipelineAssertion.CheckResponse = true;
             var dest = new MemoryStream();
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            using (checksumPipelineAssertion.CheckResponseScope())
+            {
+                await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            }
             Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
@@ -1567,9 +1585,11 @@ namespace Azure.Storage.Test.Shared
             var readStream = await OpenReadAsync(client, overrideValidationOptions, bufferSize);
 
             // Assert
-            checksumPipelineAssertion.CheckResponse = true;
             var dest = new MemoryStream();
-            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            using (checksumPipelineAssertion.CheckResponseScope())
+            {
+                await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(dest));
+            }
             Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
         #endregion
@@ -1879,15 +1899,16 @@ namespace Azure.Storage.Test.Shared
 
             // Act
             using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
             {
-                checksumPipelineAssertion.CheckRequest = true;
                 await ParallelUploadAsync(client, stream, uploadvalidationOptions, transferOptions);
-                checksumPipelineAssertion.CheckRequest = false;
             }
 
-            checksumPipelineAssertion.CheckResponse = true;
             var dest = new MemoryStream();
-            await ParallelDownloadAsync(client, dest, downloadvalidationOptions, transferOptions);
+            using (checksumPipelineAssertion.CheckResponseScope())
+            {
+                await ParallelDownloadAsync(client, dest, downloadvalidationOptions, transferOptions);
+            }
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct

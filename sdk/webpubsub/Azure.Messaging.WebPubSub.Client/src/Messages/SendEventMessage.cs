@@ -17,7 +17,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The optional ack-id
         /// </summary>
-        public ulong? AckId { get; }
+        public long? AckId { get; }
 
         /// <summary>
         /// Type of the data
@@ -41,7 +41,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <param name="data">The data content</param>
         /// <param name="dataType">Type of the data</param>
         /// <param name="ackId">The optional ack-id</param>
-        public SendEventMessage(string eventName, BinaryData data, WebPubSubDataType dataType, ulong? ackId)
+        public SendEventMessage(string eventName, BinaryData data, WebPubSubDataType dataType, long? ackId)
         {
             EventName = eventName;
             AckId = ackId;

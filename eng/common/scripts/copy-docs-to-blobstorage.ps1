@@ -2,10 +2,8 @@
 # powershell core is a requirement for successful execution.
 [CmdletBinding()]
 param (
-  $AzCopy,
   $DocLocation,
-  $SASKey,
-  $BlobName,
+  $BlobAccountName = "https://azuresdkdocs.blob.core.windows.net",
   $ExitOnError=1,
   $UploadLatest=1,
   $PublicArtifactLocation = "",
@@ -63,7 +61,7 @@ function ToSemVer($version){
 
 function SortSemVersions($versions)
 {
-    return $versions | Sort -Property Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber -Descending
+    return $versions | Sort-Object -Property Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber -Descending
 }
 
 function Sort-Versions
@@ -118,7 +116,7 @@ function Get-Existing-Versions
     Param (
         [Parameter(Mandatory=$true)] [String]$PkgName
     )
-    $versionUri = "$($BlobName)/`$web/$($Language)/$($PkgName)/versioning/versions"
+    $versionUri = "https://azuresdkdocs.z19.web.core.windows.net/$Language/$PkgName/versioning/versions"
     LogDebug "Heading to $versionUri to retrieve known versions"
 
     try {
@@ -176,9 +174,9 @@ function Update-Existing-Versions
     $sortedVersionObj.LatestGAPackage | Out-File -File "$($DocLocation)/latest-ga" -Force -NoNewLine
     $sortedVersionObj.LatestPreviewPackage | Out-File -File "$($DocLocation)/latest-preview" -Force -NoNewLine
 
-    & $($AzCopy) cp "$($DocLocation)/versions" "$($DocDest)/$($PkgName)/versioning/versions$($SASKey)" --cache-control "max-age=300, must-revalidate"
-    & $($AzCopy) cp "$($DocLocation)/latest-preview" "$($DocDest)/$($PkgName)/versioning/latest-preview$($SASKey)" --cache-control "max-age=300, must-revalidate"
-    & $($AzCopy) cp "$($DocLocation)/latest-ga" "$($DocDest)/$($PkgName)/versioning/latest-ga$($SASKey)" --cache-control "max-age=300, must-revalidate"
+    azcopy cp "$($DocLocation)/versions" "$($DocDest)/$($PkgName)/versioning/versions" --cache-control "max-age=300, must-revalidate"
+    azcopy cp "$($DocLocation)/latest-preview" "$($DocDest)/$($PkgName)/versioning/latest-preview" --cache-control "max-age=300, must-revalidate"
+    azcopy cp "$($DocLocation)/latest-ga" "$($DocDest)/$($PkgName)/versioning/latest-ga" --cache-control "max-age=300, must-revalidate"
     return $sortedVersionObj
 }
 
@@ -190,8 +188,7 @@ function Upload-Blobs
         [Parameter(Mandatory=$true)] [String]$DocVersion,
         [Parameter(Mandatory=$false)] [String]$ReleaseTag
     )
-    #eg : $BlobName = "https://azuresdkdocs.blob.core.windows.net"
-    $DocDest = "$($BlobName)/`$web/$($Language)"
+    $DocDest = "${BlobAccountName}/`$web/$($Language)"
 
     LogDebug "DocDest $($DocDest)"
     LogDebug "PkgName $($PkgName)"
@@ -216,7 +213,7 @@ function Upload-Blobs
     }
 
     LogDebug "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
-    & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
+    azcopy cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)" --recursive=true --cache-control "max-age=300, must-revalidate"
 
     LogDebug "Handling versioning files under $($DocDest)/$($PkgName)/versioning/"
     $versionsObj = (Update-Existing-Versions -PkgName $PkgName -PkgVersion $DocVersion -DocDest $DocDest)
@@ -229,7 +226,7 @@ function Upload-Blobs
     if ($UploadLatest -and ($latestVersion -eq $DocVersion))
     {
         LogDebug "Uploading $($PkgName) to latest folder in $($DocDest)..."
-        & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
+        azcopy cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest" --recursive=true --cache-control "max-age=300, must-revalidate"
     }
 }
 

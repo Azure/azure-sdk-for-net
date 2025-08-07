@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
@@ -14,16 +17,17 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public partial class AudioTrackDescriptor : TrackDescriptor
     {
-        /// <summary> Initializes a new instance of AudioTrackDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTrackDescriptor"/>. </summary>
         public AudioTrackDescriptor()
         {
             OdataType = "#Microsoft.Media.AudioTrackDescriptor";
         }
 
-        /// <summary> Initializes a new instance of AudioTrackDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTrackDescriptor"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="channelMapping"> Optional designation for single channel audio tracks.  Can be used to combine the tracks into stereo or multi-channel audio tracks. </param>
-        internal AudioTrackDescriptor(string odataType, ChannelMapping? channelMapping) : base(odataType)
+        internal AudioTrackDescriptor(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, ChannelMapping? channelMapping) : base(odataType, serializedAdditionalRawData)
         {
             ChannelMapping = channelMapping;
             OdataType = odataType ?? "#Microsoft.Media.AudioTrackDescriptor";

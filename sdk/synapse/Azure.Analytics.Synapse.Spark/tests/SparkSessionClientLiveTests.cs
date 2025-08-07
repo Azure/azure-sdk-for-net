@@ -42,6 +42,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         /// Azure Synapse Analytics service and perform operations.
         /// </summary>
         [RecordedTest]
+        [LiveOnly(Reason = "Test regularly fails due to timeout")]
         public async Task TestSparkSessionJob()
         {
             SparkSessionClient client = CreateClient();
@@ -102,6 +103,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         /// Azure Synapse Analytics service and perform operations.
         /// </summary>
         [RecordedTest]
+        [LiveOnly(Reason = "Test regularly fails due to timeout")]
         public async Task TestSparkSessionJobWithPublicConstructor()
         {
             SparkSessionClient client = CreateClient();

@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "azsadmin/resource-manager/azurebridge" -AutoRestVersion "v2" -SdkRootDirectory $PSScriptRoot

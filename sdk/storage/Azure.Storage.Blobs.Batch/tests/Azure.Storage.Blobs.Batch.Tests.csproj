@@ -11,6 +11,7 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.Batch.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared" />
@@ -33,11 +34,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobTestBase.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobTestEnvironment.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\ClientBuilderExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\ClientExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\DisposingContainer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)TransferValidationOptionsExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Argument.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

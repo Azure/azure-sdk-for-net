@@ -106,7 +106,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             return reader.GetInt32();
         }
 
-        public static ulong? ReadAsUlong(this ref Utf8JsonReader reader, string propertyName)
+        public static long? ReadAsLongNonNegtive(this ref Utf8JsonReader reader, string propertyName)
         {
             reader.Read();
             if (reader.TokenType == JsonTokenType.Null)
@@ -117,7 +117,12 @@ namespace Azure.Messaging.WebPubSub.Clients
             {
                 throw new InvalidDataException($"Expected '{propertyName}' to be of type {JsonTokenType.Number}.");
             }
-            return reader.GetUInt64();
+            var result = reader.GetInt64();
+            if (result < 0)
+            {
+                throw new InvalidDataException($"Value of '{propertyName}' must be non-negative. Actual value is ${result}.");
+            }
+            return result;
         }
     }
 }

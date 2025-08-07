@@ -5,18 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriRewriteActionProperties : IUtf8JsonSerializable
+    public partial class UriRewriteActionProperties : IUtf8JsonSerializable, IJsonModel<UriRewriteActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UriRewriteActionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<UriRewriteActionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sourcePattern"u8);
             writer.WriteStringValue(SourcePattern);
             writer.WritePropertyName("destination"u8);
@@ -26,26 +44,36 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("preserveUnmatchedPath"u8);
                 writer.WriteBooleanValue(PreserveUnmatchedPath.Value);
             }
-            writer.WriteEndObject();
         }
 
-        internal static UriRewriteActionProperties DeserializeUriRewriteActionProperties(JsonElement element)
+        UriRewriteActionProperties IJsonModel<UriRewriteActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUriRewriteActionProperties(document.RootElement, options);
+        }
+
+        internal static UriRewriteActionProperties DeserializeUriRewriteActionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            UriRewriteActionType typeName = default;
             string sourcePattern = default;
             string destination = default;
-            Optional<bool> preserveUnmatchedPath = default;
+            bool? preserveUnmatchedPath = default;
+            DeliveryRuleActionParametersType typeName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"u8))
-                {
-                    typeName = new UriRewriteActionType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("sourcePattern"u8))
                 {
                     sourcePattern = property.Value.GetString();
@@ -65,8 +93,49 @@ namespace Azure.ResourceManager.Cdn.Models
                     preserveUnmatchedPath = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("typeName"u8))
+                {
+                    typeName = new DeliveryRuleActionParametersType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UriRewriteActionProperties(typeName, sourcePattern, destination, Optional.ToNullable(preserveUnmatchedPath));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UriRewriteActionProperties(typeName, serializedAdditionalRawData, sourcePattern, destination, preserveUnmatchedPath);
         }
+
+        BinaryData IPersistableModel<UriRewriteActionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UriRewriteActionProperties IPersistableModel<UriRewriteActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeUriRewriteActionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UriRewriteActionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

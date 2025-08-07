@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Compute
 
         GalleryResource IOperationSource<GalleryResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GalleryData.DeserializeGalleryData(document.RootElement);
+            var data = ModelReaderWriter.Read<GalleryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return new GalleryResource(_client, data);
         }
 
         async ValueTask<GalleryResource> IOperationSource<GalleryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GalleryData.DeserializeGalleryData(document.RootElement);
-            return new GalleryResource(_client, data);
+            var data = ModelReaderWriter.Read<GalleryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            return await Task.FromResult(new GalleryResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

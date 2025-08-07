@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-artifacts-composite-v7
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/1e56b6fbe36e2dcbaccd342f108b7c6efb175181/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/0da14ec4f475435b9d7d0ba06e49f05a5daac226/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 generation1-convenience-client: true
 public-clients: true
@@ -19,6 +19,9 @@ modelerfour:
   seal-single-value-enum-by-default: true
 model-factory-for-hlc:
 - ManagedIntegrationRuntime
+
+suppress-abstract-base-class:
+- Dataset
 ```
 
 ### Make Endpoint type as Uri
@@ -126,6 +129,16 @@ directive:
   where: $.definitions.TriggerRun.properties
   transform: >
     $.status["x-ms-enum"].values = [{value: "Succeeded", name: "Succeeded" },{value: "Failed", name: "Failed" },{value: "Inprogress", name: "InProgress" }];
+```
+
+### Ignore x-ms-format
+ 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.*.properties.*
+  transform: >
+    $["x-ms-format"] = undefined
 ```
 
 ### Suppress Abstract Base Class

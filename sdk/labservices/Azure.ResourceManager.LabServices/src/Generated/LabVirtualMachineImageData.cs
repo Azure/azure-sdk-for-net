@@ -19,13 +19,45 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabVirtualMachineImageData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineImageData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageData"/>. </summary>
         public LabVirtualMachineImageData()
         {
             AvailableRegions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +78,8 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="sharedGalleryId"> The ID for the image in the shared gallery. </param>
         /// <param name="availableRegions"> The available regions of the image in the shared gallery. </param>
         /// <param name="osState"> The OS State of the image. </param>
-        internal LabVirtualMachineImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LabServicesEnableState? enabledState, LabServicesProvisioningState? provisioningState, string displayName, string description, Uri iconUri, string author, LabVirtualMachineImageOSType? osType, string plan, LabServicesEnableState? termsStatus, string offer, string publisher, string sku, string version, ResourceIdentifier sharedGalleryId, IList<AzureLocation> availableRegions, LabVirtualMachineImageOSState? osState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LabServicesEnableState? enabledState, LabServicesProvisioningState? provisioningState, string displayName, string description, Uri iconUri, string author, LabVirtualMachineImageOSType? osType, string plan, LabServicesEnableState? termsStatus, string offer, string publisher, string sku, string version, ResourceIdentifier sharedGalleryId, IList<AzureLocation> availableRegions, LabVirtualMachineImageOSState? osState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EnabledState = enabledState;
             ProvisioningState = provisioningState;
@@ -64,6 +97,7 @@ namespace Azure.ResourceManager.LabServices
             SharedGalleryId = sharedGalleryId;
             AvailableRegions = availableRegions;
             OSState = osState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Is the image enabled. </summary>

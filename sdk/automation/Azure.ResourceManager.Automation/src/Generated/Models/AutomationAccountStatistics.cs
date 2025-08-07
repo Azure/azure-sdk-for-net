@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the statistic. </summary>
     public partial class AutomationAccountStatistics
     {
-        /// <summary> Initializes a new instance of AutomationAccountStatistics. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatistics"/>. </summary>
         internal AutomationAccountStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationAccountStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatistics"/>. </summary>
         /// <param name="counterProperty"> Gets the property value of the statistic. </param>
         /// <param name="counterValue"> Gets the value of the statistic. </param>
         /// <param name="startOn"> Gets the startTime of the statistic. </param>
         /// <param name="endOn"> Gets the endTime of the statistic. </param>
         /// <param name="id"> Gets the id. </param>
-        internal AutomationAccountStatistics(string counterProperty, long? counterValue, DateTimeOffset? startOn, DateTimeOffset? endOn, string id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAccountStatistics(string counterProperty, long? counterValue, DateTimeOffset? startOn, DateTimeOffset? endOn, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CounterProperty = counterProperty;
             CounterValue = counterValue;
             StartOn = startOn;
             EndOn = endOn;
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the property value of the statistic. </summary>

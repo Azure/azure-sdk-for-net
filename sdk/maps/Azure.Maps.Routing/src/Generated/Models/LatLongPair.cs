@@ -10,7 +10,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> A location represented as a latitude and longitude. </summary>
     internal partial class LatLongPair
     {
-        /// <summary> Initializes a new instance of LatLongPair. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatLongPair"/>. </summary>
         internal LatLongPair()
         {
         }

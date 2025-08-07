@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Office365 linked service. </summary>
     public partial class Office365LinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of Office365LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/>. </summary>
         /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
@@ -38,8 +37,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Office365";
         }
 
-        /// <summary> Initializes a new instance of Office365LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal Office365LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object office365TenantId, object servicePrincipalTenantId, object servicePrincipalId, SecretBase servicePrincipalKey, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal Office365LinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object office365TenantId, object servicePrincipalTenantId, object servicePrincipalId, SecretBase servicePrincipalKey, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Office365TenantId = office365TenantId;
             ServicePrincipalTenantId = servicePrincipalTenantId;

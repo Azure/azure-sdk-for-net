@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,65 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update automation account operation. </summary>
     public partial class AutomationAccountPatch
     {
-        /// <summary> Initializes a new instance of AutomationAccountPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPatch"/>. </summary>
         public AutomationAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="identity"> Sets the identity property for automation account. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="sku"> Gets or sets account SKU. </param>
+        /// <param name="encryption"> Set the encryption properties for the automation account. </param>
+        /// <param name="isPublicNetworkAccessAllowed"> Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet. </param>
+        /// <param name="isLocalAuthDisabled"> Indicates whether requests using non-AAD authentication are blocked. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAccountPatch(string name, AzureLocation? location, ManagedServiceIdentity identity, IDictionary<string, string> tags, AutomationSku sku, AutomationEncryptionProperties encryption, bool? isPublicNetworkAccessAllowed, bool? isLocalAuthDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Location = location;
+            Identity = identity;
+            Tags = tags;
+            Sku = sku;
+            Encryption = encryption;
+            IsPublicNetworkAccessAllowed = isPublicNetworkAccessAllowed;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the resource. </summary>

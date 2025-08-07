@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The settings that will be leveraged for Sql source partitioning. </summary>
     public partial class SqlPartitionSettings
     {
-        /// <summary> Initializes a new instance of SqlPartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPartitionSettings"/>. </summary>
         public SqlPartitionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlPartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPartitionSettings"/>. </summary>
         /// <param name="partitionColumnName"> The name of the column in integer or datetime type that will be used for proceeding partitioning. If not specified, the primary key of the table is auto-detected and used as the partition column. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </param>

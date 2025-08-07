@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -12,22 +14,23 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Load balancing settings for a backend pool. </summary>
     public partial class FrontDoorHealthProbeSettingsData : FrontDoorResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorHealthProbeSettingsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorHealthProbeSettingsData"/>. </summary>
         public FrontDoorHealthProbeSettingsData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorHealthProbeSettingsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorHealthProbeSettingsData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="path"> The path to use for the health probe. Default is /. </param>
         /// <param name="protocol"> Protocol scheme to use for this probe. </param>
         /// <param name="intervalInSeconds"> The number of seconds between health probes. </param>
         /// <param name="healthProbeMethod"> Configures which HTTP method to use to probe the backends defined under backendPools. </param>
         /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorHealthProbeSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, string path, FrontDoorProtocol? protocol, int? intervalInSeconds, FrontDoorHealthProbeMethod? healthProbeMethod, HealthProbeEnabled? enabledState, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal FrontDoorHealthProbeSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string path, FrontDoorProtocol? protocol, int? intervalInSeconds, FrontDoorHealthProbeMethod? healthProbeMethod, HealthProbeEnabled? enabledState, FrontDoorResourceState? resourceState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             Path = path;
             Protocol = protocol;

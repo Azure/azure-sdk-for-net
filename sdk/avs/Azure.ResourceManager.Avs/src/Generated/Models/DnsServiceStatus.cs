@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> DNS Service status. </summary>
+    /// <summary> DNS service status. </summary>
     public readonly partial struct DnsServiceStatus : IEquatable<DnsServiceStatus>
     {
         private readonly string _value;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Avs.Models
         private const string SuccessValue = "SUCCESS";
         private const string FailureValue = "FAILURE";
 
-        /// <summary> SUCCESS. </summary>
+        /// <summary> is success. </summary>
         public static DnsServiceStatus Success { get; } = new DnsServiceStatus(SuccessValue);
-        /// <summary> FAILURE. </summary>
+        /// <summary> is failure. </summary>
         public static DnsServiceStatus Failure { get; } = new DnsServiceStatus(FailureValue);
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are the same. </summary>
         public static bool operator ==(DnsServiceStatus left, DnsServiceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are not the same. </summary>
         public static bool operator !=(DnsServiceStatus left, DnsServiceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DnsServiceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsServiceStatus"/>. </summary>
         public static implicit operator DnsServiceStatus(string value) => new DnsServiceStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

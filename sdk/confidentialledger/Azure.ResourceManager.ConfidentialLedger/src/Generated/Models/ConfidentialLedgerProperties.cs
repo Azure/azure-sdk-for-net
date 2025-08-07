@@ -7,21 +7,52 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Additional Confidential Ledger properties. </summary>
     public partial class ConfidentialLedgerProperties
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerProperties"/>. </summary>
         public ConfidentialLedgerProperties()
         {
             AadBasedSecurityPrincipals = new ChangeTrackingList<AadBasedSecurityPrincipal>();
             CertBasedSecurityPrincipals = new ChangeTrackingList<CertBasedSecurityPrincipal>();
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerProperties"/>. </summary>
         /// <param name="ledgerName"> Unique name for the Confidential Ledger. </param>
         /// <param name="ledgerUri"> Endpoint for calling Ledger Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
@@ -29,9 +60,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="runningState"> Object representing RunningState for Ledger. </param>
         /// <param name="ledgerType"> Type of Confidential Ledger. </param>
         /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
+        /// <param name="ledgerSku"> SKU associated with the ledger. </param>
         /// <param name="aadBasedSecurityPrincipals"> Array of all AAD based Security Principals. </param>
         /// <param name="certBasedSecurityPrincipals"> Array of all cert based Security Principals. </param>
-        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
+        /// <param name="hostLevel"> CCF Property for the logging level for the untrusted host: Trace, Debug, Info, Fail, Fatal. </param>
+        /// <param name="maxBodySizeInMb"> CCF Property for the maximum size of the http request body: 1MB, 5MB, 10MB. </param>
+        /// <param name="subjectName"> CCF Property for the subject name to include in the node certificate. Default: CN=CCF Node. </param>
+        /// <param name="nodeCount"> Number of CCF nodes in the ACC Ledger. </param>
+        /// <param name="writeLBAddressPrefix"> Prefix for the write load balancer. Example: write. </param>
+        /// <param name="workerThreads"> Number of additional threads processing incoming client requests in the enclave (modify with care!). </param>
+        /// <param name="enclavePlatform"> Enclave platform of the Confidential Ledger. </param>
+        /// <param name="applicationType"> Application type of the Confidential Ledger. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, ConfidentialLedgerSku? ledgerSku, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals, string hostLevel, int? maxBodySizeInMb, string subjectName, int? nodeCount, string writeLBAddressPrefix, int? workerThreads, ConfidentialLedgerEnclavePlatform? enclavePlatform, ConfidentialLedgerApplicationType? applicationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LedgerName = ledgerName;
             LedgerUri = ledgerUri;
@@ -40,8 +81,18 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             RunningState = runningState;
             LedgerType = ledgerType;
             ProvisioningState = provisioningState;
+            LedgerSku = ledgerSku;
             AadBasedSecurityPrincipals = aadBasedSecurityPrincipals;
             CertBasedSecurityPrincipals = certBasedSecurityPrincipals;
+            HostLevel = hostLevel;
+            MaxBodySizeInMb = maxBodySizeInMb;
+            SubjectName = subjectName;
+            NodeCount = nodeCount;
+            WriteLBAddressPrefix = writeLBAddressPrefix;
+            WorkerThreads = workerThreads;
+            EnclavePlatform = enclavePlatform;
+            ApplicationType = applicationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique name for the Confidential Ledger. </summary>
@@ -58,9 +109,27 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public ConfidentialLedgerType? LedgerType { get; set; }
         /// <summary> Provisioning state of Ledger Resource. </summary>
         public ConfidentialLedgerProvisioningState? ProvisioningState { get; }
+        /// <summary> SKU associated with the ledger. </summary>
+        public ConfidentialLedgerSku? LedgerSku { get; set; }
         /// <summary> Array of all AAD based Security Principals. </summary>
         public IList<AadBasedSecurityPrincipal> AadBasedSecurityPrincipals { get; }
         /// <summary> Array of all cert based Security Principals. </summary>
         public IList<CertBasedSecurityPrincipal> CertBasedSecurityPrincipals { get; }
+        /// <summary> CCF Property for the logging level for the untrusted host: Trace, Debug, Info, Fail, Fatal. </summary>
+        public string HostLevel { get; set; }
+        /// <summary> CCF Property for the maximum size of the http request body: 1MB, 5MB, 10MB. </summary>
+        public int? MaxBodySizeInMb { get; set; }
+        /// <summary> CCF Property for the subject name to include in the node certificate. Default: CN=CCF Node. </summary>
+        public string SubjectName { get; set; }
+        /// <summary> Number of CCF nodes in the ACC Ledger. </summary>
+        public int? NodeCount { get; set; }
+        /// <summary> Prefix for the write load balancer. Example: write. </summary>
+        public string WriteLBAddressPrefix { get; set; }
+        /// <summary> Number of additional threads processing incoming client requests in the enclave (modify with care!). </summary>
+        public int? WorkerThreads { get; set; }
+        /// <summary> Enclave platform of the Confidential Ledger. </summary>
+        public ConfidentialLedgerEnclavePlatform? EnclavePlatform { get; set; }
+        /// <summary> Application type of the Confidential Ledger. </summary>
+        public ConfidentialLedgerApplicationType? ApplicationType { get; set; }
     }
 }

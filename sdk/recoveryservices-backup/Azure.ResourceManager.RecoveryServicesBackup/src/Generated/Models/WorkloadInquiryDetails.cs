@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Details of an inquired protectable item. </summary>
     public partial class WorkloadInquiryDetails
     {
-        /// <summary> Initializes a new instance of WorkloadInquiryDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadInquiryDetails"/>. </summary>
         public WorkloadInquiryDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadInquiryDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadInquiryDetails"/>. </summary>
         /// <param name="workloadInquiryDetailsType"> Type of the Workload such as SQL, Oracle etc. </param>
         /// <param name="itemCount"> Contains the protectable item Count inside this Container. </param>
         /// <param name="inquiryValidation"> Inquiry validation such as permissions and other backup validations. </param>
-        internal WorkloadInquiryDetails(string workloadInquiryDetailsType, long? itemCount, InquiryValidation inquiryValidation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadInquiryDetails(string workloadInquiryDetailsType, long? itemCount, InquiryValidation inquiryValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkloadInquiryDetailsType = workloadInquiryDetailsType;
             ItemCount = itemCount;
             InquiryValidation = inquiryValidation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the Workload such as SQL, Oracle etc. </summary>

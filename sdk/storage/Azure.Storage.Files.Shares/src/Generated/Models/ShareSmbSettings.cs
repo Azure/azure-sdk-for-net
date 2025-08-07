@@ -10,7 +10,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Settings for SMB protocol. </summary>
     public partial class ShareSmbSettings
     {
-        /// <summary> Initializes a new instance of ShareSmbSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSmbSettings"/>. </summary>
         /// <param name="multichannel"> Settings for SMB Multichannel. </param>
         internal ShareSmbSettings(SmbMultichannel multichannel)
         {

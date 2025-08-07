@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -18,12 +19,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusTransactionalSend
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
-                await using var client = CreateClient();
+                await using ServiceBusClient client = CreateClient();
                 string queueName = scope.QueueName;
 #endif
                 ServiceBusSender sender = client.CreateSender(queueName);
@@ -53,12 +54,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusTransactionalSetSessionState
 #if SNIPPET
-                string connectionString = "<connection_string>";
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                await using var client = new ServiceBusClient(connectionString);
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
-                await using var client = CreateClient();
+                await using ServiceBusClient client = CreateClient();
                 string queueName = scope.QueueName;
 #endif
                 ServiceBusSender sender = client.CreateSender(queueName);
@@ -89,16 +90,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             #region Snippet:ServiceBusCrossEntityTransaction
 #if SNIPPET
-            string connectionString = "<connection_string>";
-            var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
-            await using var client = new ServiceBusClient(connectionString, options);
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+            ServiceBusClientOptions options = new(){ EnableCrossEntityTransactions = true };
+            await using ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential(), options);
 
             ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
             ServiceBusSender senderB = client.CreateSender("queueB");
             ServiceBusSender senderC = client.CreateSender("topicC");
 #else
-            await using var client = new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
+            await using ServiceBusClient client = new(
+                TestEnvironment.FullyQualifiedNamespace,
+                TestEnvironment.Credential,
                 new ServiceBusClientOptions
                 {
                     EnableCrossEntityTransactions = true
@@ -136,17 +138,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             #region Snippet:ServiceBusCrossEntityTransactionWrongOrder
 #if SNIPPET
-            string connectionString = "<connection_string>";
-            var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
-            await using var client = new ServiceBusClient(connectionString, options);
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+            ServiceBusClientOptions options = new(){ EnableCrossEntityTransactions = true };
+            await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential(), options);
 
             ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
             ServiceBusSender senderB = client.CreateSender("queueB");
             ServiceBusSender senderC = client.CreateSender("topicC");
 #else
-            await using var client = new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
-                new ServiceBusClientOptions
+            await using ServiceBusClient client = new(
+                TestEnvironment.FullyQualifiedNamespace,
+                TestEnvironment.Credential,
+                new()
                 {
                     EnableCrossEntityTransactions = true
                 });

@@ -7,12 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Machi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MachineLearning.Tests", "tests\Azure.ResourceManager.MachineLearning.Tests.csproj", "{738C0769-57F8-439C-8078-54498A030BA0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{33DCCE3D-E2EB-49F3-A8FE-D7B43917719E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MachineLearning.Samples", "samples\Azure.ResourceManager.MachineLearning.Samples.csproj", "{E9AE2035-2479-4B96-88E6-5D137397F398}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,18 +65,6 @@ Global
 		{33DCCE3D-E2EB-49F3-A8FE-D7B43917719E}.Release|x64.Build.0 = Release|Any CPU
 		{33DCCE3D-E2EB-49F3-A8FE-D7B43917719E}.Release|x86.ActiveCfg = Release|Any CPU
 		{33DCCE3D-E2EB-49F3-A8FE-D7B43917719E}.Release|x86.Build.0 = Release|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Debug|x64.Build.0 = Debug|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Debug|x86.Build.0 = Debug|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Release|x64.ActiveCfg = Release|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Release|x64.Build.0 = Release|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Release|x86.ActiveCfg = Release|Any CPU
-		{E9AE2035-2479-4B96-88E6-5D137397F398}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

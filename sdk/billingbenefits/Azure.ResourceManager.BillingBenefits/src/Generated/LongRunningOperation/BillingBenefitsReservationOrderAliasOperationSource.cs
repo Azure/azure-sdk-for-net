@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.BillingBenefits
 
         BillingBenefitsReservationOrderAliasResource IOperationSource<BillingBenefitsReservationOrderAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = BillingBenefitsReservationOrderAliasData.DeserializeBillingBenefitsReservationOrderAliasData(document.RootElement);
+            var data = ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingBenefitsContext.Default);
             return new BillingBenefitsReservationOrderAliasResource(_client, data);
         }
 
         async ValueTask<BillingBenefitsReservationOrderAliasResource> IOperationSource<BillingBenefitsReservationOrderAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = BillingBenefitsReservationOrderAliasData.DeserializeBillingBenefitsReservationOrderAliasData(document.RootElement);
-            return new BillingBenefitsReservationOrderAliasResource(_client, data);
+            var data = ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingBenefitsContext.Default);
+            return await Task.FromResult(new BillingBenefitsReservationOrderAliasResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

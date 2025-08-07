@@ -162,7 +162,7 @@ await foreach (SecretProperties secretProperties in allSecretProperties)
 }
 ```
 
-For more information on paged responses, see [Pagination with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/pagination).
+For more information on paged responses, see [Pagination with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/pagination).
 
 ### Consuming Long-Running Operations Using `Operation<T>`
 
@@ -234,15 +234,13 @@ KeyVaultSecret secret = client.GetSecret("Name");
 
 More on mocking in [Unit testing and mocking with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking).
 
-## Distributed tracing with Application Insights
+## Distributed tracing with OpenTelemetry
 
-Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app
-
-If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`.
-
-To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
+Azure SDKs are instrumented for distributed tracing using [OpenTelemetry](https://opentelemetry.io/). Distributed tracing allows to follow request through multiple services, record how long network or logical call take along with structured properties describing such operations.
 
 More on diagnostics in [diagnostics samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+To setup distributed tracing for your application follow your observability vendor documentation. If you use Azure Monitor, follow the [Start Monitoring Application](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore) guide.
 
 ## Troubleshooting
 
@@ -260,10 +258,8 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FAzure.Core%2FREADME.png)
-
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src
 [package]: https://www.nuget.org/packages/Azure.Core/
-[docs]: https://docs.microsoft.com/dotnet/api/azure.core
+[docs]: https://learn.microsoft.com/dotnet/api/azure.core
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

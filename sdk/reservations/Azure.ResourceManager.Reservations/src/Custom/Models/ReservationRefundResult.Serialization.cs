@@ -12,8 +12,8 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationRefundResult DeserializeReservationRefundResult(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<ReservationRefundResponseProperties> properties = default;
+            string id = default;
+            ReservationRefundResponseProperties properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -25,14 +25,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ReservationRefundResponseProperties.DeserializeReservationRefundResponseProperties(property.Value);
                     continue;
                 }
             }
-            return new ReservationRefundResult(id.Value, properties.Value);
+            return new ReservationRefundResult(id, properties);
         }
     }
 }

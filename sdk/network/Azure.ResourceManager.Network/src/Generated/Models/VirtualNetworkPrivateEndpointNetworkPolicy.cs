@@ -24,16 +24,22 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string NetworkSecurityGroupEnabledValue = "NetworkSecurityGroupEnabled";
+        private const string RouteTableEnabledValue = "RouteTableEnabled";
 
         /// <summary> Enabled. </summary>
         public static VirtualNetworkPrivateEndpointNetworkPolicy Enabled { get; } = new VirtualNetworkPrivateEndpointNetworkPolicy(EnabledValue);
         /// <summary> Disabled. </summary>
         public static VirtualNetworkPrivateEndpointNetworkPolicy Disabled { get; } = new VirtualNetworkPrivateEndpointNetworkPolicy(DisabledValue);
+        /// <summary> NetworkSecurityGroupEnabled. </summary>
+        public static VirtualNetworkPrivateEndpointNetworkPolicy NetworkSecurityGroupEnabled { get; } = new VirtualNetworkPrivateEndpointNetworkPolicy(NetworkSecurityGroupEnabledValue);
+        /// <summary> RouteTableEnabled. </summary>
+        public static VirtualNetworkPrivateEndpointNetworkPolicy RouteTableEnabled { get; } = new VirtualNetworkPrivateEndpointNetworkPolicy(RouteTableEnabledValue);
         /// <summary> Determines if two <see cref="VirtualNetworkPrivateEndpointNetworkPolicy"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkPrivateEndpointNetworkPolicy left, VirtualNetworkPrivateEndpointNetworkPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkPrivateEndpointNetworkPolicy"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkPrivateEndpointNetworkPolicy left, VirtualNetworkPrivateEndpointNetworkPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkPrivateEndpointNetworkPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkPrivateEndpointNetworkPolicy"/>. </summary>
         public static implicit operator VirtualNetworkPrivateEndpointNetworkPolicy(string value) => new VirtualNetworkPrivateEndpointNetworkPolicy(value);
 
         /// <inheritdoc />
@@ -44,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -16,13 +16,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         [TestCase(3, 2, 1, 1)]
         [TestCase(2, 2, 0, 1)]
         [TestCase(1, 1, 0, 1)]
-        public void ConvertsBlobOptionsToQueueOptionsCorrectly(int maxDegreeOfParallelism, int expectedBatchSize, int expectedNewBatchThreshold, int maxDequeueCount)
+        public void ConvertsBlobOptionsToQueueOptionsCorrectly(int maxDegreeOfParallelism, int expectedBatchSize, int expectedNewBatchThreshold, int poisonBlobThreshold)
         {
             // Arrange
             var blobOptions = new BlobsOptions()
             {
                 MaxDegreeOfParallelism = maxDegreeOfParallelism,
-                MaxDequeueCount = maxDequeueCount,
+                PoisonBlobThreshold = poisonBlobThreshold,
             };
 
             // Act
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // Assert
             Assert.AreEqual(expectedBatchSize, queueOptions.BatchSize);
             Assert.AreEqual(expectedNewBatchThreshold, queueOptions.NewBatchThreshold);
-            Assert.AreEqual(maxDequeueCount, queueOptions.MaxDequeueCount);
+            Assert.AreEqual(poisonBlobThreshold, queueOptions.MaxDequeueCount);
         }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> whether this route will be linked to the default endpoint domain. </summary>
+    /// <summary>
+    /// whether this route will be linked to the default endpoint domain.
+    /// Serialized Name: LinkToDefaultDomain
+    /// </summary>
     public readonly partial struct LinkToDefaultDomain : IEquatable<LinkToDefaultDomain>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: LinkToDefaultDomain.Enabled
+        /// </summary>
         public static LinkToDefaultDomain Enabled { get; } = new LinkToDefaultDomain(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: LinkToDefaultDomain.Disabled
+        /// </summary>
         public static LinkToDefaultDomain Disabled { get; } = new LinkToDefaultDomain(DisabledValue);
         /// <summary> Determines if two <see cref="LinkToDefaultDomain"/> values are the same. </summary>
         public static bool operator ==(LinkToDefaultDomain left, LinkToDefaultDomain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkToDefaultDomain"/> values are not the same. </summary>
         public static bool operator !=(LinkToDefaultDomain left, LinkToDefaultDomain right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LinkToDefaultDomain"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkToDefaultDomain"/>. </summary>
         public static implicit operator LinkToDefaultDomain(string value) => new LinkToDefaultDomain(value);
 
         /// <inheritdoc />
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

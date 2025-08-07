@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The metadata of the SQL script. </summary>
     public partial class SqlScriptMetadata
     {
-        /// <summary> Initializes a new instance of SqlScriptMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlScriptMetadata"/>. </summary>
         public SqlScriptMetadata()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of SqlScriptMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlScriptMetadata"/>. </summary>
         /// <param name="language"> The language of the SQL script. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SqlScriptMetadata(string language, IDictionary<string, object> additionalProperties)

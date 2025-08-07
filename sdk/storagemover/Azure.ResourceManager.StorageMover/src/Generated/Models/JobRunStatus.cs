@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
+        private const string PausedByBandwidthManagementValue = "PausedByBandwidthManagement";
 
         /// <summary> Queued. </summary>
         public static JobRunStatus Queued { get; } = new JobRunStatus(QueuedValue);
@@ -47,11 +48,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static JobRunStatus Failed { get; } = new JobRunStatus(FailedValue);
         /// <summary> Succeeded. </summary>
         public static JobRunStatus Succeeded { get; } = new JobRunStatus(SucceededValue);
+        /// <summary> PausedByBandwidthManagement. </summary>
+        public static JobRunStatus PausedByBandwidthManagement { get; } = new JobRunStatus(PausedByBandwidthManagementValue);
         /// <summary> Determines if two <see cref="JobRunStatus"/> values are the same. </summary>
         public static bool operator ==(JobRunStatus left, JobRunStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobRunStatus"/> values are not the same. </summary>
         public static bool operator !=(JobRunStatus left, JobRunStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobRunStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobRunStatus"/>. </summary>
         public static implicit operator JobRunStatus(string value) => new JobRunStatus(value);
 
         /// <inheritdoc />
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

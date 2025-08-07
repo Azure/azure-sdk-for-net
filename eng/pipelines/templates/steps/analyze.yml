@@ -1,0 +1,116 @@
+parameters:
+  - name: Artifacts
+    type: object
+    default: []
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: SDKType
+    type: string
+    default: all
+  - name: BuildSnippets
+    type: boolean
+    default: true
+
+steps:
+  - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      parameters:
+          Paths:
+            - "/*"
+            - "!SessionRecords"
+
+  - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+  - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
+
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: BuildPackagesArtifact
+        path: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - ${{ else }}:
+    - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+      parameters:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
+  - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
+    parameters:
+      PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+      Artifacts: ${{ parameters.Artifacts }}
+
+  - template: /eng/common/pipelines/templates/steps/verify-samples.yml
+    parameters:
+      ServiceDirectories: "$(ChangedServices)"
+
+  - task: UsePythonVersion@0
+    displayName: 'Use Python 3.11'
+    inputs:
+      versionSpec: '3.11'
+
+  - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
+    parameters:
+      PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: 20.x
+    displayName: 'Use Node 20.x'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Install Snippet Generator Tool'
+    inputs:
+      command: custom
+      custom: 'tool'
+      arguments: 'restore'
+      workingDirectory: '$(Agent.BuildDirectory)'
+
+  - pwsh: |
+      $failed = $false
+      if ('$(ProjectNames)' -and '$(ProjectNames)' -notlike '$(*') {
+        $serviceDirectories = "$(ChangedServices)" -split ","
+        $ScanPaths = @()
+        foreach ($ServiceDirectory in $serviceDirectories) {
+          ./eng/scripts/CodeChecks.ps1 `
+            -ServiceDirectory $ServiceDirectory `
+            -SDKType ${{ parameters.SDKType }} `
+            -SpellCheckPublicApiSurface `
+
+          if ($LASTEXITCODE -ne 0) {
+            $failed = $true
+          }
+        }
+
+        if ($failed) {
+          exit 1
+        }
+      }
+      else {
+        Write-Host "No services were directly changed. Skipping code checks."
+      }
+    displayName: Verify Generated Code
+    env:
+      EnableSourceLink: false
+
+  - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
+    parameters:
+      LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
+
+  - task: Powershell@2
+    displayName: Build snippets
+    condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/scripts/Build-Snippets.ps1
+      arguments: >
+        -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo"
+        -SdkType "${{ parameters.SDKType }}"
+        -ProjectNames "$(ProjectNames)"
+        -DiagnosticArguments "$(DiagnosticArguments)"
+        -BuildConfiguration "$(BuildConfiguration)"
+      pwsh: true
+
+  - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+      parameters:
+        ArtifactPath: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'verify_$(System.JobName)'

@@ -28,6 +28,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
         private readonly ServiceBusClientFactory _clientFactory;
         private readonly ILogger<ServiceBusTriggerAttributeBindingProvider> _logger;
         private readonly ConcurrencyManager _concurrencyManager;
+        private readonly IDrainModeManager _drainModeManager;
 
         public ServiceBusTriggerAttributeBindingProvider(
             INameResolver nameResolver,
@@ -36,7 +37,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             ILoggerFactory loggerFactory,
             IConverterManager converterManager,
             ServiceBusClientFactory clientFactory,
-            ConcurrencyManager concurrencyManager)
+            ConcurrencyManager concurrencyManager,
+            IDrainModeManager drainModeManager)
         {
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
             _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             _clientFactory = clientFactory;
             _logger = _loggerFactory.CreateLogger<ServiceBusTriggerAttributeBindingProvider>();
             _concurrencyManager = concurrencyManager;
+            _drainModeManager = drainModeManager;
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
@@ -84,7 +87,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             (factoryContext, singleDispatch) =>
             {
                 var autoCompleteMessagesOptionEvaluatedValue = GetAutoCompleteMessagesOptionToUse(attribute, factoryContext.Descriptor.ShortName);
-                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, serviceBusEntityType, entityPath, attribute.IsSessionsEnabled, autoCompleteMessagesOptionEvaluatedValue, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory, _concurrencyManager);
+                var maxMessageBatchSizeOptionEvaluatedValue = GetMaxMessageBatchSizeOptionToUse(attribute, factoryContext.Descriptor.ShortName);
+                IListener listener = new ServiceBusListener(
+                    factoryContext.Descriptor.Id,
+                    serviceBusEntityType,
+                    entityPath,
+                    attribute.IsSessionsEnabled,
+                    autoCompleteMessagesOptionEvaluatedValue,
+                    maxMessageBatchSizeOptionEvaluatedValue,
+                    factoryContext.Executor,
+                    _options,
+                    attribute.Connection,
+                    _messagingProvider,
+                    _loggerFactory,
+                    singleDispatch,
+                    _clientFactory,
+                    _concurrencyManager,
+                    _drainModeManager);
 
                 return Task.FromResult(listener);
             };
@@ -111,6 +130,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             }
 
             return _options.AutoCompleteMessages;
+        }
+
+        /// <summary>
+        /// Gets 'MaxMessageBatchSize' option value, either from the trigger attribute if it is set or from host options.
+        /// </summary>
+        /// <param name="attribute">The trigger attribute.</param>
+        /// <param name="functionName">The function name.</param>
+        private int GetMaxMessageBatchSizeOptionToUse(ServiceBusTriggerAttribute attribute, string functionName)
+        {
+            if (attribute.IsMaxMessageBatchSizeOptionSet)
+            {
+                _logger.LogInformation($"The 'MaxMessageBatchSize' option has been overriden to '{attribute.MaxMessageBatchSize}' value for '{functionName}' function.");
+
+                return attribute.MaxMessageBatchSize;
+            }
+
+            return _options.MaxMessageBatchSize;
         }
     }
 }

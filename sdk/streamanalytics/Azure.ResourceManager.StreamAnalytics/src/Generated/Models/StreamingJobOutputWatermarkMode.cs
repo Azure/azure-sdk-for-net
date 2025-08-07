@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(StreamingJobOutputWatermarkMode left, StreamingJobOutputWatermarkMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobOutputWatermarkMode"/> values are not the same. </summary>
         public static bool operator !=(StreamingJobOutputWatermarkMode left, StreamingJobOutputWatermarkMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StreamingJobOutputWatermarkMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StreamingJobOutputWatermarkMode"/>. </summary>
         public static implicit operator StreamingJobOutputWatermarkMode(string value) => new StreamingJobOutputWatermarkMode(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

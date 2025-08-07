@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryOS left, ContainerRegistryOS right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryOS"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryOS left, ContainerRegistryOS right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryOS"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryOS"/>. </summary>
         public static implicit operator ContainerRegistryOS(string value) => new ContainerRegistryOS(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

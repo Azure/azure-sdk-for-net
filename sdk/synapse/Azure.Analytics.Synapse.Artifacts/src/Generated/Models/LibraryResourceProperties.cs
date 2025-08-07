@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Library/package properties. </summary>
     public partial class LibraryResourceProperties
     {
-        /// <summary> Initializes a new instance of LibraryResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryResourceProperties"/>. </summary>
         public LibraryResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LibraryResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryResourceProperties"/>. </summary>
         /// <param name="name"> Name of the library/package. </param>
         /// <param name="path"> Location of library/package in storage account. </param>
         /// <param name="containerName"> Container name of the library/package. </param>

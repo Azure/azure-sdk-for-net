@@ -5,13 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A notification. </summary>
     public partial class DevTestLabNotificationChannelPatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabNotificationChannelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelPatch"/>. </summary>
         public DevTestLabNotificationChannelPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabNotificationChannelPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

@@ -6,13 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class MonitorQueryModelFactory
     {
-        /// <summary> Initializes a new instance of LogsTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>
+        /// <param name="granularity"> The time grain specifies a supported aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
+        /// <param name="retention"> The retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
+        /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
+        public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
+        {
+            return new MetricAvailability(granularity, retention);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsQueryResourcesResult"/>. </summary>
+        /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
+        /// <returns> A new <see cref="Models.MetricsQueryResourcesResult"/> instance for mocking. </returns>
+        public static MetricsQueryResourcesResult MetricsQueryResourcesResult(IEnumerable<MetricsQueryResult> values = null)
+        {
+            values ??= new List<MetricsQueryResult>();
+
+            return new MetricsQueryResourcesResult(values?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LogsTableColumn"/>. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -25,15 +46,6 @@ namespace Azure.Monitor.Query.Models
             }
 
             return new LogsTableColumn(name, type);
-        }
-
-        /// <summary> Initializes a new instance of MetricAvailability. </summary>
-        /// <param name="granularity"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
-        /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
-        /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
-        public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
-        {
-            return new MetricAvailability(granularity, retention);
         }
     }
 }

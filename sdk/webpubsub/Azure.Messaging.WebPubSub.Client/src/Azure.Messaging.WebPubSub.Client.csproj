@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.Messaging.WebPubSub.Client</PackageId>
     <Description>Client for Azure WebPubSub</Description>
     <PackageTags>azure;webpubsub.client</PackageTags>

@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Host.Triggers;
 using System.Reflection;
 using System.Threading.Tasks;
+
+using Microsoft.Azure.WebJobs.Host.Triggers;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <seealso cref="AuthenticationEventBinding" />
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
         {
-            AuthenticationEventsTriggerAttribute attribute = context.Parameter.GetCustomAttribute<AuthenticationEventsTriggerAttribute>(false);
+            WebJobsAuthenticationEventsTriggerAttribute attribute = context.Parameter.GetCustomAttribute<WebJobsAuthenticationEventsTriggerAttribute>(false);
             if (attribute == null)
             {
                 return Task.FromResult<ITriggerBinding>(null);

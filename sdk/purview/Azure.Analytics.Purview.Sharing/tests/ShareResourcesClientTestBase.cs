@@ -5,6 +5,7 @@ using System.Net.Http;
 using Azure.Analytics.Purview.Tests;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Analytics.Purview.Sharing.Tests
 {
@@ -13,10 +14,18 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         public ShareResourcesClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             this.AddPurviewSanitizers();
-            this.BodyKeySanitizers.Add(new Core.TestFramework.Models.BodyKeySanitizer("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.Storage/storageAccounts/consumerTestStorageAccount") { JsonPath = "properties.sink.storeReference.referenceName" });
-            this.UriRegexSanitizers.Add(new Core.TestFramework.Models.UriRegexSanitizer(@"[A-Za-z0-9-\-]*.purview.azure.com", "myaccountname.purview.azure.com"));
-            this.HeaderRegexSanitizers.Add(new Core.TestFramework.Models.HeaderRegexSanitizer("Operation-Location", "myaccountname.purview.azure.com") { Regex = @"[A-Za-z0-9-\-]*.purview.azure.com" });
-            this.HeaderRegexSanitizers.Add(new Core.TestFramework.Models.HeaderRegexSanitizer("Operation-Id", "myaccountname.purview.azure.com") { Regex = @"[A-Za-z0-9-\-]*.purview.azure.com" });
+            this.BodyKeySanitizers.Add(new BodyKeySanitizer("properties.sink.storeReference.referenceName") { Value = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.Storage/storageAccounts/consumerTestStorageAccount" });
+            this.UriRegexSanitizers.Add(new UriRegexSanitizer(@"[A-Za-z0-9-\-]*.purview.azure.com") { Value = "myaccountname.purview.azure.com" });
+            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location")
+            {
+                Regex = @"[A-Za-z0-9-\-]*.purview.azure.com",
+                Value = "myaccountname.purview.azure.com"
+            });
+            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Id")
+            {
+                Regex = @"[A-Za-z0-9-\-]*.purview.azure.com",
+                Value = "myaccountname.purview.azure.com"
+            });
         }
 
         public ShareResourcesClient GetShareResourcesClient()

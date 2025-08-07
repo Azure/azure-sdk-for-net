@@ -8,7 +8,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary>
     /// The full restore details containing information about a specific full restore operation.
     /// </summary>
-    [CodeGenModel("RestoreOperation")]
+    [CodeGenType("RestoreOperation")]
     internal partial class RestoreDetailsInternal
     { }
 }

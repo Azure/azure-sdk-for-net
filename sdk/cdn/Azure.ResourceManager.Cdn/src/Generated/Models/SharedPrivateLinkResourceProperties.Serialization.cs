@@ -5,21 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SharedPrivateLinkResourceProperties : IUtf8JsonSerializable
+    public partial class SharedPrivateLinkResourceProperties : IUtf8JsonSerializable, IJsonModel<SharedPrivateLinkResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedPrivateLinkResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SharedPrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SharedPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SharedPrivateLinkResourceProperties)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsDefined(PrivateLink))
             {
                 writer.WritePropertyName("privateLink"u8);
-                JsonSerializer.Serialize(writer, PrivateLink);
+                ((IJsonModel<WritableSubResource>)PrivateLink).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateLinkLocation))
             {
@@ -41,20 +61,50 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static SharedPrivateLinkResourceProperties DeserializeSharedPrivateLinkResourceProperties(JsonElement element)
+        SharedPrivateLinkResourceProperties IJsonModel<SharedPrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SharedPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SharedPrivateLinkResourceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharedPrivateLinkResourceProperties(document.RootElement, options);
+        }
+
+        internal static SharedPrivateLinkResourceProperties DeserializeSharedPrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<WritableSubResource> privateLink = default;
-            Optional<string> privateLinkLocation = default;
-            Optional<string> groupId = default;
-            Optional<string> requestMessage = default;
-            Optional<SharedPrivateLinkResourceStatus> status = default;
+            WritableSubResource privateLink = default;
+            string privateLinkLocation = default;
+            string groupId = default;
+            string requestMessage = default;
+            SharedPrivateLinkResourceStatus? status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLink"u8))
@@ -63,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    privateLink = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    privateLink = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("privateLinkLocation"u8))
@@ -90,8 +140,50 @@ namespace Azure.ResourceManager.Cdn.Models
                     status = property.Value.GetString().ToSharedPrivateLinkResourceStatus();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SharedPrivateLinkResourceProperties(privateLink, privateLinkLocation.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(status));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SharedPrivateLinkResourceProperties(
+                privateLink,
+                privateLinkLocation,
+                groupId,
+                requestMessage,
+                status,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SharedPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SharedPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SharedPrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SharedPrivateLinkResourceProperties IPersistableModel<SharedPrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SharedPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSharedPrivateLinkResourceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SharedPrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SharedPrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

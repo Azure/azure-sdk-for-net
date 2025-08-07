@@ -1,12 +1,39 @@
 # Release History
 
-## 1.2.0 (2023-08-03)
+## 1.4.1-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
 
 ### Bugs Fixed
 
-- Allow some `HttpStatusCode.NotFound` occurrences in `PostLedgerEntryOperation` to account for unexpected loss of session stickiness. These errors may occur when the connected node changes and transactions have not been fully replicated.
+### Other Changes
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.4.1-beta.2 (2025-04-23)
+
+### Features Added
+- Added user defined functions feature.
+- Added tags parameter for CreateLedgerEntry endpoint.
+
+## 1.4.1-beta.1 (2025-01-27)
+
+### Features Added
+- Added the ability to list users and roles.
+
+## 1.3.0 (2023-12-05)
+
+### Features Added
+
+- Added `VerifyConnection` property to `ConfidentialLedgerClientOptions` to allow the option to have a client connection without validating the service certificate.
+
+## 1.2.0 (2023-09-12)
+
+### Bugs Fixed
+
+- Service calls that result in a `HttpStatusCode.NotFound` status will now be retried by default. This is to handle scenarios where there is an unexpected loss of session stickiness when the connected node changes and transactions have not been fully replicated.
+
+## 1.2.0-beta.1 (2022-11-09)
 
 ### Features Added
 

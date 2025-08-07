@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -17,19 +18,19 @@ namespace Azure.Storage.Files.Shares.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
-            if (Optional.IsDefined(HourMetrics))
+            if (Common.Optional.IsDefined(HourMetrics))
             {
                 writer.WriteObjectValue(HourMetrics, "HourMetrics");
             }
-            if (Optional.IsDefined(MinuteMetrics))
+            if (Common.Optional.IsDefined(MinuteMetrics))
             {
                 writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
             }
-            if (Optional.IsDefined(Protocol))
+            if (Common.Optional.IsDefined(Protocol))
             {
                 writer.WriteObjectValue(Protocol, "ProtocolSettings");
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (Common.Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
                 foreach (var item in Cors)

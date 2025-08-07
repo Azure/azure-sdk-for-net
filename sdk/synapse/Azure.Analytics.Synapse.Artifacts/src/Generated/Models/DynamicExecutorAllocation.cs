@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Dynamic Executor Allocation Properties. </summary>
     public partial class DynamicExecutorAllocation
     {
-        /// <summary> Initializes a new instance of DynamicExecutorAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicExecutorAllocation"/>. </summary>
         public DynamicExecutorAllocation()
         {
         }
 
-        /// <summary> Initializes a new instance of DynamicExecutorAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicExecutorAllocation"/>. </summary>
         /// <param name="enabled"> Indicates whether Dynamic Executor Allocation is enabled or not. </param>
         internal DynamicExecutorAllocation(bool? enabled)
         {

@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The RecognizeFailed. </summary>
     public partial class RecognizeFailed
     {
-        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeFailed"/>. </summary>
         internal RecognizeFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeFailed"/>. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
         /// <param name="version"> Used to determine the version of the event. </param>

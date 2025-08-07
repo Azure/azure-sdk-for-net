@@ -23,9 +23,8 @@ namespace Azure.Core.Shared
         #region OTel-specific messaging attributes
         public const string MessagingSystem = "messaging.system";
         public const string DestinationName = "messaging.destination.name";
-        public const string SourceName = "messaging.source.name";
         public const string MessagingOperation = "messaging.operation";
-        public const string NetPeerName = "net.peer.name";
+        public const string ServerAddress = "server.address";
         public const string BatchCount = "messaging.batch.message_count";
         public const string TraceParent = "traceparent";
         public const string TraceState = "tracestate";
@@ -48,7 +47,7 @@ namespace Azure.Core.Shared
             _messagingSystem = messagingSystem;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
             _entityPath = entityPath;
-            _scopeFactory = new DiagnosticScopeFactory(clientNamespace, resourceProviderNamespace, true, false);
+            _scopeFactory = new DiagnosticScopeFactory(clientNamespace, resourceProviderNamespace, true, false, false);
         }
 
         /// <summary>
@@ -70,11 +69,11 @@ namespace Azure.Core.Shared
                 scope.AddAttribute(MessagingSystem, _messagingSystem);
                 if (operation != default)
                 {
-                    scope.AddAttribute(MessagingOperation, operation.ToString());
+                    scope.AddAttribute(MessagingOperation, operation, operation => operation.ToString());
                 }
 
-                scope.AddAttribute(NetPeerName, _fullyQualifiedNamespace);
-                scope.AddAttribute(operation == MessagingDiagnosticOperation.Receive || operation == MessagingDiagnosticOperation.Process ? SourceName : DestinationName, _entityPath);
+                scope.AddAttribute(ServerAddress, _fullyQualifiedNamespace);
+                scope.AddAttribute(DestinationName, _entityPath);
             }
             else
             {
@@ -94,7 +93,7 @@ namespace Azure.Core.Shared
         /// <param name="traceparent">The trace parent of the message.</param>
         /// <param name="tracestate">The trace state of the message.</param>
         /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
-        public static bool TryExtractTraceContext(IReadOnlyDictionary<string, object> properties, out string? traceparent, out string? tracestate)
+        public static bool TryExtractTraceContext(IReadOnlyDictionary<string, object?> properties, out string? traceparent, out string? tracestate)
         {
             traceparent = null;
             tracestate = null;
@@ -102,7 +101,7 @@ namespace Azure.Core.Shared
             if (ActivityExtensions.SupportsActivitySource && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
-                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
+                if (properties.TryGetValue(TraceState, out object? state) && state is string stateString)
                 {
                     tracestate = stateString;
                 }
@@ -126,7 +125,7 @@ namespace Azure.Core.Shared
         /// <param name="traceparent">The trace parent of the message.</param>
         /// <param name="tracestate">The trace state of the message.</param>
         /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
-        public static bool TryExtractTraceContext(IDictionary<string, object> properties, out string? traceparent, out string? tracestate)
+        public static bool TryExtractTraceContext(IDictionary<string, object?> properties, out string? traceparent, out string? tracestate)
         {
             traceparent = null;
             tracestate = null;
@@ -134,7 +133,7 @@ namespace Azure.Core.Shared
             if (ActivityExtensions.SupportsActivitySource && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
-                if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
+                if (properties.TryGetValue(TraceState, out object? state) && state is string stateString)
                 {
                     tracestate = stateString;
                 }
@@ -158,7 +157,7 @@ namespace Azure.Core.Shared
         /// <param name="activityName">The activity name to use for the diagnostic scope.</param>
         /// <param name="traceparent">The traceparent that was either added, or that already existed in the message properties.</param>
         /// <param name="tracestate">The tracestate that was either added, or that already existed in the message properties.</param>
-        public void InstrumentMessage(IDictionary<string, object> properties, string activityName, out string? traceparent, out string? tracestate)
+        public void InstrumentMessage(IDictionary<string, object?> properties, string activityName, out string? traceparent, out string? tracestate)
         {
             traceparent = null;
             tracestate = null;

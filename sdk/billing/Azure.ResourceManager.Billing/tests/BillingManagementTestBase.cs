@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.Billing.Tests
     public class BillingManagementTestBase : ManagementRecordedTestBase<BillingManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        public ResourceGroupCollection ResourceGroupsOperations { get; set; }
+        public SubscriptionResource Subscription { get; set; }
 
         protected BillingManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -28,6 +30,13 @@ namespace Azure.ResourceManager.Billing.Tests
         public void CreateCommonClient()
         {
             Client = GetArmClient();
+        }
+
+        protected async Task InitializeClients()
+        {
+            Client = GetArmClient();
+            Subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupsOperations = Subscription.GetResourceGroups();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

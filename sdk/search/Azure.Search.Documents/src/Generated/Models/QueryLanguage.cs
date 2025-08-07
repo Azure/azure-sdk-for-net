@@ -197,7 +197,7 @@ namespace Azure.Search.Documents.Models
         public static QueryLanguage LvLv { get; } = new QueryLanguage(LvLvValue);
         /// <summary> Query language value for Estonian (Estonia). </summary>
         public static QueryLanguage EtEe { get; } = new QueryLanguage(EtEeValue);
-        /// <summary> Query language value for Catalan (Spain). </summary>
+        /// <summary> Query language value for Catalan. </summary>
         public static QueryLanguage CaEs { get; } = new QueryLanguage(CaEsValue);
         /// <summary> Query language value for Finnish (Finland). </summary>
         public static QueryLanguage FiFi { get; } = new QueryLanguage(FiFiValue);
@@ -215,9 +215,9 @@ namespace Azure.Search.Documents.Models
         public static QueryLanguage HyAm { get; } = new QueryLanguage(HyAmValue);
         /// <summary> Query language value for Bengali (India). </summary>
         public static QueryLanguage BnIn { get; } = new QueryLanguage(BnInValue);
-        /// <summary> Query language value for Basque (Spain). </summary>
+        /// <summary> Query language value for Basque. </summary>
         public static QueryLanguage EuEs { get; } = new QueryLanguage(EuEsValue);
-        /// <summary> Query language value for Galician (Spain). </summary>
+        /// <summary> Query language value for Galician. </summary>
         public static QueryLanguage GlEs { get; } = new QueryLanguage(GlEsValue);
         /// <summary> Query language value for Gujarati (India). </summary>
         public static QueryLanguage GuIn { get; } = new QueryLanguage(GuInValue);
@@ -243,7 +243,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(QueryLanguage left, QueryLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryLanguage"/> values are not the same. </summary>
         public static bool operator !=(QueryLanguage left, QueryLanguage right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryLanguage"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryLanguage"/>. </summary>
         public static implicit operator QueryLanguage(string value) => new QueryLanguage(value);
 
         /// <inheritdoc />
@@ -254,7 +254,7 @@ namespace Azure.Search.Documents.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

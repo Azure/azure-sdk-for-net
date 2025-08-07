@@ -5,51 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesMySqlTaskProperties : IUtf8JsonSerializable
+    public partial class GetUserTablesMySqlTaskProperties : IUtf8JsonSerializable, IJsonModel<GetUserTablesMySqlTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetUserTablesMySqlTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GetUserTablesMySqlTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
-            {
-                writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
-            }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsCollectionDefined(ClientData))
-            {
-                writer.WritePropertyName("clientData"u8);
-                writer.WriteStartObject();
-                foreach (var item in ClientData)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static GetUserTablesMySqlTaskProperties DeserializeGetUserTablesMySqlTaskProperties(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesMySqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GetUserTablesMySqlTaskProperties)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Input))
+            {
+                writer.WritePropertyName("input"u8);
+                writer.WriteObjectValue(Input, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStartArray();
+                foreach (var item in Output)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
+        GetUserTablesMySqlTaskProperties IJsonModel<GetUserTablesMySqlTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesMySqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GetUserTablesMySqlTaskProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetUserTablesMySqlTaskProperties(document.RootElement, options);
+        }
+
+        internal static GetUserTablesMySqlTaskProperties DeserializeGetUserTablesMySqlTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<GetUserTablesMySqlTaskInput> input = default;
-            Optional<IReadOnlyList<GetUserTablesMySqlTaskOutput>> output = default;
-            TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            GetUserTablesMySqlTaskInput input = default;
+            IReadOnlyList<GetUserTablesMySqlTaskOutput> output = default;
+            DataMigrationTaskType taskType = default;
+            IReadOnlyList<DataMigrationODataError> errors = default;
+            DataMigrationTaskState? state = default;
+            IReadOnlyList<DataMigrationCommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -58,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = GetUserTablesMySqlTaskInput.DeserializeGetUserTablesMySqlTaskInput(property.Value);
+                    input = GetUserTablesMySqlTaskInput.DeserializeGetUserTablesMySqlTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -70,14 +101,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<GetUserTablesMySqlTaskOutput> array = new List<GetUserTablesMySqlTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GetUserTablesMySqlTaskOutput.DeserializeGetUserTablesMySqlTaskOutput(item));
+                        array.Add(GetUserTablesMySqlTaskOutput.DeserializeGetUserTablesMySqlTaskOutput(item, options));
                     }
                     output = array;
                     continue;
                 }
                 if (property.NameEquals("taskType"u8))
                 {
-                    taskType = new TaskType(property.Value.GetString());
+                    taskType = new DataMigrationTaskType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -86,10 +117,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ODataError> array = new List<ODataError>();
+                    List<DataMigrationODataError> array = new List<DataMigrationODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -100,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new TaskState(property.Value.GetString());
+                    state = new DataMigrationTaskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commands"u8))
@@ -109,10 +140,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<CommandProperties> array = new List<CommandProperties>();
+                    List<DataMigrationCommandProperties> array = new List<DataMigrationCommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -131,8 +162,52 @@ namespace Azure.ResourceManager.DataMigration.Models
                     clientData = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GetUserTablesMySqlTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GetUserTablesMySqlTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<DataMigrationODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<DataMigrationCommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<GetUserTablesMySqlTaskOutput>());
         }
+
+        BinaryData IPersistableModel<GetUserTablesMySqlTaskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesMySqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GetUserTablesMySqlTaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GetUserTablesMySqlTaskProperties IPersistableModel<GetUserTablesMySqlTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesMySqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeGetUserTablesMySqlTaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetUserTablesMySqlTaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GetUserTablesMySqlTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

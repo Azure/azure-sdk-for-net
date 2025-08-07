@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class IssueTests : ApiManagementManagementTestBase
     {
         public IssueTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private async Task SetCollectionsAsync()
         {
-            ResourceGroup = await CreateResourceGroupAsync();
+            ResourceGroup = await CreateResourceGroupAsync(AzureLocation.EastUS);
             ApiServiceCollection = ResourceGroup.GetApiManagementServices();
         }
 
@@ -158,7 +158,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // Load a filestream and put its content into the byte[]
             using (FileStream fs = fileInfo.OpenRead())
             {
+#if NET6_0_OR_GREATER
+                fs.ReadExactly(data, 0, data.Length);
+#else
                 fs.Read(data, 0, data.Length);
+#endif
             }
 
             var content = Convert.ToBase64String(data);

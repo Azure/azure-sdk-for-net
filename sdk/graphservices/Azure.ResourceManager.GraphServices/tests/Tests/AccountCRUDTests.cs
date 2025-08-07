@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.GraphServices.Tests.Tests
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "ApplicationId cannot be stored in test recording.")]
         public async Task TestAccountCRUDOperations()
         {
             // Get Default Subscription

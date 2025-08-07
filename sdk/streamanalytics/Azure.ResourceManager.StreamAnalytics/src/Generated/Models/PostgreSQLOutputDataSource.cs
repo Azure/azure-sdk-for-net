@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a PostgreSQL output data source. </summary>
     public partial class PostgreSQLOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of PostgreSQLOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSQLOutputDataSource"/>. </summary>
         public PostgreSQLOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.DBForPostgreSQL/servers/databases";
         }
 
-        /// <summary> Initializes a new instance of PostgreSQLOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSQLOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="server"> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="database"> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="table"> The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="password"> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="maxWriterCount"> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal PostgreSQLOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, int? maxWriterCount, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal PostgreSQLOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string server, string database, string table, string user, string password, int? maxWriterCount, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             Server = server;
             Database = database;

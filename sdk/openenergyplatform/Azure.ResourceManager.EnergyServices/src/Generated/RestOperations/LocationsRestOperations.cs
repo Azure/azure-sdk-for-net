@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EnergyServices.Models;
@@ -34,6 +33,16 @@ namespace Azure.ResourceManager.EnergyServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, EnergyServiceNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.OpenEnergyPlatform/checkNameAvailability", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, EnergyServiceNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -48,7 +57,7 @@ namespace Azure.ResourceManager.EnergyServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -72,7 +81,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EnergyServiceNameAvailabilityResult.DeserializeEnergyServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -99,7 +108,7 @@ namespace Azure.ResourceManager.EnergyServices
                 case 200:
                     {
                         EnergyServiceNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EnergyServiceNameAvailabilityResult.DeserializeEnergyServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

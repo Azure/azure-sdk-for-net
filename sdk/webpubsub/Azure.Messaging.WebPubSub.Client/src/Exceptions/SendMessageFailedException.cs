@@ -15,22 +15,23 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The ackId
         /// </summary>
-        public ulong? AckId { get; }
+        public long? AckId { get; }
 
         /// <summary>
-        /// The error
+        /// The error code response from the service. If the error is not from the serivce, code is empty.
         /// </summary>
-        public AckMessageError Error { get; }
+        public string Code { get; }
 
-        internal SendMessageFailedException(string message, ulong? ackId, AckMessageError error = null) : base(message)
+        internal SendMessageFailedException(string message, long? ackId, string code) : base(message)
         {
             AckId = ackId;
-            Error = error;
+            Code = code ?? string.Empty;
         }
 
-        internal SendMessageFailedException(string message, ulong? ackId, Exception innerException) : base(message, innerException)
+        internal SendMessageFailedException(string message, long? ackId, Exception innerException) : base(message, innerException)
         {
             AckId = ackId;
+            Code = string.Empty;
         }
     }
 }

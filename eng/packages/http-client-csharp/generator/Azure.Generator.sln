@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35201.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Generator", "Azure.Generator\src\Azure.Generator.csproj", "{8DDB0B72-B3F6-4F87-8B04-163EB4880FC8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Generator.Tests", "Azure.Generator\test\Azure.Generator.Tests.csproj", "{A05E6873-DD18-44B2-88A8-DEE3AA103EC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjects.Local.Tests", "TestProjects\Local.Tests\TestProjects.Local.Tests.csproj", "{0E941DC3-BC8B-1031-859C-EBB387036FD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.StubLibrary", "Azure.Generator.StubLibrary\src\Azure.Generator.StubLibrary.csproj", "{CC2E7459-398A-60FA-5138-282707944E43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjects.Spector.Tests", "TestProjects\Spector.Tests\TestProjects.Spector.Tests.csproj", "{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Tests.Common", "Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj", "{A6033231-E5D9-E23A-F126-F68C2F3DBA51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DDB0B72-B3F6-4F87-8B04-163EB4880FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DDB0B72-B3F6-4F87-8B04-163EB4880FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DDB0B72-B3F6-4F87-8B04-163EB4880FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DDB0B72-B3F6-4F87-8B04-163EB4880FC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A05E6873-DD18-44B2-88A8-DEE3AA103EC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A05E6873-DD18-44B2-88A8-DEE3AA103EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A05E6873-DD18-44B2-88A8-DEE3AA103EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A05E6873-DD18-44B2-88A8-DEE3AA103EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E941DC3-BC8B-1031-859C-EBB387036FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E941DC3-BC8B-1031-859C-EBB387036FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E941DC3-BC8B-1031-859C-EBB387036FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E941DC3-BC8B-1031-859C-EBB387036FD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC2E7459-398A-60FA-5138-282707944E43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC2E7459-398A-60FA-5138-282707944E43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC2E7459-398A-60FA-5138-282707944E43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC2E7459-398A-60FA-5138-282707944E43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6033231-E5D9-E23A-F126-F68C2F3DBA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6033231-E5D9-E23A-F126-F68C2F3DBA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6033231-E5D9-E23A-F126-F68C2F3DBA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6033231-E5D9-E23A-F126-F68C2F3DBA51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9BEAE4C-B3F9-490E-95F8-4ECE18E364A6}
+	EndGlobalSection
+EndGlobal

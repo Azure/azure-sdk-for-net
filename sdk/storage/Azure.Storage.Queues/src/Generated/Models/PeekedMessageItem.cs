@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The object returned in the QueueMessageList array when calling Peek Messages on a Queue. </summary>
     internal partial class PeekedMessageItem
     {
-        /// <summary> Initializes a new instance of PeekedMessageItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeekedMessageItem"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
         /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>

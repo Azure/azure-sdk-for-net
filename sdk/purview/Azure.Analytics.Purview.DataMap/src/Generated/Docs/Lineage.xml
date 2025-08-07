@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetLineageAsync(string,LineageDirection,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetLineageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+
+Response<AtlasLineageInfo> response = await client.GetLineageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
+]]></code></example>
+    </member>
+    <member name="GetLineage(string,LineageDirection,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetLineage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+
+Response<AtlasLineageInfo> response = client.GetLineage("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
+]]></code></example>
+    </member>
+    <member name="GetLineageAsync(string,string,int?,RequestContext)">
+      <example>
+This sample shows how to call GetLineageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+
+Response response = await client.GetLineageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetLineage(string,string,int?,RequestContext)">
+      <example>
+This sample shows how to call GetLineage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+
+Response response = client.GetLineage("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetNextPageAsync(string,LineageDirection,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetNextPageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+
+Response<AtlasLineageInfo> response = await client.GetNextPageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
+]]></code></example>
+    </member>
+    <member name="GetNextPage(string,LineageDirection,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetNextPage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+
+Response<AtlasLineageInfo> response = client.GetNextPage("a6894eb3-81f3-829b-2adc-52f3e603411a", LineageDirection.Input);
+]]></code></example>
+    </member>
+    <member name="GetNextPageAsync(string,string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetNextPageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+
+Response response = await client.GetNextPageAsync("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetNextPage(string,string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetNextPage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+
+Response response = client.GetNextPage("a6894eb3-81f3-829b-2adc-52f3e603411a", "INPUT");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetByUniqueAttributeAsync(string,LineageDirection,int?,string,CancellationToken)">
+      <example>
+This sample shows how to call GetByUniqueAttributeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+
+Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("azure_blob_path", LineageDirection.Both);
+]]></code></example>
+    </member>
+    <member name="GetByUniqueAttribute(string,LineageDirection,int?,string,CancellationToken)">
+      <example>
+This sample shows how to call GetByUniqueAttribute.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+
+Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("azure_blob_path", LineageDirection.Both);
+]]></code></example>
+    </member>
+    <member name="GetByUniqueAttributeAsync(string,string,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetByUniqueAttributeAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+
+Response response = await client.GetByUniqueAttributeAsync("azure_blob_path", "BOTH");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetByUniqueAttribute(string,string,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetByUniqueAttribute and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
+
+Response response = client.GetByUniqueAttribute("azure_blob_path", "BOTH");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

@@ -10,5 +10,11 @@ namespace Azure.Security.Attestation
     /// <summary> The StoredAttestationPolicy. </summary>
     public partial class StoredAttestationPolicy
     {
+        /// <summary> Initializes a new instance of <see cref="StoredAttestationPolicy"/>. </summary>
+        /// <param name="attestationPolicy"> Policy text to set as a sequence of UTF-8 encoded octets. </param>
+        internal StoredAttestationPolicy(string attestationPolicy)
+        {
+            AttestationPolicy = attestationPolicy;
+        }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: SocketAddrOperator
+    /// </summary>
     public readonly partial struct SocketAddressOperator : IEquatable<SocketAddressOperator>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string AnyValue = "Any";
         private const string IPMatchValue = "IPMatch";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: SocketAddrOperator.Any
+        /// </summary>
         public static SocketAddressOperator Any { get; } = new SocketAddressOperator(AnyValue);
-        /// <summary> IPMatch. </summary>
+        /// <summary>
+        /// IPMatch
+        /// Serialized Name: SocketAddrOperator.IPMatch
+        /// </summary>
         public static SocketAddressOperator IPMatch { get; } = new SocketAddressOperator(IPMatchValue);
         /// <summary> Determines if two <see cref="SocketAddressOperator"/> values are the same. </summary>
         public static bool operator ==(SocketAddressOperator left, SocketAddressOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SocketAddressOperator"/> values are not the same. </summary>
         public static bool operator !=(SocketAddressOperator left, SocketAddressOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SocketAddressOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SocketAddressOperator"/>. </summary>
         public static implicit operator SocketAddressOperator(string value) => new SocketAddressOperator(value);
 
         /// <inheritdoc />
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

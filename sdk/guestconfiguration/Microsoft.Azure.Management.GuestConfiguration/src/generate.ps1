@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "guestconfiguration/resource-manager" -AutoRestVersion "v2" -ConfigFileTag "package-2022-01-25" -AutoRestCodeGenerationFlags "--public-clients:true --legacy:true"

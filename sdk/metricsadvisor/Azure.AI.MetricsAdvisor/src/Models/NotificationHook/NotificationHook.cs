@@ -144,11 +144,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
             NotificationHookKind hookType = default;
-            Optional<string> hookId = default;
+            string hookId = default;
             string hookName = default;
-            Optional<string> description = default;
-            Optional<string> externalLink = default;
-            Optional<IList<string>> admins = default;
+            string description = default;
+            string externalLink = default;
+            IList<string> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookType"))
@@ -192,7 +192,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new UnknownNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins));
+            return new UnknownNotificationHook(hookType, hookId, hookName, description, externalLink, admins ?? new ChangeTrackingList<string>());
         }
 
         private class UnknownNotificationHook : NotificationHook

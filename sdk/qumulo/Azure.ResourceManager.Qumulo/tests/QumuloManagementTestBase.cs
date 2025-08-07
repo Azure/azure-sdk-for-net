@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Qumulo.Tests
             QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(
                 location, new MarketplaceDetails("qumulo-on-azure-v1%%gmz7xq9ge3py%%P1M", "qumulo-saas-mpp", "qumulo1584033880660"),
                 StorageSku.Performance,
-                new QumuloUserDetails("abc@test.com"),
+                new QumuloUserDetails("abc@test.com", null),
                 "/subscriptions/fc35d936-3b89-41f8-8110-a24b56826c37/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/virtualNetworks/eastus2vnet/subnets/default",
                 "Test123", 18)
             {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
@@ -18,13 +19,46 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class PrivateStoreCollectionInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionInfoData"/>. </summary>
         public PrivateStoreCollectionInfoData()
         {
             SubscriptionsList = new ChangeTrackingList<string>();
+            AppliedRules = new ChangeTrackingList<MarketplaceRule>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +72,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="subscriptionsList"> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </param>
         /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
         /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
-        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers) : base(id, name, resourceType, systemData)
+        /// <param name="appliedRules"> Gets list of collection rules. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers, IReadOnlyList<MarketplaceRule> appliedRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CollectionId = collectionId;
             CollectionName = collectionName;
@@ -49,6 +85,8 @@ namespace Azure.ResourceManager.Marketplace
             SubscriptionsList = subscriptionsList;
             IsEnabled = isEnabled;
             NumberOfOffers = numberOfOffers;
+            AppliedRules = appliedRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets collection Id. </summary>
@@ -69,5 +107,7 @@ namespace Azure.ResourceManager.Marketplace
         public bool? IsEnabled { get; set; }
         /// <summary> Gets the number of offers associated with the collection. </summary>
         public long? NumberOfOffers { get; }
+        /// <summary> Gets list of collection rules. </summary>
+        public IReadOnlyList<MarketplaceRule> AppliedRules { get; }
     }
 }

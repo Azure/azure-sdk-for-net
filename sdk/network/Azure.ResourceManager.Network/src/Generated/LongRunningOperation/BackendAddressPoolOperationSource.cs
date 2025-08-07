@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Network
 
         BackendAddressPoolResource IOperationSource<BackendAddressPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement);
+            var data = ModelReaderWriter.Read<BackendAddressPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new BackendAddressPoolResource(_client, data);
         }
 
         async ValueTask<BackendAddressPoolResource> IOperationSource<BackendAddressPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement);
-            return new BackendAddressPoolResource(_client, data);
+            var data = ModelReaderWriter.Read<BackendAddressPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            return await Task.FromResult(new BackendAddressPoolResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

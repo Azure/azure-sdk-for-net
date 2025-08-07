@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
     public class MaintenanceManagementTestBase : ManagementRecordedTestBase<MaintenanceManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected AzureLocation Location = AzureLocation.EastUS;
+        protected AzureLocation Location = new AzureLocation("centraluseuap");
 
         protected MaintenanceManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,7 +15,39 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Https settings for a domain. </summary>
     public partial class CustomHttpsConfiguration
     {
-        /// <summary> Initializes a new instance of CustomHttpsConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomHttpsConfiguration"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </param>
@@ -24,7 +58,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             MinimumTlsVersion = minimumTlsVersion;
         }
 
-        /// <summary> Initializes a new instance of CustomHttpsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomHttpsConfiguration"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version required from the clients to establish an SSL handshake with Front Door. </param>
@@ -32,7 +66,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="vault"> The Key Vault containing the SSL certificate. </param>
         /// <param name="secretName"> The name of the Key Vault secret representing the full certificate PFX. </param>
         /// <param name="secretVersion"> The version of the Key Vault secret representing the full certificate PFX. </param>
-        internal CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource, FrontDoorTlsProtocolType protocolType, FrontDoorRequiredMinimumTlsVersion minimumTlsVersion, FrontDoorEndpointConnectionCertificateType? certificateType, WritableSubResource vault, string secretName, string secretVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource, FrontDoorTlsProtocolType protocolType, FrontDoorRequiredMinimumTlsVersion minimumTlsVersion, FrontDoorEndpointConnectionCertificateType? certificateType, WritableSubResource vault, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateSource = certificateSource;
             ProtocolType = protocolType;
@@ -41,6 +76,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Vault = vault;
             SecretName = secretName;
             SecretVersion = secretVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomHttpsConfiguration"/> for deserialization. </summary>
+        internal CustomHttpsConfiguration()
+        {
         }
 
         /// <summary> Defines the source of the SSL certificate. </summary>

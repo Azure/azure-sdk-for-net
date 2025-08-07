@@ -1,0 +1,89 @@
+# Generated code configuration
+
+Run `dotnet build /t:GenerateCode` to generate code.
+
+``` yaml
+azure-arm: true
+csharp: true
+library-name: InformaticaDataManagement
+namespace: Azure.ResourceManager.InformaticaDataManagement
+require: https://github.com/Azure/azure-rest-api-specs/blob/00a6d4f6cdfe2e3ffd069d0771ee0a52143a13c0/specification/informatica/resource-manager/readme.md
+#tag: package-2024-05-08
+output-folder: $(this-folder)/Generated
+clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
+
+rename-mapping:
+  InformaticaOrganizationResource: InformaticaOrganization
+  OrganizationProperties: InformaticaOrganizationProperties
+  InformaticaServerlessRuntimeResource: InformaticaServerlessRuntime
+  ApplicationType.CDI: Cdi
+  ApplicationConfigs: InformaticaApplicationConfigs
+  ApplicationType: InformaticaApplicationType
+  ApplicationTypeMetadata: InformaticaApplicationTypeMetadata
+  CdiConfigProps: CdiConfigProperties
+  CheckDependenciesResponse: CheckDependenciesResult
+  CompanyDetails: InformaticaCompanyDetails
+  CompanyDetailsUpdate: InformaticaCompanyDetailsUpdate
+  InfaRuntimeResourceFetchMetaData: InformaticaRuntimeResourceFetchMetadata
+  InfaServerlessFetchConfigProperties: InformaticaServerlessFetchConfigProperties
+  MarketplaceDetails: InformaticaMarketplaceDetails
+  MarketplaceDetailsUpdate: InformaticaMarketplaceDetailsUpdate
+  NetworkInterfaceConfiguration: InformaticaNetworkInterfaceConfiguration
+  NetworkInterfaceConfigurationUpdate: InformaticaNetworkInterfaceConfigurationUpdate
+  OfferDetails: InformaticaOfferDetails
+  OfferDetailsUpdate: InformaticaOfferDetailsUpdate
+  OrganizationPropertiesCustomUpdate: InformaticaOrganizationPropertiesUpdate
+  PlatformType: InformaticaPlatformType
+  ProvisioningState: InformaticaProvisioningState
+  RegionsMetadata: InformaticaRegionsMetadata
+  RuntimeType: InformaticaRuntimeType
+  ServerlessRuntimePropertiesCustomUpdate: ServerlessRuntimePropertiesUpdate
+  UserDetails: InformaticaUserDetails
+  UserDetailsUpdate: InformaticaUserDetailsUpdate
+  ServerlessMetadataResponse.type: RuntimeType
+
+override-operation-name:
+  ServerlessRuntimes_ServerlessResourceById: GetServerlessResourceById
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+acronym-mapping:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs|ips
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag|etag
+
+
+```

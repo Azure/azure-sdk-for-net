@@ -5,21 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> The additional capabilities for a lab VM. </summary>
     internal partial class LabVirtualMachineAdditionalCapability
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineAdditionalCapability. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineAdditionalCapability"/>. </summary>
         public LabVirtualMachineAdditionalCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineAdditionalCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineAdditionalCapability"/>. </summary>
         /// <param name="installGpuDrivers"> Flag to pre-install dedicated GPU drivers. </param>
-        internal LabVirtualMachineAdditionalCapability(LabServicesEnableState? installGpuDrivers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineAdditionalCapability(LabServicesEnableState? installGpuDrivers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstallGpuDrivers = installGpuDrivers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag to pre-install dedicated GPU drivers. </summary>

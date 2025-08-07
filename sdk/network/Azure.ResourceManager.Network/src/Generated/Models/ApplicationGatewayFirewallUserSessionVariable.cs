@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string ClientAddrValue = "ClientAddr";
         private const string GeoLocationValue = "GeoLocation";
         private const string NoneValue = "None";
+        private const string ClientAddrXFFHeaderValue = "ClientAddrXFFHeader";
+        private const string GeoLocationXFFHeaderValue = "GeoLocationXFFHeader";
 
         /// <summary> ClientAddr. </summary>
         public static ApplicationGatewayFirewallUserSessionVariable ClientAddr { get; } = new ApplicationGatewayFirewallUserSessionVariable(ClientAddrValue);
@@ -32,11 +34,15 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayFirewallUserSessionVariable GeoLocation { get; } = new ApplicationGatewayFirewallUserSessionVariable(GeoLocationValue);
         /// <summary> None. </summary>
         public static ApplicationGatewayFirewallUserSessionVariable None { get; } = new ApplicationGatewayFirewallUserSessionVariable(NoneValue);
+        /// <summary> ClientAddrXFFHeader. </summary>
+        public static ApplicationGatewayFirewallUserSessionVariable ClientAddrXFFHeader { get; } = new ApplicationGatewayFirewallUserSessionVariable(ClientAddrXFFHeaderValue);
+        /// <summary> GeoLocationXFFHeader. </summary>
+        public static ApplicationGatewayFirewallUserSessionVariable GeoLocationXFFHeader { get; } = new ApplicationGatewayFirewallUserSessionVariable(GeoLocationXFFHeaderValue);
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallUserSessionVariable"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayFirewallUserSessionVariable left, ApplicationGatewayFirewallUserSessionVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallUserSessionVariable"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayFirewallUserSessionVariable left, ApplicationGatewayFirewallUserSessionVariable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallUserSessionVariable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayFirewallUserSessionVariable"/>. </summary>
         public static implicit operator ApplicationGatewayFirewallUserSessionVariable(string value) => new ApplicationGatewayFirewallUserSessionVariable(value);
 
         /// <inheritdoc />
@@ -47,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

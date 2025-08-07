@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Resources;
@@ -48,6 +49,33 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             configurationStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStore.Data)).Value;
 
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled);
+        }
+
+        [Test]
+        public async Task CreateOrUpdateDataPlaneProxyTest()
+        {
+            string configurationStoreName = Recording.GenerateAssetName("testapp-");
+            AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(new AzureLocation("westus"), new AppConfigurationSku("Standard"))
+            {
+                DataPlaneProxy = new AppConfigurationDataPlaneProxyProperties()
+                {
+                    AuthenticationMode = DataPlaneProxyAuthenticationMode.PassThrough,
+                    PrivateLinkDelegation = DataPlaneProxyPrivateLinkDelegation.Enabled,
+                },
+            };
+            AppConfigurationStoreResource configurationStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
+
+            Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
+            Assert.IsTrue(configurationStore.Data.DataPlaneProxy.AuthenticationMode == DataPlaneProxyAuthenticationMode.PassThrough);
+            Assert.IsTrue(configurationStore.Data.DataPlaneProxy.PrivateLinkDelegation == DataPlaneProxyPrivateLinkDelegation.Enabled);
+
+            configurationStore.Data.DataPlaneProxy.AuthenticationMode = DataPlaneProxyAuthenticationMode.Local;
+            configurationStore.Data.DataPlaneProxy.PrivateLinkDelegation = DataPlaneProxyPrivateLinkDelegation.Disabled;
+            configurationStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStore.Data)).Value;
+
+            Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
+            Assert.IsTrue(configurationStore.Data.DataPlaneProxy.AuthenticationMode == DataPlaneProxyAuthenticationMode.Local);
+            Assert.IsTrue(configurationStore.Data.DataPlaneProxy.PrivateLinkDelegation == DataPlaneProxyPrivateLinkDelegation.Disabled);
         }
 
         [Test]

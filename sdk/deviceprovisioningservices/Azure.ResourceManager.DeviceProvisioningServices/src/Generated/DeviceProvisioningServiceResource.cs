@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,29 +20,35 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
     /// A Class representing a DeviceProvisioningService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceProvisioningServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceProvisioningServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDeviceProvisioningService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceProvisioningServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceProvisioningServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDeviceProvisioningService method.
     /// </summary>
     public partial class DeviceProvisioningServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeviceProvisioningServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="provisioningServiceName"> The provisioningServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string provisioningServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _deviceProvisioningServiceIotDpsResourceClientDiagnostics;
-        private readonly IotDpsResourceRestOperations _deviceProvisioningServiceIotDpsResourceRestClient;
+        private readonly ClientDiagnostics _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics;
+        private readonly ProvisioningServiceDescriptionsRestOperations _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient;
         private readonly DeviceProvisioningServiceData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices";
 
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServiceResource"/> class for mocking. </summary>
         protected DeviceProvisioningServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceProvisioningServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceProvisioningServiceResource(ArmClient client, DeviceProvisioningServiceData data) : this(client, data.Id)
@@ -57,16 +62,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceProvisioningServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceProvisioningServiceIotDpsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deviceProvisioningServiceIotDpsResourceApiVersion);
-            _deviceProvisioningServiceIotDpsResourceRestClient = new IotDpsResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceIotDpsResourceApiVersion);
+            _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string deviceProvisioningServiceProvisioningServiceDescriptionsApiVersion);
+            _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceProvisioningServiceDescriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +95,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An object representing collection of DeviceProvisioningServicesCertificateResources and their operations over a DeviceProvisioningServicesCertificateResource. </returns>
         public virtual DeviceProvisioningServicesCertificateCollection GetDeviceProvisioningServicesCertificates()
         {
-            return GetCachedClient(Client => new DeviceProvisioningServicesCertificateCollection(Client, Id));
+            return GetCachedClient(client => new DeviceProvisioningServicesCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -105,15 +107,23 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DpsCertificate_Get</description>
+        /// <description>CertificateResponse_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> GetDeviceProvisioningServicesCertificateAsync(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -129,15 +139,23 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DpsCertificate_Get</description>
+        /// <description>CertificateResponse_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeviceProvisioningServicesCertificateResource> GetDeviceProvisioningServicesCertificate(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
@@ -148,7 +166,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An object representing collection of DeviceProvisioningServicesPrivateLinkResources and their operations over a DeviceProvisioningServicesPrivateLinkResource. </returns>
         public virtual DeviceProvisioningServicesPrivateLinkResourceCollection GetDeviceProvisioningServicesPrivateLinkResources()
         {
-            return GetCachedClient(Client => new DeviceProvisioningServicesPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new DeviceProvisioningServicesPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -160,14 +178,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceProvisioningServicesPrivateLinkResource>> GetDeviceProvisioningServicesPrivateLinkResourceAsync(string groupId, CancellationToken cancellationToken = default)
         {
@@ -183,14 +209,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeviceProvisioningServicesPrivateLinkResource> GetDeviceProvisioningServicesPrivateLinkResource(string groupId, CancellationToken cancellationToken = default)
         {
@@ -201,7 +235,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An object representing collection of DeviceProvisioningServicesPrivateEndpointConnectionResources and their operations over a DeviceProvisioningServicesPrivateEndpointConnectionResource. </returns>
         public virtual DeviceProvisioningServicesPrivateEndpointConnectionCollection GetDeviceProvisioningServicesPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new DeviceProvisioningServicesPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new DeviceProvisioningServicesPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -213,14 +247,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceProvisioningServicesPrivateEndpointConnectionResource>> GetDeviceProvisioningServicesPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -236,14 +278,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
+        /// <description>PrivateEndpointConnection_GetPrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetDeviceProvisioningServicesPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -259,18 +309,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeviceProvisioningServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Get");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());
@@ -291,18 +349,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeviceProvisioningServiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Get");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Get");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServiceIotDpsResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());
@@ -323,7 +389,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Delete</description>
+        /// <description>ProvisioningServiceDescription_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,12 +405,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Delete");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation(_deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServiceIotDpsResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceProvisioningServicesArmOperation(_deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -357,7 +431,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Delete</description>
+        /// <description>ProvisioningServiceDescription_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,12 +447,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Delete");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServiceIotDpsResourceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation(_deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServiceIotDpsResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new DeviceProvisioningServicesArmOperation(_deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -391,7 +473,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Update</description>
+        /// <description>ProvisioningServiceDescription_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,12 +493,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Update");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Update");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServiceIotDpsResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -429,7 +519,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Update</description>
+        /// <description>ProvisioningServiceDescription_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -441,12 +539,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Update");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.Update");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServiceIotDpsResourceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServiceIotDpsResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -467,17 +565,25 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_listValidSkus</description>
+        /// <description>ProvisioningServiceDescriptions_ListValidSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServicesSkuDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServicesSkuDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesSkuDefinition> GetValidSkusAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition(e), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -489,17 +595,25 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_listValidSkus</description>
+        /// <description>ProvisioningServiceDescriptions_ListValidSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesSkuDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSkuDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesSkuDefinition> GetValidSkus(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition(e), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -511,17 +625,25 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListKeys</description>
+        /// <description>ProvisioningServiceDescriptions_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServicesSharedAccessKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServicesSharedAccessKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesSharedAccessKey> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(e), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -533,17 +655,25 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListKeys</description>
+        /// <description>ProvisioningServiceDescriptions_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesSharedAccessKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesSharedAccessKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesSharedAccessKey> GetKeys(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(e), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -555,7 +685,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListKeysForKeyName</description>
+        /// <description>ProvisioningServiceDescriptions_GetKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -567,11 +705,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKey");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKey");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.ListKeysForKeyNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -590,7 +728,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_ListKeysForKeyName</description>
+        /// <description>ProvisioningServiceDescriptions_GetKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -602,11 +748,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKey");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.GetKey");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServiceIotDpsResourceRestClient.ListKeysForKeyName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -625,7 +771,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -638,7 +792,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.AddTag");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.AddTag");
             scope.Start();
             try
             {
@@ -647,7 +801,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _deviceProvisioningServiceIotDpsResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new DeviceProvisioningServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -679,7 +833,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -692,7 +854,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.AddTag");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.AddTag");
             scope.Start();
             try
             {
@@ -701,7 +863,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _deviceProvisioningServiceIotDpsResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new DeviceProvisioningServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -733,7 +895,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -744,7 +914,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.SetTags");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.SetTags");
             scope.Start();
             try
             {
@@ -754,7 +924,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _deviceProvisioningServiceIotDpsResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new DeviceProvisioningServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -782,7 +952,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -793,7 +971,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.SetTags");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.SetTags");
             scope.Start();
             try
             {
@@ -803,7 +981,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _deviceProvisioningServiceIotDpsResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new DeviceProvisioningServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -831,7 +1009,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -842,7 +1028,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.RemoveTag");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -851,7 +1037,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _deviceProvisioningServiceIotDpsResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new DeviceProvisioningServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -883,7 +1069,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -894,7 +1088,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.RemoveTag");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -903,7 +1097,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _deviceProvisioningServiceIotDpsResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new DeviceProvisioningServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

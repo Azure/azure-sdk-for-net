@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Azure backup parameters. </summary>
     public partial class DataProtectionBackupSettings : DataProtectionBackupSettingsBase
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSettings"/>. </summary>
         /// <param name="backupType"> BackupType ; Full/Incremental etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupType"/> is null. </exception>
         public DataProtectionBackupSettings(string backupType)
@@ -24,13 +24,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "AzureBackupParams";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="backupType"> BackupType ; Full/Incremental etc. </param>
-        internal DataProtectionBackupSettings(string objectType, string backupType) : base(objectType)
+        internal DataProtectionBackupSettings(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string backupType) : base(objectType, serializedAdditionalRawData)
         {
             BackupType = backupType;
             ObjectType = objectType ?? "AzureBackupParams";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSettings"/> for deserialization. </summary>
+        internal DataProtectionBackupSettings()
+        {
         }
 
         /// <summary> BackupType ; Full/Incremental etc. </summary>

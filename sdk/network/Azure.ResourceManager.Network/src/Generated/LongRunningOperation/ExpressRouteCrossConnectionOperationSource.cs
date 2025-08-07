@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Network
 
         ExpressRouteCrossConnectionResource IOperationSource<ExpressRouteCrossConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<ExpressRouteCrossConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new ExpressRouteCrossConnectionResource(_client, data);
         }
 
         async ValueTask<ExpressRouteCrossConnectionResource> IOperationSource<ExpressRouteCrossConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
-            return new ExpressRouteCrossConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<ExpressRouteCrossConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            return await Task.FromResult(new ExpressRouteCrossConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

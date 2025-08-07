@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         private const string EncryptedVmGuestStateOnlyWithPmkValue = "EncryptedVMGuestStateOnlyWithPmk";
         private const string EncryptedWithPmkValue = "EncryptedWithPmk";
         private const string EncryptedWithCmkValue = "EncryptedWithCmk";
+        private const string NonPersistedTPMValue = "NonPersistedTPM";
 
         /// <summary> EncryptedVMGuestStateOnlyWithPmk. </summary>
         public static ConfidentialVmEncryptionType EncryptedVmGuestStateOnlyWithPmk { get; } = new ConfidentialVmEncryptionType(EncryptedVmGuestStateOnlyWithPmkValue);
@@ -32,11 +33,13 @@ namespace Azure.ResourceManager.Compute.Models
         public static ConfidentialVmEncryptionType EncryptedWithPmk { get; } = new ConfidentialVmEncryptionType(EncryptedWithPmkValue);
         /// <summary> EncryptedWithCmk. </summary>
         public static ConfidentialVmEncryptionType EncryptedWithCmk { get; } = new ConfidentialVmEncryptionType(EncryptedWithCmkValue);
+        /// <summary> NonPersistedTPM. </summary>
+        public static ConfidentialVmEncryptionType NonPersistedTPM { get; } = new ConfidentialVmEncryptionType(NonPersistedTPMValue);
         /// <summary> Determines if two <see cref="ConfidentialVmEncryptionType"/> values are the same. </summary>
         public static bool operator ==(ConfidentialVmEncryptionType left, ConfidentialVmEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidentialVmEncryptionType"/> values are not the same. </summary>
         public static bool operator !=(ConfidentialVmEncryptionType left, ConfidentialVmEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConfidentialVmEncryptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialVmEncryptionType"/>. </summary>
         public static implicit operator ConfidentialVmEncryptionType(string value) => new ConfidentialVmEncryptionType(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

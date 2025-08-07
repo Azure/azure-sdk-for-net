@@ -48,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
         private readonly IHostSingletonManager _singletonManager;
         private readonly BlobTriggerSource _blobTriggerSource;
         private readonly ConcurrencyManager _concurrencyManager;
+        private readonly IDrainModeManager _drainModeManager;
 
         public BlobTriggerBinding(ParameterInfo parameter,
             BlobServiceClient hostBlobServiceClient,
@@ -64,7 +65,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             ISharedContextProvider sharedContextProvider,
             IHostSingletonManager singletonManager,
             ILoggerFactory loggerFactory,
-            ConcurrencyManager concurrencyManager)
+            ConcurrencyManager concurrencyManager,
+            IDrainModeManager drainModeManager)
         {
             _parameter = parameter ?? throw new ArgumentNullException(nameof(parameter));
             _hostBlobServiceClient = hostBlobServiceClient ?? throw new ArgumentNullException(nameof(hostBlobServiceClient));
@@ -86,6 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             _loggerFactory = loggerFactory;
             _converter = CreateConverter(_dataBlobServiceClient);
             _bindingDataContract = CreateBindingDataContract(path);
+            _drainModeManager = drainModeManager;
         }
 
         public Type TriggerValueType
@@ -191,10 +194,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
 
             var container = _dataBlobServiceClient.GetBlobContainerClient(_path.ContainerNamePattern);
 
-            var factory = new BlobListenerFactory(_hostIdProvider, _blobsOptions, _exceptionHandler,
-                _blobWrittenWatcherSetter, _blobTriggerQueueWriterFactory, _sharedContextProvider, _loggerFactory,
-                context.Descriptor, _hostBlobServiceClient, _hostQueueServiceClient, _dataBlobServiceClient, _dataQueueServiceClient,
-                container, _path, _blobTriggerSource, context.Executor, _singletonManager, _concurrencyManager);
+            var factory = new BlobListenerFactory(
+                _hostIdProvider,
+                _blobsOptions,
+                _exceptionHandler,
+                _blobWrittenWatcherSetter,
+                _blobTriggerQueueWriterFactory,
+                _sharedContextProvider,
+                _loggerFactory,
+                context.Descriptor,
+                _hostBlobServiceClient,
+                _hostQueueServiceClient,
+                _dataBlobServiceClient,
+                _dataQueueServiceClient,
+                container,
+                _path,
+                _blobTriggerSource,
+                context.Executor,
+                _singletonManager,
+                _concurrencyManager,
+                _drainModeManager);
 
             return factory.CreateAsync(context.CancellationToken);
         }

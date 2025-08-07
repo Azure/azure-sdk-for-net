@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventGrid.SystemEvents;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using STJ = System.Text.Json;
 
@@ -49,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     };
                 }
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
-                response.Headers.Add("Webhook-Allowed-Origin", "eventgrid.azure.net");
+                response.Headers.Add("Webhook-Allowed-Origin", GetAllowedOriginResponseHeader(req));
                 return response;
             }
 
@@ -104,7 +106,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             if (string.Equals(eventTypeHeader, NotificationEvent, StringComparison.OrdinalIgnoreCase))
             {
                 string requestContent = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                JToken token = JToken.Parse(requestContent);
+                JToken token;
+                using (JsonReader reader = new JsonTextReader(new StringReader(requestContent)) { DateParseHandling = DateParseHandling.None })
+                {
+                    token = JToken.Load(reader);
+                }
                 JArray events = token.Type switch
                 {
                     JTokenType.Array => (JArray) token,
@@ -120,6 +126,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 // TODO disable function?
                 new HttpResponseMessage(HttpStatusCode.Accepted) :
                 new HttpResponseMessage(HttpStatusCode.BadRequest);
+        }
+
+        private static string GetAllowedOriginResponseHeader(HttpRequestMessage req)
+        {
+            const string publicCloudOrigin = "eventgrid.azure.net";
+            const string requestOriginHeader = "WebHook-Request-Origin";
+
+            if (!req.Headers.Contains(requestOriginHeader))
+            {
+                return publicCloudOrigin;
+            }
+
+            string allowedOrigin = req.Headers.GetValues(requestOriginHeader).FirstOrDefault();
+            switch (allowedOrigin)
+            {
+                case publicCloudOrigin:
+                case "eventgrid.azure.us":
+                case "eventgrid.azure.eaglex.ic.gov":
+                case "eventgrid.azure.microsoft.scloud":
+                case "eventgrid.azure.cn":
+                    return allowedOrigin;
+                default:
+                    return publicCloudOrigin;
+            }
         }
     }
 }

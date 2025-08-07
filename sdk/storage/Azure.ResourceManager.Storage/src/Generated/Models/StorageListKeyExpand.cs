@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StorageListKeyExpand left, StorageListKeyExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageListKeyExpand"/> values are not the same. </summary>
         public static bool operator !=(StorageListKeyExpand left, StorageListKeyExpand right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageListKeyExpand"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageListKeyExpand"/>. </summary>
         public static implicit operator StorageListKeyExpand(string value) => new StorageListKeyExpand(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

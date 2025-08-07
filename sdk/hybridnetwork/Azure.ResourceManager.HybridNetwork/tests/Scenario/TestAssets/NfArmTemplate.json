@@ -1,0 +1,59 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "metadata": {
+        "_generator": {
+            "name": "bicep",
+            "version": "0.22.6.54827",
+            "templateHash": "4204644297979192959"
+        }
+    },
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"
+        },
+        "nfdvId": {
+            "type": "string"
+        },
+        "vnetName": {
+            "type": "string"
+        },
+        "vnetAddressPrefixes": {
+            "type": "array"
+        },
+        "subnets": {
+            "type": "array"
+        }
+    },
+    "variables": {
+        "nfName": "[format('nf-{0}', uniqueString(resourceGroup().id))]",
+        "values": {
+            "vnetName": "[parameters('vnetName')]",
+            "vnetAddressPrefixes": "[parameters('vnetAddressPrefixes')]",
+            "subnets": "[parameters('subnets')]"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.HybridNetwork/networkFunctions",
+            "apiVersion": "2023-09-01",
+            "name": "[variables('nfName')]",
+            "location": "[parameters('location')]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "networkFunctionDefinitionVersionResourceReference": {
+                    "id": "[parameters('nfdvId')]",
+                    "idType": "Open"
+                },
+                "nfviType": "AzureCore",
+                "nfviId": "[resourceGroup().id]",
+                "allowSoftwareUpdate": true,
+                "configurationType": "Open",
+                "deploymentValues": "[string(variables('values'))]"
+            }
+        }
+    ]
+}

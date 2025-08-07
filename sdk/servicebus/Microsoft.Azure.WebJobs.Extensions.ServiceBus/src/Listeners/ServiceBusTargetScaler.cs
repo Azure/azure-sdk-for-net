@@ -94,7 +94,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                 throw new ArgumentOutOfRangeException($"Unexpected concurrency='{concurrency}' - the value must be > 0.");
             }
 
-            int targetWorkerCount = (int)Math.Ceiling(messageCount / (decimal)concurrency);
+            int targetWorkerCount;
+
+            try
+            {
+                checked
+                {
+                    targetWorkerCount = (int)Math.Ceiling(messageCount / (decimal)concurrency);
+                }
+            }
+            catch (OverflowException)
+            {
+                targetWorkerCount = int.MaxValue;
+            }
+
             _logger.LogInformation($"Target worker count for function '{_functionId}' is '{targetWorkerCount}' (EntityPath='{_entityPath}', MessageCount ='{messageCount}', Concurrency='{concurrency}').");
 
             return new TargetScalerResult

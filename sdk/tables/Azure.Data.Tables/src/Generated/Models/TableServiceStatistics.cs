@@ -10,12 +10,12 @@ namespace Azure.Data.Tables.Models
     /// <summary> Stats for the service. </summary>
     public partial class TableServiceStatistics
     {
-        /// <summary> Initializes a new instance of TableServiceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableServiceStatistics"/>. </summary>
         internal TableServiceStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of TableServiceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableServiceStatistics"/>. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
         internal TableServiceStatistics(TableGeoReplicationInfo geoReplication)
         {

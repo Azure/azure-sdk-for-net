@@ -1,0 +1,30 @@
+<!--
+  This file allows overrides and extensions to the build configuration defined
+  by the central engineering system, and is considered during pipeline builds for
+  CI, test runs, and package release.
+
+  Based on the SDKType variable (msbuild property or env variable) this will filter
+  the set of projects to to match what type of SDK we are interested in building.
+
+  SDKType values
+   - "all" will build all projects
+   - "client" will build the new track 2 client/data libraries
+   - "mgmt" will build the management plane SDK.
+   - "functions" will build the storage WebJobs Extensions.
+   - "datamovement" will build the storage Data Movement packages.
+-->
+
+<Project>
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Storage.*\**\*.csproj" Exclude="$(MSBuildThisFileDirectory)Azure.Storage.DataMovement*\**\*.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(SDKType)' == 'functions'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.Storage*\**\*.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(SDKType)' == 'datamovement'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Storage.DataMovement*\**\*.csproj" />
+  </ItemGroup>
+</Project>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(BareMetalMachineEvacuate left, BareMetalMachineEvacuate right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BareMetalMachineEvacuate"/> values are not the same. </summary>
         public static bool operator !=(BareMetalMachineEvacuate left, BareMetalMachineEvacuate right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BareMetalMachineEvacuate"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineEvacuate"/>. </summary>
         public static implicit operator BareMetalMachineEvacuate(string value) => new BareMetalMachineEvacuate(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

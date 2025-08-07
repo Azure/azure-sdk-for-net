@@ -337,7 +337,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[azure_cli]: https://docs.microsoft.com/cli/azure/
+[azure_cli]: https://learn.microsoft.com/cli/azure/
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package
 [azure_portal]: https://portal.azure.com/
@@ -346,26 +346,24 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [coc_contact]: mailto:opencode@microsoft.com
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
+[cognitive_auth]: https://learn.microsoft.com/azure/cognitive-services/authentication/
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
-[custom_domain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[custom_domain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [language_studio]: https://language.cognitive.azure.com/
 [nuget]: https://www.nuget.org/
 
 [questionanswering_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/QuestionAnsweringClient.cs
 [questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
-[questionanswering_docs]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/
-[questionanswering_docs_chat]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base
+[questionanswering_docs]: https://learn.microsoft.com/azure/cognitive-services/qnamaker/
+[questionanswering_docs_chat]: https://learn.microsoft.com/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base
 [questionanswering_docs_demos]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#demo
 [questionanswering_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features
 [questionanswering_nuget_package]: https://nuget.org/packages/Azure.AI.Language.QuestionAnswering/
-[questionanswering_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
-[questionanswering_rest_docs]: https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering
-[questionanswering_rest_docs_projects]: https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects
+[questionanswering_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
+[questionanswering_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering
+[questionanswering_rest_docs_projects]: https://learn.microsoft.com/rest/api/language/question-answering-projects
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/MigrationGuide.md
 [questionansweringauthoring_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/Generated/QuestionAnsweringAuthoringClient.cs
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcognitivelanguage%2FAzure.AI.Language.QuestionAnswering%2FREADME.png)

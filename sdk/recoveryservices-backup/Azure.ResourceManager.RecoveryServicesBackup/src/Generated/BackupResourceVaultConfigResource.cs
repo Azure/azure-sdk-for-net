@@ -10,23 +10,24 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
     /// A Class representing a BackupResourceVaultConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BackupResourceVaultConfigResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBackupResourceVaultConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBackupResourceVaultConfig method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupResourceVaultConfigResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBackupResourceVaultConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupResourceVaultConfig method.
     /// </summary>
     public partial class BackupResourceVaultConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BackupResourceVaultConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupconfig/vaultconfig";
@@ -37,12 +38,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly BackupResourceVaultConfigsRestOperations _backupResourceVaultConfigRestClient;
         private readonly BackupResourceVaultConfigData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupconfig";
+
         /// <summary> Initializes a new instance of the <see cref="BackupResourceVaultConfigResource"/> class for mocking. </summary>
         protected BackupResourceVaultConfigResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BackupResourceVaultConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupResourceVaultConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BackupResourceVaultConfigResource(ArmClient client, BackupResourceVaultConfigData data) : this(client, data.Id)
@@ -63,9 +67,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupconfig";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +100,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +139,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,12 +180,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> resource config request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<BackupResourceVaultConfigResource>> UpdateAsync(BackupResourceVaultConfigData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupResourceVaultConfigResource>> UpdateAsync(BackupResourceVaultConfigData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -176,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             scope.Start();
             try
             {
-                var response = await _backupResourceVaultConfigRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _backupResourceVaultConfigRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -197,12 +223,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> resource config request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<BackupResourceVaultConfigResource> Update(BackupResourceVaultConfigData data, CancellationToken cancellationToken = default)
+        public virtual Response<BackupResourceVaultConfigResource> Update(BackupResourceVaultConfigData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -210,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             scope.Start();
             try
             {
-                var response = _backupResourceVaultConfigRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                var response = _backupResourceVaultConfigRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, xMsAuthorizationAuxiliary, cancellationToken);
                 return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -230,6 +265,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,6 +328,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -339,6 +390,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -388,6 +447,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -436,6 +503,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,6 +563,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

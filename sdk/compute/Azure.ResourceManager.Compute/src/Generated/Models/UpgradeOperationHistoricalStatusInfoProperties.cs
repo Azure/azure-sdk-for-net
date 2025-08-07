@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes each OS upgrade on the Virtual Machine Scale Set. </summary>
     public partial class UpgradeOperationHistoricalStatusInfoProperties
     {
-        /// <summary> Initializes a new instance of UpgradeOperationHistoricalStatusInfoProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpgradeOperationHistoricalStatusInfoProperties"/>. </summary>
         internal UpgradeOperationHistoricalStatusInfoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of UpgradeOperationHistoricalStatusInfoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpgradeOperationHistoricalStatusInfoProperties"/>. </summary>
         /// <param name="runningStatus"> Information about the overall status of the upgrade operation. </param>
         /// <param name="progress"> Counts of the VMs in each state. </param>
         /// <param name="error"> Error Details for this upgrade if there are any. </param>
         /// <param name="startedBy"> Invoker of the Upgrade Operation. </param>
         /// <param name="targetImageReference"> Image Reference details. </param>
         /// <param name="rollbackInfo"> Information about OS rollback if performed. </param>
-        internal UpgradeOperationHistoricalStatusInfoProperties(UpgradeOperationHistoryStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error, UpgradeOperationInvoker? startedBy, ImageReference targetImageReference, RollbackStatusInfo rollbackInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpgradeOperationHistoricalStatusInfoProperties(UpgradeOperationHistoryStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error, UpgradeOperationInvoker? startedBy, ImageReference targetImageReference, RollbackStatusInfo rollbackInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RunningStatus = runningStatus;
             Progress = progress;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
             StartedBy = startedBy;
             TargetImageReference = targetImageReference;
             RollbackInfo = rollbackInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Information about the overall status of the upgrade operation. </summary>

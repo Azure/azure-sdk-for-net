@@ -15,6 +15,8 @@ namespace Azure.Identity.Tests
     {
         public ManagedIdentityCredentialLiveTestBase(bool isAsync) : base(isAsync)
         {
+            // TODO: enable after new KeyValue is released (after Dec 2023)
+            TestDiagnostics = false;
         }
 
         public ManagedIdentityCredentialLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)

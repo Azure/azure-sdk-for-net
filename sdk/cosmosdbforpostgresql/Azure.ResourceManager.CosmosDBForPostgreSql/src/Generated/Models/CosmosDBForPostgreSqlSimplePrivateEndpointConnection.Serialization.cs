@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,17 +16,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class CosmosDBForPostgreSqlSimplePrivateEndpointConnection : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlSimplePrivateEndpointConnection : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlSimplePrivateEndpointConnection)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
@@ -38,14 +58,27 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBForPostgreSqlSimplePrivateEndpointConnection DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(JsonElement element)
+        CosmosDBForPostgreSqlSimplePrivateEndpointConnection IJsonModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlSimplePrivateEndpointConnection)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(document.RootElement, options);
+        }
+
+        internal static CosmosDBForPostgreSqlSimplePrivateEndpointConnection DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,10 +86,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            SystemData systemData = default;
+            WritableSubResource privateEndpoint = default;
+            IList<string> groupIds = default;
+            CosmosDBForPostgreSqlPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -80,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -98,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))
@@ -121,14 +156,58 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = CosmosDBForPostgreSqlPrivateLinkServiceConnectionState.DeserializeCosmosDBForPostgreSqlPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = CosmosDBForPostgreSqlPrivateLinkServiceConnectionState.DeserializeCosmosDBForPostgreSqlPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBForPostgreSqlSimplePrivateEndpointConnection(id, name, type, systemData.Value, privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CosmosDBForPostgreSqlSimplePrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlSimplePrivateEndpointConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CosmosDBForPostgreSqlSimplePrivateEndpointConnection IPersistableModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlSimplePrivateEndpointConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

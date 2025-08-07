@@ -2,12 +2,13 @@
   <PropertyGroup>
     <Description>This is the LoadTestService client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation LoadTestService for Azure Data Plane</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.1</ApiCompatVersion>
+    <ApiCompatVersion>1.0.2</ApiCompatVersion>
+    <Version>1.2.0-beta.2</Version>
     <PackageTags>Azure LoadTestService</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034</NoWarn>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -18,7 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>

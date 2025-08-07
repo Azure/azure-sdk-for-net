@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Azure.Communication.Sms.Models
@@ -15,6 +15,6 @@ namespace Azure.Communication.Sms.Models
         /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
         /// <param name="errorMessage"> Optional error message in case of 4xx/5xx/repeatable errors. </param>
         public static SmsSendResult SmsSendResult(string to, string messageId, int httpStatusCode, bool successful, string errorMessage)
-            => new SmsSendResult(to, messageId, httpStatusCode, SmsSendResponseItemRepeatabilityResult.Accepted, successful, errorMessage);
+            => new(to, messageId, httpStatusCode, SmsSendResponseItemRepeatabilityResult.Accepted, successful, errorMessage);
     }
 }

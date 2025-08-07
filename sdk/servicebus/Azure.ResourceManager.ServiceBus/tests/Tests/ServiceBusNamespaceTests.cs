@@ -598,21 +598,21 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             {
                 KeyName = Key1,
                 KeyVaultUri = keyVaultUri,
-                Identity = new UserAssignedIdentityProperties(firstIdentityId.ToString())
+                Identity = new UserAssignedIdentityProperties(firstIdentityId.ToString(), null)
             });
 
             serviceBusNamespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
             {
                 KeyName = Key2,
                 KeyVaultUri = keyVaultUri,
-                Identity = new UserAssignedIdentityProperties(firstIdentityId.ToString())
+                Identity = new UserAssignedIdentityProperties(firstIdentityId.ToString(), null)
             });
 
             serviceBusNamespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
             {
                 KeyName = Key3,
                 KeyVaultUri = keyVaultUri,
-                Identity = new UserAssignedIdentityProperties(firstIdentityId.ToString())
+                Identity = new UserAssignedIdentityProperties(firstIdentityId.ToString(), null)
             });
 
             resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, serviceBusNamespaceData)).Value;

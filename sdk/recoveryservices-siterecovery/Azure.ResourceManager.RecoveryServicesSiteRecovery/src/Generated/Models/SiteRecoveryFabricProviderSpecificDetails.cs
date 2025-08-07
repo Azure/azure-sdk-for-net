@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure Fabric Specific Details. </summary>
     public partial class SiteRecoveryFabricProviderSpecificDetails : FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProviderSpecificDetails"/>. </summary>
         internal SiteRecoveryFabricProviderSpecificDetails()
         {
             ContainerIds = new ChangeTrackingList<ResourceIdentifier>();
@@ -23,14 +24,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "Azure";
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The Location for the Azure fabric. </param>
         /// <param name="containerIds"> The container Ids for the Azure fabric. </param>
         /// <param name="zones"> The zones. </param>
         /// <param name="extendedLocations"> The ExtendedLocations. </param>
         /// <param name="locationDetails"> The location details. </param>
-        internal SiteRecoveryFabricProviderSpecificDetails(string instanceType, AzureLocation? location, IReadOnlyList<ResourceIdentifier> containerIds, IReadOnlyList<A2AZoneDetails> zones, IReadOnlyList<A2AExtendedLocationDetails> extendedLocations, IReadOnlyList<A2AFabricSpecificLocationDetails> locationDetails) : base(instanceType)
+        internal SiteRecoveryFabricProviderSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? location, IReadOnlyList<ResourceIdentifier> containerIds, IReadOnlyList<A2AZoneDetails> zones, IReadOnlyList<A2AExtendedLocationDetails> extendedLocations, IReadOnlyList<A2AFabricSpecificLocationDetails> locationDetails) : base(instanceType, serializedAdditionalRawData)
         {
             Location = location;
             ContainerIds = containerIds;

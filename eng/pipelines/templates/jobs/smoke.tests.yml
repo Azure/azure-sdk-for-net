@@ -11,15 +11,28 @@ parameters:
   - name: TimeoutInMinutes
     type: number
     default: 60
+  - name: MatrixConfigs
+    type: object
+    default:
+      - Name: SmokeTestMatrix
+        Path: eng/pipelines/templates/jobs/smoke-test-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
 
 jobs:
   - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
       pool:
-        name: "azsdk-pool-mms-ubuntu-2004-general"
-        vmImage: "MMSUbuntu20.04"
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
       displayName: Check Smoke Test Eligibility
       steps:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+            Paths:
+              - "common"
+
         # pipelines only supports template each when it generates the entire script block.
         - ${{ if and(ne(variables['Skip.Release'], 'true'), ne(parameters.Artifact.skipPublishPackage, 'true')) }}:
           - pwsh: |
@@ -40,74 +53,15 @@ jobs:
           env:
             RunSmokeTests: $(RunSmokeTests)
 
-  - job: SmokeTest
-    displayName: Run Smoke Test
-    ${{ if eq(parameters.Daily, false) }}:
-      dependsOn: smoke_test_eligibility
-      condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true))
-    strategy:
-      matrix:
-        Ubuntu_Net60:
-          Pool: "azsdk-pool-mms-ubuntu-2004-general"
-          OSVmImage: "MMSUbuntu20.04"
-          TestTargetFramework: net6.0
-        Windows_NetFramework:
-          Pool: "azsdk-pool-mms-win-2022-general"
-          OSVmImage: "windows-2022"
-          TestTargetFramework: net462
-        Windows_Net60:
-          Pool: "azsdk-pool-mms-win-2022-general"
-          OSVmImage: "windows-2022"
-          TestTargetFramework: net6.0
-        Windows_Net70:
-          Pool: "azsdk-pool-mms-win-2022-general"
-          OSVmImage: "windows-2022"
-          TestTargetFramework: net7.0
-    pool:
-      name: $(Pool)
-      vmImage: $(OSVmImage)
-    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
-
-    steps:
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-        parameters:
-          AgentImage: $(OSVmImage)
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-        parameters:
-          EnableNuGetCache: false
-
-      - ${{ if eq(parameters.Daily, true) }}:
-        - task: PowerShell@2
-          displayName: Use latest dev feed package versions
-          inputs:
-            targetType: filePath
-            filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
-            arguments: -CI -PreferDevVersion
-            workingDirectory: common/SmokeTests/SmokeTest
-            pwsh: true
-
-      - ${{ if eq(parameters.Daily, false) }}:
-        - download: current
-          artifact: ${{ parameters.ArtifactName }}
-          timeoutInMinutes: 5
-
-      - ${{ if eq(parameters.Daily, false) }}:
-        - task: PowerShell@2
-          displayName: Use latest GA/Beta package versions
-          inputs:
-            targetType: filePath
-            filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
-            arguments: -CI -PreferDevVersion -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
-            workingDirectory: common/SmokeTests/SmokeTest
-            pwsh: true
-
-      - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
-        displayName: Show SmokeTest.csproj
-
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-
-      - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
-        displayName: dotnet restore
-
-      - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
-        displayName: "Run Smoke Tests"
+  - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+    parameters:
+      GenerateJobName: generate_smoke_test_matrix
+      JobTemplatePath: /eng/pipelines/templates/jobs/smoke.tests.template.yml
+      MatrixConfigs: ${{ parameters.MatrixConfigs }}
+      CloudConfig:
+        Cloud: public
+      AdditionalParameters:
+        Daily: ${{ parameters.Daily }}
+        Artifact: ${{ parameters.Artifact }}
+        ArtifactName: ${{ parameters.ArtifactName }}
+        TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}

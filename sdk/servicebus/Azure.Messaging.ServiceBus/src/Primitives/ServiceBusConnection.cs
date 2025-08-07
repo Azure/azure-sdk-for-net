@@ -86,6 +86,17 @@ namespace Azure.Messaging.ServiceBus
             var connectionStringProperties = ServiceBusConnectionStringProperties.Parse(connectionString);
             ValidateConnectionStringProperties(connectionStringProperties, nameof(connectionString));
 
+            // If the emulator is in use, then unset TLS and set the endpoint as a custom endpoint
+            // address, unless one was explicitly provided.
+
+            var useTls = true;
+
+            if (connectionStringProperties.UseDevelopmentEmulator)
+            {
+                useTls = false;
+                options.CustomEndpointAddress ??= connectionStringProperties.Endpoint;
+            }
+
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             TransportType = options.TransportType;
             EntityPath = connectionStringProperties.EntityPath;
@@ -108,7 +119,7 @@ namespace Azure.Messaging.ServiceBus
             var sharedCredential = new SharedAccessCredential(sharedAccessSignature);
             var tokenCredential = new ServiceBusTokenCredential(sharedCredential);
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            InnerClient = CreateTransportClient(tokenCredential, options);
+            InnerClient = CreateTransportClient(tokenCredential, options, useTls);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
@@ -171,7 +182,7 @@ namespace Azure.Messaging.ServiceBus
             RetryOptions = options.RetryOptions;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            InnerClient = CreateTransportClient(tokenCredential, options);
+            InnerClient = CreateTransportClient(tokenCredential, options, useTls: true);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
@@ -263,7 +274,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
-        /// <param name="options"></param>
+        /// <param name="options">The set of options to use for the client.</param>
+        /// <param name="useTls"><c>true</c> if the client should secure the connection using TLS; otherwise, <c>false</c>.</param>
         ///
         /// <returns>A client generalization specific to the specified protocol/transport to which operations may be delegated.</returns>
         ///
@@ -277,13 +289,14 @@ namespace Azure.Messaging.ServiceBus
         ///
         internal virtual TransportClient CreateTransportClient(
             ServiceBusTokenCredential credential,
-            ServiceBusClientOptions options)
+            ServiceBusClientOptions options,
+            bool useTls = true)
         {
             switch (TransportType)
             {
                 case ServiceBusTransportType.AmqpTcp:
                 case ServiceBusTransportType.AmqpWebSockets:
-                    return new AmqpClient(FullyQualifiedNamespace, credential, options);
+                    return new AmqpClient(FullyQualifiedNamespace, credential, options, useTls);
 
                 default:
                     throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options));

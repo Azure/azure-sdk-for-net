@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
@@ -33,8 +32,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-12-01-preview";
+            _apiVersion = apiVersion ?? "2023-12-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateExecuteRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/getPrivateDnsZoneSuffix", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExecuteRequest()
@@ -63,7 +71,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerPrivateDnsZoneSuffixResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlFlexibleServerPrivateDnsZoneSuffixResponse.DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -83,7 +91,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerPrivateDnsZoneSuffixResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlFlexibleServerPrivateDnsZoneSuffixResponse.DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

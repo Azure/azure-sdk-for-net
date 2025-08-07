@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PowerBIDedicated.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.PowerBIDedicated
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetDetailsRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDetailsRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
@@ -77,7 +90,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacityData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,7 +121,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacityData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -117,6 +130,20 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityData data)
@@ -137,7 +164,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -195,6 +222,20 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
@@ -269,6 +310,20 @@ namespace Azure.ResourceManager.PowerBIDedicated
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -287,7 +342,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -345,6 +400,21 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSuspendRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendPath("/suspend", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSuspendRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
@@ -418,6 +488,21 @@ namespace Azure.ResourceManager.PowerBIDedicated
             }
         }
 
+        internal RequestUriBuilder CreateResumeRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendPath("/resume", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResumeRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
         {
             var message = _pipeline.CreateMessage();
@@ -489,6 +574,19 @@ namespace Azure.ResourceManager.PowerBIDedicated
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -526,7 +624,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacities value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedCapacities.DeserializeDedicatedCapacities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -553,13 +651,24 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacities value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedCapacities.DeserializeDedicatedCapacities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -595,7 +704,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacities value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedCapacities.DeserializeDedicatedCapacities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -620,13 +729,24 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacities value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedCapacities.DeserializeDedicatedCapacities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSkusRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSkusRequest(string subscriptionId)
@@ -662,7 +782,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         SkuEnumerationForNewResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SkuEnumerationForNewResourceResult.DeserializeSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -687,13 +807,28 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         SkuEnumerationForNewResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SkuEnumerationForNewResourceResult.DeserializeSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSkusForCapacityRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSkusForCapacityRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
@@ -737,7 +872,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         SkuEnumerationForExistingResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SkuEnumerationForExistingResourceResult.DeserializeSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -766,13 +901,26 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         SkuEnumerationForExistingResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SkuEnumerationForExistingResourceResult.DeserializeSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, CheckCapacityNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, CheckCapacityNameAvailabilityContent content)
@@ -792,7 +940,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -817,7 +965,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         CheckCapacityNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CheckCapacityNameAvailabilityResult.DeserializeCheckCapacityNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -845,7 +993,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         CheckCapacityNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CheckCapacityNameAvailabilityResult.DeserializeCheckCapacityNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

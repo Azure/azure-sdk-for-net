@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.Monitor
 
         MonitorPrivateLinkScopedResource IOperationSource<MonitorPrivateLinkScopedResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
             return new MonitorPrivateLinkScopedResource(_client, data);
         }
 
         async ValueTask<MonitorPrivateLinkScopedResource> IOperationSource<MonitorPrivateLinkScopedResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(document.RootElement);
-            return new MonitorPrivateLinkScopedResource(_client, data);
+            var data = ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
+            return await Task.FromResult(new MonitorPrivateLinkScopedResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

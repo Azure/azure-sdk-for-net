@@ -12,13 +12,13 @@ To begin, please ensure that you're familiar with the items discussed in the [Ge
 
 ## Client lifetime
 
-Each of the Event Hubs client types is safe to cache and use for the lifetime of the application, which is best practice when the application publishes or reads events regularly or semi-regularly. The clients are responsible for efficient resource management, working to keep resource usage low during periods of inactivity and manage health during periods of higher use. 
+Each of the Event Hubs client types is safe to cache and use for the lifetime of the application, which is best practice when the application publishes or reads events regularly or semi-regularly. The clients are responsible for efficient resource management, working to keep resource usage low during periods of inactivity and manage health during periods of higher use.
 
 For the `EventProcessorClient`, calling the `StopProcessingAsync` method when your application is closing will ensure that network resources and other unmanaged objects are cleaned up.  Calling  either the `CloseAsync` or `DisposeAsync` method on the `EventHubProducerClient` will perform the equivalent clean-up.
 
 ## Publish events
 
-To publish events, we will make use of the `EventHubsProducerClient`.  Because this is the only area of our sample that will be publishing events, we will close the client once publishing has completed.  In the majority of real-world scenarios, closing the producer when the application exits is the preferred pattern.  
+To publish events, we will make use of the `EventHubsProducerClient`.  Because this is the only area of our sample that will be publishing events, we will close the client once publishing has completed.  In the majority of real-world scenarios, closing the producer when the application exits is the preferred pattern.
 
 So that we have something to process, our example will publish a full batch of events.  The `EventHubDataBatch` exists to ensure that a set of events can safely be published without exceeding the size allowed by the Event Hub.  The `EventDataBatch` queries the service to understand the maximum size and is responsible for accurately measuring each event as it is added to the batch.  When its `TryAdd` method returns `false`, the event is too large to fit into the batch.
 
@@ -74,9 +74,9 @@ finally
 
 Now that the events have been published, we'll process them using the `EventProcessorClient`.  It's important to note that because events are not removed when reading, you are likely to see events that had been previously published as well as those from the batch that we just sent, if you're using an existing Event Hub.
 
-The `EventProcessorClient` is associated with a specific Event Hub and [consumer group](https://docs.microsoft.com/azure/event-hubs/event-hubs-features#consumer-groups).  Conceptually, the consumer group is a label that identifies one or more event consumers as a set.  Often, consumer groups are named after the responsibility of the consumer in an application, such as "Telemetry" or "OrderProcessing".  When an Event Hub is created, a default consumer group is created for it.  The default group, named "$Default", is what we'll be using for illustration.
+The `EventProcessorClient` is associated with a specific Event Hub and [consumer group](https://learn.microsoft.com/azure/event-hubs/event-hubs-features#consumer-groups).  Conceptually, the consumer group is a label that identifies one or more event consumers as a set.  Often, consumer groups are named after the responsibility of the consumer in an application, such as "Telemetry" or "OrderProcessing".  When an Event Hub is created, a default consumer group is created for it.  The default group, named "$Default", is what we'll be using for illustration.
 
-When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age greater than the [retention period](https://docs.microsoft.com//azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  Once removed, the events are no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
+When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age greater than the [retention period](https://learn.microsoft.com/azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  Once removed, the events are no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
 
 Each `EventProcessorClient` has its own full view of the events each partition of an Event Hub, meaning that events are available to all processors and are not removed from the partition when a processor reads them.  This allows for one or more of the different Event Hub clients to read and process events from the partition at different speeds and beginning with different events without interfering with one another.
 

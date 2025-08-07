@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer
         internal static PersonalizerSlotResult DeserializePersonalizerSlotResult(JsonElement element)
         {
             string id = default;
-            Optional<string> rewardActionId = default;
+            string rewardActionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -29,7 +29,7 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerSlotResult(id, rewardActionId.Value);
+            return new PersonalizerSlotResult(id, rewardActionId);
         }
     }
 }

@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> The set of keys which can be used to access the Maps REST APIs. Two keys are provided for key rotation without interruption. </summary>
     public partial class MapsAccountKeys
     {
-        /// <summary> Initializes a new instance of MapsAccountKeys. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsAccountKeys"/>. </summary>
         internal MapsAccountKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of MapsAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountKeys"/>. </summary>
         /// <param name="primaryKeyLastUpdatedOn"> The last updated date and time of the primary key. </param>
         /// <param name="primaryKey"> The primary key for accessing the Maps REST APIs. </param>
         /// <param name="secondaryKey"> The secondary key for accessing the Maps REST APIs. </param>
         /// <param name="secondaryKeyLastUpdatedOn"> The last updated date and time of the secondary key. </param>
-        internal MapsAccountKeys(DateTimeOffset? primaryKeyLastUpdatedOn, string primaryKey, string secondaryKey, DateTimeOffset? secondaryKeyLastUpdatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsAccountKeys(DateTimeOffset? primaryKeyLastUpdatedOn, string primaryKey, string secondaryKey, DateTimeOffset? secondaryKeyLastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKeyLastUpdatedOn = primaryKeyLastUpdatedOn;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             SecondaryKeyLastUpdatedOn = secondaryKeyLastUpdatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The last updated date and time of the primary key. </summary>

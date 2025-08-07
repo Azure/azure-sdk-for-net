@@ -140,9 +140,9 @@ namespace Microsoft.Azure.Batch
                     nameof(Metadata),
                     BindingAccess.Read | BindingAccess.Write);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new JobNetworkConfiguration(o).Freeze()),
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new JobNetworkConfiguration(o)),
                     nameof(NetworkConfiguration),
-                    BindingAccess.Read);
+                    BindingAccess.Read | BindingAccess.Write);
                 this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.OnAllTasksComplete, Common.OnAllTasksComplete>(protocolObject.OnAllTasksComplete),
                     nameof(OnAllTasksComplete),

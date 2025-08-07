@@ -19,13 +19,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public WebPubSubDataType DataType { get; set; }
 
-        public IList<string> Subprotocols { get; set; }
+        public IReadOnlyList<string> Subprotocols { get; set; }
 
-        public IDictionary<string, string[]> Claims { get; set; }
+        public IReadOnlyDictionary<string, string[]> Claims { get; set; }
 
-        public IDictionary<string, string[]> Query { get; set; }
+        public IReadOnlyDictionary<string, string[]> Query { get; set; }
 
-        public IList<WebPubSubClientCertificate> ClientCertificates { get; set; }
+        public IReadOnlyList<WebPubSubClientCertificate> ClientCertificates { get; set; }
 
         public string Reason { get; set; }
 

@@ -10,12 +10,12 @@ namespace Azure.Maps.Rendering
     /// <summary> Country property. </summary>
     public partial class RegionalCopyrightCountry
     {
-        /// <summary> Initializes a new instance of RegionalCopyrightCountry. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionalCopyrightCountry"/>. </summary>
         internal RegionalCopyrightCountry()
         {
         }
 
-        /// <summary> Initializes a new instance of RegionalCopyrightCountry. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionalCopyrightCountry"/>. </summary>
         /// <param name="iso3"> ISO3 property. </param>
         /// <param name="label"> Label property. </param>
         internal RegionalCopyrightCountry(string iso3, string label)

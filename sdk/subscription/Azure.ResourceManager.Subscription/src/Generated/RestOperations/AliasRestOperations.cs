@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Subscription.Models;
@@ -37,6 +36,16 @@ namespace Azure.ResourceManager.Subscription
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string aliasName, SubscriptionAliasCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/aliases/", false);
+            uri.AppendPath(aliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string aliasName, SubscriptionAliasCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -51,7 +60,7 @@ namespace Azure.ResourceManager.Subscription
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -59,7 +68,7 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary> Create Alias Subscription. </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
-        /// <param name="content"> The SubscriptionAliasCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="SubscriptionAliasCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -82,7 +91,7 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary> Create Alias Subscription. </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
-        /// <param name="content"> The SubscriptionAliasCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="SubscriptionAliasCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -101,6 +110,16 @@ namespace Azure.ResourceManager.Subscription
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string aliasName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/aliases/", false);
+            uri.AppendPath(aliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string aliasName)
@@ -135,7 +154,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         SubscriptionAliasData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -162,7 +181,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         SubscriptionAliasData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -171,6 +190,16 @@ namespace Azure.ResourceManager.Subscription
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string aliasName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/aliases/", false);
+            uri.AppendPath(aliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string aliasName)
@@ -231,6 +260,15 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/aliases", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -257,7 +295,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         SubscriptionAliasListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SubscriptionAliasListResult.DeserializeSubscriptionAliasListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -277,7 +315,7 @@ namespace Azure.ResourceManager.Subscription
                 case 200:
                     {
                         SubscriptionAliasListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SubscriptionAliasListResult.DeserializeSubscriptionAliasListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

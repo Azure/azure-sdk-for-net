@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Trigger reference type. </summary>
     public partial class TriggerReference
     {
-        /// <summary> Initializes a new instance of TriggerReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerReference"/>. </summary>
         /// <param name="type"> Trigger reference type. </param>
         /// <param name="referenceName"> Reference trigger name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>

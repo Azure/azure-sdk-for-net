@@ -27,6 +27,8 @@ namespace Microsoft.Azure.Batch
         internal NodeCounts(Models.NodeCounts protocolObject)
         {
             this.Creating = protocolObject.Creating;
+            this.Deallocated = protocolObject.Deallocated;
+            this.Deallocating = protocolObject.Deallocating;
             this.Idle = protocolObject.Idle;
             this.LeavingPool = protocolObject.LeavingPool;
             this.Offline = protocolObject.Offline;
@@ -39,6 +41,7 @@ namespace Microsoft.Azure.Batch
             this.Total = protocolObject.Total;
             this.Unknown = protocolObject.Unknown;
             this.Unusable = protocolObject.Unusable;
+            this.UpgradingOS = protocolObject.UpgradingOS;
             this.WaitingForStartTask = protocolObject.WaitingForStartTask;
         }
 
@@ -50,6 +53,16 @@ namespace Microsoft.Azure.Batch
         /// Gets the number of nodes in <see cref="Common.ComputeNodeState.Creating" />.
         /// </summary>
         public int Creating { get; }
+
+        /// <summary>
+        /// Gets the number of Compute Nodes in the deallocated state.
+        /// </summary>
+        public int Deallocated { get; }
+
+        /// <summary>
+        /// Gets the number of Compute Nodes in the deallocating state.
+        /// </summary>
+        public int Deallocating { get; }
 
         /// <summary>
         /// Gets the number of nodes in <see cref="Common.ComputeNodeState.Idle" />.
@@ -110,6 +123,11 @@ namespace Microsoft.Azure.Batch
         /// Gets the number of nodes in <see cref="Common.ComputeNodeState.Unusable" />.
         /// </summary>
         public int Unusable { get; }
+
+        /// <summary>
+        /// Gets the number of nodes in <see cref="Common.ComputeNodeState.UpgradingOS" />.
+        /// </summary>
+        public int UpgradingOS { get; }
 
         /// <summary>
         /// Gets the number of nodes in <see cref="Common.ComputeNodeState.WaitingForStartTask" />.

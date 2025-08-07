@@ -5,22 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class VirtualNetworkDnsForwardingRuleset
+    public partial class VirtualNetworkDnsForwardingRuleset : IUtf8JsonSerializable, IJsonModel<VirtualNetworkDnsForwardingRuleset>
     {
-        internal static VirtualNetworkDnsForwardingRuleset DeserializeVirtualNetworkDnsForwardingRuleset(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkDnsForwardingRuleset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VirtualNetworkDnsForwardingRuleset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkDnsForwardingRuleset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRuleset)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VirtualNetworkLink))
+            {
+                writer.WritePropertyName("virtualNetworkLink"u8);
+                ((IJsonModel<WritableSubResource>)VirtualNetworkLink).Write(writer, options);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        VirtualNetworkDnsForwardingRuleset IJsonModel<VirtualNetworkDnsForwardingRuleset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkDnsForwardingRuleset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRuleset)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkDnsForwardingRuleset(document.RootElement, options);
+        }
+
+        internal static VirtualNetworkDnsForwardingRuleset DeserializeVirtualNetworkDnsForwardingRuleset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<WritableSubResource> virtualNetworkLink = default;
+            ResourceIdentifier id = default;
+            WritableSubResource virtualNetworkLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -47,14 +116,50 @@ namespace Azure.ResourceManager.DnsResolver.Models
                             {
                                 continue;
                             }
-                            virtualNetworkLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualNetworkLink = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDnsResolverContext.Default);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualNetworkDnsForwardingRuleset(id.Value, virtualNetworkLink);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualNetworkDnsForwardingRuleset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkDnsForwardingRuleset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsResolverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRuleset)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualNetworkDnsForwardingRuleset IPersistableModel<VirtualNetworkDnsForwardingRuleset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkDnsForwardingRuleset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVirtualNetworkDnsForwardingRuleset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRuleset)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualNetworkDnsForwardingRuleset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

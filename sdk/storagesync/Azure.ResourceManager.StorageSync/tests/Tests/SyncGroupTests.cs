@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         private StorageSyncGroupCreateOrUpdateContent _storageSyncGroupCreateOrUpdateContent;
         private StorageSyncServiceResource _storageSyncServiceResource;
 
-        public SyncGroupTests(bool async) : base(async) //, RecordedTestMode.Record)
+        public SyncGroupTests(bool async) : base(async, ModeFromSourceCode )
         {
         }
 

@@ -22,6 +22,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string ES384Value = "ES384";
         internal const string ES512Value = "ES512";
         internal const string ES256KValue = "ES256K";
+        internal const string HS256Value = "HS256";
+        internal const string HS384Value = "HS384";
+        internal const string HS512Value = "HS512";
 
         private readonly string _value;
 
@@ -83,6 +86,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Gets an ECDSA with a secp256k1 curve <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm ES256K { get; } = new SignatureAlgorithm(ES256KValue);
+
+        /// <summary>
+        /// Gets an HMAC using SHA-256 <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
+        /// </summary>
+        public static SignatureAlgorithm HS256 { get; } = new SignatureAlgorithm(HS256Value);
+
+        /// <summary>
+        /// Gets an HMAC using SHA-384 <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
+        /// </summary>
+        public static SignatureAlgorithm HS384 { get; } = new SignatureAlgorithm(HS384Value);
+
+        /// <summary>
+        /// Gets an HMAC using SHA-512 <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
+        /// </summary>
+        public static SignatureAlgorithm HS512 { get; } = new SignatureAlgorithm(HS512Value);
 
         /// <summary>
         /// Determines if two <see cref="SignatureAlgorithm"/> values are the same.
@@ -168,16 +186,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case PS256Value:
                 case ES256Value:
                 case ES256KValue:
+                case HS256Value:
                     return SHA256.Create();
 
                 case RS384Value:
                 case PS384Value:
                 case ES384Value:
+                case HS384Value:
                     return SHA384.Create();
 
                 case RS512Value:
                 case PS512Value:
                 case ES512Value:
+                case HS512Value:
                     return SHA512.Create();
 
                 default:
@@ -193,16 +214,19 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case PS256Value:
                 case ES256Value:
                 case ES256KValue:
+                case HS256Value:
                     return HashAlgorithmName.SHA256;
 
                 case RS384Value:
                 case PS384Value:
                 case ES384Value:
+                case HS384Value:
                     return HashAlgorithmName.SHA384;
 
                 case RS512Value:
                 case PS512Value:
                 case ES512Value:
+                case HS512Value:
                     return HashAlgorithmName.SHA512;
                 default:
 

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
+    /// <summary> The audio channel type to stream, e.g., unmixed audio, mixed audio. </summary>
     public readonly partial struct MediaStreamingAudioChannel : IEquatable<MediaStreamingAudioChannel>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(MediaStreamingAudioChannel left, MediaStreamingAudioChannel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaStreamingAudioChannel"/> values are not the same. </summary>
         public static bool operator !=(MediaStreamingAudioChannel left, MediaStreamingAudioChannel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaStreamingAudioChannel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaStreamingAudioChannel"/>. </summary>
         public static implicit operator MediaStreamingAudioChannel(string value) => new MediaStreamingAudioChannel(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

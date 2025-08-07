@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PolicyInsights.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckAtSubscriptionScopeRequestUri(string subscriptionId, CheckPolicyRestrictionsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/checkPolicyRestrictions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckAtSubscriptionScopeRequest(string subscriptionId, CheckPolicyRestrictionsContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.PolicyInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -76,7 +86,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         CheckPolicyRestrictionsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,13 +113,26 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         CheckPolicyRestrictionsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckAtResourceGroupScopeRequestUri(string subscriptionId, string resourceGroupName, CheckPolicyRestrictionsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/checkPolicyRestrictions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckAtResourceGroupScopeRequest(string subscriptionId, string resourceGroupName, CheckPolicyRestrictionsContent content)
@@ -129,7 +152,7 @@ namespace Azure.ResourceManager.PolicyInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -155,7 +178,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         CheckPolicyRestrictionsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -184,13 +207,26 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         CheckPolicyRestrictionsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckAtManagementGroupScopeRequestUri(string managementGroupId, CheckManagementGroupPolicyRestrictionsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath("Microsoft.Management", true);
+            uri.AppendPath("/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/checkPolicyRestrictions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckAtManagementGroupScopeRequest(string managementGroupId, CheckManagementGroupPolicyRestrictionsContent content)
@@ -210,7 +246,7 @@ namespace Azure.ResourceManager.PolicyInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -234,7 +270,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         CheckPolicyRestrictionsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +297,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         CheckPolicyRestrictionsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CheckPolicyRestrictionsResult.DeserializeCheckPolicyRestrictionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

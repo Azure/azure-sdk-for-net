@@ -10,9 +10,18 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The KeyPhrasesTaskParameters. </summary>
     internal partial class KeyPhrasesTaskParameters
     {
-        /// <summary> Initializes a new instance of KeyPhrasesTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhrasesTaskParameters"/>. </summary>
         public KeyPhrasesTaskParameters()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyPhrasesTaskParameters"/>. </summary>
+        /// <param name="modelVersion"></param>
+        /// <param name="loggingOptOut"></param>
+        internal KeyPhrasesTaskParameters(string modelVersion, bool? loggingOptOut)
+        {
+            ModelVersion = modelVersion;
+            LoggingOptOut = loggingOptOut;
         }
 
         /// <summary> Gets or sets the model version. </summary>

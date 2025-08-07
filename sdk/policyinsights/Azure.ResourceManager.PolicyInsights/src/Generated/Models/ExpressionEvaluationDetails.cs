@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Evaluation details of policy language expressions. </summary>
     public partial class ExpressionEvaluationDetails
     {
-        /// <summary> Initializes a new instance of ExpressionEvaluationDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationDetails"/>. </summary>
         internal ExpressionEvaluationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressionEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationDetails"/>. </summary>
         /// <param name="result"> Evaluation result. </param>
         /// <param name="expression"> Expression evaluated. </param>
         /// <param name="expressionKind"> The kind of expression that was evaluated. </param>
@@ -25,7 +58,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="expressionValue"> Value of the expression. </param>
         /// <param name="targetValue"> Target value to be compared with the expression value. </param>
         /// <param name="operator"> Operator to compare the expression value and the target value. </param>
-        internal ExpressionEvaluationDetails(string result, string expression, string expressionKind, string path, BinaryData expressionValue, BinaryData targetValue, string @operator)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressionEvaluationDetails(string result, string expression, string expressionKind, string path, BinaryData expressionValue, BinaryData targetValue, string @operator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Result = result;
             Expression = expression;
@@ -34,6 +68,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             ExpressionValue = expressionValue;
             TargetValue = targetValue;
             Operator = @operator;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Evaluation result. </summary>
@@ -50,7 +85,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -81,7 +116,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

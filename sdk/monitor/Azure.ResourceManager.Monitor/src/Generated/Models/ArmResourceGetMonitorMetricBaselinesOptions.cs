@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The ArmResourceGetMonitorMetricBaselinesOptions. </summary>
     public partial class ArmResourceGetMonitorMetricBaselinesOptions
     {
-        /// <summary> Initializes a new instance of ArmResourceGetMonitorMetricBaselinesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceGetMonitorMetricBaselinesOptions"/>. </summary>
         public ArmResourceGetMonitorMetricBaselinesOptions()
         {
         }
 
         /// <summary> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </summary>
         public string Metricnames { get; set; }
-        /// <summary> Metric namespace to query metric definitions for. </summary>
+        /// <summary> Metric namespace that contains the requested metric names. </summary>
         public string Metricnamespace { get; set; }
         /// <summary> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </summary>
         public string Timespan { get; set; }

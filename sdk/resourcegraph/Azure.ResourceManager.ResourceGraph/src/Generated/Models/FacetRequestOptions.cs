@@ -5,14 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary> The options for facet evaluation. </summary>
     public partial class FacetRequestOptions
     {
-        /// <summary> Initializes a new instance of FacetRequestOptions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FacetRequestOptions"/>. </summary>
         public FacetRequestOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FacetRequestOptions"/>. </summary>
+        /// <param name="sortBy"> The column name or query expression to sort on. Defaults to count if not present. </param>
+        /// <param name="sortOrder"> The sorting order by the selected column (count by default). </param>
+        /// <param name="filter"> Specifies the filter condition for the 'where' clause which will be run on main query's result, just before the actual faceting. </param>
+        /// <param name="top"> The maximum number of facet rows that should be returned. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FacetRequestOptions(string sortBy, FacetSortOrder? sortOrder, string filter, int? top, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SortBy = sortBy;
+            SortOrder = sortOrder;
+            Filter = filter;
+            Top = top;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The column name or query expression to sort on. Defaults to count if not present. </summary>

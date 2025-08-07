@@ -52,12 +52,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class RunNotebookRequestConverter : JsonConverter<RunNotebookRequest>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookRequest model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override RunNotebookRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

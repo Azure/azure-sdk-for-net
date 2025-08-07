@@ -7,10 +7,7 @@
 # is finished being deployed. The ARM template is responsible for creating the Storage accounts needed for live tests.
 
 param (
-    [hashtable] $DeploymentOutputs,
-    [string] $TenantId,
-    [string] $TestApplicationId,
-    [string] $TestApplicationSecret
+    [hashtable] $DeploymentOutputs
 )
 
 # outputs from the ARM deployment passed in from New-TestResources
@@ -109,12 +106,8 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$PrimaryAccountName</AccountName>
       <AccountKey>$PrimaryAccountKey</AccountKey>
-      <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
-      <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
       <ResourceGroupName>$ResourceGroupName</ResourceGroupName>
       <SubscriptionId>$SubscriptionId</SubscriptionId>
-      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
       <BlobServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
       <QueueServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
       <TableServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</TableServiceEndpoint>
@@ -130,10 +123,6 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$DataLakeAccountName</AccountName>
       <AccountKey>$DataLakeAccountKey</AccountKey>
-      <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
-      <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
-      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
       <BlobServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountBlobEndpointSuffix</BlobServiceEndpoint>
       <QueueServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountQueueEndpointSuffix</QueueServiceEndpoint>
       <FileServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountFileEndpointSuffix</FileServiceEndpoint>
@@ -171,10 +160,6 @@ $content =
     <KeyVaultConfiguration>
       <VaultName>ClientsideEncryptionKeyvault</VaultName>
       <VaultEndpoint>$KeyVaultUri</VaultEndpoint>
-      <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
-      <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
-      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
     </KeyVaultConfiguration>
   </KeyVaultConfigurations>
   <ManagedDiskConfigurations>
@@ -184,9 +169,6 @@ $content =
       <ResourceGroupName>$ResourceGroupName</ResourceGroupName>
       <SubsriptionId>$SubscriptionId</SubsriptionId>
       <Location>$Location</Location>
-      <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
-      <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
     </ManagedDiskConfiguration>
   </ManagedDiskConfigurations>
 </TestConfigurations>"

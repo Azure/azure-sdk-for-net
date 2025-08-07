@@ -102,6 +102,26 @@ namespace Azure.IoT.ModelsRepository.Tests
 
         [TestCase(ModelsRepositoryTestBase.ClientType.Local, true)]
         [TestCase(ModelsRepositoryTestBase.ClientType.Local, false)]
+        public async Task GetModelNoDependenciesWithMinorVersion(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)
+        {
+            const string dtmi1 = "dtmi:com:example:Boiler";
+            const string dtmi2 = "dtmi:com:example:Thermostat;1.2";
+            string[] dtmis = new[] { dtmi1, dtmi2 };
+
+            ModelsRepositoryClient client = GetClient(clientType, hasMetadata);
+
+            // Multiple GetModel() execution with the same instance.
+            foreach (var dtmi in dtmis)
+            {
+                ModelResult result = await client.GetModelAsync(dtmi);
+                result.Content.Count.Should().Be(1);
+                result.Content.ContainsKey(dtmi).Should().BeTrue();
+                ModelsRepositoryTestBase.ParseRootDtmiFromJson(result.Content[dtmi]).Should().Be(dtmi);
+            }
+        }
+
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, true)]
+        [TestCase(ModelsRepositoryTestBase.ClientType.Local, false)]
         [TestCase(ModelsRepositoryTestBase.ClientType.Remote, true)]
         [TestCase(ModelsRepositoryTestBase.ClientType.Remote, false)]
         public async Task GetModelDependenciesComponents(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)

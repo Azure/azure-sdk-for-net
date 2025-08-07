@@ -32,10 +32,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("sourceDisplayName"u8);
                 writer.WriteStringValue(SourceDisplayName);
             }
-            if (Optional.IsDefined(SourceIdentity))
+            if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("sourceIdentity"u8);
-                writer.WriteObjectValue(SourceIdentity);
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -44,22 +44,35 @@ namespace Azure.Communication.CallAutomation
             }
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
-            if (Optional.IsDefined(MediaStreamingConfiguration))
+            if (Optional.IsDefined(CallIntelligenceOptions))
             {
-                writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
+                writer.WritePropertyName("callIntelligenceOptions"u8);
+                writer.WriteObjectValue(CallIntelligenceOptions);
             }
-            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            if (Optional.IsDefined(MediaStreamingOptions))
             {
-                writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
-                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+                writer.WritePropertyName("mediaStreamingOptions"u8);
+                writer.WriteObjectValue(MediaStreamingOptions);
             }
-            if (Optional.IsDefined(CustomContext))
+            if (Optional.IsDefined(TranscriptionOptions))
             {
-                writer.WritePropertyName("customContext"u8);
-                writer.WriteObjectValue(CustomContext);
+                writer.WritePropertyName("transcriptionOptions"u8);
+                writer.WriteObjectValue(TranscriptionOptions);
+            }
+            if (Optional.IsDefined(TeamsAppSource))
+            {
+                writer.WritePropertyName("teamsAppSource"u8);
+                writer.WriteObjectValue(TeamsAppSource);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

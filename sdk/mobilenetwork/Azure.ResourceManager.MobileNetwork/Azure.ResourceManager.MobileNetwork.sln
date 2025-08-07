@@ -1,19 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{125ECE81-43FE-46B3-A7DE-A44683899C78}") = "Azure.ResourceManager.MobileNetwork", "src\Azure.ResourceManager.MobileNetwork.csproj", "{71E6EF82-715A-49DE-9617-290F6101BFD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MobileNetwork", "src\Azure.ResourceManager.MobileNetwork.csproj", "{71E6EF82-715A-49DE-9617-290F6101BFD8}"
 EndProject
-Project("{125ECE81-43FE-46B3-A7DE-A44683899C78}") = "Azure.ResourceManager.MobileNetwork.Tests", "tests\Azure.ResourceManager.MobileNetwork.Tests.csproj", "{C2373C8C-8E9F-4599-B53A-DA018ABAFD67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MobileNetwork.Tests", "tests\Azure.ResourceManager.MobileNetwork.Tests.csproj", "{C2373C8C-8E9F-4599-B53A-DA018ABAFD67}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {41F8F120-515A-40AA-8531-86351670D357}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -47,5 +41,11 @@ Global
 		{C2373C8C-8E9F-4599-B53A-DA018ABAFD67}.Release|x64.Build.0 = Release|Any CPU
 		{C2373C8C-8E9F-4599-B53A-DA018ABAFD67}.Release|x86.ActiveCfg = Release|Any CPU
 		{C2373C8C-8E9F-4599-B53A-DA018ABAFD67}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {41F8F120-515A-40AA-8531-86351670D357}
 	EndGlobalSection
 EndGlobal

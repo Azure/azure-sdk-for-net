@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The MetastoreRegistrationResponse. </summary>
     public partial class MetastoreRegistrationResponse
     {
-        /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetastoreRegistrationResponse"/>. </summary>
         internal MetastoreRegistrationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetastoreRegistrationResponse"/>. </summary>
         /// <param name="status"> Enumerates possible request statuses. </param>
         internal MetastoreRegistrationResponse(RequestStatus? status)
         {

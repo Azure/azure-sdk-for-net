@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     internal class ActionConverterFactoryOfT : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeToConvert.IsGenericType ? typeof(AuthenticationEventAction).IsAssignableFrom(typeToConvert.GenericTypeArguments[0]) : false;
+            return typeToConvert.IsGenericType ? typeof(WebJobsAuthenticationEventsAction).IsAssignableFrom(typeToConvert.GenericTypeArguments[0]) : false;
         }
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             return converter;
         }
 
-        internal class ActionConverter<T> : JsonConverter<List<T>> where T : AuthenticationEventAction
+        internal class ActionConverter<T> : JsonConverter<List<T>> where T : WebJobsAuthenticationEventsAction
         {
             public override List<T> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

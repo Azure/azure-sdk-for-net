@@ -8,7 +8,6 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Synapse.Models;
 
@@ -18,13 +17,13 @@ namespace Azure.ResourceManager.Synapse
     {
         SynapseSsisObjectMetadataStatusResult IOperationSource<SynapseSsisObjectMetadataStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return SynapseSsisObjectMetadataStatusResult.DeserializeSynapseSsisObjectMetadataStatusResult(document.RootElement);
         }
 
         async ValueTask<SynapseSsisObjectMetadataStatusResult> IOperationSource<SynapseSsisObjectMetadataStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return SynapseSsisObjectMetadataStatusResult.DeserializeSynapseSsisObjectMetadataStatusResult(document.RootElement);
         }
     }

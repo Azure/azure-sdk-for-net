@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing an IotSecurityAggregatedRecommendation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotSecurityAggregatedRecommendationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotSecurityAggregatedRecommendationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionAnalyticsModelResource" /> using the GetIotSecurityAggregatedRecommendation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotSecurityAggregatedRecommendationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotSecurityAggregatedRecommendationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionAnalyticsModelResource"/> using the GetIotSecurityAggregatedRecommendation method.
     /// </summary>
     public partial class IotSecurityAggregatedRecommendationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IotSecurityAggregatedRecommendationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="solutionName"> The solutionName. </param>
+        /// <param name="aggregatedRecommendationName"> The aggregatedRecommendationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedRecommendationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly IotSecuritySolutionsAnalyticsRecommendationRestOperations _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient;
         private readonly IotSecurityAggregatedRecommendationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations";
+
         /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedRecommendationResource"/> class for mocking. </summary>
         protected IotSecurityAggregatedRecommendationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotSecurityAggregatedRecommendationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedRecommendationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotSecurityAggregatedRecommendationResource(ArmClient client, IotSecurityAggregatedRecommendationData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsRecommendation_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedRecommendationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsRecommendation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

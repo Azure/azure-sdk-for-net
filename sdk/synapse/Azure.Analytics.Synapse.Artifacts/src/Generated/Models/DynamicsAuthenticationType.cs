@@ -25,6 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private const string Office365Value = "Office365";
         private const string IfdValue = "Ifd";
         private const string AADServicePrincipalValue = "AADServicePrincipal";
+        private const string ActiveDirectoryValue = "Active Directory";
 
         /// <summary> Office365. </summary>
         public static DynamicsAuthenticationType Office365 { get; } = new DynamicsAuthenticationType(Office365Value);
@@ -32,11 +33,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static DynamicsAuthenticationType Ifd { get; } = new DynamicsAuthenticationType(IfdValue);
         /// <summary> AADServicePrincipal. </summary>
         public static DynamicsAuthenticationType AADServicePrincipal { get; } = new DynamicsAuthenticationType(AADServicePrincipalValue);
+        /// <summary> Active Directory. </summary>
+        public static DynamicsAuthenticationType ActiveDirectory { get; } = new DynamicsAuthenticationType(ActiveDirectoryValue);
         /// <summary> Determines if two <see cref="DynamicsAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(DynamicsAuthenticationType left, DynamicsAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicsAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(DynamicsAuthenticationType left, DynamicsAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynamicsAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicsAuthenticationType"/>. </summary>
         public static implicit operator DynamicsAuthenticationType(string value) => new DynamicsAuthenticationType(value);
 
         /// <inheritdoc />
@@ -47,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

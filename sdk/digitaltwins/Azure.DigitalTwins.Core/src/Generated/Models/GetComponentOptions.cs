@@ -10,9 +10,18 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class GetComponentOptions
     {
-        /// <summary> Initializes a new instance of GetComponentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetComponentOptions"/>. </summary>
         public GetComponentOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetComponentOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        internal GetComponentOptions(string traceParent, string traceState)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
         }
     }
 }

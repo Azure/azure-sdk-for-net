@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/512e966e15cd8e6ffd756279971c478702f4e19e/specification/communication/data-plane/Email/stable/2023-03-31/CommunicationServicesEmail.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e64ad693df24b47d4009eece6663c8d95cf94be6/specification/communication/data-plane/Email/preview/2024-07-01-preview/CommunicationServicesEmail.json
 generation1-convenience-client: true
 payload-flattening-threshold: 3
 model-namespace: false

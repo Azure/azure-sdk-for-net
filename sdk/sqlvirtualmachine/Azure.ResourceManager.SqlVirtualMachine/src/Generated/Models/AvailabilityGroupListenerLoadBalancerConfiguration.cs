@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,59 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> A load balancer configuration for an availability group listener. </summary>
     public partial class AvailabilityGroupListenerLoadBalancerConfiguration
     {
-        /// <summary> Initializes a new instance of AvailabilityGroupListenerLoadBalancerConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerLoadBalancerConfiguration"/>. </summary>
         public AvailabilityGroupListenerLoadBalancerConfiguration()
         {
             SqlVmInstances = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of AvailabilityGroupListenerLoadBalancerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerLoadBalancerConfiguration"/>. </summary>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="publicIPAddressResourceId"> Resource id of the public IP. </param>
         /// <param name="loadBalancerResourceId"> Resource id of the load balancer. </param>
         /// <param name="probePort"> Probe port. </param>
         /// <param name="sqlVmInstances"> List of the SQL virtual machine instance resource id's that are enrolled into the availability group listener. </param>
-        internal AvailabilityGroupListenerLoadBalancerConfiguration(AvailabilityGroupListenerPrivateIPAddress privateIPAddress, ResourceIdentifier publicIPAddressResourceId, ResourceIdentifier loadBalancerResourceId, int? probePort, IList<ResourceIdentifier> sqlVmInstances)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilityGroupListenerLoadBalancerConfiguration(AvailabilityGroupListenerPrivateIPAddress privateIPAddress, ResourceIdentifier publicIPAddressResourceId, ResourceIdentifier loadBalancerResourceId, int? probePort, IList<ResourceIdentifier> sqlVmInstances, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateIPAddress = privateIPAddress;
             PublicIPAddressResourceId = publicIPAddressResourceId;
             LoadBalancerResourceId = loadBalancerResourceId;
             ProbePort = probePort;
             SqlVmInstances = sqlVmInstances;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Private IP address. </summary>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Net;
 using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.WebJobs;
@@ -92,22 +93,18 @@ namespace Microsoft.Extensions.Hosting
             return builder;
         }
 
-        public static IWebJobsBuilder AddEventHubsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
+        internal static IWebJobsBuilder AddEventHubsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
-            IServiceProvider serviceProvider = null;
-            Lazy<EventHubsScalerProvider> scalerProvider = new Lazy<EventHubsScalerProvider>(() => new EventHubsScalerProvider(serviceProvider, triggerMetadata));
-
-            builder.Services.AddSingleton<IScaleMonitorProvider>(resolvedServiceProvider =>
+            // We need to register an instance of EventHubsScalerProvider in the DI container and then map it to the interfaces IScaleMonitorProvider and ITargetScalerProvider.
+            // Since there can be more than one instance of EventHubsScalerProvider, we have to store a reference to the created instance to filter it out later.
+            EventHubsScalerProvider eventHubsScalerProvider  = null;
+            builder.Services.AddSingleton(serviceProvider =>
             {
-                serviceProvider = serviceProvider ?? resolvedServiceProvider;
-                return scalerProvider.Value;
+                eventHubsScalerProvider  = new EventHubsScalerProvider(serviceProvider, triggerMetadata);
+                return eventHubsScalerProvider ;
             });
-
-            builder.Services.AddSingleton<ITargetScalerProvider>(resolvedServiceProvider =>
-            {
-                serviceProvider = serviceProvider ?? resolvedServiceProvider;
-                return scalerProvider.Value;
-            });
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Single(x => x == eventHubsScalerProvider ));
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Single(x => x == eventHubsScalerProvider ));
 
             return builder;
         }

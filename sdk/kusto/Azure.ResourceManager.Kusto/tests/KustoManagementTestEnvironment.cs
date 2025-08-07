@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.Kusto.Tests
     public class KustoManagementTestEnvironment : TestEnvironment
     {
         public string Id => GetRecordedVariable("ID");
-
         public string ClusterName => GetRecordedVariable("CLUSTER_NAME");
         public string DatabaseName => GetRecordedVariable("DATABASE_NAME");
         public string TableName => GetRecordedVariable("TABLE_NAME");
@@ -19,6 +18,8 @@ namespace Azure.ResourceManager.Kusto.Tests
         public string KeyName => GetRecordedVariable("KEY_NAME");
         public string KeyVersion => GetRecordedVariable("KEY_VERSION");
         public string PrivateEndpointName => GetRecordedVariable("PRIVATE_ENDPOINT_NAME");
+
+        public string KustoTenantId => GetRecordedVariable("KUSTO_TENANT_ID");
 
         public ResourceIdentifier UserAssignedIdentityId => new(GetRecordedVariable("USER_ASSIGNED_IDENTITY_ID"));
 
@@ -33,7 +34,5 @@ namespace Azure.ResourceManager.Kusto.Tests
         public ResourceIdentifier StorageAccountId => new(GetRecordedVariable("STORAGE_ACCOUNT_ID"));
 
         public string StorageAccountSasToken => GetRecordedVariable("STORAGE_ACCOUNT_SAS_TOKEN", options => options.IsSecret());
-
-        public Uri ScriptUri => new(GetRecordedVariable("SCRIPT_URI"));
     }
 }

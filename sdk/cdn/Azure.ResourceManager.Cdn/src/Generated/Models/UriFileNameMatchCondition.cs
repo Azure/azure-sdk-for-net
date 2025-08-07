@@ -5,49 +5,82 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for UrlFilename match conditions. </summary>
-    public partial class UriFileNameMatchCondition
+    /// <summary>
+    /// Defines the parameters for UrlFilename match conditions
+    /// Serialized Name: UrlFileNameMatchConditionParameters
+    /// </summary>
+    public partial class UriFileNameMatchCondition : DeliveryRuleConditionProperties
     {
-        /// <summary> Initializes a new instance of UriFileNameMatchCondition. </summary>
-        /// <param name="conditionType"></param>
-        /// <param name="uriFileNameOperator"> Describes operator to be matched. </param>
-        public UriFileNameMatchCondition(UriFileNameMatchConditionType conditionType, UriFileNameOperator uriFileNameOperator)
+        /// <summary> Initializes a new instance of <see cref="UriFileNameMatchCondition"/>. </summary>
+        /// <param name="uriFileNameOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: UrlFileNameMatchConditionParameters.operator
+        /// </param>
+        public UriFileNameMatchCondition(UriFileNameOperator uriFileNameOperator)
         {
-            ConditionType = conditionType;
             UriFileNameOperator = uriFileNameOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
+            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleUriFilenameConditionParameters;
         }
 
-        /// <summary> Initializes a new instance of UriFileNameMatchCondition. </summary>
-        /// <param name="conditionType"></param>
-        /// <param name="uriFileNameOperator"> Describes operator to be matched. </param>
-        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
-        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        /// <param name="transforms"> List of transforms. </param>
-        internal UriFileNameMatchCondition(UriFileNameMatchConditionType conditionType, UriFileNameOperator uriFileNameOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        /// <summary> Initializes a new instance of <see cref="UriFileNameMatchCondition"/>. </summary>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="uriFileNameOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: UrlFileNameMatchConditionParameters.operator
+        /// </param>
+        /// <param name="negateCondition">
+        /// Describes if this is negate condition or not
+        /// Serialized Name: UrlFileNameMatchConditionParameters.negateCondition
+        /// </param>
+        /// <param name="matchValues">
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: UrlFileNameMatchConditionParameters.matchValues
+        /// </param>
+        /// <param name="transforms">
+        /// List of transforms
+        /// Serialized Name: UrlFileNameMatchConditionParameters.transforms
+        /// </param>
+        internal UriFileNameMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, UriFileNameOperator uriFileNameOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
-            ConditionType = conditionType;
             UriFileNameOperator = uriFileNameOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            TypeName = typeName;
         }
 
-        /// <summary> Gets or sets the condition type. </summary>
-        public UriFileNameMatchConditionType ConditionType { get; set; }
-        /// <summary> Describes operator to be matched. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFileNameMatchCondition"/> for deserialization. </summary>
+        internal UriFileNameMatchCondition()
+        {
+        }
+
+        /// <summary>
+        /// Describes operator to be matched
+        /// Serialized Name: UrlFileNameMatchConditionParameters.operator
+        /// </summary>
         public UriFileNameOperator UriFileNameOperator { get; set; }
-        /// <summary> Describes if this is negate condition or not. </summary>
+        /// <summary>
+        /// Describes if this is negate condition or not
+        /// Serialized Name: UrlFileNameMatchConditionParameters.negateCondition
+        /// </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary> The match value for the condition of the delivery rule. </summary>
+        /// <summary>
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: UrlFileNameMatchConditionParameters.matchValues
+        /// </summary>
         public IList<string> MatchValues { get; }
-        /// <summary> List of transforms. </summary>
+        /// <summary>
+        /// List of transforms
+        /// Serialized Name: UrlFileNameMatchConditionParameters.transforms
+        /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

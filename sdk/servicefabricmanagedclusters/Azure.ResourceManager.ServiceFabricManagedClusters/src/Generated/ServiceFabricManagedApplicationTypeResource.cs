@@ -10,26 +10,28 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
     /// A Class representing a ServiceFabricManagedApplicationType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceFabricManagedApplicationTypeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceFabricManagedApplicationTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedClusterResource" /> using the GetServiceFabricManagedApplicationType method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricManagedApplicationTypeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceFabricManagedApplicationTypeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedClusterResource"/> using the GetServiceFabricManagedApplicationType method.
     /// </summary>
     public partial class ServiceFabricManagedApplicationTypeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceFabricManagedApplicationTypeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="applicationTypeName"> The applicationTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -37,12 +39,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private readonly ApplicationTypesRestOperations _serviceFabricManagedApplicationTypeApplicationTypesRestClient;
         private readonly ServiceFabricManagedApplicationTypeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedClusters/applicationTypes";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedApplicationTypeResource"/> class for mocking. </summary>
         protected ServiceFabricManagedApplicationTypeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceFabricManagedApplicationTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedApplicationTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceFabricManagedApplicationTypeResource(ArmClient client, ServiceFabricManagedApplicationTypeData data) : this(client, data.Id)
@@ -63,9 +68,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedclusters/applicationTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An object representing collection of ServiceFabricManagedApplicationTypeVersionResources and their operations over a ServiceFabricManagedApplicationTypeVersionResource. </returns>
         public virtual ServiceFabricManagedApplicationTypeVersionCollection GetServiceFabricManagedApplicationTypeVersions()
         {
-            return GetCachedClient(Client => new ServiceFabricManagedApplicationTypeVersionCollection(Client, Id));
+            return GetCachedClient(client => new ServiceFabricManagedApplicationTypeVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -100,18 +102,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypeVersions_Get</description>
+        /// <description>ApplicationTypeVersionResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The application type version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceFabricManagedApplicationTypeVersionResource>> GetServiceFabricManagedApplicationTypeVersionAsync(string version, CancellationToken cancellationToken = default)
         {
@@ -123,18 +133,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypeVersions_Get</description>
+        /// <description>ApplicationTypeVersionResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The application type version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceFabricManagedApplicationTypeVersionResource> GetServiceFabricManagedApplicationTypeVersion(string version, CancellationToken cancellationToken = default)
         {
@@ -146,11 +164,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Get</description>
+        /// <description>ApplicationTypeResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,11 +204,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Get</description>
+        /// <description>ApplicationTypeResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,11 +244,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Delete</description>
+        /// <description>ApplicationTypeResource_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,11 +286,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Delete</description>
+        /// <description>ApplicationTypeResource_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,11 +328,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Update</description>
+        /// <description>ApplicationTypeResource_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,11 +370,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Update</description>
+        /// <description>ApplicationTypeResource_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,11 +412,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Get</description>
+        /// <description>ApplicationTypeResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,11 +474,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Get</description>
+        /// <description>ApplicationTypeResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -454,11 +536,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Get</description>
+        /// <description>ApplicationTypeResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -503,11 +593,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Get</description>
+        /// <description>ApplicationTypeResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -552,11 +650,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Get</description>
+        /// <description>ApplicationTypeResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -604,11 +710,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApplicationTypes_Get</description>
+        /// <description>ApplicationTypeResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

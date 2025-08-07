@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,18 +14,69 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk input details. </summary>
     public partial class HyperVReplicaAzureDiskDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureDiskDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureDiskDetails"/>. </summary>
         public HyperVReplicaAzureDiskDetails()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureDiskDetails"/>. </summary>
+        /// <param name="diskId"> The DiskId. </param>
+        /// <param name="logStorageAccountId"> The LogStorageAccountId. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
+        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HyperVReplicaAzureDiskDetails(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType? diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DiskId = diskId;
+            LogStorageAccountId = logStorageAccountId;
+            DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
+            SectorSizeInBytes = sectorSizeInBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The DiskId. </summary>
         public string DiskId { get; set; }
         /// <summary> The LogStorageAccountId. </summary>
         public ResourceIdentifier LogStorageAccountId { get; set; }
-        /// <summary> The DiskType. </summary>
+        /// <summary> The disk type. </summary>
         public SiteRecoveryDiskAccountType? DiskType { get; set; }
         /// <summary> The DiskEncryptionSet ARM ID. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
+        /// <summary> The logical sector size (in bytes), 512 by default. </summary>
+        public int? SectorSizeInBytes { get; set; }
     }
 }

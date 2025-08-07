@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> Schedule settings for regular cluster updates. </summary>
     public partial class CosmosDBForPostgreSqlMaintenanceWindow
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlMaintenanceWindow. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlMaintenanceWindow"/>. </summary>
         public CosmosDBForPostgreSqlMaintenanceWindow()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlMaintenanceWindow"/>. </summary>
         /// <param name="customWindow"> Indicates whether custom maintenance window is enabled or not. </param>
         /// <param name="startHour"> Start hour within preferred day of the week for maintenance window. </param>
         /// <param name="startMinute"> Start minute within the start hour for maintenance window. </param>
         /// <param name="dayOfWeek"> Preferred day of the week for maintenance window. </param>
-        internal CosmosDBForPostgreSqlMaintenanceWindow(string customWindow, int? startHour, int? startMinute, int? dayOfWeek)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlMaintenanceWindow(string customWindow, int? startHour, int? startMinute, int? dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomWindow = customWindow;
             StartHour = startHour;
             StartMinute = startMinute;
             DayOfWeek = dayOfWeek;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether custom maintenance window is enabled or not. </summary>

@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionLandingZone. </summary>
     public partial class LinkConnectionLandingZone
     {
-        /// <summary> Initializes a new instance of LinkConnectionLandingZone. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionLandingZone"/>. </summary>
         public LinkConnectionLandingZone()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionLandingZone. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionLandingZone"/>. </summary>
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="fileSystem"> Landing zone's file system name. </param>
         /// <param name="folderPath"> Landing zone's folder path name. </param>

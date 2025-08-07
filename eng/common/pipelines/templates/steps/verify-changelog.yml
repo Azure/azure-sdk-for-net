@@ -11,6 +11,9 @@ parameters:
 - name: ForRelease
   type: boolean
   default: false
+- name: Condition
+  type: string
+  default: succeeded()
 
 steps:
   - task: Powershell@2
@@ -23,4 +26,5 @@ steps:
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify ChangeLogEntry for ${{ parameters.PackageName }}
+    condition: ${{ parameters.Condition }}
     continueOnError: false

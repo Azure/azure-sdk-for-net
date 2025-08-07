@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageSync.Models;
@@ -9,12 +10,17 @@ using Azure.ResourceManager.StorageSync.Tests.CustomPolicy;
 using Azure.ResourceManager.TestFramework;
 using Castle.DynamicProxy;
 using NUnit.Framework;
+using System;
+using System.Diagnostics;
+using System.Diagnostics.Tracing;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.StorageSync.Tests
 {
     public class StorageSyncManagementTestBase : ManagementRecordedTestBase<StorageSyncManagementTestEnvironment>
     {
+        public static RecordedTestMode ModeFromSourceCode => RecordedTestMode.Playback;
         public static bool IsTestTenant = false;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
@@ -25,10 +31,23 @@ namespace Azure.ResourceManager.StorageSync.Tests
         protected static string DefaultStorageSyncGroupRecordingName = "afs-sdk-sg-create";
         protected static string DefaultCloudEndpointRecordingName = "afs-sdk-cep-create";
         protected static string DefaultServerEndpointRecordingName = "afs-sdk-sep-create";
-
+        protected static AzureEventSourceListener identityListener;
+        protected static StreamWriter streamWriter;
         protected StorageSyncManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            streamWriter = new StreamWriter(new FileStream($"Test-{Guid.NewGuid()}.log", FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
+            {
+                AutoFlush = true
+            };
+            identityListener = new AzureEventSourceListener((args, message) =>
+            {
+                try
+                {
+                    streamWriter.WriteLine(message);
+                }
+                catch { }
+            }, EventLevel.LogAlways);
         }
 
         protected StorageSyncManagementTestBase(bool isAsync)

@@ -2,42 +2,60 @@
 <doc>
   <members>
     <member name="GetSecretAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetSecretAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSecretAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new TemplateClient("<vaultBaseUrl>", credential);
+TokenCredential credential = new DefaultAzureCredential();
+TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
 
-Response response = await client.GetSecretAsync("<secretName>", new RequestContext());
+Response response = await client.GetSecretAsync("<secretName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSecretAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
+
+Response response = await client.GetSecretAsync("<secretName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("contentType").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("kid").ToString());
 Console.WriteLine(result.GetProperty("managed").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetSecret(string,RequestContext)">
-<example>
-This sample shows how to call GetSecret with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSecret and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new TemplateClient("<vaultBaseUrl>", credential);
+TokenCredential credential = new DefaultAzureCredential();
+TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
 
-Response response = client.GetSecret("<secretName>", new RequestContext());
+Response response = client.GetSecret("<secretName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSecret with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
+
+Response response = client.GetSecret("<secretName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("contentType").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("kid").ToString());
 Console.WriteLine(result.GetProperty("managed").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
   </members>
 </doc>

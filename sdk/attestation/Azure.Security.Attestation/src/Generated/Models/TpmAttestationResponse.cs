@@ -10,12 +10,12 @@ namespace Azure.Security.Attestation
     /// <summary> Attestation response for Trusted Platform Module (TPM) attestation. </summary>
     public partial class TpmAttestationResponse
     {
-        /// <summary> Initializes a new instance of TpmAttestationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TpmAttestationResponse"/>. </summary>
         internal TpmAttestationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of TpmAttestationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TpmAttestationResponse"/>. </summary>
         /// <param name="internalData"> Protocol data containing attestation service response. </param>
         internal TpmAttestationResponse(string internalData)
         {

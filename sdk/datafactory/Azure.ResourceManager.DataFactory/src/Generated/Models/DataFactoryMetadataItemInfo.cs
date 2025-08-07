@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,18 +14,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Specify the name and value of custom metadata item. </summary>
     public partial class DataFactoryMetadataItemInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryMetadataItemInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryMetadataItemInfo"/>. </summary>
         public DataFactoryMetadataItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryMetadataItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryMetadataItemInfo"/>. </summary>
         /// <param name="name"> Metadata item key name. Type: string (or Expression with resultType string). </param>
         /// <param name="value"> Metadata item value. Type: string (or Expression with resultType string). </param>
-        internal DataFactoryMetadataItemInfo(DataFactoryElement<string> name, DataFactoryElement<string> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryMetadataItemInfo(DataFactoryElement<string> name, DataFactoryElement<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Metadata item key name. Type: string (or Expression with resultType string). </summary>

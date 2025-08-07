@@ -62,9 +62,6 @@ namespace Azure.Batch.Unit.Tests
                 new ComparerPropertyMapping(typeof(PoolSpecification), typeof(Protocol.Models.PoolSpecification), "TargetDedicatedComputeNodes", "TargetDedicatedNodes"),
                 new ComparerPropertyMapping(typeof(PoolSpecification), typeof(Protocol.Models.PoolSpecification), "TargetLowPriorityComputeNodes", "TargetLowPriorityNodes"),
 
-                new ComparerPropertyMapping(typeof(CloudServiceConfiguration), typeof(Protocol.Models.CloudServiceConfiguration), "OSFamily", "OsFamily"),
-                new ComparerPropertyMapping(typeof(CloudServiceConfiguration), typeof(Protocol.Models.CloudServiceConfiguration), "OSVersion", "OsVersion"),
-
                 new ComparerPropertyMapping(typeof(TaskInformation), typeof(Protocol.Models.TaskInformation), "ExecutionInformation", "TaskExecutionInformation"),
 
                 new ComparerPropertyMapping(typeof(AutoPoolSpecification), typeof(Protocol.Models.AutoPoolSpecification), "PoolSpecification", "Pool"),
@@ -686,8 +683,7 @@ namespace Azure.Batch.Unit.Tests
                 AutoPoolIdPrefix = "Matt",
                 Pool = new Protocol.Models.PoolSpecification
                 {
-                    CloudServiceConfiguration = new Protocol.Models.CloudServiceConfiguration(
-                        "4"),
+                    VirtualMachineConfiguration = new Protocol.Models.VirtualMachineConfiguration(imageReference: new Protocol.Models.ImageReference(), nodeAgentSKUId: "df"),
                     ResizeTimeout = TimeSpan.FromDays(1),
                     StartTask = new Protocol.Models.StartTask
                     {
@@ -704,9 +700,9 @@ namespace Azure.Batch.Unit.Tests
             Assert.Equal(UtilitiesInternal.MapEnum<Protocol.Models.PoolLifetimeOption, PoolLifetimeOption>(protoAutoPoolSpecification.PoolLifetimeOption), autoPoolSpecification.PoolLifetimeOption);
 
             Assert.NotNull(autoPoolSpecification.PoolSpecification);
-            Assert.NotNull(protoAutoPoolSpecification.Pool.CloudServiceConfiguration);
+            Assert.NotNull(protoAutoPoolSpecification.Pool.VirtualMachineConfiguration);
 
-            Assert.Equal(protoAutoPoolSpecification.Pool.CloudServiceConfiguration.OsFamily, autoPoolSpecification.PoolSpecification.CloudServiceConfiguration.OSFamily);
+            Assert.Equal(protoAutoPoolSpecification.Pool.VirtualMachineConfiguration.NodeAgentSKUId, autoPoolSpecification.PoolSpecification.VirtualMachineConfiguration.NodeAgentSkuId);
             Assert.Equal(protoAutoPoolSpecification.Pool.ResizeTimeout, autoPoolSpecification.PoolSpecification.ResizeTimeout);
 
             Assert.NotNull(autoPoolSpecification.PoolSpecification.StartTask);

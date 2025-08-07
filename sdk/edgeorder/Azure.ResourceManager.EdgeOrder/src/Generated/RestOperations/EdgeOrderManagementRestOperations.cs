@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EdgeOrder.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.EdgeOrder
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListAddressesAtSubscriptionLevelRequestUri(string subscriptionId, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAddressesAtSubscriptionLevelRequest(string subscriptionId, string filter, string skipToken)
@@ -80,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -107,13 +125,32 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesRequestUri(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/listProductFamilies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesRequest(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
@@ -139,7 +176,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -165,7 +202,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamilies value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductFamilies.DeserializeProductFamilies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -194,13 +231,28 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamilies value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductFamilies.DeserializeProductFamilies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListConfigurationsRequestUri(string subscriptionId, ConfigurationsContent content, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/listConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListConfigurationsRequest(string subscriptionId, ConfigurationsContent content, string skipToken)
@@ -222,7 +274,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -247,7 +299,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductConfigurations value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductConfigurations.DeserializeProductConfigurations(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,13 +327,28 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductConfigurations value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductConfigurations.DeserializeProductConfigurations(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesMetadataRequestUri(string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/productFamiliesMetadata", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesMetadataRequest(string subscriptionId, string skipToken)
@@ -322,7 +389,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamiliesMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -348,13 +415,28 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamiliesMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderAtSubscriptionLevelRequestUri(string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListOrderAtSubscriptionLevelRequest(string subscriptionId, string skipToken)
@@ -395,7 +477,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -421,13 +503,36 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtSubscriptionLevelRequestUri(string subscriptionId, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtSubscriptionLevelRequest(string subscriptionId, string filter, string expand, string skipToken)
@@ -478,7 +583,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -506,13 +611,34 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAddressesAtResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAddressesAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string filter, string skipToken)
@@ -562,7 +688,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -591,13 +717,27 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAddressByNameRequestUri(string subscriptionId, string resourceGroupName, string addressName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAddressByNameRequest(string subscriptionId, string resourceGroupName, string addressName)
@@ -640,7 +780,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderAddressData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -671,7 +811,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderAddressData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -680,6 +820,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateAddressRequestUri(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data)
@@ -700,7 +854,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -758,6 +912,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAddressByNameRequestUri(string subscriptionId, string resourceGroupName, string addressName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAddressByNameRequest(string subscriptionId, string resourceGroupName, string addressName)
@@ -832,6 +1000,20 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateUpdateAddressRequestUri(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -854,7 +1036,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -916,6 +1098,23 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListOrderAtResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListOrderAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -958,7 +1157,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -986,13 +1185,29 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOrderByNameRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/orders/", false);
+            uri.AppendPath(orderName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetOrderByNameRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
@@ -1038,7 +1253,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EdgeOrderData.DeserializeEdgeOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1070,7 +1285,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EdgeOrderData.DeserializeEdgeOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1079,6 +1294,31 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
@@ -1133,7 +1373,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1163,13 +1403,31 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOrderItemByNameRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetOrderItemByNameRequest(string subscriptionId, string resourceGroupName, string orderItemName, string expand)
@@ -1217,7 +1475,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderItemData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1249,7 +1507,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderItemData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1258,6 +1516,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data)
@@ -1278,7 +1550,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1336,6 +1608,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteOrderItemByNameRequestUri(string subscriptionId, string resourceGroupName, string orderItemName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteOrderItemByNameRequest(string subscriptionId, string resourceGroupName, string orderItemName)
@@ -1410,6 +1696,20 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateUpdateOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -1432,7 +1732,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1494,6 +1794,21 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateCancelOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason)
         {
             var message = _pipeline.CreateMessage();
@@ -1513,7 +1828,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cancellationReason);
+            content.JsonWriter.WriteObjectValue(cancellationReason, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1573,6 +1888,21 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateReturnOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendPath("/return", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateReturnOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1592,7 +1922,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1652,6 +1982,14 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListAddressesAtSubscriptionLevelNextPageRequestUri(string nextLink, string subscriptionId, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListAddressesAtSubscriptionLevelNextPageRequest(string nextLink, string subscriptionId, string filter, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -1686,7 +2024,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1715,13 +2053,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesNextPageRequestUri(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesNextPageRequest(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
@@ -1760,7 +2106,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamilies value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductFamilies.DeserializeProductFamilies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1791,13 +2137,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamilies value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductFamilies.DeserializeProductFamilies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListConfigurationsNextPageRequestUri(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListConfigurationsNextPageRequest(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
@@ -1835,7 +2189,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductConfigurations value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductConfigurations.DeserializeProductConfigurations(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1865,13 +2219,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductConfigurations value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductConfigurations.DeserializeProductConfigurations(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesMetadataNextPageRequestUri(string nextLink, string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesMetadataNextPageRequest(string nextLink, string subscriptionId, string skipToken)
@@ -1907,7 +2269,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamiliesMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1935,13 +2297,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamiliesMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderAtSubscriptionLevelNextPageRequestUri(string nextLink, string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderAtSubscriptionLevelNextPageRequest(string nextLink, string subscriptionId, string skipToken)
@@ -1977,7 +2347,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2005,13 +2375,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtSubscriptionLevelNextPageRequestUri(string nextLink, string subscriptionId, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtSubscriptionLevelNextPageRequest(string nextLink, string subscriptionId, string filter, string expand, string skipToken)
@@ -2049,7 +2427,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2079,13 +2457,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAddressesAtResourceGroupLevelNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAddressesAtResourceGroupLevelNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, string skipToken)
@@ -2124,7 +2510,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2155,13 +2541,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderAtResourceGroupLevelNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderAtResourceGroupLevelNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string skipToken)
@@ -2199,7 +2593,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2229,13 +2623,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtResourceGroupLevelNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtResourceGroupLevelNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
@@ -2275,7 +2677,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2307,7 +2709,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

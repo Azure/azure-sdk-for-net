@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public static bool operator ==(PublicNetworkAccessType left, PublicNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are not the same. </summary>
         public static bool operator !=(PublicNetworkAccessType left, PublicNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PublicNetworkAccessType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PublicNetworkAccessType"/>. </summary>
         public static implicit operator PublicNetworkAccessType(string value) => new PublicNetworkAccessType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

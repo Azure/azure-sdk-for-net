@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure workload-specific container. </summary>
     public partial class VmAppContainerProtectableContainer : ProtectableContainer
     {
-        /// <summary> Initializes a new instance of VmAppContainerProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectableContainer"/>. </summary>
         public VmAppContainerProtectableContainer()
         {
             ProtectableContainerType = ProtectableContainerType.VmAppContainer;
         }
 
-        /// <summary> Initializes a new instance of VmAppContainerProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectableContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">
@@ -26,7 +29,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
-        internal VmAppContainerProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId) : base(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmAppContainerProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId, serializedAdditionalRawData)
         {
             ProtectableContainerType = protectableContainerType;
         }

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automation.Models;
@@ -35,6 +34,24 @@ namespace Azure.ResourceManager.Automation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-06-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, string jobStreamId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/runbooks/", false);
+            uri.AppendPath(runbookName, true);
+            uri.AppendPath("/draft/testJob/streams/", false);
+            uri.AppendPath(jobStreamId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, string jobStreamId)
@@ -85,7 +102,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobStream value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationJobStream.DeserializeAutomationJobStream(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -118,13 +135,34 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobStream value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationJobStream.DeserializeAutomationJobStream(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTestJobRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/runbooks/", false);
+            uri.AppendPath(runbookName, true);
+            uri.AppendPath("/draft/testJob/streams", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByTestJobRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, string filter)
@@ -177,7 +215,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobStreamListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationJobStreamListResult.DeserializeAutomationJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,13 +247,21 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobStreamListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationJobStreamListResult.DeserializeAutomationJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTestJobNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByTestJobNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, string filter)
@@ -257,7 +303,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobStreamListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AutomationJobStreamListResult.DeserializeAutomationJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -291,7 +337,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         AutomationJobStreamListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AutomationJobStreamListResult.DeserializeAutomationJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

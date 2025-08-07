@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LabVirtualMachineImageResource" /> and their operations.
-    /// Each <see cref="LabVirtualMachineImageResource" /> in the collection will belong to the same instance of <see cref="LabPlanResource" />.
-    /// To get a <see cref="LabVirtualMachineImageCollection" /> instance call the GetLabVirtualMachineImages method from an instance of <see cref="LabPlanResource" />.
+    /// A class representing a collection of <see cref="LabVirtualMachineImageResource"/> and their operations.
+    /// Each <see cref="LabVirtualMachineImageResource"/> in the collection will belong to the same instance of <see cref="LabPlanResource"/>.
+    /// To get a <see cref="LabVirtualMachineImageCollection"/> instance call the GetLabVirtualMachineImages method from an instance of <see cref="LabPlanResource"/>.
     /// </summary>
     public partial class LabVirtualMachineImageCollection : ArmCollection, IEnumerable<LabVirtualMachineImageResource>, IAsyncEnumerable<LabVirtualMachineImageResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Images_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,9 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = await _labVirtualMachineImageImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response), response.GetRawResponse()));
+                var uri = _labVirtualMachineImageImagesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Images_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +139,9 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = _labVirtualMachineImageImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken);
-                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response), response.GetRawResponse()));
+                var uri = _labVirtualMachineImageImagesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LabServicesArmOperation<LabVirtualMachineImageResource>(Response.FromValue(new LabVirtualMachineImageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +163,14 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +209,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The image name. </param>
@@ -219,16 +254,24 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Images_ListByLabPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabVirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LabVirtualMachineImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabVirtualMachineImageResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,16 +285,24 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Images_ListByLabPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabVirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LabVirtualMachineImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabVirtualMachineImageResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineImageImagesRestClient.CreateListByLabPlanNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineImageResource(Client, LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(e)), _labVirtualMachineImageImagesClientDiagnostics, Pipeline, "LabVirtualMachineImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -264,6 +315,14 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +359,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The image name. </param>
@@ -316,6 +383,96 @@ namespace Azure.ResourceManager.LabServices
             {
                 var response = _labVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}/images/{imageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="imageName"> The image name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LabVirtualMachineImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _labVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LabVirtualMachineImageResource>(response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}/images/{imageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineImageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="imageName"> The image name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        public virtual NullableResponse<LabVirtualMachineImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _labVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LabVirtualMachineImageResource>(response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+    <!-- We don't care about XML doc comments on test types and members -->
+    <NoWarn>$(NoWarn);CS1591;SA1636</NoWarn>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Internal\BinaryDataJsonConverter.cs" Link="BinaryDataJsonConverter.cs" />
+  </ItemGroup>
+
+  <!-- Reference the Client Library -->
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.csproj" />
+  </ItemGroup>
+</Project>

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CostManagement.Models;
@@ -35,6 +34,17 @@ namespace Azure.ResourceManager.CostManagement
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/alerts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string scope)
@@ -69,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementAlertsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CostManagementAlertsResult.DeserializeCostManagementAlertsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -93,13 +103,25 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementAlertsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CostManagementAlertsResult.DeserializeCostManagementAlertsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string alertId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/alerts/", false);
+            uri.AppendPath(alertId, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string alertId)
@@ -137,7 +159,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementAlertData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CostManagementAlertData.DeserializeCostManagementAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -165,7 +187,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementAlertData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CostManagementAlertData.DeserializeCostManagementAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,6 +196,18 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDismissRequestUri(string scope, string alertId, CostManagementAlertPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/alerts/", false);
+            uri.AppendPath(alertId, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDismissRequest(string scope, string alertId, CostManagementAlertPatch patch)
@@ -192,7 +226,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -217,7 +251,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementAlertData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CostManagementAlertData.DeserializeCostManagementAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -245,13 +279,26 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementAlertData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CostManagementAlertData.DeserializeCostManagementAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListExternalRequestUri(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.CostManagement/", false);
+            uri.AppendPath(externalCloudProviderType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(externalCloudProviderId, true);
+            uri.AppendPath("/alerts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListExternalRequest(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId)
@@ -290,7 +337,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementAlertsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CostManagementAlertsResult.DeserializeCostManagementAlertsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -316,7 +363,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementAlertsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CostManagementAlertsResult.DeserializeCostManagementAlertsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

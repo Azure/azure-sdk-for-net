@@ -10,7 +10,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Capabilities of a phone number. </summary>
     public partial class PhoneNumberCapabilities
     {
-        /// <summary> Initializes a new instance of PhoneNumberCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilities"/>. </summary>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
         public PhoneNumberCapabilities(PhoneNumberCapabilityType calling, PhoneNumberCapabilityType sms)

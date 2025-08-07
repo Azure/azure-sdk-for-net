@@ -23,14 +23,17 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         private const string ResetDocsValue = "resetDocs";
+        private const string ResyncValue = "resync";
 
         /// <summary> Indicates that the reset that occurred was for a call to ResetDocs. </summary>
         public static IndexerExecutionStatusDetail ResetDocs { get; } = new IndexerExecutionStatusDetail(ResetDocsValue);
+        /// <summary> Indicates to selectively resync based on option(s) from data source. </summary>
+        public static IndexerExecutionStatusDetail Resync { get; } = new IndexerExecutionStatusDetail(ResyncValue);
         /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are the same. </summary>
         public static bool operator ==(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are not the same. </summary>
         public static bool operator !=(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
         public static implicit operator IndexerExecutionStatusDetail(string value) => new IndexerExecutionStatusDetail(value);
 
         /// <inheritdoc />
@@ -41,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -82,6 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()].Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()].Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
+            Tags[ContextTagKeys.AiApplicationVer.ToString()] = telemetryItem.Tags[ContextTagKeys.AiApplicationVer.ToString()].Truncate(SchemaConstants.Tags_AiApplicationVer_MaxLength);
             InstrumentationKey = telemetryItem.InstrumentationKey;
 
             if (telemetryItem.SampleRate != 100f)
@@ -90,8 +91,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
-            this(logRecord.Exception != null ? "Exception" : "Message", FormatUtcTimestamp(logRecord.Timestamp))
+        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
+            this(name, FormatUtcTimestamp(logRecord.Timestamp))
         {
             if (logRecord.TraceId != default)
             {
@@ -112,12 +113,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
         }
 
+        public TelemetryItem(DateTime time, AzureMonitorResource? resource, string instrumentationKey, MonitorBase monitorBaseData) : this(time, resource, instrumentationKey)
+        {
+            Data = monitorBaseData;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetResourceSdkVersionAndIkey(AzureMonitorResource? resource, string instrumentationKey)
         {
             InstrumentationKey = instrumentationKey;
-            Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
-            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance.Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName_Truncated;
+            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance_Truncated;
+            Tags[ContextTagKeys.AiApplicationVer.ToString()] = resource?.ServiceVersion_Truncated;
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
         }
 

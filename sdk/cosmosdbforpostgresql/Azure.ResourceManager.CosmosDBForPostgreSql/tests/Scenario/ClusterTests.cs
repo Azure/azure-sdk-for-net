@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
     public class ClusterTests : CosmosDBForPostgreSqlManagementTestBase
     {
         public ClusterTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

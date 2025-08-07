@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
@@ -17,6 +18,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        [Ignore("path validation fails in playback mode")]
         public async Task ValidateSystemAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))
@@ -43,6 +45,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public void ValidateUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))

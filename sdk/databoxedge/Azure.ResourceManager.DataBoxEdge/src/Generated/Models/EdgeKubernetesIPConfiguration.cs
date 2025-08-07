@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Kubernetes node IP configuration. </summary>
     public partial class EdgeKubernetesIPConfiguration
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesIPConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesIPConfiguration"/>. </summary>
         internal EdgeKubernetesIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesIPConfiguration"/>. </summary>
         /// <param name="port"> Port of the Kubernetes node. </param>
         /// <param name="ipAddress"> IP address of the Kubernetes node. </param>
-        internal EdgeKubernetesIPConfiguration(string port, string ipAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeKubernetesIPConfiguration(string port, string ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
             IPAddress = ipAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Port of the Kubernetes node. </summary>

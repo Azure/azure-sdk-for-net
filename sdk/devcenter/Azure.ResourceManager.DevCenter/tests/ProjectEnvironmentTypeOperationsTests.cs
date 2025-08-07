@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.DevCenter.Tests
                 Status = EnvironmentTypeEnableStatus.IsEnabled,
             };
 
-            data.UserRoleAssignments[TestEnvironment.TestUserOid] = new DevCenterUserRoleAssignments(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } });
-            data.CreatorRoleAssignment = new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } });
+            data.UserRoleAssignments[TestEnvironment.TestUserOid] = new DevCenterUserRoleAssignments(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } }, null);
+            data.CreatorRoleAssignment = new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } }, null);
 
             DevCenterProjectEnvironmentResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, ProjectEnvironmentTypeName, data)).Value;

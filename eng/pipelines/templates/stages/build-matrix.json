@@ -1,0 +1,11 @@
+{
+  "displayNames": {},
+  "matrix": {
+    "Agent": {
+      "PRBatch": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL"
+      }
+    }
+  }
+}

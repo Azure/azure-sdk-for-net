@@ -3,21 +3,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// Options for creating a job queue.
+    /// Options for creating a queue.
     /// </summary>
     public class CreateQueueOptions
     {
         /// <summary>
-        /// Public constructor.
+        /// Initializes a new instance of CreateQueueOptions.
         /// </summary>
-        /// <param name="queueId"> The id of this queue. </param>
-        /// <param name="distributionPolicyId"> The ID of the distribution policy that will determine how a job is distributed to workers. </param>
+        /// <param name="queueId"> Id of a queue. </param>
+        /// <param name="distributionPolicyId"> Id of a distribution policy that will determine how a job is distributed to workers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
         public CreateQueueOptions(string queueId, string distributionPolicyId)
@@ -30,7 +29,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// Unique key that identifies this queue.
+        /// Id of a queue.
         /// </summary>
         public string QueueId { get; }
 
@@ -39,14 +38,20 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public string DistributionPolicyId { get; }
 
-        /// <summary> The name of this queue. </summary>
+        /// <summary> Friendly name of this queue. </summary>
         public string Name { get; set; }
-        /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
+
+        /// <summary> Id of an exception policy that determines various job escalation rules. </summary>
         public string ExceptionPolicyId { get; set; }
 
         /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

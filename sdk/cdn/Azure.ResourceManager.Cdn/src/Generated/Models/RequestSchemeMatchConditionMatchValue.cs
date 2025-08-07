@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The RequestSchemeMatchConditionMatchValue. </summary>
+    /// <summary>
+    /// The RequestSchemeMatchConditionMatchValue.
+    /// Serialized Name: RequestSchemeMatchValue
+    /// </summary>
     public readonly partial struct RequestSchemeMatchConditionMatchValue : IEquatable<RequestSchemeMatchConditionMatchValue>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HttpValue = "HTTP";
         private const string HttpsValue = "HTTPS";
 
-        /// <summary> HTTP. </summary>
+        /// <summary>
+        /// HTTP
+        /// Serialized Name: RequestSchemeMatchValue.HTTP
+        /// </summary>
         public static RequestSchemeMatchConditionMatchValue Http { get; } = new RequestSchemeMatchConditionMatchValue(HttpValue);
-        /// <summary> HTTPS. </summary>
+        /// <summary>
+        /// HTTPS
+        /// Serialized Name: RequestSchemeMatchValue.HTTPS
+        /// </summary>
         public static RequestSchemeMatchConditionMatchValue Https { get; } = new RequestSchemeMatchConditionMatchValue(HttpsValue);
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionMatchValue"/> values are the same. </summary>
         public static bool operator ==(RequestSchemeMatchConditionMatchValue left, RequestSchemeMatchConditionMatchValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionMatchValue"/> values are not the same. </summary>
         public static bool operator !=(RequestSchemeMatchConditionMatchValue left, RequestSchemeMatchConditionMatchValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RequestSchemeMatchConditionMatchValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestSchemeMatchConditionMatchValue"/>. </summary>
         public static implicit operator RequestSchemeMatchConditionMatchValue(string value) => new RequestSchemeMatchConditionMatchValue(value);
 
         /// <inheritdoc />
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: HttpVersionOperator
+    /// </summary>
     public readonly partial struct HttpVersionOperator : IEquatable<HttpVersionOperator>
     {
         private readonly string _value;
@@ -24,13 +27,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string EqualValue = "Equal";
 
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: HttpVersionOperator.Equal
+        /// </summary>
         public static HttpVersionOperator Equal { get; } = new HttpVersionOperator(EqualValue);
         /// <summary> Determines if two <see cref="HttpVersionOperator"/> values are the same. </summary>
         public static bool operator ==(HttpVersionOperator left, HttpVersionOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpVersionOperator"/> values are not the same. </summary>
         public static bool operator !=(HttpVersionOperator left, HttpVersionOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HttpVersionOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HttpVersionOperator"/>. </summary>
         public static implicit operator HttpVersionOperator(string value) => new HttpVersionOperator(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

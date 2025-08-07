@@ -62,8 +62,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
             IConfigurationSection connectionSection = _configuration.GetWebJobsConnectionStringSectionServiceBus(connectionSetting);
             if (!connectionSection.Exists())
             {
+                // A common mistake is for developers to set their `connection` to a full connection string rather
+                // than an informational name.  If the value validates as a connection string, redact it to prevent
+                // leaking sensitive information.
+                if (IsServiceBusConnectionString(connectionSetting))
+                {
+                    connectionSetting =  "<< REDACTED >> (a full connection string was incorrectly used instead of a connection setting name)";
+                }
+
                 // Not found
-                throw new InvalidOperationException($"Service Bus account connection string '{connectionSetting}' does not exist. " +
+                throw new InvalidOperationException($"Service Bus account connection string with name '{connectionSetting}' does not exist in the settings. " +
                                                     $"Make sure that it is a defined App Setting.");
             }
 
@@ -83,6 +91,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
 
                 TokenCredential credential = _componentFactory.CreateTokenCredential(connectionSection);
                 return new ServiceBusConnectionInformation(fullyQualifiedNamespace, credential);
+            }
+        }
+
+        private static bool IsServiceBusConnectionString(string connectionString)
+        {
+            try
+            {
+                var properties = ServiceBusConnectionStringProperties.Parse(connectionString);
+
+                return (!string.IsNullOrEmpty(properties.FullyQualifiedNamespace))
+                    || (!string.IsNullOrEmpty(properties.SharedAccessKeyName))
+                    || (!string.IsNullOrEmpty(properties.SharedAccessKey))
+                    || (!string.IsNullOrEmpty(properties.SharedAccessSignature))
+                    || (!string.IsNullOrEmpty(properties.EntityPath));
+            }
+            catch
+            {
+                return false;
             }
         }
 

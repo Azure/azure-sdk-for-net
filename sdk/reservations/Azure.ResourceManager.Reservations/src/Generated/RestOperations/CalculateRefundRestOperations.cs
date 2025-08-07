@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePostRequestUri(Guid reservationOrderId, ReservationCalculateRefundContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/calculateRefund", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePostRequest(Guid reservationOrderId, ReservationCalculateRefundContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.Reservations
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -77,7 +87,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         ReservationCalculateRefundResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReservationCalculateRefundResult.DeserializeReservationCalculateRefundResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +115,7 @@ namespace Azure.ResourceManager.Reservations
                 case 200:
                     {
                         ReservationCalculateRefundResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReservationCalculateRefundResult.DeserializeReservationCalculateRefundResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

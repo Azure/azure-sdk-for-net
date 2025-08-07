@@ -11,7 +11,7 @@ param (
 
 $ErrorActionPreference = "Stop"
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 $sparseCheckoutFile = ".git/info/sparse-checkout"
 
 function AddSparseCheckoutPath([string]$subDirectory) {

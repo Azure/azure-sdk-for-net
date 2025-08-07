@@ -682,7 +682,7 @@ namespace BatchClientIntegrationTests
                         out jobId,
                         out string taskId,
                         deleteJob: false,
-                        isLinux: true);
+                        isLinux: false);
 
                     var nodes = poolFixture.Pool.ListComputeNodes().ToList();
                     ComputeNode cn = nodes[0]; // get the node that has files on it

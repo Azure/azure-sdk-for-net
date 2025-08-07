@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Hadoop Distributed File System (HDFS) linked service. </summary>
     public partial class HdfsLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of HdfsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsLinkedService"/>. </summary>
         /// <param name="url"> The URL of the HDFS service endpoint, e.g. http://myhostname:50070/webhdfs/v1 . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public HdfsLinkedService(object url)
@@ -25,8 +24,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Hdfs";
         }
 
-        /// <summary> Initializes a new instance of HdfsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
-        internal HdfsLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object authenticationType, object encryptedCredential, object userName, SecretBase password) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal HdfsLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object authenticationType, object encryptedCredential, object userName, SecretBase password) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             AuthenticationType = authenticationType;

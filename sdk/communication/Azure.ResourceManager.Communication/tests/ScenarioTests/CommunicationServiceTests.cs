@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Communication.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -50,6 +51,15 @@ namespace Azure.ResourceManager.Communication.Tests
             {
                 await communicationService.DeleteAsync(WaitUntil.Completed);
             }
+        }
+
+        private async Task<GenericResource> CreateUserAssignedIdentityAsync()
+        {
+            string userAssignedIdentityName = Recording.GenerateAssetName("testMsi-");
+            ResourceIdentifier userIdentityId = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{userAssignedIdentityName}");
+            var input = new GenericResourceData("westus2");
+            var response = await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, userIdentityId, input);
+            return response.Value;
         }
 
         [TestCase(null)]
@@ -109,6 +119,23 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.IsTrue(communication.Data.Tags.Count == 1);
             Assert.AreEqual(tagValue.Key, "newtestkey");
             Assert.AreEqual(tagValue.Value, "newtestvalue");
+        }
+
+        [Test]
+        public async Task CreateResourceWithManagedIdentity()
+        {
+            var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
+            var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
+            identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
+            CommunicationServiceResourceData data = new CommunicationServiceResourceData(ResourceLocation)
+            {
+                DataLocation = ResourceDataLocation,
+                Identity = identity
+            };
+            string communicationServiceName = Recording.GenerateAssetName("communication-service-");
+            var communicationServiceLro = await _resourceGroup.GetCommunicationServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
+            var resource = communicationServiceLro.Value;
+            Assert.AreEqual(resource.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssignedUserAssigned);
         }
 
         [Test]

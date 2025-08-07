@@ -5,44 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyLogAnalyticsResources : IUtf8JsonSerializable
+    public partial class FirewallPolicyLogAnalyticsResources : IUtf8JsonSerializable, IJsonModel<FirewallPolicyLogAnalyticsResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyLogAnalyticsResources>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FirewallPolicyLogAnalyticsResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLogAnalyticsResources>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support writing '{format}' format.");
+            }
+
             if (Optional.IsCollectionDefined(Workspaces))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in Workspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DefaultWorkspaceId))
             {
                 writer.WritePropertyName("defaultWorkspaceId"u8);
-                JsonSerializer.Serialize(writer, DefaultWorkspaceId);
+                ((IJsonModel<WritableSubResource>)DefaultWorkspaceId).Write(writer, options);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        internal static FirewallPolicyLogAnalyticsResources DeserializeFirewallPolicyLogAnalyticsResources(JsonElement element)
+        FirewallPolicyLogAnalyticsResources IJsonModel<FirewallPolicyLogAnalyticsResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLogAnalyticsResources>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallPolicyLogAnalyticsResources(document.RootElement, options);
+        }
+
+        internal static FirewallPolicyLogAnalyticsResources DeserializeFirewallPolicyLogAnalyticsResources(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<FirewallPolicyLogAnalyticsWorkspace>> workspaces = default;
-            Optional<WritableSubResource> defaultWorkspaceId = default;
+            IList<FirewallPolicyLogAnalyticsWorkspace> workspaces = default;
+            WritableSubResource defaultWorkspaceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaces"u8))
@@ -54,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyLogAnalyticsWorkspace> array = new List<FirewallPolicyLogAnalyticsWorkspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyLogAnalyticsWorkspace.DeserializeFirewallPolicyLogAnalyticsWorkspace(item));
+                        array.Add(FirewallPolicyLogAnalyticsWorkspace.DeserializeFirewallPolicyLogAnalyticsWorkspace(item, options));
                     }
                     workspaces = array;
                     continue;
@@ -65,11 +114,47 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    defaultWorkspaceId = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    defaultWorkspaceId = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FirewallPolicyLogAnalyticsResources(Optional.ToList(workspaces), defaultWorkspaceId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FirewallPolicyLogAnalyticsResources(workspaces ?? new ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace>(), defaultWorkspaceId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FirewallPolicyLogAnalyticsResources>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLogAnalyticsResources>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FirewallPolicyLogAnalyticsResources IPersistableModel<FirewallPolicyLogAnalyticsResources>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLogAnalyticsResources>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeFirewallPolicyLogAnalyticsResources(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FirewallPolicyLogAnalyticsResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

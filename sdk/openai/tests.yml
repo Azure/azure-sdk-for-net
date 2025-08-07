@@ -5,3 +5,6 @@ extends:
   parameters:
     ServiceDirectory: openai
     SupportedClouds: 'Public'
+    # Skip project reference tests
+    MatrixFilters:
+      - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)

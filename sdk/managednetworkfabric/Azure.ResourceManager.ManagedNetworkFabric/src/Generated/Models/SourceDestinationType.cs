@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> IP Address type. </summary>
+    /// <summary> IP Address type that needs to be matched. </summary>
     public readonly partial struct SourceDestinationType : IEquatable<SourceDestinationType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(SourceDestinationType left, SourceDestinationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceDestinationType"/> values are not the same. </summary>
         public static bool operator !=(SourceDestinationType left, SourceDestinationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceDestinationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceDestinationType"/>. </summary>
         public static implicit operator SourceDestinationType(string value) => new SourceDestinationType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

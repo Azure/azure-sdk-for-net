@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Eloqua server linked service. </summary>
     public partial class EloquaLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of EloquaLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="EloquaLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Eloqua server. (i.e. eloqua.example.com). </param>
         /// <param name="username"> The site name and user name of your Eloqua account in the form: sitename/username. (i.e. Eloqua/Alice). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="username"/> is null. </exception>
@@ -28,8 +27,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Eloqua";
         }
 
-        /// <summary> Initializes a new instance of EloquaLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="EloquaLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal EloquaLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object username, SecretBase password, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal EloquaLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object username, SecretBase password, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             Username = username;

@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The base definition of the custom setup. </summary>
     public partial class CustomSetupBase
     {
-        /// <summary> Initializes a new instance of CustomSetupBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSetupBase"/>. </summary>
         public CustomSetupBase()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomSetupBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSetupBase"/>. </summary>
         /// <param name="type"> The type of custom setup. </param>
         internal CustomSetupBase(string type)
         {

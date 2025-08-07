@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeShareData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeShareData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/>. </summary>
         /// <param name="shareStatus"> Current status of the share. </param>
         /// <param name="monitoringStatus"> Current monitoring status of the share. </param>
         /// <param name="accessProtocol"> Access protocol to be used by the share. </param>
@@ -32,7 +65,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeShareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="refreshDetails"> Details of the refresh job on this share. </param>
         /// <param name="shareMappings"> Share mount point to the role. </param>
         /// <param name="dataPolicy"> Data policy of the share. </param>
-        internal DataBoxEdgeShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ShareStatus shareStatus, DataBoxEdgeShareMonitoringStatus monitoringStatus, DataBoxEdgeStorageContainerInfo azureContainerInfo, ShareAccessProtocol accessProtocol, IList<UserAccessRight> userAccessRights, IList<ClientAccessRight> clientAccessRights, DataBoxEdgeRefreshDetails refreshDetails, IReadOnlyList<DataBoxEdgeMountPointMap> shareMappings, DataBoxEdgeDataPolicy? dataPolicy) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ShareStatus shareStatus, DataBoxEdgeShareMonitoringStatus monitoringStatus, DataBoxEdgeStorageContainerInfo azureContainerInfo, ShareAccessProtocol accessProtocol, IList<UserAccessRight> userAccessRights, IList<ClientAccessRight> clientAccessRights, DataBoxEdgeRefreshDetails refreshDetails, IReadOnlyList<DataBoxEdgeMountPointMap> shareMappings, DataBoxEdgeDataPolicy? dataPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ShareStatus = shareStatus;
@@ -59,6 +93,12 @@ namespace Azure.ResourceManager.DataBoxEdge
             RefreshDetails = refreshDetails;
             ShareMappings = shareMappings;
             DataPolicy = dataPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/> for deserialization. </summary>
+        internal DataBoxEdgeShareData()
+        {
         }
 
         /// <summary> Description for the share. </summary>

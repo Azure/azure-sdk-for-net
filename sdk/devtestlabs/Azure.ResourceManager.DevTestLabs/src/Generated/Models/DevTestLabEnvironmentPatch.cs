@@ -5,13 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> An environment, which is essentially an ARM template deployment. </summary>
     public partial class DevTestLabEnvironmentPatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabEnvironmentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEnvironmentPatch"/>. </summary>
         public DevTestLabEnvironmentPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEnvironmentPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabEnvironmentPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

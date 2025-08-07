@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
@@ -34,8 +33,19 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -71,7 +81,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -96,13 +106,24 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidatePurchaseInformationRequestUri(string subscriptionId, AppServiceCertificateOrderData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidatePurchaseInformationRequest(string subscriptionId, AppServiceCertificateOrderData data)
@@ -120,7 +141,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -170,6 +191,19 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -207,7 +241,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -234,13 +268,27 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -283,7 +331,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -314,7 +362,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -323,6 +371,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderData data)
@@ -343,7 +405,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -401,6 +463,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -473,6 +549,20 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -491,7 +581,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -519,7 +609,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -550,13 +640,28 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCertificatesRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/certificates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListCertificatesRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -600,7 +705,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateListResult.DeserializeAppServiceCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -629,13 +734,29 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateListResult.DeserializeAppServiceCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCertificateRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name)
@@ -682,7 +803,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -715,7 +836,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -724,6 +845,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateCertificateRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificateData data)
@@ -746,7 +883,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -808,6 +945,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteCertificateRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name)
@@ -886,6 +1039,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateUpdateCertificateRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateCertificateRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string name, AppServiceCertificatePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -906,7 +1075,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -936,7 +1105,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -969,13 +1138,28 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReissueRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/reissue", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReissueRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, ReissueCertificateOrderContent content)
@@ -997,7 +1181,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1055,6 +1239,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateRenewRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/renew", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRenewRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, RenewCertificateOrderContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1074,7 +1273,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1130,6 +1329,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResendEmailRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/resendEmail", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResendEmailRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -1201,6 +1415,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateResendRequestEmailsRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceDomainNameIdentifier nameIdentifier)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/resendRequestEmails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResendRequestEmailsRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, AppServiceDomainNameIdentifier nameIdentifier)
         {
             var message = _pipeline.CreateMessage();
@@ -1220,7 +1449,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nameIdentifier);
+            content.JsonWriter.WriteObjectValue(nameIdentifier, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1278,6 +1507,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateRetrieveSiteSealRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/retrieveSiteSeal", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRetrieveSiteSealRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, SiteSealContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1297,7 +1541,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1325,7 +1569,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         SiteSeal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteSeal.DeserializeSiteSeal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1356,13 +1600,28 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         SiteSeal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteSeal.DeserializeSiteSeal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateVerifyDomainOwnershipRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/verifyDomainOwnership", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateVerifyDomainOwnershipRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -1434,6 +1693,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateRetrieveCertificateActionsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/retrieveCertificateActions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRetrieveCertificateActionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -1475,7 +1749,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<CertificateOrderAction> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<CertificateOrderAction> array = new List<CertificateOrderAction>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1509,7 +1783,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<CertificateOrderAction> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<CertificateOrderAction> array = new List<CertificateOrderAction>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1521,6 +1795,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRetrieveCertificateEmailHistoryRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/retrieveEmailHistory", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRetrieveCertificateEmailHistoryRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1564,7 +1853,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceCertificateEmail> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<AppServiceCertificateEmail> array = new List<AppServiceCertificateEmail>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1598,7 +1887,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceCertificateEmail> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<AppServiceCertificateEmail> array = new List<AppServiceCertificateEmail>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1610,6 +1899,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
@@ -1644,7 +1941,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1671,13 +1968,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1714,7 +2019,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1743,13 +2048,21 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCertificatesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListCertificatesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -1788,7 +2101,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateListResult.DeserializeAppServiceCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1819,7 +2132,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateListResult.DeserializeAppServiceCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

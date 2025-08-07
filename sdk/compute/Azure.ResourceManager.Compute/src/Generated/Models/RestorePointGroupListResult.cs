@@ -5,33 +5,76 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Compute;
+using System.Linq;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List restore point collection operation response. </summary>
     internal partial class RestorePointGroupListResult
     {
-        /// <summary> Initializes a new instance of RestorePointGroupListResult. </summary>
-        internal RestorePointGroupListResult()
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/>. </summary>
+        /// <param name="value"> Gets the list of restore point collections. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RestorePointGroupListResult(IEnumerable<RestorePointGroupData> value)
         {
-            Value = new ChangeTrackingList<RestorePointGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RestorePointGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/>. </summary>
         /// <param name="value"> Gets the list of restore point collections. </param>
         /// <param name="nextLink"> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </param>
-        internal RestorePointGroupListResult(IReadOnlyList<RestorePointGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointGroupListResult(IReadOnlyList<RestorePointGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/> for deserialization. </summary>
+        internal RestorePointGroupListResult()
+        {
         }
 
         /// <summary> Gets the list of restore point collections. </summary>
         public IReadOnlyList<RestorePointGroupData> Value { get; }
         /// <summary> The uri to fetch the next page of RestorePointCollections. Call ListNext() with this to fetch the next page of RestorePointCollections. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

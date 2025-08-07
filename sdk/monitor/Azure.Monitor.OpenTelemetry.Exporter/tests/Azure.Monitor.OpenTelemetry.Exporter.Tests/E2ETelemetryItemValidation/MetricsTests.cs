@@ -9,6 +9,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
@@ -22,6 +23,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     public class MetricsTests
     {
         internal readonly TelemetryItemOutputHelper telemetryOutput;
+
+        internal readonly Dictionary<string, object> testResourceAttributes = new()
+        {
+            { "service.instance.id", "testInstance" },
+            { "service.name", "testName" },
+            { "service.namespace", "testNamespace" },
+            { "service.version", "testVersion" },
+        };
 
         public MetricsTests(ITestOutputHelper output)
         {
@@ -40,6 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var meter = new Meter(meterName, "1.0");
 
             var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddMeter(meterName)
                 .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
@@ -86,6 +96,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var meter = new Meter(meterName, "1.0");
 
             var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddMeter(meterName)
                 .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
@@ -142,6 +153,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var meter = new Meter(meterName, "1.0");
 
             var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddMeter(meterName)
                 .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
@@ -186,6 +198,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var meter = new Meter(meterName, "1.0");
 
             var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddMeter(meterName)
                 .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems);
 
@@ -232,6 +245,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             using var meter = new Meter(meterName, "1.0");
 
             var meterProviderBuilder = Sdk.CreateMeterProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
                 .AddMeter(meterName)
                 .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems, out MetricReader metricReader);
 

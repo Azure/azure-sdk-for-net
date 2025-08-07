@@ -3,7 +3,7 @@ Service: storage-file-share
 Project: sdk/storage/Azure.Storage.Files.Shares/perf/Azure.Storage.Files.Shares.Perf/Azure.Storage.Files.Shares.Perf.csproj
 
 PackageVersions:
-- Azure.Storage.Files.Shares: 12.12.1
+- Azure.Storage.Files.Shares: 12.20.0
 - Azure.Storage.Files.Shares: source
 
 Tests:

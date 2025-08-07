@@ -5,24 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Abstract model class for event details of a HyperVReplica E2E event. </summary>
     public partial class HyperVReplicaBaseEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaBaseEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaBaseEventDetails"/>. </summary>
         internal HyperVReplicaBaseEventDetails()
         {
             InstanceType = "HyperVReplicaBaseEventDetails";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaBaseEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaBaseEventDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerName"> The container friendly name. </param>
         /// <param name="fabricName"> The fabric friendly name. </param>
         /// <param name="remoteContainerName"> The remote container name. </param>
         /// <param name="remoteFabricName"> The remote fabric name. </param>
-        internal HyperVReplicaBaseEventDetails(string instanceType, string containerName, string fabricName, string remoteContainerName, string remoteFabricName) : base(instanceType)
+        internal HyperVReplicaBaseEventDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string containerName, string fabricName, string remoteContainerName, string remoteFabricName) : base(instanceType, serializedAdditionalRawData)
         {
             ContainerName = containerName;
             FabricName = fabricName;

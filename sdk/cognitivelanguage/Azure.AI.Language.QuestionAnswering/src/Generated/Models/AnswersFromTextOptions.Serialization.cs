@@ -21,7 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStartArray();
             foreach (var item in TextDocuments)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TextDocument>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Language))
@@ -35,6 +35,14 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

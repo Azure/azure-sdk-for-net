@@ -39,13 +39,13 @@ Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/a
 Documentation is available to help you learn how to use this package
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet)
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md)
 
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+- [.NET Management Library Code Samples](https://learn.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ## Troubleshooting
 

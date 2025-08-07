@@ -12,9 +12,28 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The JobRequest. </summary>
     public partial class JobRequest
     {
-        /// <summary> Initializes a new instance of JobRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRequest"/>. </summary>
         public JobRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRequest"/>. </summary>
+        /// <param name="jobId"> The unique identifier of the job. </param>
+        /// <param name="type"> The job type. </param>
+        /// <param name="cloudToDeviceMethod"> The method type and parameters. This is required if the job type is cloudToDeviceMethod. </param>
+        /// <param name="updateTwin"> The state information for a device or module. This is implicitly created and deleted when the corresponding device/ module identity is created or deleted in the IoT Hub. </param>
+        /// <param name="queryCondition"> The condition for devices to execute the job. This is required if the job type is updateTwin or cloudToDeviceMethod. </param>
+        /// <param name="startTime"> The start date and time of the job in ISO 8601 standard. </param>
+        /// <param name="maxExecutionTimeInSeconds"> The maximum execution time in secounds. </param>
+        internal JobRequest(string jobId, JobRequestType? type, CloudToDeviceMethodRequest cloudToDeviceMethod, TwinData updateTwin, string queryCondition, DateTimeOffset? startTime, long? maxExecutionTimeInSeconds)
+        {
+            JobId = jobId;
+            Type = type;
+            CloudToDeviceMethod = cloudToDeviceMethod;
+            UpdateTwin = updateTwin;
+            QueryCondition = queryCondition;
+            StartTime = startTime;
+            MaxExecutionTimeInSeconds = maxExecutionTimeInSeconds;
         }
 
         /// <summary> The unique identifier of the job. </summary>

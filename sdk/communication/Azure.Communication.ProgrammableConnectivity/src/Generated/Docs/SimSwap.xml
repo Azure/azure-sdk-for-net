@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="RetrieveAsync(string,SimSwapRetrievalContent,CancellationToken)">
+      <example>
+This sample shows how to call RetrieveAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
+
+SimSwapRetrievalContent body = new SimSwapRetrievalContent(new NetworkIdentifier("IPv6", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"))
+{
+    PhoneNumber = "+61215310263792",
+};
+Response<SimSwapRetrievalResult> response = await client.RetrieveAsync("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="Retrieve(string,SimSwapRetrievalContent,CancellationToken)">
+      <example>
+This sample shows how to call Retrieve.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
+
+SimSwapRetrievalContent body = new SimSwapRetrievalContent(new NetworkIdentifier("IPv6", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"))
+{
+    PhoneNumber = "+61215310263792",
+};
+Response<SimSwapRetrievalResult> response = client.Retrieve("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="RetrieveAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RetrieveAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    phoneNumber = "+61215310263792",
+    networkIdentifier = new
+    {
+        identifierType = "IPv6",
+        identifier = "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+    },
+});
+Response response = await client.RetrieveAsync("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Retrieve(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Retrieve and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    phoneNumber = "+61215310263792",
+    networkIdentifier = new
+    {
+        identifierType = "IPv6",
+        identifier = "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+    },
+});
+Response response = client.Retrieve("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="VerifyAsync(string,SimSwapVerificationContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
+
+SimSwapVerificationContent body = new SimSwapVerificationContent(new NetworkIdentifier("ipv4", "12.12.12.12"))
+{
+    MaxAgeHours = 941,
+};
+Response<SimSwapVerificationResult> response = await client.VerifyAsync("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="Verify(string,SimSwapVerificationContent,CancellationToken)">
+      <example>
+This sample shows how to call Verify.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
+
+SimSwapVerificationContent body = new SimSwapVerificationContent(new NetworkIdentifier("ipv4", "12.12.12.12"))
+{
+    MaxAgeHours = 941,
+};
+Response<SimSwapVerificationResult> response = client.Verify("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="VerifyAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    maxAgeHours = 941,
+    networkIdentifier = new
+    {
+        identifierType = "ipv4",
+        identifier = "12.12.12.12",
+    },
+});
+Response response = await client.VerifyAsync("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code></example>
+    </member>
+    <member name="Verify(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Verify and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    maxAgeHours = 941,
+    networkIdentifier = new
+    {
+        identifierType = "ipv4",
+        identifier = "12.12.12.12",
+    },
+});
+Response response = client.Verify("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

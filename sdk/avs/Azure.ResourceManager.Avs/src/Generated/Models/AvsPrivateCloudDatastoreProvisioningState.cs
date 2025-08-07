@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The state of the datastore provisioning. </summary>
+    /// <summary> datastore provisioning state. </summary>
     public readonly partial struct AvsPrivateCloudDatastoreProvisioningState : IEquatable<AvsPrivateCloudDatastoreProvisioningState>
     {
         private readonly string _value;
@@ -24,34 +24,34 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string CancelledValue = "Cancelled";
         private const string PendingValue = "Pending";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static AvsPrivateCloudDatastoreProvisioningState Succeeded { get; } = new AvsPrivateCloudDatastoreProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static AvsPrivateCloudDatastoreProvisioningState Failed { get; } = new AvsPrivateCloudDatastoreProvisioningState(FailedValue);
-        /// <summary> Cancelled. </summary>
-        public static AvsPrivateCloudDatastoreProvisioningState Cancelled { get; } = new AvsPrivateCloudDatastoreProvisioningState(CancelledValue);
-        /// <summary> Pending. </summary>
-        public static AvsPrivateCloudDatastoreProvisioningState Pending { get; } = new AvsPrivateCloudDatastoreProvisioningState(PendingValue);
-        /// <summary> Creating. </summary>
-        public static AvsPrivateCloudDatastoreProvisioningState Creating { get; } = new AvsPrivateCloudDatastoreProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
-        public static AvsPrivateCloudDatastoreProvisioningState Updating { get; } = new AvsPrivateCloudDatastoreProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
-        public static AvsPrivateCloudDatastoreProvisioningState Deleting { get; } = new AvsPrivateCloudDatastoreProvisioningState(DeletingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static AvsPrivateCloudDatastoreProvisioningState Canceled { get; } = new AvsPrivateCloudDatastoreProvisioningState(CanceledValue);
+        /// <summary> is cancelled. </summary>
+        public static AvsPrivateCloudDatastoreProvisioningState Cancelled { get; } = new AvsPrivateCloudDatastoreProvisioningState(CancelledValue);
+        /// <summary> is pending. </summary>
+        public static AvsPrivateCloudDatastoreProvisioningState Pending { get; } = new AvsPrivateCloudDatastoreProvisioningState(PendingValue);
+        /// <summary> is creating. </summary>
+        public static AvsPrivateCloudDatastoreProvisioningState Creating { get; } = new AvsPrivateCloudDatastoreProvisioningState(CreatingValue);
+        /// <summary> is updating. </summary>
+        public static AvsPrivateCloudDatastoreProvisioningState Updating { get; } = new AvsPrivateCloudDatastoreProvisioningState(UpdatingValue);
+        /// <summary> is deleting. </summary>
+        public static AvsPrivateCloudDatastoreProvisioningState Deleting { get; } = new AvsPrivateCloudDatastoreProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="AvsPrivateCloudDatastoreProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AvsPrivateCloudDatastoreProvisioningState left, AvsPrivateCloudDatastoreProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsPrivateCloudDatastoreProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AvsPrivateCloudDatastoreProvisioningState left, AvsPrivateCloudDatastoreProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvsPrivateCloudDatastoreProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsPrivateCloudDatastoreProvisioningState"/>. </summary>
         public static implicit operator AvsPrivateCloudDatastoreProvisioningState(string value) => new AvsPrivateCloudDatastoreProvisioningState(value);
 
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

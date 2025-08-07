@@ -10,6 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// <see href="https://github.com/Azure/azure-rest-api-specs/blob/4eb2ae1846ac79a993cabc378436b6218baaa1ed/specification/applicationinsights/data-plane/Monitor.Exporters/preview/2020-09-15_Preview/swagger.json"/>
     /// and the Ingestion service data models
     /// <see href="https://docs.microsoft.com/azure/azure-monitor/app/data-model"/>.
+    /// NOTE: Some of these max lengths are not defined in the Swagger. Must refer to the internal service repo.
     /// </summary>
     /// <remarks>
     /// MaxLength (inclusive) defines the maximum number of characters.
@@ -120,6 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int Tags_AiOperationName_MaxLength = 1024;
         public const int Tags_AiOperationParentId_MaxLength = 512;
         public const int Tags_AiUserAuthUserId_MaxLength = 1024;
+        public const int Tags_AiApplicationVer_MaxLength = 1024;
         public const int Tags_AiCloudRole_MaxLength = 256;
         public const int Tags_AiCloudRoleInstance_MaxLength = 256;
         public const int Tags_AiInternalSdkVersion_MaxLength = 64;

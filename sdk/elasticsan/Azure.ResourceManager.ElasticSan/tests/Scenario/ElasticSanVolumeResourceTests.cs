@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task Get()
+        public async Task GetUpdateDelete()
         {
             _collection = await GetVolumeCollection();
             string volumeName = Recording.GenerateAssetName("testvolume-");
@@ -44,34 +44,79 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeResource volume2 = await volume1.GetAsync();
             Assert.AreEqual(volume1.Id.Name, volume2.Id.Name);
             Assert.AreEqual(100, volume2.Data.SizeGiB);
-            Assert.IsNull(volume2.Data.CreationData.SourceUri);
             Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume1.Data.CreationData.CreateSource);
-        }
 
-        [Test]
-        [RecordedTest]
-        public async Task Delete()
-        {
-            _collection = await GetVolumeCollection();
-            string volumeName = Recording.GenerateAssetName("testvolume-");
-            ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, GetDefaultElasticSanVolumeData())).Value;
-            await volume1.DeleteAsync(WaitUntil.Completed);
-            //Skip validation for deletion as server has an issue of still showing deleted volume as active
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Update()
-        {
-            _collection = await GetVolumeCollection();
-            string volumeName = Recording.GenerateAssetName("testvolume-");
-            ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, GetDefaultElasticSanVolumeData())).Value;
             ElasticSanVolumePatch patch = new ElasticSanVolumePatch()
             {
                 SizeGiB = 200
             };
-            ElasticSanVolumeResource volume2 = (await volume1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.AreEqual(200, volume2.Data.SizeGiB);
+            ElasticSanVolumeResource volume3 = (await volume1.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            Assert.AreEqual(200, volume3.Data.SizeGiB);
+
+            await volume1.DeleteAsync(WaitUntil.Completed, ElasticSanDeleteSnapshotsUnderVolume.True, ElasticSanForceDeleteVolume.True);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task DeleteGetRestore()
+        {
+            ElasticSanCollection elasticSanCollection = (await GetResourceGroupAsync(ResourceGroupName)).GetElasticSans();
+            ElasticSanVolumeGroupCollection volGroupCollection = (await elasticSanCollection.GetAsync(ElasticSanName)).Value.GetElasticSanVolumeGroups();
+            string volumeGroupName = Recording.GenerateAssetName("testvolgroupsd-");
+            var volumeGroupData = new ElasticSanVolumeGroupData()
+            {
+                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy()
+                {
+                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
+                    RetentionPeriodDays = 1
+                }
+            };
+            ElasticSanVolumeGroupResource volGroup = (await volGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, volumeGroupData)).Value;
+            _collection = volGroup.GetElasticSanVolumes();
+
+            string volumeName = Recording.GenerateAssetName("testvolumesd-");
+            ElasticSanVolumeData data = new ElasticSanVolumeData(100);
+            ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data)).Value;
+
+            await volume1.DeleteAsync(WaitUntil.Completed);
+
+            ElasticSanVolumeResource softdeletedVolume = null;
+            int count = 0;
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(ElasticSanAccessSoftDeletedVolume.True))
+            {
+                softdeletedVolume = _;
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 1);
+
+            await softdeletedVolume.RestoreVolumeAsync(WaitUntil.Completed);
+            bool foundVolume = false;
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync())
+            {
+                if (_.Id.Name == volumeName)
+                {
+                    foundVolume = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(foundVolume);
+
+            await volume1.DeleteAsync(WaitUntil.Completed);
+            count = 0;
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(ElasticSanAccessSoftDeletedVolume.True))
+            {
+                softdeletedVolume = _;
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 1);
+            await softdeletedVolume.DeleteAsync(WaitUntil.Completed, deleteType: ElasticSanDeleteType.Permanent);
+
+            count = 0;
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(ElasticSanAccessSoftDeletedVolume.True))
+            {
+                count++;
+            }
+            Assert.AreEqual(count, 0);
         }
     }
 }

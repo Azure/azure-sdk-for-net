@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LabServicesScheduleResource" /> and their operations.
-    /// Each <see cref="LabServicesScheduleResource" /> in the collection will belong to the same instance of <see cref="LabResource" />.
-    /// To get a <see cref="LabServicesScheduleCollection" /> instance call the GetLabServicesSchedules method from an instance of <see cref="LabResource" />.
+    /// A class representing a collection of <see cref="LabServicesScheduleResource"/> and their operations.
+    /// Each <see cref="LabServicesScheduleResource"/> in the collection will belong to the same instance of <see cref="LabResource"/>.
+    /// To get a <see cref="LabServicesScheduleCollection"/> instance call the GetLabServicesSchedules method from an instance of <see cref="LabResource"/>.
     /// </summary>
     public partial class LabServicesScheduleCollection : ArmCollection, IEnumerable<LabServicesScheduleResource>, IAsyncEnumerable<LabServicesScheduleResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Schedules_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,9 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = await _labServicesScheduleSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation<LabServicesScheduleResource>(Response.FromValue(new LabServicesScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _labServicesScheduleSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LabServicesArmOperation<LabServicesScheduleResource>(Response.FromValue(new LabServicesScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Schedules_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +139,9 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = _labServicesScheduleSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, data, cancellationToken);
-                var operation = new LabServicesArmOperation<LabServicesScheduleResource>(Response.FromValue(new LabServicesScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _labServicesScheduleSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LabServicesArmOperation<LabServicesScheduleResource>(Response.FromValue(new LabServicesScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +163,14 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Schedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +209,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Schedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it within containing lab. Used in resource URIs. </param>
@@ -219,16 +254,24 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Schedules_ListByLab</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabServicesScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LabServicesScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabServicesScheduleResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesScheduleSchedulesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesScheduleSchedulesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,16 +285,24 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Schedules_ListByLab</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabServicesScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LabServicesScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabServicesScheduleResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labServicesScheduleSchedulesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labServicesScheduleSchedulesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabServicesScheduleResource(Client, LabServicesScheduleData.DeserializeLabServicesScheduleData(e)), _labServicesScheduleSchedulesClientDiagnostics, Pipeline, "LabServicesScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -264,6 +315,14 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Schedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +359,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Schedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it within containing lab. Used in resource URIs. </param>
@@ -316,6 +383,96 @@ namespace Azure.ResourceManager.LabServices
             {
                 var response = _labServicesScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduleName"> The name of the schedule that uniquely identifies it within containing lab. Used in resource URIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LabServicesScheduleResource>> GetIfExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _labServicesScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LabServicesScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new LabServicesScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabServicesScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduleName"> The name of the schedule that uniquely identifies it within containing lab. Used in resource URIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        public virtual NullableResponse<LabServicesScheduleResource> GetIfExists(string scheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _labServicesScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LabServicesScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new LabServicesScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

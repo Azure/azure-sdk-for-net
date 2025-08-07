@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Azure.Communication.Identity.Models;
 using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -57,22 +59,46 @@ namespace Azure.Communication.Identity.Tests
             CTEOptions = await CreateTeamsUserParams();
         }
 
-        [Test]
-        [TestCase(AuthMethod.ConnectionString, "chat", TestName = "GettingTokenWithSingleChatScopeWithConnectionString")]
-        [TestCase(AuthMethod.ConnectionString, "voip", TestName = "GettingTokenWithSingleVoIPScopeWithConnectionString")]
-        [TestCase(AuthMethod.ConnectionString, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, "chat", TestName = "GettingTokenWithSingleChatScopeWithKeyCredential")]
-        [TestCase(AuthMethod.KeyCredential, "voip", TestName = "GettingTokenWithSingleVoIPScopeWithKeyCredential")]
-        [TestCase(AuthMethod.KeyCredential, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithKeyCredential")]
-        [TestCase(AuthMethod.TokenCredential, "chat", TestName = "GettingTokenWithSingleChatScopeWithTokenCredential")]
-        [TestCase(AuthMethod.TokenCredential, "voip", TestName = "GettingTokenWithSingleVoIPScopeWithTokenCredential")]
-        [TestCase(AuthMethod.TokenCredential, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithTokenCredential")]
-        public async Task GetTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
+        [TestCase(AuthMethod.ConnectionString, TestName = "GettingTokenWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, TestName = "GettingTokenWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GettingTokenWithTokenCredential")]
+        public async Task GetTokenUsingDifferentAuthentication(AuthMethod authMethod)
         {
+            string[] scopes = new[] { "chat", "voip" };
+
             CommunicationIdentityClient client = CreateClient(authMethod);
 
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
             Response<AccessToken> tokenResponse = await client.GetTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
+            Assert.IsNotNull(tokenResponse.Value);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
+            ValidateScopesIfNotSanitized();
+
+            void ValidateScopesIfNotSanitized()
+            {
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    JwtTokenParser.JwtPayload payload = JwtTokenParser.DecodeJwtPayload(tokenResponse.Value.Token);
+                    CollectionAssert.AreEquivalent(scopes, payload.Scopes);
+                }
+            }
+        }
+
+        [TestCase("chat", TestName = "GettingTokenWithChatScope")]
+        [TestCase("voip", TestName = "GettingTokenWithVoipScope")]
+        [TestCase("chat.join", TestName = "GettingTokenWithChatJoinScope")]
+        [TestCase("chat.join.limited", TestName = "GettingTokenWithChatJoinLimitedScope")]
+        [TestCase("voip.join", TestName = "GettingTokenWithVoipJoinScope")]
+        [TestCase("chat", "voip", TestName = "GettingTokenWithChatVoipScopes")]
+        [TestCase("chat", "chat.join", "chat.join.limited", TestName = "GettingTokenWithAllChatScopes")]
+        [TestCase("voip", "voip.join", TestName = "GettingTokenWithAllVoipScopes")]
+        [TestCase("chat.join", "voip.join", TestName = "GettingTokenWithChatJoinVoipJoinScopes")]
+        public async Task GetTokenGeneratesTokenAndIdentityWithScopes(params string[] scopes)
+        {
+            CommunicationIdentityClient client = CreateClient();
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
+            Response<AccessToken> tokenResponse = await client.GetTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
+
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
             ValidateScopesIfNotSanitized();
@@ -124,7 +150,13 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         [TestCase("chat", TestName = "CreateUserAndTokenWithChatScope")]
         [TestCase("voip", TestName = "CreateUserAndTokenWithVoIPScope")]
-        [TestCase("chat", "voip", TestName = "CreateUserAndTokenWithMultipleScopes")]
+        [TestCase("chat.join", TestName = "CreateUserAndTokenWithChatJoinScope")]
+        [TestCase("chat.join.limited", TestName = "CreateUserAndTokenWithChatJoinLimitedScope")]
+        [TestCase("voip.join", TestName = "CreateUserAndTokenWithVoipJoinScope")]
+        [TestCase("chat", "voip", TestName = "CreateUserAndTokenWithChatVoipScopes")]
+        [TestCase("chat", "chat.join", "chat.join.limited", TestName = "CreateUserAndTokenWithAllChatScopes")]
+        [TestCase("voip", "voip.join", TestName = "CreateUserAndTokenWithAllVoipScopes")]
+        [TestCase("chat.join", "voip.join", TestName = "CreateUserAndTokenWithChatJoinVoipJoinScopes")]
         public async Task CreateUserAndTokenWithDifferentScopes(params string[] scopes)
         {
             CommunicationIdentityClient client = CreateClient();
@@ -482,6 +514,8 @@ namespace Azure.Communication.Identity.Tests
         [TestCase(ServiceVersion.V2021_03_07, TestName = "CreateIdentityWithServiceVersion_V2021_03_07")]
         [TestCase(ServiceVersion.V2022_06_01, TestName = "CreateIdentityWithServiceVersion_V2022_06_01")]
         [TestCase(ServiceVersion.V2022_10_01, TestName = "CreateIdentityWithServiceVersion_V2022_10_01")]
+        [TestCase(ServiceVersion.V2023_10_01, TestName = "CreateIdentityWithServiceVersion_V2023_10_01")]
+        [TestCase(ServiceVersion.V2025_03_02_PREVIEW, TestName = "CreateIdentityWithServiceVersion_V2025_03_02_PREVIEW")]
         public async Task CreateIdentityWithDifferentServiceVersions(ServiceVersion version)
         {
             try
@@ -494,6 +528,40 @@ namespace Azure.Communication.Identity.Tests
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }
+        }
+
+        [Test]
+        public async Task CreateUserWithCustomIdShouldReturnExistingIdentity()
+        {
+            var customId = "bob@contoso.com";
+            CommunicationIdentityClient client = CreateClient();
+            Response<CommunicationUserIdentifier> createResponse = await client.CreateUserAsync(customId);
+
+            Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status);
+            Assert.IsNotNull(createResponse.Value.Id);
+
+            Response<CommunicationUserIdentifier> createResponse2 = await client.CreateUserAsync(customId);
+            Assert.AreEqual((int)HttpStatusCode.Created, createResponse2.GetRawResponse().Status);
+            Assert.AreEqual(createResponse.Value.Id, createResponse2.Value.Id);
+        }
+
+        [Test]
+        public async Task GetUserShouldReturnTheCustomId()
+        {
+            var customId = "alice@contoso.com";
+            CommunicationIdentityClient client = CreateClient();
+            Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateUserAndTokenAsync(customId,
+                new List<CommunicationTokenScope> { CommunicationTokenScope.VoIP },
+                TimeSpan.FromHours(2));
+            Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
+                || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
+            Assert.IsNotNull(createResponse.Value.User);
+
+            Response<CommunicationUserDetail> getResponse = await client.GetUserDetailAsync(createResponse.Value.User);
+            Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
+            Assert.AreEqual(createResponse.Value.User.Id, getResponse.Value.User.Id);
+            Assert.AreEqual(customId, getResponse.Value.CustomId);
+            Assert.IsNotNull(getResponse.Value.LastTokenIssuedAt);
         }
 
         [Test]

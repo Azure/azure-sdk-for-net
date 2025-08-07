@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Operation Mode. </summary>
+    /// <summary> Operation mode of the operation: Import, Export, or PolybaseImport. </summary>
     public readonly partial struct DatabaseExtensionOperationMode : IEquatable<DatabaseExtensionOperationMode>
     {
         private readonly string _value;
@@ -23,14 +23,20 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         private const string PolybaseImportValue = "PolybaseImport";
+        private const string ImportValue = "Import";
+        private const string ExportValue = "Export";
 
         /// <summary> PolybaseImport. </summary>
         public static DatabaseExtensionOperationMode PolybaseImport { get; } = new DatabaseExtensionOperationMode(PolybaseImportValue);
+        /// <summary> Import. </summary>
+        public static DatabaseExtensionOperationMode Import { get; } = new DatabaseExtensionOperationMode(ImportValue);
+        /// <summary> Export. </summary>
+        public static DatabaseExtensionOperationMode Export { get; } = new DatabaseExtensionOperationMode(ExportValue);
         /// <summary> Determines if two <see cref="DatabaseExtensionOperationMode"/> values are the same. </summary>
         public static bool operator ==(DatabaseExtensionOperationMode left, DatabaseExtensionOperationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseExtensionOperationMode"/> values are not the same. </summary>
         public static bool operator !=(DatabaseExtensionOperationMode left, DatabaseExtensionOperationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DatabaseExtensionOperationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DatabaseExtensionOperationMode"/>. </summary>
         public static implicit operator DatabaseExtensionOperationMode(string value) => new DatabaseExtensionOperationMode(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

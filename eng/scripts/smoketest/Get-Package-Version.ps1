@@ -1,6 +1,3 @@
-param(
-    [string]$ArtifactsPath
-)
 . (Join-Path $PSScriptRoot ../../common/scripts/common.ps1)
 $ErrorActionPreference = 'Continue'
 
@@ -30,7 +27,7 @@ function Get-SmokeTestPkgProperties
 
     $azureCorePkgInfo = $newPackages.Where({ $_.Name -eq "Azure.Core"})
     $azureCoreVer = [AzureEngSemanticVersion]::ParseVersionString($azureCorePkgInfo.Version)
-    $azureCoreVer.IsPreRelease = $false
+    $azureCoreVer.PrereleaseLabel = ""
     $azureCoreVerBase = $azureCoreVer.ToString()
 
     # Pick a version of core that is at least one day old but no older then one month old
@@ -55,7 +52,7 @@ function Get-SmokeTestPkgProperties
 
     foreach ($pkg in $newPackages) {
         $pkgVersion = [AzureEngSemanticVersion]::ParseVersionString($pkg.Version)
-        $pkgVersion.IsPreRelease = $false
+        $pkgVersion.PrereleaseLabel = ""
         $pkgVersionBase = $pkgVersion.ToString()
 
         $pkgVersionAlpha = "$pkgVersionBase-alpha.$azureCoreVerDateStr"

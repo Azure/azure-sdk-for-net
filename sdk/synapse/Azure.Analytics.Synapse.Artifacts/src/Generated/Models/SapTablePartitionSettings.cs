@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The settings that will be leveraged for SAP table source partitioning. </summary>
     public partial class SapTablePartitionSettings
     {
-        /// <summary> Initializes a new instance of SapTablePartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapTablePartitionSettings"/>. </summary>
         public SapTablePartitionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SapTablePartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapTablePartitionSettings"/>. </summary>
         /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>

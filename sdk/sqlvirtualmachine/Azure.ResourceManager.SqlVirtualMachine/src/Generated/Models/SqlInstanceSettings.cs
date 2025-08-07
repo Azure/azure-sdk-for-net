@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Set the server/instance-level settings for SQL Server. </summary>
     public partial class SqlInstanceSettings
     {
-        /// <summary> Initializes a new instance of SqlInstanceSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlInstanceSettings"/>. </summary>
         public SqlInstanceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlInstanceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlInstanceSettings"/>. </summary>
         /// <param name="collation"> SQL Server Collation. </param>
         /// <param name="maxDop"> SQL Server MAXDOP. </param>
         /// <param name="isOptimizeForAdHocWorkloadsEnabled"> SQL Server Optimize for Adhoc workloads. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="maxServerMemoryInMB"> SQL Server maximum memory. </param>
         /// <param name="isLpimEnabled"> SQL Server LPIM. </param>
         /// <param name="isIfiEnabled"> SQL Server IFI. </param>
-        internal SqlInstanceSettings(string collation, int? maxDop, bool? isOptimizeForAdHocWorkloadsEnabled, int? minServerMemoryInMB, int? maxServerMemoryInMB, bool? isLpimEnabled, bool? isIfiEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlInstanceSettings(string collation, int? maxDop, bool? isOptimizeForAdHocWorkloadsEnabled, int? minServerMemoryInMB, int? maxServerMemoryInMB, bool? isLpimEnabled, bool? isIfiEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Collation = collation;
             MaxDop = maxDop;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             MaxServerMemoryInMB = maxServerMemoryInMB;
             IsLpimEnabled = isLpimEnabled;
             IsIfiEnabled = isIfiEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SQL Server Collation. </summary>

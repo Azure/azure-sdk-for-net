@@ -1,10 +1,9 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: personalizer
     TimeoutInMinutes: 240
     MaxParallel: 2
     UnsupportedClouds: 'Canary'
-    SupportedClouds: 'Public,UsGov,China'

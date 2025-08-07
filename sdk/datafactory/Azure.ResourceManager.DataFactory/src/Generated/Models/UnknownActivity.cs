@@ -10,10 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownActivity. </summary>
-    internal partial class UnknownActivity : DataFactoryActivity
+    /// <summary> Unknown version of Activity. </summary>
+    internal partial class UnknownActivity : PipelineActivity
     {
-        /// <summary> Initializes a new instance of UnknownActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -22,9 +22,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal UnknownActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             ActivityType = activityType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownActivity"/> for deserialization. </summary>
+        internal UnknownActivity()
+        {
         }
     }
 }

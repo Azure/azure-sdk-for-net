@@ -24,17 +24,13 @@ You must have an [Azure subscription][azure_subscription] and a [Purview resourc
 
 ### Authenticate the client
 
-Since the Workflow service uses an Azure Active Directory (AAD) bearer token for authentication and identification, an email address should be encoded into the token to allow for notification when using Workflow. It is recommended that the [Azure Identity][azure_identity] library be used  with a the [UsernamePasswordCredential][username_password_credential]. Before using the [Azure Identity][azure_identity] library with Workflow, [an application][app_registration] should be registered and used for the clientId passed to the [UsernamePasswordCredential][username_password_credential].
+Since the Workflow service uses an Azure Active Directory (AAD) bearer token for authentication and identification, an email address should be encoded into the token to allow for notification when using Workflow. It is recommended that the [Azure Identity][azure_identity] library be used  with a the [DefaultAzureCredential][default_azure_credential]. Before using the [Azure Identity][azure_identity] library with Workflow, [an application][app_registration] should be registered and set the information obtained from the application, such as AZURE_CLIENT_ID, AZURE_TENANT_ID, and AZURE_CLIENT_SECRET, as environment variables. Then use [DefaultAzureCredential][default_azure_credential] for authentication. For more authentication details, refer to [MFA][multifactor_authentication].
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_CreateClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("WORKFLOW_ENDPOINT"));
-string clientId = Environment.GetEnvironmentVariable("ClientId");
-string tenantId = Environment.GetEnvironmentVariable("TenantId");
-string username = Environment.GetEnvironmentVariable("Username");
-string password = Environment.GetEnvironmentVariable("Password");
+TokenCredential credential = new DefaultAzureCredential();
 
-TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
-var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
+var client = new WorkflowsClient(endpoint, credential);
 ```
 
 ## Examples
@@ -62,7 +58,7 @@ Guid workflowId = Guid.NewGuid();
 
 string workflow = "{\"name\":\"Create glossary term workflow\",\"description\":\"\",\"triggers\":[{\"type\":\"when_term_creation_is_requested\",\"underGlossaryHierarchy\":\"/glossaries/20031e20-b4df-4a66-a61d-1b0716f3fa48\"}],\"isEnabled\":true,\"actionDag\":{\"actions\":{\"Startandwaitforanapproval\":{\"type\":\"Approval\",\"inputs\":{\"parameters\":{\"approvalType\":\"PendingOnAll\",\"title\":\"ApprovalRequestforCreateGlossaryTerm\",\"assignedTo\":[\"eece94d9-0619-4669-bb8a-d6ecec5220bc\"]}},\"runAfter\":{}},\"Condition\":{\"type\":\"If\",\"expression\":{\"and\":[{\"equals\":[\"@outputs('Startandwaitforanapproval')['body/outcome']\",\"Approved\"]}]},\"actions\":{\"Createglossaryterm\":{\"type\":\"CreateTerm\",\"runAfter\":{}},\"Sendemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-APPROVED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{triggerBody()['request']['term']['name']}isapproved.\",\"emailRecipients\":[\"@{triggerBody()['request']['requestor']}\"]}},\"runAfter\":{\"Createglossaryterm\":[\"Succeeded\"]}}},\"else\":{\"actions\":{\"Sendrejectemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-REJECTED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{triggerBody()['request']['term']['name']}isrejected.\",\"emailRecipients\":[\"@{triggerBody()['request']['requestor']}\"]}},\"runAfter\":{}}}},\"runAfter\":{\"Startandwaitforanapproval\":[\"Succeeded\"]}}}}}";
 
-Response createResult = await client.CreateOrReplaceWorkflowAsync(workflowId, RequestContent.Create(workflow));
+Response createResult = await client.CreateOrReplaceAsync(workflowId, RequestContent.Create(workflow));
 ```
 
 ### Submit user requests
@@ -70,7 +66,7 @@ Response createResult = await client.CreateOrReplaceWorkflowAsync(workflowId, Re
 ```C# Snippet:Azure_Analytics_Purview_Workflows_SubmitUserRequests
 string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"20031e20-b4df-4a66-a61d-1b0716f3fa48\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
 
-Response submitResult = await client.SubmitUserRequestsAsync(RequestContent.Create(request));
+Response submitResult = await client.SubmitAsync(RequestContent.Create(request));
 ```
 
 ### Approve workflow task
@@ -81,7 +77,7 @@ Guid taskId = new Guid("b129fe16-72d3-4994-9135-b997b9be46e0");
 
 string request = "{\"comment\":\"Thanks!\"}";
 
-Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestContent.Create(request));
+Response approveResult = await client.ApproveAsync(taskId, RequestContent.Create(request));
 ```
 
 ## Key concepts
@@ -105,10 +101,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [product_documentation]: https://learn.microsoft.com/azure/purview/concept-workflow
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
-[purview_resource]: https://docs.microsoft.com/azure/purview/create-catalog-portal
+[purview_resource]: https://learn.microsoft.com/azure/purview/create-catalog-portal
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [app_registration]: https://learn.microsoft.com/azure/active-directory/develop/quickstart-register-app
-[username_password_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet
+[default_azure_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
+[multifactor_authentication]:https://learn.microsoft.com/entra/identity/authentication/concept-mandatory-multifactor-authentication?tabs=dotnet#client-libraries
 [protocol_client_quickstart]: https://aka.ms/azsdk/net/protocol/quickstart
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Ssis folder. </summary>
     public partial class SynapseSsisFolder : SynapseSsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SynapseSsisFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisFolder"/>. </summary>
         internal SynapseSsisFolder()
         {
             MetadataType = SynapseSsisObjectMetadataType.Folder;
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisFolder"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
-        internal SynapseSsisFolder(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description) : base(metadataType, id, name, description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSsisFolder(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(metadataType, id, name, description, serializedAdditionalRawData)
         {
             MetadataType = metadataType;
         }

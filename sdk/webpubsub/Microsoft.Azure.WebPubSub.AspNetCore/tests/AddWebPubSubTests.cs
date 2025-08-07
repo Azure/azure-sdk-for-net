@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #if NETCOREAPP
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -57,6 +58,64 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
             Assert.NotNull(clientFactory);
             Assert.Throws<ArgumentException>(() => clientFactory.Create<TestHub>());
+        }
+
+        [Test]
+        public void TestMapWebPubSubHubConfigureNormal()
+        {
+            var testHost = "webpubsub.azure.net";
+            WebApplicationBuilder builder = WebApplication.CreateBuilder();
+            builder.Services
+             .AddWebPubSub(o => o.ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint=https://{testHost};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"));
+
+            using var app = builder.Build();
+            app.MapWebPubSubHub<TestHub>("/testhub");
+
+            var validator = app.Services.GetRequiredService<RequestValidator>();
+
+            Assert.NotNull(validator);
+            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+        }
+
+        [Test]
+        public void TestMapWebPubSubHubConfigureCustomHub()
+        {
+            var testHost = "webpubsub.azure.net";
+            var customHub = "customhub";
+            WebApplicationBuilder builder = WebApplication.CreateBuilder();
+            builder.Services
+             .AddWebPubSub(o => o.ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint=https://{testHost};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"));
+
+            using var app = builder.Build();
+            app.MapWebPubSubHub<TestHub>("/testhub", customHub);
+
+            var validator = app.Services.GetRequiredService<RequestValidator>();
+            var adaptor = app.Services.GetRequiredService<ServiceRequestHandlerAdapter>();
+
+            Assert.NotNull(validator);
+            Assert.NotNull(adaptor);
+            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+            Assert.NotNull(adaptor.GetHub(customHub), "Custom hub should be registered");
+        }
+
+        [Test]
+        public void TestMapWebPubSubHubConfigureHubByTypeName()
+        {
+            var testHost = "webpubsub.azure.net";
+            WebApplicationBuilder builder = WebApplication.CreateBuilder();
+            builder.Services
+             .AddWebPubSub(o => o.ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint=https://{testHost};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;"));
+
+            using var app = builder.Build();
+            app.MapWebPubSubHub<TestHub>("/testhub");
+
+            var validator = app.Services.GetRequiredService<RequestValidator>();
+            var adaptor = app.Services.GetRequiredService<ServiceRequestHandlerAdapter>();
+
+            Assert.NotNull(validator);
+            Assert.NotNull(adaptor);
+            Assert.True(validator.IsValidOrigin(new List<string> { testHost }));
+            Assert.NotNull(adaptor.GetHub(nameof(TestHub)), "Hub with the name that matches the class name should be registered");
         }
 
         private sealed class TestHub : WebPubSubHub

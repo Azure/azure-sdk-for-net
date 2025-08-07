@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
@@ -25,16 +23,14 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         AzureDevOpsRepoResource IOperationSource<AzureDevOpsRepoResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(document.RootElement);
+            var data = ModelReaderWriter.Read<AzureDevOpsRepoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityDevOpsContext.Default);
             return new AzureDevOpsRepoResource(_client, data);
         }
 
         async ValueTask<AzureDevOpsRepoResource> IOperationSource<AzureDevOpsRepoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(document.RootElement);
-            return new AzureDevOpsRepoResource(_client, data);
+            var data = ModelReaderWriter.Read<AzureDevOpsRepoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityDevOpsContext.Default);
+            return await Task.FromResult(new AzureDevOpsRepoResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

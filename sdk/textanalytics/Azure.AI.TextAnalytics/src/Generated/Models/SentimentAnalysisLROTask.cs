@@ -10,13 +10,13 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> An object representing the task definition for a Sentiment Analysis task. </summary>
     internal partial class SentimentAnalysisLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of SentimentAnalysisLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisLROTask"/>. </summary>
         public SentimentAnalysisLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.SentimentAnalysis;
         }
 
-        /// <summary> Initializes a new instance of SentimentAnalysisLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Sentiment Analysis task. </param>

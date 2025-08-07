@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.DataMovement;
-using Azure.Storage.DataMovement.Blobs;
+using System.Threading;
+using Azure.Storage.Blobs;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// Options applying to data transfer uploads and downloads using the <see cref="BlobContainerClient"/> extension methods
-    /// <see cref="BlobContainerClientExtensions.StartDownloadToDirectoryAsync(BlobContainerClient, string, BlobContainerClientTransferOptions)"/> and
-    /// <see cref="BlobContainerClientExtensions.StartUploadDirectoryAsync(BlobContainerClient, string, BlobContainerClientTransferOptions)"/>.
+    /// <see cref="BlobContainerClientExtensions.DownloadToDirectoryAsync(BlobContainerClient, WaitUntil, string, BlobContainerClientTransferOptions, CancellationToken)"/> and
+    /// <see cref="BlobContainerClientExtensions.UploadDirectoryAsync(BlobContainerClient, WaitUntil, string, BlobContainerClientTransferOptions, CancellationToken)"/>.
     /// </summary>
     public class BlobContainerClientTransferOptions
     {
@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.Models
         public BlobStorageResourceContainerOptions BlobContainerOptions { get; set; }
 
         /// <summary>
-        /// Options pertaining to the data tranfer.
+        /// Options pertaining to the data transfer.
         /// </summary>
         public TransferOptions TransferOptions { get; set; }
     }

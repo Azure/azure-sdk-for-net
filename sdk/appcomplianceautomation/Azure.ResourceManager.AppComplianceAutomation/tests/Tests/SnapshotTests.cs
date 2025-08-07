@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             // List snapshots
             int count = 0;
             string latestSnapshotName = "";
-            ReportResource report = Client.GetReportResource(ReportResource.CreateResourceIdentifier("sdk-report2947"));
-            SnapshotResourceCollection snapshots = report.GetSnapshotResources();
-            await foreach (SnapshotResource resource in snapshots.GetAllAsync())
+            AppComplianceReportResource report = Client.GetAppComplianceReportResource(AppComplianceReportResource.CreateResourceIdentifier("sdk-test-report"));
+            AppComplianceReportSnapshotCollection snapshots = report.GetAppComplianceReportSnapshots();
+            await foreach (AppComplianceReportSnapshotResource resource in snapshots.GetAllAsync(null))
             {
                 count++;
                 if (latestSnapshotName == "")
@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             Assert.Greater(count, 0);
 
             // Get snapshot
-            SnapshotResource snapshot = await snapshots.GetAsync(latestSnapshotName);
+            AppComplianceReportSnapshotResource snapshot = await snapshots.GetAsync(latestSnapshotName);
             Assert.IsNotNull(snapshot);
 
             // Download snapshot
-            SnapshotDownloadContent content = new SnapshotDownloadContent(DownloadType.ComplianceDetailedPdfReport);
+            SnapshotDownloadRequestContent content = new SnapshotDownloadRequestContent(AppComplianceDownloadType.ComplianceDetailedPdfReport);
             content.OfferGuid = null;
-            content.ReportCreatorTenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+            content.ReportCreatorTenantId = new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47");
 
-            ArmOperation<DownloadResponse> response = await snapshot.DownloadAsync(WaitUntil.Completed, content);
+            ArmOperation<AppComplianceDownloadResult> response = await snapshot.DownloadAsync(WaitUntil.Completed, content);
             Assert.IsNotNull(response);
         }
     }

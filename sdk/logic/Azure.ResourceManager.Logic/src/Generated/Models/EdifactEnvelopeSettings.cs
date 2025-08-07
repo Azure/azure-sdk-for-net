@@ -5,12 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The Edifact agreement envelope settings. </summary>
     public partial class EdifactEnvelopeSettings
     {
-        /// <summary> Initializes a new instance of EdifactEnvelopeSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdifactEnvelopeSettings"/>. </summary>
         /// <param name="applyDelimiterStringAdvice"> The value indicating whether to apply delimiter string advice. </param>
         /// <param name="createGroupingSegments"> The value indicating whether to create grouping segments. </param>
         /// <param name="enableDefaultGroupHeaders"> The value indicating whether to enable default group headers. </param>
@@ -43,7 +78,7 @@ namespace Azure.ResourceManager.Logic.Models
             IsTestInterchange = isTestInterchange;
         }
 
-        /// <summary> Initializes a new instance of EdifactEnvelopeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactEnvelopeSettings"/>. </summary>
         /// <param name="groupAssociationAssignedCode"> The group association assigned code. </param>
         /// <param name="communicationAgreementId"> The communication agreement id. </param>
         /// <param name="applyDelimiterStringAdvice"> The value indicating whether to apply delimiter string advice. </param>
@@ -85,7 +120,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="senderInternalSubIdentification"> The sender internal sub identification. </param>
         /// <param name="receiverInternalIdentification"> The receiver internal identification. </param>
         /// <param name="receiverInternalSubIdentification"> The receiver internal sub identification. </param>
-        internal EdifactEnvelopeSettings(string groupAssociationAssignedCode, string communicationAgreementId, bool applyDelimiterStringAdvice, bool createGroupingSegments, bool enableDefaultGroupHeaders, string recipientReferencePasswordValue, string recipientReferencePasswordQualifier, string applicationReferenceId, string processingPriorityCode, long interchangeControlNumberLowerBound, long interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, string interchangeControlNumberPrefix, string interchangeControlNumberSuffix, string senderReverseRoutingAddress, string receiverReverseRoutingAddress, string functionalGroupId, string groupControllingAgencyCode, string groupMessageVersion, string groupMessageRelease, long groupControlNumberLowerBound, long groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupControlNumberPrefix, string groupControlNumberSuffix, string groupApplicationReceiverQualifier, string groupApplicationReceiverId, string groupApplicationSenderQualifier, string groupApplicationSenderId, string groupApplicationPassword, bool overwriteExistingTransactionSetControlNumber, string transactionSetControlNumberPrefix, string transactionSetControlNumberSuffix, long transactionSetControlNumberLowerBound, long transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, bool isTestInterchange, string senderInternalIdentification, string senderInternalSubIdentification, string receiverInternalIdentification, string receiverInternalSubIdentification)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactEnvelopeSettings(string groupAssociationAssignedCode, string communicationAgreementId, bool applyDelimiterStringAdvice, bool createGroupingSegments, bool enableDefaultGroupHeaders, string recipientReferencePasswordValue, string recipientReferencePasswordQualifier, string applicationReferenceId, string processingPriorityCode, long interchangeControlNumberLowerBound, long interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, string interchangeControlNumberPrefix, string interchangeControlNumberSuffix, string senderReverseRoutingAddress, string receiverReverseRoutingAddress, string functionalGroupId, string groupControllingAgencyCode, string groupMessageVersion, string groupMessageRelease, long groupControlNumberLowerBound, long groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupControlNumberPrefix, string groupControlNumberSuffix, string groupApplicationReceiverQualifier, string groupApplicationReceiverId, string groupApplicationSenderQualifier, string groupApplicationSenderId, string groupApplicationPassword, bool overwriteExistingTransactionSetControlNumber, string transactionSetControlNumberPrefix, string transactionSetControlNumberSuffix, long transactionSetControlNumberLowerBound, long transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, bool isTestInterchange, string senderInternalIdentification, string senderInternalSubIdentification, string receiverInternalIdentification, string receiverInternalSubIdentification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupAssociationAssignedCode = groupAssociationAssignedCode;
             CommunicationAgreementId = communicationAgreementId;
@@ -128,6 +164,12 @@ namespace Azure.ResourceManager.Logic.Models
             SenderInternalSubIdentification = senderInternalSubIdentification;
             ReceiverInternalIdentification = receiverInternalIdentification;
             ReceiverInternalSubIdentification = receiverInternalSubIdentification;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactEnvelopeSettings"/> for deserialization. </summary>
+        internal EdifactEnvelopeSettings()
+        {
         }
 
         /// <summary> The group association assigned code. </summary>

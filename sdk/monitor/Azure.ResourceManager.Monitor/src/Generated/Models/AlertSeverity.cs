@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(AlertSeverity left, AlertSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertSeverity"/> values are not the same. </summary>
         public static bool operator !=(AlertSeverity left, AlertSeverity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlertSeverity"/>. </summary>
+        /// <summary> Converts a <see cref="long"/> to a <see cref="AlertSeverity"/>. </summary>
         public static implicit operator AlertSeverity(long value) => new AlertSeverity(value);
 
         /// <inheritdoc />

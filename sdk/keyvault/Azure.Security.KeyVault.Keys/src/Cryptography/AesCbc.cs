@@ -15,7 +15,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static readonly AesCbc Aes128Cbc = new AesCbc("A128CBC", 128, PaddingMode.Zeros);
         public static readonly AesCbc Aes192Cbc = new AesCbc("A192CBC", 192, PaddingMode.Zeros);
         public static readonly AesCbc Aes256Cbc = new AesCbc("A256CBC", 256, PaddingMode.Zeros);
-
         public static readonly AesCbc Aes128CbcPad = new AesCbc("A128CBCPAD", 128, PaddingMode.PKCS7);
         public static readonly AesCbc Aes192CbcPad = new AesCbc("A192CBCPAD", 192, PaddingMode.PKCS7);
         public static readonly AesCbc Aes256CbcPad = new AesCbc("A256CBCPAD", 256, PaddingMode.PKCS7);

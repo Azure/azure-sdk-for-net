@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             Mock<IConverterManager> convertManager = new Mock<IConverterManager>(MockBehavior.Default);
             var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
             var factory = new ServiceBusClientFactory(configuration, new Mock<AzureComponentFactory>().Object, provider, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(options));
-            _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, provider, NullLoggerFactory.Instance, convertManager.Object, factory, concurrencyManager);
+            _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, provider, NullLoggerFactory.Instance, convertManager.Object, factory, concurrencyManager, default);
         }
 
         [Test]
@@ -108,6 +108,80 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             Assert.False(autoCompleteMessagesFlagSentToListener);
         }
 
+        [Test]
+        public async Task GetMaxMessageBatchSizeOptionToUse_MaxMessageBatchSizeOnTrigger()
+        {
+            var listenerContext = new ListenerFactoryContext(
+                new Mock<FunctionDescriptor>().Object,
+                new Mock<ITriggeredFunctionExecutor>().Object,
+                CancellationToken.None);
+            var parameters = new object[] { listenerContext };
+            var entityPath = "maxMessageBatchSizeOnTrigger";
+
+            var client = new ServiceBusClient(_testConnection);
+            ServiceBusProcessor processor = client.CreateProcessor(entityPath);
+            ServiceBusReceiver receiver = client.CreateReceiver(entityPath);
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", _testConnection));
+
+            ServiceBusOptions config = new ServiceBusOptions();
+            var mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor);
+
+            var mockMessagingProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(config));
+            var mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), mockMessagingProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
+            mockMessagingProvider
+                .Setup(p => p.CreateMessageProcessor(It.IsAny<ServiceBusClient>(), entityPath, It.IsAny<ServiceBusProcessorOptions>()))
+                .Returns(mockMessageProcessor.Object);
+
+            var parameter = GetType().GetMethod("TestMaxMessageBatchSizeOnTrigger", BindingFlags.NonPublic | BindingFlags.Static).GetParameters()[0];
+            var context = new TriggerBindingProviderContext(parameter, CancellationToken.None);
+            var binding = await _provider.TryCreateAsync(context);
+            var createListenerTask = binding.GetType().GetMethod("CreateListenerAsync");
+            var listener = await (Task<IListener>)createListenerTask.Invoke(binding, parameters);
+            var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
+            var maxMessageBatchSizeSentToListener = (int)listener.GetType().GetField("_maxMessageBatchSize", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
+
+            Assert.NotNull(listenerOptions);
+            Assert.AreEqual(listenerOptions.MaxMessageBatchSize, 1000);
+            Assert.AreEqual(maxMessageBatchSizeSentToListener, 2);
+        }
+
+        [Test]
+        public async Task GetMaxMessageBatchSizeOptionToUse_MaxMessageBatchSizeNotSetOnTrigger()
+        {
+            var listenerContext = new ListenerFactoryContext(
+                new Mock<FunctionDescriptor>().Object,
+                new Mock<ITriggeredFunctionExecutor>().Object,
+                CancellationToken.None);
+            var parameters = new object[] { listenerContext };
+            var entityPath = "maxMessageBatchSizeFromHostSettings";
+
+            var client = new ServiceBusClient(_testConnection);
+            ServiceBusProcessor processor = client.CreateProcessor(entityPath);
+            ServiceBusReceiver receiver = client.CreateReceiver(entityPath);
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", _testConnection));
+
+            ServiceBusOptions config = new ServiceBusOptions();
+            var mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor);
+
+            var mockMessagingProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(config));
+            var mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), mockMessagingProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
+            mockMessagingProvider
+                .Setup(p => p.CreateMessageProcessor(It.IsAny<ServiceBusClient>(), entityPath, It.IsAny<ServiceBusProcessorOptions>()))
+                .Returns(mockMessageProcessor.Object);
+
+            var parameter = GetType().GetMethod("TestMaxMessageBatchSizeNotSetOnTrigger", BindingFlags.NonPublic | BindingFlags.Static).GetParameters()[0];
+            var context = new TriggerBindingProviderContext(parameter, CancellationToken.None);
+            var binding = await _provider.TryCreateAsync(context);
+            var createListenerTask = binding.GetType().GetMethod("CreateListenerAsync");
+            var listener = await (Task<IListener>)createListenerTask.Invoke(binding, parameters);
+            var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
+            var maxMessageBatchSizeSentToListener = (int)listener.GetType().GetField("_maxMessageBatchSize", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
+
+            Assert.NotNull(listenerOptions);
+            Assert.AreEqual(listenerOptions.MaxMessageBatchSize, 1000);
+            Assert.AreEqual(maxMessageBatchSizeSentToListener, 1000);
+        }
+
         internal static void TestJob_AccountOverride(
             [ServiceBusTriggerAttribute("test"),
              ServiceBusAccount(Constants.DefaultConnectionStringName)]
@@ -128,6 +202,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
              ServiceBusAccount(Constants.DefaultConnectionStringName)] ServiceBusMessage message)
         {
             message = new ServiceBusMessage();
+        }
+        internal static void TestMaxMessageBatchSizeOnTrigger(
+            [ServiceBusTriggerAttribute("maxMessageBatchSizeOnTrigger", MaxMessageBatchSize = 2),
+             ServiceBusAccount(Constants.DefaultConnectionStringName)] ServiceBusMessage[] messages)
+        {
+            messages = new ServiceBusMessage[] { new ServiceBusMessage(), new ServiceBusMessage() };
+        }
+
+        internal static void TestMaxMessageBatchSizeNotSetOnTrigger(
+            [ServiceBusTriggerAttribute("maxMessageBatchSizeFromHostSettings"),
+             ServiceBusAccount(Constants.DefaultConnectionStringName)] ServiceBusMessage[] messages)
+        {
+            messages = new ServiceBusMessage[] { new ServiceBusMessage(), new ServiceBusMessage() };
         }
     }
 }

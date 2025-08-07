@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The result returned from a check name availability request. </summary>
     public partial class KustoPoolNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of KustoPoolNameAvailabilityResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolNameAvailabilityResult"/>. </summary>
         internal KustoPoolNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoPoolNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="name"> The name that was checked. </param>
         /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>
         /// <param name="reason"> Message providing the reason why the given name is invalid. </param>
-        internal KustoPoolNameAvailabilityResult(bool? isNameAvailable, string name, string message, KustoPoolNameUnavailableReason? reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPoolNameAvailabilityResult(bool? isNameAvailable, string name, string message, KustoPoolNameUnavailableReason? reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Name = name;
             Message = message;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies a Boolean value that indicates if the name is available. </summary>

@@ -10,15 +10,20 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownFormatReadSettings. </summary>
+    /// <summary> Unknown version of FormatReadSettings. </summary>
     internal partial class UnknownFormatReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of UnknownFormatReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFormatReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownFormatReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties) : base(formatReadSettingsType, additionalProperties)
         {
             FormatReadSettingsType = formatReadSettingsType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownFormatReadSettings"/> for deserialization. </summary>
+        internal UnknownFormatReadSettings()
+        {
         }
     }
 }

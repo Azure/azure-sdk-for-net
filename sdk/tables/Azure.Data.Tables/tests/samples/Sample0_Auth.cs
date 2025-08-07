@@ -108,10 +108,7 @@ namespace Azure.Data.Tables.Samples
 #if SNIPPET
                 new DefaultAzureCredential());
 #else
-                new ClientSecretCredential(
-                    GetVariable("TENANT_ID"),
-                    GetVariable("CLIENT_ID"),
-                    GetVariable("CLIENT_SECRET")));
+                Credential);
 #endif
 
             // Create the table if it doesn't already exist to verify we've successfully authenticated.

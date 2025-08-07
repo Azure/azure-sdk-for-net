@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Removed `document` tag reported on `LanguageServiceClient` and `LegacyServiceClient` activities as it may contain sensitive or personal data and can exceed tag length limitations.
+
 ### Bugs Fixed
 
 ### Other Changes
@@ -373,7 +375,7 @@ This is the first version of the client library that targets the Azure Cognitive
 
 ## 5.1.0-beta.3 (2020-11-19)
 ### New Features
-- Added `HealthcareOperation` long running operation for new asynchronous `Text Analytics for health` hosted API with support for batch processing. Note this is a currently in a gated preview where AAD is not supported. More information [here](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
+- Added `HealthcareOperation` long running operation for new asynchronous `Text Analytics for health` hosted API with support for batch processing. Note this is a currently in a gated preview where AAD is not supported. More information [here](https://learn.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
 - Added `AnalyzeOperation` long running operation for new asynchronous `Analyze API` to support batch processing of Named entity recognition, Personally Identifiable Information and Key phrase extraction.
 - Both new features listed above are available in `West US2`, `East US2`, `Central US`, `North Europe` and `West Europe` regions and in Standard tier.
 

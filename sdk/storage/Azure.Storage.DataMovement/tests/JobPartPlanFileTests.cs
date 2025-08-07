@@ -31,7 +31,20 @@ namespace Azure.Storage.DataMovement.Tests
                     checkpointerPath: test.DirectoryPath,
                     id: transferId,
                     jobPart: jobPart,
-                    headerStream: stream);
+                    header: new(
+                        DataMovementConstants.JobPartPlanFile.SchemaVersion,
+                        transferId,
+                        jobPart,
+                        System.DateTimeOffset.Now,
+                        "mock",
+                        "mock",
+                        "mock",
+                        "mock",
+                        default,
+                        default,
+                        default,
+                        default,
+                        new()));
             }
 
             JobPartPlanFileName fileName = new JobPartPlanFileName(
@@ -63,7 +76,20 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 file = await JobPartPlanFile.CreateJobPartPlanFileAsync(
                    fileName: fileName,
-                   headerStream: stream);
+                   header: new(
+                        DataMovementConstants.JobPartPlanFile.SchemaVersion,
+                        transferId,
+                        jobPart,
+                        System.DateTimeOffset.Now,
+                        "mock",
+                        "mock",
+                        "mock",
+                        "mock",
+                        default,
+                        default,
+                        default,
+                        default,
+                        new()));
             }
 
             Assert.NotNull(file);

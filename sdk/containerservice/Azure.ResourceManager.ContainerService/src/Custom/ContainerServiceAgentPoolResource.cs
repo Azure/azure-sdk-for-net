@@ -4,15 +4,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
@@ -32,13 +27,9 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ignorePodDisruptionBudget"> ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-        {
-            return await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
-        }
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken) => await DeleteAsync(waitUntil, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes an agent pool in the specified managed cluster.
@@ -54,12 +45,8 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ignorePodDisruptionBudget"> ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
-        {
-            return Delete(waitUntil, null, cancellationToken);
-        }
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken) => Delete(waitUntil, cancellationToken);
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The protocol of an established TLS connection. </summary>
+    /// <summary>
+    /// The protocol of an established TLS connection.
+    /// Serialized Name: SslProtocol
+    /// </summary>
     public readonly partial struct DeliveryRuleSslProtocol : IEquatable<DeliveryRuleSslProtocol>
     {
         private readonly string _value;
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(DeliveryRuleSslProtocol left, DeliveryRuleSslProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeliveryRuleSslProtocol"/> values are not the same. </summary>
         public static bool operator !=(DeliveryRuleSslProtocol left, DeliveryRuleSslProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeliveryRuleSslProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeliveryRuleSslProtocol"/>. </summary>
         public static implicit operator DeliveryRuleSslProtocol(string value) => new DeliveryRuleSslProtocol(value);
 
         /// <inheritdoc />
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

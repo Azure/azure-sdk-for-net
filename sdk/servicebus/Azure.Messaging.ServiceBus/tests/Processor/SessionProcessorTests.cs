@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Moq;
 using NUnit.Framework;
 
@@ -134,8 +135,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
-            var client = new ServiceBusClient(connString);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
             var identifier = "MyProcessor";
             var options = new ServiceBusSessionProcessorOptions
             {
@@ -188,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             options.PrefetchCount = 0;
             options.SessionIdleTimeout = TimeSpan.FromSeconds(1);
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+            options.MaxAutoLockRenewalDuration = Timeout.InfiniteTimeSpan;
         }
 
         [Test]
@@ -443,6 +444,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsTrue(processMessageCalled);
             Assert.IsTrue(sessionOpenCalled);
             Assert.IsTrue(sessionCloseCalled);
+        }
+
+        [Test]
+        public void CanUpdateConcurrencyOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdateConcurrency(5, 2);
+            Assert.AreEqual(5, mockProcessor.MaxConcurrentSessions);
+            Assert.AreEqual(2, mockProcessor.MaxConcurrentCallsPerSession);
+        }
+
+        [Test]
+        public void CanUpdatePrefetchOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdatePrefetchCount(10);
+            Assert.AreEqual(10, mockProcessor.PrefetchCount);
         }
 
         [Test]

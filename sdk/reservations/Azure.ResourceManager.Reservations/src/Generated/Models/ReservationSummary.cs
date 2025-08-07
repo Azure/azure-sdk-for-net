@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The roll up count summary of reservations in each state. </summary>
     internal partial class ReservationSummary
     {
-        /// <summary> Initializes a new instance of ReservationSummary. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationSummary"/>. </summary>
         internal ReservationSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationSummary"/>. </summary>
         /// <param name="succeededCount"> The number of reservation in Succeeded state. </param>
         /// <param name="failedCount"> The number of reservation in Failed state. </param>
         /// <param name="expiringCount"> The number of reservation in Expiring state. </param>
@@ -25,7 +60,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="processingCount"> The number of reservation in Processing state. </param>
         /// <param name="warningCount"> The number of reservation in Warning state. </param>
         /// <param name="noBenefitCount"> The number of reservation in NoBenefit state. </param>
-        internal ReservationSummary(float? succeededCount, float? failedCount, float? expiringCount, float? expiredCount, float? pendingCount, float? cancelledCount, float? processingCount, float? warningCount, float? noBenefitCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationSummary(float? succeededCount, float? failedCount, float? expiringCount, float? expiredCount, float? pendingCount, float? cancelledCount, float? processingCount, float? warningCount, float? noBenefitCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SucceededCount = succeededCount;
             FailedCount = failedCount;
@@ -36,6 +72,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ProcessingCount = processingCount;
             WarningCount = warningCount;
             NoBenefitCount = noBenefitCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of reservation in Succeeded state. </summary>

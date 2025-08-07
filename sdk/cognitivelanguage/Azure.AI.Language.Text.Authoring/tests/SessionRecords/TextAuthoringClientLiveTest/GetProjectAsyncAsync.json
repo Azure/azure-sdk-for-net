@@ -1,0 +1,44 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyTextProject001?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250603.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "1165746d-944c-42f5-b7b5-fd0cd2429d42",
+        "Content-Length": "330",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Jun 2025 04:24:47 GMT",
+        "request-id": "1165746d-944c-42f5-b7b5-fd0cd2429d42",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "43",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "createdDateTime": "2025-06-03T21:43:08Z",
+        "lastModifiedDateTime": "2025-06-03T21:43:08Z",
+        "projectKind": "CustomMultiLabelClassification",
+        "storageInputContainerName": "multi-class-example",
+        "projectName": "MyTextProject001",
+        "multilingual": true,
+        "description": "Project description for a Custom Entity Recognition project",
+        "language": "en"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1153998276"
+  }
+}

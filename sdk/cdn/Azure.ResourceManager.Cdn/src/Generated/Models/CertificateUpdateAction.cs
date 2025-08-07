@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes the action that shall be taken when the certificate is updated in Key Vault. </summary>
+    /// <summary>
+    /// Describes the action that shall be taken when the certificate is updated in Key Vault.
+    /// Serialized Name: UpdateRule
+    /// </summary>
     public readonly partial struct CertificateUpdateAction : IEquatable<CertificateUpdateAction>
     {
         private readonly string _value;
@@ -24,13 +27,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string NoActionValue = "NoAction";
 
-        /// <summary> NoAction. </summary>
+        /// <summary>
+        /// NoAction
+        /// Serialized Name: UpdateRule.NoAction
+        /// </summary>
         public static CertificateUpdateAction NoAction { get; } = new CertificateUpdateAction(NoActionValue);
         /// <summary> Determines if two <see cref="CertificateUpdateAction"/> values are the same. </summary>
         public static bool operator ==(CertificateUpdateAction left, CertificateUpdateAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateUpdateAction"/> values are not the same. </summary>
         public static bool operator !=(CertificateUpdateAction left, CertificateUpdateAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CertificateUpdateAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateUpdateAction"/>. </summary>
         public static implicit operator CertificateUpdateAction(string value) => new CertificateUpdateAction(value);
 
         /// <inheritdoc />
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

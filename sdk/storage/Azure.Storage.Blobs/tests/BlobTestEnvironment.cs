@@ -28,8 +28,7 @@ namespace Azure.Storage.Blobs.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     BlobServiceClient serviceClient = new BlobServiceClient(
-                        new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
-                        GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
+                        new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint), Credential);
                     await serviceClient.GetPropertiesAsync();
                     var containerName = Guid.NewGuid().ToString();
                     var containerClient = serviceClient.GetBlobContainerClient(containerName);

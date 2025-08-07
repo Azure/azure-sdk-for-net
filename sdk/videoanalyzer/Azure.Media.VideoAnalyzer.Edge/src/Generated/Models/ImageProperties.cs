@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Image transformations and formatting options to be applied to the video frame(s). </summary>
     public partial class ImageProperties
     {
-        /// <summary> Initializes a new instance of ImageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageProperties"/>. </summary>
         public ImageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageProperties"/>. </summary>
         /// <param name="scale"> Image scaling mode. </param>
         /// <param name="format">
         /// Base class for image formatting properties.

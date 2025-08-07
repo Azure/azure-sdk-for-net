@@ -8,14 +8,14 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> SQL stored procedure parameter. </summary>
-    public partial class StoredProcedureParameter
+    internal partial class StoredProcedureParameter
     {
-        /// <summary> Initializes a new instance of StoredProcedureParameter. </summary>
-        public StoredProcedureParameter()
+        /// <summary> Initializes a new instance of <see cref="StoredProcedureParameter"/>. </summary>
+        internal StoredProcedureParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of StoredProcedureParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoredProcedureParameter"/>. </summary>
         /// <param name="value"> Stored procedure parameter value. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> Stored procedure parameter type. </param>
         internal StoredProcedureParameter(object value, StoredProcedureParameterType? type)
@@ -25,8 +25,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Stored procedure parameter value. Type: string (or Expression with resultType string). </summary>
-        public object Value { get; set; }
+        public object Value { get; }
         /// <summary> Stored procedure parameter type. </summary>
-        public StoredProcedureParameterType? Type { get; set; }
+        public StoredProcedureParameterType? Type { get; }
     }
 }

@@ -5,28 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendSettings : IUtf8JsonSerializable
+    public partial class ApplicationGatewayBackendSettings : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayBackendSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayBackendSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationGatewayBackendSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -48,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
-                JsonSerializer.Serialize(writer, Probe);
+                ((IJsonModel<WritableSubResource>)Probe).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(TrustedRootCertificates))
             {
@@ -56,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedRootCertificates)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,28 +84,48 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayBackendSettings DeserializeApplicationGatewayBackendSettings(JsonElement element)
+        ApplicationGatewayBackendSettings IJsonModel<ApplicationGatewayBackendSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayBackendSettings(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayBackendSettings DeserializeApplicationGatewayBackendSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> port = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<int> timeout = default;
-            Optional<WritableSubResource> probe = default;
-            Optional<IList<WritableSubResource>> trustedRootCertificates = default;
-            Optional<string> hostName = default;
-            Optional<bool> pickHostNameFromBackendAddress = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? port = default;
+            ApplicationGatewayProtocol? protocol = default;
+            int? timeout = default;
+            WritableSubResource probe = default;
+            IList<WritableSubResource> trustedRootCertificates = default;
+            string hostName = default;
+            bool? pickHostNameFromBackendAddress = default;
+            NetworkProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -168,7 +202,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            probe = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            probe = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("trustedRootCertificates"u8))
@@ -180,7 +214,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
                             }
                             trustedRootCertificates = array;
                             continue;
@@ -211,8 +245,57 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayBackendSettings(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(timeout), probe, Optional.ToList(trustedRootCertificates), hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayBackendSettings(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                port,
+                protocol,
+                timeout,
+                probe,
+                trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                hostName,
+                pickHostNameFromBackendAddress,
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayBackendSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayBackendSettings IPersistableModel<ApplicationGatewayBackendSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeApplicationGatewayBackendSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayBackendSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

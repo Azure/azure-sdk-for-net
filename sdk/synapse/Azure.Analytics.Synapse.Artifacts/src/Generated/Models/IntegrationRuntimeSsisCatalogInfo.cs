@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Catalog information for managed dedicated integration runtime. </summary>
     public partial class IntegrationRuntimeSsisCatalogInfo
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeSsisCatalogInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeSsisCatalogInfo"/>. </summary>
         public IntegrationRuntimeSsisCatalogInfo()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeSsisCatalogInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeSsisCatalogInfo"/>. </summary>
         /// <param name="catalogServerEndpoint"> The catalog database server URL. </param>
         /// <param name="catalogAdminUserName"> The administrator user name of catalog database. </param>
         /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>

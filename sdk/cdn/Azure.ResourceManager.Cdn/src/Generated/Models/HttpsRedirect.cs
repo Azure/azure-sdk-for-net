@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
+    /// <summary>
+    /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
+    /// Serialized Name: HttpsRedirect
+    /// </summary>
     public readonly partial struct HttpsRedirect : IEquatable<HttpsRedirect>
     {
         private readonly string _value;
@@ -25,15 +28,21 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: HttpsRedirect.Enabled
+        /// </summary>
         public static HttpsRedirect Enabled { get; } = new HttpsRedirect(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: HttpsRedirect.Disabled
+        /// </summary>
         public static HttpsRedirect Disabled { get; } = new HttpsRedirect(DisabledValue);
         /// <summary> Determines if two <see cref="HttpsRedirect"/> values are the same. </summary>
         public static bool operator ==(HttpsRedirect left, HttpsRedirect right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpsRedirect"/> values are not the same. </summary>
         public static bool operator !=(HttpsRedirect left, HttpsRedirect right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HttpsRedirect"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HttpsRedirect"/>. </summary>
         public static implicit operator HttpsRedirect(string value) => new HttpsRedirect(value);
 
         /// <inheritdoc />
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

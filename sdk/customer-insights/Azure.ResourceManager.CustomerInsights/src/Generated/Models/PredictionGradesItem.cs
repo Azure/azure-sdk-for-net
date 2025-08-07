@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The definition of a prediction grade. </summary>
     public partial class PredictionGradesItem
     {
-        /// <summary> Initializes a new instance of PredictionGradesItem. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictionGradesItem"/>. </summary>
         public PredictionGradesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of PredictionGradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionGradesItem"/>. </summary>
         /// <param name="gradeName"> Name of the grade. </param>
         /// <param name="minScoreThreshold"> Minimum score threshold. </param>
         /// <param name="maxScoreThreshold"> Maximum score threshold. </param>
-        internal PredictionGradesItem(string gradeName, int? minScoreThreshold, int? maxScoreThreshold)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionGradesItem(string gradeName, int? minScoreThreshold, int? maxScoreThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GradeName = gradeName;
             MinScoreThreshold = minScoreThreshold;
             MaxScoreThreshold = maxScoreThreshold;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the grade. </summary>

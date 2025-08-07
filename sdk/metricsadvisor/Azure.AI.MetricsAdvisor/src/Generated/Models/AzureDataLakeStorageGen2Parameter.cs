@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureDataLakeStorageGen2Parameter. </summary>
     internal partial class AzureDataLakeStorageGen2Parameter
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2Parameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2Parameter"/>. </summary>
         /// <param name="fileSystemName"> The file system (container) name in this Azure Data Lake. </param>
         /// <param name="directoryTemplate"> The directory template under this file system. </param>
         /// <param name="fileTemplate"> The file template. </param>
@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             FileTemplate = fileTemplate;
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2Parameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2Parameter"/>. </summary>
         /// <param name="accountName"> The account name of this Azure Data Lake. </param>
         /// <param name="accountKey"> The account key that can access this Azure Data Lake. </param>
         /// <param name="fileSystemName"> The file system (container) name in this Azure Data Lake. </param>

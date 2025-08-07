@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> This activity verifies that an external resource exists. </summary>
     public partial class ValidationActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of ValidationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> Validation activity dataset reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Validation";
         }
 
-        /// <summary> Initializes a new instance of ValidationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="minimumSize"> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </param>
         /// <param name="childItems"> Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dataset"> Validation activity dataset reference. </param>
-        internal ValidationActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> timeout, DataFactoryElement<int> sleep, DataFactoryElement<int> minimumSize, DataFactoryElement<bool> childItems, DatasetReference dataset) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal ValidationActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> timeout, DataFactoryElement<int> sleep, DataFactoryElement<int> minimumSize, DataFactoryElement<bool> childItems, DatasetReference dataset) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Timeout = timeout;
             Sleep = sleep;
@@ -50,6 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ChildItems = childItems;
             Dataset = dataset;
             ActivityType = activityType ?? "Validation";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ValidationActivity"/> for deserialization. </summary>
+        internal ValidationActivity()
+        {
         }
 
         /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>

@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The MetadataPermissionsWorkspacesItem. </summary>
     internal partial class MetadataPermissionsWorkspacesItem
     {
-        /// <summary> Initializes a new instance of MetadataPermissionsWorkspacesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissionsWorkspacesItem"/>. </summary>
         /// <param name="resourceId"> The resource ID on the permission indication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         internal MetadataPermissionsWorkspacesItem(string resourceId)
@@ -23,6 +22,15 @@ namespace Azure.Monitor.Query.Models
 
             ResourceId = resourceId;
             DenyTables = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissionsWorkspacesItem"/>. </summary>
+        /// <param name="resourceId"> The resource ID on the permission indication. </param>
+        /// <param name="denyTables"> The list of tables that were denied access for the resource ID. </param>
+        internal MetadataPermissionsWorkspacesItem(string resourceId, IReadOnlyList<string> denyTables)
+        {
+            ResourceId = resourceId;
+            DenyTables = denyTables;
         }
 
         /// <summary> The resource ID on the permission indication. </summary>

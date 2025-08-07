@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Linq.Expressions;
+using Azure.Core.Json;
 
 namespace Azure.Core.Serialization
 {
@@ -31,6 +33,7 @@ namespace Azure.Core.Serialization
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
+        [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
         private class MetaObject : DynamicMetaObject
         {
             private static readonly string[] _memberNames = new string[] { "Name", "Value" };

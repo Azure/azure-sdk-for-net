@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements_Async
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -18,7 +17,7 @@ JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdminist
 
 ## Create a Distribution Policy
 
-Use `RouterClient` to create a [Distribution Policy](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#distribution-policy) to control how jobs are to be distributed to workers with associated queue.
+Use `RouterClient` to create a [Distribution Policy](https://learn.microsoft.com/azure/communication-services/concepts/router/concepts#distribution-policy) to control how jobs are to be distributed to workers with associated queue.
 
 For this example, we are going to create a __Longest Idle__ policy with an offer TTL set to 1 day.
 
@@ -33,10 +32,10 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
 
 ## Create a Queue
 
-Use `RouterClient` to create a [Queue](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#queue).
+Use `RouterClient` to create a [Queue](https://learn.microsoft.com/azure/communication-services/concepts/router/concepts#queue).
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
-Response<Models.RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -45,7 +44,7 @@ Response<Models.RouterQueue> queue = await routerAdministrationClient.CreateQueu
 
 ## Create a Job
 
-Use `RouterClient` to create a [Job](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#job).
+Use `RouterClient` to create a [Job](https://learn.microsoft.com/azure/communication-services/concepts/router/concepts#job).
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
 Response<RouterJob> job = await routerClient.CreateJobAsync(
@@ -58,7 +57,7 @@ Response<RouterJob> job = await routerClient.CreateJobAsync(
         Priority = 1,
         RequestedWorkerSelectors =
         {
-            new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new LabelValue(10))
+            new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new RouterValue(10))
         }
     });
 ```
@@ -69,11 +68,11 @@ Register a worker associated with the queue that was just created. We will assig
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
 Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
-    new CreateWorkerOptions(workerId: "worker-1", totalCapacity: 1)
+    new CreateWorkerOptions(workerId: "worker-1", capacity: 1)
     {
-        QueueAssignments = { [queue.Value.Id] = new RouterQueueAssignment() },
-        Labels = { ["Some-Skill"] = new LabelValue(11) },
-        ChannelConfigurations = { ["my-channel"] = new ChannelConfiguration(1) },
+        Queues = { queue.Value.Id },
+        Labels = { ["Some-Skill"] = new RouterValue(11) },
+        Channels = { new RouterChannel("my-channel", 1) },
         AvailableForOffers = true,
     }
 );
@@ -81,7 +80,7 @@ Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
 
 ## Check offers to a Worker
 
-Once the worker has been registered, Router will send an offer to the worker if the worker satisfies requirements for a job. See [Offer flow](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#offer)
+Once the worker has been registered, Router will send an offer to the worker if the worker satisfies requirements for a job. See [Offer flow](https://learn.microsoft.com/azure/communication-services/concepts/router/concepts#offer)
 
 We should get a [RouterWorkerOfferIssued][offer_issued_event_schema] from our [EventGrid subscription][subscribe_events].
 
@@ -103,10 +102,10 @@ foreach (EventGridEvent egEvent in egEvents)
     switch (egEvent.EventType)
     {
         case "Microsoft.Communication.WorkerOfferIssued":
-            AcsRouterWorkerOfferIssuedEventData deserializedEventData =
+            AcsRouterWorkerOfferIssuedEventData? deserializedEventData =
                 egEvent.Data.ToObjectFromJson<AcsRouterWorkerOfferIssuedEventData>();
-            Console.Write(deserializedEventData.OfferId); // Offer Id
-            offerId = deserializedEventData.OfferId;
+            Console.Write(deserializedEventData?.OfferId); // Offer Id
+            offerId = deserializedEventData?.OfferId ?? string.Empty;
             break;
         // Handle any other custom event type
         default:
@@ -121,7 +120,7 @@ However, we could also wait a few seconds and then query the worker directly aga
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
 Response<RouterWorker> result = await routerClient.GetWorkerAsync(worker.Value.Id);
-foreach (Models.RouterJobOffer? offer in result.Value.Offers)
+foreach (RouterJobOffer? offer in result.Value.Offers)
 {
     Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
 }
@@ -133,7 +132,7 @@ Once a worker receives an offer, it can take two possible actions: accept or dec
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
 // fetching the offer id
-Models.RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
+RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
 
 string offerId = jobOffer.OfferId; // `OfferId` can be retrieved directly from consuming event from Event grid
 
@@ -153,10 +152,7 @@ Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.Status
 Once the worker is done with the job, the worker has to mark the job as `completed`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob_Async
-Response completeJob = await routerClient.CompleteJobAsync(
-    options: new CompleteJobOptions(
-            jobId: job.Value.Id,
-            assignmentId: acceptJobOfferResult.Value.AssignmentId)
+Response completeJob = await routerClient.CompleteJobAsync(new CompleteJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
     {
         Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
@@ -169,10 +165,7 @@ Console.WriteLine($"Job has been successfully completed: {completeJob.Status == 
 After a job has been completed, the worker can perform wrap up actions to the job before closing the job and finally releasing its capacity to accept more incoming jobs
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob_Async
-Response closeJob = await routerClient.CloseJobAsync(
-    options: new CloseJobOptions(
-        jobId: job.Value.Id,
-        assignmentId: acceptJobOfferResult.Value.AssignmentId)
+Response closeJob = await routerClient.CloseJobAsync(new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
     {
         Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
@@ -184,8 +177,7 @@ Console.WriteLine($"Updated job status: {updatedJob.Value.Status == RouterJobSta
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture_Async
 // Optionally, a job can also be set up to be marked as closed in the future.
-var closeJobInFuture = await routerClient.CloseJobAsync(
-    options: new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
+var closeJobInFuture = await routerClient.CloseJobAsync(new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
     {
         CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
         Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
@@ -199,8 +191,8 @@ Console.WriteLine($"Updated job status: {updatedJob.Value.Status == RouterJobSta
 ```
 
 <!-- LINKS -->
-[subscribe_events]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events
-[offer_issued_event_schema]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued
+[subscribe_events]: https://learn.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events
+[offer_issued_event_schema]: https://learn.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued
 [deserialize_event_grid_event_data]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid#receiving-and-deserializing-events
-[event_grid_event_handlers]: https://docs.microsoft.com/azure/event-grid/event-handlers
-[webhook_event_grid_event_delivery]: https://docs.microsoft.com/azure/event-grid/webhook-event-delivery
+[event_grid_event_handlers]: https://learn.microsoft.com/azure/event-grid/event-handlers
+[webhook_event_grid_event_delivery]: https://learn.microsoft.com/azure/event-grid/webhook-event-delivery

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The pass name. Currently, the only allowable value is OobeSystem. </summary>
+    /// <summary> The PassName. </summary>
     public readonly partial struct PassName : IEquatable<PassName>
     {
         private readonly string _value;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(PassName left, PassName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PassName"/> values are not the same. </summary>
         public static bool operator !=(PassName left, PassName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PassName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PassName"/>. </summary>
         public static implicit operator PassName(string value) => new PassName(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

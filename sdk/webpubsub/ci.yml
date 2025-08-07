@@ -43,3 +43,5 @@ extends:
       safeName: MicrosoftAzureWebPubSubCommon
     - name: Microsoft.Azure.Functions.Worker.Extensions.WebPubSub
       safeName: MicrosoftAzureFunctionsWorkerExtensionsWebPubSub
+    - name: Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
+      safeName: MicrosoftAzureWebJobsExtensionsWebPubSubForSocketIO

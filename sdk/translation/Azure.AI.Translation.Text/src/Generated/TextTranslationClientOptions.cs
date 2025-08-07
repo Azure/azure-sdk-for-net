@@ -23,15 +23,5 @@ namespace Azure.AI.Translation.Text
         }
 
         internal string Version { get; }
-
-        /// <summary> Initializes new instance of TextTranslationClientOptions. </summary>
-        public TextTranslationClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V3_0 => "3.0",
-                _ => throw new NotSupportedException()
-            };
-        }
     }
 }

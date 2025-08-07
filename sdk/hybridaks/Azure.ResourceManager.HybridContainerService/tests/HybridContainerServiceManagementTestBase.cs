@@ -14,8 +14,9 @@ namespace Azure.ResourceManager.HybridContainerService.Tests
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource Subscription { get; private set; }
-        protected ResourceGroupResource ResourceGroup { get; private set; }
-        protected AzureLocation DefaultLocation => AzureLocation.WestEurope;
+        protected ResourceGroupResource ResourceGroupVnet { get; private set; }
+        protected ResourceGroupResource ResourceGroupCls { get; private set; }
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
 
         protected HybridContainerServiceManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.HybridContainerService.Tests
         {
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
-            ResourceGroup = await CreateResourceGroup(Subscription, "hybridaksresgrp-netsdk", DefaultLocation);
+            ResourceGroupVnet = await CreateResourceGroup(Subscription, "hybridaksresgrp-netsdk-vnet", DefaultLocation);
+            ResourceGroupCls = await CreateResourceGroup(Subscription, "hybridaksresgrp-netsdk-cls", DefaultLocation);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgName, AzureLocation location)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -12,24 +13,58 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
     public partial class LinuxConfiguration
     {
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
         public LinuxConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
         /// <param name="isPasswordAuthenticationDisabled"> Specifies whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. </param>
         /// <param name="provisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </param>
         /// <param name="isVmAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
-        internal LinuxConfiguration(bool? isPasswordAuthenticationDisabled, SshConfiguration ssh, bool? provisionVmAgent, LinuxPatchSettings patchSettings, bool? isVmAgentPlatformUpdatesEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxConfiguration(bool? isPasswordAuthenticationDisabled, SshConfiguration ssh, bool? provisionVmAgent, LinuxPatchSettings patchSettings, bool? isVmAgentPlatformUpdatesEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsPasswordAuthenticationDisabled = isPasswordAuthenticationDisabled;
             Ssh = ssh;
             ProvisionVmAgent = provisionVmAgent;
             PatchSettings = patchSettings;
             IsVmAgentPlatformUpdatesEnabled = isVmAgentPlatformUpdatesEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies whether password authentication should be disabled. </summary>

@@ -14,30 +14,30 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The compute resource properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeComputeProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeComputeProperties"/>. </summary>
         public IntegrationRuntimeComputeProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeComputeProperties"/>. </summary>
         /// <param name="location"> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </param>
         /// <param name="nodeSize"> The node size requirement to managed integration runtime. </param>
         /// <param name="numberOfNodes"> The required number of nodes for managed integration runtime. </param>
         /// <param name="maxParallelExecutionsPerNode"> Maximum parallel executions count per node for managed integration runtime. </param>
         /// <param name="dataFlowProperties"> Data flow properties for managed integration runtime. </param>
-        /// <param name="vNetProperties"> VNet properties for managed integration runtime. </param>
+        /// <param name="vnetProperties"> VNet properties for managed integration runtime. </param>
         /// <param name="copyComputeScaleProperties"> CopyComputeScale properties for managed integration runtime. </param>
         /// <param name="pipelineExternalComputeScaleProperties"> PipelineExternalComputeScale properties for managed integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVNetProperties vNetProperties, CopyComputeScaleProperties copyComputeScaleProperties, PipelineExternalComputeScaleProperties pipelineExternalComputeScaleProperties, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVnetProperties vnetProperties, CopyComputeScaleProperties copyComputeScaleProperties, PipelineExternalComputeScaleProperties pipelineExternalComputeScaleProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Location = location;
             NodeSize = nodeSize;
             NumberOfNodes = numberOfNodes;
             MaxParallelExecutionsPerNode = maxParallelExecutionsPerNode;
             DataFlowProperties = dataFlowProperties;
-            VNetProperties = vNetProperties;
+            VnetProperties = vnetProperties;
             CopyComputeScaleProperties = copyComputeScaleProperties;
             PipelineExternalComputeScaleProperties = pipelineExternalComputeScaleProperties;
             AdditionalProperties = additionalProperties;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Data flow properties for managed integration runtime. </summary>
         public IntegrationRuntimeDataFlowProperties DataFlowProperties { get; set; }
         /// <summary> VNet properties for managed integration runtime. </summary>
-        public IntegrationRuntimeVNetProperties VNetProperties { get; set; }
+        public IntegrationRuntimeVnetProperties VnetProperties { get; set; }
         /// <summary> CopyComputeScale properties for managed integration runtime. </summary>
         public CopyComputeScaleProperties CopyComputeScaleProperties { get; set; }
         /// <summary> PipelineExternalComputeScale properties for managed integration runtime. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

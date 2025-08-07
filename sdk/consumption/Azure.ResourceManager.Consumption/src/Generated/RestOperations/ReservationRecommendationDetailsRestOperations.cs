@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.Consumption
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationRecommendationDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("scope", reservationScope.ToString(), true);
+            uri.AppendQuery("region", region, true);
+            uri.AppendQuery("term", term.ToString(), true);
+            uri.AppendQuery("lookBackPeriod", lookBackPeriod.ToString(), true);
+            uri.AppendQuery("product", product, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product)
@@ -81,7 +96,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionReservationRecommendationDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumptionReservationRecommendationDetails.DeserializeConsumptionReservationRecommendationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -114,7 +129,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionReservationRecommendationDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumptionReservationRecommendationDetails.DeserializeConsumptionReservationRecommendationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

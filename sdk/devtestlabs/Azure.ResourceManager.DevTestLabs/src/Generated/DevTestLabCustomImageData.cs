@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabCustomImageData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabCustomImageData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabCustomImageData(AzureLocation location) : base(location)
         {
             DataDiskStorageInfo = new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +77,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="isPlanAuthorized"> Whether or not the custom images underlying offer/plan has been enabled for programmatic deployment. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Vm = vm;
             Vhd = vhd;
@@ -59,6 +92,12 @@ namespace Azure.ResourceManager.DevTestLabs
             IsPlanAuthorized = isPlanAuthorized;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageData"/> for deserialization. </summary>
+        internal DevTestLabCustomImageData()
+        {
         }
 
         /// <summary> The virtual machine from which the image is to be created. </summary>
