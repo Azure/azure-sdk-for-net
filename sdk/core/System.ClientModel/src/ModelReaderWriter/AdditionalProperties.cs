@@ -5,6 +5,7 @@ using System.Buffers.Text;
 using System.ClientModel.Internal;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 
@@ -29,12 +30,17 @@ public partial struct AdditionalProperties
     /// </summary>
     /// <param name="jsonPath"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Contains(ReadOnlySpan<byte> jsonPath)
     {
         if (_properties == null)
             return false;
 
-        return _properties.ContainsKey(jsonPath);
+#if NET9_0_OR_GREATER
+        return _alternateProperties.ContainsKey(jsonPath);
+#else
+        return _properties.ContainsKey(jsonPath.ToArray());
+#endif
     }
 
     /// <summary>
@@ -49,6 +55,7 @@ public partial struct AdditionalProperties
 
         foreach (var kvp in _properties)
         {
+            // TODO: this does not normalize the jsonPath
             if (jsonPath.Length == kvp.Key.Length || kvp.Key.AsSpan().StartsWith(jsonPath))
             {
                 return true;
@@ -274,7 +281,10 @@ public partial struct AdditionalProperties
         if (_properties == null)
             return;
 
-        SpanHashSet arrays = new();
+        HashSet<byte[]> arrays = new(JsonPathComparer.Default);
+#if NET9_0_OR_GREATER
+        HashSet<byte[]>.AlternateLookup<ReadOnlySpan<byte>> alternateArrays = arrays.GetAlternateLookup<ReadOnlySpan<byte>>();
+#endif
 
         foreach (var kvp in _properties)
         {
@@ -291,10 +301,18 @@ public partial struct AdditionalProperties
             if (kvp.Value.Kind.HasFlag(ValueKind.ArrayItem))
             {
                 var arrayKeySpan = kvp.Key.GetParent();
-                if (arrays.Contains(arrayKeySpan))
+#if NET9_0_OR_GREATER
+                if (alternateArrays.Contains(arrayKeySpan))
                 {
                     continue;
                 }
+#else
+                var arrayKeyBytes = arrayKeySpan.ToArray();
+                if (arrays.Contains(arrayKeyBytes))
+                {
+                    continue;
+                }
+#endif
 
                 if (writer.CurrentDepth > 0)
                 {
@@ -304,6 +322,7 @@ public partial struct AdditionalProperties
                 writer.WriteStartArray();
                 foreach (var arrayItem in _properties)
                 {
+                    //TODO: this does not normalize the keys
                     if (arrayKeySpan.Length == arrayItem.Key.Length || !arrayItem.Key.AsSpan().StartsWith(arrayKeySpan))
                         continue;
 
@@ -314,7 +333,11 @@ public partial struct AdditionalProperties
                 }
                 writer.WriteEndArray();
 
-                arrays.Add(arrayKeySpan);
+#if NET9_0_OR_GREATER
+                alternateArrays.Add(arrayKeySpan);
+#else
+                arrays.Add(arrayKeyBytes);
+#endif
                 continue;
             }
 
@@ -323,12 +346,12 @@ public partial struct AdditionalProperties
                 JsonPathReader pathReader = new(kvp.Key);
                 ReadOnlySpan<byte> firstProperty = pathReader.GetFirstProperty();
 
-                if (Propagated.Contains(firstProperty))
+                if (PropagatedContains(firstProperty))
                 {
                     continue;
                 }
 
-                Propagated.Add(firstProperty);
+                PropagatedAdd(firstProperty);
 
                 AdditionalProperties local = new();
                 PropagateTo(ref local, firstProperty);
@@ -368,7 +391,7 @@ public partial struct AdditionalProperties
             ReadOnlySpan<byte> _firstProperty = pathReader.GetFirstProperty();
             if (!_firstProperty.IsEmpty)
             {
-                Propagated.Add(_firstProperty);
+                PropagatedAdd(_firstProperty);
             }
             var inner = entry.Key.AsSpan().Slice(prefix.Length);
             if (entry.Value.Kind.HasFlag(ValueKind.ArrayItem))
@@ -397,18 +420,21 @@ public partial struct AdditionalProperties
                     }
                     if (target._arrayIndices is null)
                     {
-                        target._arrayIndices = new();
-                        target._arrayIndices[useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes] = index;
+                        target._arrayIndices = new(JsonPathComparer.Default);
+#if NET9_0_OR_GREATER
+                        target._alternateArrayIndices = target._arrayIndices.GetAlternateLookup<ReadOnlySpan<byte>>();
+#endif
+                        target.SetValueOnArrayIndicies(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, index);
                     }
                     else
                     {
-                        if (!target._arrayIndices.TryGetValue(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, out int existingIndex))
+                        if (!target.TryGetValueFromArrayIndicies(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, out int existingIndex))
                         {
-                            target._arrayIndices[useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes] = index;
+                            target.SetValueOnArrayIndicies(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, index);
                         }
                         else
                         {
-                            target._arrayIndices[useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes] = Math.Max(index, existingIndex);
+                            target.SetValueOnArrayIndicies(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, Math.Max(index, existingIndex));
                         }
                     }
                 }
@@ -453,7 +479,7 @@ public partial struct AdditionalProperties
     /// <returns></returns>
     public int? GetArrayLength(ReadOnlySpan<byte> array)
     {
-        if (_arrayIndices == null || !_arrayIndices.TryGetValue(array, out var index))
+        if (_arrayIndices == null || TryGetValueFromArrayIndicies(array, out var index))
         {
             return null;
         }

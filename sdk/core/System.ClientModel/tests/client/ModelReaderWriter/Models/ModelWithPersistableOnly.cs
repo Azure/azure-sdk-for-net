@@ -3,6 +3,7 @@
 
 using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
+using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -175,7 +176,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 if (options.Format == "J")
                 {
                     //this means it's an unknown property we got
-                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawData.Add(property.Name, property.Value.GetUtf8Bytes());
                 }
             }
 

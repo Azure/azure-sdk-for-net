@@ -64,6 +64,28 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
 
         [Test]
+        public void AddSameStringProperty()
+        {
+            var value = "some value";
+            var pointer = "$.foobar"u8;
+
+            var model = GetInitialModel();
+            model.Patch.Set(pointer, value);
+            model.Patch.Set("$['foobar']"u8, "some other value");
+
+            Assert.AreEqual("some other value", model.Patch.GetString(pointer));
+            Assert.AreEqual("some other value", model.Patch.GetString("$['foobar']"u8));
+
+            var data = WriteModifiedModel(model, "foobar", "\"some other value\"");
+
+            var model2 = GetRoundTripModel(data);
+            Assert.AreEqual("some other value", model2.Patch.GetString(pointer));
+            Assert.AreEqual("some other value", model2.Patch.GetString("$['foobar']"u8));
+
+            AssertCommon(model, model2);
+        }
+
+        [Test]
         public void AddNullProperty()
         {
             var pointer = "$.foobar"u8;

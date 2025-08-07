@@ -84,7 +84,7 @@ namespace System.ClientModel.Primitives
         private object _dummy;
         private int _dummyPrimitive;
         public AdditionalProperties(System.ReadOnlyMemory<byte> rawJson) { throw null; }
-        public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool ContainsStartsWith(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public int? GetArrayLength(System.ReadOnlySpan<byte> array) { throw null; }
         public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }

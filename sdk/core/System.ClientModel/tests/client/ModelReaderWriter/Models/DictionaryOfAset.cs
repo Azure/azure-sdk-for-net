@@ -3,11 +3,11 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Text.Json;
-using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
@@ -125,7 +125,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 else if (property.Value.ValueKind == JsonValueKind.Object)
                 {
-                    items.Add(property.Name, AvailabilitySetData.DeserializeAvailabilitySetData(property.Value, options, BinaryData.FromString(property.Value.GetRawText())));
+                    items.Add(property.Name, AvailabilitySetData.DeserializeAvailabilitySetData(property.Value, options, property.Value.GetUtf8Bytes()));
                 }
             }
 

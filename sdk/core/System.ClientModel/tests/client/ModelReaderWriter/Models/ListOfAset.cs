@@ -4,6 +4,7 @@
 using System.Buffers.Text;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -149,7 +150,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 else if (arrayItem.ValueKind == JsonValueKind.Object)
                 {
-                    items.Add(AvailabilitySetData.DeserializeAvailabilitySetData(arrayItem, options, BinaryData.FromString(arrayItem.GetRawText())));
+                    items.Add(AvailabilitySetData.DeserializeAvailabilitySetData(arrayItem, options, arrayItem.GetUtf8Bytes()));
                 }
             }
 

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -64,7 +64,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                     continue;
                 }
 
-                additionalProperties.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
             }
             var model = new WritableSubResource(id, additionalProperties);
 

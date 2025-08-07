@@ -214,7 +214,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(BinaryData.FromString(property.Value.GetRawText()), options);
+                    systemData = ModelReaderWriter.Read<SystemData>(property.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -253,7 +253,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(BinaryData.FromString(item.GetRawText()), options));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(item.GetUtf8Bytes(), options));
                             }
                             virtualMachines = array;
                             continue;
@@ -264,7 +264,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            proximityPlacementGroup = ModelReaderWriter.Read<WritableSubResource>(BinaryData.FromString(property0.Value.GetRawText()), options);
+                            proximityPlacementGroup = ModelReaderWriter.Read<WritableSubResource>(property0.Value.GetUtf8Bytes(), options);
                             continue;
                         }
                         if (property0.NameEquals("statuses"u8))
@@ -284,7 +284,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     }
                     continue;
                 }
-                additionalProperties.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
             }
 
             return new AvailabilitySetData(

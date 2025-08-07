@@ -16,19 +16,19 @@ namespace System.ClientModel.Tests.Internal.Perf
         [Benchmark]
         public bool AreEqual_Comparer()
         {
-            return JsonPathEqualityComparer.Equals(_path1a.AsSpan(), _path1b.AsSpan());
+            return JsonPathComparer.Default.Equals(_path1a, _path1b);
         }
 
         [Benchmark]
         public bool EarlyNotEqual_Comparer()
         {
-            return JsonPathEqualityComparer.Equals(_path1a.AsSpan(), _path2.AsSpan());
+            return JsonPathComparer.Default.Equals(_path1a, _path2);
         }
 
         [Benchmark]
         public bool LateNotEqual_Comparer()
         {
-            return JsonPathEqualityComparer.Equals(_path1a.AsSpan(), _path3.AsSpan());
+            return JsonPathComparer.Default.Equals(_path1a, _path3);
         }
 
         [Benchmark]
