@@ -1,14 +1,8 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.3 (2025-08-07)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added missing long running operation header for Grafana Update operation.
 
 ## 1.2.0-beta.2 (2025-08-04)
 
