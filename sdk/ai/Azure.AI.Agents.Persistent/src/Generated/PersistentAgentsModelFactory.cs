@@ -268,7 +268,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Persistent.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -373,6 +373,37 @@ namespace Azure.AI.Agents.Persistent
             azureAISearch ??= new Dictionary<string, string>();
 
             return new RunStepAzureAISearchToolCall("azure_ai_search", id, serializedAdditionalRawData: null, azureAISearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepBrowserAutomationToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="browserAutomation"> Details of the browser automation tool call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepBrowserAutomationToolCall"/> instance for mocking. </returns>
+        public static RunStepBrowserAutomationToolCall RunStepBrowserAutomationToolCall(string id = null, BrowserAutomationToolCallDetails browserAutomation = null)
+        {
+            return new RunStepBrowserAutomationToolCall("browser_automation", id, serializedAdditionalRawData: null, browserAutomation);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.BrowserAutomationToolCallDetails"/>. </summary>
+        /// <param name="input"> The input provided to the Browser Automation tool. </param>
+        /// <param name="output"> The output returned by the Browser Automation tool. </param>
+        /// <param name="steps"> The steps the Browser Automation tool executed. </param>
+        /// <returns> A new <see cref="Persistent.BrowserAutomationToolCallDetails"/> instance for mocking. </returns>
+        public static BrowserAutomationToolCallDetails BrowserAutomationToolCallDetails(string input = null, string output = null, IEnumerable<BrowserAutomationToolCallStep> steps = null)
+        {
+            steps ??= new List<BrowserAutomationToolCallStep>();
+
+            return new BrowserAutomationToolCallDetails(input, output, steps?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.BrowserAutomationToolCallStep"/>. </summary>
+        /// <param name="lastStepResult"> The result of the last step executed with the Browser. </param>
+        /// <param name="currentState"> The current state of execution with the Browser. </param>
+        /// <param name="nextStep"> The next step to execute with the Browser. </param>
+        /// <returns> A new <see cref="Persistent.BrowserAutomationToolCallStep"/> instance for mocking. </returns>
+        public static BrowserAutomationToolCallStep BrowserAutomationToolCallStep(string lastStepResult = null, string currentState = null, string nextStep = null)
+        {
+            return new BrowserAutomationToolCallStep(lastStepResult, currentState, nextStep, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMcpToolCall"/>. </summary>
