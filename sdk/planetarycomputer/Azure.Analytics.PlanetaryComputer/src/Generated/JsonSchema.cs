@@ -5,32 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> JSON Schema structure for STAC Queryables. </summary>
     public partial class JsonSchema
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="JsonSchema"/>. </summary>
-        internal JsonSchema()
-        {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JsonSchema"/>. </summary>
-        /// <param name="additionalProperties"></param>
-        internal JsonSchema(IReadOnlyDictionary<string, BinaryData> additionalProperties)
-        {
-            _additionalBinaryDataProperties = additionalProperties;
-        }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
     }
 }
