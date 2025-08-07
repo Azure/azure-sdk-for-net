@@ -26,6 +26,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(FooListResult))]
     [ModelReaderWriterBuildable(typeof(FooSettingsData))]
     [ModelReaderWriterBuildable(typeof(FooSettingsProperties))]
+    [ModelReaderWriterBuildable(typeof(FooSettingsPropertiesMetaData))]
     [ModelReaderWriterBuildable(typeof(FooSettingsPatch))]
     [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(BarData))]

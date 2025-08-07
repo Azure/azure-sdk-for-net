@@ -63,13 +63,13 @@ namespace MgmtTypeSpec.Models
                 properties);
         }
 
-        /// <summary> The FooSettingsProperties. </summary>
         /// <param name="accessControlEnabled"></param>
         /// <param name="provisioningState"></param>
+        /// <param name="metaDataMetaDatas"> Gets the MetaDatas. </param>
         /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
-        public static FooSettingsProperties FooSettingsProperties(bool accessControlEnabled = default, ResourceProvisioningState? provisioningState = default)
+        public static FooSettingsProperties FooSettingsProperties(bool? accessControlEnabled = default, ResourceProvisioningState? provisioningState = default, IList<string> metaDataMetaDatas)
         {
-            return new FooSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
+            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDataMetaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDataMetaDatas, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
