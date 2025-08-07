@@ -13,11 +13,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="id"> Gets or Sets subscription Id. </param>
         /// <param name="state"> Gets or Sets media streaming subscription state. </param>
         /// <param name="subscribedResultStates"> Gets or Sets the subscribed media streaming content types. </param>
-        internal TranscriptionSubscription(string id, TranscriptionSubscriptionState? state, IReadOnlyList<TranscriptionResultState> subscribedResultStates)
+        /// <param name="locale"> Specifies the locale used for transcription, e.g., en-CA or en-AU. </param>
+        internal TranscriptionSubscription(string id, TranscriptionSubscriptionState? state, IReadOnlyList<TranscriptionResultState> subscribedResultStates, string locale)
         {
             Id = id;
             State = state;
             SubscribedResultStates = subscribedResultStates;
+            Locale = locale;
         }
 
         /// <summary> Gets or Sets subscription Id. </summary>
@@ -26,5 +28,7 @@ namespace Azure.Communication.CallAutomation
         public TranscriptionSubscriptionState? State { get; }
         /// <summary> Gets or Sets the subscribed transcription result types. </summary>
         public IReadOnlyList<TranscriptionResultState> SubscribedResultStates { get; }
+        /// <summary> Specifies the locale used for transcription, e.g., en-CA or en-AU. </summary>
+        public string Locale { get; }
     }
 }

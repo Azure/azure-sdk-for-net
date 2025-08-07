@@ -8,6 +8,7 @@
     <PackageTags>Azure ConfidentialLedger</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants)</DefineConstants>
+    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
@@ -19,7 +20,7 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
-<!-- Shared source from Azure.Core -->
+  <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />

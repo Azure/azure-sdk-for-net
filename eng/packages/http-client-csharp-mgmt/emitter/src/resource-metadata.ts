@@ -37,12 +37,27 @@ export enum ResourceScope {
 }
 
 export interface ResourceMetadata {
+  resourceIdPattern: string;
   resourceType: string;
   methods: ResourceMethod[];
-  isSingleton: boolean;
   resourceScope: ResourceScope;
-  parentResource?: string;
-  // TODO -- add parent resource support in the same RP case
+  parentResourceId?: string;
+  singletonResourceName?: string;
+  resourceName: string;
+}
+
+export function convertResourceMetadataToArguments(
+  metadata: ResourceMetadata
+): Record<string, any> {
+  return {
+    resourceIdPattern: metadata.resourceIdPattern,
+    resourceType: metadata.resourceType,
+    methods: metadata.methods,
+    resourceScope: metadata.resourceScope,
+    parentResourceId: metadata.parentResourceId,
+    singletonResourceName: metadata.singletonResourceName,
+    resourceName: metadata.resourceName
+  };
 }
 
 export interface ResourceMethod {

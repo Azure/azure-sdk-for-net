@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(MigrateToVirtualMachineScaleSet))
             {
                 writer.WritePropertyName("migrateToVirtualMachineScaleSet"u8);
-                JsonSerializer.Serialize(writer, MigrateToVirtualMachineScaleSet);
+                ((IJsonModel<WritableSubResource>)MigrateToVirtualMachineScaleSet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    migrateToVirtualMachineScaleSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    migrateToVirtualMachineScaleSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

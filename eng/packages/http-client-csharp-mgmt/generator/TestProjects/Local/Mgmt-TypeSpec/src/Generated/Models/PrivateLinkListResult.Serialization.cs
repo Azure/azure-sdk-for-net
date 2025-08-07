@@ -42,7 +42,7 @@ namespace MgmtTypeSpec.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PrivateLinkData item in Value)
+            foreach (PrivateLink item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            IList<PrivateLinkData> value = default;
+            IList<PrivateLink> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PrivateLinkData> array = new List<PrivateLinkData>();
+                    List<PrivateLink> array = new List<PrivateLink>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkData.DeserializePrivateLinkData(item, options));
+                        array.Add(PrivateLink.DeserializePrivateLink(item, options));
                     }
                     value = array;
                     continue;
@@ -167,7 +167,7 @@ namespace MgmtTypeSpec.Models
         string IPersistableModel<PrivateLinkListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkListResult"/> from. </param>
-        public static explicit operator PrivateLinkListResult(Response result)
+        internal static PrivateLinkListResult FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
