@@ -5,6 +5,7 @@
 ### Features Added
 
 - Updated API version to 2025-06-01
+- Make `Azure.ResourceManager.Cdn` AOT-compatible
 
 ## 1.4.0 (2025-05-10)
 
