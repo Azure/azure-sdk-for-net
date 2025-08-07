@@ -104,8 +104,7 @@ export async function updateClients(
         if (entry && !entry.resourceIdPattern && isCRUDKind(kind)) {
           entry.resourceIdPattern = method.operation.path;
         }
-      }
-      else {
+      } else {
         // we add a methodMetadata decorator to this method
         nonResourceMethods.set(method.crossLanguageDefinitionId, {
           methodId: method.crossLanguageDefinitionId,
@@ -118,15 +117,22 @@ export async function updateClients(
 
   // after the resourceIdPattern has been populated, we can set the parentResourceId
   for (const [modelId, metadata] of resourceModelToMetadataMap) {
-    const parentResourceModelId = getParentResourceModelId(sdkContext, models.get(modelId));
+    const parentResourceModelId = getParentResourceModelId(
+      sdkContext,
+      models.get(modelId)
+    );
     if (parentResourceModelId) {
-      metadata.parentResourceId = resourceModelToMetadataMap.get(parentResourceModelId)?.resourceIdPattern;
+      metadata.parentResourceId = resourceModelToMetadataMap.get(
+        parentResourceModelId
+      )?.resourceIdPattern;
     }
   }
 
   // the last step, add the decorator to the resource model
   for (const model of resourceModels) {
-    const metadata = resourceModelToMetadataMap.get(model.crossLanguageDefinitionId);
+    const metadata = resourceModelToMetadataMap.get(
+      model.crossLanguageDefinitionId
+    );
     if (metadata) {
       addResourceMetadata(sdkContext, model, metadata);
     }
@@ -287,10 +293,13 @@ function getResourceScope(model: InputModelType): ResourceScope {
 
 // TODO -- this logic needs to refine in near future.
 function getOperationScope(path: string): ResourceScope {
-  if (path.startsWith("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/")) {
+  if (
+    path.startsWith(
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/"
+    )
+  ) {
     return ResourceScope.ResourceGroup;
-  }
-  else if (path.startsWith("/subscriptions/{subscriptionId}/")) {
+  } else if (path.startsWith("/subscriptions/{subscriptionId}/")) {
     return ResourceScope.Subscription;
   }
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
@@ -307,7 +316,7 @@ function addNonResourceMethodDecorators(
   codeModel.clients[0].decorators.push({
     name: nonResourceMethodMetadata,
     arguments: convertMethodMetadataToArguments(metadata)
-  })
+  });
 }
 
 function addResourceMetadata(

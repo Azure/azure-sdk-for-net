@@ -70,12 +70,12 @@ export function convertMethodMetadataToArguments(
   metadata: MethodMetadata[]
 ): Record<string, any> {
   return {
-    "nonResourceMethods": metadata.map((m) => ({
+    nonResourceMethods: metadata.map((m) => ({
       methodId: m.methodId,
       operationPath: m.operationPath,
       operationScope: m.operationScope
     }))
-  }
+  };
 }
 
 export interface ResourceMethod {
