@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAsyncCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
+            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllAsyncCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
         }
 
         /// <summary> Get a list of Target Type resources for given location. </summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
+            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
