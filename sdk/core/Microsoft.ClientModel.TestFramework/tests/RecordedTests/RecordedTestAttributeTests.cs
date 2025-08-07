@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,9 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
-namespace Microsoft.ClientModel.TestFramework.Tests.RecordedTests;
-[TestFixture]
+
+namespace Microsoft.ClientModel.TestFramework.Tests;
+
 public class RecordedTestAttributeTests
 {
     private class MockRecordedTestBase : RecordedTestBase
@@ -18,6 +20,7 @@ public class RecordedTestAttributeTests
             Mode = mode;
         }
     }
+
     private class MockTestCommand : TestCommand
     {
         private readonly TestResult _result;
@@ -31,6 +34,7 @@ public class RecordedTestAttributeTests
             return _result;
         }
     }
+
     private class MockTest : Test
     {
         public override object[] Arguments => Array.Empty<object>();
@@ -51,51 +55,48 @@ public class RecordedTestAttributeTests
             return node;
         }
     }
+
     [Test]
-    public void RecordedTestAttribute_InheritsFromTestAttribute()
-    {
-        var attribute = new RecordedTestAttribute();
-        Assert.That(attribute, Is.InstanceOf<TestAttribute>());
-        Assert.That(attribute, Is.InstanceOf<IWrapSetUpTearDown>());
-    }
-    [Test]
-    public void Wrap_WithRecordedTestBaseFixture_ReturnsWrappedCommand()
+    public void WrapWithRecordedTestBaseFixtureReturnsWrappedCommand()
     {
         var attribute = new RecordedTestAttribute();
         var fixture = new MockRecordedTestBase(RecordedTestMode.Playback);
         var test = new MockTest("TestMethod") { Fixture = fixture };
         var originalCommand = new MockTestCommand(test,
             new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests),
-            nameof(Wrap_WithRecordedTestBaseFixture_ReturnsWrappedCommand)))));
+            nameof(WrapWithRecordedTestBaseFixtureReturnsWrappedCommand)))));
         var wrappedCommand = attribute.Wrap(originalCommand);
         Assert.That(wrappedCommand, Is.Not.SameAs(originalCommand));
         Assert.That(wrappedCommand, Is.Not.Null);
     }
+
     [Test]
-    public void Wrap_WithoutRecordedTestBaseFixture_ReturnsOriginalCommand()
+    public void WrapWithoutRecordedTestBaseFixtureReturnsOriginalCommand()
     {
         var attribute = new RecordedTestAttribute();
         var test = new MockTest("TestMethod") { Fixture = new object() }; // Not a RecordedTestBase
         var originalCommand = new MockTestCommand(test,
             new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests),
-            nameof(Wrap_WithoutRecordedTestBaseFixture_ReturnsOriginalCommand)))));
+            nameof(WrapWithoutRecordedTestBaseFixtureReturnsOriginalCommand)))));
         var wrappedCommand = attribute.Wrap(originalCommand);
         Assert.That(wrappedCommand, Is.SameAs(originalCommand));
     }
+
     [Test]
-    public void Wrap_WithNullFixture_ReturnsOriginalCommand()
+    public void WrapWithNullFixtureReturnsOriginalCommand()
     {
         var attribute = new RecordedTestAttribute();
         var test = new MockTest("TestMethod") { Fixture = null };
         var originalCommand = new MockTestCommand(test,
             new TestCaseResult(new TestMethod(
                 new MethodWrapper(typeof(RecordedTestAttributeTests),
-                nameof(Wrap_WithNullFixture_ReturnsOriginalCommand)))));
+                nameof(WrapWithNullFixtureReturnsOriginalCommand)))));
         var wrappedCommand = attribute.Wrap(originalCommand);
         Assert.That(wrappedCommand, Is.SameAs(originalCommand));
     }
+
     [Test]
-    public void Wrap_WithParentFixture_FindsRecordedTestBase()
+    public void WrapWithParentFixtureFindsRecordedTestBase()
     {
         var attribute = new RecordedTestAttribute();
         var fixture = new MockRecordedTestBase(RecordedTestMode.Record);
@@ -104,18 +105,19 @@ public class RecordedTestAttributeTests
         var originalCommand = new MockTestCommand(childTest,
             new TestCaseResult(new TestMethod(
                     new MethodWrapper(typeof(RecordedTestAttributeTests),
-                    nameof(Wrap_WithParentFixture_FindsRecordedTestBase)))));
+                    nameof(WrapWithParentFixtureFindsRecordedTestBase)))));
         var wrappedCommand = attribute.Wrap(originalCommand);
         Assert.That(wrappedCommand, Is.Not.SameAs(originalCommand));
     }
+
     [Test]
-    public void RecordedTestAttributeCommand_ExecutesInnerCommand()
+    public void ExecutionWithSuccessfulTestExecutesInnerCommand()
     {
         var fixture = new MockRecordedTestBase(RecordedTestMode.Live);
         var test = new MockTest("TestMethod") { Fixture = fixture };
         var expectedResult = new TestCaseResult(new TestMethod(
             new MethodWrapper(typeof(RecordedTestAttributeTests),
-            nameof(RecordedTestAttributeCommand_ExecutesInnerCommand))));
+            nameof(ExecutionWithSuccessfulTestExecutesInnerCommand))));
         expectedResult.SetResult(ResultState.Success);
         var innerCommand = new MockTestCommand(test, expectedResult);
         var attribute = new RecordedTestAttribute();
@@ -126,14 +128,15 @@ public class RecordedTestAttributeTests
         Assert.That(result, Is.SameAs(expectedResult));
         Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Passed));
     }
+
     [Test]
-    public void RecordedTestAttributeCommand_WithPassedTest_ReturnsOriginalResult()
+    public void ExecutionWithPassedTestReturnsOriginalResult()
     {
         var fixture = new MockRecordedTestBase(RecordedTestMode.Playback);
         var test = new MockTest("TestMethod") { Fixture = fixture };
         var passedResult = new TestCaseResult(new TestMethod(
             new MethodWrapper(typeof(RecordedTestAttributeTests),
-            nameof(RecordedTestAttributeCommand_WithPassedTest_ReturnsOriginalResult))));
+            nameof(ExecutionWithPassedTestReturnsOriginalResult))));
         passedResult.SetResult(ResultState.Success);
         var innerCommand = new MockTestCommand(test, passedResult);
         var attribute = new RecordedTestAttribute();
@@ -143,14 +146,15 @@ public class RecordedTestAttributeTests
         var result = wrappedCommand.Execute(context);
         Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Passed));
     }
+
     [Test]
-    public void RecordedTestAttributeCommand_WithSkippedTest_ReturnsOriginalResult()
+    public void ExecutionWithSkippedTestReturnsOriginalResult()
     {
         var fixture = new MockRecordedTestBase(RecordedTestMode.Playback);
         var test = new MockTest("TestMethod") { Fixture = fixture };
         var skippedResult = new TestCaseResult(new TestMethod(
             new MethodWrapper(typeof(RecordedTestAttributeTests),
-            nameof(RecordedTestAttributeCommand_WithSkippedTest_ReturnsOriginalResult))));
+            nameof(ExecutionWithSkippedTestReturnsOriginalResult))));
         skippedResult.SetResult(ResultState.Skipped, "Test skipped");
         var innerCommand = new MockTestCommand(test, skippedResult);
         var attribute = new RecordedTestAttribute();
@@ -160,14 +164,15 @@ public class RecordedTestAttributeTests
         var result = wrappedCommand.Execute(context);
         Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Skipped));
     }
+
     [Test]
-    public void RecordedTestAttributeCommand_WithFailedTestInLiveMode_ReturnsOriginalResult()
+    public void ExecutionWithFailedTestInLiveModeReturnsOriginalResult()
     {
         var fixture = new MockRecordedTestBase(RecordedTestMode.Live);
         var test = new MockTest("TestMethod") { Fixture = fixture };
         var failedResult = new TestCaseResult(new TestMethod(
             new MethodWrapper(typeof(RecordedTestAttributeTests),
-            nameof(RecordedTestAttributeCommand_WithFailedTestInLiveMode_ReturnsOriginalResult))));
+            nameof(ExecutionWithFailedTestInLiveModeReturnsOriginalResult))));
         failedResult.SetResult(ResultState.Failure, "Test failed");
         var innerCommand = new MockTestCommand(test, failedResult);
         var attribute = new RecordedTestAttribute();
@@ -178,12 +183,13 @@ public class RecordedTestAttributeTests
         Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Failed));
         Assert.That(result.Message, Is.EqualTo("Test failed"));
     }
+
     [Test]
-    public void RecordedTestAttributeCommand_WithFailedTestInRecordMode_ReturnsOriginalResult()
+    public void ExecutionWithFailedTestInRecordModeReturnsOriginalResult()
     {
         var fixture = new MockRecordedTestBase(RecordedTestMode.Record);
         var test = new MockTest("TestMethod") { Fixture = fixture };
-        var failedResult = new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(RecordedTestAttributeCommand_WithFailedTestInRecordMode_ReturnsOriginalResult))));
+        var failedResult = new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(ExecutionWithFailedTestInRecordModeReturnsOriginalResult))));
         failedResult.SetResult(ResultState.Failure, "Test failed");
         var innerCommand = new MockTestCommand(test, failedResult);
         var attribute = new RecordedTestAttribute();
@@ -194,8 +200,9 @@ public class RecordedTestAttributeTests
         Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Failed));
         Assert.That(result.Message, Is.EqualTo("Test failed"));
     }
+
     [Test]
-    public void RecordedTestAttributeCommand_CanBeCreatedWithDifferentModes()
+    public void WrapCanBeCreatedWithDifferentModes()
     {
         var liveFixture = new MockRecordedTestBase(RecordedTestMode.Live);
         var recordFixture = new MockRecordedTestBase(RecordedTestMode.Record);
@@ -203,7 +210,7 @@ public class RecordedTestAttributeTests
         var liveTest = new MockTest("LiveTest") { Fixture = liveFixture };
         var recordTest = new MockTest("RecordTest") { Fixture = recordFixture };
         var playbackTest = new MockTest("PlaybackTest") { Fixture = playbackFixture };
-        var passedResult = new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(RecordedTestAttributeCommand_CanBeCreatedWithDifferentModes))));
+        var passedResult = new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(WrapCanBeCreatedWithDifferentModes))));
         passedResult.SetResult(ResultState.Success);
         var attribute = new RecordedTestAttribute();
         var liveCommand = attribute.Wrap(new MockTestCommand(liveTest, passedResult));
@@ -213,41 +220,26 @@ public class RecordedTestAttributeTests
         Assert.That(recordCommand, Is.Not.Null);
         Assert.That(playbackCommand, Is.Not.Null);
     }
+
     [Test]
-    public void RecordedTestAttribute_HasCorrectAttributeUsage()
-    {
-        var attributeUsage = typeof(RecordedTestAttribute)
-            .GetCustomAttributes(typeof(AttributeUsageAttribute), false)
-            .Cast<AttributeUsageAttribute>()
-            .FirstOrDefault();
-        Assert.That(attributeUsage, Is.Not.Null);
-        Assert.That(attributeUsage.ValidOn, Is.EqualTo(AttributeTargets.Method));
-    }
-    [Test]
-    public void RecordedTestAttribute_ImplementsRequiredInterfaces()
-    {
-        var attribute = new RecordedTestAttribute();
-        Assert.That(attribute, Is.InstanceOf<TestAttribute>());
-        Assert.That(attribute, Is.InstanceOf<IWrapSetUpTearDown>());
-    }
-    [Test]
-    public void Wrap_WithMultipleLevelsOfParents_FindsFixture()
+    public void WrapWithMultipleLevelsOfParentsFindsFixture()
     {
         var attribute = new RecordedTestAttribute();
         var fixture = new MockRecordedTestBase(RecordedTestMode.Playback);
         var grandParent = new MockTest("GrandParent") { Fixture = fixture };
         var parent = new MockTest("Parent") { Fixture = null, Parent = grandParent };
         var child = new MockTest("Child") { Fixture = null, Parent = parent };
-        var originalCommand = new MockTestCommand(child, new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(Wrap_WithMultipleLevelsOfParents_FindsFixture)))));
+        var originalCommand = new MockTestCommand(child, new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(WrapWithMultipleLevelsOfParentsFindsFixture)))));
         var wrappedCommand = attribute.Wrap(originalCommand);
         Assert.That(wrappedCommand, Is.Not.SameAs(originalCommand));
     }
+
     [Test]
-    public void RecordedTestAttributeCommand_PreservesTestContext()
+    public void RecordedTestAttributeCommandPreservesTestContext()
     {
         var fixture = new MockRecordedTestBase(RecordedTestMode.Live);
         var test = new MockTest("TestMethod") { Fixture = fixture };
-        var result = new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(RecordedTestAttributeCommand_PreservesTestContext))));
+        var result = new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(RecordedTestAttributeCommandPreservesTestContext))));
         result.SetResult(ResultState.Success);
         var innerCommand = new MockTestCommand(test, result);
         var attribute = new RecordedTestAttribute();

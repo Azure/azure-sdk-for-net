@@ -1,159 +1,166 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using Microsoft.ClientModel.TestFramework;
-using NUnit.Framework;
+
 using System;
-namespace Microsoft.ClientModel.TestFramework.Tests.RecordedTests;
+using NUnit.Framework;
+
+namespace Microsoft.ClientModel.TestFramework.Tests;
+
 [TestFixture]
 public class RecordedVariableOptionsTests
 {
+    #region IsSecret Method - Fluent Interface
+
     [Test]
-    public void Constructor_CreatesValidInstance()
-    {
-        var options = new RecordedVariableOptions();
-        Assert.IsNotNull(options);
-    }
-    [Test]
-    public void IsSecret_WithDefaultSanitizedValue_ReturnsOptionsInstance()
-    {
-        var options = new RecordedVariableOptions();
-        var result = options.IsSecret();
-        Assert.AreSame(options, result);
-    }
-    [Test]
-    public void IsSecret_WithSpecificSanitizedValue_ReturnsOptionsInstance()
-    {
-        var options = new RecordedVariableOptions();
-        var result = options.IsSecret(SanitizedValue.Base64);
-        Assert.AreSame(options, result);
-    }
-    [Test]
-    public void IsSecret_WithCustomString_ReturnsOptionsInstance()
+    public void IsSecretWithCustomStringReturnsOptionsInstance()
     {
         var options = new RecordedVariableOptions();
         var customValue = "SANITIZED_CUSTOM_VALUE";
+
         var result = options.IsSecret(customValue);
-        Assert.AreSame(options, result);
+
+        Assert.That(result, Is.SameAs(options));
     }
+
     [Test]
-    public void Apply_WithoutIsSecret_ReturnsOriginalValue()
+    public void IsSecretCanBeChained()
+    {
+        var options = new RecordedVariableOptions();
+        var result = options.IsSecret().IsSecret(SanitizedValue.Base64);
+        Assert.That(result, Is.SameAs(options));
+    }
+
+    [Test]
+    public void IsSecretWithNullCustomValueThrowsArgumentNullException()
+    {
+        var options = new RecordedVariableOptions();
+
+        Assert.Throws<ArgumentNullException>(() => options.IsSecret((string)null));
+    }
+
+    #endregion
+
+    #region Apply Method - Without Secrets
+
+    [Test]
+    public void ApplyWithoutIsSecretReturnsOriginalValue()
     {
         var options = new RecordedVariableOptions();
         var originalValue = "original-secret-value";
         var result = options.Apply(originalValue);
-        Assert.AreEqual(originalValue, result);
+        Assert.That(result, Is.EqualTo(originalValue));
     }
+
+    #endregion
+
+    #region Apply Method - With Sanitization
+
     [Test]
-    public void Apply_WithDefaultSanitization_ReturnsSanitizedValue()
+    public void ApplyWithDefaultSanitizationReturnsSanitizedValue()
     {
         var options = new RecordedVariableOptions();
         options.IsSecret();
         var originalValue = "secret-value";
         var result = options.Apply(originalValue);
-        Assert.AreNotEqual(originalValue, result);
-        Assert.AreEqual("Sanitized", result); // Assuming RecordedTestBase.SanitizeValue is "Sanitized"
+        Assert.That(result, Is.Not.EqualTo(originalValue));
+        Assert.That(result, Is.EqualTo("Sanitized")); // Assuming RecordedTestBase.SanitizeValue is "Sanitized"
     }
+
     [Test]
-    public void Apply_WithBase64Sanitization_ReturnsBase64Value()
+    public void ApplyWithBase64SanitizationReturnsBase64Value()
     {
         var options = new RecordedVariableOptions();
         options.IsSecret(SanitizedValue.Base64);
         var originalValue = "secret-value";
         var result = options.Apply(originalValue);
-        Assert.AreEqual("Kg==", result);
+        Assert.That(result, Is.EqualTo("Kg=="));
     }
+
     [Test]
-    public void Apply_WithCustomSanitization_ReturnsCustomValue()
+    public void ApplyWithCustomSanitizationReturnsCustomValue()
     {
         var options = new RecordedVariableOptions();
         var customSanitizedValue = "CUSTOM_SANITIZED";
         options.IsSecret(customSanitizedValue);
         var originalValue = "secret-value";
         var result = options.Apply(originalValue);
-        Assert.AreEqual(customSanitizedValue, result);
+        Assert.That(result, Is.EqualTo(customSanitizedValue));
     }
+
     [Test]
-    public void IsSecret_CanBeChained()
-    {
-        var options = new RecordedVariableOptions();
-        var result = options.IsSecret().IsSecret(SanitizedValue.Base64);
-        Assert.AreSame(options, result);
-    }
-    [Test]
-    public void IsSecret_LastCallWins()
+    public void ApplyLastCallWins()
     {
         var options = new RecordedVariableOptions();
         var customValue = "FINAL_VALUE";
         options.IsSecret(SanitizedValue.Base64).IsSecret(customValue);
         var result = options.Apply("original");
-        Assert.AreEqual(customValue, result);
+        Assert.That(result, Is.EqualTo(customValue));
     }
-    [Test]
-    public void IsSecret_WithNullCustomValue_AllowsNull()
+
+    #endregion
+
+    #region Apply Method - Edge Cases
+
+    [TestCase(null, "SANITIZED", "SANITIZED")]
+    [TestCase("", "SANITIZED", "SANITIZED")]
+    [TestCase("original", "SANITIZED", "SANITIZED")]
+    public void ApplyWithVariousOriginalValuesHandlesGracefully(string originalValue, string sanitizedValue, string expectedResult)
     {
         var options = new RecordedVariableOptions();
-        Assert.DoesNotThrow(() => options.IsSecret((string)null));
-    }
-    [Test]
-    public void Apply_WithNullSanitizedValue_ReturnsNull()
-    {
-        var options = new RecordedVariableOptions();
-        options.IsSecret((string)null);
-        var originalValue = "original";
+        options.IsSecret(sanitizedValue);
         var result = options.Apply(originalValue);
-        Assert.IsNull(result);
+        Assert.That(result, Is.EqualTo(expectedResult));
     }
+
     [Test]
-    public void Apply_WithEmptyCustomSanitization_ReturnsEmpty()
+    public void ApplyWithEmptyCustomSanitizationReturnsEmpty()
     {
         var options = new RecordedVariableOptions();
         options.IsSecret("");
         var originalValue = "secret";
+
         var result = options.Apply(originalValue);
-        Assert.AreEqual("", result);
+
+        Assert.That(result, Is.EqualTo(""));
     }
+
+    #endregion
+
+    #region SanitizedValue Enum Behavior
+
     [Test]
-    public void Apply_WithNullOriginalValue_HandlesGracefully()
+    public void SanitizedValueDefaultMapsToCorrectValue()
     {
         var options = new RecordedVariableOptions();
-        options.IsSecret("SANITIZED");
-        var result = options.Apply(null);
-        Assert.AreEqual("SANITIZED", result);
+        options.IsSecret(SanitizedValue.Default);
+        var result = options.Apply("original");
+        Assert.That(result, Is.EqualTo("Sanitized")); // Assuming this is the default sanitized value
     }
+
+    #endregion
+
+    #region Integration and Usage Patterns
+
     [Test]
-    public void Apply_WithEmptyOriginalValue_HandlesGracefully()
-    {
-        var options = new RecordedVariableOptions();
-        options.IsSecret("SANITIZED");
-        var result = options.Apply("");
-        Assert.AreEqual("SANITIZED", result);
-    }
-    [Test]
-    public void MultipleOptions_CanBeUsedIndependently()
+    public void MultipleOptionsCanBeUsedIndependently()
     {
         var options1 = new RecordedVariableOptions().IsSecret("VALUE1");
         var options2 = new RecordedVariableOptions().IsSecret("VALUE2");
         var result1 = options1.Apply("original");
         var result2 = options2.Apply("original");
-        Assert.AreEqual("VALUE1", result1);
-        Assert.AreEqual("VALUE2", result2);
+        Assert.That(result1, Is.EqualTo("VALUE1"));
+        Assert.That(result2, Is.EqualTo("VALUE2"));
     }
+
     [Test]
-    public void SanitizedValue_Default_MapsToCorrectValue()
-    {
-        var options = new RecordedVariableOptions();
-        options.IsSecret(SanitizedValue.Default);
-        var result = options.Apply("original");
-        // Should use RecordedTestBase.SanitizeValue for default
-        Assert.AreEqual("Sanitized", result); // Assuming this is the default sanitized value
-    }
-    [Test]
-    public void FluentInterface_WorksCorrectly()
+    public void FluentInterfaceWorksCorrectly()
     {
         var originalValue = "secret-data";
         var result = new RecordedVariableOptions()
             .IsSecret("MASKED")
             .Apply(originalValue);
-        Assert.AreEqual("MASKED", result);
+        Assert.That(result, Is.EqualTo("MASKED"));
     }
+
+    #endregion
 }

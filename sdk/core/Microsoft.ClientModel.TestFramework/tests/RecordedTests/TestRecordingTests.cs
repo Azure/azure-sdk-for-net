@@ -10,12 +10,10 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
-namespace Microsoft.ClientModel.TestFramework.Tests.RecordedTests;
+namespace Microsoft.ClientModel.TestFramework.Tests;
 
 [TestFixture]
 public class TestRecordingTests

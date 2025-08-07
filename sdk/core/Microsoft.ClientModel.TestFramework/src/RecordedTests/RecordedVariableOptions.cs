@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
@@ -26,8 +28,12 @@ public class RecordedVariableOptions
     /// </summary>
     /// <param name="sanitizedValue">The custom value to use when sanitizing.</param>
     /// <returns>The current options instance for method chaining.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="sanitizedValue"/> is null.</exception>
     public RecordedVariableOptions IsSecret(string sanitizedValue)
     {
+        if (sanitizedValue == null)
+            throw new ArgumentNullException(nameof(sanitizedValue));
+
         _sanitizedValue = sanitizedValue;
         return this;
     }

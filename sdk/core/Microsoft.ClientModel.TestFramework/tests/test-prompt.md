@@ -21,6 +21,14 @@
 - Framework provides pre-built mocks that match the domain
 - Testing transport-layer functionality
 
+**Avoid NUnit Internals (With Exceptions):**
+- **Generally avoid**: Don't try to mock or use `TestResult`, `TestMethod`, `TestExecutionContext`, or other NUnit internal classes for typical business logic testing
+- **Exception for Framework Integration**: When testing classes that directly integrate with NUnit's framework (like custom attributes that implement `IRepeatTest`, `IWrapSetUpTearDown`, etc.), using NUnit internals is appropriate and necessary
+- **Key principle**: If your class under test is designed to work with NUnit internals, then your tests should use those same internals
+- **Examples of appropriate use**: Testing custom test attributes, test commands, framework extensions
+- **Examples of inappropriate use**: Testing business logic classes, data models, utility functions
+- **Focus on behavior**: Whether using internals or not, always focus on testing meaningful behavior rather than implementation details
+
 **Reflection Usage:**
 - Use judiciously for accessing private fields when testing internal state
 - Always check for null after reflection calls
@@ -58,6 +66,50 @@ public async Task ScenarioExpectedBehavior()
 - **Descriptive Names**: Use `ScenarioExpectedBehavior` pattern (no underscores, no method name prefix)
 - **Systematic Coverage**: Cover all modes/parameters systematically
 - **TestCase Attributes**: Use `[TestCase]` for parameter variations instead of duplicate test methods
+
+## Test File Structure and Naming
+
+**File Naming Convention:**
+- Each class should have a corresponding test file: `{ClassBeingTested}Tests.cs`
+- Examples: `RecordedVariableOptions.cs` → `RecordedVariableOptionsTests.cs`
+- Test files should be in the same relative namespace as the class being tested, but under a `.Tests` namespace
+
+**When to Skip Test Files:**
+- **Enums**: No meaningful unit tests (compile-time guarantees)
+- **Simple DTOs/POCOs**: Properties that just get/set backing fields
+- **Empty interfaces**: No behavior to test
+- **Pure data classes**: Classes with only properties and no logic
+- **Abstract classes with no implementation**: Test the concrete implementations instead
+
+**Test Class Structure:**
+```csharp
+[TestFixture]
+public class ClassNameTests
+{
+    #region Constructor and Basic Properties
+    // Constructor tests, basic property validation
+    #endregion
+
+    #region Method Name - Core Behavior  
+    // Primary functionality tests
+    #endregion
+    
+    #region Method Name - Edge Cases
+    // Null inputs, boundary conditions, error scenarios
+    #endregion
+    
+    #region Integration and Usage Patterns
+    // Real-world usage scenarios, fluent interfaces
+    #endregion
+}
+```
+
+**File Organization Principles:**
+- One test class per production class (not per method)
+- Group related tests in logical regions
+- Order regions from basic to complex functionality
+- Include integration tests in the same file when appropriate
+- Keep test files focused - if they become too large, consider splitting by functionality
 
 ## Common Patterns
 
@@ -135,6 +187,8 @@ When implementing tests, watch for:
 - **Don't test trivial/obvious things**: Avoid testing that classes are abstract, interfaces are implemented, or other compile-time guarantees
 - **Don't test framework behavior**: Don't test that NUnit works, that mocks work, or other third-party functionality
 - **Don't test language features**: Don't test that properties return values they were set to, or that constructors assign parameters
+- **Don't use NUnit internals**: Avoid using classes like `TestResult`, `TestMethod`, `TestExecutionContext` directly - these are internal implementation details that make tests brittle and overly complex
+- **Never use Assert.Pass()**: If something isn't meaningfully testable at the unit level, delete the test rather than using `Assert.Pass()` - it creates false coverage and test noise
 
 ## Quality Indicators
 - Tests should read like documentation

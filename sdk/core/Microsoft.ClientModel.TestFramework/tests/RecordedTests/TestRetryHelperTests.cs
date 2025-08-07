@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Microsoft.ClientModel.TestFramework.Tests.RecordedTests;
+namespace Microsoft.ClientModel.TestFramework.Tests;
 
 [TestFixture]
 public class TestRetryHelperTests

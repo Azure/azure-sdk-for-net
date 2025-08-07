@@ -1,178 +1,123 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using Microsoft.ClientModel.TestFramework;
+
 using NUnit.Framework;
-using System;
-using System.Reflection;
-namespace Microsoft.ClientModel.TestFramework.Tests.RecordedTests;
+using NUnit.Framework.Internal;
+
+namespace Microsoft.ClientModel.TestFramework.Tests;
+
 [TestFixture]
 public class LiveParallelizableAttributeTests
 {
     [Test]
-    public void Constructor_WithParallelScope_CreatesValidInstance()
+    public void LiveMode_PreservesRequestedParallelScope()
     {
-        var attribute = new LiveParallelizableAttribute(ParallelScope.Self);
-        Assert.IsNotNull(attribute);
-        Assert.IsInstanceOf<LiveParallelizableAttribute>(attribute);
-    }
-    [Test]
-    public void Inheritance_ExtendsParallelizableAttribute()
-    {
-        var attribute = new LiveParallelizableAttribute(ParallelScope.Self);
-        Assert.IsInstanceOf<ParallelizableAttribute>(attribute);
-    }
-    [Test]
-    public void AttributeUsage_AllowsAssemblyClassAndMethod()
-    {
-        var usage = typeof(LiveParallelizableAttribute).GetCustomAttribute<AttributeUsageAttribute>();
-        Assert.IsNotNull(usage);
-        Assert.IsTrue(usage.ValidOn.HasFlag(AttributeTargets.Assembly));
-        Assert.IsTrue(usage.ValidOn.HasFlag(AttributeTargets.Class));
-        Assert.IsTrue(usage.ValidOn.HasFlag(AttributeTargets.Method));
-        Assert.IsFalse(usage.AllowMultiple);
-        Assert.IsTrue(usage.Inherited);
-    }
-    [Test]
-    public void Constructor_WithSelfScope_SetsCorrectScope()
-    {
-        var attribute = new LiveParallelizableAttribute(ParallelScope.Self);
-        // The actual scope depends on the current test mode
-        Assert.IsNotNull(attribute);
-    }
-    [Test]
-    public void Constructor_WithFixturesScope_SetsCorrectScope()
-    {
-        var attribute = new LiveParallelizableAttribute(ParallelScope.Fixtures);
-        Assert.IsNotNull(attribute);
-    }
-    [Test]
-    public void Constructor_WithChildrenScope_SetsCorrectScope()
-    {
-        var attribute = new LiveParallelizableAttribute(ParallelScope.Children);
-        Assert.IsNotNull(attribute);
-    }
-    [Test]
-    public void Constructor_WithAllScope_SetsCorrectScope()
-    {
-        var attribute = new LiveParallelizableAttribute(ParallelScope.All);
-        Assert.IsNotNull(attribute);
-    }
-    [Test]
-    public void Constructor_WithNoneScope_SetsCorrectScope()
-    {
-        var attribute = new LiveParallelizableAttribute(ParallelScope.None);
-        Assert.IsNotNull(attribute);
-    }
-    [Test]
-    public void ApplyModeToParallelScope_WithLiveMode_ReturnsRequestedScope()
-    {
-        // Test that when in Live mode, the requested scope is preserved
-        using (new MockTestEnvironment(RecordedTestMode.Live))
+        using (new TestEnvVar("CLIENTMODEL_TEST_MODE", "Live"))
         {
-            var attribute = new LiveParallelizableAttribute(ParallelScope.Self);
-            Assert.IsNotNull(attribute);
-            // The actual verification would require accessing the internal scope
+            var attribute = new LiveParallelizableAttribute(ParallelScope.Children);
+
+            // In Live mode, the requested scope should be preserved
+            Assert.That(attribute.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Children));
         }
     }
+
     [Test]
-    public void ApplyModeToParallelScope_WithRecordMode_ReturnsNoneScope()
+    public void RecordMode_ForcesParallelScopeToNone()
     {
-        // Test that when in Record mode, scope is set to None
-        using (new MockTestEnvironment(RecordedTestMode.Record))
+        using (new TestEnvVar("CLIENTMODEL_TEST_MODE", "Record"))
         {
-            var attribute = new LiveParallelizableAttribute(ParallelScope.Self);
-            Assert.IsNotNull(attribute);
-            // The actual verification would require accessing the internal scope
+            var attribute = new LiveParallelizableAttribute(ParallelScope.Children);
+
+            // In Record mode, scope should be forced to None regardless of requested scope
+            Assert.That(attribute.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.None));
         }
     }
+
     [Test]
-    public void ApplyModeToParallelScope_WithPlaybackMode_ReturnsNoneScope()
+    public void PlaybackMode_ForcesParallelScopeToNone()
     {
-        // Test that when in Playback mode, scope is set to None
-        using (new MockTestEnvironment(RecordedTestMode.Playback))
+        using (new TestEnvVar("CLIENTMODEL_TEST_MODE", "Playback"))
         {
             var attribute = new LiveParallelizableAttribute(ParallelScope.Self);
-            Assert.IsNotNull(attribute);
-            // The actual verification would require accessing the internal scope
+
+            // In Playback mode, scope should be forced to None regardless of requested scope
+            Assert.That(attribute.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.None));
         }
     }
+
     [Test]
-    public void Attribute_CanBeAppliedToMethod()
+    public void LiveMode_WithDifferentScopes_PreservesEachScope()
     {
-        var method = typeof(TestClassWithLiveParallelizable).GetMethod(nameof(TestClassWithLiveParallelizable.ParallelizableMethod));
-        var attribute = method.GetCustomAttribute<LiveParallelizableAttribute>();
-        Assert.IsNotNull(attribute);
+        using (new TestEnvVar("CLIENTMODEL_TEST_MODE", "Live"))
+        {
+            var selfAttr = new LiveParallelizableAttribute(ParallelScope.Self);
+            var childrenAttr = new LiveParallelizableAttribute(ParallelScope.Children);
+            var fixturesAttr = new LiveParallelizableAttribute(ParallelScope.Fixtures);
+            var allAttr = new LiveParallelizableAttribute(ParallelScope.All);
+
+            Assert.That(selfAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Self));
+            Assert.That(childrenAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Children));
+            Assert.That(fixturesAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Fixtures));
+            Assert.That(allAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.All));
+        }
     }
+
     [Test]
-    public void Attribute_CanBeAppliedToClass()
+    public void NonLiveModes_AlwaysForceToNoneRegardlessOfRequestedScope()
     {
-        var attribute = typeof(LiveParallelizableTestClass).GetCustomAttribute<LiveParallelizableAttribute>();
-        Assert.IsNotNull(attribute);
+        var testCases = new[]
+        {
+            ("Record", ParallelScope.Self),
+            ("Record", ParallelScope.Children),
+            ("Record", ParallelScope.Fixtures),
+            ("Record", ParallelScope.All),
+            ("Playback", ParallelScope.Self),
+            ("Playback", ParallelScope.Children),
+            ("Playback", ParallelScope.Fixtures),
+            ("Playback", ParallelScope.All)
+        };
+
+        foreach (var (mode, requestedScope) in testCases)
+        {
+            using (new TestEnvVar("CLIENTMODEL_TEST_MODE", mode))
+            {
+                var attribute = new LiveParallelizableAttribute(requestedScope);
+
+                Assert.That(attribute.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.None),
+                    $"Mode: {mode}, RequestedScope: {requestedScope} should result in ParallelScope.None");
+            }
+        }
     }
+
     [Test]
-    public void AllowMultiple_IsFalse()
+    public void DefaultMode_ForcesParallelScopeToNone()
     {
-        var usage = typeof(LiveParallelizableAttribute).GetCustomAttribute<AttributeUsageAttribute>();
-        Assert.IsFalse(usage.AllowMultiple);
+        // When no environment variable is set, TestEnvironment.GlobalTestMode defaults to Playback
+        using (new TestEnvVar("CLIENTMODEL_TEST_MODE", null))
+        {
+            var attribute = new LiveParallelizableAttribute(ParallelScope.All);
+
+            // Default mode (Playback) should force scope to None
+            Assert.That(attribute.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.None));
+        }
     }
-    [Test]
-    public void Inherited_IsTrue()
-    {
-        var usage = typeof(LiveParallelizableAttribute).GetCustomAttribute<AttributeUsageAttribute>();
-        Assert.IsTrue(usage.Inherited);
-    }
-    [Test]
-    public void Attribute_InheritsToSubclass()
-    {
-        var baseAttribute = typeof(LiveParallelizableTestClass).GetCustomAttribute<LiveParallelizableAttribute>();
-        var derivedAttribute = typeof(DerivedLiveParallelizableTestClass).GetCustomAttribute<LiveParallelizableAttribute>(inherit: true);
-        Assert.IsNotNull(baseAttribute);
-        Assert.IsNotNull(derivedAttribute);
-    }
-    [Test]
-    public void LiveParallelizable_DifferentFromRegularParallelizable()
-    {
-        var liveParallelizableAttr = new LiveParallelizableAttribute(ParallelScope.Self);
-        var parallelizableAttr = new ParallelizableAttribute(ParallelScope.Self);
-        Assert.IsInstanceOf<LiveParallelizableAttribute>(liveParallelizableAttr);
-        Assert.IsInstanceOf<ParallelizableAttribute>(parallelizableAttr);
-        Assert.AreNotEqual(liveParallelizableAttr.GetType(), parallelizableAttr.GetType());
-    }
-    // Helper classes for testing
+
+    // Helper classes for testing attribute application
     public class TestClassWithLiveParallelizable
     {
         [LiveParallelizable(ParallelScope.Self)]
         public void ParallelizableMethod()
         {
-            // Parallelizable test method
+            // Test method with LiveParallelizable attribute
         }
     }
+
     [LiveParallelizable(ParallelScope.Children)]
     public class LiveParallelizableTestClass
     {
         public void TestMethod()
         {
-            // Method in parallelizable class
-        }
-    }
-    public class DerivedLiveParallelizableTestClass : LiveParallelizableTestClass
-    {
-        public void DerivedMethod()
-        {
-            // Method in derived class should inherit LiveParallelizable attribute
-        }
-    }
-    // Mock class to simulate TestEnvironment.GlobalTestMode
-    public class MockTestEnvironment : IDisposable
-    {
-        private readonly RecordedTestMode _mode;
-        public MockTestEnvironment(RecordedTestMode mode)
-        {
-            _mode = mode;
-        }
-        public void Dispose()
-        {
-            // Restore original mode if needed
+            // Method in class with LiveParallelizable attribute
         }
     }
 }

@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ClientModel.TestFramework;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
-using System;
-using System.Reflection;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
 
@@ -15,170 +15,103 @@ namespace Microsoft.ClientModel.TestFramework.Tests;
 public class RetryOnErrorAttributeTests
 {
     [Test]
-    public void RetryOnErrorAttribute_IsAbstract()
+    public void ConstructorCreatesInstance()
     {
-        var type = typeof(RetryOnErrorAttribute);
-        Assert.IsTrue(type.IsAbstract);
+        var attribute = new TestRetryAttribute(3, _ => true);
+        Assert.That(attribute, Is.Not.Null);
     }
 
     [Test]
-    public void Inheritance_ExtendsNUnitAttribute()
+    public void WrapCreatesRetryCommand()
     {
-        var type = typeof(RetryOnErrorAttribute);
-        Assert.IsTrue(typeof(NUnitAttribute).IsAssignableFrom(type));
+        var test = new SimpleTest("Test");
+        var testMethod = new TestMethod(new MethodWrapper(typeof(RetryOnErrorAttributeTests), nameof(WrapCreatesRetryCommand)));
+        var result = new TestCaseResult(testMethod);
+        var command = new SimpleTestCommand(test, result);
+        var attribute = new TestRetryAttribute(3, _ => true);
+
+        var wrappedCommand = attribute.Wrap(command);
+
+        Assert.That(wrappedCommand, Is.Not.Null);
+        Assert.That(wrappedCommand, Is.TypeOf<RetryOnErrorAttribute.RetryOnErrorCommand>());
     }
 
     [Test]
-    public void Interface_ImplementsIRepeatTest()
+    public void ExecuteSuccessfulTestRunsOnce()
     {
-        var type = typeof(RetryOnErrorAttribute);
-        Assert.IsTrue(typeof(IRepeatTest).IsAssignableFrom(type));
+        var test = new SimpleTest("Test");
+        var testMethod = new TestMethod(new MethodWrapper(typeof(RetryOnErrorAttributeTests), nameof(ExecuteSuccessfulTestRunsOnce)));
+        var result = new TestCaseResult(testMethod);
+        result.SetResult(ResultState.Success);
+        var command = new SimpleTestCommand(test, result);
+        var attribute = new TestRetryAttribute(3, _ => true);
+        var wrappedCommand = attribute.Wrap(command);
+        var context = new TestExecutionContext { CurrentTest = test };
+
+        var finalResult = wrappedCommand.Execute(context);
+
+        Assert.That(finalResult.ResultState.Status, Is.EqualTo(TestStatus.Passed));
+        Assert.That(command.ExecutionCount, Is.EqualTo(1));
     }
 
     [Test]
-    public void AttributeUsage_AllowsMethodOnly()
+    public void ExecuteWithShouldRetryFalseDoesNotRetry()
     {
-        var usage = typeof(RetryOnErrorAttribute).GetCustomAttribute<AttributeUsageAttribute>();
-        Assert.IsNotNull(usage);
-        Assert.AreEqual(AttributeTargets.Method, usage.ValidOn);
-        Assert.IsFalse(usage.AllowMultiple);
-        Assert.IsFalse(usage.Inherited);
+        var test = new SimpleTest("Test");
+        var testMethod = new TestMethod(new MethodWrapper(typeof(RetryOnErrorAttributeTests), nameof(ExecuteWithShouldRetryFalseDoesNotRetry)));
+        var result = new TestCaseResult(testMethod);
+        result.SetResult(ResultState.Error, "Test failed");
+        var command = new SimpleTestCommand(test, result);
+        var attribute = new TestRetryAttribute(3, _ => false); // shouldRetry always returns false
+        var wrappedCommand = attribute.Wrap(command);
+        var context = new TestExecutionContext { CurrentTest = test };
+
+        var finalResult = wrappedCommand.Execute(context);
+
+        Assert.That(finalResult.ResultState.Status, Is.EqualTo(TestStatus.Failed));
+        Assert.That(command.ExecutionCount, Is.EqualTo(1)); // Should not retry
     }
 
-    [Test]
-    public void Constructor_IsProtected()
+    // Mock classes for testing
+    private class SimpleTest : Test
     {
-        var type = typeof(RetryOnErrorAttribute);
-        var constructors = type.GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance);
-        Assert.Greater(constructors.Length, 0);
-        Assert.IsTrue(Array.Exists(constructors, c => c.IsFamily)); // Protected constructor exists
-    }
+        public SimpleTest(string name) : base(name) { }
 
-    [Test]
-    public void Wrap_Method_Exists()
-    {
-        var type = typeof(RetryOnErrorAttribute);
-        var wrapMethod = type.GetMethod("Wrap", new[] { typeof(TestCommand) });
-        Assert.IsNotNull(wrapMethod);
-        Assert.AreEqual(typeof(TestCommand), wrapMethod.ReturnType);
-    }
+        public override object[] Arguments => Array.Empty<object>();
+        public override string MethodName => Name;
+        public override bool HasChildren => false;
+        public override IList<ITest> Tests => new List<ITest>();
 
-    [Test]
-    public void ConcreteImplementation_CanBeCreated()
-    {
-        var concreteAttribute = new TestRetryOnErrorAttribute(3, context => true);
-        Assert.IsNotNull(concreteAttribute);
-        Assert.IsInstanceOf<RetryOnErrorAttribute>(concreteAttribute);
-    }
+        public override string XmlElementName => throw new NotImplementedException();
 
-    [Test]
-    public void Wrap_WithValidCommand_ReturnsWrappedCommand()
-    {
-        var concreteAttribute = new TestRetryOnErrorAttribute(3, context => true);
-        var originalCommand = new MockTestCommand();
-        var wrappedCommand = concreteAttribute.Wrap(originalCommand);
-        Assert.IsNotNull(wrappedCommand);
-        Assert.AreNotSame(originalCommand, wrappedCommand);
-    }
-
-    [Test]
-    public void Wrap_ReturnsRetryOnErrorCommand()
-    {
-        var concreteAttribute = new TestRetryOnErrorAttribute(2, context => false);
-        var originalCommand = new MockTestCommand();
-        var wrappedCommand = concreteAttribute.Wrap(originalCommand);
-        Assert.IsNotNull(wrappedCommand);
-        // Verify it's the correct type by checking the class name
-        Assert.That(wrappedCommand.GetType().Name, Contains.Substring("RetryOnErrorCommand"));
-    }
-
-    [Test]
-    public void Constructor_WithTryCount_AcceptsValidValues()
-    {
-        Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(1, context => true));
-        Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(5, context => true));
-        Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(10, context => true));
-    }
-
-    [Test]
-    public void Constructor_WithShouldRetryFunction_AcceptsValidFunctions()
-    {
-        Func<TestExecutionContext, bool> alwaysRetry = context => true;
-        Func<TestExecutionContext, bool> neverRetry = context => false;
-        Func<TestExecutionContext, bool> conditionalRetry = context => context.CurrentResult?.ResultState.Status == TestStatus.Failed;
-        Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(3, alwaysRetry));
-        Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(3, neverRetry));
-        Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(3, conditionalRetry));
-    }
-
-    [Test]
-    public void Constructor_WithNullShouldRetry_AllowsNull()
-    {
-        Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(3, null));
-    }
-
-    [Test]
-    public void RetryOnErrorCommand_IsInternalClass()
-    {
-        // The RetryOnErrorCommand class should be internal
-        var assembly = typeof(RetryOnErrorAttribute).Assembly;
-        var commandType = assembly.GetType("Microsoft.ClientModel.TestFramework.RetryOnErrorAttribute+RetryOnErrorCommand");
-        Assert.IsNotNull(commandType);
-        Assert.IsTrue(commandType.IsNotPublic); // Internal types are not public
-    }
-
-    [Test]
-    public void Attribute_CanBeAppliedToMethod()
-    {
-        var method = typeof(TestClassWithRetryOnError).GetMethod(nameof(TestClassWithRetryOnError.RetriableMethod));
-        // Since RetryOnErrorAttribute is abstract and can't be used directly,
-        // we verify the method exists and can be annotated in principle
-        Assert.IsNotNull(method);
-        Assert.IsTrue(method.IsStatic);
-    }
-
-    [Test]
-    public void AllowMultiple_IsFalse()
-    {
-        var usage = typeof(RetryOnErrorAttribute).GetCustomAttribute<AttributeUsageAttribute>();
-        Assert.IsFalse(usage.AllowMultiple);
-    }
-
-    [Test]
-    public void Inherited_IsFalse()
-    {
-        var usage = typeof(RetryOnErrorAttribute).GetCustomAttribute<AttributeUsageAttribute>();
-        Assert.IsFalse(usage.Inherited);
-    }
-
-    // Helper classes for testing
-    public class TestRetryOnErrorAttribute : RetryOnErrorAttribute
-    {
-        public TestRetryOnErrorAttribute(int tryCount, Func<TestExecutionContext, bool> shouldRetry)
-            : base(tryCount, shouldRetry)
+        public override TNode AddToXml(TNode parentNode, bool recursive) => parentNode;
+        public override TestResult MakeTestResult()
         {
+            var testMethod = new TestMethod(new MethodWrapper(typeof(RetryOnErrorAttributeTests), Name));
+            return new TestCaseResult(testMethod);
         }
     }
 
-    public class MockTestCommand : TestCommand
+    private class SimpleTestCommand : TestCommand
     {
-        public MockTestCommand() : base(new TestMethod(new MethodWrapper(typeof(RetryOnErrorAttributeTests), typeof(RetryOnErrorAttributeTests).GetMethod(nameof(MockTestMethod)))))
+        private readonly TestResult _resultToReturn;
+        public int ExecutionCount { get; private set; }
+
+        public SimpleTestCommand(Test test, TestResult result) : base(test)
         {
+            _resultToReturn = result;
         }
+
         public override TestResult Execute(TestExecutionContext context)
         {
-            return context.CurrentResult ?? new TestCaseResult(Test as TestMethod);
+            ExecutionCount++;
+            return _resultToReturn;
         }
-        public void MockTestMethod() { }
     }
 
-    public class TestClassWithRetryOnError
+    private class TestRetryAttribute : RetryOnErrorAttribute
     {
-        // Since RetryOnErrorAttribute is abstract and takes a Func parameter,
-        // we can't use it directly as an attribute. This is just for structural testing.
-        public static void RetriableMethod()
-        {
-            // Method that would have retry on error attribute
-        }
+        public TestRetryAttribute(int maxRetryCount, Func<TestExecutionContext, bool> shouldRetry)
+            : base(maxRetryCount, shouldRetry) { }
     }
 }
