@@ -20,14 +20,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         ResourceCollectionClientProvider collection,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
-        MethodProvider convenienceMethod,
         bool isAsync)
         : ResourceOperationMethodProvider(
             collection,
             collection.ContextualPath,
             restClientInfo,
             method,
-            convenienceMethod,
             isAsync,
             methodName: isAsync ? "GetIfExistsAsync" : "GetIfExists",
             description: $"Tries to get details for this resource from the service.")

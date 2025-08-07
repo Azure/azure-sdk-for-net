@@ -59,7 +59,7 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
-        private IReadOnlyDictionary<InputServiceMethod, InputClient> IntMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
+        private IReadOnlyDictionary<InputServiceMethod, InputClient> InputMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
 
         private IReadOnlyDictionary<InputModelType, string> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
@@ -69,10 +69,10 @@ namespace Azure.Generator.Management
 
             foreach (var (resourceModel, metadata) in ResourceMetadata)
             {
-                var id = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Update).FirstOrDefault()?.Id;
-                if (id != null && InputMethodsByCrossLanguageDefinitionId.GetValueOrDefault(id) is { Operation.HttpMethod: "PATCH" } method)
+                var inputMethod = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Update).FirstOrDefault()?.InputMethod;
+                if (inputMethod is { Operation.HttpMethod: "PATCH" } patchMethod)
                 {
-                    foreach (var parameter in method.Parameters)
+                    foreach (var parameter in patchMethod.Parameters)
                     {
                         if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != resourceModel)
                         {
@@ -103,7 +103,7 @@ namespace Azure.Generator.Management
             => InputMethodsByCrossLanguageDefinitionId.TryGetValue(crossLanguageDefinitionId, out var method) ? method : null;
 
         internal InputClient? GetClientByMethod(InputServiceMethod method)
-            => IntMethodClientMap.TryGetValue(method, out var client) ? client : null;
+            => InputMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
         internal ResourceMetadata? GetResourceMetadata(InputModelType model)
             => ResourceMetadata.TryGetValue(model, out var metadata) ? metadata : null;
@@ -184,7 +184,13 @@ namespace Azure.Generator.Management
                                 operationKind = kind;
                             }
                         }
-                        methods.Add(new ResourceMethod(id ?? throw new InvalidOperationException("id cannot be null"), operationKind ?? throw new InvalidOperationException("operationKind cannot be null")));
+                        var inputMethod = GetMethodByCrossLanguageDefinitionId(id ?? throw new InvalidOperationException("id cannot be null"));
+                        var inputClient = GetClientByMethod(inputMethod ?? throw new InvalidOperationException($"cannot find InputServiceMethod {id}"));
+                        methods.Add(
+                            new ResourceMethod(
+                                operationKind ?? throw new InvalidOperationException("operationKind cannot be null"),
+                                inputMethod,
+                                inputClient ?? throw new InvalidOperationException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client")));
                     }
                 }
 
@@ -198,16 +204,6 @@ namespace Azure.Generator.Management
                     resourceName = resourceNameData.ToObjectFromJson<string>();
                 }
 
-                var methodToClientMap = new Dictionary<string, InputClient>();
-                foreach (var method in methods)
-                {
-                    var inputClient = GetClientByMethod(GetMethodByCrossLanguageDefinitionId(method.Id)!);
-                    if (inputClient != null)
-                    {
-                        methodToClientMap[method.Id] = inputClient;
-                    }
-                }
-
                 // TODO -- I know we should never throw the exception, but here we just put it here and refine it later
                 return new(
                     resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
@@ -216,8 +212,7 @@ namespace Azure.Generator.Management
                     methods,
                     singletonResourceName,
                     parentResource,
-                    resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
-                    methodToClientMap);
+                    resourceName ?? throw new InvalidOperationException("resourceName cannot be null"));
             }
         }
 

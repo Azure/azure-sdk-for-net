@@ -22,7 +22,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly TypeProvider _enclosingType;
         private readonly RequestPathPattern _contextualPath;
         private readonly RestClientInfo _restClientInfo;
-        private readonly InputServiceMethod _method;
+        private readonly InputPagingServiceMethod _method;
         private readonly MethodProvider _convenienceMethod;
         private readonly bool _isAsync;
         private readonly CSharpType _itemType;
@@ -36,21 +36,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
             RestClientInfo restClientInfo,
-            InputServiceMethod method,
-            MethodProvider convenienceMethod,
+            InputPagingServiceMethod method,
             bool isAsync,
-            CSharpType itemType,
             ResourceOperationKind methodKind)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
             _restClientInfo = restClientInfo;
             _method = method;
-            _convenienceMethod = convenienceMethod;
+            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
             _isAsync = isAsync;
-            _itemType = itemType;
+            _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
             InitializeTypeInfo(
-                itemType,
+                _itemType,
                 ref _actualItemType!,
                 ref _itemResourceClient
             );

@@ -165,10 +165,10 @@
 # ServiceOwners:                                                   @ilayrn @orhasban @zoharHenMicrosoft @Aviv-Yaniv
 
 # PRLabel: %Azure Stack
-/sdk/azurestack*/                                                  @sarathys @bganapa @rakku-ms
+/sdk/azurestack*/                                                  @bganapa @rakku-ms
 
 # ServiceLabel: %Azure Stack
-# ServiceOwners:                                                   @sarathys @bganapa @rakku-ms
+# ServiceOwners:                                                   @bganapa @rakku-ms
 
 # ServiceLabel: %Azure Arc Enabled Servers
 # ServiceOwners:                                                   @rpsqrd @edyoung
@@ -561,10 +561,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @Azure/azure-sdk-write-keyvault
+/sdk/keyvault/                                                     @cheathamb36 @chen-karen @jackrichins @vickm
 
 # ServiceLabel: %KeyVault
-# ServiceOwners:                                                   @cheathamb36 @chen-karen @Azure/azure-sdk-write-keyvault
+# ServiceOwners:                                                   @cheathamb36 @chen-karen @jackrichins @vickm
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru

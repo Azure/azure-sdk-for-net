@@ -18,26 +18,20 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         ResourceCollectionClientProvider collection,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
-        MethodProvider convenienceMethod,
-        bool isAsync) : ResourceOperationMethodProvider(collection, collection.ContextualPath, restClientInfo, method, convenienceMethod, isAsync)
+        bool isAsync)
+        : ResourceOperationMethodProvider(
+            collection,
+            collection.ContextualPath,
+            restClientInfo,
+            method,
+            isAsync,
+            methodName: isAsync ? "ExistsAsync" : "Exists",
+            description: $"Checks to see if the resource exists in azure.")
     {
-        protected override MethodSignature CreateSignature()
+        protected override CSharpType BuildReturnType()
         {
-            var returnType = new CSharpType(typeof(Response<>), typeof(bool))
+            return new CSharpType(typeof(Response<>), typeof(bool))
                 .WrapAsync(_isAsync);
-
-            return new MethodSignature(
-                _isAsync ? "ExistsAsync" : "Exists",
-                $"Checks to see if the resource exists in azure.",
-                _convenienceMethod.Signature.Modifiers,
-                returnType,
-                _convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(),
-                _convenienceMethod.Signature.Attributes,
-                _convenienceMethod.Signature.GenericArguments,
-                _convenienceMethod.Signature.GenericParameterConstraints,
-                _convenienceMethod.Signature.ExplicitInterface,
-                _convenienceMethod.Signature.NonDocumentComment);
         }
 
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
