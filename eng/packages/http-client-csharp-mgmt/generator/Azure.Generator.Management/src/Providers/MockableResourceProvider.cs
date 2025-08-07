@@ -52,15 +52,44 @@ namespace Azure.Generator.Management.Providers
                     continue;
                 }
 
+                var thisResource = This.As<ArmResource>();
                 var restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
 
-                // TODO -- add the properties for these fields to make them lazily initialized
-                var restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, restClientProvider.Type, ResourceHelpers.GetRestClientFieldName(restClientProvider.Name), enclosingType);
+                var clientDiagnosticsField = new FieldProvider(
+                    FieldModifiers.Private,
+                    typeof(ClientDiagnostics),
+                    ResourceHelpers.GetClientDiagnosticsFieldName(restClientProvider.Name),
+                    enclosingType);
+                var clientDiagnosticsProperty = new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Private,
+                    typeof(ClientDiagnostics),
+                    ResourceHelpers.GetClientDiagnosticsPropertyName(restClientProvider.Name),
+                    // TODO -- here we either need to use the corresponding ResourceType.Namespace or ProviderConstants.DefaultProviderNamespace, pending on https://github.com/Azure/azure-sdk-for-net/issues/50593
+                    new ExpressionPropertyBody(
+                        clientDiagnosticsField.Assign(
+                            New.Instance(typeof(ClientDiagnostics), Literal(enclosingType.Type.Namespace), Literal("TODO"), thisResource.Diagnostics()),
+                            nullCoalesce: true)),
+                    enclosingType);
 
-                var clientDiagnosticsFieldName = ResourceHelpers.GetClientDiagnosticFieldName(restClientProvider.Name);
-                var clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), clientDiagnosticsFieldName, enclosingType);
+                var restClientField = new FieldProvider(
+                    FieldModifiers.Private,
+                    restClientProvider.Type,
+                    ResourceHelpers.GetRestClientFieldName(restClientProvider.Name),
+                    enclosingType);
+                var restClientProperty = new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Private,
+                    restClientProvider.Type,
+                    ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
+                    new ExpressionPropertyBody(
+                        restClientField.Assign(
+                            // TODO -- need to add apiVersion here in the future https://github.com/Azure/azure-sdk-for-net/issues/51791
+                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Null),
+                            nullCoalesce: true)),
+                    enclosingType);
 
-                clientInfos.Add(inputClient, new RestClientInfo(restClientProvider, restClientField, clientDiagnosticsField));
+                clientInfos.Add(inputClient, new RestClientInfo(restClientProvider, restClientField, restClientProperty, clientDiagnosticsField, clientDiagnosticsProperty));
             }
             return clientInfos;
         }

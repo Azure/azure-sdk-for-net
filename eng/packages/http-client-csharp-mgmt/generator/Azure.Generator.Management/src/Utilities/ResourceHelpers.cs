@@ -7,23 +7,42 @@ using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Generator.Management.Utilities
 {
     internal static class ResourceHelpers
     {
-        public static string GetClientDiagnosticFieldName(string resourceName)
+        public static string GetClientDiagnosticsFieldName(string clientName)
         {
-            var fieldName = $"{resourceName}ClientDiagnostics".ToVariableName();
+            var fieldName = GetClientDiagnosticsName(clientName).ToVariableName();
 
             return $"_{fieldName}";
         }
 
-        public static string GetRestClientFieldName(string restClientName)
+        public static string GetClientDiagnosticsPropertyName(string clientName)
         {
-            var fieldName = $"{restClientName}RestClient".ToVariableName();
+            var propertyName = GetClientDiagnosticsName(clientName).ToIdentifierName();
+            return propertyName;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static string GetClientDiagnosticsName(string clientName) => $"{clientName}ClientDiagnostics";
+
+        public static string GetRestClientFieldName(string clientName)
+        {
+            var fieldName = GetRestClientName(clientName).ToVariableName();
             return $"_{fieldName}";
         }
+
+        public static string GetRestClientPropertyName(string clientName)
+        {
+            var propertyName = GetRestClientName(clientName).ToIdentifierName();
+            return propertyName;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static string GetRestClientName(string clientName) => $"{clientName}RestClient";
 
         /// <summary>
         /// Gets the appropriate method name for a resource operation based on its kind.

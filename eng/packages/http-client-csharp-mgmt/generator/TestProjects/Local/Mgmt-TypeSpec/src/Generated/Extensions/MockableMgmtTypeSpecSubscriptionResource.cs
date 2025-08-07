@@ -20,8 +20,8 @@ namespace MgmtTypeSpec.Mocking
     /// <summary></summary>
     public partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
     {
-        private readonly ClientDiagnostics _fooTasksClientDiagnostics;
-        private readonly FooTasks _fooTasksRestClient;
+        private ClientDiagnostics _fooTasksClientDiagnostics;
+        private FooTasks _fooTasksRestClient;
 
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecSubscriptionResource for mocking. </summary>
         protected MockableMgmtTypeSpecSubscriptionResource()
@@ -35,6 +35,10 @@ namespace MgmtTypeSpec.Mocking
         {
         }
 
+        private ClientDiagnostics FooTasksClientDiagnostics => _fooTasksClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", "TODO", Diagnostics);
+
+        private FooTasks FooTasksRestClient => _fooTasksRestClient ??= new FooTasks(FooTasksClientDiagnostics, Pipeline, Endpoint, null);
+
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
         /// <param name="body"> The request body. </param>
@@ -44,7 +48,7 @@ namespace MgmtTypeSpec.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _fooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {
@@ -52,7 +56,7 @@ namespace MgmtTypeSpec.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
@@ -77,7 +81,7 @@ namespace MgmtTypeSpec.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _fooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActionsAsync");
+            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActionsAsync");
             scope.Start();
             try
             {
@@ -85,7 +89,7 @@ namespace MgmtTypeSpec.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)

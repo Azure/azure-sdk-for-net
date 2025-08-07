@@ -109,7 +109,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var arguments = new List<ValueExpression>
             {
-                _restClientInfo.RestClientField,
+                _restClientInfo.RestClient,
             };
             arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
 
