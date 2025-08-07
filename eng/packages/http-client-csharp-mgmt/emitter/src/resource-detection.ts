@@ -309,9 +309,6 @@ function addNonResourceMethodDecorators(
   codeModel: CodeModel,
   metadata: NonResourceMethod[]
 ) {
-  // TODO -- now in our code model, the InputServiceMethod does not have a decorators property
-  // therefore here we cannot put them on the InputServiceMethod
-  // as a workaround, we put them on the root client
   codeModel.clients[0].decorators ??= [];
   codeModel.clients[0].decorators.push({
     name: nonResourceMethodMetadata,
