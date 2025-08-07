@@ -15,7 +15,7 @@ namespace Azure.AI.Agents.Persistent
     {
         /// <summary> Initializes a new instance of <see cref="RunStepConnectedAgentToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="connectedAgent"></param>
+        /// <param name="connectedAgent"> The connected agent step information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="connectedAgent"/> is null. </exception>
         internal RunStepConnectedAgentToolCall(string id, RunStepConnectedAgent connectedAgent) : base(id)
         {
@@ -30,7 +30,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectedAgent"></param>
+        /// <param name="connectedAgent"> The connected agent step information. </param>
         internal RunStepConnectedAgentToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, RunStepConnectedAgent connectedAgent) : base(type, id, serializedAdditionalRawData)
         {
             ConnectedAgent = connectedAgent;
@@ -41,7 +41,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> Gets the connected agent. </summary>
+        /// <summary> The connected agent step information. </summary>
         public RunStepConnectedAgent ConnectedAgent { get; }
     }
 }

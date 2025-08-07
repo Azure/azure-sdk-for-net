@@ -458,7 +458,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepConnectedAgentToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="connectedAgent"></param>
+        /// <param name="connectedAgent"> The connected agent step information. </param>
         /// <returns> A new <see cref="Persistent.RunStepConnectedAgentToolCall"/> instance for mocking. </returns>
         public static RunStepConnectedAgentToolCall RunStepConnectedAgentToolCall(string id = null, RunStepConnectedAgent connectedAgent = null)
         {
