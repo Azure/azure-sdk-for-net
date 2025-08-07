@@ -28,6 +28,11 @@ public class UserAgentPolicy : PipelinePolicy
     public string? ApplicationId { get; }
 
     /// <summary>
+    /// The formatted user agent string that will be added to HTTP requests by this policy.
+    /// </summary>
+    public string UserAgentValue => _userAgent;
+
+    /// <summary>
     /// Initialize an instance of <see cref="UserAgentPolicy"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="callerAssembly"/>.
     /// </summary>
     /// <param name="callerAssembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the user agent.</param>
@@ -69,11 +74,6 @@ public class UserAgentPolicy : PipelinePolicy
         AddUserAgentHeader(message);
         await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
     }
-
-    /// <summary>
-    /// The properly formatted UserAgent string based on this <see cref="UserAgentPolicy"/> instance.
-    /// </summary>
-    public override string ToString() => _userAgent;
 
     private void AddUserAgentHeader(PipelineMessage message)
     {

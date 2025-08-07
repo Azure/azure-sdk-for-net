@@ -188,7 +188,7 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         Assert.AreEqual(assembly, policy.Assembly);
 
         // Should contain assembly name and version
-        var userAgent = policy.ToString();
+        var userAgent = policy.UserAgentValue;
         string assemblyName = assembly.GetName().Name!;
         Assert.That(userAgent, Does.Contain(assemblyName));
 
@@ -207,7 +207,7 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         Assert.IsNotNull(policy);
         Assert.AreEqual(applicationId, policy.ApplicationId);
         Assert.AreEqual(assembly, policy.Assembly);
-        var userAgent = policy.ToString();
+        var userAgent = policy.UserAgentValue;
 
         // Should start with application ID
         Assert.That(userAgent, Does.StartWith(applicationId));
