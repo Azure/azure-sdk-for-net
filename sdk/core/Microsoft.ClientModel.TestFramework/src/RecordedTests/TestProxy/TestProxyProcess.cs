@@ -45,12 +45,12 @@ public class TestProxyProcess
     /// <summary>
     /// Gets the test framework client for interacting with the test proxy.
     /// </summary>
-    internal TestFrameworkClient Client { get; }
+    internal virtual TestFrameworkClient Client { get; }
 
     /// <summary>
     /// Gets the test proxy client for proxy-specific operations.
     /// </summary>
-    internal TestProxyClient ProxyClient { get; }
+    internal virtual TestProxyClient ProxyClient { get; }
     private readonly StringBuilder _errorBuffer = new();
     private static readonly object _lock = new();
     private static TestProxyProcess? _shared;
@@ -80,6 +80,13 @@ public class TestProxyProcess
 
         bool HasDotNetExe(string? dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
         s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
+    }
+
+    // For mocking
+    internal TestProxyProcess()
+    {
+        Client = default!;
+        ProxyClient = default!;
     }
 
     /// <summary>

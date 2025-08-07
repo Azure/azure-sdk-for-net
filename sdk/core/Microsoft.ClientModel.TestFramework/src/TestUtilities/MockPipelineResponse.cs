@@ -164,7 +164,6 @@ public class MockPipelineResponse : PipelineResponse
     /// <inheritdoc/>
     public override BinaryData BufferContent(CancellationToken cancellationToken = default)
     {
-        Console.WriteLine("Buffering content sync");
         if (_bufferedContent is not null)
         {
             return _bufferedContent;
@@ -191,8 +190,6 @@ public class MockPipelineResponse : PipelineResponse
     /// <inheritdoc/>
     public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
     {
-        Console.WriteLine("Buffering content async");
-
         if (_bufferedContent is not null)
         {
             return _bufferedContent;

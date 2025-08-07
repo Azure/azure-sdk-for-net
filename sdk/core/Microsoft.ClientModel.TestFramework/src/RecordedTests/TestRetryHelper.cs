@@ -58,7 +58,8 @@ public class TestRetryHelper
             }
             catch (Exception e)
             {
-                exceptions = [e];
+                exceptions ??= new List<Exception>();
+                exceptions.Add(e);
 
                 await Task.Delay(delay).ConfigureAwait(false);
             }

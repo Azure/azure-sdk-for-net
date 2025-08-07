@@ -41,158 +41,10 @@ public class TestRecording : IAsyncDisposable
     /// </summary>
     public SortedDictionary<string, string> Variables => _variables;
 
-    private TestRecording(RecordedTestMode mode, string sessionFile, TestProxyProcess proxy, RecordedTestBase recordedTestBase)
-    {
-        Mode = mode;
-        _sessionFile = sessionFile;
-        _proxy = proxy;
-        _recordedTestBase = recordedTestBase;
-    }
-
     /// <summary>
-    /// Creates a new test recording instance asynchronously and initializes proxy settings.
+    /// Gets a value indicating whether this recording session has processed any HTTP requests.
     /// </summary>
-    /// <param name="mode">The recording mode (Live, Record, or Playback).</param>
-    /// <param name="sessionFile">The file path where the recording session will be stored or read from.</param>
-    /// <param name="proxy">The test proxy process used for recording and playback operations.</param>
-    /// <param name="recordedTestBase">The base test class containing sanitizers and configuration.</param>
-    /// <param name="cancellationToken">Optional cancellation token to cancel the operation.</param>
-    /// <returns>A configured TestRecording instance ready for use.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when the proxy client is not initialized.</exception>
-    /// <exception cref="TestRecordingMismatchException">Thrown when a playback recording file is not found.</exception>
-    public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxyProcess proxy, RecordedTestBase recordedTestBase, CancellationToken? cancellationToken = default)
-    {
-        var recording = new TestRecording(mode, sessionFile, proxy, recordedTestBase);
-        await recording.InitializeProxySettingsAsync(cancellationToken ?? CancellationToken.None).ConfigureAwait(false);
-        return recording;
-    }
-
-    internal async Task InitializeProxySettingsAsync(CancellationToken cancellationToken)
-    {
-        if (_proxy.Client == null)
-        {
-            throw new InvalidOperationException("TestProxyProcess.Client is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
-        }
-
-        var assetsJson = _recordedTestBase.AssetsJsonPath;
-
-        switch (Mode)
-        {
-            case RecordedTestMode.Record:
-                ClientResult recordResponse = await _proxy.ProxyClient.StartRecordAsync(body: new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
-                var rawRecordResponse = recordResponse.GetRawResponse();
-                rawRecordResponse.Headers.TryGetValue("x-recording-id", out string? recordRecordingId);
-                RecordingId = recordRecordingId;
-                await ApplySanitizersAsync(cancellationToken).ConfigureAwait(false);
-
-                break;
-            case RecordedTestMode.Playback:
-                ClientResult<IReadOnlyDictionary<string, string>>? playbackResult;
-                try
-                {
-                    playbackResult = await _proxy.ProxyClient.StartPlaybackAsync(new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
-                }
-                catch (ClientResultException ex)
-                    when (ex.Status == 404)
-                {
-                    // We don't throw the exception here because Playback only tests that are testing the
-                    // recording infrastructure itself will not have session records.
-                    MismatchException = new TestRecordingMismatchException(ex.Message, ex);
-                    return;
-                }
-
-                _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResult);
-                var response = playbackResult.GetRawResponse();
-                response.Headers.TryGetValue("x-recording-id", out string? playbackRecordingId);
-                RecordingId = playbackRecordingId;
-                await ApplySanitizersAsync(cancellationToken).ConfigureAwait(false);
-
-                var excludedHeaders = new List<string>()
-                {
-                    "Content-Type",
-                    "Content-Length",
-                    "Connection"
-                };
-                CustomDefaultMatcher defaultMatcher = new()
-                {
-                    ExcludedHeaders = string.Join(",", excludedHeaders),
-                    IgnoredHeaders = _recordedTestBase.IgnoredHeaders.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredHeaders) : null,
-                    IgnoredQueryParameters = _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters) : null,
-                    CompareBodies = _recordedTestBase.CompareBodies
-                };
-                await _proxy.ProxyClient.SetMatcherAsync(MatcherType.CustomDefaultMatcher, defaultMatcher).ConfigureAwait(false);
-
-                foreach (HeaderTransform transform in _recordedTestBase.HeaderTransforms)
-                {
-                    await _proxy.ProxyClient.AddHeaderTransformAsync("HeaderTransform", transform).ConfigureAwait(false);
-                }
-                break;
-        }
-    }
-
-    private async Task ApplySanitizersAsync(CancellationToken cancellationToken)
-    {
-        if (_proxy.Client == null)
-        {
-            throw new InvalidOperationException("TestProxyProcess.Client is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
-        }
-
-        foreach (string header in _recordedTestBase.SanitizedHeaders)
-        {
-            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, new HeaderRegexSanitizer(header), RecordingId, cancellationToken).ConfigureAwait(false);
-        }
-
-        foreach (var header in _recordedTestBase.HeaderRegexSanitizers)
-        {
-            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, header, RecordingId, cancellationToken).ConfigureAwait(false);
-        }
-
-        foreach (var (header, queryParameter) in _recordedTestBase.SanitizedQueryParametersInHeaders)
-        {
-            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer,
-                HeaderRegexSanitizer.CreateWithQueryParameter(header, queryParameter, Sanitized),
-                RecordingId,
-                cancellationToken).ConfigureAwait(false);
-        }
-
-        foreach (UriRegexSanitizer sanitizer in _recordedTestBase.UriRegexSanitizers)
-        {
-            await _proxy.ProxyClient.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer, sanitizer, RecordingId, cancellationToken).ConfigureAwait(false);
-        }
-
-        foreach (string queryParameter in _recordedTestBase.SanitizedQueryParameters)
-        {
-            await _proxy.ProxyClient.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer,
-                UriRegexSanitizer.CreateWithQueryParameter(queryParameter, Sanitized),
-                RecordingId,
-                cancellationToken).ConfigureAwait(false);
-        }
-
-        foreach (string path in _recordedTestBase.JsonPathSanitizers)
-        {
-            await _proxy.ProxyClient.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, new BodyKeySanitizer(path), RecordingId).ConfigureAwait(false);
-        }
-
-        foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
-        {
-            await _proxy.ProxyClient.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, sanitizer, RecordingId).ConfigureAwait(false);
-        }
-
-        foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
-        {
-            await _proxy.ProxyClient.AddBodyRegexSanitizerAsync(SanitizerType.BodyRegexSanitizer, sanitizer, RecordingId).ConfigureAwait(false);
-        }
-
-        if (_recordedTestBase.SanitizersToRemove.Count > 0)
-        {
-            var toRemove = new SanitizersToRemove(new List<string>());
-            foreach (var sanitizer in _recordedTestBase.SanitizersToRemove)
-            {
-                toRemove.Sanitizers.Add(sanitizer);
-            }
-            await _proxy.ProxyClient.RemoveSanitizersAsync(RecordingId, toRemove, cancellationToken).ConfigureAwait(false);
-        }
-    }
+    public bool HasRequests { get; internal set; }
 
     /// <summary>
     /// Gets the current recording mode (Live, Record, or Playback).
@@ -284,31 +136,38 @@ public class TestRecording : IAsyncDisposable
     /// </summary>
     public DateTimeOffset UtcNow => Now.ToUniversalTime();
 
-    /// <summary>
-    /// Disposes the test recording asynchronously, stopping the recording or playback session.
-    /// </summary>
-    /// <param name="save">Whether to save the recording. If false, the recording is discarded.</param>
-    /// <returns>A task representing the asynchronous disposal operation.</returns>
-    public async ValueTask DisposeAsync(bool save)
+    // For mocking
+    internal TestRecording()
     {
-        if (_proxy.Client is null)
-        {
-            return;
-        }
-        if (Mode == RecordedTestMode.Record)
-        {
-            await _proxy.ProxyClient.StopRecordAsync(RecordingId, Variables, save ? null : "request-response").ConfigureAwait(false);
-        }
-        else if (Mode == RecordedTestMode.Playback && HasRequests)
-        {
-            await _proxy.ProxyClient.StopPlaybackAsync(RecordingId).ConfigureAwait(false);
-        }
+        _sessionFile = string.Empty;
+        _proxy = default!;
+        _recordedTestBase = default!;
     }
 
-    /// <inheritdoc/>
-    public async ValueTask DisposeAsync()
+    internal TestRecording(RecordedTestMode mode, string sessionFile, TestProxyProcess proxy, RecordedTestBase recordedTestBase)
     {
-        await DisposeAsync(true).ConfigureAwait(false);
+        Mode = mode;
+        _sessionFile = sessionFile;
+        _proxy = proxy;
+        _recordedTestBase = recordedTestBase;
+    }
+
+    /// <summary>
+    /// Creates a new test recording instance asynchronously and initializes proxy settings.
+    /// </summary>
+    /// <param name="mode">The recording mode (Live, Record, or Playback).</param>
+    /// <param name="sessionFile">The file path where the recording session will be stored or read from.</param>
+    /// <param name="proxy">The test proxy process used for recording and playback operations.</param>
+    /// <param name="recordedTestBase">The base test class containing sanitizers and configuration.</param>
+    /// <param name="cancellationToken">Optional cancellation token to cancel the operation.</param>
+    /// <returns>A configured TestRecording instance ready for use.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the proxy client is not initialized.</exception>
+    /// <exception cref="TestRecordingMismatchException">Thrown when a playback recording file is not found.</exception>
+    public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxyProcess proxy, RecordedTestBase recordedTestBase, CancellationToken? cancellationToken = default)
+    {
+        var recording = new TestRecording(mode, sessionFile, proxy, recordedTestBase);
+        await recording.InitializeProxySettingsAsync(cancellationToken ?? CancellationToken.None).ConfigureAwait(false);
+        return recording;
     }
 
     /// <summary>
@@ -458,11 +317,6 @@ public class TestRecording : IAsyncDisposable
     }
 
     /// <summary>
-    /// Gets a value indicating whether this recording session has processed any HTTP requests.
-    /// </summary>
-    public bool HasRequests { get; internal set; }
-
-    /// <summary>
     /// Creates a scope that disables recording for HTTP requests made within the scope.
     /// Useful for setup calls that shouldn't be part of the test recording.
     /// </summary>
@@ -480,6 +334,33 @@ public class TestRecording : IAsyncDisposable
     public DisableRecordingScope DisableRequestBodyRecording()
     {
         return new DisableRecordingScope(this, EntryRecordModel.RecordWithoutRequestBody);
+    }
+
+    /// <summary>
+    /// Disposes the test recording asynchronously, stopping the recording or playback session.
+    /// </summary>
+    /// <param name="save">Whether to save the recording. If false, the recording is discarded.</param>
+    /// <returns>A task representing the asynchronous disposal operation.</returns>
+    public async ValueTask DisposeAsync(bool save)
+    {
+        if (_proxy.ProxyClient is null)
+        {
+            return;
+        }
+        if (Mode == RecordedTestMode.Record)
+        {
+            await _proxy.ProxyClient.StopRecordAsync(RecordingId, Variables, save ? null : "request-response").ConfigureAwait(false);
+        }
+        else if (Mode == RecordedTestMode.Playback && HasRequests)
+        {
+            await _proxy.ProxyClient.StopPlaybackAsync(RecordingId).ConfigureAwait(false);
+        }
+    }
+
+    /// <inheritdoc/>
+    public async ValueTask DisposeAsync()
+    {
+        await DisposeAsync(true).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -504,6 +385,138 @@ public class TestRecording : IAsyncDisposable
         public void Dispose()
         {
             _testRecording._disableRecording.Value = EntryRecordModel.Record;
+        }
+    }
+
+    internal async Task InitializeProxySettingsAsync(CancellationToken cancellationToken)
+    {
+        var assetsJson = _recordedTestBase.AssetsJsonPath;
+
+        switch (Mode)
+        {
+            case RecordedTestMode.Record:
+                if (_proxy.ProxyClient == null)
+                {
+                    throw new InvalidOperationException("TestProxyProcess.ProxyClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
+                }
+
+                ClientResult recordResponse = await _proxy.ProxyClient.StartRecordAsync(body: new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
+                var rawRecordResponse = recordResponse.GetRawResponse();
+                rawRecordResponse.Headers.TryGetValue("x-recording-id", out string? recordRecordingId);
+                RecordingId = recordRecordingId;
+                await ApplySanitizersAsync(cancellationToken).ConfigureAwait(false);
+
+                break;
+            case RecordedTestMode.Playback:
+                if (_proxy.ProxyClient == null)
+                {
+                    throw new InvalidOperationException("TestProxyProcess.ProxyClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
+                }
+
+                ClientResult<IReadOnlyDictionary<string, string>>? playbackResult;
+                try
+                {
+                    playbackResult = await _proxy.ProxyClient.StartPlaybackAsync(new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
+                }
+                catch (ClientResultException ex)
+                    when (ex.Status == 404)
+                {
+                    // We don't throw the exception here because Playback only tests that are testing the
+                    // recording infrastructure itself will not have session records.
+                    MismatchException = new TestRecordingMismatchException(ex.Message, ex);
+                    return;
+                }
+
+                _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResult);
+                var response = playbackResult.GetRawResponse();
+                response.Headers.TryGetValue("x-recording-id", out string? playbackRecordingId);
+                RecordingId = playbackRecordingId;
+                await ApplySanitizersAsync(cancellationToken).ConfigureAwait(false);
+
+                var excludedHeaders = new List<string>()
+                {
+                    "Content-Type",
+                    "Content-Length",
+                    "Connection"
+                };
+                CustomDefaultMatcher defaultMatcher = new()
+                {
+                    ExcludedHeaders = string.Join(",", excludedHeaders),
+                    IgnoredHeaders = _recordedTestBase.IgnoredHeaders.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredHeaders) : null,
+                    IgnoredQueryParameters = _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters) : null,
+                    CompareBodies = _recordedTestBase.CompareBodies
+                };
+                await _proxy.ProxyClient.SetMatcherAsync(MatcherType.CustomDefaultMatcher, defaultMatcher).ConfigureAwait(false);
+
+                foreach (HeaderTransform transform in _recordedTestBase.HeaderTransforms)
+                {
+                    await _proxy.ProxyClient.AddHeaderTransformAsync("HeaderTransform", transform).ConfigureAwait(false);
+                }
+                break;
+        }
+    }
+
+    private async Task ApplySanitizersAsync(CancellationToken cancellationToken)
+    {
+        if (_proxy.ProxyClient == null)
+        {
+            throw new InvalidOperationException("TestProxyProcess.ProxyClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
+        }
+
+        foreach (string header in _recordedTestBase.SanitizedHeaders)
+        {
+            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, new HeaderRegexSanitizer(header), RecordingId, cancellationToken).ConfigureAwait(false);
+        }
+
+        foreach (var header in _recordedTestBase.HeaderRegexSanitizers)
+        {
+            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, header, RecordingId, cancellationToken).ConfigureAwait(false);
+        }
+
+        foreach (var (header, queryParameter) in _recordedTestBase.SanitizedQueryParametersInHeaders)
+        {
+            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer,
+                HeaderRegexSanitizer.CreateWithQueryParameter(header, queryParameter, Sanitized),
+                RecordingId,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        foreach (UriRegexSanitizer sanitizer in _recordedTestBase.UriRegexSanitizers)
+        {
+            await _proxy.ProxyClient.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer, sanitizer, RecordingId, cancellationToken).ConfigureAwait(false);
+        }
+
+        foreach (string queryParameter in _recordedTestBase.SanitizedQueryParameters)
+        {
+            await _proxy.ProxyClient.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer,
+                UriRegexSanitizer.CreateWithQueryParameter(queryParameter, Sanitized),
+                RecordingId,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        foreach (string path in _recordedTestBase.JsonPathSanitizers)
+        {
+            await _proxy.ProxyClient.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, new BodyKeySanitizer(path), RecordingId).ConfigureAwait(false);
+        }
+
+        foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
+        {
+            await _proxy.ProxyClient.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, sanitizer, RecordingId).ConfigureAwait(false);
+        }
+
+        foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
+        {
+            await _proxy.ProxyClient.AddBodyRegexSanitizerAsync(SanitizerType.BodyRegexSanitizer, sanitizer, RecordingId).ConfigureAwait(false);
+        }
+
+        if (_recordedTestBase.SanitizersToRemove.Count > 0)
+        {
+            var toRemove = new SanitizersToRemove(new List<string>());
+            foreach (var sanitizer in _recordedTestBase.SanitizersToRemove)
+            {
+                toRemove.Sanitizers.Add(sanitizer);
+            }
+            await _proxy.ProxyClient.RemoveSanitizersAsync(RecordingId, toRemove, cancellationToken).ConfigureAwait(false);
         }
     }
 }

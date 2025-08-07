@@ -79,7 +79,7 @@ public abstract class RecordedTestBase : ClientTestBase
     /// <value>
     /// The active TestRecording instance, or null if no recording is currently active.
     /// </value>
-    public TestRecording? Recording { get; private set; }
+    public virtual TestRecording? Recording { get; private set; }
 
     /// <summary>
     /// Gets or sets the recording mode for the current test execution.
@@ -112,26 +112,26 @@ public abstract class RecordedTestBase : ClientTestBase
     /// <summary>
     /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
     /// </summary>
-    public List<string> JsonPathSanitizers { get; } = new();
+    public virtual List<string> JsonPathSanitizers { get; } = new();
 
     /// <summary>
     /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
     /// <see cref="JsonPathSanitizers"/>, but provides additional features such as regex matching, and customizing the sanitization replacement.
     /// </summary>
-    public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new();
+    public virtual List<BodyKeySanitizer> BodyKeySanitizers { get; } = new();
 
     /// <summary>
     /// The list of <see cref="BodyRegexSanitizer"/> to use while sanitizing request and response bodies. This allows you to specify a
     /// regex for matching on specific content in the body.
     /// </summary>
-    public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } = new();
+    public virtual List<BodyRegexSanitizer> BodyRegexSanitizers { get; } = new();
 
     /// <summary>
     /// The list of <see cref="UriRegexSanitizer"/> to use while sanitizing request and response URIs. This allows you to specify
     /// a regex for matching on the URI. <seealso cref="SanitizedQueryParameters"/> is a convenience property that allows you to sanitize
     /// query parameters without constructing the <see cref="UriRegexSanitizer"/> yourself.
     /// </summary>
-    public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new()
+    public virtual List<UriRegexSanitizer> UriRegexSanitizers { get; } = new()
         {
             UriRegexSanitizer.CreateWithQueryParameter("skoid", EmptyGuid),
             UriRegexSanitizer.CreateWithQueryParameter("sktid", EmptyGuid),
@@ -148,17 +148,17 @@ public abstract class RecordedTestBase : ClientTestBase
     /// <see cref="SanitizedHeaders"/> instead. <seealso cref="SanitizedQueryParametersInHeaders"/> is a convenience property that allows
     /// you to sanitize query parameters out of specific headers without constructing the <see cref="HeaderRegexSanitizer"/> yourself.
     /// </summary>
-    public List<HeaderRegexSanitizer> HeaderRegexSanitizers { get; } = new();
+    public virtual List<HeaderRegexSanitizer> HeaderRegexSanitizers { get; } = new();
 
     /// <summary>
     /// The list of headers that will be sanitized on the request and response. By default, the "Authorization" header is included.
     /// </summary>
-    public List<string> SanitizedHeaders { get; } = new();
+    public virtual List<string> SanitizedHeaders { get; } = new();
 
     /// <summary>
     /// The list of query parameters that will be sanitized on the request and response URIs.
     /// </summary>
-    public List<string> SanitizedQueryParameters { get; } = new()
+    public virtual List<string> SanitizedQueryParameters { get; } = new()
         {
             "sig",
             "sip",
@@ -170,13 +170,13 @@ public abstract class RecordedTestBase : ClientTestBase
     /// The list of header keys and query parameter tuples where the associated query parameter that should be sanitized from the corresponding
     /// request and response headers.
     /// </summary>
-    public List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get; } = new();
+    public virtual List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get; } = new();
 
     /// <summary>
     /// The list of sanitizers to remove. Sanitizer IDs can be found in Test Proxy docs.
     /// https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md
     /// </summary>
-    public List<string> SanitizersToRemove { get; } = new()
+    public virtual List<string> SanitizersToRemove { get; } = new()
         {
             "AZSDK2003", // Location header
             "AZSDK2006", // x-ms-rename-source
@@ -271,6 +271,11 @@ public abstract class RecordedTestBase : ClientTestBase
     /// This is useful when running the proxy locally for debugging recorded test issues.
     /// </value>
     protected bool UseLocalDebugProxy { get; set; }
+
+    // For mocking
+    internal RecordedTestBase() : base(default)
+    {
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RecordedTestBase"/> class.

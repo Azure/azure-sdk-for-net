@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -7,7 +8,9 @@ using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
 using System;
 using System.Reflection;
-namespace Microsoft.ClientModel.TestFramework.Tests.RecordedTests;
+
+namespace Microsoft.ClientModel.TestFramework.Tests;
+
 [TestFixture]
 public class RetryOnErrorAttributeTests
 {
@@ -17,18 +20,21 @@ public class RetryOnErrorAttributeTests
         var type = typeof(RetryOnErrorAttribute);
         Assert.IsTrue(type.IsAbstract);
     }
+
     [Test]
     public void Inheritance_ExtendsNUnitAttribute()
     {
         var type = typeof(RetryOnErrorAttribute);
         Assert.IsTrue(typeof(NUnitAttribute).IsAssignableFrom(type));
     }
+
     [Test]
     public void Interface_ImplementsIRepeatTest()
     {
         var type = typeof(RetryOnErrorAttribute);
         Assert.IsTrue(typeof(IRepeatTest).IsAssignableFrom(type));
     }
+
     [Test]
     public void AttributeUsage_AllowsMethodOnly()
     {
@@ -38,6 +44,7 @@ public class RetryOnErrorAttributeTests
         Assert.IsFalse(usage.AllowMultiple);
         Assert.IsFalse(usage.Inherited);
     }
+
     [Test]
     public void Constructor_IsProtected()
     {
@@ -46,6 +53,7 @@ public class RetryOnErrorAttributeTests
         Assert.Greater(constructors.Length, 0);
         Assert.IsTrue(Array.Exists(constructors, c => c.IsFamily)); // Protected constructor exists
     }
+
     [Test]
     public void Wrap_Method_Exists()
     {
@@ -54,6 +62,7 @@ public class RetryOnErrorAttributeTests
         Assert.IsNotNull(wrapMethod);
         Assert.AreEqual(typeof(TestCommand), wrapMethod.ReturnType);
     }
+
     [Test]
     public void ConcreteImplementation_CanBeCreated()
     {
@@ -61,6 +70,7 @@ public class RetryOnErrorAttributeTests
         Assert.IsNotNull(concreteAttribute);
         Assert.IsInstanceOf<RetryOnErrorAttribute>(concreteAttribute);
     }
+
     [Test]
     public void Wrap_WithValidCommand_ReturnsWrappedCommand()
     {
@@ -70,6 +80,7 @@ public class RetryOnErrorAttributeTests
         Assert.IsNotNull(wrappedCommand);
         Assert.AreNotSame(originalCommand, wrappedCommand);
     }
+
     [Test]
     public void Wrap_ReturnsRetryOnErrorCommand()
     {
@@ -80,6 +91,7 @@ public class RetryOnErrorAttributeTests
         // Verify it's the correct type by checking the class name
         Assert.That(wrappedCommand.GetType().Name, Contains.Substring("RetryOnErrorCommand"));
     }
+
     [Test]
     public void Constructor_WithTryCount_AcceptsValidValues()
     {
@@ -87,6 +99,7 @@ public class RetryOnErrorAttributeTests
         Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(5, context => true));
         Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(10, context => true));
     }
+
     [Test]
     public void Constructor_WithShouldRetryFunction_AcceptsValidFunctions()
     {
@@ -97,11 +110,13 @@ public class RetryOnErrorAttributeTests
         Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(3, neverRetry));
         Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(3, conditionalRetry));
     }
+
     [Test]
     public void Constructor_WithNullShouldRetry_AllowsNull()
     {
         Assert.DoesNotThrow(() => new TestRetryOnErrorAttribute(3, null));
     }
+
     [Test]
     public void RetryOnErrorCommand_IsInternalClass()
     {
@@ -111,6 +126,7 @@ public class RetryOnErrorAttributeTests
         Assert.IsNotNull(commandType);
         Assert.IsTrue(commandType.IsNotPublic); // Internal types are not public
     }
+
     [Test]
     public void Attribute_CanBeAppliedToMethod()
     {
@@ -120,18 +136,21 @@ public class RetryOnErrorAttributeTests
         Assert.IsNotNull(method);
         Assert.IsTrue(method.IsStatic);
     }
+
     [Test]
     public void AllowMultiple_IsFalse()
     {
         var usage = typeof(RetryOnErrorAttribute).GetCustomAttribute<AttributeUsageAttribute>();
         Assert.IsFalse(usage.AllowMultiple);
     }
+
     [Test]
     public void Inherited_IsFalse()
     {
         var usage = typeof(RetryOnErrorAttribute).GetCustomAttribute<AttributeUsageAttribute>();
         Assert.IsFalse(usage.Inherited);
     }
+
     // Helper classes for testing
     public class TestRetryOnErrorAttribute : RetryOnErrorAttribute
     {
@@ -140,6 +159,7 @@ public class RetryOnErrorAttributeTests
         {
         }
     }
+
     public class MockTestCommand : TestCommand
     {
         public MockTestCommand() : base(new TestMethod(new MethodWrapper(typeof(RetryOnErrorAttributeTests), typeof(RetryOnErrorAttributeTests).GetMethod(nameof(MockTestMethod)))))
@@ -151,6 +171,7 @@ public class RetryOnErrorAttributeTests
         }
         public void MockTestMethod() { }
     }
+
     public class TestClassWithRetryOnError
     {
         // Since RetryOnErrorAttribute is abstract and takes a Func parameter,
