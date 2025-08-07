@@ -55,7 +55,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Union",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -101,7 +101,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Union",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -206,7 +206,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Union",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -265,7 +265,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Union",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -337,7 +337,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Union",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -383,7 +383,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Union",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -1205,7 +1205,7 @@
                 ]
               }
             ],
-            "namespace": "",
+            "namespace": "Type.Union",
             "decorators": []
           },
           "optional": false,
@@ -1436,7 +1436,7 @@
                       "decorators": []
                     }
                   ],
-                  "namespace": "",
+                  "namespace": "Type.Union",
                   "decorators": []
                 },
                 "optional": false,
@@ -1474,7 +1474,7 @@
                       "$ref": "128"
                     }
                   ],
-                  "namespace": "",
+                  "namespace": "Type.Union",
                   "decorators": []
                 },
                 "optional": false,
@@ -1589,7 +1589,7 @@
                       "$ref": "40"
                     }
                   ],
-                  "namespace": "",
+                  "namespace": "Type.Union",
                   "decorators": []
                 },
                 "optional": false,
@@ -1778,7 +1778,7 @@
                       "decorators": []
                     }
                   ],
-                  "namespace": "",
+                  "namespace": "Type.Union",
                   "decorators": []
                 },
                 "optional": false,

@@ -2579,7 +2579,7 @@
             "decorators": []
           }
         ],
-        "namespace": "",
+        "namespace": "Type.Property.AdditionalProperties",
         "decorators": []
       },
       "properties": [
@@ -2781,7 +2781,7 @@
             ]
           }
         ],
-        "namespace": "",
+        "namespace": "Type.Property.AdditionalProperties",
         "decorators": []
       },
       "properties": [
@@ -2894,7 +2894,7 @@
             "$ref": "258"
           }
         ],
-        "namespace": "",
+        "namespace": "Type.Property.AdditionalProperties",
         "decorators": []
       },
       "properties": [
@@ -2957,7 +2957,7 @@
             "$ref": "258"
           }
         ],
-        "namespace": "",
+        "namespace": "Type.Property.AdditionalProperties",
         "decorators": []
       },
       "properties": [

@@ -140,7 +140,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Property.ValueTypes",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -186,7 +186,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Property.ValueTypes",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -232,7 +232,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Property.ValueTypes",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",

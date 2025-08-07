@@ -729,7 +729,7 @@
               "crossLanguageDefinitionId": "TypeSpec.string",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -799,7 +799,7 @@
               "crossLanguageDefinitionId": "TypeSpec.bytes",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -876,7 +876,7 @@
               "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -953,7 +953,7 @@
               "crossLanguageDefinitionId": "TypeSpec.duration",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -1030,7 +1030,7 @@
               "crossLanguageDefinitionId": "TypeSpec.Array",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -1137,7 +1137,7 @@
               "crossLanguageDefinitionId": "TypeSpec.Array",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -1216,7 +1216,7 @@
               "crossLanguageDefinitionId": "TypeSpec.Array",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,

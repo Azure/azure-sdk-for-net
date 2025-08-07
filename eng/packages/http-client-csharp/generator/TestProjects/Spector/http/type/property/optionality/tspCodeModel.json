@@ -42,7 +42,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Property.Optional",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -88,7 +88,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Property.Optional",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
@@ -134,7 +134,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "Type.Property.Optional",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",

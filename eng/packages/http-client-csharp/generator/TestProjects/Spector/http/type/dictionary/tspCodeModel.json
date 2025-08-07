@@ -3099,7 +3099,7 @@
                           "crossLanguageDefinitionId": "TypeSpec.float32",
                           "decorators": []
                         },
-                        "namespace": ""
+                        "namespace": "Type.Dictionary"
                       },
                       "decorators": []
                     },

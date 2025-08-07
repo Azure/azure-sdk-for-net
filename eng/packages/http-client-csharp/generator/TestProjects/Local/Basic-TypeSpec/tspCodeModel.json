@@ -1443,7 +1443,7 @@
                 "decorators": []
               }
             ],
-            "namespace": "",
+            "namespace": "BasicTypeSpec",
             "decorators": []
           },
           "optional": false,
@@ -1684,7 +1684,7 @@
               "crossLanguageDefinitionId": "TypeSpec.Array",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "BasicTypeSpec"
           },
           "optional": true,
           "readOnly": false,
@@ -1711,7 +1711,7 @@
             "type": {
               "$ref": "170"
             },
-            "namespace": ""
+            "namespace": "BasicTypeSpec"
           },
           "optional": false,
           "readOnly": false,
@@ -2338,7 +2338,7 @@
                     "crossLanguageDefinitionId": "TypeSpec.int32",
                     "decorators": []
                   },
-                  "namespace": ""
+                  "namespace": "BasicTypeSpec"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -2365,7 +2365,7 @@
                   "type": {
                     "$ref": "6"
                   },
-                  "namespace": ""
+                  "namespace": "BasicTypeSpec"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -2392,7 +2392,7 @@
                   "type": {
                     "$ref": "1"
                   },
-                  "namespace": ""
+                  "namespace": "BasicTypeSpec"
                 },
                 "optional": false,
                 "readOnly": false,
