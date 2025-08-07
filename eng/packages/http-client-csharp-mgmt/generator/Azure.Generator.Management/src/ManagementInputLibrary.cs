@@ -250,21 +250,14 @@ namespace Azure.Generator.Management
                         continue; // skip methods that are not needed
                     }
                     var operationScopeString = item.GetProperty("operationScope").GetString() ?? throw new JsonException("operationScope cannot be null");
-                    string? carrierResourceId = null;
-                    if (item.TryGetProperty("carrierResourceId", out var carrierResourceIdData))
-                    {
-                        carrierResourceId = carrierResourceIdData.GetString();
-                    }
                     // find the method by its ID
                     var method = GetMethodByCrossLanguageDefinitionId(methodId) ?? throw new JsonException($"cannot find the method with crossLanguageDefinitionId {methodId}");
                     var client = GetClientByMethod(method) ?? throw new JsonException($"cannot find the client for method {methodId}");
                     var operationScope = Enum.Parse<ResourceScope>(operationScopeString, true);
-                    // TODO -- find the corresponding ResourceMetadata if any
                     nonResourceMethodMetadata.Add(new NonResourceMethod(
                         operationScope,
                         method,
-                        client,
-                        carrierResourceId != null ? resourceCache[carrierResourceId] : null));
+                        client));
                 }
             }
 

@@ -8,5 +8,4 @@ namespace Azure.Generator.Management.Models;
 internal record NonResourceMethod(
     ResourceScope OperationScope,
     InputServiceMethod InputMethod,
-    InputClient InputClient,
-    ResourceMetadata? CarrierResource);
+    InputClient InputClient);

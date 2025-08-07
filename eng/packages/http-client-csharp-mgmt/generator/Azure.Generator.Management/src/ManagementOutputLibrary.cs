@@ -115,10 +115,7 @@ namespace Azure.Generator.Management
             }
             foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
             {
-                if (nonResourceMethod.CarrierResource == null) // this has no been picked up by a resource
-                {
-                    resourcesAndMethodsPerScope[nonResourceMethod.OperationScope].NonResourceMethods.Add(nonResourceMethod);
-                }
+                resourcesAndMethodsPerScope[nonResourceMethod.OperationScope].NonResourceMethods.Add(nonResourceMethod);
             }
 
             var mockableArmClientResource = new MockableArmClientProvider(ResourceClients);

@@ -11,7 +11,7 @@ import {
   calculateResourceTypeFromPath,
   convertMethodMetadataToArguments,
   convertResourceMetadataToArguments,
-  MethodMetadata,
+  MethodMetadata as NonResourceMethod,
   ResourceMetadata,
   ResourceOperationKind,
   ResourceScope
@@ -75,7 +75,7 @@ export async function updateClients(
       } as ResourceMetadata
     ])
   );
-  const nonResourceMethods: Map<string, MethodMetadata> = new Map();
+  const nonResourceMethods: Map<string, NonResourceMethod> = new Map();
 
   // first we flatten all possible clients in the code model
   const clients = getAllClients(codeModel);
@@ -110,8 +110,7 @@ export async function updateClients(
         nonResourceMethods.set(method.crossLanguageDefinitionId, {
           methodId: method.crossLanguageDefinitionId,
           operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path),
-          carrierResource: undefined // this will be populated later if needed
+          operationScope: getOperationScope(method.operation.path)
         });
       }
     }
@@ -125,11 +124,6 @@ export async function updateClients(
     }
   }
 
-  // after we have all the resource metadata, we can assign carrierResource to the non-resource methods
-  for (const [, methodMetadata] of nonResourceMethods) {
-    methodMetadata.carrierResource = getCarrierResource(methodMetadata.operationPath, Array.from(resourceModelToMetadataMap.values()));
-  }
-
   // the last step, add the decorator to the resource model
   for (const model of resourceModels) {
     const metadata = resourceModelToMetadataMap.get(model.crossLanguageDefinitionId);
@@ -138,8 +132,7 @@ export async function updateClients(
     }
   }
   // and add the methodMetadata decorator to the non-resource methods
-  addMethodMetadataDecorators(
-    sdkContext,
+  addNonResourceMethodDecorators(
     codeModel,
     Array.from(nonResourceMethods.values())
   );
@@ -303,28 +296,9 @@ function getOperationScope(path: string): ResourceScope {
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
 }
 
-function getCarrierResource(path: string, metadata: ResourceMetadata[]): string | undefined {
-  const candidates: string[] = [];
-  for (const resource of metadata) {
-    // skip those failed resources
-    if (!resource.resourceIdPattern) {
-      continue;
-    }
-    if (path.startsWith(resource.resourceIdPattern)) {
-      candidates.push(resource.resourceIdPattern);
-    }
-  }
-  // return the longest candidate as the carrier resource
-  if (candidates.length > 0) {
-    return candidates.reduce((a, b) => (a.length > b.length ? a : b));
-  }
-  return undefined;
-}
-
-function addMethodMetadataDecorators(
-  sdkContext: CSharpEmitterContext,
+function addNonResourceMethodDecorators(
   codeModel: CodeModel,
-  metadata: MethodMetadata[]
+  metadata: NonResourceMethod[]
 ) {
   // TODO -- now in our code model, the InputServiceMethod does not have a decorators property
   // therefore here we cannot put them on the InputServiceMethod

@@ -64,7 +64,6 @@ export interface MethodMetadata {
   methodId: string;
   operationPath: string;
   operationScope: ResourceScope;
-  carrierResource?: string;
 }
 
 export function convertMethodMetadataToArguments(
@@ -74,8 +73,7 @@ export function convertMethodMetadataToArguments(
     "nonResourceMethods": metadata.map((m) => ({
       methodId: m.methodId,
       operationPath: m.operationPath,
-      operationScope: m.operationScope,
-      carrierResource: m.carrierResource
+      operationScope: m.operationScope
     }))
   }
 }

@@ -34,7 +34,6 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal sealed class ResourceClientProvider : TypeProvider
     {
-        // TODO -- find a way to inject the non-resource operations holding by this resource
         internal static ResourceClientProvider Create(ResourceMetadata resourceMetadata)
         {
             // Create a resource that supports multiple clients, using ResourceName from metadata
