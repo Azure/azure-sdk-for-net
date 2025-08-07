@@ -184,7 +184,6 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         // Test without application ID
         var policy = new UserAgentPolicy(assembly);
         Assert.IsNotNull(policy);
-        Assert.IsNotNull(policy);
         Assert.IsNull(policy.ApplicationId);
         Assert.AreEqual(assembly, policy.Assembly);
 
