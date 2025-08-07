@@ -11,6 +11,7 @@ namespace Azure.Provisioning.Primitives;
 
 public abstract class ProvisionableConstruct : Provisionable, IBicepValue
 {
+    internal BicepValue? _parentValue;
     /// <summary>
     /// Gets the parent infrastructure construct, if any.
     /// </summary>

@@ -23,6 +23,11 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
             {
                 target = BicepSyntax.Var(named.BicepIdentifier);
             }
+            else if (Construct is ProvisionableConstruct pc && pc._parentValue is IBicepValue pv)
+            {
+                // generic is anonying here - we did not get into the branch that handles BicepListIndexer<T> therefore the index is missing here.
+                target = pv.ToBicepExpression();
+            }
             else if (throwIfNoRoot)
             {
                 throw new InvalidOperationException("Cannot reference a construct without a name.");

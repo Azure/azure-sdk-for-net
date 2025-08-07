@@ -17,11 +17,24 @@ namespace Azure.Provisioning;
 /// <typeparam name="T">The type of the value.</typeparam>
 public class BicepValue<T> : BicepValue
 {
+    private T? _value;
     /// <summary>
     /// Gets or sets the literal value.  You can also rely on implicit
     /// conversions most of the time.
     /// </summary>
-    public T? Value { get; private protected set; }
+    public T? Value
+    {
+        get
+        {
+            if (_value is ProvisionableConstruct pc)
+            {
+                pc._parentValue = this;
+            }
+            return _value;
+        }
+
+        private protected set => _value = value;
+    }
     private protected override object? GetLiteralValue() => Value;
 
     // Get the closest primitive to T
@@ -41,7 +54,7 @@ public class BicepValue<T> : BicepValue
     public BicepValue(BicepExpression expression) : this(self: null, expression) { }
 
     internal BicepValue(BicepValueReference? self) : base(self) { }
-    private protected BicepValue(BicepValueReference? self, T literal) : base(self, (object)literal!) { Value = literal; }
+    private protected BicepValue(BicepValueReference? self, T literal) : base(self, (object)literal!) { _value = literal; }
     private protected BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression) { }
 
     /// <summary>
@@ -50,7 +63,7 @@ public class BicepValue<T> : BicepValue
     public void ClearValue()
     {
         _kind = BicepValueKind.Unset;
-        Value = default;
+        _value = default;
         _expression = null;
         _source = null;
     }
