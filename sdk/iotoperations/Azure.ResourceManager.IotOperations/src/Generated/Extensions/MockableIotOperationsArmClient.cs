@@ -129,5 +129,53 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             IotOperationsDataflowEndpointResource.ValidateResourceId(id);
             return new IotOperationsDataflowEndpointResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataflowGraphResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataflowGraphResource.CreateResourceIdentifier" /> to create a <see cref="DataflowGraphResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataflowGraphResource"/> object. </returns>
+        public virtual DataflowGraphResource GetDataflowGraphResource(ResourceIdentifier id)
+        {
+            DataflowGraphResource.ValidateResourceId(id);
+            return new DataflowGraphResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryEndpointResource.CreateResourceIdentifier" /> to create a <see cref="RegistryEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryEndpointResource"/> object. </returns>
+        public virtual RegistryEndpointResource GetRegistryEndpointResource(ResourceIdentifier id)
+        {
+            RegistryEndpointResource.ValidateResourceId(id);
+            return new RegistryEndpointResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AkriConnectorTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AkriConnectorTemplateResource.CreateResourceIdentifier" /> to create an <see cref="AkriConnectorTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AkriConnectorTemplateResource"/> object. </returns>
+        public virtual AkriConnectorTemplateResource GetAkriConnectorTemplateResource(ResourceIdentifier id)
+        {
+            AkriConnectorTemplateResource.ValidateResourceId(id);
+            return new AkriConnectorTemplateResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AkriConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AkriConnectorResource.CreateResourceIdentifier" /> to create an <see cref="AkriConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AkriConnectorResource"/> object. </returns>
+        public virtual AkriConnectorResource GetAkriConnectorResource(ResourceIdentifier id)
+        {
+            AkriConnectorResource.ValidateResourceId(id);
+            return new AkriConnectorResource(Client, id);
+        }
     }
 }

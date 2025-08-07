@@ -185,6 +185,82 @@ namespace Azure.ResourceManager.IotOperations
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DataflowGraphResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataflowGraphResource.CreateResourceIdentifier" /> to create a <see cref="DataflowGraphResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetDataflowGraphResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataflowGraphResource"/> object. </returns>
+        public static DataflowGraphResource GetDataflowGraphResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableIotOperationsArmClient(client).GetDataflowGraphResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistryEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistryEndpointResource.CreateResourceIdentifier" /> to create a <see cref="RegistryEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetRegistryEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RegistryEndpointResource"/> object. </returns>
+        public static RegistryEndpointResource GetRegistryEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableIotOperationsArmClient(client).GetRegistryEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AkriConnectorTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AkriConnectorTemplateResource.CreateResourceIdentifier" /> to create an <see cref="AkriConnectorTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetAkriConnectorTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AkriConnectorTemplateResource"/> object. </returns>
+        public static AkriConnectorTemplateResource GetAkriConnectorTemplateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableIotOperationsArmClient(client).GetAkriConnectorTemplateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AkriConnectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AkriConnectorResource.CreateResourceIdentifier" /> to create an <see cref="AkriConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetAkriConnectorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AkriConnectorResource"/> object. </returns>
+        public static AkriConnectorResource GetAkriConnectorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableIotOperationsArmClient(client).GetAkriConnectorResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of IotOperationsInstanceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -214,7 +290,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +328,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,7 +366,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,7 +402,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

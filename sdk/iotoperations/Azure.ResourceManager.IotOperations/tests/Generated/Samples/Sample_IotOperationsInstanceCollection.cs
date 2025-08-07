@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_InstanceCreateOrUpdate()
         {
-            // Generated from example definition: 2024-11-01/Instance_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Instance_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "InstanceResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
 
             // invoke the operation
             string instanceName = "aio-instance";
-            IotOperationsInstanceData data = new IotOperationsInstanceData(new AzureLocation("xvewadyhycrjpu"), new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsInstanceData data = new IotOperationsInstanceData(new AzureLocation("eastus2"), new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation))
             {
                 Properties = new IotOperationsInstanceProperties(new SchemaRegistryRef(new ResourceIdentifier("/subscriptions/0000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup123/providers/Microsoft.DeviceRegistry/schemaRegistries/resource-name123")))
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_InstanceGet()
         {
-            // Generated from example definition: 2024-11-01/Instance_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Instance_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "InstanceResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_InstanceListByResourceGroup()
         {
-            // Generated from example definition: 2024-11-01/Instance_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Instance_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "InstanceResource_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_InstanceGet()
         {
-            // Generated from example definition: 2024-11-01/Instance_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Instance_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "InstanceResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_InstanceGet()
         {
-            // Generated from example definition: 2024-11-01/Instance_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Instance_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "InstanceResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

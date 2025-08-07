@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    internal partial class DataflowEndpointAuthenticationServiceAccountToken : IUtf8JsonSerializable, IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>
+    public partial class DataflowEndpointAuthenticationServiceAccountToken : IUtf8JsonSerializable, IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
