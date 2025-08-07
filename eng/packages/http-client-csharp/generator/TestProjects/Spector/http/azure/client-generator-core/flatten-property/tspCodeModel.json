@@ -101,7 +101,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "12",
@@ -140,7 +141,8 @@
                   "json": {
                     "name": "description"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "16",
@@ -164,7 +166,8 @@
                   "json": {
                     "name": "age"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -178,7 +181,8 @@
             "json": {
               "name": "properties"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -217,7 +221,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "21",
@@ -256,7 +261,8 @@
                   "json": {
                     "name": "summary"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "25",
@@ -276,7 +282,8 @@
                   "json": {
                     "name": "properties"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -290,7 +297,8 @@
             "json": {
               "name": "properties"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -419,14 +427,14 @@
             {
               "$id": "33",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "1"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -437,7 +445,7 @@
             {
               "$id": "34",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "3"
               },
@@ -575,14 +583,14 @@
             {
               "$id": "41",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "5"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -593,7 +601,7 @@
             {
               "$id": "42",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "7"
               },

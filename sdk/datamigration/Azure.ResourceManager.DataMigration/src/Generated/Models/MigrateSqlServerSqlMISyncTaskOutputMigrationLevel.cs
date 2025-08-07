@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="databaseErrorCount"> Number of database level errors. </param>
-        internal MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? databaseCount, MigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerName, string sourceServerVersion, string sourceServerBrandVersion, string targetServerName, string targetServerVersion, string targetServerBrandVersion, int? databaseErrorCount) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? databaseCount, DataMigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerName, string sourceServerVersion, string sourceServerBrandVersion, string targetServerName, string targetServerVersion, string targetServerBrandVersion, int? databaseErrorCount) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseCount = databaseCount;
             State = state;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Count of databases. </summary>
         public int? DatabaseCount { get; }
         /// <summary> Current state of migration. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
         /// <summary> Migration end time. </summary>

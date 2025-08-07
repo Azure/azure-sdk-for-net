@@ -19,9 +19,9 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class BarSettingsResource : ArmResource
     {
-        private readonly ClientDiagnostics _barsettingsClientDiagnostics;
-        private readonly BarSettingsOperations _barsettingsRestClient;
-        private readonly BarSettingsData _data;
+        private readonly ClientDiagnostics _barSettingsOperationsClientDiagnostics;
+        private readonly BarSettingsOperations _barSettingsOperationsRestClient;
+        private readonly BarSettingsResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos/bars/settings";
 
@@ -33,7 +33,7 @@ namespace MgmtTypeSpec
         /// <summary> Initializes a new instance of <see cref="BarSettingsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BarSettingsResource(ArmClient client, BarSettingsData data) : this(client, data.Id)
+        internal BarSettingsResource(ArmClient client, BarSettingsResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -44,9 +44,9 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BarSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _barsettingsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string barsettingsApiVersion);
-            _barsettingsRestClient = new BarSettingsOperations(_barsettingsClientDiagnostics, Pipeline, Endpoint, barsettingsApiVersion);
+            TryGetApiVersion(ResourceType, out string barSettingsResourceApiVersion);
+            _barSettingsOperationsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _barSettingsOperationsRestClient = new BarSettingsOperations(_barSettingsOperationsClientDiagnostics, Pipeline, Endpoint, barSettingsResourceApiVersion);
             ValidateResourceId(id);
         }
 
@@ -54,7 +54,7 @@ namespace MgmtTypeSpec
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual BarSettingsData Data
+        public virtual BarSettingsResourceData Data
         {
             get
             {
@@ -87,29 +87,28 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Create a BarSettings. </summary>
+        /// <summary> Create a BarSettingsResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BarSettingsResource> CreateOrUpdate(WaitUntil waitUntil, BarSettingsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BarSettingsResource> CreateOrUpdate(WaitUntil waitUntil, BarSettingsResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barsettingsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _barsettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsData.ToRequestContent(data), context);
+                };
+                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<BarSettingsResource> operation = new MgmtTypeSpecArmOperation<BarSettingsResource>(
-                    new BarSettingsOperationSource(Client),
-                    _barsettingsClientDiagnostics,
+                    new BarSettingsResourceOperationSource(Client),
+                    _barSettingsOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -127,29 +126,28 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Create a BarSettings. </summary>
+        /// <summary> Create a BarSettingsResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BarSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BarSettingsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BarSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BarSettingsResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barsettingsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdateAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _barsettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsData.ToRequestContent(data), context);
+                };
+                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<BarSettingsResource> operation = new MgmtTypeSpecArmOperation<BarSettingsResource>(
-                    new BarSettingsOperationSource(Client),
-                    _barsettingsClientDiagnostics,
+                    new BarSettingsResourceOperationSource(Client),
+                    _barSettingsOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -167,22 +165,21 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a BarSettings. </summary>
+        /// <summary> Get a BarSettingsResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BarSettingsResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barsettingsClientDiagnostics.CreateScope("BarSettingsResource.Get");
+            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.Get");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _barsettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                };
+                HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BarSettingsData> response = Response.FromValue(BarSettingsData.FromResponse(result), result);
+                Response<BarSettingsResourceData> response = Response.FromValue(BarSettingsResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -196,22 +193,21 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a BarSettings. </summary>
+        /// <summary> Get a BarSettingsResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BarSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barsettingsClientDiagnostics.CreateScope("BarSettingsResource.GetAsync");
+            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.GetAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _barsettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                };
+                HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BarSettingsData> response = Response.FromValue(BarSettingsData.FromResponse(result), result);
+                Response<BarSettingsResourceData> response = Response.FromValue(BarSettingsResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

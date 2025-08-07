@@ -7,9 +7,13 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed bug where the scan will continue scanning AzureWebJobsStorage even when configuring a target storage account
 
 ### Other Changes
+
+## 5.3.5 (2025-07-21)
+
+### Bugs Fixed
+- Fixed bug where the scan will continue scanning AzureWebJobsStorage even when configuring a target storage account
 
 ## 5.3.4 (2025-02-11)
 

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupFilePaths"> The list of backup files to be used in case of existing backups. </param>
         /// <param name="id"> id of the database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateSqlServerSqlMIDatabaseInput(string name, string restoreDatabaseName, FileShare backupFileShare, IList<string> backupFilePaths, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrateSqlServerSqlMIDatabaseInput(string name, string restoreDatabaseName, DataMigrationFileShareInfo backupFileShare, IList<string> backupFilePaths, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             RestoreDatabaseName = restoreDatabaseName;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Name of the database at destination. </summary>
         public string RestoreDatabaseName { get; set; }
         /// <summary> Backup file share information for backing up this database. </summary>
-        public FileShare BackupFileShare { get; set; }
+        public DataMigrationFileShareInfo BackupFileShare { get; set; }
         /// <summary> The list of backup files to be used in case of existing backups. </summary>
         public IList<string> BackupFilePaths { get; }
         /// <summary> id of the database. </summary>

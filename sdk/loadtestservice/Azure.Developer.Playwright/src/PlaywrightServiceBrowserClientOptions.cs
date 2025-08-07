@@ -57,14 +57,62 @@ namespace Azure.Developer.Playwright
         /// </summary>
         public string RunId
         {
-            get => _runId ?? _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable) ?? _clientUtility.GetDefaultRunId();
+            get
+            {
+                // If runId is not set, try to get it from the environment variable if not present in environment variable then set default value
+                if (string.IsNullOrEmpty(_runId))
+                {
+                    var envRunId = _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable);
+                    _runId = !string.IsNullOrEmpty(envRunId) ? envRunId : _clientUtility.GetDefaultRunId();
+                }
+                return _runId!;
+            }
             set
             {
+                if (!string.IsNullOrEmpty(value) && !Guid.TryParse(value, out _))
+                {
+                    throw new ArgumentException(Constants.s_playwright_service_runId_not_guid_error_message);
+                }
                 _runId = value;
                 // Set run id if not already set in the environment
                 if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable)))
                 {
                     _environment.SetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable, value);
+                }
+            }
+        }
+
+        private string? _runName;
+
+        /// <summary>
+        /// Gets or sets the run name.
+        /// </summary>
+        public string RunName
+        {
+            get
+            {
+                // If runName is not set, try to get it from the environment variable if not present in environment variable then set default value
+                if (string.IsNullOrEmpty(_runName))
+                {
+                    var envRunName = _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable);
+                    _runName = !string.IsNullOrEmpty(envRunName) ? envRunName : _clientUtility.GetDefaultRunName(RunId);
+                }
+                return _runName!;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && value.Length > 200)
+                {
+                    _runName = value.Substring(0, 200);
+                }
+                else
+                {
+                    _runName = value;
+                }
+                // Set run name if not already set in the environment
+                if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable)))
+                {
+                    _environment.SetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable, _runName);
                 }
             }
         }
@@ -211,7 +259,7 @@ namespace Azure.Developer.Playwright
             // no-op
         }
 
-        internal PlaywrightServiceBrowserClientOptions(ServiceVersion serviceVersion, IEnvironment? environment = null, ClientUtilities? clientUtility = null)
+        internal PlaywrightServiceBrowserClientOptions(ServiceVersion serviceVersion, IEnvironment? environment = null, ILogger? logger = null, ClientUtilities? clientUtility = null)
         {
             _environment = environment ?? new EnvironmentHandler();
             _clientUtility = clientUtility ?? new ClientUtilities(_environment);
