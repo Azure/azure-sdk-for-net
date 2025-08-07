@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using System.Threading;
-using System.Buffers;
-using Azure.Core.Pipeline;
 using System;
-using Azure.Storage.DataMovement.JobPlan;
+using System.Buffers;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Common;
+using Azure.Storage.DataMovement.JobPlan;
+using static Azure.Storage.DataMovement.TransferInternalState;
 
 namespace Azure.Storage.DataMovement;
 
@@ -48,19 +49,20 @@ internal class JobBuilder
         ITransferCheckpointer checkpointer,
         string transferId,
         bool resumeJob,
+        RemoveTransferDelegate removeTransferDelegate,
         CancellationToken cancellationToken)
     {
         ValidateTransferOptions(transferOptions);
 
-        TransferOperation transferOperation = new(id: transferId);
+        TransferOperation transferOperation = new(removeTransferDelegate: removeTransferDelegate, id: transferId);
         TransferJobInternal transferJobInternal;
 
         // For single item transfers, wrap in single item container
         if (sourceResource is StorageResourceItem sourceItem &&
-            destinationResource is StorageResourceItem destationItem)
+            destinationResource is StorageResourceItem destinationItem)
         {
             sourceResource = new SingleItemStorageResourceContainer(sourceItem);
-            destinationResource = new SingleItemStorageResourceContainer(destationItem);
+            destinationResource = new SingleItemStorageResourceContainer(destinationItem);
         }
 
         if (sourceResource is StorageResourceContainer sourceContainer &&

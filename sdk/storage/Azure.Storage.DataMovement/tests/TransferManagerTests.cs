@@ -93,6 +93,10 @@ public class TransferManagerTests
             chunksProcessor.VerifyNoOtherCalls();
         }
 
+        jobsProcessor.Verify(jobsProcessor => jobsProcessor.TryCompleteAsync(), Times.Once);
+        partsProcessor.Verify(partsProcessor => partsProcessor.TryCompleteAsync(), Times.Once);
+        chunksProcessor.Verify(chunksProcessor => chunksProcessor.TryCompleteAsync(), Times.Once);
+
         jobsProcessor.VerifyNoOtherCalls();
         partsProcessor.VerifyNoOtherCalls();
         chunksProcessor.VerifyNoOtherCalls();
@@ -372,7 +376,7 @@ public class TransferManagerTests
             case 0:
                 jobBuilder.Setup(b => b.BuildJobAsync(It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
                     It.IsAny<TransferOptions>(), It.IsAny<ITransferCheckpointer>(), It.IsAny<string>(),
-                    It.IsAny<bool>(), It.IsAny<CancellationToken>())
+                    It.IsAny<bool>(), It.IsAny<TransferInternalState.RemoveTransferDelegate>(),It.IsAny<CancellationToken>())
                 ).Throws(expectedException);
                 break;
             case 1:

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
+using static Azure.Storage.DataMovement.TransferInternalState;
 
 namespace Azure.Storage.DataMovement
 {
@@ -15,7 +16,6 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class TransferOperation : IDisposable
     {
-        private TransferManager _transferManager;
         /// <summary>
         /// Defines whether the transfer has completed.
         /// </summary>
@@ -34,14 +34,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The <see cref="TransferManager"/> responsible for this transfer.
         /// </summary>
-        public TransferManager TransferManager {
-            get => _transferManager;
-            internal set
-            {
-                _transferManager = value;
-                _state.TransferManager = value;
-            }
-        }
+        public TransferManager TransferManager { get; internal set; }
 
         /// <summary>
         /// Defines the current state of the transfer.
@@ -58,15 +51,20 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructing a TransferOperation object.
         /// </summary>
+        /// <param name="removeTransferDelegate">Delegate to call to remove transfer from the respective TransferManager.</param>
         /// <param name="id">The transfer ID of the transfer object.</param>
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="TransferStatus"/>.</param>
         internal TransferOperation(
+            RemoveTransferDelegate removeTransferDelegate,
             string id,
             TransferStatus status = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             status ??= new TransferStatus();
-            _state = new TransferInternalState(id, status);
+            _state = new TransferInternalState(
+                removeTransferDelegate,
+                id,
+                status);
         }
 
         /// <summary>
@@ -74,6 +72,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public void Dispose()
         {
+            TransferManager = null;
             _state?.Dispose();
             GC.SuppressFinalize(this);
         }

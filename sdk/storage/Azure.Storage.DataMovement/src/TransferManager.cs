@@ -142,7 +142,10 @@ namespace Azure.Storage.DataMovement
                 {
                     throw Errors.InvalidTransferId(nameof(PauseTransferAsync), transferId);
                 }
-                await transfer.PauseAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                else
+                {
+                    await transfer.PauseAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
             }
         }
 
@@ -359,7 +362,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal virtual bool TryRemoveTransferAsync(string id)
+        internal virtual bool TryRemoveTransfer(string id)
         {
             return _transfers.TryRemove(id, out TransferOperation transfer);
         }
@@ -449,6 +452,7 @@ namespace Azure.Storage.DataMovement
                     _checkpointer,
                     transferId,
                     resumeJob,
+                    TryRemoveTransfer,
                     cancellationToken)
                 .ConfigureAwait(false);
 
@@ -476,11 +480,9 @@ namespace Azure.Storage.DataMovement
                     // If TryAdd fails here, we need to check if in other places where we are
                     // adding that every transferId is unique.
                     if (!_transfers.TryAdd(transferId, new TransferOperation(
+                        removeTransferDelegate: TryRemoveTransfer,
                         id: transferId,
-                        status: jobStatus)
-                    {
-                        TransferManager = this,
-                    }))
+                        status: jobStatus)))
                     {
                         throw Errors.CollisionTransferId(transferId);
                     }

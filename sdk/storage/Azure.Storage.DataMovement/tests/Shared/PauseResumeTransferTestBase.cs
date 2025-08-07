@@ -896,15 +896,18 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
-
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20)))
+            {
+                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            }
             // Assert
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
-            using CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token);
+            using (CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
+            {
+                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token);
+            }
 
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
