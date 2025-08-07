@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed the deserialization issue, when agent service returns the customized lists of trusted and requiring authentication MCP tools.
+
 ### Other Changes
 
 ### Sample updates
