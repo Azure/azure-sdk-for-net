@@ -101,6 +101,40 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, MethodBodyStatement.Empty, this);
         }
 
+        protected override FieldProvider[] BuildFields()
+        {
+            var fields = new List<FieldProvider>(_clientInfos.Count * 2);
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                // add the client diagnostics field
+                fields.Add(clientInfo.DiagnosticsField);
+                // add the rest client field
+                fields.Add(clientInfo.RestClientField);
+            }
+
+            return [.. fields];
+        }
+
+        protected override PropertyProvider[] BuildProperties()
+        {
+            var properties = new List<PropertyProvider>(_clientInfos.Count * 2);
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                if (clientInfo.DiagnosticProperty is not null)
+                {
+                    // add the client diagnostics property
+                    properties.Add(clientInfo.DiagnosticProperty);
+                }
+                if (clientInfo.RestClientProperty is not null)
+                {
+                    // add the rest client property
+                    properties.Add(clientInfo.RestClientProperty);
+                }
+            }
+
+            return [.. properties];
+        }
+
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>(_resources.Count * 3);

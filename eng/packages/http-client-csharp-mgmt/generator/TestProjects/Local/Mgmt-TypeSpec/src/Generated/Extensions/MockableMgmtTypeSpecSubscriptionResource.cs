@@ -20,6 +20,9 @@ namespace MgmtTypeSpec.Mocking
     /// <summary></summary>
     public partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
     {
+        private readonly ClientDiagnostics _fooTasksClientDiagnostics;
+        private readonly FooTasks _fooTasksRestClient;
+
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecSubscriptionResource for mocking. </summary>
         protected MockableMgmtTypeSpecSubscriptionResource()
         {
