@@ -25,7 +25,7 @@ namespace Azure.Identity.Broker.Tests
             yield return new object[] { Constants.WorkloadIdentityCredential };
             yield return new object[] { Constants.ManagedIdentityCredential };
             yield return new object[] { Constants.InteractiveBrowserCredential };
-            yield return new object[] { Constants.BrokerAuthenticationCredential };
+            yield return new object[] { Constants.BrokerCredential };
         }
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -97,7 +97,7 @@ namespace Azure.Identity.Broker.Tests
                 {
                     Assert.IsTrue(chain.Single(cred => cred is InteractiveBrowserCredential) is InteractiveBrowserCredential);
                 }
-                else if (credSelection == Constants.BrokerAuthenticationCredential)
+                else if (credSelection == Constants.BrokerCredential)
                 {
                     Assert.IsTrue(chain.Single(cred => cred is InteractiveBrowserCredential) is InteractiveBrowserCredential);
                 }

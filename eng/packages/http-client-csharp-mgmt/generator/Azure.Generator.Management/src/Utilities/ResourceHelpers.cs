@@ -32,8 +32,21 @@ namespace Azure.Generator.Management.Utilities
             return operationKind switch
             {
                 ResourceOperationKind.Create => isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate",
+                ResourceOperationKind.List => isAsync ? "GetAllAsync" : "GetAll",
                 _ => null
             };
+        }
+
+        /// <summary>
+        /// Determines if the given resource operation kind should also be treated as an LRO (Long-Running Operation).
+        /// When this happens, an operation is not a true long-running operation at the REST API level,
+        /// but it is modeled as an LRO in the SDK for consistency and to provide a uniform developer experience.
+        /// Only Create and Delete operations are forced to be LROs for now.
+        /// </summary>
+        public static bool ShouldMakeLro(ResourceOperationKind operationKind)
+        {
+            return operationKind == ResourceOperationKind.Create
+                || operationKind == ResourceOperationKind.Delete;
         }
     }
 }

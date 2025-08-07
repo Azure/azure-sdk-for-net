@@ -34,15 +34,15 @@ namespace Azure.Generator.Mgmt.Tests
                 decorators: []);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
-            var visitor = new TestVisitor();
+
+            // PreVisitModel is called during the model creation
             var type = plugin.Object.TypeFactory.CreateModel(model);
-            var transformedModel = visitor.InvokeVisit(model, type);
-            Assert.That(transformedModel?.Name, Is.EqualTo(TestModelName.Replace("Url", "Uri")));
-            Assert.That(transformedModel?.Properties[0].Name, Is.EqualTo(TestProtyName.Replace("Url", "Uri")));
+            Assert.That(type?.Name, Is.EqualTo(TestModelName.Replace("Url", "Uri")));
+            Assert.That(type?.Properties[0].Name, Is.EqualTo(TestProtyName.Replace("Url", "Uri")));
         }
 
         [Test]
-        public void TestPrependResourceProviderName()
+        public void TestPrependResourceProviderNameForModel()
         {
             var skuModelName = "Sku";
             var modelProperty = InputFactory.Property("TestName", InputPrimitiveType.String, serializedName: "testName", isRequired: true);
@@ -58,22 +58,42 @@ namespace Azure.Generator.Mgmt.Tests
                 decorators: []);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
-            var visitor = new TestVisitor();
+
+            // PreVisitModel is called during the model creation
             var type = plugin.Object.TypeFactory.CreateModel(model);
-            var transformedModel = visitor.InvokeVisit(model, type);
             var resourceProviderName = ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName;
-            Assert.AreEqual(transformedModel?.Name, $"{resourceProviderName}{skuModelName}");
-            var serializationProvider = transformedModel?.SerializationProviders.SingleOrDefault();
+            var updatedSkuModelName = $"{resourceProviderName}{skuModelName}";
+            Assert.AreEqual(type?.Name, updatedSkuModelName);
+            Assert.AreEqual(type!.Constructors[0].Signature.Name, $"{resourceProviderName}{skuModelName}");
+            var serializationProvider = type?.SerializationProviders.SingleOrDefault();
             Assert.NotNull(serializationProvider);
-            Assert.AreEqual(serializationProvider!.Name, $"{resourceProviderName}{skuModelName}");
+            Assert.AreEqual(serializationProvider!.Name, updatedSkuModelName);
+            var deserializationMethod = serializationProvider.Methods.SingleOrDefault(m => m.Signature.Name.StartsWith("Deserialize"));
+            Assert.AreEqual("DeserializeSamplesSku", deserializationMethod!.Signature.Name);
         }
 
-        private class TestVisitor : NameVisitor
+        [Test]
+        public void TestPrependResourceProviderNameForEnum()
         {
-            public ModelProvider? InvokeVisit(InputModelType model, ModelProvider? type)
-            {
-                return base.PreVisitModel(model, type);
-            }
+            var enumName = "PrivateEndpointServiceConnectionStatus";
+            var stringEnum = InputFactory.StringEnum(enumName, [("a", "a"), ("b", "b")]);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: stringEnum);
+            var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [stringEnum], clients: () => [client]);
+
+            // PreVisitEnum is called during the enum creation
+            var type = plugin.Object.TypeFactory.CreateEnum(stringEnum);
+            var resourceProviderName = ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName;
+            var updatedSkuModelName = $"{resourceProviderName}{enumName}";
+            Assert.AreEqual(type?.Name, updatedSkuModelName);
         }
     }
 }

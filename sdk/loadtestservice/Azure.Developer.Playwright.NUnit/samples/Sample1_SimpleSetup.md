@@ -14,5 +14,11 @@ using Azure.Identity;
 namespace PlaywrightService.SampleTests; // Remember to change this as per your project namespace
 
 [SetUpFixture]
-public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit { }
+public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit
+{
+    public PlaywrightServiceNUnitSetup() : base(
+        credential: new DefaultAzureCredential()
+    )
+    { }
+}
 ```
