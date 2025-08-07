@@ -227,13 +227,16 @@ namespace Azure.Generator.Management
 
         private IReadOnlyList<NonResourceMethod> DeserializeNonResourceMethods()
         {
-            var nonResourceMethodMetadata = new List<NonResourceMethod>();
             var rootClient = InputNamespace.RootClients.First();
             var decorator = rootClient.Decorators.FirstOrDefault(d => d.Name == NonResourceMethodMetadata);
             if (decorator is null)
             {
-                return nonResourceMethodMetadata;
+                return [];
             }
+
+            // create a cache for resource metadata
+            var resourceCache = ResourceMetadatas.ToDictionary(r => r.ResourceIdPattern, r => r);
+            var nonResourceMethodMetadata = new List<NonResourceMethod>();
             // deserialize the decorator arguments
             var args = decorator.Arguments ?? throw new InvalidOperationException();
             if (args.TryGetValue("nonResourceMethods", out var nonResourceMethods))
@@ -261,7 +264,7 @@ namespace Azure.Generator.Management
                         operationScope,
                         method,
                         client,
-                        null));
+                        carrierResourceId != null ? resourceCache[carrierResourceId] : null));
                 }
             }
 
