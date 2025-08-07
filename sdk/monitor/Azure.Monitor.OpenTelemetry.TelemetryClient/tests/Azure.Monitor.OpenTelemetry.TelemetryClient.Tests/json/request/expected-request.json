@@ -1,0 +1,29 @@
+{
+  "name": "Request",
+  "time": "2025-07-23T12:21:05.7926194Z",
+  "iKey": "12345678-1234-1234-1234-123456789012",
+  "tags": {
+    "ai.operation.id": "5368e772bae2e96eb04b3178c401c03d",
+    "ai.operation.name": "GET /api/orders",
+    "ai.cloud.role": "unknown_service:dotnet",
+    "ai.cloud.roleInstance": "host-not-compared",
+    "ai.application.ver": null,
+    "ai.internal.sdkVersion": "dotnet9.0.2:otel1.12.0:ext1.4.0"
+  },
+  "data": {
+    "baseType": "RequestData",
+    "baseData": {
+      "id": "09a82f8194a66ec4",
+      "name": "GET /api/orders",
+      "duration": "00:00:00.1230000",
+      "success": true,
+      "responseCode": "200",
+      "properties": {
+         "global-Key2": "global-Value2",
+         "global-Key1": "global-Value1",
+         "_MS.ProcessedByMetricExtractors": "(Name: X,Ver:'1.1')"
+      },
+      "ver": 2
+    }
+  }
+}
