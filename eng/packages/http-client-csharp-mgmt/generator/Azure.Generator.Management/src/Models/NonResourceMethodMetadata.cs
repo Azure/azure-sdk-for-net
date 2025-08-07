@@ -6,6 +6,7 @@ using Microsoft.TypeSpec.Generator.Input;
 namespace Azure.Generator.Management.Models;
 
 internal record NonResourceMethodMetadata(
-    InputServiceMethod Method,
     ResourceScope OperationScope,
+    InputServiceMethod InputMethod,
+    InputClient InputClient,
     ResourceMetadata? CarrierResource);

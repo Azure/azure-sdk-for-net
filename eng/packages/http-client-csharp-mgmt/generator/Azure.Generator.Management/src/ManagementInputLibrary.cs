@@ -243,11 +243,13 @@ namespace Azure.Generator.Management
                     }
                     // find the method by its ID
                     var method = GetMethodByCrossLanguageDefinitionId(methodId) ?? throw new JsonException($"cannot find the method with crossLanguageDefinitionId {methodId}");
+                    var client = GetClientByMethod(method) ?? throw new JsonException($"cannot find the client for method {methodId}");
                     var operationScope = Enum.Parse<ResourceScope>(operationScopeString, true);
                     // TODO -- find the corresponding ResourceMetadata if any
                     nonResourceMethodMetadata.Add(new NonResourceMethodMetadata(
-                        method,
                         operationScope,
+                        method,
+                        client,
                         null));
                 }
             }

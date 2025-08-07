@@ -120,7 +120,7 @@ namespace Azure.Generator.Management
             {
                 if (methodMetadata.CarrierResource == null) // this has no been picked up by a resource
                 {
-                    methodsPerScope[methodMetadata.OperationScope].Add(methodMetadata.Method);
+                    methodsPerScope[methodMetadata.OperationScope].Add(methodMetadata.InputMethod);
                 }
             }
 
