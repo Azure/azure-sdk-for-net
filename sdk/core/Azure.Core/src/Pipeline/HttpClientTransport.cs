@@ -65,20 +65,27 @@ namespace Azure.Core.Pipeline
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided factory.
         /// Subsequent calls to <see cref="HttpPipelineTransport.TryUpdateTransport(HttpPipelineTransportOptions)"/> will use the new transport.
         /// </summary>
-        /// <param name="transportFactory">The factory function to create the transport.</param>
+        /// <param name="transportUpdateFactory">The factory function to create the transport.</param>
         /// <param name="options">The options to pass to the factory.</param>
         /// <returns>A new <see cref="HttpClientTransport"/> instance.</returns>
         public static HttpClientTransport Create(
-            Func<HttpPipelineTransportOptions, HttpClientTransport> transportFactory,
+            Func<HttpPipelineTransportOptions, HttpClientTransport> transportUpdateFactory,
             HttpPipelineTransportOptions? options = null)
         {
-            if (transportFactory == null)
+            if (transportUpdateFactory == null)
             {
-                throw new ArgumentNullException(nameof(transportFactory));
+                throw new ArgumentNullException(nameof(transportUpdateFactory));
             }
 
-            var transport = transportFactory(options ?? new HttpPipelineTransportOptions());
-            transport.TransportFactory = transportFactory;
+            // Use the factory to create the initial transport with the provided options
+            HttpClientTransport transport = transportUpdateFactory(options!);
+            if (transport == null)
+            {
+                throw new InvalidOperationException("The transport factory returned null.");
+            }
+
+            // Set the factory so it can be used for subsequent updates
+            transport.TransportFactory = transportUpdateFactory;
             return transport;
         }
 
@@ -135,6 +142,7 @@ namespace Azure.Core.Pipeline
             message.ClearResponse();
             try
             {
+                var localClient = Client;
 #if NET5_0_OR_GREATER
                 if (!async)
                 {
@@ -142,14 +150,14 @@ namespace Azure.Core.Pipeline
                     // HttpClient.Send would throw a NotSupported exception instead of GetAwaiter().GetResult()
                     // throwing a System.Threading.SynchronizationLockException: Cannot wait on monitors on this runtime.
 #pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
-                    responseMessage = Client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
+                    responseMessage = localClient.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
 #pragma warning restore CA1416
                 }
                 else
 #endif
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    responseMessage = await Client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
+                    responseMessage = await localClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                         .ConfigureAwait(false);
                 }

@@ -51,14 +51,5 @@ namespace Azure.Core.Pipeline
             message.Response.Sanitizer = _sanitizer;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
-
-        public override void Update(object options)
-        {
-            if (options is HttpPipelineTransportOptions transportOptions)
-            {
-                var newTransport = transportOptions.TransportFactory?.Invoke(transportOptions);
-                _transport = newTransport ?? throw new ArgumentNullException(nameof(newTransport));
-            }
-        }
     }
 }

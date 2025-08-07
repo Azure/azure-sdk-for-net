@@ -66,7 +66,7 @@ namespace Azure.Core.Pipeline
             return options switch
             {
                 null => HttpClientTransport.Shared,
-                _ => new HttpClientTransport(options)
+                _ => HttpClientTransport.Create(o => new HttpClientTransport(o), options)
             };
         }
     }

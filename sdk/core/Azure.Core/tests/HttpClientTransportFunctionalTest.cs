@@ -26,15 +26,19 @@ namespace Azure.Core.Tests
         public HttpClientTransportFunctionalTest(bool isAsync) : base(isAsync)
         { }
 
-        protected override HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null)
+        protected override HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null, Func<HttpPipelineTransportOptions, HttpClientTransport> transportFactory = null)
         {
 #if !NET462
             if (https)
             {
-                return new HttpClientTransport(options ?? new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = _ => true });
+                return transportFactory is null ?
+                    new HttpClientTransport(options ?? new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = _ => true })
+                    : HttpClientTransport.Create(transportFactory, options);
             }
 #endif
-            return new HttpClientTransport(options);
+            return transportFactory is null ?
+                new HttpClientTransport(options) :
+                HttpClientTransport.Create(transportFactory, options);
         }
 
 #if NET462

@@ -5,10 +5,10 @@ using System;
 
 namespace Azure.Core.Pipeline;
 
-internal interface ITransportUpdated
+internal interface ISupportsTransportCertificateUpdate
 {
     /// <summary>
     /// Event that is triggered when the transport needs to be updated.
     /// </summary>
-    internal event Action<HttpPipelineTransportOptions>? TransportUpdated;
+    public event Action<HttpPipelineTransportOptions>? TransportUpdated;
 }

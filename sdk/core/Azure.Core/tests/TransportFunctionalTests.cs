@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        protected abstract HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null);
+        protected abstract HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null, Func<HttpPipelineTransportOptions, HttpClientTransport> transportFactory = null);
 
         public static object[] ContentWithLength =>
             new object[]
@@ -227,9 +227,9 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expectedMethod, httpMethod);
         }
 
-         public static object[] HeadersWithValues =>
-            new object[]
-            {
+        public static object[] HeadersWithValues =>
+           new object[]
+           {
                 // Name, value, is content, supports multiple
                 new object[] { "Allow", "adcde", true, true },
                 new object[] { "Accept", "adcde", true, true },
@@ -256,50 +256,50 @@ namespace Azure.Core.Tests
                 new object[] { "Range", "bytes=0-100", false, false },
                 new object[] { "Content-Length", "16", true, false },
                 new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false, false },
-             };
+            };
 
-         [TestCaseSource(nameof(HeadersWithValues))]
-         public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
-         {
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+        {
             StringValues httpHeaderValues = default;
 
-             using TestServer testServer = new TestServer(
-                 context =>
-                 {
-                     Assert.True(context.Request.Headers.TryGetValue(headerName, out httpHeaderValues));
-                 });
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    Assert.True(context.Request.Headers.TryGetValue(headerName, out httpHeaderValues));
+                });
 
-             var transport = GetTransport();
-             Request request = CreateRequest(transport, testServer);
+            var transport = GetTransport();
+            Request request = CreateRequest(transport, testServer);
 
-             request.Headers.Add(headerName, headerValue);
+            request.Headers.Add(headerName, headerValue);
 
-             if (contentHeader)
-             {
-                 request.Content = RequestContent.Create(new byte[16]);
-             }
+            if (contentHeader)
+            {
+                request.Content = RequestContent.Create(new byte[16]);
+            }
 
-             Assert.True(request.Headers.TryGetValue(headerName, out var value));
-             Assert.AreEqual(headerValue, value);
+            Assert.True(request.Headers.TryGetValue(headerName, out var value));
+            Assert.AreEqual(headerValue, value);
 
-             Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
-             Assert.AreEqual(headerValue, value);
+            Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
+            Assert.AreEqual(headerValue, value);
 
-             CollectionAssert.AreEqual(new[]
-             {
+            CollectionAssert.AreEqual(new[]
+            {
                  new HttpHeader(headerName, headerValue),
              }, request.Headers);
 
-             await ExecuteRequest(request, transport);
+            await ExecuteRequest(request, transport);
 
-             Assert.AreEqual(headerValue, string.Join(",", (string[])httpHeaderValues));
-         }
+            Assert.AreEqual(headerValue, string.Join(",", (string[])httpHeaderValues));
+        }
 
-         [TestCaseSource(nameof(HeadersWithValues))]
-         public async Task CanGetAndAddRequestHeadersUppercase(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
-         {
-             await CanGetAndAddRequestHeaders(headerName.ToUpperInvariant(), headerValue, contentHeader, supportsMultiple);
-         }
+        [TestCaseSource(nameof(HeadersWithValues))]
+        public async Task CanGetAndAddRequestHeadersUppercase(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+        {
+            await CanGetAndAddRequestHeaders(headerName.ToUpperInvariant(), headerValue, contentHeader, supportsMultiple);
+        }
 
         [TestCaseSource(nameof(HeadersWithValues))]
         public void TryGetReturnsCorrectValuesWhenNotFound(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
@@ -317,7 +317,8 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(HeadersWithValues))]
         public async Task CanAddMultipleValuesToRequestHeader(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
-            if (!supportsMultiple) return;
+            if (!supportsMultiple)
+                return;
 
             var anotherHeaderValue = headerValue + "1";
             var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
@@ -384,7 +385,8 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(HeadersWithValues))]
         public async Task CanGetAndSetMultiValueResponseHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
         {
-            if (!supportsMultiple) return;
+            if (!supportsMultiple)
+                return;
 
             var anotherHeaderValue = headerValue + "1";
             var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
@@ -523,7 +525,7 @@ namespace Azure.Core.Tests
                 });
 
             var stream = new MemoryStream();
-            stream.SetLength(10*1024);
+            stream.SetLength(10 * 1024);
             var content = RequestContent.Create(stream);
             var transport = GetTransport();
 
@@ -537,7 +539,7 @@ namespace Azure.Core.Tests
             await ExecuteRequest(request, transport);
 
             CollectionAssert.AreEqual(stream.ToArray(), requestBytes);
-            Assert.AreEqual(10*1024, requestBytes.Length);
+            Assert.AreEqual(10 * 1024, requestBytes.Length);
         }
 
         public static object[][] RequestMethods => new[]
@@ -689,13 +691,13 @@ namespace Azure.Core.Tests
             await ExecuteRequest(request, transport);
             await ExecuteRequest(request, transport);
 
-            Assert.AreEqual(new long [] {3, 3}, requests);
+            Assert.AreEqual(new long[] { 3, 3 }, requests);
         }
 
         [Test]
         public async Task RequestContentIsNotDisposedOnSend()
         {
-            using TestServer testServer = new TestServer(context =>{});
+            using TestServer testServer = new TestServer(context => { });
 
             DisposeTrackingContent disposeTrackingContent = new DisposeTrackingContent();
             var transport = GetTransport();
@@ -1089,15 +1091,7 @@ namespace Azure.Core.Tests
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
             ServicePointManager.ServerCertificateValidationCallback = null;
 #endif
-            // byte[] cer = Convert.FromBase64String(Pfx);
-            byte[] cer = Convert.FromBase64String(Pfx2);
-            X509Certificate2 clientCert;
-
-#if NET9_0_OR_GREATER
-            clientCert = X509CertificateLoader.LoadPkcs12(cer, null);
-#else
-            clientCert = new X509Certificate2(cer);
-#endif
+            X509Certificate2 clientCert = GetCertificate(Pfx);
 
             using (TestServer testServer = new TestServer(
                 async context =>
@@ -1106,6 +1100,7 @@ namespace Azure.Core.Tests
                     if (setClientCertificate)
                     {
                         Assert.NotNull(cert);
+                        Assert.AreEqual(clientCert, cert);
                     }
                     else
                     {
@@ -1128,6 +1123,121 @@ namespace Azure.Core.Tests
                 request.Uri.Reset(testServer.Address);
 
                 await ExecuteRequest(request, transport);
+            }
+        }
+
+        [Test]
+        public async Task ClientCertificateCanBeRotatedFromEmpty()
+        {
+#if NETFRAMEWORK // ServicePointManager is obsolete and doesn't affect HttpClient
+            // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
+            ServicePointManager.ServerCertificateValidationCallback = null;
+#endif
+            X509Certificate2 clientCert = GetCertificate(Pfx);
+            bool setClientCertificate = false;
+            bool validatedCert = false;
+
+            using (TestServer testServer = new TestServer(
+                async context =>
+                {
+                    var cert = context.Connection.ClientCertificate;
+                    if (setClientCertificate)
+                    {
+                        Assert.NotNull(cert);
+                        Assert.AreEqual(clientCert, cert);
+                        validatedCert = true;
+                    }
+                    else
+                    {
+                        Assert.Null(cert);
+                    }
+                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                },
+                true))
+            {
+                var options = new HttpPipelineTransportOptions();
+                options.ServerCertificateCustomValidationCallback = args => true;
+
+                var transport = GetTransport(true, options, o => new HttpClientTransport(o));
+
+                // Initially no client certificate
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+
+                await ExecuteRequest(request, transport);
+
+                // Now set the client certificate and update the transport
+                options.ClientCertificates.Add(clientCert);
+
+                Assert.IsTrue(transport.TryUpdateTransport(options));
+                setClientCertificate = true;
+
+                request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+
+                await ExecuteRequest(request, transport);
+                Assert.IsTrue(validatedCert, "Client certificate was not validated after transport update.");
+            }
+        }
+
+        [Test]
+        public async Task ClientCertificateCanBeRotatedFromExistingCert()
+        {
+#if NETFRAMEWORK // ServicePointManager is obsolete and doesn't affect HttpClient
+            // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
+            ServicePointManager.ServerCertificateValidationCallback = null;
+#endif
+            X509Certificate2 clientCert = GetCertificate(Pfx);
+            X509Certificate2 anotherCert = GetCertificate(Pfx2);
+            bool setClientCertificate = false;
+            bool validatedCert = false;
+
+            using (TestServer testServer = new TestServer(
+                async context =>
+                {
+                    var cert = context.Connection.ClientCertificate;
+                    if (setClientCertificate)
+                    {
+                        Assert.NotNull(cert);
+                        Assert.AreEqual(anotherCert, cert);
+                        validatedCert = true;
+                    }
+                    else
+                    {
+                        Assert.NotNull(cert);
+                        Assert.AreEqual(clientCert, cert);
+                        validatedCert = true;
+                    }
+                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                },
+                true))
+            {
+                var options = new HttpPipelineTransportOptions();
+                options.ServerCertificateCustomValidationCallback = args => true;
+                options.ClientCertificates.Add(clientCert);
+
+                var transport = GetTransport(true, options, o => new HttpClientTransport(o));
+
+                // Initially no client certificate
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+
+                await ExecuteRequest(request, transport);
+
+                // Now set the client certificate and update the transport
+                options.ClientCertificates.Clear();
+                options.ClientCertificates.Add(anotherCert);
+
+                Assert.IsTrue(transport.TryUpdateTransport(options));
+                setClientCertificate = true;
+
+                request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+
+                await ExecuteRequest(request, transport);
+                Assert.IsTrue(validatedCert, "Client certificate was not validated after transport update.");
             }
         }
 

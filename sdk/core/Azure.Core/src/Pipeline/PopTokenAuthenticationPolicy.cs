@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an Authentication header.
     /// </summary>
-    public class PopTokenAuthenticationPolicy : HttpPipelinePolicy
+    public class PopTokenAuthenticationPolicy : HttpPipelinePolicy, ISupportsTransportCertificateUpdate
     {
         private string[] _scopes;
         private readonly AccessTokenCache _accessTokenCache;
@@ -23,8 +24,10 @@ namespace Azure.Core.Pipeline
         private volatile HttpPipelineTransportOptions _transportOptions;
         private string? _currentBindingCertThumbprint;
 
-        // event  for when the transport needs to be updated
-        internal event Action<HttpPipelineTransportOptions>? TransportUpdated;
+        /// <summary>
+        /// Event that is triggered when the transport needs to be updated.
+        /// </summary>
+        public event Action<HttpPipelineTransportOptions>? TransportUpdated;
 
         /// <summary>
         /// Creates a new instance of <see cref="PopTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -234,7 +237,7 @@ namespace Azure.Core.Pipeline
                 transportOptions.ClientCertificates.Clear();
                 transportOptions.ClientCertificates.Add(token.BindingCertificate);
                 _transportOptions = transportOptions;
-                OwningPipeline?.UpdatePolicy(HttpPipelineUpdatePosition.Transport, transportOptions);
+                TransportUpdated?.Invoke(transportOptions);
                 _currentBindingCertThumbprint = token.BindingCertificate.Thumbprint;
             }
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"{token.TokenType} {token.Token}");

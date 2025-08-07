@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -61,6 +63,17 @@ namespace Azure.Core.Tests
                 pipeline.Send(message, cancellationToken);
             }
             return message.Response;
+        }
+
+        protected X509Certificate2 GetCertificate(string pfx)
+        {
+            byte[] cer = Convert.FromBase64String(Pfx);
+
+#if NET9_0_OR_GREATER
+            return X509CertificateLoader.LoadPkcs12(cer, null);
+#else
+            return new X509Certificate2(cer);
+#endif
         }
 
         protected const string Pfx = @"

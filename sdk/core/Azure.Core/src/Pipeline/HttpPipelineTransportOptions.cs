@@ -43,11 +43,6 @@ namespace Azure.Core.Pipeline
         public bool IsClientRedirectEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets a factory method to create the transport.
-        /// </summary>
-        public Func<HttpPipelineTransportOptions, HttpPipelineTransport>? TransportFactory { get; set; }
-
-        /// <summary>
         /// Creates a clone of the current <see cref="HttpPipelineTransportOptions"/> instance with the same settings.
         /// </summary>
         /// <returns></returns>
@@ -57,7 +52,6 @@ namespace Azure.Core.Pipeline
             {
                 ServerCertificateCustomValidationCallback = ServerCertificateCustomValidationCallback,
                 IsClientRedirectEnabled = IsClientRedirectEnabled,
-                TransportFactory = TransportFactory
             };
             foreach (X509Certificate2 certificate in ClientCertificates)
             {

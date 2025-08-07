@@ -61,7 +61,7 @@ namespace Azure.Core.Pipeline
             for (int i = 0; i < policies.Length; i++)
             {
                 // If the policy implements ITransportUpdated, we need to subscribe to its TransportUpdated event
-                if (policies[i] is ITransportUpdated transportUpdated)
+                if (policies[i] is ISupportsTransportCertificateUpdate transportUpdated)
                 {
                     transportUpdated.TransportUpdated += options => _transport.TryUpdateTransport(options);
                     break;
@@ -92,7 +92,7 @@ namespace Azure.Core.Pipeline
             for (int i = 0; i < pipeline.Length; i++)
             {
                 // If the policy implements ITransportUpdated, we need to subscribe to its TransportUpdated event
-                if (pipeline[i] is ITransportUpdated transportUpdated)
+                if (pipeline[i] is ISupportsTransportCertificateUpdate transportUpdated)
                 {
                     transportUpdated.TransportUpdated += options => _transport.TryUpdateTransport(options);
                     break;
