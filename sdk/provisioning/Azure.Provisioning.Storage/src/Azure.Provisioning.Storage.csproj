@@ -4,12 +4,12 @@
     <Description>Azure.Provisioning.Storage simplifies declarative resource provisioning in .NET for Azure Storage.</Description>
     <Version>1.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.1</ApiCompatVersion>
+    <ApiCompatVersion>1.1.2</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
 
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
-    <NoWarn>CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup Condition="$('EXPERIMENTAL_PROVISIONING') == true">

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The Azure Active Directory identity of the managed instance. </param>
-        /// <param name="sku"> Managed instance SKU. Allowed values for sku.name: GP_Gen5, GP_G8IM, GP_G8IH, BC_Gen5, BC_G8IM, BC_G8IH. </param>
+        /// <param name="sku"> Managed instance SKU. Allowed values for sku.name: GP_Gen5 (General Purpose, Standard-series); GP_G8IM (General Purpose, Premium-series); GP_G8IH (General Purpose, Premium-series memory optimized); BC_Gen5 (Business Critical, Standard-Series); BC_G8IM (Business Critical, Premium-series); BC_G8IH (Business Critical, Premium-series memory optimized). </param>
         /// <param name="provisioningState"> Provisioning state of managed instance. </param>
         /// <param name="managedInstanceCreateMode">
         /// Specifies the mode of database creation.
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
         /// <param name="hybridSecondaryUsage"> Hybrid secondary usage. Possible values are 'Active' (default value) and 'Passive' (customer uses the secondary as Passive DR). </param>
         /// <param name="hybridSecondaryUsageDetected"> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </param>
-        /// <param name="vCores"> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </param>
-        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
+        /// <param name="vCores"> The number of vCores. Allowed values: 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80, 96, 128. Supported vCores depends on the selected hardware family and service tier. </param>
+        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 32768. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageIOps"> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageThroughputMBps"> Storage throughput MBps parameter is not supported in the instance create/update operation. </param>
-        /// <param name="totalMemoryInMB"> Total memory in MB. Minimum value: 7168. Maximum value: 891328. Increments of 1 MB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
+        /// <param name="memorySizeInGB"> Memory size in GB. Minimum value: 28. Maximum value: 870. Minimum and maximum value depend on the number of vCores and service tier. Read more about resource limits: https://aka.ms/mi-resource-limits-api. </param>
         /// <param name="collation"> Collation of the managed instance. </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
         /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
         /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="isZoneRedundant"> Whether or not the multi-az is enabled. </param>
+        /// <param name="isZoneRedundant"> Whether or not the zone-redundancy is enabled. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator can be utilized during instance creation and for instance updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </param>
         /// <param name="servicePrincipal"> The managed instance's service principal. </param>
         /// <param name="virtualClusterId"> Virtual cluster resource id for the Managed Instance. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
@@ -121,8 +121,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="createOn"> Specifies the point in time (ISO8601 format) of the Managed Instance creation. </param>
         /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
         /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
+        /// <param name="requestedLogicalAvailabilityZone"> Specifies the logical availability zone Managed Instance is pinned to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? totalMemoryInMB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? memorySizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Sql
             StorageSizeInGB = storageSizeInGB;
             StorageIOps = storageIOps;
             StorageThroughputMBps = storageThroughputMBps;
-            TotalMemoryInMB = totalMemoryInMB;
+            MemorySizeInGB = memorySizeInGB;
             Collation = collation;
             DnsZone = dnsZone;
             ManagedDnsZonePartner = managedDnsZonePartner;
@@ -167,6 +168,7 @@ namespace Azure.ResourceManager.Sql
             CreateOn = createOn;
             AuthenticationMetadata = authenticationMetadata;
             DatabaseFormat = databaseFormat;
+            RequestedLogicalAvailabilityZone = requestedLogicalAvailabilityZone;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -178,7 +180,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The Azure Active Directory identity of the managed instance. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Managed instance SKU. Allowed values for sku.name: GP_Gen5, GP_G8IM, GP_G8IH, BC_Gen5, BC_G8IM, BC_G8IH. </summary>
+        /// <summary> Managed instance SKU. Allowed values for sku.name: GP_Gen5 (General Purpose, Standard-series); GP_G8IM (General Purpose, Premium-series); GP_G8IH (General Purpose, Premium-series memory optimized); BC_Gen5 (Business Critical, Standard-Series); BC_G8IM (Business Critical, Premium-series); BC_G8IH (Business Critical, Premium-series memory optimized). </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; set; }
         /// <summary> Provisioning state of managed instance. </summary>
@@ -220,10 +222,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </summary>
         [WirePath("properties.hybridSecondaryUsageDetected")]
         public HybridSecondaryUsageDetected? HybridSecondaryUsageDetected { get; }
-        /// <summary> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </summary>
+        /// <summary> The number of vCores. Allowed values: 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80, 96, 128. Supported vCores depends on the selected hardware family and service tier. </summary>
         [WirePath("properties.vCores")]
         public int? VCores { get; set; }
-        /// <summary> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
+        /// <summary> Storage size in GB. Minimum value: 32. Maximum value: 32768. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
         [WirePath("properties.storageSizeInGB")]
         public int? StorageSizeInGB { get; set; }
         /// <summary> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
@@ -232,9 +234,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Storage throughput MBps parameter is not supported in the instance create/update operation. </summary>
         [WirePath("properties.storageThroughputMBps")]
         public int? StorageThroughputMBps { get; set; }
-        /// <summary> Total memory in MB. Minimum value: 7168. Maximum value: 891328. Increments of 1 MB allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
-        [WirePath("properties.totalMemoryMB")]
-        public int? TotalMemoryInMB { get; set; }
+        /// <summary> Memory size in GB. Minimum value: 28. Maximum value: 870. Minimum and maximum value depend on the number of vCores and service tier. Read more about resource limits: https://aka.ms/mi-resource-limits-api. </summary>
+        [WirePath("properties.memorySizeInGB")]
+        public int? MemorySizeInGB { get; set; }
         /// <summary> Collation of the managed instance. </summary>
         [WirePath("properties.collation")]
         public string Collation { get; set; }
@@ -284,7 +286,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
         [WirePath("properties.requestedBackupStorageRedundancy")]
         public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
-        /// <summary> Whether or not the multi-az is enabled. </summary>
+        /// <summary> Whether or not the zone-redundancy is enabled. </summary>
         [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
@@ -293,7 +295,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         [WirePath("properties.keyId")]
         public Uri KeyId { get; set; }
-        /// <summary> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </summary>
+        /// <summary> The Azure Active Directory administrator can be utilized during instance creation and for instance updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </summary>
         [WirePath("properties.administrators")]
         public ManagedInstanceExternalAdministrator Administrators { get; set; }
         /// <summary> The managed instance's service principal. </summary>
@@ -317,5 +319,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Specifies the internal format of instance databases specific to the SQL engine version. </summary>
         [WirePath("properties.databaseFormat")]
         public ManagedInstanceDatabaseFormat? DatabaseFormat { get; set; }
+        /// <summary> Specifies the logical availability zone Managed Instance is pinned to. </summary>
+        [WirePath("properties.requestedLogicalAvailabilityZone")]
+        public SqlAvailabilityZoneType? RequestedLogicalAvailabilityZone { get; set; }
     }
 }

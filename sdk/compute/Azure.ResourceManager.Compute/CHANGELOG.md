@@ -1,6 +1,22 @@
 # Release History
 
-## 1.10.0 (2026-06-30)
+## 1.11.0 (2025-07-25)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0f03ae6d4107a964b20a48aa87fa520052750bb9/specification/compute/resource-manager/readme.md.
+  - Added new classes: `SupportedSecurityOption`, `AvailabilityPolicyDiskDelay`, `SnapshotAccessState`, `AvailabilityPolicy`.
+  - Added `SecurityMetadataUri` and `InstantAccessDurationMinutes` properties to `DiskCreationData` class.
+  - Added `SecurityMetadataAccessSas` property to `AccessUri` class.
+  - Added `AvailabilityPolicy` property to `ManagedDiskData` and `ManagedDiskUpdateData` classes.
+  - Added `SupportedSecurityOption` property to `SupportedCapabilities` class.
+  - Added `SnapshotAccessState` to `SnapshotData` and `SnapshotUpdateData` classes.
+
+### Breaking Changes
+
+- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility. 
+
+## 1.10.0 (2025-06-30)
 
 ### Features Added
 

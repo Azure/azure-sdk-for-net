@@ -113,6 +113,7 @@ public partial class FileService : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
         _corsRules = DefineListProperty<StorageCorsRule>("CorsRules", ["properties", "cors", "corsRules"]);
         _protocolSmbSetting = DefineModelProperty<SmbSetting>("ProtocolSmbSetting", ["properties", "protocolSettings", "smb"]);

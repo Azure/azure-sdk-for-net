@@ -280,6 +280,7 @@ public partial class BlobContainer : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _defaultEncryptionScope = DefineProperty<string>("DefaultEncryptionScope", ["properties", "defaultEncryptionScope"]);
         _enableNfsV3AllSquash = DefineProperty<bool>("EnableNfsV3AllSquash", ["properties", "enableNfsV3AllSquash"]);

@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.Search.Models
     {
         public static string ToSerialString(this SearchServiceProvisioningState value) => value switch
         {
-            SearchServiceProvisioningState.Succeeded => "Succeeded",
-            SearchServiceProvisioningState.Provisioning => "Provisioning",
-            SearchServiceProvisioningState.Failed => "Failed",
+            SearchServiceProvisioningState.Succeeded => "succeeded",
+            SearchServiceProvisioningState.Provisioning => "provisioning",
+            SearchServiceProvisioningState.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceProvisioningState value.")
         };
 
         public static SearchServiceProvisioningState ToSearchServiceProvisioningState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return SearchServiceProvisioningState.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Provisioning")) return SearchServiceProvisioningState.Provisioning;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return SearchServiceProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return SearchServiceProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "provisioning")) return SearchServiceProvisioningState.Provisioning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return SearchServiceProvisioningState.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceProvisioningState value.");
         }
     }

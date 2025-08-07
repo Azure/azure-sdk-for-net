@@ -1723,7 +1723,12 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.RoundTripModel",
       "usage": "Input,Output,Json",
       "doc": "this is a roundtrip model",
-      "decorators": [],
+      "decorators": [
+        {
+          "name": "Azure.ClientGenerator.Core.@useSystemTextJsonConverter",
+          "arguments": {}
+        }
+      ],
       "properties": [
         {
           "$id": "175",
@@ -6316,15 +6321,313 @@
               "items"
             ]
           }
+        },
+        {
+          "$id": "448",
+          "kind": "basic",
+          "name": "ConditionalRequest",
+          "accessibility": "public",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
+          "doc": "A sample operation with conditional requests",
+          "operation": {
+            "$id": "449",
+            "name": "ConditionalRequest",
+            "resourceName": "BasicTypeSpec",
+            "doc": "A sample operation with conditional requests",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "450",
+                "name": "ifMatch",
+                "nameInRequest": "If-Match",
+                "type": {
+                  "$id": "451",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "452",
+                "name": "ifNoneMatch",
+                "nameInRequest": "If-None-Match",
+                "type": {
+                  "$id": "453",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{basicTypeSpecUrl}",
+            "path": "/conditionalrequest",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "BasicTypeSpec.ConditionalRequest",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "454",
+              "name": "ifMatch",
+              "nameInRequest": "If-Match",
+              "type": {
+                "$id": "455",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "456",
+              "name": "ifNoneMatch",
+              "nameInRequest": "If-None-Match",
+              "type": {
+                "$id": "457",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "BasicTypeSpec.ConditionalRequest"
+        },
+        {
+          "$id": "458",
+          "kind": "basic",
+          "name": "ConditionalRequestDate",
+          "accessibility": "public",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
+          "doc": "A sample operation with conditional requests",
+          "operation": {
+            "$id": "459",
+            "name": "ConditionalRequestDate",
+            "resourceName": "BasicTypeSpec",
+            "doc": "A sample operation with conditional requests",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "460",
+                "name": "ifMatch",
+                "nameInRequest": "If-Match",
+                "type": {
+                  "$id": "461",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "462",
+                "name": "ifNoneMatch",
+                "nameInRequest": "If-None-Match",
+                "type": {
+                  "$id": "463",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "464",
+                "name": "ifModifiedSince",
+                "nameInRequest": "If-Modified-Since",
+                "type": {
+                  "$id": "465",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{basicTypeSpecUrl}",
+            "path": "/conditionalrequest/date",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "BasicTypeSpec.ConditionalRequestDate",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "466",
+              "name": "ifMatch",
+              "nameInRequest": "If-Match",
+              "type": {
+                "$id": "467",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "468",
+              "name": "ifNoneMatch",
+              "nameInRequest": "If-None-Match",
+              "type": {
+                "$id": "469",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "470",
+              "name": "ifModifiedSince",
+              "nameInRequest": "If-Modified-Since",
+              "type": {
+                "$id": "471",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "BasicTypeSpec.ConditionalRequestDate"
         }
       ],
       "parameters": [
         {
-          "$id": "448",
+          "$id": "472",
           "name": "basicTypeSpecUrl",
           "nameInRequest": "basicTypeSpecUrl",
           "type": {
-            "$id": "449",
+            "$id": "473",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -6354,8 +6657,14 @@
       "in": "header"
     },
     "oAuth2": {
-      "scopes": [
-        "https://theservice.azure.com/.default"
+      "flows": [
+        {
+          "scopes": [
+            "https://theservice.azure.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+          "tokenUrl": "https://login.microsoftonline.com/common/oauth2/token"
+        }
       ]
     }
   }

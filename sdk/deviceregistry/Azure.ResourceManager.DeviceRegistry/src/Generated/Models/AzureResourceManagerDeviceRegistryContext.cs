@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.DeviceRegistry.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
@@ -13,6 +15,41 @@ namespace Azure.ResourceManager.DeviceRegistry
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AssetEndpointProfileListResult))]
+    [ModelReaderWriterBuildable(typeof(AssetEndpointProfileStatus))]
+    [ModelReaderWriterBuildable(typeof(AssetEndpointProfileStatusError))]
+    [ModelReaderWriterBuildable(typeof(AssetEndpointProfileUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(AssetListResult))]
+    [ModelReaderWriterBuildable(typeof(AssetProperties))]
+    [ModelReaderWriterBuildable(typeof(AssetUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(BillingContainerListResult))]
+    [ModelReaderWriterBuildable(typeof(BillingContainerProperties))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetData))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetEndpointProfileData))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetEndpointProfilePatch))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetEndpointProfileProperties))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetEndpointProfileResource))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetPatch))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetResource))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetStatus))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetStatusDataset))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetStatusError))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetStatusEvent))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryAuthentication))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryBillingContainerData))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryBillingContainerResource))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryDataPoint))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryDataPointBase))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryDataset))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryEvent))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryEventBase))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryTopic))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryUsernamePasswordCredentials))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryX509Credentials))]
+    [ModelReaderWriterBuildable(typeof(MessageSchemaReference))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDeviceRegistryContext : ModelReaderWriterContext
     {
     }
