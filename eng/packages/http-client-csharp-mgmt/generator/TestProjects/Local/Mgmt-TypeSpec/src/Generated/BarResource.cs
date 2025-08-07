@@ -46,8 +46,8 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BarResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string barApiVersion);
+            _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion);
             ValidateResourceId(id);
         }
@@ -533,9 +533,9 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Gets an object representing a BarSettings along with the instance operations that can be performed on it in the Bar. </summary>
+        /// <summary> Gets an object representing a BarSettingsResource along with the instance operations that can be performed on it in the Bar. </summary>
         /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
-        public virtual BarSettingsResource GetBarSettings()
+        public virtual BarSettingsResource GetBarSettingsResource()
         {
             return new BarSettingsResource(Client, Id.AppendChildResource("settings", "current"));
         }

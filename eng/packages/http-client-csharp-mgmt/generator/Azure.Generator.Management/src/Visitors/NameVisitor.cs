@@ -22,7 +22,7 @@ namespace Azure.Generator.Management.Visitors;
 internal class NameVisitor : ScmLibraryVisitor
 {
     private const string ResourceTypeName = "ResourceType";
-    private static readonly HashSet<string> _knownModels = new HashSet<string>()
+    private static readonly HashSet<string> _knownTypes = new HashSet<string>()
         {
             "Sku",
             "SkuName",
@@ -49,6 +49,21 @@ internal class NameVisitor : ScmLibraryVisitor
     private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
     private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
+    protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
+    {
+        if (type is null)
+        {
+            return null;
+        }
+
+        if (_knownTypes.Contains(enumType.Name))
+        {
+            var newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{enumType.Name}";
+            type.Update(name: newName);
+        }
+        return base.PreVisitEnum(enumType, type);
+    }
+
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
         var inputLibrary = ManagementClientGenerator.Instance.InputLibrary;
@@ -59,15 +74,13 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (TryTransformUrlToUri(model.Name, out var newName))
         {
-            UpdateConstructors(type, newName);
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
         }
 
-        if (_knownModels.Contains(model.Name))
+        if (_knownTypes.Contains(model.Name))
         {
             newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
-            UpdateConstructors(type, newName);
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
         }
@@ -75,7 +88,6 @@ internal class NameVisitor : ScmLibraryVisitor
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
         {
             newName = $"{enclosingResourceName}Patch";
-            UpdateConstructors(type, newName);
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
 
@@ -86,16 +98,6 @@ internal class NameVisitor : ScmLibraryVisitor
             }
         }
         return base.PreVisitModel(model, type);
-    }
-
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    private static void UpdateConstructors(ModelProvider type, string newName)
-    {
-        foreach (var constructor in type.Constructors)
-        {
-            // Update the constructor name to match the model name
-            constructor.Signature.Update(name: newName);
-        }
     }
 
     // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved

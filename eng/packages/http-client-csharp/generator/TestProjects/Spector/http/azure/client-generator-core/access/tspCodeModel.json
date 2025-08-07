@@ -197,7 +197,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -234,7 +235,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -270,7 +272,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -307,7 +310,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -344,7 +348,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -380,7 +385,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -425,7 +431,8 @@
               "json": {
                 "name": "name"
               }
-            }
+            },
+            "isHttpMetadata": false
           }
         ]
       },
@@ -467,7 +474,8 @@
                   "json": {
                     "name": "name"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -481,7 +489,8 @@
             "json": {
               "name": "inner"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -523,7 +532,8 @@
           "json": {
             "name": "kind"
           }
-        }
+        },
+        "isHttpMetadata": false
       },
       "properties": [
         {
@@ -551,7 +561,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ],
       "discriminatedSubtypes": {
@@ -587,7 +598,8 @@
                 "json": {
                   "name": "kind"
                 }
-              }
+              },
+              "isHttpMetadata": false
             }
           ]
         }
@@ -747,7 +759,7 @@
                 {
                   "$id": "66",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "3"
                   },
@@ -872,7 +884,7 @@
                 {
                   "$id": "74",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "5"
                   },
@@ -1043,7 +1055,7 @@
                 {
                   "$id": "86",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "7"
                   },
@@ -1168,7 +1180,7 @@
                 {
                   "$id": "94",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "9"
                   },
@@ -1293,7 +1305,7 @@
                 {
                   "$id": "102",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "11"
                   },
@@ -1464,7 +1476,7 @@
                 {
                   "$id": "114",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "13"
                   },
@@ -1589,7 +1601,7 @@
                 {
                   "$id": "122",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "15"
                   },
@@ -1762,7 +1774,7 @@
                 {
                   "$id": "134",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "17"
                   },
@@ -1889,7 +1901,7 @@
                 {
                   "$id": "142",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "19"
                   },

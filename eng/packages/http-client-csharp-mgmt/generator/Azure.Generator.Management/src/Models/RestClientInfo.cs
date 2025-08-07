@@ -9,5 +9,11 @@ namespace Azure.Generator.Management.Models
     /// <summary>
     /// Record to combine client provider and related field providers
     /// </summary>
-    internal record RestClientInfo(ClientProvider RestClientProvider, FieldProvider RestClientField, FieldProvider DiagnosticsField);
+    internal record RestClientInfo(ClientProvider RestClientProvider, FieldProvider RestClientField, PropertyProvider? RestClientProperty, FieldProvider DiagnosticsField, PropertyProvider? DiagnosticProperty)
+    {
+        internal RestClientInfo(ClientProvider restClientProvider, FieldProvider restClientField, FieldProvider diagnosticsField)
+            : this(restClientProvider, restClientField, null, diagnosticsField, null)
+        {
+        }
+    }
 }
