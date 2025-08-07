@@ -16,13 +16,13 @@ using Azure.ResourceManager;
 namespace MgmtTypeSpec
 {
     /// <summary></summary>
-    internal partial class BarSettingsOperationSource : IOperationSource<BarSettingsResource>
+    internal partial class BarSettingsResourceOperationSource : IOperationSource<BarSettingsResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal BarSettingsOperationSource(ArmClient client)
+        internal BarSettingsResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -33,7 +33,7 @@ namespace MgmtTypeSpec
         BarSettingsResource IOperationSource<BarSettingsResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BarSettingsData data = BarSettingsData.DeserializeBarSettingsData(document.RootElement, new ModelReaderWriterOptions("W"));
+            BarSettingsResourceData data = BarSettingsResourceData.DeserializeBarSettingsResourceData(document.RootElement, new ModelReaderWriterOptions("W"));
             return new BarSettingsResource(_client, data);
         }
 
@@ -43,7 +43,7 @@ namespace MgmtTypeSpec
         async ValueTask<BarSettingsResource> IOperationSource<BarSettingsResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            BarSettingsData data = BarSettingsData.DeserializeBarSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BarSettingsResourceData data = BarSettingsResourceData.DeserializeBarSettingsResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BarSettingsResource(_client, data);
         }
     }

@@ -15,20 +15,20 @@ using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    internal partial class VolumeSnapshotsRestOperations
+    internal partial class SnapshotsRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of VolumeSnapshotsRestOperations. </summary>
+        /// <summary> Initializes a new instance of SnapshotsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public VolumeSnapshotsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public SnapshotsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ElasticSan
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByVolumeGroupRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string snapshotName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -48,16 +48,13 @@ namespace Azure.ResourceManager.ElasticSan
             uri.AppendPath(elasticSanName, true);
             uri.AppendPath("/volumegroups/", false);
             uri.AppendPath(volumeGroupName, true);
-            uri.AppendPath("/snapshots", false);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(snapshotName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByVolumeGroupRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string snapshotName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,11 +69,8 @@ namespace Azure.ResourceManager.ElasticSan
             uri.AppendPath(elasticSanName, true);
             uri.AppendPath("/volumegroups/", false);
             uri.AppendPath(volumeGroupName, true);
-            uri.AppendPath("/snapshots", false);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(snapshotName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -84,65 +78,71 @@ namespace Azure.ResourceManager.ElasticSan
             return message;
         }
 
-        /// <summary> List Snapshots in a VolumeGroup or List Snapshots by Volume (name) in a VolumeGroup using filter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a Volume Snapshot. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
-        /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
+        /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SnapshotList>> ListByVolumeGroupAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ElasticSanSnapshotData>> GetAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var message = CreateListByVolumeGroupRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, filter);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, snapshotName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SnapshotList value = default;
+                        ElasticSanSnapshotData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SnapshotList.DeserializeSnapshotList(document.RootElement);
+                        value = ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ElasticSanSnapshotData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> List Snapshots in a VolumeGroup or List Snapshots by Volume (name) in a VolumeGroup using filter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a Volume Snapshot. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
-        /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
+        /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SnapshotList> ListByVolumeGroup(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ElasticSanSnapshotData> Get(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var message = CreateListByVolumeGroupRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, filter);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, snapshotName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SnapshotList value = default;
+                        ElasticSanSnapshotData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SnapshotList.DeserializeSnapshotList(document.RootElement);
+                        value = ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ElasticSanSnapshotData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Create a Volume Snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Create a Volume Snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Delete a Volume Snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Delete a Volume Snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string snapshotName)
+        internal RequestUriBuilder CreateListByVolumeGroupRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -370,13 +370,16 @@ namespace Azure.ResourceManager.ElasticSan
             uri.AppendPath(elasticSanName, true);
             uri.AppendPath("/volumegroups/", false);
             uri.AppendPath(volumeGroupName, true);
-            uri.AppendPath("/snapshots/", false);
-            uri.AppendPath(snapshotName, true);
+            uri.AppendPath("/snapshots", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string snapshotName)
+        internal HttpMessage CreateListByVolumeGroupRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -391,80 +394,77 @@ namespace Azure.ResourceManager.ElasticSan
             uri.AppendPath(elasticSanName, true);
             uri.AppendPath("/volumegroups/", false);
             uri.AppendPath(volumeGroupName, true);
-            uri.AppendPath("/snapshots/", false);
-            uri.AppendPath(snapshotName, true);
+            uri.AppendPath("/snapshots", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Get a Volume Snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List Snapshots in a VolumeGroup or List Snapshots by Volume (name) in a VolumeGroup using filter. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
-        /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
+        /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="snapshotName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticSanSnapshotData>> GetAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string snapshotName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SnapshotList>> ListByVolumeGroupAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, snapshotName);
+            using var message = CreateListByVolumeGroupRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ElasticSanSnapshotData value = default;
+                        SnapshotList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(document.RootElement);
+                        value = SnapshotList.DeserializeSnapshotList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ElasticSanSnapshotData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get a Volume Snapshot. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List Snapshots in a VolumeGroup or List Snapshots by Volume (name) in a VolumeGroup using filter. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
-        /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
+        /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="snapshotName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticSanSnapshotData> Get(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string snapshotName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SnapshotList> ListByVolumeGroup(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, snapshotName);
+            using var message = CreateListByVolumeGroupRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ElasticSanSnapshotData value = default;
+                        SnapshotList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(document.RootElement);
+                        value = SnapshotList.DeserializeSnapshotList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ElasticSanSnapshotData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary> List Snapshots in a VolumeGroup or List Snapshots by Volume (name) in a VolumeGroup using filter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary> List Snapshots in a VolumeGroup or List Snapshots by Volume (name) in a VolumeGroup using filter. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>

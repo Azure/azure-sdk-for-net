@@ -53,7 +53,7 @@ namespace MgmtTypeSpec
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> something. </summary>
-        public string PropertiesSomething
+        public string ZooSomething
         {
             get
             {

@@ -181,6 +181,9 @@
 # ServiceLabel: %Azure Stack
 # ServiceOwners:                                                   @bganapa @rakku-ms
 
+# ServiceLabel: %Azure Arc Enabled Servers
+# ServiceOwners:                                                   @rpsqrd @edyoung
+
 # PRLabel: %Batch
 /sdk/batch/                                                        @wiboris @dpwatrous @wanghoppe @skapur12 @cRui861
 
@@ -1066,7 +1069,7 @@
 # ServiceOwners:                                                   @alluri02
 
 # PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
+/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
@@ -1075,7 +1078,7 @@
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978

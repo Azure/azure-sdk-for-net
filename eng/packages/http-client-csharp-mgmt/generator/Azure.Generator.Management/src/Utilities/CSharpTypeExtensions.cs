@@ -31,19 +31,5 @@ namespace Azure.Generator.Management.Utilities
                     : typeof(Response);
             }
         }
-
-        public static CSharpType UnWrap(this CSharpType type)
-        {
-            var currentType = type;
-
-            // Recursively unwrap any generic type with a single type argument
-            // This will find the innermost type regardless of nesting level or specific generic types
-            while (currentType.IsGenericType && currentType.Arguments.Count == 1)
-            {
-                currentType = currentType.Arguments[0];
-            }
-
-            return currentType;
-        }
     }
 }

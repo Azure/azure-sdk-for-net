@@ -18,11 +18,11 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class BarSettingsData : IJsonModel<BarSettingsData>
+    public partial class BarSettingsResourceData : IJsonModel<BarSettingsResourceData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BarSettingsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BarSettingsResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace MgmtTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BarSettingsData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -63,24 +63,24 @@ namespace MgmtTypeSpec
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BarSettingsData IJsonModel<BarSettingsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BarSettingsData)JsonModelCreateCore(ref reader, options);
+        BarSettingsResourceData IJsonModel<BarSettingsResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BarSettingsResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BarSettingsData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBarSettingsData(document.RootElement, options);
+            return DeserializeBarSettingsResourceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BarSettingsData DeserializeBarSettingsData(JsonElement element, ModelReaderWriterOptions options)
+        internal static BarSettingsResourceData DeserializeBarSettingsResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +162,7 @@ namespace MgmtTypeSpec
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BarSettingsData(
+            return new BarSettingsResourceData(
                 id,
                 name,
                 resourceType,
@@ -173,63 +173,63 @@ namespace MgmtTypeSpec
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BarSettingsData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BarSettingsResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BarSettingsData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BarSettingsData IPersistableModel<BarSettingsData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BarSettingsData)PersistableModelCreateCore(data, options);
+        BarSettingsResourceData IPersistableModel<BarSettingsResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BarSettingsResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeBarSettingsData(document.RootElement, options);
+                        return DeserializeBarSettingsResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BarSettingsData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BarSettingsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BarSettingsResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="barSettingsData"> The <see cref="BarSettingsData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BarSettingsData barSettingsData)
+        /// <param name="barSettingsResourceData"> The <see cref="BarSettingsResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BarSettingsResourceData barSettingsResourceData)
         {
-            if (barSettingsData == null)
+            if (barSettingsResourceData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(barSettingsData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(barSettingsResourceData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BarSettingsData"/> from. </param>
-        internal static BarSettingsData FromResponse(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BarSettingsResourceData"/> from. </param>
+        internal static BarSettingsResourceData FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeBarSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeBarSettingsResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
