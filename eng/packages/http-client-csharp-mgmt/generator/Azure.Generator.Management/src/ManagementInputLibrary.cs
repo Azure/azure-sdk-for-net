@@ -234,8 +234,6 @@ namespace Azure.Generator.Management
                 return [];
             }
 
-            // create a cache for resource metadata
-            var resourceCache = ResourceMetadatas.ToDictionary(r => r.ResourceIdPattern, r => r);
             var nonResourceMethodMetadata = new List<NonResourceMethod>();
             // deserialize the decorator arguments
             var args = decorator.Arguments ?? throw new InvalidOperationException();
