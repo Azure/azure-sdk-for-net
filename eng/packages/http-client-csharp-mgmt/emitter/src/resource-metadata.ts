@@ -60,14 +60,14 @@ export function convertResourceMetadataToArguments(
   };
 }
 
-export interface MethodMetadata {
+export interface NonResourceMethod {
   methodId: string;
   operationPath: string;
   operationScope: ResourceScope;
 }
 
 export function convertMethodMetadataToArguments(
-  metadata: MethodMetadata[]
+  metadata: NonResourceMethod[]
 ): Record<string, any> {
   return {
     nonResourceMethods: metadata.map((m) => ({

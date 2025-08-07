@@ -11,7 +11,7 @@ import {
   calculateResourceTypeFromPath,
   convertMethodMetadataToArguments,
   convertResourceMetadataToArguments,
-  MethodMetadata as NonResourceMethod,
+  NonResourceMethod,
   ResourceMetadata,
   ResourceOperationKind,
   ResourceScope
