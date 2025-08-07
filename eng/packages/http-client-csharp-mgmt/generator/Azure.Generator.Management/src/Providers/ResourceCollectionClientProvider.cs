@@ -124,7 +124,24 @@ namespace Azure.Generator.Management.Providers
             ? []
             : [new CSharpType(typeof(IEnumerable<>), _resource.Type), new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)];
 
-        protected override PropertyProvider[] BuildProperties() => [];
+        protected override PropertyProvider[] BuildProperties()
+        {
+            var properties = new List<PropertyProvider>();
+
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                if (clientInfo.DiagnosticProperty is not null)
+                {
+                    properties.Add(clientInfo.DiagnosticProperty);
+                }
+                if (clientInfo.RestClientProperty is not null)
+                {
+                    properties.Add(clientInfo.RestClientProperty);
+                }
+            }
+
+            return [.. properties];
+        }
 
         protected override FieldProvider[] BuildFields()
         {

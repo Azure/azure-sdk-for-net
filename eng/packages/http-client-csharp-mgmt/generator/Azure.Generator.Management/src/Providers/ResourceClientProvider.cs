@@ -162,8 +162,25 @@ namespace Azure.Generator.Management.Providers
                     Return(_dataField)
                 }),
                 this);
+            var properties = new List<PropertyProvider>
+            {
+                hasDataProperty,
+                dataProperty
+            };
 
-            return [hasDataProperty, dataProperty];
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                if (clientInfo.DiagnosticProperty is not null)
+                {
+                    properties.Add(clientInfo.DiagnosticProperty);
+                }
+                if (clientInfo.RestClientProperty is not null)
+                {
+                    properties.Add(clientInfo.RestClientProperty);
+                }
+            }
+
+            return [.. properties];
         }
 
         protected override TypeProvider[] BuildSerializationProviders() => [new ResourceSerializationProvider(this)];

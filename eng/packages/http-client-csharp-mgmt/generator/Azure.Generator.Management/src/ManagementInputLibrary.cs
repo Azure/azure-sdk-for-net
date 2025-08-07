@@ -35,6 +35,12 @@ namespace Azure.Generator.Management
         {
         }
 
+        private static readonly HashSet<string> _methodsToOmit = new()
+        {
+            // operations_list has been covered in Azure.ResourceManager already, we don't need to generate it in the client
+            "Azure.ResourceManager.Operations.list"
+        };
+
         private InputNamespace? _inputNamespace;
         /// <inheritdoc/>
         public override InputNamespace InputNamespace => _inputNamespace ??= BuildInputNamespaceInternal();
@@ -58,8 +64,9 @@ namespace Azure.Generator.Management
         private IReadOnlyList<ResourceMetadata>? _resourceMetadatas;
         internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => _resourceMetadatas ??= DeserializeResourceMetadata();
 
-        private IReadOnlyList<NonResourceMethodMetadata>? _nonResourceMethodMetadatas;
-        internal IReadOnlyList<NonResourceMethodMetadata> NonResourceMethodMetadatas => _nonResourceMethodMetadatas ??= DeserializeNonResourceMetadata();
+        private IReadOnlyList<NonResourceMethod>? _nonResourceMethods;
+        internal IReadOnlyList<NonResourceMethod> NonResourceMethods => _nonResourceMethods
+            ??= DeserializeNonResourceMethods();
 
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
@@ -218,9 +225,9 @@ namespace Azure.Generator.Management
             }
         }
 
-        private IReadOnlyList<NonResourceMethodMetadata> DeserializeNonResourceMetadata()
+        private IReadOnlyList<NonResourceMethod> DeserializeNonResourceMethods()
         {
-            var nonResourceMethodMetadata = new List<NonResourceMethodMetadata>();
+            var nonResourceMethodMetadata = new List<NonResourceMethod>();
             var rootClient = InputNamespace.RootClients.First();
             var decorator = rootClient.Decorators.FirstOrDefault(d => d.Name == NonResourceMethodMetadata);
             if (decorator is null)
@@ -235,6 +242,10 @@ namespace Azure.Generator.Management
                 foreach (var item in document.RootElement.EnumerateArray())
                 {
                     var methodId = item.GetProperty("methodId").GetString() ?? throw new JsonException("methodId cannot be null");
+                    if (_methodsToOmit.Contains(methodId))
+                    {
+                        continue; // skip methods that are not needed
+                    }
                     var operationScopeString = item.GetProperty("operationScope").GetString() ?? throw new JsonException("operationScope cannot be null");
                     string? carrierResourceId = null;
                     if (item.TryGetProperty("carrierResourceId", out var carrierResourceIdData))
@@ -246,7 +257,7 @@ namespace Azure.Generator.Management
                     var client = GetClientByMethod(method) ?? throw new JsonException($"cannot find the client for method {methodId}");
                     var operationScope = Enum.Parse<ResourceScope>(operationScopeString, true);
                     // TODO -- find the corresponding ResourceMetadata if any
-                    nonResourceMethodMetadata.Add(new NonResourceMethodMetadata(
+                    nonResourceMethodMetadata.Add(new NonResourceMethod(
                         operationScope,
                         method,
                         client,

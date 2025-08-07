@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
@@ -23,19 +24,45 @@ namespace Azure.Generator.Management.Providers
     internal class MockableResourceProvider : TypeProvider
     {
         private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
-        private protected readonly IReadOnlyList<InputServiceMethod> _methods;
+        private protected readonly IReadOnlyList<NonResourceMethod> _methods;
+        private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
-        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<InputServiceMethod> methods)
-            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, methods)
+        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, nonResourceMethods)
         {
         }
 
-        private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<InputServiceMethod> methods)
+        private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> methods)
         {
             _resources = resources;
             _methods = methods;
             ArmCoreType = armCoreType;
             ContextualPath = contextualPath;
+            _clientInfos = BuildRestClientInfos(methods, this);
+        }
+
+        private static Dictionary<InputClient, RestClientInfo> BuildRestClientInfos(IReadOnlyList<NonResourceMethod> methods, TypeProvider enclosingType)
+        {
+            var clientInfos = new Dictionary<InputClient, RestClientInfo>();
+            foreach (var method in methods)
+            {
+                var inputClient = method.InputClient;
+                if (clientInfos.ContainsKey(inputClient))
+                {
+                    continue;
+                }
+
+                var restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+
+                // TODO -- add the properties for these fields to make them lazily initialized
+                var restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, restClientProvider.Type, ResourceHelpers.GetRestClientFieldName(restClientProvider.Name), enclosingType);
+
+                var clientDiagnosticsFieldName = ResourceHelpers.GetClientDiagnosticFieldName(restClientProvider.Name);
+                var clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), clientDiagnosticsFieldName, enclosingType);
+
+                clientInfos.Add(inputClient, new RestClientInfo(restClientProvider, restClientField, clientDiagnosticsField));
+            }
+            return clientInfos;
         }
 
         internal CSharpType ArmCoreType { get; }
@@ -85,6 +112,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var method in _methods)
             {
                 // add the method provider one by one.
+                methods.Add(BuildNonResourceMethod(method, false));
+                methods.Add(BuildNonResourceMethod(method, true));
             }
 
             return [.. methods];
@@ -167,12 +196,15 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        // TODO -- need to figure out how the restClientInfo goes on this class first
-        //private MethodProvider BuildNonResourceMethod(InputServiceMethod method, bool isAsync) => method switch
-        //{
-        //    InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, ContextualPath, null!, pagingMethod, null!, isAsync, null!, default),
-        //    _ => new ResourceOperationMethodProvider(this, ContextualPath, )
-        //};
+        private MethodProvider BuildNonResourceMethod(NonResourceMethod method, bool isAsync)
+        {
+            var clientInfo = _clientInfos[method.InputClient];
+            return method.InputMethod switch
+            {
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, ContextualPath, clientInfo, pagingMethod, isAsync),
+                _ => new ResourceOperationMethodProvider(this, ContextualPath, clientInfo, method.InputMethod, isAsync)
+            };
+        }
 
         private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
         {

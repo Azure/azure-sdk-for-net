@@ -92,51 +92,48 @@ namespace Azure.Generator.Management
             return resources;
         }
 
+        private record ResourcesAndNonResourceMethodsInScope(
+            List<ResourceClientProvider> ResourceClients,
+            List<NonResourceMethod> NonResourceMethods);
+
         private IReadOnlyList<TypeProvider> BuildExtensions()
         {
             // walk through all resources to figure out their scopes
-            var resourcesPerScope = new Dictionary<ResourceScope, List<ResourceClientProvider>>
+            var resourcesAndMethodsPerScope = new Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope>
             {
-                [ResourceScope.ResourceGroup] = [],
-                [ResourceScope.Subscription] = [],
-                [ResourceScope.Tenant] = [],
-                [ResourceScope.ManagementGroup] = [],
+                [ResourceScope.ResourceGroup] = new([], []),
+                [ResourceScope.Subscription] = new([], []),
+                [ResourceScope.Tenant] = new([], []),
+                [ResourceScope.ManagementGroup] = new([], []),
             };
             foreach (var resource in ResourceClients)
             {
                 if (resource.ParentResourceIdPattern is null)
                 {
-                    resourcesPerScope[resource.ResourceScope].Add(resource);
+                    resourcesAndMethodsPerScope[resource.ResourceScope].ResourceClients.Add(resource);
                 }
             }
-            var methodsPerScope = new Dictionary<ResourceScope, List<InputServiceMethod>>
+            foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
             {
-                [ResourceScope.ResourceGroup] = [],
-                [ResourceScope.Subscription] = [],
-                [ResourceScope.Tenant] = [],
-                [ResourceScope.ManagementGroup] = [],
-            };
-            foreach (var methodMetadata in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethodMetadatas)
-            {
-                if (methodMetadata.CarrierResource == null) // this has no been picked up by a resource
+                if (nonResourceMethod.CarrierResource == null) // this has no been picked up by a resource
                 {
-                    methodsPerScope[methodMetadata.OperationScope].Add(methodMetadata.InputMethod);
+                    resourcesAndMethodsPerScope[nonResourceMethod.OperationScope].NonResourceMethods.Add(nonResourceMethod);
                 }
             }
 
             var mockableArmClientResource = new MockableArmClientProvider(ResourceClients);
-            var mockableResources = new List<MockableResourceProvider>(resourcesPerScope.Count)
+            var mockableResources = new List<MockableResourceProvider>(resourcesAndMethodsPerScope.Count)
             {
                 // add the arm client mockable resource
                 mockableArmClientResource
             };
             ManagementClientGenerator.Instance.AddTypeToKeep(mockableArmClientResource.Name);
 
-            foreach (var (scope, candidates) in resourcesPerScope)
+            foreach (var (scope, (resources, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
-                if (candidates.Count > 0)
+                if (resources.Count > 0 || nonResourceMethods.Count > 0)
                 {
-                    var mockableExtension = new MockableResourceProvider(scope, candidates, methodsPerScope[scope]);
+                    var mockableExtension = new MockableResourceProvider(scope, resources, nonResourceMethods);
                     mockableResources.Add(mockableExtension);
                     ManagementClientGenerator.Instance.AddTypeToKeep(mockableExtension.Name);
                 }
@@ -147,20 +144,6 @@ namespace Azure.Generator.Management
 
             return [.. mockableResources, extensionProvider];
         }
-
-        //private static ManagementMethodMap BuildManagementMethodMap()
-        //{
-        //    // find all the resources
-        //    var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas;
-        //    // iterate over all clients to gather all the methods
-        //    var methods = new List<InputServiceMethod>();
-        //    foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
-        //    {
-        //        methods.AddRange(client.Methods);
-        //    }
-
-        //    throw new NotImplementedException("ManagementMethodMap is not implemented yet. This should be implemented in the future to support non-resource operations on management clients.");
-        //}
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()

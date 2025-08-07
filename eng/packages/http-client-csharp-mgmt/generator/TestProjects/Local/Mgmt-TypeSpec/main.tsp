@@ -4,6 +4,7 @@ import "./PrivateEndpointConnection.tsp";
 import "./foo.tsp";
 import "./bar.tsp";
 import "./zoo.tsp";
+import "./routes.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
