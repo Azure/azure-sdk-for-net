@@ -44,11 +44,11 @@ namespace MgmtTypeSpec.Models
         internal FooSettingsPropertiesMetaData MetaData { get; }
 
         /// <summary> Gets the MetaDatas. </summary>
-        public IList<string> MetaDataMetaDatas
+        public IList<string> MetaDatas
         {
             get
             {
-                return MetaData is null ? default : MetaData.MetaDatas;
+                return MetaData.MetaDatas;
             }
         }
     }
