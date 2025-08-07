@@ -291,7 +291,7 @@ function getResourceScope(model: InputModelType): ResourceScope {
   return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
 }
 
-// TODO -- this logic needs to refine in near future.
+// TODO -- this logic needs to be refined in the near future.
 function getOperationScope(path: string): ResourceScope {
   if (
     path.startsWith(
