@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Can take a value of access_token_refresh_token, or access_token, or refresh_token. </summary>
-    public readonly partial struct PostContentSchemaGrantType : IEquatable<PostContentSchemaGrantType>
+    internal readonly partial struct PostContentSchemaGrantType : IEquatable<PostContentSchemaGrantType>
     {
         private readonly string _value;
 
