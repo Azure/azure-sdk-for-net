@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PostgreSql
       safeName: AzureResourceManagerPostgreSql
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.PostgreSql
+      ExpectedWarningsFilepath: None
