@@ -66,6 +66,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             VirtualMachines = virtualMachines;
             ProximityPlacementGroup = proximityPlacementGroup;
             Statuses = statuses;
+            Patch.SetPropagators(PropagateSet, PropagateGet);
         }
 
         /// <summary> Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'. </summary>

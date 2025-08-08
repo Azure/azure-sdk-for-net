@@ -53,17 +53,5 @@ namespace System.ClientModel.Tests.Internal.Perf
         {
             return ModelReaderWriter.Read<AvailabilitySetData>(_dataWithPatches, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
         }
-
-        [Benchmark]
-        public void Propagate_NoMatch()
-        {
-            _modelWithPatches.Patch.PropagateTo(ref _modelWithPatches.Sku.Patch, "$.nomatch"u8);
-        }
-
-        [Benchmark]
-        public void Propagate_Match()
-        {
-            _modelWithPatches.Patch.PropagateTo(ref _modelWithPatches.Sku.Patch, "$.sku"u8);
-        }
     }
 }

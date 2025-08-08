@@ -194,6 +194,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model2 = GetRoundTripModel(data);
             //Assert.AreEqual(expectedValue, model2.Json.GetString(propertyNameSpan));
+            Assert.AreEqual("Classic", model2.Sku.Name);
             Assert.AreEqual(expectedValue, model2.Sku.Patch.GetString("$.something"u8));
 
             AssertCommon(model, model2, "sku");
@@ -288,6 +289,29 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = GetRoundTripModel(data);
 
             Assert.AreEqual("new-location", model2.Location);
+        }
+
+        [Test]
+        public void AddNewObjectThenANewPropertyToThatObject()
+        {
+            var model = GetInitialModel();
+
+            model.Patch.Set("$.foobar"u8, "{\"x\":\"value\"}"u8);
+
+            Assert.AreEqual("{\"x\":\"value\"}"u8.ToArray(), model.Patch.GetJson("$.foobar"u8).ToArray());
+
+            model.Patch.Set("$.foobar.name"u8, "vmName1");
+
+            Assert.AreEqual("vmName1", model.Patch.GetString("$.foobar.name"u8));
+
+            var data = WriteModifiedModel(model, "foobar", "{\"x\":\"value\",\"name\":\"vmName1\"}");
+
+            var model2 = GetRoundTripModel(data);
+
+            Assert.AreEqual("{\"x\":\"value\",\"name\":\"vmName1\"}"u8.ToArray(), model2.Patch.GetJson("$.foobar"u8).ToArray());
+            Assert.AreEqual("vmName1", model2.Patch.GetString("$.foobar.name"u8));
+
+            AssertCommon(model, model2);
         }
 
         private AvailabilitySetData GetInitialModel()

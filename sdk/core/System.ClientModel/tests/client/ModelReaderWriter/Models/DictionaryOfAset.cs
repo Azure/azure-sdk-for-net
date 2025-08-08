@@ -37,6 +37,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             Items = items ?? new Dictionary<string, AvailabilitySetData>();
             _patch = patch;
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
 
         void IJsonModel<DictionaryOfAset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -52,23 +53,24 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            AdditionalProperties ap = new();
-            Patch.PropagateTo(ref ap, "$"u8);
             writer.WriteStartObject();
             foreach (var item in Items)
             {
-                byte[] itemBytes = [.. "$."u8, .. Encoding.UTF8.GetBytes(item.Key)];
-                if (!ap.Contains(itemBytes))
+                if (item.Value.Patch.Contains("$"u8))
                 {
-                    if (ap.ContainsStartsWith(itemBytes))
-                    {
-                        ap.PropagateTo(ref item.Value.Patch, itemBytes);
-                    }
+                    if (item.Value.Patch.IsRemoved("$"u8))
+                        continue;
+
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteRawValue(item.Value.Patch.GetJson("$"u8));
+                }
+                else if (!Patch.ContainsChildOf("$"u8, Encoding.UTF8.GetBytes(item.Key)))
+                {
                     writer.WritePropertyName(item.Key);
                     ((IJsonModel<AvailabilitySetData>)item.Value).Write(writer, options);
                 }
             }
-            ap.Write(writer);
+            Patch.Write(writer, "$"u8);
             writer.WriteEndObject();
         }
 
@@ -143,6 +145,37 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 default:
                     throw new FormatException($"The model {nameof(DictionaryOfAset)} does not support writing '{options.Format}' format.");
             }
+        }
+
+        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value)
+        {
+            string key = jsonPath.GetFirstPropertyName(out int i);
+            value = ReadOnlyMemory<byte>.Empty;
+
+            if (!Items.TryGetValue(key, out var aset))
+                return false;
+
+            return aset.Patch.TryGetJson([.. "$"u8, .. GetRemainder(jsonPath, i)], out value);
+        }
+
+        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, AdditionalProperties.EncodedValue value)
+        {
+            string key = jsonPath.GetFirstPropertyName(out int i);
+
+            if (!Items.TryGetValue(key, out var aset))
+                return false;
+
+            aset.Patch.Set([.. "$"u8, .. GetRemainder(jsonPath, i)], value);
+            return true;
+        }
+
+        private static ReadOnlySpan<byte> GetRemainder(ReadOnlySpan<byte> jsonPath, int i)
+        {
+            return i >= jsonPath.Length
+                ? ReadOnlySpan<byte>.Empty
+                : jsonPath[i] == (byte)'.'
+                    ? jsonPath.Slice(i)
+                    : jsonPath.Slice(i + 2);
         }
     }
 }

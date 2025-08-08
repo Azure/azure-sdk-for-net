@@ -5,17 +5,35 @@ namespace System.ClientModel.Primitives;
 
 public partial struct AdditionalProperties
 {
-    private readonly struct EncodedValue
+    /// <summary>
+    /// .
+    /// </summary>
+    public struct EncodedValue
     {
+        /// <summary>
+        /// .
+        /// </summary>
         public static EncodedValue Empty => new(ValueKind.None, ReadOnlyMemory<byte>.Empty);
 
-        public EncodedValue(ValueKind kind, ReadOnlyMemory<byte> value)
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <param name="value"></param>
+        internal EncodedValue(ValueKind kind, ReadOnlyMemory<byte> value)
         {
             Kind = kind;
             Value = value;
         }
 
-        public ValueKind Kind { get; }
+        /// <summary>
+        /// .
+        /// </summary>
+        internal ValueKind Kind { get; set; }
+
+        /// <summary>
+        /// .
+        /// </summary>
         public ReadOnlyMemory<byte> Value { get; }
     }
 }

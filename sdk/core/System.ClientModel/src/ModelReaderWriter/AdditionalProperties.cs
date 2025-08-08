@@ -19,10 +19,38 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
+    /// <param name="jsonPath"></param>
+    /// <param name="value"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public delegate bool PropagatorSetter(ReadOnlySpan<byte> jsonPath, EncodedValue value);
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPath"></param>
+    /// <param name="value"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public delegate bool PropagatorGetter(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value);
+
+    /// <summary>
+    /// .
+    /// </summary>
     /// <param name="rawJson"></param>
     public AdditionalProperties(ReadOnlyMemory<byte> rawJson)
     {
         _rawJson = new(ValueKind.Json, rawJson);
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="setter"></param>
+    /// <param name="getter"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void SetPropagators(PropagatorSetter setter, PropagatorGetter getter)
+    {
+        _propagatorSetter = setter;
+        _propagatorGetter = getter;
     }
 
     /// <summary>
@@ -136,6 +164,17 @@ public partial struct AdditionalProperties
     public void Set(ReadOnlySpan<byte> jsonPath, bool value)
     {
         SetInternal(jsonPath, EncodeValue(value));
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPath"></param>
+    /// <param name="value"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void Set(ReadOnlySpan<byte> jsonPath, EncodedValue value)
+    {
+        SetInternal(jsonPath, value);
     }
 
     /// <summary>
@@ -265,10 +304,70 @@ public partial struct AdditionalProperties
     /// .
     /// </summary>
     /// <param name="jsonPath"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public bool TryGetJson(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value)
+    {
+        return TryGetValue(jsonPath, out value);
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPath"></param>
     public void Remove(ReadOnlySpan<byte> jsonPath)
     {
         // Special (remove, set null, etc)
         SetInternal(jsonPath, s_removedValueArray);
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="writer"></param>
+    /// <param name="prefix"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void Write(Utf8JsonWriter writer, ReadOnlySpan<byte> prefix)
+    {
+        if (_properties == null)
+            return;
+
+        foreach (var kvp in _properties)
+        {
+            if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
+                continue;
+
+            JsonPathReader reader = new(kvp.Key);
+            if (!reader.Advance(prefix))
+                continue;
+
+            if (reader.Current.TokenType == JsonPathTokenType.PropertySeparator)
+                reader.Read();
+
+            WriteEncodedValueAsJson(writer, reader.Current.ValueSpan, kvp.Value);
+        }
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="writer"></param>
+    /// <param name="array"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void WriteArray(Utf8JsonWriter writer, ReadOnlySpan<byte> array)
+    {
+        if (_properties == null)
+            return;
+
+        if (!TryGetValueFromProperties(array, out var value))
+            return;
+
+        if (value.Kind == ValueKind.Removed)
+            return;
+
+        value.Kind |= ValueKind.Written;
+        SetValueOnProperties(array, value);
+        writer.WriteRawValue(value.Value.Span.Slice(1, value.Value.Length - 2));
     }
 
     /// <summary>
@@ -291,53 +390,17 @@ public partial struct AdditionalProperties
             if (kvp.Key.IsRoot())
                 continue;
 
-            if (kvp.Value.Kind == ValueKind.Removed)
+            if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
             {
                 continue;
             }
 
             var parent = kvp.Key.GetParent();
 
-            if (kvp.Value.Kind.HasFlag(ValueKind.ArrayItem))
+            if (kvp.Key.IsArrayInsert())
             {
-                var arrayKeySpan = kvp.Key.GetParent();
-#if NET9_0_OR_GREATER
-                if (alternateArrays.Contains(arrayKeySpan))
-                {
-                    continue;
-                }
-#else
-                var arrayKeyBytes = arrayKeySpan.ToArray();
-                if (arrays.Contains(arrayKeyBytes))
-                {
-                    continue;
-                }
-#endif
-
-                if (writer.CurrentDepth > 0)
-                {
-                    // only write the property name if we are not at the root
-                    writer.WritePropertyName(parent.GetPropertyName());
-                }
-                writer.WriteStartArray();
-                foreach (var arrayItem in _properties)
-                {
-                    //TODO: this does not normalize the keys
-                    if (arrayKeySpan.Length == arrayItem.Key.Length || !arrayItem.Key.AsSpan().StartsWith(arrayKeySpan))
-                        continue;
-
-                    if (arrayItem.Value.Kind.HasFlag(ValueKind.Removed) || arrayItem.Key.GetIndexSpan().IsEmpty)
-                        continue;
-
-                    writer.WriteRawValue(arrayItem.Value.Value.Span);
-                }
-                writer.WriteEndArray();
-
-#if NET9_0_OR_GREATER
-                alternateArrays.Add(arrayKeySpan);
-#else
-                arrays.Add(arrayKeyBytes);
-#endif
+                writer.WritePropertyName(parent.GetPropertyName());
+                writer.WriteRawValue(kvp.Value.Value.Span);
                 continue;
             }
 
@@ -346,100 +409,14 @@ public partial struct AdditionalProperties
                 JsonPathReader pathReader = new(kvp.Key);
                 ReadOnlySpan<byte> firstProperty = pathReader.GetFirstProperty();
 
-                if (PropagatedContains(firstProperty))
-                {
-                    continue;
-                }
-
-                PropagatedAdd(firstProperty);
-
-                AdditionalProperties local = new();
-                PropagateTo(ref local, firstProperty);
-
                 writer.WritePropertyName(firstProperty.GetPropertyName());
                 writer.WriteStartObject();
-                local.Write(writer);
+                Write(writer, firstProperty);
                 writer.WriteEndObject();
                 continue;
             }
 
             WriteEncodedValueAsJson(writer, kvp.Key.GetPropertyName(), kvp.Value);
-        }
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="prefix"></param>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public void PropagateTo(ref AdditionalProperties target, ReadOnlySpan<byte> prefix)
-    {
-        if (_properties == null)
-            return;
-
-        //64 is an arbitrary size but most array names should be small
-        Span<byte> arraySpan = stackalloc byte[64];
-        arraySpan[0] = (byte)'$';
-
-        foreach (var entry in _properties)
-        {
-            if (prefix.Length == entry.Key.Length || !entry.Key.AsSpan().StartsWith(prefix))
-                continue;
-
-            JsonPathReader pathReader = new(entry.Key);
-            ReadOnlySpan<byte> _firstProperty = pathReader.GetFirstProperty();
-            if (!_firstProperty.IsEmpty)
-            {
-                PropagatedAdd(_firstProperty);
-            }
-            var inner = entry.Key.AsSpan().Slice(prefix.Length);
-            if (entry.Value.Kind.HasFlag(ValueKind.ArrayItem))
-            {
-                var indexSpan = entry.Key.GetIndexSpan();
-                if (indexSpan.Length == 0)
-                {
-                    // If the property name is empty, skip it
-                    continue;
-                }
-
-                if (Utf8Parser.TryParse(indexSpan, out int index, out _))
-                {
-                    bool useSpan;
-                    byte[]? arrayBytes = default;
-                    var innerSlice = inner.Slice(0, inner.IndexOf((byte)'['));
-                    if (innerSlice.Length + 1 <= arraySpan.Length)
-                    {
-                        useSpan = true;
-                        innerSlice.CopyTo(arraySpan.Slice(1));
-                    }
-                    else
-                    {
-                        useSpan = false;
-                        arrayBytes = [(byte)'$', .. inner.Slice(0, inner.IndexOf((byte)'['))];
-                    }
-                    if (target._arrayIndices is null)
-                    {
-                        target._arrayIndices = new(JsonPathComparer.Default);
-#if NET9_0_OR_GREATER
-                        target._alternateArrayIndices = target._arrayIndices.GetAlternateLookup<ReadOnlySpan<byte>>();
-#endif
-                        target.SetValueOnArrayIndicies(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, index);
-                    }
-                    else
-                    {
-                        if (!target.TryGetValueFromArrayIndicies(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, out int existingIndex))
-                        {
-                            target.SetValueOnArrayIndicies(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, index);
-                        }
-                        else
-                        {
-                            target.SetValueOnArrayIndicies(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, Math.Max(index, existingIndex));
-                        }
-                    }
-                }
-            }
-            target.SetInternal([(byte)'$', .. inner], entry.Value);
         }
     }
 
@@ -475,16 +452,14 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="array"></param>
+    /// <param name="jsonPath"></param>
     /// <returns></returns>
-    public int? GetArrayLength(ReadOnlySpan<byte> array)
+    public bool IsRemoved(ReadOnlySpan<byte> jsonPath)
     {
-        if (_arrayIndices == null || TryGetValueFromArrayIndicies(array, out var index))
-        {
-            return null;
-        }
+        if (_properties is null)
+            return false;
 
-        return index;
+        return TryGetValueFromProperties(jsonPath, out var value) && value.Kind == ValueKind.Removed;
     }
 
     /// <summary>
@@ -493,10 +468,37 @@ public partial struct AdditionalProperties
     /// <param name="jsonPath"></param>
     /// <returns></returns>
     public bool IsRemoved(byte[] jsonPath)
+        => IsRemoved(jsonPath.AsSpan());
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPath"></param>
+    /// <param name="property"></param>
+    /// <returns></returns>
+    public bool ContainsChildOf(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> property)
     {
-        if (_properties is null)
+        if (_properties == null)
             return false;
 
-        return _properties.TryGetValue(jsonPath, out var value) && value.Kind == ValueKind.Removed;
+        foreach (var kvp in _properties)
+        {
+            if (kvp.Key.Length <= jsonPath.Length)
+                continue;
+
+            JsonPathReader reader = new(kvp.Key);
+            if (!reader.Advance(jsonPath))
+                continue;
+
+            if (reader.Current.TokenType == JsonPathTokenType.PropertySeparator)
+                reader.Read();
+
+            if (reader.Current.ValueSpan.SequenceEqual(property))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

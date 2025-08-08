@@ -39,6 +39,7 @@ internal ref struct JsonPathReader
     private const byte DoubleQuote = 34;  // '"'
     private const byte Zero = 48;         // '0'
     private const byte Nine = 57;         // '9'
+    private const byte Dash = 45;         // '-'
 
     private readonly ReadOnlySpan<byte> _jsonPath;
     private int _consumed;
@@ -88,6 +89,14 @@ internal ref struct JsonPathReader
                 if (next == SingleQuote || next == DoubleQuote)
                 {
                     Current = new JsonPathToken(JsonPathTokenType.PropertySeparator, _consumed++);
+                    return true;
+                }
+
+                // special handling of jsonPath insert [-] it must end with this
+                if (next == Dash && _consumed + 3 == _length && _jsonPath[_consumed + 2] == CloseBracket)
+                {
+                    Current = new JsonPathToken(JsonPathTokenType.ArrayIndex, _consumed, _jsonPath.Slice(_consumed + 1, 1));
+                    _consumed += 3; // Skip '[-]'
                     return true;
                 }
 
@@ -187,5 +196,85 @@ internal ref struct JsonPathReader
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool IsDigit(byte b) => b >= Zero && b <= Nine;
+    internal static bool IsDigit(byte b) => b >= Zero && b <= Nine;
+
+    public bool Advance(ReadOnlySpan<byte> prefix)
+    {
+        if (prefix.IsEmpty || _jsonPath.IsEmpty)
+            return false;
+
+        if (prefix.Length >= _length)
+            return false;
+
+        if (prefix[0] != DollarSign || _jsonPath[0] != DollarSign)
+            return false;
+
+        JsonPathReader prefixReader = new(prefix);
+
+        while (Read() && prefixReader.Read())
+        {
+            if (!Current.ValueSpan.SequenceEqual(prefixReader.Current.ValueSpan))
+            {
+                return false;
+            }
+        }
+
+        return prefixReader.Current.TokenType == JsonPathTokenType.End && Current.TokenType != JsonPathTokenType.End;
+    }
+
+    private void Reset()
+    {
+        _consumed = 0;
+        Current = default;
+    }
+
+    public bool Equals(JsonPathReader other)
+    {
+        //reset in case we aren't starting from the beginning
+        var x = this;
+        var y = other;
+        x.Reset();
+        y.Reset();
+
+        while (x.Read() && y.Read())
+        {
+            if (!x.Current.ValueSpan.SequenceEqual(y.Current.ValueSpan))
+                return false;
+        }
+        return !x.Read() && !y.Read();
+    }
+
+    public override int GetHashCode()
+    {
+        var local = this;
+        //reset in case we aren't starting from the beginning
+        local.Reset();
+
+#if NET8_0_OR_GREATER
+        var hash = new HashCode();
+        while (local.Read())
+        {
+            if (!local.Current.ValueSpan.IsEmpty)
+                hash.AddBytes(local.Current.ValueSpan);
+        }
+        return hash.ToHashCode();
+#else
+        unchecked
+        {
+            int hash = 17;
+            while (local.Read())
+            {
+                var span = local.Current.ValueSpan;
+                if (!span.IsEmpty)
+                {
+                    for (int i = 0; i < span.Length; i++)
+                    {
+                        hash = hash * 31 + span[i];
+                    }
+                }
+            }
+            return hash;
+        }
+#endif
+    }
 }

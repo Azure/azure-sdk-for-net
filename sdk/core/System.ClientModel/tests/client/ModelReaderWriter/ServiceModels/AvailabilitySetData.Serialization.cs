@@ -46,25 +46,22 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             }
             if (OptionalProperty.IsDefined(Sku) && !Patch.Contains("$.sku"u8))
             {
-                Patch.PropagateTo(ref Sku.Patch, "$.sku"u8);
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (OptionalProperty.IsCollectionDefined(Tags) && !Patch.Contains("$.tags"u8))
             {
                 writer.WritePropertyName("tags"u8);
-                AdditionalProperties tagsAp = new();
-                Patch.PropagateTo(ref tagsAp, "$.tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
-                    if (!tagsAp.Contains([.. "$."u8, .. Encoding.UTF8.GetBytes(item.Key)]))
+                    if (!Patch.ContainsChildOf("$.tags"u8, Encoding.UTF8.GetBytes(item.Key)))
                     {
                         writer.WritePropertyName(item.Key);
                         writer.WriteStringValue(item.Value);
                     }
                 }
-                tagsAp.Write(writer);
+                Patch.Write(writer, "$.tags"u8);
                 writer.WriteEndObject();
             }
             if (!Patch.Contains("$.location"u8))
@@ -74,67 +71,44 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             }
             if (!Patch.Contains("$.properties"u8))
             {
-                var flattenedJson = new AdditionalProperties();
-                Patch.PropagateTo(ref flattenedJson, "$.properties"u8);
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
-                if (OptionalProperty.IsDefined(PlatformUpdateDomainCount) && !flattenedJson.Contains("$.platformUpdateDomainCount"u8))
+                if (OptionalProperty.IsDefined(PlatformUpdateDomainCount) && !Patch.Contains("$.properties.platformUpdateDomainCount"u8))
                 {
                     writer.WritePropertyName("platformUpdateDomainCount"u8);
                     writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
                 }
-                if (OptionalProperty.IsDefined(PlatformFaultDomainCount) && !flattenedJson.Contains("$.platformFaultDomainCount"u8))
+                if (OptionalProperty.IsDefined(PlatformFaultDomainCount) && !Patch.Contains("$.properties.platformFaultDomainCount"u8))
                 {
                     writer.WritePropertyName("platformFaultDomainCount"u8);
                     writer.WriteNumberValue(PlatformFaultDomainCount.Value);
                 }
-                if (flattenedJson.Contains("$.virtualMachines"u8))
+                if (Patch.Contains("$.properties.virtualMachines"u8))
                 {
                     writer.WritePropertyName("virtualMachines"u8);
-                    writer.WriteRawValue(flattenedJson.GetJson("$.virtualMachines"u8));
+                    writer.WriteRawValue(Patch.GetJson("$.properties.virtualMachines"u8));
                 }
                 else if (OptionalProperty.IsCollectionDefined(VirtualMachines))
                 {
-                    if (flattenedJson.ContainsStartsWith("$.virtualMachines"u8))
+                    writer.WritePropertyName("virtualMachines"u8);
+                    writer.WriteStartArray();
+                    for (int i=0; i< VirtualMachines.Count; i++)
                     {
-                        var jsonPath = "$.virtualMachines["u8;
-                        Span<byte> buffer = stackalloc byte[jsonPath.Length + 11];
-                        for (int i = 0; i < VirtualMachines.Count; i++)
-                        {
-                            if (flattenedJson.IsRemoved(Encoding.UTF8.GetBytes($"$.virtualMachines[{i}]")))
-                            {
-                                continue;
-                            }
+                        if (VirtualMachines[i].Patch.IsRemoved("$"u8.ToArray()))
+                            continue;
 
-                            var indexInPatch = flattenedJson.GetArrayLength("$.virtualMachines"u8);
-                            var index = indexInPatch.HasValue ? indexInPatch.Value + i : i;
-                            jsonPath.CopyTo(buffer);
-                            Utf8Formatter.TryFormat(index, buffer.Slice(jsonPath.Length), out var bytesWritten);
-                            buffer[jsonPath.Length + bytesWritten] = (byte)']';
-                            var prefix = buffer.Slice(0, jsonPath.Length + bytesWritten + 1);
-
-                            flattenedJson.PropagateTo(ref VirtualMachines[i].Patch, prefix);
-                            flattenedJson.Set("$.virtualMachines[-]"u8, VirtualMachines[i]);
-                        }
+                        ((IJsonModel<WritableSubResource>)VirtualMachines[i]).Write(writer, options);
                     }
-                    else
-                    {
-                        writer.WritePropertyName("virtualMachines"u8);
-                        writer.WriteStartArray();
-                        foreach (var item in VirtualMachines)
-                        {
-                            ((IJsonModel<WritableSubResource>)item).Write(writer, options);
-                        }
-                        writer.WriteEndArray();
-                    }
+                    Patch.WriteArray(writer, "$.properties.virtualMachines[-]"u8);
+                    writer.WriteEndArray();
                 }
-                if (OptionalProperty.IsDefined(ProximityPlacementGroup) && !flattenedJson.Contains("$.proximityPlacementGroup"u8))
+                if (OptionalProperty.IsDefined(ProximityPlacementGroup) && !Patch.Contains("$.properties.proximityPlacementGroup"u8))
                 {
                     writer.WritePropertyName("proximityPlacementGroup"u8);
                     ((IJsonModel<WritableSubResource>)ProximityPlacementGroup).Write(writer, options);
                 }
 
-                flattenedJson.Write(writer);
+                Patch.Write(writer, "$.properties"u8);
 
                 writer.WriteEndObject();
             }
@@ -281,6 +255,8 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                             statuses = array;
                             continue;
                         }
+                        additionalProperties.Set([.. "$.properties."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
+
                     }
                     continue;
                 }
@@ -361,5 +337,76 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
         }
 
         string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, AdditionalProperties.EncodedValue value)
+        {
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+
+            if (local.StartsWith("sku"u8))
+            {
+                Sku.Patch.Set([.. "$"u8, .. local.Slice("sku"u8.Length)], value);
+                return true;
+            }
+            else if (local.StartsWith("properties.virtualMachines"u8))
+            {
+                int propertyLength = "properties.virtualMachines"u8.Length;
+                ReadOnlySpan<byte> indexSlice = local.Slice(propertyLength);
+                if (!TryGetIndex(propertyLength, indexSlice, out int index, out int bytesConsumed))
+                    return false;
+
+                if (VirtualMachines.Count > index)
+                {
+                    VirtualMachines[index].Patch.Set([.. "$"u8, .. indexSlice.Slice(bytesConsumed + 2)], value);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value)
+        {
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+            value = ReadOnlyMemory<byte>.Empty;
+
+            if (local.StartsWith("sku"u8))
+            {
+                value = Sku.Patch.GetJson([.. "$"u8, .. local.Slice("sku"u8.Length)]);
+                return true;
+            }
+            else if (local.StartsWith("properties.virtualMachines"u8))
+            {
+                int propertyLength = "properties.virtualMachines"u8.Length;
+                ReadOnlySpan<byte> indexSlice = local.Slice(propertyLength);
+                if (!TryGetIndex(propertyLength, indexSlice, out int index, out int bytesConsumed))
+                    return false;
+
+                if (VirtualMachines.Count > index)
+                {
+                    return VirtualMachines[index].Patch.TryGetJson([.. "$"u8, .. indexSlice.Slice(bytesConsumed + 2)], out value);
+                }
+            }
+
+            return false;
+        }
+
+        private static bool TryGetIndex(int propertyLength, ReadOnlySpan<byte> indexSlice, out int index, out int bytesConsumed)
+        {
+            index = -1;
+            bytesConsumed = 0;
+
+            if (indexSlice.IsEmpty || indexSlice[0] != (byte)'[')
+                return false;
+
+            indexSlice = indexSlice.Slice(1);
+            if (indexSlice.IsEmpty || indexSlice[0] == (byte)'-')
+                return false;
+
+            int indexEnd = indexSlice.Slice(1).IndexOf((byte)']');
+            if (indexEnd < 0)
+                return false;
+
+            return Utf8Parser.TryParse(indexSlice.Slice(0, indexEnd + 1), out index, out bytesConsumed);
+        }
     }
 }

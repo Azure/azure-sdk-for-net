@@ -43,14 +43,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = GetInitialModel();
 
             model.Patch.Set("$.tags.insertedKey"u8, "insertedValue");
+            model.Patch.Set("$['tags'].insertedKey2"u8, "insertedValue2");
 
             Assert.AreEqual("insertedValue", model.Patch.GetString("$.tags.insertedKey"u8));
 
-            var data = WriteModifiedModel(model, "tags", "{\"key\":\"value\",\"insertedKey\":\"insertedValue\"}");
+            var data = WriteModifiedModel(model, "tags", "{\"key\":\"value\",\"insertedKey\":\"insertedValue\",\"insertedKey2\":\"insertedValue2\"}");
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("insertedValue", model2.Patch.GetString("$.tags['insertedKey']"u8));
+            Assert.AreEqual("insertedValue", model2.Patch.GetString("$['tags']['insertedKey']"u8));
+            Assert.AreEqual("insertedValue", model2.Patch.GetString("$['tags'].insertedKey"u8));
+            Assert.AreEqual("insertedValue", model2.Patch.GetString("$.tags.['insertedKey']"u8));
             Assert.AreEqual("insertedValue", model2.Patch.GetString("$.tags.insertedKey"u8));
+            Assert.AreEqual("insertedValue2", model2.Patch.GetString("$['tags']['insertedKey2']"u8));
+            Assert.AreEqual("insertedValue2", model2.Patch.GetString("$['tags'].insertedKey2"u8));
+            Assert.AreEqual("insertedValue2", model2.Patch.GetString("$.tags['insertedKey2']"u8));
+            Assert.AreEqual("insertedValue2", model2.Patch.GetString("$.tags.insertedKey2"u8));
 
             AssertCommon(model, model2, "tags");
         }

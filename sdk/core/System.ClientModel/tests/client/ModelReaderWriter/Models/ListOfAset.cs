@@ -61,37 +61,13 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             }
             else if (OptionalProperty.IsCollectionDefined(Items))
             {
-                if (Patch.ContainsStartsWith("$"u8))
+                writer.WriteStartArray();
+                foreach (var item in Items)
                 {
-                    var jsonPath = "$["u8;
-                    Span<byte> buffer = stackalloc byte[jsonPath.Length + 11];
-                    for (int i = 0; i < Items.Count; i++)
-                    {
-                        if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$[{i}]")))
-                        {
-                            continue;
-                        }
-
-                        var indexInPatch = Patch.GetArrayLength("$"u8);
-                        var index = indexInPatch.HasValue ? indexInPatch.Value + i : i;
-                        jsonPath.CopyTo(buffer);
-                        Utf8Formatter.TryFormat(index, buffer.Slice(jsonPath.Length), out var bytesWritten);
-                        buffer[jsonPath.Length + bytesWritten] = (byte)']';
-                        var prefix = buffer.Slice(0, jsonPath.Length + bytesWritten + 1);
-
-                        Patch.PropagateTo(ref Items[i].Patch, prefix);
-                        Patch.Set("$[-]"u8, Items[i]);
-                    }
+                    ((IJsonModel<AvailabilitySetData>)item).Write(writer, options);
                 }
-                else
-                {
-                    writer.WriteStartArray();
-                    foreach (var item in Items)
-                    {
-                        ((IJsonModel<AvailabilitySetData>)item).Write(writer, options);
-                    }
-                    writer.WriteEndArray();
-                }
+                Patch.WriteArray(writer, "$[-]"u8);
+                writer.WriteEndArray();
             }
 
             Patch.Write(writer);

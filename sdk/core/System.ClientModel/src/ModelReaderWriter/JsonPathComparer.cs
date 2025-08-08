@@ -14,58 +14,21 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
     {
         if (ReferenceEquals(x, y)) return true;
         if (x is null || y is null) return false;
-        return Equals(new JsonPathReader(x), new JsonPathReader(y));
+        return new JsonPathReader(x).Equals(new JsonPathReader(y));
     }
 
     public int GetHashCode(byte[] obj)
-        => GetHashCode(new JsonPathReader(obj));
+        => new JsonPathReader(obj).GetHashCode();
 
     public byte[] Create(ReadOnlySpan<byte> alternate)
-    => alternate.ToArray();
+        => alternate.ToArray();
 
     public bool Equals(ReadOnlySpan<byte> alternate, byte[] other)
-        => Equals(new JsonPathReader(alternate), new JsonPathReader(other));
+        => new JsonPathReader(alternate).Equals(new JsonPathReader(other));
 
     public int GetHashCode(ReadOnlySpan<byte> alternate)
-         => GetHashCode(new JsonPathReader(alternate));
-
-    public static int GetHashCode(JsonPathReader obj)
     {
-#if NET8_0_OR_GREATER
-        var hash = new HashCode();
-        while (obj.Read())
-        {
-            if (!obj.Current.ValueSpan.IsEmpty)
-                hash.AddBytes(obj.Current.ValueSpan);
-        }
-        return hash.ToHashCode();
-#else
-        unchecked
-        {
-            int hash = 17;
-            while (obj.Read())
-            {
-                var span = obj.Current.ValueSpan;
-                if (!span.IsEmpty)
-                {
-                    for (int i = 0; i < span.Length; i++)
-                    {
-                        hash = hash * 31 + span[i];
-                    }
-                }
-            }
-            return hash;
-        }
-#endif
-    }
-
-    public static bool Equals(JsonPathReader x, JsonPathReader y)
-    {
-        while (x.Read() && y.Read())
-        {
-            if (!x.Current.ValueSpan.SequenceEqual(y.Current.ValueSpan))
-                return false;
-        }
-        return !x.Read() && !y.Read();
+        JsonPathReader reader = new(alternate);
+        return reader.GetHashCode();
     }
 }
