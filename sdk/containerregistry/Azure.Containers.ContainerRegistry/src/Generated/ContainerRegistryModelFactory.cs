@@ -115,5 +115,21 @@ namespace Azure.Containers.ContainerRegistry
                 canList,
                 canRead);
         }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.AcrRefreshToken"/>. </summary>
+        /// <param name="refreshToken"> The refresh token to be used for generating access tokens. </param>
+        /// <returns> A new <see cref="ContainerRegistry.AcrRefreshToken"/> instance for mocking. </returns>
+        public static AcrRefreshToken AcrRefreshToken(string refreshToken = null)
+        {
+            return new AcrRefreshToken(refreshToken);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.AcrAccessToken"/>. </summary>
+        /// <param name="accessToken"> The access token for performing authenticated requests. </param>
+        /// <returns> A new <see cref="ContainerRegistry.AcrAccessToken"/> instance for mocking. </returns>
+        public static AcrAccessToken AcrAccessToken(string accessToken = null)
+        {
+            return new AcrAccessToken(accessToken);
+        }
     }
 }
