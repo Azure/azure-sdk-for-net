@@ -138,10 +138,11 @@
 # ServiceOwners:                                                   @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @shenmuxiaosen @avanigupta
+/sdk/appconfiguration/                                             @shenmuxiaosen @avanigupta @ReilleyMilne @shirelmr
 
 # ServiceLabel: %App Configuration
-# ServiceOwners:                                                   @shenmuxiaosen @avanigupta
+# ServiceOwners: @shenmuxiaosen @avanigupta @ReilleyMilne @shirelmr
+
 
 # ServiceLabel: %App Services
 # ServiceOwners:                                                   @antcp @AzureAppServiceCLI
