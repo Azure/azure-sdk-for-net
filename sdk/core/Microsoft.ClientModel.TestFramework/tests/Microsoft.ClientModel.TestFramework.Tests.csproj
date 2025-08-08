@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestProject>true</IsTestProject>
+    <!-- We don't care about XML doc comments on test types and members -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Reference the Client Library -->
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.ClientModel.TestFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+	  <PackageReference Include="NUnit3TestAdapter" />
+		<PackageReference Include="NUnit" />
+		<PackageReference Include="Moq" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="RecordedTests\TestProxy\" />
+  </ItemGroup>
+</Project>
