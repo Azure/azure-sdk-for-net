@@ -152,10 +152,6 @@ stages:
               ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
               PublishAnalysisLogs: false
 
-          - template: /eng/common/pipelines/templates/steps/credscan.yml
-            parameters:
-              BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-
       - job: APIScan
         timeoutInMinutes: 180
         steps:
