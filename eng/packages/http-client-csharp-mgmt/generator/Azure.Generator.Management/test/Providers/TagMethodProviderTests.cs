@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
-using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.ResourceManager;

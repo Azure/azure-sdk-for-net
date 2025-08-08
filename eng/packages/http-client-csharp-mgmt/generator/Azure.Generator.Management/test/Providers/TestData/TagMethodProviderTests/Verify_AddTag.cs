@@ -22,8 +22,13 @@ try
     else
     {
         global::Samples.Models.ResponseTypeData current = (this.Get(cancellationToken)).Value.Data;
-        current.Tags[key] = value;
-        global::Azure.ResourceManager.ArmOperation<global::Samples.ResponseTypeResource> result = this.Update(global::Azure.WaitUntil.Completed, current, cancellationToken);
+        global::System.Threading.CancellationToken patch = new global::System.Threading.CancellationToken();
+        foreach (global::System.Collections.Generic.KeyValuePair<string, string> tag in current.Tags)
+        {
+            patch.Tags.Add(tag);
+        }
+        patch.Tags[key] = value;
+        global::Azure.ResourceManager.ArmOperation<global::Samples.ResponseTypeResource> result = this.Update(global::Azure.WaitUntil.Completed, patch, cancellationToken);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }
