@@ -49,14 +49,30 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal EdgeOrderProduct()
         {
             Configurations = new ChangeTrackingList<ProductConfiguration>();
+            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
+            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProduct"/>. </summary>
         /// <param name="configurations"> List of configurations for the product. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProduct(IReadOnlyList<ProductConfiguration> configurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderProduct(IReadOnlyList<ProductConfiguration> configurations, string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Configurations = configurations;
+            DisplayName = displayName;
+            Description = description;
+            ImageInformation = imageInformation;
+            CostInformation = costInformation;
+            AvailabilityInformation = availabilityInformation;
+            HierarchyInformation = hierarchyInformation;
+            FilterableProperties = filterableProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

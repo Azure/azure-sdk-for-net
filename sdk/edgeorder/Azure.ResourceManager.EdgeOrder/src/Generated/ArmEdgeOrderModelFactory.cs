@@ -734,12 +734,30 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProduct"/>. </summary>
         /// <param name="configurations"> List of configurations for the product. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <returns> A new <see cref="Models.EdgeOrderProduct"/> instance for mocking. </returns>
-        public static EdgeOrderProduct EdgeOrderProduct(IEnumerable<ProductConfiguration> configurations = null)
+        public static EdgeOrderProduct EdgeOrderProduct(IEnumerable<ProductConfiguration> configurations = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null)
         {
             configurations ??= new List<ProductConfiguration>();
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+            filterableProperties ??= new List<FilterableProperty>();
 
-            return new EdgeOrderProduct(configurations?.ToList(), serializedAdditionalRawData: null);
+            return new EdgeOrderProduct(
+                configurations?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductFamiliesMetadata"/>. </summary>

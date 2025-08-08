@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeOrderAddressResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             Argument.AssertNotNull(data, nameof(data));
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = await _edgeOrderAddressAddressResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation(_edgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, _edgeOrderAddressAddressResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, _edgeOrderAddressAddressResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeOrderAddressResource> CreateOrUpdate(WaitUntil waitUntil, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             Argument.AssertNotNull(data, nameof(data));
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.EdgeOrder
             try
             {
                 var response = _edgeOrderAddressAddressResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, addressName, data, cancellationToken);
-                var operation = new EdgeOrderArmOperation(_edgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, _edgeOrderAddressAddressResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(new EdgeOrderAddressOperationSource(Client), _edgeOrderAddressAddressResourcesClientDiagnostics, Pipeline, _edgeOrderAddressAddressResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
