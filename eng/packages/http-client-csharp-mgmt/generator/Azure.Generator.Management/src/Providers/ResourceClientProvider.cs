@@ -55,13 +55,15 @@ namespace Azure.Generator.Management.Providers
 
         private readonly ResourceMetadata _resourceMetadata;
 
+        private readonly RequestPathPattern _contextualPath;
+
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
         private ResourceClientProvider(string resourceName, InputModelType model, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            ContextualPath = new RequestPathPattern(resourceMetadata.ResourceIdPattern);
+            _contextualPath = new RequestPathPattern(resourceMetadata.ResourceIdPattern);
             _inputModel = model;
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
@@ -76,8 +78,6 @@ namespace Azure.Generator.Management.Providers
 
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
         }
-
-        public RequestPathPattern ContextualPath { get; }
 
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
@@ -291,7 +291,7 @@ namespace Azure.Generator.Management.Providers
             var formatBuilder = new StringBuilder();
             var refCount = 0;
 
-            foreach (var segment in ContextualPath)
+            foreach (var segment in _contextualPath)
             {
                 if (segment.IsConstant)
                 {
@@ -355,8 +355,8 @@ namespace Azure.Generator.Management.Providers
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
-                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false)));
-                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true)));
 
                     continue;
                 }
@@ -366,18 +366,18 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, false);
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, false);
                     operationMethods.Add(updateMethodProvider);
 
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
                 }
             }
 
@@ -398,12 +398,12 @@ namespace Azure.Generator.Management.Providers
                     var updateRestClientInfo = _clientInfos[updateMethod.InputClient];
 
                     methods.AddRange([
-                        new AddTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, true),
-                        new AddTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, false),
-                        new SetTagsMethodProvider(this, updateMethodProvider, updateRestClientInfo, true),
-                        new SetTagsMethodProvider(this, updateMethodProvider, updateRestClientInfo, false),
-                        new RemoveTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, true),
-                        new RemoveTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, false)
+                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
+                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false),
+                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
+                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false),
+                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
+                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false)
                     ]);
                 }
             }

@@ -39,10 +39,12 @@ namespace Azure.Generator.Management.Providers
         // This is the resource type of the current resource. Not the resource type of my parent resource
         private ScopedApi<ResourceType> _resourceTypeExpression;
 
+        private readonly RequestPathPattern _contextualPath;
+
         internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            ContextualPath = GetContextualRequestPattern(resourceMetadata);
+            _contextualPath = GetContextualRequestPattern(resourceMetadata);
             _resource = resource;
 
             // Initialize client info dictionary using extension method
@@ -66,14 +68,7 @@ namespace Azure.Generator.Management.Providers
             {
                 return new RequestPathPattern(resourceMetadata.ParentResourceId);
             }
-            return resourceMetadata.ResourceScope switch
-            {
-                ResourceScope.ManagementGroup => RequestPathPattern.ManagementGroup,
-                ResourceScope.ResourceGroup => RequestPathPattern.ResourceGroup,
-                ResourceScope.Subscription => RequestPathPattern.Subscription,
-                ResourceScope.Tenant => RequestPathPattern.Tenant,
-                _ => throw new NotSupportedException($"Unsupported resource scope: {resourceMetadata.ResourceScope}"),
-            };
+            return RequestPathPattern.GetFromScope(resourceMetadata.ResourceScope);
         }
 
         private static void InitializeMethods(
@@ -105,8 +100,6 @@ namespace Azure.Generator.Management.Providers
         }
 
         public ResourceClientProvider Resource => _resource;
-
-        public RequestPathPattern ContextualPath { get; }
 
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
@@ -273,7 +266,7 @@ namespace Azure.Generator.Management.Providers
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
                 var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync);
-                result.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
+                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
             }
 
             return result;
@@ -285,8 +278,8 @@ namespace Azure.Generator.Management.Providers
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync);
             return getAll.InputMethod switch
             {
-                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, pagingGetAll, isAsync, methodName: methodName),
-                _ => new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName: methodName)
+                InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName: methodName),
+                _ => new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName: methodName)
             };
         }
 
@@ -302,7 +295,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
-                result.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, _get.InputMethod, isAsync));
+                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync));
             }
 
             return result;
@@ -320,7 +313,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
-                var existsMethodProvider = new ExistsOperationMethodProvider(this, restClientInfo, _get.InputMethod, isAsync);
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(existsMethodProvider);
             }
 
@@ -339,7 +332,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
-                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, restClientInfo, _get.InputMethod, isAsync);
+                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(getIfExistsMethodProvider);
             }
 

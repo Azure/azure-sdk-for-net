@@ -27,6 +27,8 @@ namespace Azure.Generator.Management.Providers
         private protected readonly IReadOnlyList<NonResourceMethod> _methods;
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
+        private readonly RequestPathPattern _contextualPath;
+
         public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
             : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, nonResourceMethods)
         {
@@ -37,7 +39,7 @@ namespace Azure.Generator.Management.Providers
             _resources = resources;
             _methods = methods;
             ArmCoreType = armCoreType;
-            ContextualPath = contextualPath;
+            _contextualPath = contextualPath;
             _clientInfos = BuildRestClientInfos(methods, this);
         }
 
@@ -95,8 +97,6 @@ namespace Azure.Generator.Management.Providers
         }
 
         internal CSharpType ArmCoreType { get; }
-
-        public RequestPathPattern ContextualPath { get; }
 
         protected override string BuildNamespace() => $"{base.BuildNamespace()}.Mocking";
 
@@ -264,8 +264,8 @@ namespace Azure.Generator.Management.Providers
             var clientInfo = _clientInfos[method.InputClient];
             return method.InputMethod switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, ContextualPath, clientInfo, pagingMethod, isAsync),
-                _ => new ResourceOperationMethodProvider(this, ContextualPath, clientInfo, method.InputMethod, isAsync)
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync),
+                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method.InputMethod, isAsync)
             };
         }
 
