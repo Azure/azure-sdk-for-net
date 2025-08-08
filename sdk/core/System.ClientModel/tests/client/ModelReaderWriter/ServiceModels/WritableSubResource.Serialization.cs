@@ -29,6 +29,12 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(writer));
             }
 
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+
             writer.WriteStartObject();
             if (OptionalProperty.IsDefined(Id) && !Patch.Contains("$.id"u8))
             {

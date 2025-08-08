@@ -202,7 +202,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
 
         [Test]
-        [Ignore("WIP")]
         public void ReplaceItemInArrayClr()
         {
             var model = GetInitialModel();

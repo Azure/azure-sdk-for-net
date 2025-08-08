@@ -376,6 +376,17 @@ public partial struct AdditionalProperties
         if (_properties == null)
             return;
 
+        bool writingRoot = false;
+        // if we are at the root of the writer we need to write the start / end object
+        if (writer.CurrentDepth == 0 && writer.BytesCommitted == 0 && writer.BytesPending == 0)
+        {
+            if (!_properties.ContainsKey("$[-]"u8))
+            {
+                writer.WriteStartObject();
+                writingRoot = true;
+            }
+        }
+
         HashSet<byte[]> arrays = new(JsonPathComparer.Default);
 #if NET9_0_OR_GREATER
         HashSet<byte[]>.AlternateLookup<ReadOnlySpan<byte>> alternateArrays = arrays.GetAlternateLookup<ReadOnlySpan<byte>>();
@@ -395,7 +406,10 @@ public partial struct AdditionalProperties
 
             if (kvp.Key.IsArrayInsert())
             {
-                writer.WritePropertyName(parent.GetPropertyName());
+                if (!parent.IsRoot())
+                {
+                    writer.WritePropertyName(parent.GetPropertyName());
+                }
                 writer.WriteRawValue(kvp.Value.Value.Span);
                 continue;
             }
@@ -413,6 +427,11 @@ public partial struct AdditionalProperties
             }
 
             WriteEncodedValueAsJson(writer, kvp.Key.GetPropertyName(), kvp.Value);
+        }
+
+        if (writingRoot)
+        {
+            writer.WriteEndObject();
         }
     }
 
