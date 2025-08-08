@@ -554,6 +554,7 @@ public class CustomerServiceBot : IDisposable
 
             // Add the result to the conversation
             await _session!.AddItemAsync(outputItem, cancellationToken).ConfigureAwait(false);
+            await _session!.StartResponseAsync(cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation("✅ Function {FunctionName} completed successfully", functionName);
         }
