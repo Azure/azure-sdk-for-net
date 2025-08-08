@@ -144,7 +144,7 @@ namespace Azure.Generator.Management.Tests.Common
                 kind: InputParameterKind.Constant);
 
         /// <summary>
-        /// Construct input paraemter
+        /// Construct input parameter
         /// </summary>
         /// <param name="name"></param>
         /// <param name="type"></param>
