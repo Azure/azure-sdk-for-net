@@ -69,7 +69,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -104,7 +105,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -249,14 +251,14 @@
                 {
                   "$id": "21",
                   "name": "contentType",
-                  "nameInRequest": "contentType",
+                  "nameInRequest": "Content-Type",
                   "doc": "Body parameter's content type. Known values are application/json",
                   "type": {
                     "$ref": "1"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -392,7 +394,11 @@
                   "name": "name",
                   "nameInRequest": "name",
                   "type": {
-                    "$ref": "10"
+                    "$id": "31",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
                   },
                   "location": "Body",
                   "isApiVersion": false,
@@ -405,16 +411,16 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "31",
+                  "$id": "32",
                   "name": "contentType",
-                  "nameInRequest": "contentType",
+                  "nameInRequest": "Content-Type",
                   "doc": "Body parameter's content type. Known values are application/json",
                   "type": {
                     "$ref": "3"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -432,12 +438,12 @@
           ],
           "parameters": [
             {
-              "$id": "32",
+              "$id": "33",
               "name": "endpoint",
               "nameInRequest": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "33",
+                "$id": "34",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -452,7 +458,7 @@
               "kind": "Client",
               "defaultValue": {
                 "type": {
-                  "$id": "34",
+                  "$id": "35",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
