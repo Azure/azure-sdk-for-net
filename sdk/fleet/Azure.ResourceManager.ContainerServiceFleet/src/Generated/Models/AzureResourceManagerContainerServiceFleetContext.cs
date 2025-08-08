@@ -54,6 +54,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     [ModelReaderWriterBuildable(typeof(FleetUpdateStrategyData))]
     [ModelReaderWriterBuildable(typeof(FleetUpdateStrategyListResult))]
     [ModelReaderWriterBuildable(typeof(FleetUpdateStrategyResource))]
+    [ModelReaderWriterBuildable(typeof(GateConfiguration))]
+    [ModelReaderWriterBuildable(typeof(GateData))]
+    [ModelReaderWriterBuildable(typeof(GateListResult))]
+    [ModelReaderWriterBuildable(typeof(GatePatch))]
+    [ModelReaderWriterBuildable(typeof(GatePatchProperties))]
+    [ModelReaderWriterBuildable(typeof(GateResource))]
+    [ModelReaderWriterBuildable(typeof(GateTarget))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MemberUpdateStatus))]
     [ModelReaderWriterBuildable(typeof(NodeImageSelection))]
@@ -61,6 +68,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     [ModelReaderWriterBuildable(typeof(NodeImageVersion))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UpdateRunGateStatus))]
+    [ModelReaderWriterBuildable(typeof(UpdateRunGateTargetProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerContainerServiceFleetContext : ModelReaderWriterContext
     {

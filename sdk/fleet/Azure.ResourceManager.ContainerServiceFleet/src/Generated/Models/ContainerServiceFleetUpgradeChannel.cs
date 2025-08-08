@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         private const string StableValue = "Stable";
         private const string RapidValue = "Rapid";
         private const string NodeImageValue = "NodeImage";
+        private const string TargetKubernetesVersionValue = "TargetKubernetesVersion";
 
         /// <summary>
         ///  Upgrades the clusters kubernetes version to the latest supported patch release on minor version N-1, where N is the latest supported minor version.
@@ -35,6 +36,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static ContainerServiceFleetUpgradeChannel Rapid { get; } = new ContainerServiceFleetUpgradeChannel(RapidValue);
         /// <summary> Upgrade node image version of the clusters. </summary>
         public static ContainerServiceFleetUpgradeChannel NodeImage { get; } = new ContainerServiceFleetUpgradeChannel(NodeImageValue);
+        /// <summary>
+        ///   Upgrades the clusters Kubernetes version to the latest supported patch version of the specified target Kubernetes version.
+        ///   For information on the behavior of update run for Kubernetes version upgrade,
+        ///   see https://learn.microsoft.com/en-us/azure/kubernetes-fleet/update-orchestration?tabs=azure-portal
+        /// </summary>
+        public static ContainerServiceFleetUpgradeChannel TargetKubernetesVersion { get; } = new ContainerServiceFleetUpgradeChannel(TargetKubernetesVersionValue);
         /// <summary> Determines if two <see cref="ContainerServiceFleetUpgradeChannel"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceFleetUpgradeChannel left, ContainerServiceFleetUpgradeChannel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceFleetUpgradeChannel"/> values are not the same. </summary>
