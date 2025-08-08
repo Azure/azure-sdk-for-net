@@ -15,28 +15,28 @@ using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    internal partial class RecoveryServicesRestOperations
+    internal partial class RecoveryServicesOperationGroupRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of RecoveryServicesRestOperations. </summary>
+        /// <summary> Initializes a new instance of RecoveryServicesOperationGroupRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RecoveryServicesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public RecoveryServicesOperationGroupRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content)
+        internal RequestUriBuilder CreateCheckRecoveryServicesNameAvailabilityRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServices
             return uri;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content)
+        internal HttpMessage CreateCheckRecoveryServicesNameAvailabilityRequest(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -81,20 +81,20 @@ namespace Azure.ResourceManager.RecoveryServices
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
         /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="location"> Location of the resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, location, content);
+            using var message = CreateCheckRecoveryServicesNameAvailabilityRequest(subscriptionId, resourceGroupName, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -115,20 +115,20 @@ namespace Azure.ResourceManager.RecoveryServices
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
         /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="location"> Location of the resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecoveryServicesNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, location, content);
+            using var message = CreateCheckRecoveryServicesNameAvailabilityRequest(subscriptionId, resourceGroupName, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServices
             }
         }
 
-        internal RequestUriBuilder CreateCapabilitiesRequestUri(string subscriptionId, AzureLocation location, ResourceCapabilities input)
+        internal RequestUriBuilder CreateGetRecoveryServiceCapabilitiesRequestUri(string subscriptionId, AzureLocation location, ResourceCapabilities input)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServices
             return uri;
         }
 
-        internal HttpMessage CreateCapabilitiesRequest(string subscriptionId, AzureLocation location, ResourceCapabilities input)
+        internal HttpMessage CreateGetRecoveryServiceCapabilitiesRequest(string subscriptionId, AzureLocation location, ResourceCapabilities input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -181,18 +181,18 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary> API to get details about capabilities provided by Microsoft.RecoveryServices RP. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> Location of the resource. </param>
-        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="input"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilitiesResult>> CapabilitiesAsync(string subscriptionId, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        public async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(string subscriptionId, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateCapabilitiesRequest(subscriptionId, location, input);
+            using var message = CreateGetRecoveryServiceCapabilitiesRequest(subscriptionId, location, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -209,18 +209,18 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary> API to get details about capabilities provided by Microsoft.RecoveryServices RP. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> Location of the resource. </param>
-        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="input"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilitiesResult> Capabilities(string subscriptionId, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        public Response<CapabilitiesResult> GetRecoveryServiceCapabilities(string subscriptionId, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateCapabilitiesRequest(subscriptionId, location, input);
+            using var message = CreateGetRecoveryServiceCapabilitiesRequest(subscriptionId, location, input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

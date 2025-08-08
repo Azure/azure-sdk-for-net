@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="azureMonitorAlertSettings"> Settings for Azure Monitor based alerts. </param>
         /// <param name="classicAlertSettings"> Settings for classic alerts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VaultMonitoringSettings(AzureMonitorAlertSettings azureMonitorAlertSettings, ClassicAlertSettings classicAlertSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VaultMonitoringSettings(RecoveryServicesAzureMonitorAlertSettings azureMonitorAlertSettings, RecoveryServicesClassicAlertSettings classicAlertSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureMonitorAlertSettings = azureMonitorAlertSettings;
             ClassicAlertSettings = classicAlertSettings;
@@ -62,31 +62,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Settings for Azure Monitor based alerts. </summary>
-        internal AzureMonitorAlertSettings AzureMonitorAlertSettings { get; set; }
-        /// <summary> Gets or sets the azure monitor alert alerts for all job failures. </summary>
-        public RecoveryServicesAlertsState? AzureMonitorAlertAlertsForAllJobFailures
-        {
-            get => AzureMonitorAlertSettings is null ? default : AzureMonitorAlertSettings.AlertsForAllJobFailures;
-            set
-            {
-                if (AzureMonitorAlertSettings is null)
-                    AzureMonitorAlertSettings = new AzureMonitorAlertSettings();
-                AzureMonitorAlertSettings.AlertsForAllJobFailures = value;
-            }
-        }
-
+        public RecoveryServicesAzureMonitorAlertSettings AzureMonitorAlertSettings { get; set; }
         /// <summary> Settings for classic alerts. </summary>
-        internal ClassicAlertSettings ClassicAlertSettings { get; set; }
-        /// <summary> Gets or sets the classic alert alerts for critical operations. </summary>
-        public RecoveryServicesAlertsState? ClassicAlertAlertsForCriticalOperations
-        {
-            get => ClassicAlertSettings is null ? default : ClassicAlertSettings.AlertsForCriticalOperations;
-            set
-            {
-                if (ClassicAlertSettings is null)
-                    ClassicAlertSettings = new ClassicAlertSettings();
-                ClassicAlertSettings.AlertsForCriticalOperations = value;
-            }
-        }
+        public RecoveryServicesClassicAlertSettings ClassicAlertSettings { get; set; }
     }
 }
