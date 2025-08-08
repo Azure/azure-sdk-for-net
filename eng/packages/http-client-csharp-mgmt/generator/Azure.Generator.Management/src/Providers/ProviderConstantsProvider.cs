@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Statements;
 using System.IO;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -12,6 +12,10 @@ namespace Azure.Generator.Management.Providers
 {
     internal class ProviderConstantsProvider : TypeProvider
     {
+        private const string DefaultProviderNamespaceName = "DefaultProviderNamespace";
+
+        public static ValueExpression DefaultProviderNamespace =>  Static(ManagementClientGenerator.Instance.OutputLibrary.ProviderConstants.Type).Property(DefaultProviderNamespaceName);
+
         protected override string BuildName() => "ProviderConstants";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
@@ -24,8 +28,8 @@ namespace Azure.Generator.Management.Providers
                 null,
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
                 typeof(string),
-                "DefaultProviderNamespace",
-                new ExpressionPropertyBody(Static<ClientDiagnostics>().Invoke(nameof(ClientDiagnostics.GetResourceProviderNamespace), [TypeOf(Type)])),
+                DefaultProviderNamespaceName,
+                new ExpressionPropertyBody(Static<ClientDiagnostics>().Invoke(nameof(ClientDiagnostics.GetResourceProviderNamespace), [TypeOf(Type).Property(nameof(System.Type.Assembly))])),
                 this);
 
             return [defaultProviderNamespaceProperty];

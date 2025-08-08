@@ -70,7 +70,7 @@ namespace Azure.Generator.Management.Providers
                     // TODO -- here we either need to use the corresponding ResourceType.Namespace or ProviderConstants.DefaultProviderNamespace, pending on https://github.com/Azure/azure-sdk-for-net/issues/50593
                     new ExpressionPropertyBody(
                         clientDiagnosticsField.Assign(
-                            New.Instance(typeof(ClientDiagnostics), Literal(enclosingType.Type.Namespace), Literal("TODO"), thisResource.Diagnostics()),
+                            New.Instance(typeof(ClientDiagnostics), Literal(enclosingType.Type.Namespace), ProviderConstantsProvider.DefaultProviderNamespace, thisResource.Diagnostics()),
                             nullCoalesce: true)),
                     enclosingType);
 
