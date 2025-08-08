@@ -2,11 +2,15 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -20,13 +24,78 @@ namespace Azure.Generator.Management.Providers
     internal class MockableResourceProvider : TypeProvider
     {
         private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
+        private protected readonly IReadOnlyList<NonResourceMethod> _methods;
+        private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
-        // TODO -- in the future we need to update this to include the operations this mockable resource should include.
-        public MockableResourceProvider(CSharpType armCoreType, IReadOnlyList<ResourceClientProvider> resources)
+        private readonly RequestPathPattern _contextualPath;
+
+        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, nonResourceMethods)
         {
-            ArmCoreType = armCoreType;
-            _resources = resources;
         }
+
+        private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> methods)
+        {
+            _resources = resources;
+            _methods = methods;
+            ArmCoreType = armCoreType;
+            _contextualPath = contextualPath;
+            _clientInfos = BuildRestClientInfos(methods, this);
+        }
+
+        private static Dictionary<InputClient, RestClientInfo> BuildRestClientInfos(IReadOnlyList<NonResourceMethod> methods, TypeProvider enclosingType)
+        {
+            var clientInfos = new Dictionary<InputClient, RestClientInfo>();
+            foreach (var method in methods)
+            {
+                var inputClient = method.InputClient;
+                if (clientInfos.ContainsKey(inputClient))
+                {
+                    continue;
+                }
+
+                var thisResource = This.As<ArmResource>();
+                var restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+
+                var clientDiagnosticsField = new FieldProvider(
+                    FieldModifiers.Private,
+                    typeof(ClientDiagnostics),
+                    ResourceHelpers.GetClientDiagnosticsFieldName(restClientProvider.Name),
+                    enclosingType);
+                var clientDiagnosticsProperty = new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Private,
+                    typeof(ClientDiagnostics),
+                    ResourceHelpers.GetClientDiagnosticsPropertyName(restClientProvider.Name),
+                    // TODO -- here we either need to use the corresponding ResourceType.Namespace or ProviderConstants.DefaultProviderNamespace, pending on https://github.com/Azure/azure-sdk-for-net/issues/50593
+                    new ExpressionPropertyBody(
+                        clientDiagnosticsField.Assign(
+                            New.Instance(typeof(ClientDiagnostics), Literal(enclosingType.Type.Namespace), Literal("TODO"), thisResource.Diagnostics()),
+                            nullCoalesce: true)),
+                    enclosingType);
+
+                var restClientField = new FieldProvider(
+                    FieldModifiers.Private,
+                    restClientProvider.Type,
+                    ResourceHelpers.GetRestClientFieldName(restClientProvider.Name),
+                    enclosingType);
+                var restClientProperty = new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Private,
+                    restClientProvider.Type,
+                    ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
+                    new ExpressionPropertyBody(
+                        restClientField.Assign(
+                            // TODO -- need to add apiVersion here in the future https://github.com/Azure/azure-sdk-for-net/issues/51791
+                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Null),
+                            nullCoalesce: true)),
+                    enclosingType);
+
+                clientInfos.Add(inputClient, new RestClientInfo(restClientProvider, restClientField, restClientProperty, clientDiagnosticsField, clientDiagnosticsProperty));
+            }
+            return clientInfos;
+        }
+
         internal CSharpType ArmCoreType { get; }
 
         protected override string BuildNamespace() => $"{base.BuildNamespace()}.Mocking";
@@ -61,6 +130,40 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, MethodBodyStatement.Empty, this);
         }
 
+        protected override FieldProvider[] BuildFields()
+        {
+            var fields = new List<FieldProvider>(_clientInfos.Count * 2);
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                // add the client diagnostics field
+                fields.Add(clientInfo.DiagnosticsField);
+                // add the rest client field
+                fields.Add(clientInfo.RestClientField);
+            }
+
+            return [.. fields];
+        }
+
+        protected override PropertyProvider[] BuildProperties()
+        {
+            var properties = new List<PropertyProvider>(_clientInfos.Count * 2);
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                if (clientInfo.DiagnosticProperty is not null)
+                {
+                    // add the client diagnostics property
+                    properties.Add(clientInfo.DiagnosticProperty);
+                }
+                if (clientInfo.RestClientProperty is not null)
+                {
+                    // add the rest client property
+                    properties.Add(clientInfo.RestClientProperty);
+                }
+            }
+
+            return [.. properties];
+        }
+
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>(_resources.Count * 3);
@@ -68,6 +171,14 @@ namespace Azure.Generator.Management.Providers
             {
                 methods.AddRange(BuildMethodsForResource(resource));
             }
+
+            foreach (var method in _methods)
+            {
+                // add the method provider one by one.
+                methods.Add(BuildNonResourceMethod(method, false));
+                methods.Add(BuildNonResourceMethod(method, true));
+            }
+
             return [.. methods];
         }
 
@@ -148,7 +259,16 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        // TODO -- when we have the ability to get parent resources, we might move this to a more generic place and make it a helper method.
+        private MethodProvider BuildNonResourceMethod(NonResourceMethod method, bool isAsync)
+        {
+            var clientInfo = _clientInfos[method.InputClient];
+            return method.InputMethod switch
+            {
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync),
+                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method.InputMethod, isAsync)
+            };
+        }
+
         private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
         {
             var segments = resourceType.Split('/');

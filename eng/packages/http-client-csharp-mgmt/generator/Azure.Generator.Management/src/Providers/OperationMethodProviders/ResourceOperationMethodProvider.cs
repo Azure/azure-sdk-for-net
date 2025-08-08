@@ -84,8 +84,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ref _originalBodyType,
                 ref _returnBodyType,
                 ref _returnBodyResourceClient);
-            _clientDiagnosticsField = restClientInfo.DiagnosticsField;
-            _restClientField = restClientInfo.RestClientField;
+            _clientDiagnosticsField = restClientInfo.Diagnostics;
+            _restClientField = restClientInfo.RestClient;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
         }
