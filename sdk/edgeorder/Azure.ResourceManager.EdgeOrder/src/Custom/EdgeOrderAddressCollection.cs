@@ -3,21 +3,9 @@
 
 #nullable disable
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
-using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
-[assembly: CodeGenSuppressType(nameof(IEnumerator))]
-[assembly: CodeGenSuppressType(nameof(IEnumerator<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource>))]
-[assembly: CodeGenSuppressType(nameof(IAsyncEnumerator<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource>))]
 namespace Azure.ResourceManager.EdgeOrder
 {
     public partial class EdgeOrderAddressCollection
@@ -48,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<EdgeOrderAddressResource> GetAllAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderAddressResource> GetAllAsync(string filter, string skipToken, CancellationToken cancellationToken)
         {
             return GetAllAsync(filter, skipToken, null, cancellationToken);
         }
@@ -79,24 +67,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<EdgeOrderAddressResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderAddressResource> GetAll(string filter, string skipToken, CancellationToken cancellationToken)
         {
             return GetAll(filter, skipToken, null, cancellationToken);
-        }
-
-        IEnumerator<EdgeOrderAddressResource> IEnumerable<EdgeOrderAddressResource>.GetEnumerator()
-        {
-            return GetAll(null, null, null).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll(null, null, null).GetEnumerator();
-        }
-
-        IAsyncEnumerator<EdgeOrderAddressResource> IAsyncEnumerable<EdgeOrderAddressResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(null, null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -3,21 +3,9 @@
 
 #nullable disable
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
-using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
-[assembly: CodeGenSuppressType(nameof(IEnumerator))]
-[assembly: CodeGenSuppressType(nameof(IEnumerator<Azure.ResourceManager.EdgeOrder.EdgeOrderItemResource>))]
-[assembly: CodeGenSuppressType(nameof(IAsyncEnumerator<Azure.ResourceManager.EdgeOrder.EdgeOrderItemResource>))]
 namespace Azure.ResourceManager.EdgeOrder
 {
     public partial class EdgeOrderItemCollection
@@ -49,7 +37,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<EdgeOrderItemResource> GetAllAsync(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderItemResource> GetAllAsync(string filter, string expand, string skipToken, CancellationToken cancellationToken)
         {
             return GetAllAsync(filter, expand, skipToken, null, cancellationToken);
         }
@@ -81,24 +69,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<EdgeOrderItemResource> GetAll(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderItemResource> GetAll(string filter, string expand, string skipToken, CancellationToken cancellationToken)
         {
             return GetAll(filter, expand, skipToken, null, cancellationToken);
-        }
-
-        IEnumerator<EdgeOrderItemResource> IEnumerable<EdgeOrderItemResource>.GetEnumerator()
-        {
-            return GetAll(null, null, null, null).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll(null, null, null, null).GetEnumerator();
-        }
-
-        IAsyncEnumerator<EdgeOrderItemResource> IAsyncEnumerable<EdgeOrderItemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(null, null, null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
