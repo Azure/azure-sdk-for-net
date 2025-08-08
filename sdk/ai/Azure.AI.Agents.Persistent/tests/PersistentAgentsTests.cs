@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         private const string AGENT_NAME2 = "cs_e2e_tests_client2";
         private const string VCT_STORE_NAME = "cs_e2e_tests_vct_store";
         private const string FILE_NAME = "product_info_1.md";
+        private const string OPENAPI_SPEC_FILE = "weather_openapi.json";
         private const string FILE_NAME2 = "test_file.txt";
         private const string TEMP_DIR = "cs_e2e_temp_dir";
 
@@ -56,7 +58,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             return new CompositeDisposable(
             new TestAppContextSwitch(new() {
-                { PersistantAgensConstants.UseOldConnectionString, true.ToString() },
+                { PersistentAgentsConstants.UseOldConnectionString, true.ToString() },
             }));
         }
 
@@ -93,6 +95,36 @@ namespace Azure.AI.Agents.Persistent.Tests
             { AzureAISearchQueryTypeEnum.Vector, AzureAISearchQueryType.Vector },
             { AzureAISearchQueryTypeEnum.VectorSimpleHybrid, AzureAISearchQueryType.VectorSimpleHybrid },
             { AzureAISearchQueryTypeEnum.VectorSemanticHybrid, AzureAISearchQueryType.VectorSemanticHybrid }
+        };
+
+        public enum ToolTypes
+        {
+            BingGrounding,
+            OpenAPI,
+            DeepResearch,
+            AzureAISearch,
+            ConnectedAgent
+        }
+
+        public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
+        {
+            {ToolTypes.BingGrounding, typeof(RunStepDeltaBingGroundingToolCall) },
+            {ToolTypes.OpenAPI, typeof(RunStepDeltaOpenAPIToolCall)},
+            {ToolTypes.DeepResearch, typeof(RunStepDeltaDeepResearchToolCall)},
+            {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)},
+            {ToolTypes.ConnectedAgent, typeof(RunStepDeltaConnectedAgentToolCall)}
+        };
+
+        public Dictionary<ToolTypes, string> ToolPrompts = new()
+        {
+            {ToolTypes.BingGrounding, "How does wikipedia explain Euler's Identity?" },
+            {ToolTypes.OpenAPI, "What's the weather in Seattle?"},
+            {ToolTypes.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
+                "including what is currently known about orcas' cognitive capabilities, " +
+                "communication systems and problem-solving reflected in recent publications in top their scientific " +
+                "journals like Science, Nature and PNAS."},
+            {ToolTypes.AzureAISearch, "What is the temperature rating of the cozynights sleeping bag?"},
+            {ToolTypes.ConnectedAgent, "What is the Microsoft stock price?"}
         };
         #endregion
 
@@ -176,7 +208,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
-            HashSet<string> ids = new();
+            HashSet<string> ids = [];
             int initialAgentCount = await CountElementsAndRemoveIds(client, ids);
             PersistentAgent agent1 = await GetAgent(client, AGENT_NAME);
             ids = [agent1.Id];
@@ -209,7 +241,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgent agent = await GetAgent(client, AGENT_NAME);
             AsyncPageable<PersistentAgentThread> pgThreads = client.Threads.GetThreadsAsync(limit: 2);
             // This test may take a long time if the number of threads is big.
-            // The code below may e used to clean up the threads.
+            //The code below may e used to clean up the threads.
             //pgThreads = client.Threads.GetThreadsAsync(limit: 100);
             //List<PersistentAgentThread> del = await pgThreads.ToListAsync();
             //foreach (PersistentAgentThread thr in del)
@@ -219,6 +251,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             //}
             //pgThreads = client.Threads.GetThreadsAsync(limit: 100);
             //Assert.AreEqual(0, (await pgThreads.ToListAsync()).Count);
+            //Assert.Fail("Please comment out the cleanup code.");
             // End of cleanup code.
             int cntBefore = (await pgThreads.ToListAsync()).Count;
             PersistentAgentThread thr1 = await client.Threads.CreateThreadAsync();
@@ -451,6 +484,391 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
+        public async Task TestListAgentsAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            // In this test we are assuming that workspace has more then 10 agents.
+            // If it is not the case create these agents.
+            int agentLimit = 10;
+            AsyncPageable<PersistentAgent> agents = client.Administration.GetAgentsAsync(limit: 100, order: ListSortOrder.Ascending);
+            List<string> ids = await agents.Select(x => x.Id).ToListAsync();
+            if (ids.Count < agentLimit)
+            {
+                for (int i = ids.Count; i < agentLimit; i++)
+                {
+                    PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+                    ids.Add((await GetAgent(client)).Id);
+                }
+            }
+            // Test calling before.
+            agents = client.Administration.GetAgentsAsync(before: ids[4], limit: 2, order: ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (PersistentAgent agent in agents)
+            {
+                Assert.AreEqual(ids[idNum], agent.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            agents = client.Administration.GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
+            await foreach (PersistentAgent agent in agents)
+            {
+                Assert.AreEqual(ids[idNum], agent.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+                agentLimit--;
+                if (agentLimit <= 0)
+                    break;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListThreadsAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            // In this test we are assuming that workspace has more then 10 threads.
+            // If it is not the case create these threads.
+            int threadLimit = 10;
+            AsyncPageable<PersistentAgentThread> threads = client.Threads.GetThreadsAsync(limit: 100, order: ListSortOrder.Ascending);
+            List<string> ids = await threads.Select(x => x.Id).ToListAsync();
+            if (ids.Count < threadLimit)
+            {
+                for (int i = ids.Count; i < threadLimit; i++)
+                {
+                    PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+                    ids.Add(thread.Id);
+                }
+            }
+            // Test calling before.
+            threads = client.Threads.GetThreadsAsync(before: ids[4], limit: 2, order: ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (PersistentAgentThread thread in threads)
+            {
+                Assert.AreEqual(ids[idNum], thread.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            threads = client.Threads.GetThreadsAsync(after: ids[idNum-1], limit: 2, order: ListSortOrder.Ascending);
+            await foreach (PersistentAgentThread thread in threads)
+            {
+                Assert.AreEqual(ids[idNum], thread.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+                threadLimit--;
+                if (threadLimit <= 0)
+                    break;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListVectorStoresAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            // In this test we are assuming that workspace has more then 10 threads.
+            // If it is not the case create these threads.
+            int storeLimit = 10;
+            AsyncPageable<PersistentAgentsVectorStore> vctStores = client.VectorStores.GetVectorStoresAsync(limit: 100, order: ListSortOrder.Ascending);
+            List<string> ids = await vctStores.Select(x => x.Id).ToListAsync();
+            if (ids.Count < storeLimit)
+            {
+                for (int i = ids.Count; i < storeLimit; i++)
+                {
+                    PersistentAgentsVectorStore vct = await client.VectorStores.CreateVectorStoreAsync(name: VCT_STORE_NAME);
+                    ids.Add(vct.Id);
+                }
+            }
+            // Test calling before.
+            vctStores = client.VectorStores.GetVectorStoresAsync(before: ids[4], limit: 2, order: ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (PersistentAgentsVectorStore vct in vctStores)
+            {
+                Assert.AreEqual(ids[idNum], vct.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            vctStores = client.VectorStores.GetVectorStoresAsync(after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
+            await foreach (PersistentAgentsVectorStore vct in vctStores)
+            {
+                Assert.AreEqual(ids[idNum], vct.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+                storeLimit--;
+                if (storeLimit <= 0)
+                    break;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListRunsAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            PersistentAgentThread thread = await GetThread(client);
+            PersistentAgent agent = await GetAgent(client);
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                threadId: thread.Id,
+                role: MessageRole.User,
+                content: "What is the mass of the Sun?"
+            );
+            int runLimit = 5;
+            string[] ids = new string[runLimit];
+            for (int i = 0; i < runLimit; i++)
+            {
+                ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
+                await WaitForRun(client: client, run: run);
+                ids[i] = run.Id;
+            }
+            // Test calling before.
+            AsyncPageable<ThreadRun> runs = client.Runs.GetRunsAsync(threadId:thread.Id, before: ids[2], limit: 1, order: ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (ThreadRun run in runs)
+            {
+                Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 2);
+            // Test calling after.
+            runs = client.Runs.GetRunsAsync(threadId: thread.Id, after: ids[idNum - 1], limit: 1, order: ListSortOrder.Ascending);
+            await foreach (ThreadRun run in runs)
+            {
+                Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            client.Threads.DeleteThread(threadId: thread.Id);
+        }
+
+        [RecordedTest]
+        public async Task TestMultipleAgentTool()
+        {
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent weatherAgent = await GetAgent(
+                client: client,
+                agentName: "weather-bot",
+                instruction: "Your job is to get the weather for a given location. " +
+                             "Always return 50F Cloudy when asked about weather in Seattle"
+            );
+
+            // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
+            ConnectedAgentToolDefinition stockPriceConnectedAgentTool = (ConnectedAgentToolDefinition) await GetToolDefinition(ToolTypes.ConnectedAgent);
+
+            ConnectedAgentToolDefinition weatherConnectedAgentTool = new(
+                new ConnectedAgentDetails(
+                    id: weatherAgent.Id,
+                    name: "weather_bot",
+                    description: "Gets the weather for a given location"
+                )
+            );
+            PersistentAgent agent = await GetAgent(
+               client: client,
+               agentName: "my-assistant",
+               instruction: "You are a helpful assistant, and use the connected agents to get stock prices and weather.",
+               tools: [stockPriceConnectedAgentTool, weatherConnectedAgentTool]);
+
+            // Create thread for communication
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+            // Create message to thread
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "What is the stock price of Microsoft and the weather in Seattle?");
+
+            // Run the agent
+            ThreadRun run = client.Runs.CreateRun(thread, agent);
+            run = await WaitForRun(client, run);
+
+            // Check run steps
+            List<string> ids = await client.Runs.GetRunStepsAsync(run, order: ListSortOrder.Ascending).Select(x => x.Id).ToListAsync();
+            Assert.AreEqual(ids.Count, 3);
+
+            // Check steps before
+            List<RunStep> steps = await client.Runs.GetRunStepsAsync(run, before: ids[1], order: ListSortOrder.Ascending).ToListAsync();
+            Assert.AreEqual(1, steps.Count);
+            Assert.AreEqual(steps[0].Id, ids[0]);
+
+            // Check steps after
+            steps = await client.Runs.GetRunStepsAsync(run, after: ids[0], order: ListSortOrder.Ascending).ToListAsync();
+            Assert.AreEqual(2, steps.Count);
+            Assert.AreEqual(steps[0].Id, ids[1]);
+            Assert.AreEqual(steps[1].Id, ids[2]);
+
+            // Check that we have steps of the correct types
+            bool foundWeatherBot = false;
+            bool foundStockBot = false;
+            await foreach (RunStep step in client.Runs.GetRunStepsAsync(run, order: ListSortOrder.Ascending))
+            {
+                if (step.StepDetails is RunStepToolCallDetails toolDetails)
+                {
+                    foreach (RunStepToolCall toolCall in toolDetails.ToolCalls)
+                    {
+                        if (toolCall is RunStepConnectedAgentToolCall connectedAgentToolCall)
+                        {
+                            foundWeatherBot |= string.Equals(weatherConnectedAgentTool.ConnectedAgent.Name, connectedAgentToolCall.ConnectedAgent.Name);
+                            foundStockBot |= string.Equals(stockPriceConnectedAgentTool.ConnectedAgent.Name, connectedAgentToolCall.ConnectedAgent.Name);
+                        }
+                    }
+                }
+            }
+            Assert.True(foundWeatherBot, "The weather bot step was not found.");
+            Assert.True(foundStockBot, "The stock bot step was not found.");
+
+            List <PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
+                threadId: run.ThreadId,
+                runId: run.Id,
+                order: ListSortOrder.Ascending
+            ).ToListAsync();
+            Assert.Greater(messages.Count, 0);
+
+            // NOTE: Comment out these four lines if you plan to reuse the agent later.
+            client.Threads.DeleteThread(threadId: thread.Id);
+        }
+
+        [RecordedTest]
+        public async Task TestListMessageAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            PersistentAgentThread thread = await GetThread(client);
+
+            string[] ids = new string[9];
+            for (int i = 0; i < 9; i++)
+            {
+                PersistentThreadMessage msg1 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "foo");
+                ids[i] = msg1.Id;
+            }
+            // Test calling before.
+            AsyncPageable<PersistentThreadMessage> msgResp = client.Messages.GetMessagesAsync(thread.Id, before: ids[4], limit:2, order:ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (PersistentThreadMessage msg in msgResp)
+            {
+                Assert.AreEqual(ids[idNum], msg.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            msgResp = client.Messages.GetMessagesAsync(thread.Id, after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
+            await foreach (PersistentThreadMessage msg in msgResp)
+            {
+                Assert.AreEqual(ids[idNum], msg.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListVectorStoreFilesAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            int storeLimit = 10;
+            List<VectorStoreDataSource> sources = [];
+            for (int i = 0; i < storeLimit; i++)
+            {
+                sources.Add(new(
+                    assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
+                    assetType: VectorStoreDataSourceAssetType.UriAsset
+                ));
+            }
+            VectorStoreConfiguration storeConf = new(
+                sources
+            );
+            PersistentAgentsVectorStore vct = await client.VectorStores.CreateVectorStoreAsync(
+                name: VCT_STORE_NAME,
+                storeConfiguration: storeConf
+            );
+            List<string> ids = await client.VectorStores.GetVectorStoreFilesAsync(vectorStoreId: vct.Id, order: ListSortOrder.Ascending).Select(x => x.Id).ToListAsync();
+            AsyncPageable<VectorStoreFile> files = client.VectorStores.GetVectorStoreFilesAsync(
+                vectorStoreId: vct.Id,
+                limit: 2,
+                order: ListSortOrder.Ascending,
+                before: ids[4]
+            );
+            int idNum = 0;
+            await foreach (VectorStoreFile fle in files)
+            {
+                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            files = client.VectorStores.GetVectorStoreFilesAsync(
+                vectorStoreId: vct.Id,
+                limit: 2,
+                order: ListSortOrder.Ascending,
+                after: ids[idNum-1]
+            );
+            await foreach (VectorStoreFile fle in files)
+            {
+                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListVectorStoreFileBatchesAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            int storeLimit = 10;
+            List<VectorStoreDataSource> sources = [];
+            IReadOnlyList<PersistentAgentFileInfo> uploadedFiles = (await client.Files.GetFilesAsync()).Value;
+            List<string> fileIds = [];
+            // This test requires the number of uploaded files to be not less then ten.
+            // The code below ill do it, however, th test will require re-recording as file upload
+            // is not handled properly by the recording system.
+            // Q: Why cannot we use the Enterprise file search as in TestListVectorStoreFilesAfterAndBefore?
+            // A: Only one data source configuration may be uploaded at this time.
+            if (uploadedFiles.Count < storeLimit)
+            {
+                for (int i = uploadedFiles.Count; i < storeLimit; i++)
+                    await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
+                uploadedFiles = (await client.Files.GetFilesAsync()).Value;
+            }
+            for (int i = 0; i < storeLimit; i++)
+            {
+                fileIds.Add(uploadedFiles[i].Id);
+            }
+            PersistentAgentsVectorStore vct = await client.VectorStores.CreateVectorStoreAsync(
+                name: VCT_STORE_NAME
+            );
+            VectorStoreFileBatch batch = await client.VectorStores.CreateVectorStoreFileBatchAsync(
+                vectorStoreId: vct.Id,
+                fileIds: fileIds
+            );
+            batch = await WaitForBatch(client, vct.Id, batch);
+
+            List<string> ids = await client.VectorStores.GetVectorStoreFileBatchFilesAsync(vectorStoreId: vct.Id, batchId: batch.Id, order: ListSortOrder.Ascending).Select(x => x.Id).ToListAsync();
+            AsyncPageable<VectorStoreFile> files = client.VectorStores.GetVectorStoreFileBatchFilesAsync(
+                vectorStoreId: vct.Id,
+                batchId: batch.Id,
+                limit: 2,
+                order: ListSortOrder.Ascending,
+                before: ids[4]
+            );
+            int idNum = 0;
+            await foreach (VectorStoreFile fle in files)
+            {
+                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(4, idNum);
+            // Test calling after.
+            files = client.VectorStores.GetVectorStoreFileBatchFilesAsync(
+                vectorStoreId: vct.Id,
+                batchId: batch.Id,
+                limit: 2,
+                order: ListSortOrder.Ascending,
+                after: ids[idNum - 1]
+            );
+            await foreach (VectorStoreFile fle in files)
+            {
+                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+        }
+
+        [RecordedTest]
         [TestCase(ArgumentType.Metadata)]
         [TestCase(ArgumentType.Bytes)]
         [TestCase(ArgumentType.Stream)]
@@ -656,7 +1074,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     threadId: thread.Id,
                     assistantId: agent.Id,
                     parallelToolCalls: parallelToolCalls
-                );
+                    );
             }
             bool functionCalled = false;
             do
@@ -1059,7 +1477,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun fileSearchRun = null;
             if (useStream)
             {
-                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: include))
+                CreateRunStreamingOptions opts = new()
+                {
+                    Include = include,
+                };
+                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: opts))
                 {
                     if (streamingUpdate is RunUpdate runUpdate)
                         fileSearchRun = runUpdate.Value;
@@ -1287,7 +1709,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             await client.Messages.CreateMessageAsync(
                 thread.Id,
                 MessageRole.User,
-                "What is the temperature rating of the cozynights sleeping bag?");
+                ToolPrompts[ToolTypes.AzureAISearch]);
             ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
             do
@@ -1353,7 +1775,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public async Task TestAzureAiSearchStreaming(AzureAISearchQueryTypeEnum queryType)
         {
             using var _ = SetTestSwitch();
-            if (!IsAsync)
+            if (!IsAsync && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
             ToolResources searchResource = GetAISearchToolResource(queryType);
@@ -1372,36 +1794,412 @@ namespace Azure.AI.Agents.Persistent.Tests
             await client.Messages.CreateMessageAsync(
                 thread.Id,
                 MessageRole.User,
-                "What is the temperature rating of the cozynights sleeping bag?");
-            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
+                ToolPrompts[ToolTypes.AzureAISearch]);
+            await ValidateStream(client: client, agentId: agent.Id, threadId: thread.Id, runStepDeltaType: ExpectedDeltas[ToolTypes.AzureAISearch]);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task TestAutomaticSubmitToolOutputs(bool correctDefinition)
+        {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
+
+            string GetHumidityByAddress(string address)
             {
-                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+                return address.Contains("Seattle") ? "80" : "60";
+            }
+
+            FunctionToolDefinition correctGeHhumidityByAddressTool = new(
+                 name: "GetHumidityByAddress",
+                 description: "Get humidity by address",
+                 parameters: BinaryData.FromObjectAsJson(
+                 new
+                 {
+                     Type = "object",
+                     Properties = new
+                     {
+                         Address = new
+                         {
+                             Type = "string",
+                             Description = "Address"
+                         }
+                     },
+                     Required = new[] { "address" }
+                 },
+                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+
+            FunctionToolDefinition incorrectGeHhumidityByAddressTool = new(
+                 name: "GetHumidityByAddress",
+                 description: "Get humidity by address",
+                 parameters: BinaryData.FromObjectAsJson(
+                 new
+                 {
+                     Type = "object",
+                     Properties = new
+                     {
+                         Addresses = new
+                         {
+                             Type = "array",
+                             Description = "A list of addresses",
+                             Items = new
+                             {
+                                 Type = "object",
+                                 Properties = new
+                                 {
+                                     Street = new
+                                     {
+                                         Type = "string",
+                                         Description = "Street"
+                                     },
+                                     City = new
+                                     {
+                                         Type = "string",
+                                         description = "city"
+                                     },
+                                 },
+                                 Required = new[] { "street", "city" }
+                             }
+                         },
+                     },
+                     Required = new[] { "address" }
+                 },
+                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+
+            Dictionary<string, Delegate> toolDelegates = new();
+            toolDelegates.Add(nameof(GetHumidityByAddress), GetHumidityByAddress);
+
+            PersistentAgentsClient client = GetClient();
+            string output = "";
+            bool completed = false;
+            bool cancelled = false;
+            List<ToolDefinition> tools = new();
+            AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 0);
+            if (correctDefinition)
+                tools.Add(correctGeHhumidityByAddressTool);
+            else
+                tools.Add(incorrectGeHhumidityByAddressTool);
+
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
+                    model: "gpt-4o-mini",
+                    name: AGENT_NAME,
+                    instructions: "Use the provided functions to help answer questions.",
+                    tools: tools
+                );
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "Get humidity for address, 456 2nd Ave in city, Seattle");
+
+            CreateRunStreamingOptions opts = new()
+            {
+                AutoFunctionCallOptions = autoFunctionCallOptions
+            };
+            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: opts))
+            {
+                if (streamingUpdate is MessageContentUpdate contentUpdate)
                 {
-                    Console.WriteLine("--- Run started! ---");
-                }
-                else if (streamingUpdate is MessageContentUpdate contentUpdate)
-                {
-                    if (contentUpdate.TextAnnotation != null)
-                    {
-                        Console.Write($" [see {contentUpdate.TextAnnotation.Title}] ({contentUpdate.TextAnnotation.Url})");
-                    }
-                    else
-                    {
-                        //Detect the reference placeholder and skip it. Instead we will print the actual reference.
-                        if (contentUpdate.Text[0] != (char)12304 || contentUpdate.Text[contentUpdate.Text.Length - 1] != (char)12305)
-                            Console.Write(contentUpdate.Text);
-                    }
+                    output += contentUpdate.Text;
                 }
                 else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("--- Run completed! ---");
+                    completed = true;
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCancelled)
+                {
+                    cancelled = true;
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed && streamingUpdate is RunUpdate errorStep)
+                {
+                    Assert.Fail(errorStep.Value.LastError.Message);
                 }
             }
+
+            if (correctDefinition)
+            {
+                Assert.True(output.Contains("80"));
+                Assert.True(completed);
+            }
+            else
+            {
+                Assert.True(cancelled);
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestDeepResearchTool()
+        {
+            PersistentAgentsClient client = GetClient();
+            string instruction = "You are a helpful Agent that assists in researching scientific topics.";
+            PersistentAgent agent = await GetAgent(client: client, instruction:instruction, model: "gpt-4o", tools: [await GetToolDefinition(ToolTypes.DeepResearch)]);
+            PersistentAgentThreadCreationOptions threadOp = new();
+            threadOp.Messages.Add(new ThreadMessageOptions(
+                role: MessageRole.User,
+                content: ToolPrompts[ToolTypes.DeepResearch]
+            ));
+            ThreadAndRunOptions opts = new()
+            {
+                ThreadOptions = threadOp,
+            };
+            ThreadRun run = await client.CreateThreadAndRunAsync(
+                assistantId: agent.Id,
+                options: opts
+            );
+            run = await WaitForRun(client, run);
+            Assert.AreEqual(RunStatus.Completed, run.Status);
+            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(run.ThreadId, run.Id).ToListAsync();
+            Assert.GreaterOrEqual(messages.Count, 1);
+            bool annotationFound = false;
+            foreach (PersistentThreadMessage msg in messages)
+            {
+                if (msg.Role != MessageRole.Agent)
+                    continue;
+                foreach (MessageContent contentItem in msg.ContentItems)
+                {
+                    if (contentItem is MessageTextContent textItem)
+                    {
+                        // Console.WriteLine(textItem.Text);
+                        if (textItem.Annotations != null)
+                        {
+                            foreach (MessageTextAnnotation annotation in textItem.Annotations)
+                            {
+                                if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
+                                {
+                                    annotationFound = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (annotationFound)
+                        break;
+                }
+                if (annotationFound)
+                    break;
+            }
+            // Note sometimes this assumption fails because agent asks additional question.
+            Assert.That(annotationFound, "Annotations were not found, the data are not grounded.");
+        }
+
+        [RecordedTest]
+        public async Task TestMcpTool()
+        {
+            PersistentAgentsClient client = GetClient();
+            MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
+            string searchApiCode = "search_azure_rest_api_code";
+            mcpTool.AllowedTools.Add(searchApiCode);
+
+            PersistentAgent agent = await GetAgent(
+                client,
+                instruction: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
+                model: "gpt-4o",
+                tools: [mcpTool]);
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "Please summarize the Azure REST API specifications Readme");
+
+            MCPToolResource mcpToolResource = new("github");
+            mcpToolResource.UpdateHeader("SuperSecret", "123456");
+            ToolResources toolResources = mcpToolResource.ToToolResources();
+
+            // Run the agent with MCP tool resources
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent, toolResources);
+
+            // Handle run execution and tool approvals
+            bool isApprovalRequested = false;
+            while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)
+            {
+                if (Mode != RecordedTestMode.Playback)
+                    await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+
+                if (run.Status == RunStatus.RequiresAction && run.RequiredAction is SubmitToolApprovalAction toolApprovalAction)
+                {
+                    var toolApprovals = new List<ToolApproval>();
+                    foreach (RequiredToolCall toolCall in toolApprovalAction.SubmitToolApproval.ToolCalls)
+                    {
+                        if (toolCall is RequiredMcpToolCall mcpToolCall)
+                        {
+                            Console.WriteLine($"Approving MCP tool call: {mcpToolCall.Name}");
+                            toolApprovals.Add(new ToolApproval(mcpToolCall.Id, approve: true)
+                            {
+                                Headers = { ["SuperSecret"] = "123456" }
+                            });
+                            isApprovalRequested = true;
+                        }
+                    }
+
+                    if (toolApprovals.Count > 0)
+                    {
+                        run = await client.Runs.SubmitToolOutputsToRunAsync(thread.Id, run.Id, toolApprovals: toolApprovals, stream: false);
+                    }
+                }
+            }
+            Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
+            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
+            Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
+            AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(thread.Id, run.Id);
+            bool isRunStepMCPPresent = false;
+            await foreach (RunStep step in steps)
+            {
+                if (step.StepDetails is RunStepToolCallDetails details)
+                {
+                    foreach (RunStepToolCall call in details.ToolCalls)
+                        if (call is RunStepMcpToolCall)
+                            isRunStepMCPPresent = true;
+                }
+            }
+            Assert.IsTrue(isRunStepMCPPresent, "No MCP tool call step is present.");
+        }
+
+        [RecordedTest]
+        public async Task TestMcpToolStreaming()
+        {
+            PersistentAgentsClient client = GetClient();
+            MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
+            string searchApiCode = "search_azure_rest_api_code";
+            mcpTool.AllowedTools.Add(searchApiCode);
+            PersistentAgent agent = await GetAgent(
+                client,
+                instruction: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
+                tools: [mcpTool]);
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "Please summarize the Azure REST API specifications Readme");
+            MCPToolResource mcpToolResource = new("github");
+            mcpToolResource.UpdateHeader("SuperSecret", "123456");
+            ToolResources toolResources = mcpToolResource.ToToolResources();
+            CreateRunStreamingOptions options = new()
+            {
+                ToolResources = toolResources
+            };
+            List<ToolApproval> toolApprovals = [];
+            ThreadRun streamRun = null;
+            bool isApprovalRequested = false;
+            bool isMCPStepCreated = false;
+            AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: options);
+            do
+            {
+                toolApprovals.Clear();
+                await foreach (StreamingUpdate streamingUpdate in stream)
+                {
+                    if (streamingUpdate is SubmitToolApprovalUpdate submitToolApprovalUpdate)
+                    {
+                        toolApprovals.Add(new ToolApproval(submitToolApprovalUpdate.ToolCallId, approve: true)
+                        {
+                            Headers = { ["SuperSecret"] = "123456" }
+                        });
+                        streamRun = submitToolApprovalUpdate.Value;
+                        isApprovalRequested = true;
+                    }
+                    else if (streamingUpdate is MessageContentUpdate contentUpdate)
+                    {
+                        Console.Write(contentUpdate.Text);
+                    }
+                    else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed && streamingUpdate is RunUpdate errorStep)
+                    {
+                        Assert.Fail(errorStep.Value.LastError.Message);
+                    }
+                    else if (streamingUpdate is RunStepDetailsUpdate runStepDelta)
+                    {
+                        if (!string.IsNullOrEmpty(runStepDelta.FunctionArguments))
+                        {
+                            isMCPStepCreated = true;
+                        }
+                    }
+                }
+                if (toolApprovals.Count > 0)
+                {
+                    stream = client.Runs.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs: [], toolApprovals: toolApprovals);
+                }
+            }
+            while (toolApprovals.Count > 0);
+            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
+            Assert.IsTrue(isMCPStepCreated, "The Delta MCP step was not encountered.");
+            Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
+        }
+
+        [RecordedTest]
+        [TestCase(ToolTypes.BingGrounding)]
+        [TestCase(ToolTypes.OpenAPI)]
+        [TestCase(ToolTypes.DeepResearch)]
+        [TestCase(ToolTypes.ConnectedAgent)]
+        // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
+        public async Task TestStreamDelta(ToolTypes toolToTest)
+        {
+            // Commenting DeepResearch as it is not compatible with unit test framework iterations
+            // and connection breaks after timeout during streaming test.
+            // The error says that the thread already contains the active run.
+            if (toolToTest == ToolTypes.DeepResearch && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive("DeepResearch is not fully supported by TestFramework");
+            ToolResources toolRes = GetToolResources(toolToTest);
+            ToolDefinition toolDef = await GetToolDefinition(toolToTest);
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent agent = await GetAgent(
+                client: client,
+                model: "gpt-4o",
+                tools: toolDef is null ? null : [toolDef],
+                toolResources: toolRes
+            );
+            // Create thread for communication
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+            // Create message to thread
+            await client.Messages.CreateMessageAsync(
+                threadId: thread.Id,
+                role: MessageRole.User,
+                content: ToolPrompts[toolToTest]);
+            await ValidateStream(client: client, agentId: agent.Id, threadId: thread.Id, runStepDeltaType: ExpectedDeltas[toolToTest]);
         }
 
         #region Helpers
 
+        private static async Task ValidateStream(PersistentAgentsClient client, string agentId, string threadId, Type runStepDeltaType)
+        {
+            bool isStarted = false;
+            bool receivedMessage = false;
+            bool gotExpectedDelta = false;
+            bool isCompleted = false;
+            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(threadId, agentId))
+            {
+                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+                {
+                    isStarted = true;
+                }
+                else if (streamingUpdate is MessageContentUpdate msg)
+                {
+                    Console.WriteLine(msg.Text);
+                    receivedMessage = true;
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed && streamingUpdate is RunUpdate errorStep)
+                {
+                    Assert.Fail(errorStep.Value.LastError.Message);
+                }
+                else if (streamingUpdate is RunStepDetailsUpdate runStepDelta)
+                {
+                    if (runStepDelta.GetDeltaToolCall.GetType() == runStepDeltaType)
+                    {
+                        gotExpectedDelta = true;
+                    }
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    isCompleted = true;
+                }
+                FailOnStreamError(streamingUpdate);
+            }
+            Assert.True(isStarted, "The stream is missing Start event.");
+            Assert.True(receivedMessage, "The message was never received.");
+            Assert.True(gotExpectedDelta, $"The delta tool call of type {runStepDeltaType} was not found.");
+            Assert.True(isCompleted, "The stream was not completed.");
+        }
         private static string CreateTempDirMayBe()
         {
             string tempDir = Path.Combine(Path.GetTempPath(), TEMP_DIR);
@@ -1447,12 +2245,14 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsTrue(resp.Value);
         }
 
-        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName=AGENT_NAME, string instruction= "You are helpful agent.")
+        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName = AGENT_NAME, string instruction = "You are helpful agent.", string model="gpt-4o", IEnumerable<ToolDefinition> tools=null, ToolResources toolResources=null)
         {
             return await client.Administration.CreateAgentAsync(
-                model: "gpt-4",
+                model: model,
                 name: agentName,
-                instructions: instruction
+                instructions: instruction,
+                tools: tools,
+                toolResources: toolResources
             );
         }
 
@@ -1490,14 +2290,10 @@ namespace Azure.AI.Agents.Persistent.Tests
         private async Task<ThreadRun> WaitForRun(PersistentAgentsClient client, ThreadRun run)
         {
             double delay = 500;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                // No need to wait during playback.
-                delay = 1;
-            }
             do
             {
-                await Task.Delay(TimeSpan.FromMilliseconds(delay));
+                if (Mode != RecordedTestMode.Playback)
+                    await Task.Delay(TimeSpan.FromMilliseconds(delay));
                 run = await client.Runs.GetRunAsync(run.ThreadId, run.Id);
             }
             while (run.Status == RunStatus.Queued
@@ -1507,10 +2303,24 @@ namespace Azure.AI.Agents.Persistent.Tests
             return run;
         }
 
-        private static string GetFile([CallerFilePath] string pth = "")
+        private async Task<VectorStoreFileBatch> WaitForBatch(PersistentAgentsClient client, string vectorStoreId, VectorStoreFileBatch batch)
+        {
+            double delay = 500;
+            do
+            {
+                if (Mode != RecordedTestMode.Playback)
+                    await Task.Delay(TimeSpan.FromMilliseconds(delay));
+                batch = await client.VectorStores.GetVectorStoreFileBatchAsync(vectorStoreId: vectorStoreId, batchId: batch.Id);
+            }
+            while (batch.Status == VectorStoreFileBatchStatus.InProgress);
+            Assert.AreEqual(VectorStoreFileBatchStatus.Completed, batch.Status, message: "Failed to create VectorStoreFileBatchStatus");
+            return batch;
+        }
+
+        private static string GetFile([CallerFilePath] string pth = "", string fileName= FILE_NAME)
         {
             var dirName = Path.GetDirectoryName(pth) ?? "";
-            return Path.Combine(new string[] { dirName, "TestData", FILE_NAME });
+            return Path.Combine(new string[] { dirName, "TestData", fileName });
         }
 
         private static async Task<int> CountElementsAndRemoveIds(PersistentAgentsClient client, HashSet<string> ids)
@@ -1525,7 +2335,54 @@ namespace Azure.AI.Agents.Persistent.Tests
             return count;
         }
 
-        private ToolResources GetAISearchToolResource(AzureAISearchQueryTypeEnum queryType)
+        private ToolResources GetToolResources(ToolTypes toolType)
+            => toolType switch
+            {
+                ToolTypes.AzureAISearch => GetAISearchToolResource(
+                    queryType: AzureAISearchQueryTypeEnum.Simple,
+                    filter: "category eq 'sleeping bag'"
+                ),
+                _ => null
+            };
+
+        private async Task<PersistentAgent> GetSubAgent() => await GetAgent(
+                GetClient(), agentName: "stock-price-bot", model: "gpt-4o", instruction: "Your job is to get the stock price of a company. If asked for the Microsoft stock price, always return $350.");
+
+        private async Task<ToolDefinition> GetToolDefinition(ToolTypes toolType)
+            => toolType switch
+                {
+                    ToolTypes.BingGrounding => new BingGroundingToolDefinition(
+                        new BingGroundingSearchToolParameters(
+                            [new BingGroundingSearchConfiguration(TestEnvironment.BING_CONNECTION_ID)]
+                        )
+                    ),
+                    ToolTypes.OpenAPI => new OpenApiToolDefinition(
+                        name: "get_weather",
+                        description: "Retrieve weather information for a location",
+                        spec: BinaryData.FromBytes(File.ReadAllBytes(GetFile(fileName: OPENAPI_SPEC_FILE))),
+                        openApiAuthentication: new OpenApiAnonymousAuthDetails(),
+                        defaultParams: ["format"]
+                    ),
+                    ToolTypes.DeepResearch => new DeepResearchToolDefinition(
+                        new DeepResearchDetails(
+                                model: TestEnvironment.DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME,
+                                bingGroundingConnections: [
+                                    new DeepResearchBingGroundingConnection(TestEnvironment.BING_CONNECTION_ID)
+                            ]
+                        )
+                    ),
+                    ToolTypes.AzureAISearch => new AzureAISearchToolDefinition(),
+                    ToolTypes.ConnectedAgent => new ConnectedAgentToolDefinition(
+                        new ConnectedAgentDetails(
+                            id: (await GetSubAgent()).Id,
+                            name: "stock_price_bot",
+                            description: "Gets the stock price of a company"
+                        )
+                    ),
+                    _ => null
+                };
+
+        private ToolResources GetAISearchToolResource(AzureAISearchQueryTypeEnum queryType, string filter=null)
         {
             return new ToolResources()
             {
@@ -1533,10 +2390,18 @@ namespace Azure.AI.Agents.Persistent.Tests
                     indexConnectionId: TestEnvironment.AI_SEARCH_CONNECTION_ID,
                     indexName: "sample_index",
                     queryType: SearchQueryTypes[queryType],
-                    filter: null,
+                    filter: filter,
                     topK: 5
                 )
             };
+        }
+
+        public static void FailOnStreamError(StreamingUpdate streamingUpdate)
+        {
+            if ((streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed || streamingUpdate.UpdateKind == StreamingUpdateReason.Error) && streamingUpdate is RunUpdate errorStep)
+            {
+                Assert.Fail(errorStep.Value.LastError.Message);
+            }
         }
 
         #endregion
@@ -1583,7 +2448,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Pageable<PersistentAgent> agents = client.Administration.GetAgents();
             foreach (PersistentAgent agent in agents)
             {
-                if (agent.Name.StartsWith(AGENT_NAME))
+               if (agent.Name != null && (agent.Name.StartsWith(AGENT_NAME) || string.Equals(agent.Name, "stock-price-bot") || string.Equals(agent.Name, "weather-bot")))
                     client.Administration.DeleteAgent(agent.Id);
             }
         }

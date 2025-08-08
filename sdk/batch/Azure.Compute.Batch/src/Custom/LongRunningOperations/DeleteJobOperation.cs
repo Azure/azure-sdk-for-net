@@ -28,10 +28,8 @@ namespace Azure.Compute.Batch
         /// Gets the success of the operation.
         /// </summary>
         private bool? _value;
-        private DateTimeOffset _creationTime;
         private Response _rawResponse;
         private string _jobId;
-        private bool firstGet = true;
 
         /// <summary>
         /// Initializes a new <see cref="DeleteJobOperation"/> instance
@@ -172,19 +170,7 @@ namespace Azure.Compute.Batch
             {
                 _rawResponse = deleteResponse.GetRawResponse();
 
-                // we are going to save the first get responses creation time assuming
-                // this first get returns the current object
-                if (firstGet)
-                {
-                    _creationTime = (DateTimeOffset)deleteResponse.Value.CreationTime;
-                    firstGet = false;
-                } // need to handle the case where we get back the response from a new object.
-                else if (deleteResponse.Value.CreationTime != _creationTime)
-                {
-                    _value = true;
-                    _hasCompleted = true;
-                }
-                else if (deleteResponse.Value.State != BatchJobState.Deleting)
+                if (deleteResponse.Value.State != BatchJobState.Deleting)
                 {
                     _value = true;
                     _hasCompleted = true;

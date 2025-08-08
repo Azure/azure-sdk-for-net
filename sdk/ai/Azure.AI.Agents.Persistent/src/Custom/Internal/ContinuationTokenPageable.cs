@@ -11,12 +11,23 @@ using Azure.Core;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Runtime.CompilerServices;
+using Azure.AI.Agents.Persistent.Telemetry;
 
 namespace Azure.AI.Agents.Persistent
 {
+    // Enum to specify the type of items in the pageable
+    internal enum ContinuationItemType
+    {
+        Undefined,
+        ThreadMessage,
+        RunStep
+    }
+
     internal class ContinuationTokenPageable<T>: Pageable<T>
     {
         private readonly ContinuationTokenPageableImpl<T> _impl;
+        private readonly ContinuationItemType _itemType;
+
         public ContinuationTokenPageable(
             Func<int?, string, HttpMessage> createPageRequest,
             Func<JsonElement, T> valueFactory,
@@ -26,9 +37,15 @@ namespace Azure.AI.Agents.Persistent
             RequestContext requestContext,
             string itemPropertyName = "data",
             string hasMoreField = "has_more",
-            string continuationTokenName = "last_id"
+            string continuationTokenName = "last_id",
+            ContinuationItemType itemType = ContinuationItemType.Undefined,
+            string threadId = null,
+            string runId = null,
+            Uri endpoint = null,
+            string after = null
         )
         {
+            _itemType = itemType;
             _impl = new(
                 createPageRequest: createPageRequest,
                 valueFactory: valueFactory,
@@ -38,7 +55,12 @@ namespace Azure.AI.Agents.Persistent
                 requestContext: requestContext,
                 itemPropertyName: itemPropertyName,
                 hasMoreField: hasMoreField,
-                continuationTokenName: continuationTokenName
+                continuationTokenName: continuationTokenName,
+                itemType: itemType,
+                threadId: threadId,
+                runId: runId,
+                endpoint: endpoint,
+                continuationTokenInitial: after
             );
         }
 
@@ -48,6 +70,8 @@ namespace Azure.AI.Agents.Persistent
     internal class ContinuationTokenPageableAsync<T> : AsyncPageable<T>
     {
         private readonly ContinuationTokenPageableImpl<T> _impl;
+        private readonly ContinuationItemType _itemType;
+
         public ContinuationTokenPageableAsync(
             Func<int?, string, HttpMessage> createPageRequest,
             Func<JsonElement, T> valueFactory,
@@ -57,9 +81,15 @@ namespace Azure.AI.Agents.Persistent
             RequestContext requestContext,
             string itemPropertyName = "data",
             string hasMoreField = "has_more",
-            string continuationTokenName = "last_id"
+            string continuationTokenName = "last_id",
+            ContinuationItemType itemType = ContinuationItemType.Undefined,
+            string threadId = null,
+            string runId = null,
+            Uri endpoint = null,
+            string after = null
         )
         {
+            _itemType = itemType;
             _impl = new(
                 createPageRequest: createPageRequest,
                 valueFactory: valueFactory,
@@ -69,7 +99,12 @@ namespace Azure.AI.Agents.Persistent
                 requestContext: requestContext,
                 itemPropertyName: itemPropertyName,
                 hasMoreField: hasMoreField,
-                continuationTokenName: continuationTokenName
+                continuationTokenName: continuationTokenName,
+                itemType: itemType,
+                threadId: threadId,
+                runId: runId,
+                endpoint: endpoint,
+                continuationTokenInitial: after
             );
         }
 
@@ -91,6 +126,11 @@ namespace Azure.AI.Agents.Persistent
         private readonly string _itemPropertyName;
         private readonly string _hasMoreField;
         private readonly string _continuationTokenName;
+        private readonly ContinuationItemType _itemType;
+        private readonly string _threadId;
+        private readonly string _runId;
+        private readonly Uri _endpoint;
+        private readonly string _continuationTokenInitial;
 
         public ContinuationTokenPageableImpl(
             Func<int?, string, HttpMessage> createPageRequest,
@@ -101,7 +141,12 @@ namespace Azure.AI.Agents.Persistent
             RequestContext requestContext,
             string itemPropertyName,
             string hasMoreField,
-            string continuationTokenName
+            string continuationTokenName,
+            ContinuationItemType itemType = ContinuationItemType.Undefined,
+            string threadId = null,
+            string runId = null,
+            Uri endpoint = null,
+            string continuationTokenInitial = null
         )
         {
             _createPageRequest = createPageRequest;
@@ -114,11 +159,16 @@ namespace Azure.AI.Agents.Persistent
             _itemPropertyName = itemPropertyName;
             _hasMoreField = hasMoreField;
             _continuationTokenName = continuationTokenName;
+            _itemType = itemType;
+            _threadId = threadId;
+            _runId = runId;
+            _endpoint = endpoint;
+            _continuationTokenInitial = continuationTokenInitial;
         }
 
         public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
-            string continuationToken = default;
+            string continuationToken = _continuationTokenInitial;
             do
             {
                 var response = await GetNextResponseAsync(null, continuationToken, cancellationToken).ConfigureAwait(false);
@@ -136,7 +186,7 @@ namespace Azure.AI.Agents.Persistent
 
         public IEnumerator<T> GetEnumerator()
         {
-            string continuationToken = default;
+            string continuationToken = _continuationTokenInitial;
             do
             {
                 Response response = GetNextResponse(pageSizeHint: null, continuationToken: continuationToken);
@@ -154,6 +204,8 @@ namespace Azure.AI.Agents.Persistent
 
         public IEnumerable<Page<T>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            if (string.IsNullOrEmpty(continuationToken))
+                continuationToken = _continuationTokenInitial;
             do
             {
                 Response response = GetNextResponse(pageSizeHint, continuationToken);
@@ -167,6 +219,8 @@ namespace Azure.AI.Agents.Persistent
 
         public async IAsyncEnumerable<Page<T>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
+            if (string.IsNullOrEmpty(continuationToken))
+                continuationToken = _continuationTokenInitial;
             do
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, continuationToken, cancellationToken).ConfigureAwait(false);
@@ -186,17 +240,41 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(_scopeName);
-            scope.Start();
-            try
+            // Use GenAI scope for paging if item type is specified
+            OpenTelemetryScope genAIScope = null;
+            DiagnosticScope? diagnosticsScope = null;
+            if (_itemType == ContinuationItemType.ThreadMessage)
             {
-                _pipeline.Send(message, _cancellationToken);
-                return GetResponse(message);
+                genAIScope = OpenTelemetryScope.StartListMessages(_threadId, _runId, _endpoint);
             }
-            catch (Exception e)
+            else if (_itemType == ContinuationItemType.RunStep)
             {
-                scope.Failed(e);
-                throw;
+                genAIScope = OpenTelemetryScope.StartListRunSteps(_threadId, _runId, _endpoint);
+            }
+            else
+            {
+                diagnosticsScope = _clientDiagnostics.CreateScope(_scopeName);
+            }
+
+            using (genAIScope)
+            {
+                using (diagnosticsScope)
+                {
+                    diagnosticsScope?.Start();
+                    try
+                    {
+                        _pipeline.Send(message, _cancellationToken);
+                        var response = GetResponse(message);
+                        genAIScope?.RecordPagedResponse(response);
+                        return response;
+                    }
+                    catch (Exception e)
+                    {
+                        diagnosticsScope?.Failed(e);
+                        genAIScope?.RecordError(e);
+                        throw;
+                    }
+                }
             }
         }
 
@@ -204,27 +282,51 @@ namespace Azure.AI.Agents.Persistent
         {
             var message = CreateMessage(pageSizeHint, continuationToken);
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(_scopeName);
-            scope.Start();
-            try
+            // Use GenAI scope for paging if item type is specified
+            OpenTelemetryScope genAIScope = null;
+            DiagnosticScope? diagnosticsScope = null;
+            if (_itemType == ContinuationItemType.ThreadMessage)
             {
-                if (cancellationToken.CanBeCanceled && _cancellationToken.CanBeCanceled)
-                {
-                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken);
-                    await _pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
-                }
-                else
-                {
-                    var ct = cancellationToken.CanBeCanceled ? cancellationToken : _cancellationToken;
-                    await _pipeline.SendAsync(message, ct).ConfigureAwait(false);
-                }
-
-                return GetResponse(message);
+                genAIScope = OpenTelemetryScope.StartListMessages(_threadId, _runId, _endpoint);
             }
-            catch (Exception e)
+            else if (_itemType == ContinuationItemType.RunStep)
             {
-                scope.Failed(e);
-                throw;
+                genAIScope = OpenTelemetryScope.StartListRunSteps(_threadId, _runId, _endpoint);
+            }
+            else
+            {
+                diagnosticsScope = _clientDiagnostics.CreateScope(_scopeName);
+            }
+
+            using (genAIScope)
+            {
+                using (diagnosticsScope)
+                {
+                    diagnosticsScope?.Start();
+                    try
+                    {
+                        if (cancellationToken.CanBeCanceled && _cancellationToken.CanBeCanceled)
+                        {
+                            using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken);
+                            await _pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            var ct = cancellationToken.CanBeCanceled ? cancellationToken : _cancellationToken;
+                            await _pipeline.SendAsync(message, ct).ConfigureAwait(false);
+                        }
+
+                        var response = GetResponse(message);
+                        genAIScope?.RecordPagedResponse(response);
+                        return response;
+                    }
+                    catch (Exception e)
+                    {
+                        diagnosticsScope?.Failed(e);
+                        genAIScope?.RecordError(e);
+                        throw;
+                    }
+                }
             }
         }
 

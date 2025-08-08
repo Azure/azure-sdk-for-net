@@ -64,7 +64,7 @@ namespace Azure.Generator.Management.Providers
             var methodSignature = new MethodSignature(
                 $"Get{mockableResource.Name}",
                 null,
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                MethodSignatureModifiers.Private | MethodSignatureModifiers.Static,
                 mockableResource.Type,
                 null,
                 [parameter]);
@@ -99,7 +99,8 @@ namespace Azure.Generator.Management.Providers
                 modifiers,
                 target.ReturnType,
                 target.ReturnDescription,
-                parameters);
+                parameters,
+                Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
             var body = new MethodBodyStatement[]
             {

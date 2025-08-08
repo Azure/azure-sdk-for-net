@@ -7,8 +7,9 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using MgmtTypeSpec;
 
-namespace MgmtTypeSpec
+namespace MgmtTypeSpec.Mocking
 {
     /// <summary></summary>
     public partial class MockableMgmtTypeSpecArmClient : ArmResource
@@ -32,6 +33,42 @@ namespace MgmtTypeSpec
         {
             FooResource.ValidateResourceId(id);
             return new FooResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
+        public virtual FooSettingsResource GetFooSettingsResource(ResourceIdentifier id)
+        {
+            FooSettingsResource.ValidateResourceId(id);
+            return new FooSettingsResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BarResource"/> object. </returns>
+        public virtual BarResource GetBarResource(ResourceIdentifier id)
+        {
+            BarResource.ValidateResourceId(id);
+            return new BarResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
+        public virtual BarSettingsResource GetBarSettingsResource(ResourceIdentifier id)
+        {
+            BarSettingsResource.ValidateResourceId(id);
+            return new BarSettingsResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ZooResource"/> object. </returns>
+        public virtual ZooResource GetZooResource(ResourceIdentifier id)
+        {
+            ZooResource.ValidateResourceId(id);
+            return new ZooResource(Client, id);
         }
     }
 }

@@ -1736,7 +1736,8 @@
       "filename": "**/sdk/openai/**/*.cs",
       "words": [
         "AOAI",
-        "Rerank"
+        "Rerank",
+        "Evals"
       ]
     },
     {

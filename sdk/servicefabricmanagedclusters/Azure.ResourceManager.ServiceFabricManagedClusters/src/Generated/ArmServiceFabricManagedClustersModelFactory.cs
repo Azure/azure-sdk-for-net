@@ -18,6 +18,45 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmServiceFabricManagedClustersModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
+        /// <param name="version">
+        /// The version of the application type as defined in the application manifest.
+        /// This name must be the full Arm Resource ID for the referenced application type version.
+        /// </param>
+        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
+        /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
+        /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
+        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/> instance for mocking. </returns>
+        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = null, string provisioningState = null, string version = null, IDictionary<string, string> parameters = null, ApplicationUpgradePolicy upgradePolicy = null, ManagedServiceIdentity identity = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            managedIdentities ??= new List<ApplicationUserAssignedIdentityInfo>();
+            parameters ??= new Dictionary<string, string>();
+
+            return new ServiceFabricManagedApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                managedIdentities?.ToList(),
+                provisioningState,
+                version,
+                parameters,
+                upgradePolicy,
+                identity,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -65,46 +104,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 location,
                 provisioningState,
                 appPackageUri,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
-        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="version">
-        /// The version of the application type as defined in the application manifest.
-        /// This name must be the full Arm Resource ID for the referenced application type version.
-        ///
-        /// </param>
-        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
-        /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
-        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
-        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/> instance for mocking. </returns>
-        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, string version = null, IDictionary<string, string> parameters = null, ApplicationUpgradePolicy upgradePolicy = null, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            parameters ??= new Dictionary<string, string>();
-            managedIdentities ??= new List<ApplicationUserAssignedIdentityInfo>();
-
-            return new ServiceFabricManagedApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                identity,
-                provisioningState,
-                version,
-                parameters,
-                upgradePolicy,
-                managedIdentities?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -160,7 +159,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
         /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
-        ///
         /// </param>
         /// <returns> A new <see cref="Models.ManagedServiceProperties"/> instance for mocking. </returns>
         public static ManagedServiceProperties ManagedServiceProperties(string placementConstraints = null, IEnumerable<ManagedServiceCorrelation> correlationScheme = null, IEnumerable<ManagedServiceLoadMetric> serviceLoadMetrics = null, IEnumerable<ManagedServicePlacementPolicy> servicePlacementPolicies = null, ServiceFabricManagedServiceMoveCost? defaultMoveCost = null, IEnumerable<ManagedServiceScalingPolicy> scalingPolicies = null, string provisioningState = null, string serviceKind = null, string serviceTypeName = null, ManagedServicePartitionScheme partitionDescription = null, ManagedServicePackageActivationMode? servicePackageActivationMode = null, string serviceDnsName = null)
@@ -186,410 +184,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 serviceDnsName);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The sku of the managed cluster. </param>
-        /// <param name="dnsName"> The cluster dns name. </param>
-        /// <param name="fqdn"> The fully qualified domain name associated with the public load balancer of the cluster. </param>
-        /// <param name="ipv4Address"> The IPv4 address associated with the public load balancer of the cluster. </param>
-        /// <param name="clusterId"> A service generated unique identifier for the cluster resource. </param>
-        /// <param name="clusterState"> The current state of the cluster. </param>
-        /// <param name="clusterCertificateThumbprints"> List of thumbprints of the cluster certificates. </param>
-        /// <param name="clientConnectionPort"> The port used for client connections to the cluster. </param>
-        /// <param name="httpGatewayConnectionPort"> The port used for HTTP connections to the cluster. </param>
-        /// <param name="adminUserName"> VM admin user name. </param>
-        /// <param name="adminPassword"> VM admin user password. </param>
-        /// <param name="loadBalancingRules"> Load balancing rules that are applied to the public load balancer of the cluster. </param>
-        /// <param name="isRdpAccessAllowed"> Setting this to true enables RDP access to the VM. The default NSG rule opens RDP port to Internet which can be overridden with custom Network Security Rules. The default value for this setting is false. </param>
-        /// <param name="networkSecurityRules"> Custom Network Security Rules that are applied to the Virtual Network of the cluster. </param>
-        /// <param name="clients"> Client certificates that are allowed to manage the cluster. </param>
-        /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
-        /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the managed cluster resource. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
-        /// <param name="clusterUpgradeMode">
-        /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
-        ///
-        /// </param>
-        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
-        /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
-        /// <param name="isAutoOSUpgradeEnabled"> Enables automatic OS upgrade for node types created using OS images with version 'latest'. The default value for this setting is false. </param>
-        /// <param name="hasZoneResiliency"> Indicates if the cluster has zone resiliency. </param>
-        /// <param name="maxUnusedVersionsToKeep"> The policy used to clean up unused versions. </param>
-        /// <param name="isIPv6Enabled"> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </param>
-        /// <param name="subnetId"> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The **networkSecurityRules** specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </param>
-        /// <param name="ipTags"> The list of IP tags associated with the default public IP address of the cluster. </param>
-        /// <param name="ipv6Address"> IPv6 address for the cluster if IPv6 is enabled. </param>
-        /// <param name="isServicePublicIPEnabled"> Setting this to true will link the IPv4 address as the ServicePublicIP of the IPv6 address. It can only be set to True if IPv6 is enabled on the cluster. </param>
-        /// <param name="auxiliarySubnets"> Auxiliary subnets for the cluster. </param>
-        /// <param name="serviceEndpoints"> Service endpoints for subnets in the cluster. </param>
-        /// <param name="zonalUpdateMode"> Indicates the update mode for Cross Az clusters. </param>
-        /// <param name="useCustomVnet"> For new clusters, this parameter indicates that it uses Bring your own VNet, but the subnet is specified at node type level; and for such clusters, the subnetId property is required for node types. </param>
-        /// <param name="publicIPPrefixId"> Specify the resource id of a public IPv4 prefix that the load balancer will allocate a public IPv4 address from. This setting cannot be changed once the cluster is created. </param>
-        /// <param name="publicIPv6PrefixId"> Specify the resource id of a public IPv6 prefix that the load balancer will allocate a public IPv6 address from. This setting cannot be changed once the cluster is created. </param>
-        /// <param name="ddosProtectionPlanId"> Specify the resource id of a DDoS network protection plan that will be associated with the virtual network of the cluster. </param>
-        /// <param name="upgradeDescription"> The policy to use when upgrading the cluster. </param>
-        /// <param name="httpGatewayTokenAuthConnectionPort"> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </param>
-        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthConnectionPort must be defined. </param>
-        /// <param name="autoGeneratedDomainNameLabelScope"> This property is the entry point to using a public CA cert for your cluster cert. It specifies the level of reuse allowed for the custom FQDN created, matching the subject of the public CA cert. </param>
-        /// <param name="allocatedOutboundPorts"> The number of outbound ports allocated for SNAT for each node in the backend pool of the default load balancer. The default value is 0 which provides dynamic port allocation based on pool size. </param>
-        /// <param name="etag"> Azure resource etag. </param>
-        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedClusterData"/> instance for mocking. </returns>
-        public static ServiceFabricManagedClusterData ServiceFabricManagedClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ServiceFabricManagedClustersSkuName? skuName = null, string dnsName = null, string fqdn = null, IPAddress ipv4Address = null, Guid? clusterId = null, ServiceFabricManagedClusterState? clusterState = null, IEnumerable<BinaryData> clusterCertificateThumbprints = null, int? clientConnectionPort = null, int? httpGatewayConnectionPort = null, string adminUserName = null, string adminPassword = null, IEnumerable<ManagedClusterLoadBalancingRule> loadBalancingRules = null, bool? isRdpAccessAllowed = null, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = null, IEnumerable<ManagedClusterClientCertificate> clients = null, ManagedClusterAzureActiveDirectory azureActiveDirectory = null, IEnumerable<ClusterFabricSettingsSection> fabricSettings = null, ServiceFabricManagedResourceProvisioningState? provisioningState = null, string clusterCodeVersion = null, ManagedClusterUpgradeMode? clusterUpgradeMode = null, ManagedClusterUpgradeCadence? clusterUpgradeCadence = null, IEnumerable<ManagedClusterAddOnFeature> addOnFeatures = null, bool? isAutoOSUpgradeEnabled = null, bool? hasZoneResiliency = null, int? maxUnusedVersionsToKeep = null, bool? isIPv6Enabled = null, string subnetId = null, IEnumerable<ManagedClusterIPTag> ipTags = null, IPAddress ipv6Address = null, bool? isServicePublicIPEnabled = null, IEnumerable<ManagedClusterSubnet> auxiliarySubnets = null, IEnumerable<ManagedClusterServiceEndpoint> serviceEndpoints = null, ZonalUpdateMode? zonalUpdateMode = null, bool? useCustomVnet = null, ResourceIdentifier publicIPPrefixId = null, ResourceIdentifier publicIPv6PrefixId = null, ResourceIdentifier ddosProtectionPlanId = null, ManagedClusterUpgradePolicy upgradeDescription = null, int? httpGatewayTokenAuthConnectionPort = null, bool? isHttpGatewayExclusiveAuthModeEnabled = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null, int? allocatedOutboundPorts = null, ETag? etag = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            clusterCertificateThumbprints ??= new List<BinaryData>();
-            loadBalancingRules ??= new List<ManagedClusterLoadBalancingRule>();
-            networkSecurityRules ??= new List<ServiceFabricManagedNetworkSecurityRule>();
-            clients ??= new List<ManagedClusterClientCertificate>();
-            fabricSettings ??= new List<ClusterFabricSettingsSection>();
-            addOnFeatures ??= new List<ManagedClusterAddOnFeature>();
-            ipTags ??= new List<ManagedClusterIPTag>();
-            auxiliarySubnets ??= new List<ManagedClusterSubnet>();
-            serviceEndpoints ??= new List<ManagedClusterServiceEndpoint>();
-
-            return new ServiceFabricManagedClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                skuName.HasValue ? new ServiceFabricManagedClustersSku(skuName.Value, serializedAdditionalRawData: null) : null,
-                dnsName,
-                fqdn,
-                ipv4Address,
-                clusterId,
-                clusterState,
-                clusterCertificateThumbprints?.ToList(),
-                clientConnectionPort,
-                httpGatewayConnectionPort,
-                adminUserName,
-                adminPassword,
-                loadBalancingRules?.ToList(),
-                isRdpAccessAllowed,
-                networkSecurityRules?.ToList(),
-                clients?.ToList(),
-                azureActiveDirectory,
-                fabricSettings?.ToList(),
-                provisioningState,
-                clusterCodeVersion,
-                clusterUpgradeMode,
-                clusterUpgradeCadence,
-                addOnFeatures?.ToList(),
-                isAutoOSUpgradeEnabled,
-                hasZoneResiliency,
-                maxUnusedVersionsToKeep.HasValue ? new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.Value, serializedAdditionalRawData: null) : null,
-                isIPv6Enabled,
-                subnetId,
-                ipTags?.ToList(),
-                ipv6Address,
-                isServicePublicIPEnabled,
-                auxiliarySubnets?.ToList(),
-                serviceEndpoints?.ToList(),
-                zonalUpdateMode,
-                useCustomVnet,
-                publicIPPrefixId,
-                publicIPv6PrefixId,
-                ddosProtectionPlanId,
-                upgradeDescription,
-                httpGatewayTokenAuthConnectionPort,
-                isHttpGatewayExclusiveAuthModeEnabled,
-                autoGeneratedDomainNameLabelScope,
-                allocatedOutboundPorts,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedAzResiliencyStatus"/>. </summary>
-        /// <param name="baseResourceStatus"> List of Managed VM Sizes for Service Fabric Managed Clusters. </param>
-        /// <param name="isClusterZoneResilient"> URL to get the next set of Managed VM Sizes if there are any. </param>
-        /// <returns> A new <see cref="Models.ManagedAzResiliencyStatus"/> instance for mocking. </returns>
-        public static ManagedAzResiliencyStatus ManagedAzResiliencyStatus(IEnumerable<ResourceAzStatus> baseResourceStatus = null, bool? isClusterZoneResilient = null)
-        {
-            baseResourceStatus ??= new List<ResourceAzStatus>();
-
-            return new ManagedAzResiliencyStatus(baseResourceStatus?.ToList(), isClusterZoneResilient, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceAzStatus"/>. </summary>
-        /// <param name="resourceName"> VM Size properties. </param>
-        /// <param name="resourceType"> VM Size id. </param>
-        /// <param name="isZoneResilient"> VM Size name. </param>
-        /// <param name="details"> Zone resiliency status details for the resource. </param>
-        /// <returns> A new <see cref="Models.ResourceAzStatus"/> instance for mocking. </returns>
-        public static ResourceAzStatus ResourceAzStatus(string resourceName = null, ResourceType? resourceType = null, bool? isZoneResilient = null, string details = null)
-        {
-            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, details, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedMaintenanceWindowStatus"/>. </summary>
-        /// <param name="isWindowEnabled"> If maintenance window is enabled on this cluster. </param>
-        /// <param name="isRegionReady"> Indicates if the region is ready to configure maintenance windows. </param>
-        /// <param name="isWindowActive"> If maintenance window is active. </param>
-        /// <param name="canApplyUpdates"> If updates can be applied. </param>
-        /// <param name="lastWindowStatusUpdatedOn"> Last window update time in UTC. </param>
-        /// <param name="lastWindowStartOn"> Last window start time in UTC. </param>
-        /// <param name="lastWindowEndOn"> Last window end time in UTC. </param>
-        /// <returns> A new <see cref="Models.ManagedMaintenanceWindowStatus"/> instance for mocking. </returns>
-        public static ManagedMaintenanceWindowStatus ManagedMaintenanceWindowStatus(bool? isWindowEnabled = null, bool? isRegionReady = null, bool? isWindowActive = null, bool? canApplyUpdates = null, DateTimeOffset? lastWindowStatusUpdatedOn = null, DateTimeOffset? lastWindowStartOn = null, DateTimeOffset? lastWindowEndOn = null)
-        {
-            return new ManagedMaintenanceWindowStatus(
-                isWindowEnabled,
-                isRegionReady,
-                isWindowActive,
-                canApplyUpdates,
-                lastWindowStatusUpdatedOn,
-                lastWindowStartOn,
-                lastWindowEndOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricManagedClusterVersion"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. </param>
-        /// <param name="versionSupportExpireOn"> The date of expiry of support of the version. </param>
-        /// <param name="osType"> Cluster operating system, the default will be Windows. </param>
-        /// <returns> A new <see cref="Models.ServiceFabricManagedClusterVersion"/> instance for mocking. </returns>
-        public static ServiceFabricManagedClusterVersion ServiceFabricManagedClusterVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterCodeVersion = null, DateTimeOffset? versionSupportExpireOn = null, ServiceFabricManagedClusterOSType? osType = null)
-        {
-            return new ServiceFabricManagedClusterVersion(
-                id,
-                name,
-                resourceType,
-                systemData,
-                clusterCodeVersion,
-                versionSupportExpireOn,
-                osType,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="vmSize"> VM Size properties. </param>
-        /// <returns> A new <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/> instance for mocking. </returns>
-        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vmSize = null)
-        {
-            return new ServiceFabricManagedUnsupportedVmSize(
-                id,
-                name,
-                resourceType,
-                systemData,
-                vmSize != null ? new VmSize(vmSize, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku"> The node type sku. </param>
-        /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
-        /// <param name="vmInstanceCount"> The number of nodes in the node type. &lt;br /&gt;&lt;br /&gt;**Values:** &lt;br /&gt;-1 - Use when auto scale rules are configured or sku.capacity is defined &lt;br /&gt; 0 - Not supported &lt;br /&gt; &gt;0 - Use for manual scale. </param>
-        /// <param name="dataDiskSizeInGB"> Disk size for the managed disk attached to the vms on the node type in GBs. </param>
-        /// <param name="dataDiskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
-        /// <param name="dataDiskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
-        /// <param name="placementProperties"> The placement tags applied to nodes in the node type, which can be used to indicate where certain services (workload) should run. </param>
-        /// <param name="capacities"> The capacity tags applied to the nodes in the node type, the cluster resource manager uses these tags to understand how much resource a node has. </param>
-        /// <param name="applicationPorts"> The range of ports from which cluster assigned port to Service Fabric applications. </param>
-        /// <param name="ephemeralPorts"> The range of ephemeral ports that nodes in this node type should be configured with. </param>
-        /// <param name="vmSize"> The size of virtual machines in the pool. All virtual machines in a pool are the same size. For example, Standard_D3. </param>
-        /// <param name="vmImagePublisher"> The publisher of the Azure Virtual Machines Marketplace image. For example, Canonical or MicrosoftWindowsServer. </param>
-        /// <param name="vmImageOffer"> The offer type of the Azure Virtual Machines Marketplace image. For example, UbuntuServer or WindowsServer. </param>
-        /// <param name="vmImageSku"> The SKU of the Azure Virtual Machines Marketplace image. For example, 14.04.0-LTS or 2012-R2-Datacenter. </param>
-        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
-        /// <param name="vmSecrets"> The secrets to install in the virtual machines. </param>
-        /// <param name="vmExtensions"> Set of extensions that should be installed onto the virtual machines. </param>
-        /// <param name="userAssignedIdentities"> Identities to assign to the virtual machine scale set under the node type. </param>
-        /// <param name="isStateless"> Indicates if the node type can only host Stateless workloads. </param>
-        /// <param name="hasMultiplePlacementGroups"> Indicates if scale set associated with the node type can be composed of multiple placement groups. </param>
-        /// <param name="frontendConfigurations"> Indicates the node type uses its own frontend configurations instead of the default one for the cluster. This setting can only be specified for non-primary node types and can not be added or removed after the node type is created. </param>
-        /// <param name="networkSecurityRules"> The Network Security Rules for this node type. This setting can only be specified for node types that are configured with frontend configurations. </param>
-        /// <param name="additionalDataDisks"> Additional managed data disks. </param>
-        /// <param name="isEncryptionAtHostEnabled"> Enable or disable the Host Encryption for the virtual machines on the node type. This will enable the encryption for all the disks including Resource/Temp disk at host itself. Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the node type resource. </param>
-        /// <param name="isAcceleratedNetworkingEnabled"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn't have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
-        /// <param name="useTempDataDisk"> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </param>
-        /// <param name="isOverProvisioningEnabled"> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </param>
-        /// <param name="zones"> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </param>
-        /// <param name="isSpotVm"> Indicates whether the node type will be Spot Virtual Machines. Azure will allocate the VMs if there is capacity available and the VMs can be evicted at any time. </param>
-        /// <param name="hostGroupId"> Specifies the full host group resource Id. This property is used for deploying on azure dedicated hosts. </param>
-        /// <param name="useEphemeralOSDisk"> Indicates whether to use ephemeral os disk. The sku selected on the vmSize property needs to support this feature. </param>
-        /// <param name="spotRestoreTimeout"> Indicates the time duration after which the platform will not try to restore the VMSS SPOT instances specified as ISO 8601. </param>
-        /// <param name="evictionPolicy"> Specifies the eviction policy for virtual machines in a SPOT node type. Default is Delete. </param>
-        /// <param name="vmImageResourceId"> Indicates the resource id of the vm image. This parameter is used for custom vm image. </param>
-        /// <param name="subnetId"> Indicates the resource id of the subnet for the node type. </param>
-        /// <param name="vmSetupActions"> Specifies the actions to be performed on the vms before bootstrapping the service fabric runtime. </param>
-        /// <param name="securityType"> Specifies the security type of the nodeType. Only Standard and TrustedLaunch are currently supported. </param>
-        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch SecurityType. </param>
-        /// <param name="isNodePublicIPEnabled"> Specifies whether each node is allocated its own public IPv4 address. This is only supported on secondary node types with custom Load Balancers. </param>
-        /// <param name="isNodePublicIPv6Enabled"> Specifies whether each node is allocated its own public IPv6 address. This is only supported on secondary node types with custom Load Balancers. </param>
-        /// <param name="vmSharedGalleryImageId"> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </param>
-        /// <param name="natGatewayId"> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </param>
-        /// <param name="natConfigurations"> Specifies the NAT configuration on default public Load Balancer for the node type. This is only supported for node types use the default public Load Balancer. </param>
-        /// <param name="vmImagePlan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </param>
-        /// <param name="serviceArtifactReferenceId"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. </param>
-        /// <param name="dscpConfigurationId"> Specifies the resource id of the DSCP configuration to apply to the node type network interface. </param>
-        /// <param name="additionalNetworkInterfaceConfigurations"> Specifies the settings for any additional secondary network interfaces to attach to the node type. </param>
-        /// <param name="computerNamePrefix"> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </param>
-        /// <param name="vmApplications"> Specifies the gallery applications that should be made available to the underlying VMSS. </param>
-        /// <param name="tags"> Azure resource tags. </param>
-        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData"/> instance for mocking. </returns>
-        public static ServiceFabricManagedNodeTypeData ServiceFabricManagedNodeTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NodeTypeSku sku = null, bool? isPrimary = null, int? vmInstanceCount = null, int? dataDiskSizeInGB = null, ServiceFabricManagedDataDiskType? dataDiskType = null, string dataDiskLetter = null, IDictionary<string, string> placementProperties = null, IDictionary<string, string> capacities = null, EndpointRangeDescription applicationPorts = null, EndpointRangeDescription ephemeralPorts = null, string vmSize = null, string vmImagePublisher = null, string vmImageOffer = null, string vmImageSku = null, string vmImageVersion = null, IEnumerable<NodeTypeVaultSecretGroup> vmSecrets = null, IEnumerable<NodeTypeVmssExtension> vmExtensions = null, IEnumerable<ResourceIdentifier> userAssignedIdentities = null, bool? isStateless = null, bool? hasMultiplePlacementGroups = null, IEnumerable<NodeTypeFrontendConfiguration> frontendConfigurations = null, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = null, IEnumerable<NodeTypeVmssDataDisk> additionalDataDisks = null, bool? isEncryptionAtHostEnabled = null, ServiceFabricManagedResourceProvisioningState? provisioningState = null, bool? isAcceleratedNetworkingEnabled = null, bool? useDefaultPublicLoadBalancer = null, bool? useTempDataDisk = null, bool? isOverProvisioningEnabled = null, IEnumerable<string> zones = null, bool? isSpotVm = null, string hostGroupId = null, bool? useEphemeralOSDisk = null, string spotRestoreTimeout = null, SpotNodeVmEvictionPolicyType? evictionPolicy = null, ResourceIdentifier vmImageResourceId = null, ResourceIdentifier subnetId = null, IEnumerable<VmSetupAction> vmSetupActions = null, ServiceFabricManagedClusterSecurityType? securityType = null, bool? isSecureBootEnabled = null, bool? isNodePublicIPEnabled = null, bool? isNodePublicIPv6Enabled = null, ResourceIdentifier vmSharedGalleryImageId = null, ResourceIdentifier natGatewayId = null, IEnumerable<NodeTypeNatConfig> natConfigurations = null, VmImagePlan vmImagePlan = null, ResourceIdentifier serviceArtifactReferenceId = null, ResourceIdentifier dscpConfigurationId = null, IEnumerable<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = null, string computerNamePrefix = null, IEnumerable<ServiceFabricManagedVmApplication> vmApplications = null, IDictionary<string, string> tags = null)
-        {
-            placementProperties ??= new Dictionary<string, string>();
-            capacities ??= new Dictionary<string, string>();
-            vmSecrets ??= new List<NodeTypeVaultSecretGroup>();
-            vmExtensions ??= new List<NodeTypeVmssExtension>();
-            userAssignedIdentities ??= new List<ResourceIdentifier>();
-            frontendConfigurations ??= new List<NodeTypeFrontendConfiguration>();
-            networkSecurityRules ??= new List<ServiceFabricManagedNetworkSecurityRule>();
-            additionalDataDisks ??= new List<NodeTypeVmssDataDisk>();
-            zones ??= new List<string>();
-            vmSetupActions ??= new List<VmSetupAction>();
-            natConfigurations ??= new List<NodeTypeNatConfig>();
-            additionalNetworkInterfaceConfigurations ??= new List<AdditionalNetworkInterfaceConfiguration>();
-            vmApplications ??= new List<ServiceFabricManagedVmApplication>();
-            tags ??= new Dictionary<string, string>();
-
-            return new ServiceFabricManagedNodeTypeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                sku,
-                isPrimary,
-                vmInstanceCount,
-                dataDiskSizeInGB,
-                dataDiskType,
-                dataDiskLetter,
-                placementProperties,
-                capacities,
-                applicationPorts,
-                ephemeralPorts,
-                vmSize,
-                vmImagePublisher,
-                vmImageOffer,
-                vmImageSku,
-                vmImageVersion,
-                vmSecrets?.ToList(),
-                vmExtensions?.ToList(),
-                userAssignedIdentities != null ? new VmManagedIdentity(userAssignedIdentities?.ToList(), serializedAdditionalRawData: null) : null,
-                isStateless,
-                hasMultiplePlacementGroups,
-                frontendConfigurations?.ToList(),
-                networkSecurityRules?.ToList(),
-                additionalDataDisks?.ToList(),
-                isEncryptionAtHostEnabled,
-                provisioningState,
-                isAcceleratedNetworkingEnabled,
-                useDefaultPublicLoadBalancer,
-                useTempDataDisk,
-                isOverProvisioningEnabled,
-                zones?.ToList(),
-                isSpotVm,
-                hostGroupId,
-                useEphemeralOSDisk,
-                spotRestoreTimeout,
-                evictionPolicy,
-                vmImageResourceId,
-                subnetId,
-                vmSetupActions?.ToList(),
-                securityType,
-                isSecureBootEnabled,
-                isNodePublicIPEnabled,
-                isNodePublicIPv6Enabled,
-                vmSharedGalleryImageId,
-                natGatewayId,
-                natConfigurations?.ToList(),
-                vmImagePlan,
-                serviceArtifactReferenceId,
-                dscpConfigurationId,
-                additionalNetworkInterfaceConfigurations?.ToList(),
-                computerNamePrefix,
-                vmApplications?.ToList(),
-                tags,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeVmssExtension"/>. </summary>
-        /// <param name="name"> The name of the extension. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
-        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
-        /// <param name="setupOrder"> Indicates the setup order for the extension. </param>
-        /// <returns> A new <see cref="Models.NodeTypeVmssExtension"/> instance for mocking. </returns>
-        public static NodeTypeVmssExtension NodeTypeVmssExtension(string name = null, string publisher = null, string vmssExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, string forceUpdateTag = null, IEnumerable<string> provisionAfterExtensions = null, string provisioningState = null, bool? isAutomaticUpgradeEnabled = null, IEnumerable<VmssExtensionSetupOrder> setupOrder = null)
-        {
-            provisionAfterExtensions ??= new List<string>();
-            setupOrder ??= new List<VmssExtensionSetupOrder>();
-
-            return new NodeTypeVmssExtension(
-                name,
-                publisher,
-                vmssExtensionPropertiesType,
-                typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                settings,
-                protectedSettings,
-                forceUpdateTag,
-                provisionAfterExtensions?.ToList(),
-                provisioningState,
-                isAutomaticUpgradeEnabled,
-                setupOrder?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeAvailableSku"/>. </summary>
-        /// <param name="resourceType"> The type of resource the sku applies to.  &lt;br /&gt;&lt;br /&gt;Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </param>
-        /// <param name="sku"> The supported SKU for a for node type. </param>
-        /// <param name="capacity"> Provides information about how the node count can be scaled. </param>
-        /// <returns> A new <see cref="Models.NodeTypeAvailableSku"/> instance for mocking. </returns>
-        public static NodeTypeAvailableSku NodeTypeAvailableSku(ResourceType? resourceType = null, NodeTypeSupportedSku sku = null, NodeTypeSkuCapacity capacity = null)
-        {
-            return new NodeTypeAvailableSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeSupportedSku"/>. </summary>
-        /// <param name="name"> The sku name. </param>
-        /// <param name="tier"> Specifies the tier of the node type. &lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt; **Standard**. </param>
-        /// <returns> A new <see cref="Models.NodeTypeSupportedSku"/> instance for mocking. </returns>
-        public static NodeTypeSupportedSku NodeTypeSupportedSku(string name = null, string tier = null)
-        {
-            return new NodeTypeSupportedSku(name, tier, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeSkuCapacity"/>. </summary>
-        /// <param name="minimum"> Lowest permitted node count in a node type. </param>
-        /// <param name="maximum"> Highest permitted node count in a node type. </param>
-        /// <param name="default"> Default node count in a node type. </param>
-        /// <param name="scaleType"> Node type capacity scale type. </param>
-        /// <returns> A new <see cref="Models.NodeTypeSkuCapacity"/> instance for mocking. </returns>
-        public static NodeTypeSkuCapacity NodeTypeSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, NodeTypeSkuScaleType? scaleType = null)
-        {
-            return new NodeTypeSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.StatefulServiceProperties"/>. </summary>
         /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
@@ -613,7 +207,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
         /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
-        ///
         /// </param>
         /// <param name="hasPersistedState"> A flag indicating whether this is a persistent service which stores states on the local disk. If it is then the value of this property is true, if not it is false. </param>
         /// <param name="targetReplicaSetSize"> The target replica set size as a number. </param>
@@ -676,7 +269,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
         /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
-        ///
         /// </param>
         /// <param name="instanceCount"> The instance count. </param>
         /// <param name="minInstanceCount"> MinInstanceCount is the minimum number of instances that must be up to meet the EnsureAvailability safety check during operations like upgrade or deactivate node. The actual number that is used is max( MinInstanceCount, ceil( MinInstancePercentage/100.0 * InstanceCount) ). Note, if InstanceCount is set to -1, during MinInstanceCount computation -1 is first converted into the number of nodes on which the instances are allowed to be placed according to the placement constraints on the service. </param>
@@ -706,6 +298,459 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 instanceCount,
                 minInstanceCount,
                 minInstancePercentage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricManagedClusterVersion"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. </param>
+        /// <param name="versionSupportExpireOn"> The date of expiry of support of the version. </param>
+        /// <param name="osType"> Cluster operating system, the default will be Windows. </param>
+        /// <returns> A new <see cref="Models.ServiceFabricManagedClusterVersion"/> instance for mocking. </returns>
+        public static ServiceFabricManagedClusterVersion ServiceFabricManagedClusterVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterCodeVersion = null, DateTimeOffset? versionSupportExpireOn = null, ServiceFabricManagedClusterOSType? osType = null)
+        {
+            return new ServiceFabricManagedClusterVersion(
+                id,
+                name,
+                resourceType,
+                systemData,
+                clusterCodeVersion,
+                versionSupportExpireOn,
+                osType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="vmSize"> VM Size properties. </param>
+        /// <returns> A new <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/> instance for mocking. </returns>
+        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vmSize = null)
+        {
+            return new ServiceFabricManagedUnsupportedVmSize(
+                id,
+                name,
+                resourceType,
+                systemData,
+                vmSize != null ? new VmSize(vmSize, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedClusterData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="dnsName"> The cluster dns name. </param>
+        /// <param name="fqdn"> The fully qualified domain name associated with the public load balancer of the cluster. </param>
+        /// <param name="ipv4Address"> The IPv4 address associated with the public load balancer of the cluster. </param>
+        /// <param name="clusterId"> A service generated unique identifier for the cluster resource. </param>
+        /// <param name="clusterState"> The current state of the cluster. </param>
+        /// <param name="clusterCertificateThumbprints"> List of thumbprints of the cluster certificates. </param>
+        /// <param name="clientConnectionPort"> The port used for client connections to the cluster. </param>
+        /// <param name="httpGatewayConnectionPort"> The port used for HTTP connections to the cluster. </param>
+        /// <param name="adminUserName"> VM admin user name. </param>
+        /// <param name="adminPassword"> VM admin user password. </param>
+        /// <param name="loadBalancingRules"> Load balancing rules that are applied to the public load balancer of the cluster. </param>
+        /// <param name="isRdpAccessAllowed"> Setting this to true enables RDP access to the VM. The default NSG rule opens RDP port to Internet which can be overridden with custom Network Security Rules. The default value for this setting is false. </param>
+        /// <param name="networkSecurityRules"> Custom Network Security Rules that are applied to the Virtual Network of the cluster. </param>
+        /// <param name="clients"> Client certificates that are allowed to manage the cluster. </param>
+        /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
+        /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the managed cluster resource. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterUpgradeMode"> The upgrade mode of the cluster when new Service Fabric runtime version is available. </param>
+        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
+        /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
+        /// <param name="isAutoOSUpgradeEnabled"> Enables automatic OS upgrade for node types created using OS images with version 'latest'. The default value for this setting is false. </param>
+        /// <param name="hasZoneResiliency"> Indicates if the cluster has zone resiliency. </param>
+        /// <param name="maxUnusedVersionsToKeep"> The policy used to clean up unused versions. </param>
+        /// <param name="isIPv6Enabled"> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </param>
+        /// <param name="subnetId"> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The **networkSecurityRules** specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </param>
+        /// <param name="ipTags"> The list of IP tags associated with the default public IP address of the cluster. </param>
+        /// <param name="ipv6Address"> IPv6 address for the cluster if IPv6 is enabled. </param>
+        /// <param name="isServicePublicIPEnabled"> Setting this to true will link the IPv4 address as the ServicePublicIP of the IPv6 address. It can only be set to True if IPv6 is enabled on the cluster. </param>
+        /// <param name="auxiliarySubnets"> Auxiliary subnets for the cluster. </param>
+        /// <param name="serviceEndpoints"> Service endpoints for subnets in the cluster. </param>
+        /// <param name="zonalUpdateMode"> Indicates the update mode for Cross Az clusters. </param>
+        /// <param name="useCustomVnet"> For new clusters, this parameter indicates that it uses Bring your own VNet, but the subnet is specified at node type level; and for such clusters, the subnetId property is required for node types. </param>
+        /// <param name="publicIPPrefixId"> Specify the resource id of a public IPv4 prefix that the load balancer will allocate a public IPv4 address from. This setting cannot be changed once the cluster is created. </param>
+        /// <param name="publicIPv6PrefixId"> Specify the resource id of a public IPv6 prefix that the load balancer will allocate a public IPv6 address from. This setting cannot be changed once the cluster is created. </param>
+        /// <param name="ddosProtectionPlanId"> Specify the resource id of a DDoS network protection plan that will be associated with the virtual network of the cluster. </param>
+        /// <param name="upgradeDescription"> The policy to use when upgrading the cluster. </param>
+        /// <param name="httpGatewayTokenAuthConnectionPort"> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </param>
+        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthConnectionPort must be defined. </param>
+        /// <param name="autoGeneratedDomainNameLabelScope"> This property is the entry point to using a public CA cert for your cluster cert. It specifies the level of reuse allowed for the custom FQDN created, matching the subject of the public CA cert. </param>
+        /// <param name="allocatedOutboundPorts"> The number of outbound ports allocated for SNAT for each node in the backend pool of the default load balancer. The default value is 0 which provides dynamic port allocation based on pool size. </param>
+        /// <param name="vmImage"> The VM image the node types are configured with. This property controls the Service Fabric component packages to be used for the cluster. Allowed values are: 'Windows'. The default value is 'Windows'. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.",. </param>
+        /// <param name="skuName"> The sku of the managed cluster. </param>
+        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedClusterData"/> instance for mocking. </returns>
+        public static ServiceFabricManagedClusterData ServiceFabricManagedClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string dnsName = null, string fqdn = null, IPAddress ipv4Address = null, Guid? clusterId = null, ServiceFabricManagedClusterState? clusterState = null, IEnumerable<BinaryData> clusterCertificateThumbprints = null, int? clientConnectionPort = null, int? httpGatewayConnectionPort = null, string adminUserName = null, string adminPassword = null, IEnumerable<ManagedClusterLoadBalancingRule> loadBalancingRules = null, bool? isRdpAccessAllowed = null, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = null, IEnumerable<ManagedClusterClientCertificate> clients = null, ManagedClusterAzureActiveDirectory azureActiveDirectory = null, IEnumerable<ClusterFabricSettingsSection> fabricSettings = null, ServiceFabricManagedResourceProvisioningState? provisioningState = null, string clusterCodeVersion = null, ManagedClusterUpgradeMode? clusterUpgradeMode = null, ManagedClusterUpgradeCadence? clusterUpgradeCadence = null, IEnumerable<ManagedClusterAddOnFeature> addOnFeatures = null, bool? isAutoOSUpgradeEnabled = null, bool? hasZoneResiliency = null, int? maxUnusedVersionsToKeep = null, bool? isIPv6Enabled = null, string subnetId = null, IEnumerable<ManagedClusterIPTag> ipTags = null, IPAddress ipv6Address = null, bool? isServicePublicIPEnabled = null, IEnumerable<ManagedClusterSubnet> auxiliarySubnets = null, IEnumerable<ManagedClusterServiceEndpoint> serviceEndpoints = null, ZonalUpdateMode? zonalUpdateMode = null, bool? useCustomVnet = null, ResourceIdentifier publicIPPrefixId = null, ResourceIdentifier publicIPv6PrefixId = null, ResourceIdentifier ddosProtectionPlanId = null, ManagedClusterUpgradePolicy upgradeDescription = null, int? httpGatewayTokenAuthConnectionPort = null, bool? isHttpGatewayExclusiveAuthModeEnabled = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null, int? allocatedOutboundPorts = null, string vmImage = null, ETag? etag = null, ServiceFabricManagedClustersSkuName? skuName = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            clusterCertificateThumbprints ??= new List<BinaryData>();
+            loadBalancingRules ??= new List<ManagedClusterLoadBalancingRule>();
+            networkSecurityRules ??= new List<ServiceFabricManagedNetworkSecurityRule>();
+            clients ??= new List<ManagedClusterClientCertificate>();
+            fabricSettings ??= new List<ClusterFabricSettingsSection>();
+            addOnFeatures ??= new List<ManagedClusterAddOnFeature>();
+            ipTags ??= new List<ManagedClusterIPTag>();
+            auxiliarySubnets ??= new List<ManagedClusterSubnet>();
+            serviceEndpoints ??= new List<ManagedClusterServiceEndpoint>();
+
+            return new ServiceFabricManagedClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                dnsName,
+                fqdn,
+                ipv4Address,
+                clusterId,
+                clusterState,
+                clusterCertificateThumbprints?.ToList(),
+                clientConnectionPort,
+                httpGatewayConnectionPort,
+                adminUserName,
+                adminPassword,
+                loadBalancingRules?.ToList(),
+                isRdpAccessAllowed,
+                networkSecurityRules?.ToList(),
+                clients?.ToList(),
+                azureActiveDirectory,
+                fabricSettings?.ToList(),
+                provisioningState,
+                clusterCodeVersion,
+                clusterUpgradeMode,
+                clusterUpgradeCadence,
+                addOnFeatures?.ToList(),
+                isAutoOSUpgradeEnabled,
+                hasZoneResiliency,
+                maxUnusedVersionsToKeep.HasValue ? new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.Value, serializedAdditionalRawData: null) : null,
+                isIPv6Enabled,
+                subnetId,
+                ipTags?.ToList(),
+                ipv6Address,
+                isServicePublicIPEnabled,
+                auxiliarySubnets?.ToList(),
+                serviceEndpoints?.ToList(),
+                zonalUpdateMode,
+                useCustomVnet,
+                publicIPPrefixId,
+                publicIPv6PrefixId,
+                ddosProtectionPlanId,
+                upgradeDescription,
+                httpGatewayTokenAuthConnectionPort,
+                isHttpGatewayExclusiveAuthModeEnabled,
+                autoGeneratedDomainNameLabelScope,
+                allocatedOutboundPorts,
+                vmImage,
+                etag,
+                skuName.HasValue ? new ServiceFabricManagedClustersSku(skuName.Value, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FaultSimulation"/>. </summary>
+        /// <param name="simulationId"> unique identifier for the fault simulation. </param>
+        /// <param name="status"> Fault simulation status. </param>
+        /// <param name="startOn"> The start time of the fault simulation. </param>
+        /// <param name="endOn"> The end time of the fault simulation. </param>
+        /// <param name="details"> Fault simulation details. </param>
+        /// <returns> A new <see cref="Models.FaultSimulation"/> instance for mocking. </returns>
+        public static FaultSimulation FaultSimulation(string simulationId = null, FaultSimulationStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, FaultSimulationDetails details = null)
+        {
+            return new FaultSimulation(
+                simulationId,
+                status,
+                startOn,
+                endOn,
+                details,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FaultSimulationDetails"/>. </summary>
+        /// <param name="clusterId"> unique identifier for the cluster resource. </param>
+        /// <param name="operationId"> unique identifier for the operation associated with the fault simulation. </param>
+        /// <param name="nodeTypeFaultSimulation"> List of node type simulations associated with the cluster fault simulation. </param>
+        /// <param name="parameters">
+        /// Fault simulation parameters.
+        /// Please note <see cref="FaultSimulationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ZoneFaultSimulationContent"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.FaultSimulationDetails"/> instance for mocking. </returns>
+        public static FaultSimulationDetails FaultSimulationDetails(string clusterId = null, string operationId = null, IEnumerable<NodeTypeFaultSimulation> nodeTypeFaultSimulation = null, FaultSimulationContent parameters = null)
+        {
+            nodeTypeFaultSimulation ??= new List<NodeTypeFaultSimulation>();
+
+            return new FaultSimulationDetails(clusterId, operationId, nodeTypeFaultSimulation?.ToList(), parameters, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeFaultSimulation"/>. </summary>
+        /// <param name="nodeTypeName"> Node type name. </param>
+        /// <param name="status"> Fault simulation status. </param>
+        /// <param name="operationId"> Current or latest asynchronous operation identifier on the node type. </param>
+        /// <param name="operationStatus"> Current or latest asynchronous operation status on the node type. </param>
+        /// <returns> A new <see cref="Models.NodeTypeFaultSimulation"/> instance for mocking. </returns>
+        public static NodeTypeFaultSimulation NodeTypeFaultSimulation(string nodeTypeName = null, FaultSimulationStatus? status = null, string operationId = null, SfmcOperationStatus? operationStatus = null)
+        {
+            return new NodeTypeFaultSimulation(nodeTypeName, status, operationId, operationStatus, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedAzResiliencyStatus"/>. </summary>
+        /// <param name="baseResourceStatus"> List of Managed VM Sizes for Service Fabric Managed Clusters. </param>
+        /// <param name="isClusterZoneResilient"> URL to get the next set of Managed VM Sizes if there are any. </param>
+        /// <returns> A new <see cref="Models.ManagedAzResiliencyStatus"/> instance for mocking. </returns>
+        public static ManagedAzResiliencyStatus ManagedAzResiliencyStatus(IEnumerable<ResourceAzStatus> baseResourceStatus = null, bool? isClusterZoneResilient = null)
+        {
+            baseResourceStatus ??= new List<ResourceAzStatus>();
+
+            return new ManagedAzResiliencyStatus(baseResourceStatus?.ToList(), isClusterZoneResilient, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceAzStatus"/>. </summary>
+        /// <param name="resourceName"> VM Size properties. </param>
+        /// <param name="resourceType"> VM Size id. </param>
+        /// <param name="isZoneResilient"> VM Size name. </param>
+        /// <param name="details"> Zone resiliency status details for the resource. </param>
+        /// <returns> A new <see cref="Models.ResourceAzStatus"/> instance for mocking. </returns>
+        public static ResourceAzStatus ResourceAzStatus(string resourceName = null, ResourceType? resourceType = null, bool? isZoneResilient = null, string details = null)
+        {
+            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, details, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedMaintenanceWindowStatus"/>. </summary>
+        /// <param name="isWindowEnabled"> If maintenance window is enabled on this cluster. </param>
+        /// <param name="isRegionReady"> Indicates if the region is ready to configure maintenance windows. </param>
+        /// <param name="isWindowActive"> If maintenance window is active. </param>
+        /// <param name="canApplyUpdates"> If updates can be applied. </param>
+        /// <param name="lastWindowStatusUpdatedOn"> Last window update time in UTC. </param>
+        /// <param name="lastWindowStartOn"> Last window start time in UTC. </param>
+        /// <param name="lastWindowEndOn"> Last window end time in UTC. </param>
+        /// <returns> A new <see cref="Models.ManagedMaintenanceWindowStatus"/> instance for mocking. </returns>
+        public static ManagedMaintenanceWindowStatus ManagedMaintenanceWindowStatus(bool? isWindowEnabled = null, bool? isRegionReady = null, bool? isWindowActive = null, bool? canApplyUpdates = null, DateTimeOffset? lastWindowStatusUpdatedOn = null, DateTimeOffset? lastWindowStartOn = null, DateTimeOffset? lastWindowEndOn = null)
+        {
+            return new ManagedMaintenanceWindowStatus(
+                isWindowEnabled,
+                isRegionReady,
+                isWindowActive,
+                canApplyUpdates,
+                lastWindowStatusUpdatedOn,
+                lastWindowStartOn,
+                lastWindowEndOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
+        /// <param name="vmInstanceCount"> The number of nodes in the node type. **Values:** -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
+        /// <param name="dataDiskSizeInGB"> Disk size for the managed disk attached to the vms on the node type in GBs. </param>
+        /// <param name="dataDiskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
+        /// <param name="dataDiskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
+        /// <param name="placementProperties"> The placement tags applied to nodes in the node type, which can be used to indicate where certain services (workload) should run. </param>
+        /// <param name="capacities"> The capacity tags applied to the nodes in the node type, the cluster resource manager uses these tags to understand how much resource a node has. </param>
+        /// <param name="applicationPorts"> The range of ports from which cluster assigned port to Service Fabric applications. </param>
+        /// <param name="ephemeralPorts"> The range of ephemeral ports that nodes in this node type should be configured with. </param>
+        /// <param name="vmSize"> The size of virtual machines in the pool. All virtual machines in a pool are the same size. For example, Standard_D3. </param>
+        /// <param name="vmImagePublisher"> The publisher of the Azure Virtual Machines Marketplace image. For example, Canonical or MicrosoftWindowsServer. </param>
+        /// <param name="vmImageOffer"> The offer type of the Azure Virtual Machines Marketplace image. For example, UbuntuServer or WindowsServer. </param>
+        /// <param name="vmImageSku"> The SKU of the Azure Virtual Machines Marketplace image. For example, 14.04.0-LTS or 2012-R2-Datacenter. </param>
+        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
+        /// <param name="vmSecrets"> The secrets to install in the virtual machines. </param>
+        /// <param name="vmExtensions"> Set of extensions that should be installed onto the virtual machines. </param>
+        /// <param name="userAssignedIdentities"> Identities to assign to the virtual machine scale set under the node type. </param>
+        /// <param name="isStateless"> Indicates if the node type can only host Stateless workloads. </param>
+        /// <param name="hasMultiplePlacementGroups"> Indicates if scale set associated with the node type can be composed of multiple placement groups. </param>
+        /// <param name="frontendConfigurations"> Indicates the node type uses its own frontend configurations instead of the default one for the cluster. This setting can only be specified for non-primary node types and can not be added or removed after the node type is created. </param>
+        /// <param name="networkSecurityRules"> The Network Security Rules for this node type. This setting can only be specified for node types that are configured with frontend configurations. </param>
+        /// <param name="additionalDataDisks"> Additional managed data disks. </param>
+        /// <param name="isEncryptionAtHostEnabled"> Enable or disable the Host Encryption for the virtual machines on the node type. This will enable the encryption for all the disks including Resource/Temp disk at host itself. Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the node type resource. </param>
+        /// <param name="isAcceleratedNetworkingEnabled"> Specifies whether the network interface is accelerated networking-enabled. </param>
+        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn't have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
+        /// <param name="useTempDataDisk"> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </param>
+        /// <param name="isOverProvisioningEnabled"> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </param>
+        /// <param name="zones"> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </param>
+        /// <param name="isSpotVm"> Indicates whether the node type will be Spot Virtual Machines. Azure will allocate the VMs if there is capacity available and the VMs can be evicted at any time. </param>
+        /// <param name="hostGroupId"> Specifies the full host group resource Id. This property is used for deploying on azure dedicated hosts. </param>
+        /// <param name="useEphemeralOSDisk"> Indicates whether to use ephemeral os disk. The sku selected on the vmSize property needs to support this feature. </param>
+        /// <param name="spotRestoreTimeout"> Indicates the time duration after which the platform will not try to restore the VMSS SPOT instances specified as ISO 8601. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for virtual machines in a SPOT node type. Default is Delete. </param>
+        /// <param name="vmImageResourceId"> Indicates the resource id of the vm image. This parameter is used for custom vm image. </param>
+        /// <param name="subnetId"> Indicates the resource id of the subnet for the node type. </param>
+        /// <param name="vmSetupActions"> Specifies the actions to be performed on the vms before bootstrapping the service fabric runtime. </param>
+        /// <param name="securityType"> Specifies the security type of the nodeType. Supported values include Standard, TrustedLaunch and ConfidentialVM. </param>
+        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob and VMGuestStateOnly for encryption of just the VMGuestState blob. Note: It can be set for only Confidential VMs. </param>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch and ConfidentialVM SecurityType. </param>
+        /// <param name="isNodePublicIPEnabled"> Specifies whether each node is allocated its own public IPv4 address. This is only supported on secondary node types with custom Load Balancers. </param>
+        /// <param name="isNodePublicIPv6Enabled"> Specifies whether each node is allocated its own public IPv6 address. This is only supported on secondary node types with custom Load Balancers. </param>
+        /// <param name="vmSharedGalleryImageId"> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </param>
+        /// <param name="natGatewayId"> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </param>
+        /// <param name="natConfigurations"> Specifies the NAT configuration on default public Load Balancer for the node type. This is only supported for node types use the default public Load Balancer. </param>
+        /// <param name="vmImagePlan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </param>
+        /// <param name="serviceArtifactReferenceId"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. </param>
+        /// <param name="dscpConfigurationId"> Specifies the resource id of the DSCP configuration to apply to the node type network interface. </param>
+        /// <param name="additionalNetworkInterfaceConfigurations"> Specifies the settings for any additional secondary network interfaces to attach to the node type. </param>
+        /// <param name="computerNamePrefix"> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </param>
+        /// <param name="vmApplications"> Specifies the gallery applications that should be made available to the underlying VMSS. </param>
+        /// <param name="isZoneBalanceEnabled"> Setting this to true allows stateless node types to scale out without equal distribution across zones. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The node type sku. </param>
+        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData"/> instance for mocking. </returns>
+        public static ServiceFabricManagedNodeTypeData ServiceFabricManagedNodeTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isPrimary = null, int? vmInstanceCount = null, int? dataDiskSizeInGB = null, ServiceFabricManagedDataDiskType? dataDiskType = null, string dataDiskLetter = null, IDictionary<string, string> placementProperties = null, IDictionary<string, string> capacities = null, EndpointRangeDescription applicationPorts = null, EndpointRangeDescription ephemeralPorts = null, string vmSize = null, string vmImagePublisher = null, string vmImageOffer = null, string vmImageSku = null, string vmImageVersion = null, IEnumerable<NodeTypeVaultSecretGroup> vmSecrets = null, IEnumerable<NodeTypeVmssExtension> vmExtensions = null, IEnumerable<ResourceIdentifier> userAssignedIdentities = null, bool? isStateless = null, bool? hasMultiplePlacementGroups = null, IEnumerable<NodeTypeFrontendConfiguration> frontendConfigurations = null, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = null, IEnumerable<NodeTypeVmssDataDisk> additionalDataDisks = null, bool? isEncryptionAtHostEnabled = null, ServiceFabricManagedResourceProvisioningState? provisioningState = null, bool? isAcceleratedNetworkingEnabled = null, bool? useDefaultPublicLoadBalancer = null, bool? useTempDataDisk = null, bool? isOverProvisioningEnabled = null, IEnumerable<string> zones = null, bool? isSpotVm = null, string hostGroupId = null, bool? useEphemeralOSDisk = null, string spotRestoreTimeout = null, SpotNodeVmEvictionPolicyType? evictionPolicy = null, ResourceIdentifier vmImageResourceId = null, ResourceIdentifier subnetId = null, IEnumerable<VmSetupAction> vmSetupActions = null, ServiceFabricManagedClusterSecurityType? securityType = null, NodeTypeSecurityEncryptionType? securityEncryptionType = null, bool? isSecureBootEnabled = null, bool? isNodePublicIPEnabled = null, bool? isNodePublicIPv6Enabled = null, ResourceIdentifier vmSharedGalleryImageId = null, ResourceIdentifier natGatewayId = null, IEnumerable<NodeTypeNatConfig> natConfigurations = null, VmImagePlan vmImagePlan = null, ResourceIdentifier serviceArtifactReferenceId = null, ResourceIdentifier dscpConfigurationId = null, IEnumerable<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = null, string computerNamePrefix = null, IEnumerable<ServiceFabricManagedVmApplication> vmApplications = null, bool? isZoneBalanceEnabled = null, IDictionary<string, string> tags = null, NodeTypeSku sku = null)
+        {
+            placementProperties ??= new Dictionary<string, string>();
+            capacities ??= new Dictionary<string, string>();
+            vmSecrets ??= new List<NodeTypeVaultSecretGroup>();
+            vmExtensions ??= new List<NodeTypeVmssExtension>();
+            userAssignedIdentities ??= new List<ResourceIdentifier>();
+            frontendConfigurations ??= new List<NodeTypeFrontendConfiguration>();
+            networkSecurityRules ??= new List<ServiceFabricManagedNetworkSecurityRule>();
+            additionalDataDisks ??= new List<NodeTypeVmssDataDisk>();
+            zones ??= new List<string>();
+            vmSetupActions ??= new List<VmSetupAction>();
+            natConfigurations ??= new List<NodeTypeNatConfig>();
+            additionalNetworkInterfaceConfigurations ??= new List<AdditionalNetworkInterfaceConfiguration>();
+            vmApplications ??= new List<ServiceFabricManagedVmApplication>();
+            tags ??= new Dictionary<string, string>();
+
+            return new ServiceFabricManagedNodeTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isPrimary,
+                vmInstanceCount,
+                dataDiskSizeInGB,
+                dataDiskType,
+                dataDiskLetter,
+                placementProperties,
+                capacities,
+                applicationPorts,
+                ephemeralPorts,
+                vmSize,
+                vmImagePublisher,
+                vmImageOffer,
+                vmImageSku,
+                vmImageVersion,
+                vmSecrets?.ToList(),
+                vmExtensions?.ToList(),
+                userAssignedIdentities != null ? new VmManagedIdentity(userAssignedIdentities?.ToList(), serializedAdditionalRawData: null) : null,
+                isStateless,
+                hasMultiplePlacementGroups,
+                frontendConfigurations?.ToList(),
+                networkSecurityRules?.ToList(),
+                additionalDataDisks?.ToList(),
+                isEncryptionAtHostEnabled,
+                provisioningState,
+                isAcceleratedNetworkingEnabled,
+                useDefaultPublicLoadBalancer,
+                useTempDataDisk,
+                isOverProvisioningEnabled,
+                zones?.ToList(),
+                isSpotVm,
+                hostGroupId,
+                useEphemeralOSDisk,
+                spotRestoreTimeout,
+                evictionPolicy,
+                vmImageResourceId,
+                subnetId,
+                vmSetupActions?.ToList(),
+                securityType,
+                securityEncryptionType,
+                isSecureBootEnabled,
+                isNodePublicIPEnabled,
+                isNodePublicIPv6Enabled,
+                vmSharedGalleryImageId,
+                natGatewayId,
+                natConfigurations?.ToList(),
+                vmImagePlan,
+                serviceArtifactReferenceId,
+                dscpConfigurationId,
+                additionalNetworkInterfaceConfigurations?.ToList(),
+                computerNamePrefix,
+                vmApplications?.ToList(),
+                isZoneBalanceEnabled,
+                tags,
+                sku,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeVmssExtension"/>. </summary>
+        /// <param name="name"> The name of the extension. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="setupOrder"> Indicates the setup order for the extension. </param>
+        /// <returns> A new <see cref="Models.NodeTypeVmssExtension"/> instance for mocking. </returns>
+        public static NodeTypeVmssExtension NodeTypeVmssExtension(string name = null, string publisher = null, string vmssExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, string forceUpdateTag = null, IEnumerable<string> provisionAfterExtensions = null, string provisioningState = null, bool? isAutomaticUpgradeEnabled = null, IEnumerable<VmssExtensionSetupOrder> setupOrder = null)
+        {
+            provisionAfterExtensions ??= new List<string>();
+            setupOrder ??= new List<VmssExtensionSetupOrder>();
+
+            return new NodeTypeVmssExtension(
+                name,
+                publisher,
+                vmssExtensionPropertiesType,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                forceUpdateTag,
+                provisionAfterExtensions?.ToList(),
+                provisioningState,
+                isAutomaticUpgradeEnabled,
+                setupOrder?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeAvailableSku"/>. </summary>
+        /// <param name="resourceType"> The type of resource the sku applies to. Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </param>
+        /// <param name="sku"> The supported SKU for a for node type. </param>
+        /// <param name="capacity"> Provides information about how the node count can be scaled. </param>
+        /// <returns> A new <see cref="Models.NodeTypeAvailableSku"/> instance for mocking. </returns>
+        public static NodeTypeAvailableSku NodeTypeAvailableSku(ResourceType? resourceType = null, NodeTypeSupportedSku sku = null, NodeTypeSkuCapacity capacity = null)
+        {
+            return new NodeTypeAvailableSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeSupportedSku"/>. </summary>
+        /// <param name="name"> The sku name. </param>
+        /// <param name="tier"> Specifies the tier of the node type. Possible Values: **Standard**. </param>
+        /// <returns> A new <see cref="Models.NodeTypeSupportedSku"/> instance for mocking. </returns>
+        public static NodeTypeSupportedSku NodeTypeSupportedSku(string name = null, string tier = null)
+        {
+            return new NodeTypeSupportedSku(name, tier, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NodeTypeSkuCapacity"/>. </summary>
+        /// <param name="minimum"> Lowest permitted node count in a node type. </param>
+        /// <param name="maximum"> Highest permitted node count in a node type. </param>
+        /// <param name="default"> Default node count in a node type. </param>
+        /// <param name="scaleType"> Node type capacity scale type. </param>
+        /// <returns> A new <see cref="Models.NodeTypeSkuCapacity"/> instance for mocking. </returns>
+        public static NodeTypeSkuCapacity NodeTypeSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, NodeTypeSkuScaleType? scaleType = null)
+        {
+            return new NodeTypeSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData" />. </summary>
@@ -762,7 +807,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedClusterData ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSkuName? skuName, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IEnumerable<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IEnumerable<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IEnumerable<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IEnumerable<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IEnumerable<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, int? maxUnusedVersionsToKeep, bool? isIPv6Enabled, string subnetId, IEnumerable<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IEnumerable<ManagedClusterSubnet> auxiliarySubnets, IEnumerable<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ResourceIdentifier publicIPv6PrefixId, ResourceIdentifier ddosProtectionPlanId, ManagedClusterUpgradePolicy upgradeDescription, int? httpGatewayTokenAuthConnectionPort, bool? isHttpGatewayExclusiveAuthModeEnabled, ETag? etag)
         {
-            return ServiceFabricManagedClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, skuName: skuName, dnsName: dnsName, fqdn: fqdn, ipv4Address: ipv4Address, clusterId: clusterId, clusterState: clusterState, clusterCertificateThumbprints: clusterCertificateThumbprints, clientConnectionPort: clientConnectionPort, httpGatewayConnectionPort: httpGatewayConnectionPort, adminUserName: adminUserName, adminPassword: adminPassword, loadBalancingRules: loadBalancingRules, isRdpAccessAllowed: isRdpAccessAllowed, networkSecurityRules: networkSecurityRules, clients: clients, azureActiveDirectory: azureActiveDirectory, fabricSettings: fabricSettings, provisioningState: provisioningState, clusterCodeVersion: clusterCodeVersion, clusterUpgradeMode: clusterUpgradeMode, clusterUpgradeCadence: clusterUpgradeCadence, addOnFeatures: addOnFeatures, isAutoOSUpgradeEnabled: isAutoOSUpgradeEnabled, hasZoneResiliency: hasZoneResiliency, maxUnusedVersionsToKeep: maxUnusedVersionsToKeep, isIPv6Enabled: isIPv6Enabled, subnetId: subnetId, ipTags: ipTags, ipv6Address: ipv6Address, isServicePublicIPEnabled: isServicePublicIPEnabled, auxiliarySubnets: auxiliarySubnets, serviceEndpoints: serviceEndpoints, zonalUpdateMode: zonalUpdateMode, useCustomVnet: useCustomVnet, publicIPPrefixId: publicIPPrefixId, publicIPv6PrefixId: publicIPv6PrefixId, ddosProtectionPlanId: ddosProtectionPlanId, upgradeDescription: upgradeDescription, httpGatewayTokenAuthConnectionPort: httpGatewayTokenAuthConnectionPort, isHttpGatewayExclusiveAuthModeEnabled: isHttpGatewayExclusiveAuthModeEnabled, autoGeneratedDomainNameLabelScope: default, allocatedOutboundPorts: default, etag: etag);
+            return ServiceFabricManagedClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, dnsName: dnsName, fqdn: fqdn, ipv4Address: ipv4Address, clusterId: clusterId, clusterState: clusterState, clusterCertificateThumbprints: clusterCertificateThumbprints, clientConnectionPort: clientConnectionPort, httpGatewayConnectionPort: httpGatewayConnectionPort, adminUserName: adminUserName, adminPassword: adminPassword, loadBalancingRules: loadBalancingRules, isRdpAccessAllowed: isRdpAccessAllowed, networkSecurityRules: networkSecurityRules, clients: clients, azureActiveDirectory: azureActiveDirectory, fabricSettings: fabricSettings, provisioningState: provisioningState, clusterCodeVersion: clusterCodeVersion, clusterUpgradeMode: clusterUpgradeMode, clusterUpgradeCadence: clusterUpgradeCadence, addOnFeatures: addOnFeatures, isAutoOSUpgradeEnabled: isAutoOSUpgradeEnabled, hasZoneResiliency: hasZoneResiliency, maxUnusedVersionsToKeep: maxUnusedVersionsToKeep, isIPv6Enabled: isIPv6Enabled, subnetId: subnetId, ipTags: ipTags, ipv6Address: ipv6Address, isServicePublicIPEnabled: isServicePublicIPEnabled, auxiliarySubnets: auxiliarySubnets, serviceEndpoints: serviceEndpoints, zonalUpdateMode: zonalUpdateMode, useCustomVnet: useCustomVnet, publicIPPrefixId: publicIPPrefixId, publicIPv6PrefixId: publicIPv6PrefixId, ddosProtectionPlanId: ddosProtectionPlanId, upgradeDescription: upgradeDescription, httpGatewayTokenAuthConnectionPort: httpGatewayTokenAuthConnectionPort, isHttpGatewayExclusiveAuthModeEnabled: isHttpGatewayExclusiveAuthModeEnabled, autoGeneratedDomainNameLabelScope: default, allocatedOutboundPorts: default, vmImage: default, etag: etag, skuName: skuName);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData" />. </summary>
@@ -825,7 +870,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedNodeTypeData ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IEnumerable<NodeTypeVaultSecretGroup> vmSecrets, IEnumerable<NodeTypeVmssExtension> vmExtensions, IEnumerable<ResourceIdentifier> userAssignedIdentities, bool? isStateless, bool? hasMultiplePlacementGroups, IEnumerable<NodeTypeFrontendConfiguration> frontendConfigurations, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IEnumerable<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IEnumerable<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IEnumerable<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IEnumerable<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IEnumerable<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IDictionary<string, string> tags)
         {
-            return ServiceFabricManagedNodeTypeData(id: id, name: name, resourceType: resourceType, systemData: systemData, sku: sku, isPrimary: isPrimary, vmInstanceCount: vmInstanceCount, dataDiskSizeInGB: dataDiskSizeInGB, dataDiskType: dataDiskType, dataDiskLetter: dataDiskLetter, placementProperties: placementProperties, capacities: capacities, applicationPorts: applicationPorts, ephemeralPorts: ephemeralPorts, vmSize: vmSize, vmImagePublisher: vmImagePublisher, vmImageOffer: vmImageOffer, vmImageSku: vmImageSku, vmImageVersion: vmImageVersion, vmSecrets: vmSecrets, vmExtensions: vmExtensions, userAssignedIdentities: userAssignedIdentities, isStateless: isStateless, hasMultiplePlacementGroups: hasMultiplePlacementGroups, frontendConfigurations: frontendConfigurations, networkSecurityRules: networkSecurityRules, additionalDataDisks: additionalDataDisks, isEncryptionAtHostEnabled: isEncryptionAtHostEnabled, provisioningState: provisioningState, isAcceleratedNetworkingEnabled: isAcceleratedNetworkingEnabled, useDefaultPublicLoadBalancer: useDefaultPublicLoadBalancer, useTempDataDisk: useTempDataDisk, isOverProvisioningEnabled: isOverProvisioningEnabled, zones: zones, isSpotVm: isSpotVm, hostGroupId: hostGroupId, useEphemeralOSDisk: useEphemeralOSDisk, spotRestoreTimeout: spotRestoreTimeout, evictionPolicy: evictionPolicy, vmImageResourceId: vmImageResourceId, subnetId: subnetId, vmSetupActions: vmSetupActions, securityType: securityType, isSecureBootEnabled: isSecureBootEnabled, isNodePublicIPEnabled: isNodePublicIPEnabled, isNodePublicIPv6Enabled: isNodePublicIPv6Enabled, vmSharedGalleryImageId: vmSharedGalleryImageId, natGatewayId: natGatewayId, natConfigurations: natConfigurations, vmImagePlan: vmImagePlan, serviceArtifactReferenceId: serviceArtifactReferenceId, dscpConfigurationId: dscpConfigurationId, additionalNetworkInterfaceConfigurations: additionalNetworkInterfaceConfigurations, computerNamePrefix: computerNamePrefix, vmApplications: default, tags: tags);
+            return ServiceFabricManagedNodeTypeData(id: id, name: name, resourceType: resourceType, systemData: systemData, isPrimary: isPrimary, vmInstanceCount: vmInstanceCount, dataDiskSizeInGB: dataDiskSizeInGB, dataDiskType: dataDiskType, dataDiskLetter: dataDiskLetter, placementProperties: placementProperties, capacities: capacities, applicationPorts: applicationPorts, ephemeralPorts: ephemeralPorts, vmSize: vmSize, vmImagePublisher: vmImagePublisher, vmImageOffer: vmImageOffer, vmImageSku: vmImageSku, vmImageVersion: vmImageVersion, vmSecrets: vmSecrets, vmExtensions: vmExtensions, userAssignedIdentities: userAssignedIdentities, isStateless: isStateless, hasMultiplePlacementGroups: hasMultiplePlacementGroups, frontendConfigurations: frontendConfigurations, networkSecurityRules: networkSecurityRules, additionalDataDisks: additionalDataDisks, isEncryptionAtHostEnabled: isEncryptionAtHostEnabled, provisioningState: provisioningState, isAcceleratedNetworkingEnabled: isAcceleratedNetworkingEnabled, useDefaultPublicLoadBalancer: useDefaultPublicLoadBalancer, useTempDataDisk: useTempDataDisk, isOverProvisioningEnabled: isOverProvisioningEnabled, zones: zones, isSpotVm: isSpotVm, hostGroupId: hostGroupId, useEphemeralOSDisk: useEphemeralOSDisk, spotRestoreTimeout: spotRestoreTimeout, evictionPolicy: evictionPolicy, vmImageResourceId: vmImageResourceId, subnetId: subnetId, vmSetupActions: vmSetupActions, securityType: securityType, securityEncryptionType: default, isSecureBootEnabled: isSecureBootEnabled, isNodePublicIPEnabled: isNodePublicIPEnabled, isNodePublicIPv6Enabled: isNodePublicIPv6Enabled, vmSharedGalleryImageId: vmSharedGalleryImageId, natGatewayId: natGatewayId, natConfigurations: natConfigurations, vmImagePlan: vmImagePlan, serviceArtifactReferenceId: serviceArtifactReferenceId, dscpConfigurationId: dscpConfigurationId, additionalNetworkInterfaceConfigurations: additionalNetworkInterfaceConfigurations, computerNamePrefix: computerNamePrefix, vmApplications: default, isZoneBalanceEnabled: default, tags: tags, sku: sku);
         }
     }
 }

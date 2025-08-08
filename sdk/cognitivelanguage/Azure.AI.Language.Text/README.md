@@ -16,6 +16,9 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 
   [Source code][source_root] | [Package (NuGet)][package]| [API reference documentation][text_refdocs] | [Product documentation][text_docs] | [Samples][source_samples]
 
+> [!NOTE]
+> Text Authoring is not supported in version 2.0.0-beta.1. If you use Text Authoring, please continue to use version 1.1.0. You can find the [samples][textauthoring_samples] here.
+
 ## Getting started
 
 ### Install the package
@@ -27,9 +30,10 @@ dotnet add package Azure.AI.Language.Text --prerelease
 ```
 
 |SDK version  |Supported API version of service
-|-------------|-----------------------------------------------------
-|1.0.0-beta.1 | 2022-05-01, 2023-04-01, 2023-11-15-preview (default)
+|-------------|------------------------------------------------------------------------------------------------
+|1.0.0-beta.3 | 2022-05-01, 2023-04-01, 2024-11-01, 2024-11-15-preview, 2025-05-15-preview (default)
 |1.0.0-beta.2 | 2022-05-01, 2023-04-01, 2024-11-01, 2024-11-15-preview (default)
+|1.0.0-beta.1 | 2022-05-01, 2023-04-01, 2023-11-15-preview (default)
 
 ### Prerequisites
 
@@ -65,8 +69,8 @@ using Azure.AI.Language.Text;
 With your **endpoint** and **API key**, you can instantiate a `TextAnalysisClient`:
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your apikey");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
 
@@ -89,7 +93,7 @@ using Azure.Identity;
 Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
 
 ```C# Snippet:TextAnalysisClient_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
@@ -107,8 +111,8 @@ You have the flexibility to explicitly select a supported service API version wh
 For example,
 
 ```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your apikey");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);
 ```
@@ -275,3 +279,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_portal]: https://portal.azure.com
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
+[textauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/README.md

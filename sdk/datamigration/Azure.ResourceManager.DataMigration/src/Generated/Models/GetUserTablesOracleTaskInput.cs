@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="connectionInfo"> Information for connecting to Oracle source. </param>
         /// <param name="selectedSchemas"> List of Oracle schemas for which to collect tables. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedSchemas"/> is null. </exception>
-        public GetUserTablesOracleTaskInput(OracleConnectionInfo connectionInfo, IEnumerable<string> selectedSchemas)
+        public GetUserTablesOracleTaskInput(DataMigrationOracleConnectionInfo connectionInfo, IEnumerable<string> selectedSchemas)
         {
             Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
             Argument.AssertNotNull(selectedSchemas, nameof(selectedSchemas));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="connectionInfo"> Information for connecting to Oracle source. </param>
         /// <param name="selectedSchemas"> List of Oracle schemas for which to collect tables. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetUserTablesOracleTaskInput(OracleConnectionInfo connectionInfo, IList<string> selectedSchemas, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetUserTablesOracleTaskInput(DataMigrationOracleConnectionInfo connectionInfo, IList<string> selectedSchemas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionInfo = connectionInfo;
             SelectedSchemas = selectedSchemas;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Information for connecting to Oracle source. </summary>
-        public OracleConnectionInfo ConnectionInfo { get; set; }
+        public DataMigrationOracleConnectionInfo ConnectionInfo { get; set; }
         /// <summary> List of Oracle schemas for which to collect tables. </summary>
         public IList<string> SelectedSchemas { get; }
     }

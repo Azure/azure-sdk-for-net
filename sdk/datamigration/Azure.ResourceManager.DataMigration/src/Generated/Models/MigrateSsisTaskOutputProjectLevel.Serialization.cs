@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string folderName = default;
             string projectName = default;
-            MigrationState? state = default;
+            DataMigrationState? state = default;
             SsisMigrationStage? stage = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
             string message = default;
-            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new MigrationState(property.Value.GetString());
+                    state = new DataMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 startedOn,
                 endedOn,
                 message,
-                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
+                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSsisTaskOutputProjectLevel>.Write(ModelReaderWriterOptions options)

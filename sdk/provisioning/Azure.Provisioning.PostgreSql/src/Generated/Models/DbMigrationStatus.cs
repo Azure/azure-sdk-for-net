@@ -16,42 +16,6 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class DbMigrationStatus : ProvisionableConstruct
 {
     /// <summary>
-    /// Number of tables queued for the migration of a DB.
-    /// </summary>
-    public BicepValue<int> NumFullLoadQueuedTables 
-    {
-        get { Initialize(); return _numFullLoadQueuedTables!; }
-    }
-    private BicepValue<int>? _numFullLoadQueuedTables;
-
-    /// <summary>
-    /// Number of tables errored out during the migration of a DB.
-    /// </summary>
-    public BicepValue<int> NumFullLoadErroredTables 
-    {
-        get { Initialize(); return _numFullLoadErroredTables!; }
-    }
-    private BicepValue<int>? _numFullLoadErroredTables;
-
-    /// <summary>
-    /// Number of tables loading during the migration of a DB.
-    /// </summary>
-    public BicepValue<int> NumFullLoadLoadingTables 
-    {
-        get { Initialize(); return _numFullLoadLoadingTables!; }
-    }
-    private BicepValue<int>? _numFullLoadLoadingTables;
-
-    /// <summary>
-    /// Number of tables loaded during the migration of a DB.
-    /// </summary>
-    public BicepValue<int> NumFullLoadCompletedTables 
-    {
-        get { Initialize(); return _numFullLoadCompletedTables!; }
-    }
-    private BicepValue<int>? _numFullLoadCompletedTables;
-
-    /// <summary>
     /// Name of the database.
     /// </summary>
     public BicepValue<string> DatabaseName 
@@ -208,10 +172,6 @@ public partial class DbMigrationStatus : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _numFullLoadQueuedTables = DefineProperty<int>("NumFullLoadQueuedTables", ["fullLoadQueuedTables"], isOutput: true);
-        _numFullLoadErroredTables = DefineProperty<int>("NumFullLoadErroredTables", ["fullLoadErroredTables"], isOutput: true);
-        _numFullLoadLoadingTables = DefineProperty<int>("NumFullLoadLoadingTables", ["fullLoadLoadingTables"], isOutput: true);
-        _numFullLoadCompletedTables = DefineProperty<int>("NumFullLoadCompletedTables", ["fullLoadCompletedTables"], isOutput: true);
         _databaseName = DefineProperty<string>("DatabaseName", ["databaseName"], isOutput: true);
         _migrationState = DefineProperty<MigrationDbState>("MigrationState", ["migrationState"], isOutput: true);
         _migrationOperation = DefineProperty<string>("MigrationOperation", ["migrationOperation"], isOutput: true);

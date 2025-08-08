@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             if (Optional.IsDefined(WafPolicy))
             {
                 writer.WritePropertyName("wafPolicy"u8);
-                JsonSerializer.Serialize(writer, WafPolicy);
+                ((IJsonModel<WritableSubResource>)WafPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             {
                                 continue;
                             }
-                            wafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            wafPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerServiceNetworkingContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

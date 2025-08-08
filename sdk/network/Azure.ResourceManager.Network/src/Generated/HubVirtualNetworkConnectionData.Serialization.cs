@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
-                JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
+                ((IJsonModel<WritableSubResource>)RemoteVirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(AllowHubToRemoteVnetTransit))
             {
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            remoteVirtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("allowHubToRemoteVnetTransit"u8))

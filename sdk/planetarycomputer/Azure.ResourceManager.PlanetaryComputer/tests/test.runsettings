@@ -1,0 +1,8 @@
+<RunSettings>
+  <RunConfiguration>
+    <TestRunParameters>
+      <Parameter name="AZURE_TEST_MODE" value="Record"/>
+      <Parameter name="AZURE_TEST_PROXY" value="http://localhost:5000" />
+    </TestRunParameters>
+  </RunConfiguration>
+</RunSettings>

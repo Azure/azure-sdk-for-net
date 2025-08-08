@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> The DeidentificationClient. </summary>
     public partial class DeidentificationClient
     {
         private readonly Uri _endpoint;

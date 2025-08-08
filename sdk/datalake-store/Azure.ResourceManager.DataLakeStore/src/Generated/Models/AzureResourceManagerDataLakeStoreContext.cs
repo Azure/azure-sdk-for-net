@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.DataLakeStore.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
@@ -13,6 +15,47 @@ namespace Azure.ResourceManager.DataLakeStore
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountBasicData))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountCollectionGetAllOptions))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountData))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountEncryptionConfig))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountKeyVaultMetaInfo))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountListResult))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountPatch))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreAccountResource))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreCapabilityInformation))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreFirewallRuleCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreFirewallRuleData))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreFirewallRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreFirewallRulePatch))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreFirewallRuleResource))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreTrustedIdProviderCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreTrustedIdProviderData))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreTrustedIdProviderListResult))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreTrustedIdProviderPatch))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreTrustedIdProviderResource))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreUsage))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreUsageListResult))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreUsageName))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreVirtualNetworkRuleData))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreVirtualNetworkRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreVirtualNetworkRulePatch))]
+    [ModelReaderWriterBuildable(typeof(DataLakeStoreVirtualNetworkRuleResource))]
+    [ModelReaderWriterBuildable(typeof(FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(FirewallRuleForDataLakeStoreAccountUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetAccountsOptions))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(TrustedIdProviderForDataLakeStoreAccountUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(UpdateEncryptionConfig))]
+    [ModelReaderWriterBuildable(typeof(UpdateKeyVaultMetaInfo))]
+    [ModelReaderWriterBuildable(typeof(VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(VirtualNetworkRuleForDataLakeStoreAccountUpdateContent))]
     public partial class AzureResourceManagerDataLakeStoreContext : ModelReaderWriterContext
     {
     }

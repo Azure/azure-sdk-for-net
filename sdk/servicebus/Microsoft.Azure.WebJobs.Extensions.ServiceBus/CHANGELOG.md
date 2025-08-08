@@ -1,5 +1,17 @@
 # Release History
 
+## 5.18.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Wait for 2 secs before scaling out for ScaleMonitor to avoid aggressive scaling (matches with ScaleControlelr V2) - AB#32302750
+
+### Other Changes
+
 ## 5.17.0 (2025-06-20)
 
 ### Other Changes

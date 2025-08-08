@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary>
-    /// The current state of the cluster.
-    ///
-    /// </summary>
+    /// <summary> The current state of the cluster. </summary>
     public readonly partial struct ServiceFabricManagedClusterState : IEquatable<ServiceFabricManagedClusterState>
     {
         private readonly string _value;

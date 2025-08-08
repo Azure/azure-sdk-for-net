@@ -50,16 +50,16 @@ In the case of Question Answering, the modern client libraries have packages and
 Previously in `Azure.AI.TextAnalytics`, you could create a `TextAnalyticsClient` along with `AzureKeyCredential` from the package `Azure.Core`::
 
 ```C#
-Uri endpoint = new("<endpoint>");
-AzureKeyCredential credential = new("<apiKey>");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 TextAnalyticsClient client = new(endpoint, credential);
 ```
 
 Now in `Azure.AI.Language.Text`, you create a `TextAnalysisClient` along with `AzureKeyCredential` from the package `Azure.Core`:
 
 ```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your apikey");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);
 ```
