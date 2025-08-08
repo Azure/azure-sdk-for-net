@@ -37,7 +37,7 @@ namespace MgmtTypeSpec
         {
             TryGetApiVersion(BarResource.ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", BarResource.ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion);
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
