@@ -43,7 +43,7 @@ export interface ResourceMetadata {
   resourceScope: ResourceScope;
   parentResourceId?: string;
   singletonResourceName?: string;
-  // TODO -- add parent resource support in the same RP case
+  resourceName: string;
 }
 
 export function convertResourceMetadataToArguments(
@@ -55,7 +55,26 @@ export function convertResourceMetadataToArguments(
     methods: metadata.methods,
     resourceScope: metadata.resourceScope,
     parentResourceId: metadata.parentResourceId,
-    singletonResourceName: metadata.singletonResourceName
+    singletonResourceName: metadata.singletonResourceName,
+    resourceName: metadata.resourceName
+  };
+}
+
+export interface NonResourceMethod {
+  methodId: string;
+  operationPath: string;
+  operationScope: ResourceScope;
+}
+
+export function convertMethodMetadataToArguments(
+  metadata: NonResourceMethod[]
+): Record<string, any> {
+  return {
+    nonResourceMethods: metadata.map((m) => ({
+      methodId: m.methodId,
+      operationPath: m.operationPath,
+      operationScope: m.operationScope
+    }))
   };
 }
 

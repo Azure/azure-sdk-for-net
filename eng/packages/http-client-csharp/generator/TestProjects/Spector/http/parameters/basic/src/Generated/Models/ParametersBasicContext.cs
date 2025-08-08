@@ -6,9 +6,11 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Parameters.Basic.Models;
 
 namespace Parameters.Basic
 {
+    [ModelReaderWriterBuildable(typeof(User))]
     public partial class ParametersBasicContext : ModelReaderWriterContext
     {
     }

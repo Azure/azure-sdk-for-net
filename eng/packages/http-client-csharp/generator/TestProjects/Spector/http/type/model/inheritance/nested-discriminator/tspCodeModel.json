@@ -197,7 +197,8 @@
           "json": {
             "name": "kind"
           }
-        }
+        },
+        "isHttpMetadata": false
       },
       "properties": [
         {
@@ -225,7 +226,8 @@
             "json": {
               "name": "age"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ],
       "discriminatedSubtypes": {
@@ -261,7 +263,8 @@
               "json": {
                 "name": "sharktype"
               }
-            }
+            },
+            "isHttpMetadata": false
           },
           "baseModel": {
             "$ref": "21"
@@ -285,7 +288,8 @@
                 "json": {
                   "name": "kind"
                 }
-              }
+              },
+              "isHttpMetadata": false
             },
             {
               "$ref": "27"
@@ -324,7 +328,8 @@
                     "json": {
                       "name": "sharktype"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -360,7 +365,8 @@
                     "json": {
                       "name": "sharktype"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 }
               ]
             }
@@ -398,7 +404,8 @@
                 "json": {
                   "name": "kind"
                 }
-              }
+              },
+              "isHttpMetadata": false
             },
             {
               "$id": "36",
@@ -425,7 +432,8 @@
                 "json": {
                   "name": "friends"
                 }
-              }
+              },
+              "isHttpMetadata": false
             },
             {
               "$id": "38",
@@ -457,7 +465,8 @@
                 "json": {
                   "name": "hate"
                 }
-              }
+              },
+              "isHttpMetadata": false
             },
             {
               "$id": "41",
@@ -477,7 +486,8 @@
                 "json": {
                   "name": "partner"
                 }
-              }
+              },
+              "isHttpMetadata": false
             }
           ]
         }
@@ -562,7 +572,7 @@
             {
               "$id": "46",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "9"
               },
@@ -677,14 +687,14 @@
             {
               "$id": "52",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "11"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -757,7 +767,7 @@
             {
               "$id": "56",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "13"
               },
@@ -872,14 +882,14 @@
             {
               "$id": "62",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "15"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -952,7 +962,7 @@
             {
               "$id": "66",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "17"
               },
@@ -1035,7 +1045,7 @@
             {
               "$id": "70",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "19"
               },

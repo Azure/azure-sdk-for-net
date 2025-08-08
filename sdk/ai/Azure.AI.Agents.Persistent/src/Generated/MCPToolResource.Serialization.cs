@@ -47,7 +47,14 @@ namespace Azure.AI.Agents.Persistent
             if (Optional.IsDefined(RequireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
-                writer.WriteStringValue(RequireApproval.Value.ToString());
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RequireApproval);
+#else
+                using (JsonDocument document = JsonDocument.Parse(RequireApproval, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +95,7 @@ namespace Azure.AI.Agents.Persistent
             }
             string serverLabel = default;
             IDictionary<string, string> headers = default;
-            MCPToolResourceRequireApproval? requireApproval = default;
+            BinaryData requireApproval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +121,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    requireApproval = new MCPToolResourceRequireApproval(property.Value.GetString());
+                    requireApproval = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

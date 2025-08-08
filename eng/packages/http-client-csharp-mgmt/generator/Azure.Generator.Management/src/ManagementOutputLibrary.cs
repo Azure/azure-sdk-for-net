@@ -5,13 +5,11 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Generator.Management
@@ -23,11 +21,19 @@ namespace Azure.Generator.Management
         internal ManagementLongRunningOperationProvider ArmOperation => _armOperation ??= new ManagementLongRunningOperationProvider(false);
 
         private ManagementLongRunningOperationProvider? _genericArmOperation;
-        internal ManagementLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
+        internal ManagementLongRunningOperationProvider ArmOperationOfT => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
 
-        // TODO: replace this with CSharpType to TypeProvider mapping
-        private HashSet<CSharpType>? _resourceTypes;
-        private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
+        private PageableWrapperProvider? _pageableWrapper;
+        internal PageableWrapperProvider PageableWrapper => _pageableWrapper ??= new PageableWrapperProvider(false);
+
+        private PageableWrapperProvider? _asyncPageableWrapper;
+        internal PageableWrapperProvider AsyncPageableWrapper => _asyncPageableWrapper ??= new PageableWrapperProvider(true);
+
+        private ProviderConstantsProvider? _providerConstants;
+        internal ProviderConstantsProvider ProviderConstants => _providerConstants ??= new ProviderConstantsProvider();
+
+        private IReadOnlyList<ResourceClientProvider>? _resourceClients;
+        internal IReadOnlyList<ResourceClientProvider> ResourceClients => _resourceClients ??= BuildResources();
 
         // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
         private HashSet<CSharpType>? _modelFactoryModels;
@@ -78,77 +84,56 @@ namespace Azure.Generator.Management
 
         internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
 
-        private HashSet<CSharpType> BuildResourceModels()
-        {
-            var resourceTypes = new HashSet<CSharpType>();
-
-            foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
-            {
-                if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
-                {
-                    var modelProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model);
-                    if (modelProvider is not null)
-                    {
-                        resourceTypes.Add(modelProvider.Type);
-                    }
-                }
-            }
-            return resourceTypes;
-        }
-
         private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
             var resources = new List<ResourceClientProvider>();
-            foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            foreach (var resourceMetadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
             {
-                var resource = BuildResource(model);
-                if (resource is not null)
-                {
-                    resources.Add(resource);
-                }
+                var resource = ResourceClientProvider.Create(resourceMetadata);
+                resources.Add(resource);
             }
             return resources;
         }
 
-        private static readonly IReadOnlyDictionary<ResourceScope, Type> _scopeToTypes = new Dictionary<ResourceScope, Type>
-        {
-            [ResourceScope.ResourceGroup] = typeof(ResourceGroupResource),
-            [ResourceScope.Subscription] = typeof(SubscriptionResource),
-            [ResourceScope.Tenant] = typeof(TenantResource),
-            [ResourceScope.ManagementGroup] = typeof(ManagementGroupResource),
-        };
+        private record ResourcesAndNonResourceMethodsInScope(
+            List<ResourceClientProvider> ResourceClients,
+            List<NonResourceMethod> NonResourceMethods);
 
-        private IReadOnlyList<TypeProvider> BuildExtensions(IReadOnlyList<ResourceClientProvider> resources)
+        private IReadOnlyList<TypeProvider> BuildExtensions()
         {
             // walk through all resources to figure out their scopes
-            var scopeCandidates = new Dictionary<ResourceScope, List<ResourceClientProvider>>
+            var resourcesAndMethodsPerScope = new Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope>
             {
-                [ResourceScope.ResourceGroup] = [],
-                [ResourceScope.Subscription] = [],
-                [ResourceScope.Tenant] = [],
-                [ResourceScope.ManagementGroup] = [],
+                [ResourceScope.ResourceGroup] = new([], []),
+                [ResourceScope.Subscription] = new([], []),
+                [ResourceScope.Tenant] = new([], []),
+                [ResourceScope.ManagementGroup] = new([], []),
             };
-            foreach (var resource in resources)
+            foreach (var resource in ResourceClients)
             {
                 if (resource.ParentResourceIdPattern is null)
                 {
-                    scopeCandidates[resource.ResourceScope].Add(resource);
+                    resourcesAndMethodsPerScope[resource.ResourceScope].ResourceClients.Add(resource);
                 }
             }
+            foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
+            {
+                resourcesAndMethodsPerScope[nonResourceMethod.OperationScope].NonResourceMethods.Add(nonResourceMethod);
+            }
 
-            var mockableArmClientResource = new MockableArmClientProvider(typeof(ArmClient), resources);
-            var mockableResources = new List<MockableResourceProvider>(scopeCandidates.Count)
+            var mockableArmClientResource = new MockableArmClientProvider(ResourceClients);
+            var mockableResources = new List<MockableResourceProvider>(resourcesAndMethodsPerScope.Count)
             {
                 // add the arm client mockable resource
                 mockableArmClientResource
             };
             ManagementClientGenerator.Instance.AddTypeToKeep(mockableArmClientResource.Name);
 
-            foreach (var (scope, candidates) in scopeCandidates)
+            foreach (var (scope, (resources, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
-                if (candidates.Count > 0)
+                if (resources.Count > 0 || nonResourceMethods.Count > 0)
                 {
-                    var mockableExtension = new MockableResourceProvider(_scopeToTypes[scope], candidates);
+                    var mockableExtension = new MockableResourceProvider(scope, resources, nonResourceMethods);
                     mockableResources.Add(mockableExtension);
                     ManagementClientGenerator.Instance.AddTypeToKeep(mockableExtension.Name);
                 }
@@ -160,33 +145,34 @@ namespace Azure.Generator.Management
             return [.. mockableResources, extensionProvider];
         }
 
-        // TODO -- in a near future we might need to change the input, because in real typespec, there is no guarantee that one model corresponds to one resource.
-        private static ResourceClientProvider? BuildResource(InputModelType model)
-        {
-            // A resource model should contain the decorator "Azure.ResourceManager.@resourceMetadata"
-            var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(model);
-            return resourceMetadata is not null ?
-                ResourceClientProvider.Create(model, resourceMetadata) :
-                null;
-        }
-
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var resources = BuildResources();
+            var resources = ResourceClients;
             var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
-            var extensions = BuildExtensions(resources);
+            var extensions = BuildExtensions();
+
             return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 ArmOperation,
-                GenericArmOperation,
+                ArmOperationOfT,
+                ProviderConstants,
                 .. resources,
                 .. collections,
                 .. extensions,
+                PageableWrapper,
+                AsyncPageableWrapper,
                 .. resources.Select(r => r.Source),
                 .. resources.SelectMany(r => r.SerializationProviders)];
         }
 
-        internal bool IsResourceModelType(CSharpType type) => ResourceTypes.Contains(type);
+        internal bool IsResourceModelType(CSharpType type) => TryGetResourceClientProvider(type, out _);
+
+        private IReadOnlyDictionary<CSharpType, ResourceClientProvider>? _resourceDataTypes;
+        internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
+        {
+            _resourceDataTypes ??= ResourceClients.ToDictionary(r => r.ResourceData.Type, r => r);
+            return _resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider);
+        }
     }
 }

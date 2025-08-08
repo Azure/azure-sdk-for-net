@@ -16,58 +16,6 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSearchModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceOfferingsByRegion"/>. </summary>
-        /// <param name="regionName"> The name of the region. </param>
-        /// <param name="features"> The list of features offered in this region. </param>
-        /// <param name="skus"> The list of SKUs offered in this region. </param>
-        /// <returns> A new <see cref="Models.SearchServiceOfferingsByRegion"/> instance for mocking. </returns>
-        public static SearchServiceOfferingsByRegion SearchServiceOfferingsByRegion(string regionName = null, IEnumerable<SearchServiceFeatureOffering> features = null, IEnumerable<SearchServiceSkuOffering> skus = null)
-        {
-            features ??= new List<SearchServiceFeatureOffering>();
-            skus ??= new List<SearchServiceSkuOffering>();
-
-            return new SearchServiceOfferingsByRegion(regionName, features?.ToList(), skus?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceFeatureOffering"/>. </summary>
-        /// <param name="name"> The name of the feature offered in this region. </param>
-        /// <returns> A new <see cref="Models.SearchServiceFeatureOffering"/> instance for mocking. </returns>
-        public static SearchServiceFeatureOffering SearchServiceFeatureOffering(SearchServiceFeatureName? name = null)
-        {
-            return new SearchServiceFeatureOffering(name, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceSkuOffering"/>. </summary>
-        /// <param name="skuName"> Defines the SKU of a search service, which determines billing rate and capacity limits. </param>
-        /// <param name="limits"> The limits associated with this SKU offered in this region. </param>
-        /// <returns> A new <see cref="Models.SearchServiceSkuOffering"/> instance for mocking. </returns>
-        public static SearchServiceSkuOffering SearchServiceSkuOffering(SearchServiceSkuName? skuName = null, SearchServiceSkuOfferingLimits limits = null)
-        {
-            return new SearchServiceSkuOffering(skuName != null ? new SearchSku(skuName, serializedAdditionalRawData: null) : null, limits, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceSkuOfferingLimits"/>. </summary>
-        /// <param name="indexes"> The maximum number of indexes available for this SKU. </param>
-        /// <param name="indexers"> The maximum number of indexers available for this SKU. </param>
-        /// <param name="partitionStorageInGigabytes"> The maximum storage size in Gigabytes available for this SKU per partition. </param>
-        /// <param name="partitionVectorStorageInGigabytes"> The maximum vector storage size in Gigabytes available for this SKU per partition. </param>
-        /// <param name="searchUnits"> The maximum number of search units available for this SKU. </param>
-        /// <param name="replicas"> The maximum number of replicas available for this SKU. </param>
-        /// <param name="partitions"> The maximum number of partitions available for this SKU. </param>
-        /// <returns> A new <see cref="Models.SearchServiceSkuOfferingLimits"/> instance for mocking. </returns>
-        public static SearchServiceSkuOfferingLimits SearchServiceSkuOfferingLimits(int? indexes = null, int? indexers = null, float? partitionStorageInGigabytes = null, float? partitionVectorStorageInGigabytes = null, int? searchUnits = null, int? replicas = null, int? partitions = null)
-        {
-            return new SearchServiceSkuOfferingLimits(
-                indexes,
-                indexers,
-                partitionStorageInGigabytes,
-                partitionVectorStorageInGigabytes,
-                searchUnits,
-                replicas,
-                partitions,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.SearchServiceAdminKeyResult"/>. </summary>
         /// <param name="primaryKey"> The primary admin API key of the search service. </param>
         /// <param name="secondaryKey"> The secondary admin API key of the search service. </param>
@@ -99,13 +47,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
         /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
         /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
-        /// <param name="computeType"> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </param>
+        /// <param name="computeType"> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </param>
         /// <param name="publicInternetAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
         /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
         /// <param name="networkRuleSet"> Network specific rules that determine how the Azure AI Search service may be reached. </param>
-        /// <param name="disabledDataExfiltrationOptions"> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </param>
+        /// <param name="dataExfiltrationProtections"> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </param>
         /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
@@ -113,13 +61,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
-        /// <param name="isUpgradeAvailable"> Indicates whether or not the search service has an upgrade available. </param>
-        /// <param name="serviceUpgradeOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
+        /// <param name="isUpgradeAvailable"> Indicates if the search service has an upgrade available. </param>
+        /// <param name="serviceUpgradedOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
         /// <returns> A new <see cref="Search.SearchServiceData"/> instance for mocking. </returns>
-        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, SearchServiceComputeType? computeType = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null, bool? isUpgradeAvailable = null, DateTimeOffset? serviceUpgradeOn = null)
+        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, SearchServiceComputeType? computeType = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null, SearchServiceUpgradeAvailable? isUpgradeAvailable = null, DateTimeOffset? serviceUpgradedOn = null)
         {
             tags ??= new Dictionary<string, string>();
-            disabledDataExfiltrationOptions ??= new List<SearchDisabledDataExfiltrationOption>();
+            dataExfiltrationProtections ??= new List<SearchDataExfiltrationProtection>();
             privateEndpointConnections ??= new List<SearchPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<SharedSearchServicePrivateLinkResourceData>();
 
@@ -142,7 +90,7 @@ namespace Azure.ResourceManager.Search.Models
                 statusDetails,
                 provisioningState,
                 networkRuleSet,
-                disabledDataExfiltrationOptions?.ToList(),
+                dataExfiltrationProtections?.ToList(),
                 encryptionWithCmk,
                 isLocalAuthDisabled,
                 authOptions,
@@ -151,7 +99,7 @@ namespace Azure.ResourceManager.Search.Models
                 sharedPrivateLinkResources?.ToList(),
                 eTag,
                 isUpgradeAvailable,
-                serviceUpgradeOn,
+                serviceUpgradedOn,
                 serializedAdditionalRawData: null);
         }
 
@@ -213,13 +161,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
         /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
         /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
-        /// <param name="computeType"> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </param>
+        /// <param name="computeType"> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </param>
         /// <param name="publicInternetAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
         /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
         /// <param name="networkRuleSet"> Network specific rules that determine how the Azure AI Search service may be reached. </param>
-        /// <param name="disabledDataExfiltrationOptions"> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </param>
+        /// <param name="dataExfiltrationProtections"> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </param>
         /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
@@ -227,13 +175,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
-        /// <param name="isUpgradeAvailable"> Indicates whether or not the search service has an upgrade available. </param>
-        /// <param name="serviceUpgradeOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
+        /// <param name="isUpgradeAvailable"> Indicates if the search service has an upgrade available. </param>
+        /// <param name="serviceUpgradedOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
-        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, SearchServiceComputeType? computeType = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null, bool? isUpgradeAvailable = null, DateTimeOffset? serviceUpgradeOn = null)
+        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, SearchServiceComputeType? computeType = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null, SearchServiceUpgradeAvailable? isUpgradeAvailable = null, DateTimeOffset? serviceUpgradedOn = null)
         {
             tags ??= new Dictionary<string, string>();
-            disabledDataExfiltrationOptions ??= new List<SearchDisabledDataExfiltrationOption>();
+            dataExfiltrationProtections ??= new List<SearchDataExfiltrationProtection>();
             privateEndpointConnections ??= new List<SearchPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<SharedSearchServicePrivateLinkResourceData>();
 
@@ -256,7 +204,7 @@ namespace Azure.ResourceManager.Search.Models
                 statusDetails,
                 provisioningState,
                 networkRuleSet,
-                disabledDataExfiltrationOptions?.ToList(),
+                dataExfiltrationProtections?.ToList(),
                 encryptionWithCmk,
                 isLocalAuthDisabled,
                 authOptions,
@@ -265,7 +213,7 @@ namespace Azure.ResourceManager.Search.Models
                 sharedPrivateLinkResources?.ToList(),
                 eTag,
                 isUpgradeAvailable,
-                serviceUpgradeOn,
+                serviceUpgradedOn,
                 serializedAdditionalRawData: null);
         }
 
@@ -367,31 +315,71 @@ namespace Azure.ResourceManager.Search.Models
             return new QuotaUsageResultName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Search.NetworkSecurityPerimeterConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Search.SearchServiceNetworkSecurityPerimeterConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"></param>
-        /// <param name="networkSecurityPerimeter"> The perimeter for a network security perimeter configuration. </param>
-        /// <param name="resourceAssociation"> The resource association for the network security perimeter. </param>
-        /// <param name="profile"> The profile for a network security perimeter configuration. </param>
-        /// <param name="provisioningIssues"></param>
-        /// <returns> A new <see cref="Search.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, NspConfigPerimeter networkSecurityPerimeter = null, NspConfigAssociation resourceAssociation = null, NspConfigProfile profile = null, IEnumerable<NspProvisioningIssue> provisioningIssues = null)
+        /// <param name="properties"> Network security configuration properties. </param>
+        /// <returns> A new <see cref="Search.SearchServiceNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static SearchServiceNetworkSecurityPerimeterConfigurationData SearchServiceNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SearchServiceNetworkSecurityPerimeterConfigurationProperties properties = null)
         {
-            provisioningIssues ??= new List<NspProvisioningIssue>();
-
-            return new NetworkSecurityPerimeterConfigurationData(
+            return new SearchServiceNetworkSecurityPerimeterConfigurationData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        /// <param name="provisioningState"> Provisioning state of a network security perimeter configuration that is being created or updated. </param>
+        /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
+        /// <param name="networkSecurityPerimeter"> Information about a network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
+        /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
+        public static SearchServiceNetworkSecurityPerimeterConfigurationProperties SearchServiceNetworkSecurityPerimeterConfigurationProperties(SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<SearchServiceNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, SearchServiceNetworkSecurityPerimeter networkSecurityPerimeter = null, SearchServiceNetworkSecurityPerimeterResourceAssociation resourceAssociation = null, SearchNetworkSecurityProfile profile = null)
+        {
+            provisioningIssues ??= new List<SearchServiceNetworkSecurityPerimeterProvisioningIssue>();
+
+            return new SearchServiceNetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
+                provisioningIssues?.ToList(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
-                provisioningIssues?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue"/>. </summary>
+        /// <param name="name"> Name of the issue. </param>
+        /// <param name="properties"> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </param>
+        /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue"/> instance for mocking. </returns>
+        public static SearchServiceNetworkSecurityPerimeterProvisioningIssue SearchServiceNetworkSecurityPerimeterProvisioningIssue(string name = null, SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties properties = null)
+        {
+            return new SearchServiceNetworkSecurityPerimeterProvisioningIssue(name, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
+        /// <param name="issueType"> Type of issue. </param>
+        /// <param name="severity"> Severity of the issue. </param>
+        /// <param name="description"> Description of the issue. </param>
+        /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
+        /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
+        /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType = null, SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? severity = null, string description = null, IEnumerable<ResourceIdentifier> suggestedResourceIds = null, IEnumerable<SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules = null)
+        {
+            suggestedResourceIds ??= new List<ResourceIdentifier>();
+            suggestedAccessRules ??= new List<SearchServiceNetworkSecurityPerimeterAccessRule>();
+
+            return new SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(
+                issueType,
+                severity,
+                description,
+                suggestedResourceIds?.ToList(),
+                suggestedAccessRules?.ToList(),
                 serializedAdditionalRawData: null);
         }
     }

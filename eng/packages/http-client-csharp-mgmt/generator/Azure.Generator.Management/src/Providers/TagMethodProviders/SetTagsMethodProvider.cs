@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -15,12 +16,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     {
         public SetTagsMethodProvider(
             ResourceClientProvider resource,
+            RequestPathPattern contextualPath,
             MethodProvider updateMethodProvider,
-            ClientProvider restClient,
-            FieldProvider clientDiagnosticsField,
-            FieldProvider restClientField,
+            RestClientInfo restClientInfo,
             bool isAsync)
-            : base(resource, updateMethodProvider, restClient, clientDiagnosticsField, restClientField, isAsync,
+            : base(resource, contextualPath, updateMethodProvider, restClientInfo, isAsync,
                    isAsync ? "SetTagsAsync" : "SetTags",
                    "Replace the tags on the resource with the given set.")
         {

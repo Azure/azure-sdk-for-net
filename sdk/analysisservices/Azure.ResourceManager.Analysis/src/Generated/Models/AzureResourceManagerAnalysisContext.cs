@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Analysis.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Analysis
 {
@@ -13,6 +15,23 @@ namespace Azure.ResourceManager.Analysis
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AnalysisExistingSku))]
+    [ModelReaderWriterBuildable(typeof(AnalysisGatewayDetails))]
+    [ModelReaderWriterBuildable(typeof(AnalysisGatewayStatus))]
+    [ModelReaderWriterBuildable(typeof(AnalysisIPv4FirewallRule))]
+    [ModelReaderWriterBuildable(typeof(AnalysisIPv4FirewallSettings))]
+    [ModelReaderWriterBuildable(typeof(AnalysisResourceSku))]
+    [ModelReaderWriterBuildable(typeof(AnalysisServerData))]
+    [ModelReaderWriterBuildable(typeof(AnalysisServerNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(AnalysisServerNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(AnalysisServerPatch))]
+    [ModelReaderWriterBuildable(typeof(AnalysisServerResource))]
+    [ModelReaderWriterBuildable(typeof(AnalysisServers))]
+    [ModelReaderWriterBuildable(typeof(ExistingResourceResultSkuEnumeration))]
+    [ModelReaderWriterBuildable(typeof(NewResourceResultSkuEnumeration))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ServerAdministrators))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAnalysisContext : ModelReaderWriterContext
     {
     }
