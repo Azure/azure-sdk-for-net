@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Region for connection monitor endpoint. </summary>
+        [WirePath("region")]
         public string Region { get; set; }
     }
 }

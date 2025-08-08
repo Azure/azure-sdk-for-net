@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The gateway's local address. </summary>
+        [WirePath("localAddress")]
         public string LocalAddress { get; }
         /// <summary> The route's network prefix. </summary>
+        [WirePath("network")]
         public string Network { get; }
         /// <summary> The route's next hop. </summary>
+        [WirePath("nextHop")]
         public string NextHop { get; }
         /// <summary> The peer this route was learned from. </summary>
+        [WirePath("sourcePeer")]
         public string SourcePeer { get; }
         /// <summary> The source this route was learned from. </summary>
+        [WirePath("origin")]
         public string Origin { get; }
         /// <summary> The route's AS path sequence. </summary>
+        [WirePath("asPath")]
         public string AsPath { get; }
         /// <summary> The route's weight. </summary>
+        [WirePath("weight")]
         public int? Weight { get; }
     }
 }

@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Tenant ID. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> List of management groups. </summary>
+        [WirePath("managementGroups")]
         public IReadOnlyList<string> ManagementGroups { get; }
         /// <summary> List of subscriptions. </summary>
+        [WirePath("subscriptions")]
         public IReadOnlyList<string> Subscriptions { get; }
     }
 }

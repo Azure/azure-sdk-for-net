@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of network interfaces on the specified VM. </summary>
+        [WirePath("networkInterfaces")]
         public IReadOnlyList<SecurityGroupNetworkInterface> NetworkInterfaces { get; }
     }
 }

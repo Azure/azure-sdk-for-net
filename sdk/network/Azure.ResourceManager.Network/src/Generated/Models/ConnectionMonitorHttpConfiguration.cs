@@ -72,16 +72,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The port to connect to. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
         /// <summary> The HTTP method to use. </summary>
+        [WirePath("method")]
         public NetworkHttpConfigurationMethod? Method { get; set; }
         /// <summary> The path component of the URI. For instance, "/dir1/dir2". </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> The HTTP headers to transmit with the request. </summary>
+        [WirePath("requestHeaders")]
         public IList<NetworkWatcherHttpHeader> RequestHeaders { get; }
         /// <summary> HTTP status codes to consider successful. For instance, "2xx,301-304,418". </summary>
+        [WirePath("validStatusCodeRanges")]
         public IList<string> ValidStatusCodeRanges { get; }
         /// <summary> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </summary>
+        [WirePath("preferHTTPS")]
         public bool? PreferHttps { get; set; }
     }
 }

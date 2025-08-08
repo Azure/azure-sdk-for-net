@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Boolean indicating whether static routes on this connection are automatically propagate to route tables which this connection propagates to. </summary>
+        [WirePath("propagateStaticRoutes")]
         public bool? PropagateStaticRoutes { get; }
         /// <summary> Parameter determining whether NVA in spoke vnet is bypassed for traffic with destination in spoke. </summary>
+        [WirePath("vnetLocalRouteOverrideCriteria")]
         public VnetLocalRouteOverrideCriterion? VnetLocalRouteOverrideCriteria { get; set; }
     }
 }

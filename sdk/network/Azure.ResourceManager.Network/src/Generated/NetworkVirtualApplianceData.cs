@@ -87,18 +87,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The service principal that has read access to cloud-init and config blob. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Network Virtual Appliance SKU. </summary>
+        [WirePath("properties.nvaSku")]
         public VirtualApplianceSkuProperties NvaSku { get; set; }
         /// <summary> Address Prefix. </summary>
+        [WirePath("properties.addressPrefix")]
         public string AddressPrefix { get; }
         /// <summary> BootStrapConfigurationBlobs storage URLs. </summary>
+        [WirePath("properties.bootStrapConfigurationBlobs")]
         public IList<string> BootStrapConfigurationBlobs { get; }
         /// <summary> The Virtual Hub where Network Virtual Appliance is being deployed. </summary>
         internal WritableSubResource VirtualHub { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualHub.id")]
         public ResourceIdentifier VirtualHubId
         {
             get => VirtualHub is null ? default : VirtualHub.Id;
@@ -111,18 +117,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> CloudInitConfigurationBlob storage URLs. </summary>
+        [WirePath("properties.cloudInitConfigurationBlobs")]
         public IList<string> CloudInitConfigurationBlobs { get; }
         /// <summary> CloudInitConfiguration string in plain text. </summary>
+        [WirePath("properties.cloudInitConfiguration")]
         public string CloudInitConfiguration { get; set; }
         /// <summary> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </summary>
+        [WirePath("properties.virtualApplianceAsn")]
         public long? VirtualApplianceAsn { get; set; }
         /// <summary> Public key for SSH login. </summary>
+        [WirePath("properties.sshPublicKey")]
         public string SshPublicKey { get; set; }
         /// <summary> List of Virtual Appliance Network Interfaces. </summary>
+        [WirePath("properties.virtualApplianceNics")]
         public IReadOnlyList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
         /// <summary> Network Profile containing configurations for Public and Private NIC. </summary>
         internal NetworkVirtualAppliancePropertiesFormatNetworkProfile NetworkProfile { get; set; }
         /// <summary> Gets the network interface configurations. </summary>
+        [WirePath("properties.networkProfile.networkInterfaceConfigurations")]
         public IList<VirtualApplianceNetworkInterfaceConfiguration> NetworkInterfaceConfigurations
         {
             get
@@ -134,22 +146,31 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Details required for Additional Network Interface. </summary>
+        [WirePath("properties.additionalNics")]
         public IList<VirtualApplianceAdditionalNicProperties> AdditionalNics { get; }
         /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>
+        [WirePath("properties.internetIngressPublicIps")]
         public IList<WritableSubResource> InternetIngressPublicIPs { get; }
         /// <summary> List of references to VirtualApplianceSite. </summary>
+        [WirePath("properties.virtualApplianceSites")]
         public IReadOnlyList<WritableSubResource> VirtualApplianceSites { get; }
         /// <summary> List of references to VirtualApplianceConnections. </summary>
+        [WirePath("properties.virtualApplianceConnections")]
         public IReadOnlyList<WritableSubResource> VirtualApplianceConnections { get; }
         /// <summary> List of references to InboundSecurityRules. </summary>
+        [WirePath("properties.inboundSecurityRules")]
         public IReadOnlyList<WritableSubResource> InboundSecurityRules { get; }
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The deployment type. PartnerManaged for the SaaS NVA. </summary>
+        [WirePath("properties.deploymentType")]
         public string DeploymentType { get; }
         /// <summary> The delegation for the Virtual Appliance. </summary>
+        [WirePath("properties.delegation")]
         public VirtualApplianceDelegationProperties Delegation { get; set; }
         /// <summary> The delegation for the Virtual Appliance. </summary>
+        [WirePath("properties.partnerManagedResource")]
         public PartnerManagedResourceProperties PartnerManagedResource { get; set; }
     }
 }

@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the resource from which a connectivity check will be initiated. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> The source port from which a connectivity check will be performed. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
     }
 }

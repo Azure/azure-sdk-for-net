@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of DNS servers IP addresses. </summary>
+        [WirePath("dnsServers")]
         public IList<string> DnsServers { get; }
     }
 }

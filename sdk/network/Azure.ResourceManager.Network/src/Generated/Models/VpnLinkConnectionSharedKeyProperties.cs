@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The value of the shared key for the vpn link connection. </summary>
+        [WirePath("sharedKey")]
         public string SharedKey { get; set; }
         /// <summary> The length of the shared key for the vpn link connection. </summary>
+        [WirePath("sharedKeyLength")]
         public int? SharedKeyLength { get; set; }
         /// <summary> The provisioning state of the SharedKey resource. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

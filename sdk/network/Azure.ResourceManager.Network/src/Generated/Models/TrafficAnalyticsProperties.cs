@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
+        [WirePath("networkWatcherFlowAnalyticsConfiguration")]
         public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration { get; set; }
     }
 }

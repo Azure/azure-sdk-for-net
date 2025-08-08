@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the resource used as the destination by connection monitor. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Address of the connection monitor destination (IP or domain name). </summary>
+        [WirePath("address")]
         public string Address { get; set; }
         /// <summary> The destination port used by connection monitor. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
     }
 }

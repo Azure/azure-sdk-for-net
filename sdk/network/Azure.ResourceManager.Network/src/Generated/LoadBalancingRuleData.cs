@@ -37,8 +37,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Properties of load balancer load balancing rule. </summary>
+        [WirePath("properties")]
         public LoadBalancingRuleProperties Properties { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

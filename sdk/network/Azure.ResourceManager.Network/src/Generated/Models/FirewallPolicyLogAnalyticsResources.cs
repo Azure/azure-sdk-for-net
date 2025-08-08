@@ -65,10 +65,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of workspaces for Firewall Policy Insights. </summary>
+        [WirePath("workspaces")]
         public IList<FirewallPolicyLogAnalyticsWorkspace> Workspaces { get; }
         /// <summary> The default workspace Id for Firewall Policy Insights. </summary>
         internal WritableSubResource DefaultWorkspaceId { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("defaultWorkspaceId.id")]
         public ResourceIdentifier DefaultWorkspaceIdId
         {
             get => DefaultWorkspaceId is null ? default : DefaultWorkspaceId.Id;

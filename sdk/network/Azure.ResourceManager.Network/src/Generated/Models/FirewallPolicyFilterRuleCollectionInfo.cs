@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The action type of a Filter rule collection. </summary>
         internal FirewallPolicyFilterRuleCollectionAction Action { get; set; }
         /// <summary> The type of action. </summary>
+        [WirePath("action.type")]
         public FirewallPolicyFilterRuleCollectionActionType? ActionType
         {
             get => Action is null ? default : Action.ActionType;
@@ -57,6 +58,7 @@ namespace Azure.ResourceManager.Network.Models
         /// Please note <see cref="FirewallPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/> and <see cref="NetworkRule"/>.
         /// </summary>
+        [WirePath("rules")]
         public IList<FirewallPolicyRule> Rules { get; }
     }
 }

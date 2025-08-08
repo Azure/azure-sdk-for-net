@@ -47,10 +47,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Default backend address pool resource of URL path map. </summary>
         internal WritableSubResource DefaultBackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.defaultBackendAddressPool.id")]
         public ResourceIdentifier DefaultBackendAddressPoolId
         {
             get => DefaultBackendAddressPool is null ? default : DefaultBackendAddressPool.Id;
@@ -65,6 +67,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Default backend http settings resource of URL path map. </summary>
         internal WritableSubResource DefaultBackendHttpSettings { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.defaultBackendHttpSettings.id")]
         public ResourceIdentifier DefaultBackendHttpSettingsId
         {
             get => DefaultBackendHttpSettings is null ? default : DefaultBackendHttpSettings.Id;
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Default Rewrite rule set resource of URL path map. </summary>
         internal WritableSubResource DefaultRewriteRuleSet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.defaultRewriteRuleSet.id")]
         public ResourceIdentifier DefaultRewriteRuleSetId
         {
             get => DefaultRewriteRuleSet is null ? default : DefaultRewriteRuleSet.Id;
@@ -93,6 +97,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Default redirect configuration resource of URL path map. </summary>
         internal WritableSubResource DefaultRedirectConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.defaultRedirectConfiguration.id")]
         public ResourceIdentifier DefaultRedirectConfigurationId
         {
             get => DefaultRedirectConfiguration is null ? default : DefaultRedirectConfiguration.Id;
@@ -107,6 +112,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Default Load Distribution Policy resource of URL path map. </summary>
         internal WritableSubResource DefaultLoadDistributionPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.defaultLoadDistributionPolicy.id")]
         public ResourceIdentifier DefaultLoadDistributionPolicyId
         {
             get => DefaultLoadDistributionPolicy is null ? default : DefaultLoadDistributionPolicy.Id;
@@ -119,8 +125,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Path rule of URL path map resource. </summary>
+        [WirePath("properties.pathRules")]
         public IList<ApplicationGatewayPathRule> PathRules { get; }
         /// <summary> The provisioning state of the URL path map resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

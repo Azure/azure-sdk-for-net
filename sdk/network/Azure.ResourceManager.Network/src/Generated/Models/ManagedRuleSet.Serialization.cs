@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -150,6 +152,113 @@ namespace Azure.ResourceManager.Network.Models
             return new ManagedRuleSet(ruleSetType, ruleSetVersion, ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverride>(), computedDisabledRules ?? new ChangeTrackingList<ManagedRuleSetRuleGroup>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleSetType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleSetType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleSetType))
+                {
+                    builder.Append("  ruleSetType: ");
+                    if (RuleSetType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuleSetType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuleSetType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleSetVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleSetVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleSetVersion))
+                {
+                    builder.Append("  ruleSetVersion: ");
+                    if (RuleSetVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuleSetVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuleSetVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleGroupOverrides), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleGroupOverrides: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RuleGroupOverrides))
+                {
+                    if (RuleGroupOverrides.Any())
+                    {
+                        builder.Append("  ruleGroupOverrides: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RuleGroupOverrides)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ruleGroupOverrides: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputedDisabledRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  computedDisabledRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ComputedDisabledRules))
+                {
+                    if (ComputedDisabledRules.Any())
+                    {
+                        builder.Append("  computedDisabledRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ComputedDisabledRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  computedDisabledRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedRuleSet>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSet>)this).GetFormatFromOptions(options) : options.Format;
@@ -158,6 +267,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedRuleSet)} does not support writing '{options.Format}' format.");
             }

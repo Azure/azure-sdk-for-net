@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Indicates whether the traffic is allowed or denied. </summary>
+        [WirePath("access")]
         public NetworkAccess? Access { get; }
         /// <summary> Name of the rule. If input is not matched against any security rule, it is not displayed. </summary>
+        [WirePath("ruleName")]
         public string RuleName { get; }
     }
 }

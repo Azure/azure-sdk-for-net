@@ -95,20 +95,28 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for P2S client. </summary>
+        [WirePath("saLifeTimeSeconds")]
         public int SaLifeTimeSeconds { get; set; }
         /// <summary> The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for P2S client.. </summary>
+        [WirePath("saDataSizeKilobytes")]
         public int SaDataSizeKilobytes { get; set; }
         /// <summary> The IPSec encryption algorithm (IKE phase 1). </summary>
+        [WirePath("ipsecEncryption")]
         public IPsecEncryption IPsecEncryption { get; set; }
         /// <summary> The IPSec integrity algorithm (IKE phase 1). </summary>
+        [WirePath("ipsecIntegrity")]
         public IPsecIntegrity IPsecIntegrity { get; set; }
         /// <summary> The IKE encryption algorithm (IKE phase 2). </summary>
+        [WirePath("ikeEncryption")]
         public IkeEncryption IkeEncryption { get; set; }
         /// <summary> The IKE integrity algorithm (IKE phase 2). </summary>
+        [WirePath("ikeIntegrity")]
         public IkeIntegrity IkeIntegrity { get; set; }
         /// <summary> The DH Group used in IKE Phase 1 for initial SA. </summary>
+        [WirePath("dhGroup")]
         public DHGroup DhGroup { get; set; }
         /// <summary> The Pfs Group used in IKE Phase 2 for new child SA. </summary>
+        [WirePath("pfsGroup")]
         public PfsGroup PfsGroup { get; set; }
     }
 }

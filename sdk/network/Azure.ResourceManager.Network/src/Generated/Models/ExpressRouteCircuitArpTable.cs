@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Entry age in minutes. </summary>
+        [WirePath("age")]
         public int? Age { get; }
         /// <summary> Interface address. </summary>
+        [WirePath("interface")]
         public string Interface { get; }
         /// <summary> The IP address. </summary>
+        [WirePath("ipAddress")]
         public string IPAddress { get; }
         /// <summary> The MAC address. </summary>
+        [WirePath("macAddress")]
         public string MacAddress { get; }
     }
 }

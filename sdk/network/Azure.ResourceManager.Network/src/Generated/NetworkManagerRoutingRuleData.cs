@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A description for this rule. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> Indicates the destination for this particular rule. </summary>
+        [WirePath("properties.destination")]
         public RoutingRuleRouteDestination Destination { get; set; }
         /// <summary> Indicates the next hop for this particular rule. </summary>
+        [WirePath("properties.nextHop")]
         public RoutingRuleNextHop NextHop { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

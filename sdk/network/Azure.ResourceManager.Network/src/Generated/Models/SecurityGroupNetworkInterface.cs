@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> ID of the network interface. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> All security rules associated with the network interface. </summary>
+        [WirePath("securityRuleAssociations")]
         public SecurityRuleAssociations SecurityRuleAssociations { get; }
     }
 }

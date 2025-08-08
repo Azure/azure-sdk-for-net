@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of VirtualWAN security providers. </summary>
+        [WirePath("supportedProviders")]
         public IReadOnlyList<VirtualWanSecurityProvider> SupportedProviders { get; }
     }
 }

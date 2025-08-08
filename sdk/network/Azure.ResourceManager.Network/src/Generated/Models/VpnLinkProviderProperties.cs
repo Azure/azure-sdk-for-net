@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the link provider. </summary>
+        [WirePath("linkProviderName")]
         public string LinkProviderName { get; set; }
         /// <summary> Link speed. </summary>
+        [WirePath("linkSpeedInMbps")]
         public int? LinkSpeedInMbps { get; set; }
     }
 }

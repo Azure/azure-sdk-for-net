@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets the network interface configurations. </summary>
+        [WirePath("networkInterfaceConfigurations")]
         public IList<VirtualApplianceNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get; }
     }
 }
