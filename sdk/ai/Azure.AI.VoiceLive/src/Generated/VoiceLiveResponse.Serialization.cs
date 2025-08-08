@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class Response : IUtf8JsonSerializable, IJsonModel<Response>
+    public partial class VoiceLiveResponse : IUtf8JsonSerializable, IJsonModel<VoiceLiveResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Response>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceLiveResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Response>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VoiceLiveResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Response>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Response)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceLiveResponse)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Id))
@@ -135,19 +135,19 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        Response IJsonModel<Response>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VoiceLiveResponse IJsonModel<VoiceLiveResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Response>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Response)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceLiveResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponse(document.RootElement, options);
+            return DeserializeVoiceLiveResponse(document.RootElement, options);
         }
 
-        internal static Response DeserializeResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VoiceLiveResponse DeserializeVoiceLiveResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -156,7 +156,7 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             string id = default;
-            ResponseObject? @object = default;
+            VoiceLiveResponseObject? @object = default;
             ResponseStatus? status = default;
             ResponseStatusDetails statusDetails = default;
             IReadOnlyList<ConversationResponseItem> output = default;
@@ -182,7 +182,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    @object = new ResponseObject(property.Value.GetString());
+                    @object = new VoiceLiveResponseObject(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -287,7 +287,7 @@ namespace Azure.AI.VoiceLive
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Response(
+            return new VoiceLiveResponse(
                 id,
                 @object,
                 status,
@@ -303,43 +303,43 @@ namespace Azure.AI.VoiceLive
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Response>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VoiceLiveResponse>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Response>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Response)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceLiveResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Response IPersistableModel<Response>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VoiceLiveResponse IPersistableModel<VoiceLiveResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Response>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResponse(document.RootElement, options);
+                        return DeserializeVoiceLiveResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Response)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceLiveResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Response>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VoiceLiveResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Response FromResponse(Azure.Response response)
+        internal static VoiceLiveResponse FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeResponse(document.RootElement);
+            return DeserializeVoiceLiveResponse(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

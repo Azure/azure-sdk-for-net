@@ -562,12 +562,12 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="response"></param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseCreated"/> instance for mocking. </returns>
-        public static ServerEventResponseCreated ServerEventResponseCreated(string eventId = null, Response response = null)
+        public static ServerEventResponseCreated ServerEventResponseCreated(string eventId = null, VoiceLiveResponse response = null)
         {
             return new ServerEventResponseCreated(ServerEventType.ResponseCreated, eventId, serializedAdditionalRawData: null, response);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.Response"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.VoiceLiveResponse"/>. </summary>
         /// <param name="id"> The unique ID of the response. </param>
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
@@ -607,13 +607,13 @@ namespace Azure.AI.VoiceLive
         /// Maximum number of output tokens for a single assistant response,
         /// inclusive of tool calls, that was used in this response.
         /// </param>
-        /// <returns> A new <see cref="VoiceLive.Response"/> instance for mocking. </returns>
-        public static Response Response(string id = null, ResponseObject? @object = null, ResponseStatus? status = null, ResponseStatusDetails statusDetails = null, IEnumerable<ConversationResponseItem> output = null, ResponseUsage usage = null, string conversationId = null, BinaryData voice = null, IEnumerable<ResponseModality> modalities = null, ResponseOutputAudioFormat? outputAudioFormat = null, float? temperature = null, BinaryData maxOutputTokens = null)
+        /// <returns> A new <see cref="VoiceLive.VoiceLiveResponse"/> instance for mocking. </returns>
+        public static VoiceLiveResponse VoiceLiveResponse(string id = null, VoiceLiveResponseObject? @object = null, ResponseStatus? status = null, ResponseStatusDetails statusDetails = null, IEnumerable<ConversationResponseItem> output = null, ResponseUsage usage = null, string conversationId = null, BinaryData voice = null, IEnumerable<ResponseModality> modalities = null, ResponseOutputAudioFormat? outputAudioFormat = null, float? temperature = null, BinaryData maxOutputTokens = null)
         {
             output ??= new List<ConversationResponseItem>();
             modalities ??= new List<ResponseModality>();
 
-            return new Response(
+            return new VoiceLiveResponse(
                 id,
                 @object,
                 status,
@@ -783,7 +783,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="response"></param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseDone"/> instance for mocking. </returns>
-        public static ServerEventResponseDone ServerEventResponseDone(string eventId = null, Response response = null)
+        public static ServerEventResponseDone ServerEventResponseDone(string eventId = null, VoiceLiveResponse response = null)
         {
             return new ServerEventResponseDone(ServerEventType.ResponseDone, eventId, serializedAdditionalRawData: null, response);
         }
@@ -1146,10 +1146,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the function call item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="callId"> The ID of the function call. </param>
-        /// <param name="name"> function name. </param>
         /// <param name="arguments"> The final arguments as a JSON string. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDone"/> instance for mocking. </returns>
-        public static ServerEventResponseFunctionCallArgumentsDone ServerEventResponseFunctionCallArgumentsDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string name = null, string arguments = null)
+        public static ServerEventResponseFunctionCallArgumentsDone ServerEventResponseFunctionCallArgumentsDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string arguments = null)
         {
             return new ServerEventResponseFunctionCallArgumentsDone(
                 ServerEventType.ResponseFunctionCallArgumentsDone,
@@ -1159,7 +1158,6 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 outputIndex,
                 callId,
-                name,
                 arguments);
         }
     }

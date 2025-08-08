@@ -3,5 +3,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.AI.VoiceLive.Response")]
-[assembly: SuppressMessage("Usage", "AZC0030:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.AI.VoiceLive.Response")]
+[assembly: SuppressMessage("Usage", "AZC0030:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.AI.VoiceLive.VoiceLiveResponse")]

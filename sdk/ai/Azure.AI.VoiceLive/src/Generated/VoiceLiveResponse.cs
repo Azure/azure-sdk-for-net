@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The response resource. </summary>
-    public partial class Response
+    public partial class VoiceLiveResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Response"/>. </summary>
-        internal Response()
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveResponse"/>. </summary>
+        internal VoiceLiveResponse()
         {
             Output = new ChangeTrackingList<ConversationResponseItem>();
             Modalities = new ChangeTrackingList<ResponseModality>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Response"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveResponse"/>. </summary>
         /// <param name="id"> The unique ID of the response. </param>
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
@@ -93,7 +93,7 @@ namespace Azure.AI.VoiceLive
         /// inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Response(string id, ResponseObject? @object, ResponseStatus? status, ResponseStatusDetails statusDetails, IReadOnlyList<ConversationResponseItem> output, ResponseUsage usage, string conversationId, BinaryData voice, IReadOnlyList<ResponseModality> modalities, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VoiceLiveResponse(string id, VoiceLiveResponseObject? @object, ResponseStatus? status, ResponseStatusDetails statusDetails, IReadOnlyList<ConversationResponseItem> output, ResponseUsage usage, string conversationId, BinaryData voice, IReadOnlyList<ResponseModality> modalities, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Object = @object;
@@ -113,7 +113,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> The unique ID of the response. </summary>
         public string Id { get; }
         /// <summary> The object type, must be `realtime.response`. </summary>
-        public ResponseObject? Object { get; }
+        public VoiceLiveResponseObject? Object { get; }
         /// <summary>
         /// The final status of the response (`completed`, `cancelled`, `failed`, or
         /// `incomplete`).

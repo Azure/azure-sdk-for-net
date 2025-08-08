@@ -43,8 +43,6 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(OutputIndex);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             writer.WritePropertyName("arguments"u8);
             writer.WriteStringValue(Arguments);
         }
@@ -73,7 +71,6 @@ namespace Azure.AI.VoiceLive
             string itemId = default;
             int outputIndex = default;
             string callId = default;
-            string name = default;
             string arguments = default;
             ServerEventType type = default;
             string eventId = default;
@@ -99,11 +96,6 @@ namespace Azure.AI.VoiceLive
                 if (property.NameEquals("call_id"u8))
                 {
                     callId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("arguments"u8))
@@ -135,7 +127,6 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 outputIndex,
                 callId,
-                name,
                 arguments);
         }
 
@@ -172,7 +163,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ServerEventResponseFunctionCallArgumentsDone FromResponse(Azure.Response response)
+        internal static new ServerEventResponseFunctionCallArgumentsDone FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeServerEventResponseFunctionCallArgumentsDone(document.RootElement);

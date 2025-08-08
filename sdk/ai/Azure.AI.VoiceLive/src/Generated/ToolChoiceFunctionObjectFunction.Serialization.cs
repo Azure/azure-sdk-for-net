@@ -125,7 +125,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ToolChoiceFunctionObjectFunction FromResponse(Azure.Response response)
+        internal static ToolChoiceFunctionObjectFunction FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeToolChoiceFunctionObjectFunction(document.RootElement);

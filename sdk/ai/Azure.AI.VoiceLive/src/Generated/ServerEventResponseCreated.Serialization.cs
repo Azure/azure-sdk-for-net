@@ -59,7 +59,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            Response response = default;
+            VoiceLiveResponse response = default;
             ServerEventType type = default;
             string eventId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -68,7 +68,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (property.NameEquals("response"u8))
                 {
-                    response = Response.DeserializeResponse(property.Value, options);
+                    response = VoiceLiveResponse.DeserializeVoiceLiveResponse(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -123,7 +123,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ServerEventResponseCreated FromResponse(Azure.Response response)
+        internal static new ServerEventResponseCreated FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeServerEventResponseCreated(document.RootElement);

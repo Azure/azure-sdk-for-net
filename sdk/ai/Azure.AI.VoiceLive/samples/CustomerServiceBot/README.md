@@ -388,10 +388,6 @@ Or set logging level in appsettings.json:
 
 ## Learning Resources
 
-- [VoiceLive SDK Documentation](https://docs.microsoft.com/azure/ai/voicelive)
-- [Function Calling Best Practices](https://docs.microsoft.com/azure/ai/function-calling)
-- [Voice User Interface Design](https://docs.microsoft.com/azure/ai/voice-ui)
-
 ---
 
 This sample demonstrates production-ready patterns for building sophisticated voice-enabled customer service applications using the Azure VoiceLive SDK.

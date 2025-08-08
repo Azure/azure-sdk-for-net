@@ -98,8 +98,8 @@ namespace Azure.AI.VoiceLive
 
             ForceModelsRequest forceModelsRequest = new ForceModelsRequest(@event, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Azure.Response response = await ForceModelsAsync(accept, forceModelsRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Azure.Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
+            Response response = await ForceModelsAsync(accept, forceModelsRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
         }
 
         /// <summary> Force models. </summary>
@@ -114,8 +114,8 @@ namespace Azure.AI.VoiceLive
 
             ForceModelsRequest forceModelsRequest = new ForceModelsRequest(@event, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Azure.Response response = ForceModels(accept, forceModelsRequest.ToRequestContent(), context);
-            return Azure.Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
+            Response response = ForceModels(accept, forceModelsRequest.ToRequestContent(), context);
+            return Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Azure.Response> ForceModelsAsync(string accept, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> ForceModelsAsync(string accept, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(content, nameof(content));
@@ -179,7 +179,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Azure.Response ForceModels(string accept, RequestContent content, RequestContext context = null)
+        internal virtual Response ForceModels(string accept, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(content, nameof(content));

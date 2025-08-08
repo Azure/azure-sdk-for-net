@@ -1,5 +1,5 @@
 directory: specification/ai/data-plane/VoiceLive
 commit: <replace with your value>
-repo: .
+repo: <replace with your value>
 additionalDirectories: 
 - specification/ai/data-plane/VoiceLive

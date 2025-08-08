@@ -20,7 +20,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseDone"/>. </summary>
         /// <param name="response"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="response"/> is null. </exception>
-        internal ServerEventResponseDone(Response response)
+        internal ServerEventResponseDone(VoiceLiveResponse response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"></param>
-        internal ServerEventResponseDone(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, Response response) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventResponseDone(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, VoiceLiveResponse response) : base(type, eventId, serializedAdditionalRawData)
         {
             Response = response;
         }
@@ -44,6 +44,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Gets the response. </summary>
-        public Response Response { get; }
+        public VoiceLiveResponse Response { get; }
     }
 }
