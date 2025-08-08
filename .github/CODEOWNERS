@@ -124,27 +124,6 @@
 # ServiceLabel: %App Services
 # ServiceOwners:                                                   @antcp @AzureAppServiceCLI
 
-# ServiceLabel: %ARM
-# ServiceOwners:                                                   @armleads-azure
-
-# ServiceLabel: %ARM - Core
-# ServiceOwners:                                                   @armleads-azure
-
-# ServiceLabel: %ARM - Managed Applications
-# ServiceOwners:                                                   @armleads-azure
-
-# ServiceLabel: %ARM - RBAC
-# ServiceOwners:                                                   @armleads-azure
-
-# ServiceLabel: %ARM - Service Catalog
-# ServiceOwners:                                                   @armleads-azure
-
-# ServiceLabel: %ARM - Tags
-# ServiceOwners:                                                   @armleads-azure
-
-# ServiceLabel: %ARM - Templates
-# ServiceOwners:                                                   @armleads-azure
-
 # ServiceLabel: %ARO
 # ServiceOwners:                                                   @mjudeikis @jim-minter @julienstroheker @amanohar
 
@@ -176,10 +155,10 @@
 # AzureSdkOwners:                                                  @christothes @KrzysztofCwalina
 
 # PRLabel: %Azure Stack
-/sdk/azurestack*/                                                  @sarathys @bganapa @rakku-ms
+/sdk/azurestack*/                                                  @bganapa @rakku-ms
 
 # ServiceLabel: %Azure Stack
-# ServiceOwners:                                                   @sarathys @bganapa @rakku-ms
+# ServiceOwners:                                                   @bganapa @rakku-ms
 
 # PRLabel: %Batch
 /sdk/batch/                                                        @wiboris @dpwatrous @wanghoppe @skapur12 @cRui861
@@ -404,8 +383,7 @@
 /sdk/containerregistry/                                            @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry
-# AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @toddysm @yugangw-MSFT
+# ServiceOwners:                                                   @toddysm @shizhMSFT
 
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
@@ -569,10 +547,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @Azure/azure-sdk-write-keyvault
+/sdk/keyvault/                                                     @cheathamb36 @chen-karen @jackrichins @vickm
 
 # ServiceLabel: %KeyVault
-# ServiceOwners:                                                   @cheathamb36 @chen-karen @Azure/azure-sdk-write-keyvault
+# ServiceOwners:                                                   @cheathamb36 @chen-karen @jackrichins @vickm
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
@@ -626,10 +604,10 @@
 # ServiceOwners:                                                   @naiteeks @bennage @giakas
 
 # PRLabel: %Microsoft Playwright Testing
-/sdk/playwrighttesting/                                            @Sid200026 @puagarwa @ShreyaAnand
+/sdk/playwrighttesting/                                            @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Microsoft Playwright Testing
-# ServiceOwners:                                                   @Sid200026 @puagarwa @ShreyaAnand
+# ServiceOwners:                                                   @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Migrate
 # ServiceOwners:                                                   @shijojoy
@@ -972,6 +950,27 @@
 # ServiceLabel: %ARM %Mgmt
 # ServiceOwners:                                                   @Azure/arm-sdk-owners
 
+# ServiceLabel: %ARM
+# ServiceOwners:                                                   @armleads-azure
+
+# ServiceLabel: %ARM - Core
+# ServiceOwners:                                                   @armleads-azure
+
+# ServiceLabel: %ARM - Managed Applications
+# ServiceOwners:                                                   @armleads-azure
+
+# ServiceLabel: %ARM - RBAC
+# ServiceOwners:                                                   @armleads-azure
+
+# ServiceLabel: %ARM - Service Catalog
+# ServiceOwners:                                                   @armleads-azure
+
+# ServiceLabel: %ARM - Tags
+# ServiceOwners:                                                   @armleads-azure
+
+# ServiceLabel: %ARM - Templates
+# ServiceOwners:                                                   @armleads-azure
+
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
 
@@ -1066,7 +1065,7 @@
 # ServiceOwners:                                                   @alluri02
 
 # PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
+/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
@@ -1075,7 +1074,7 @@
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
