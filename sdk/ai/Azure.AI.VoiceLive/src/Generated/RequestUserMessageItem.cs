@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="RequestUserMessageItem"/>. </summary>
         /// <param name="content"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal RequestUserMessageItem(IEnumerable<BinaryData> content)
+        public RequestUserMessageItem(IEnumerable<BinaryData> content)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="status"></param>
         /// <param name="content"></param>
-        internal RequestUserMessageItem(ItemType type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, ItemStatus? status, IReadOnlyList<BinaryData> content) : base(type, id, serializedAdditionalRawData, role, status)
+        internal RequestUserMessageItem(ItemType type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, ItemStatus? status, IList<BinaryData> content) : base(type, id, serializedAdditionalRawData, role, status)
         {
             Content = content;
         }
@@ -83,6 +83,6 @@ namespace Azure.AI.VoiceLive
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyList<BinaryData> Content { get; }
+        public IList<BinaryData> Content { get; }
     }
 }

@@ -67,7 +67,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the type. </summary>
         internal ItemType Type { get; set; }
-        /// <summary> Gets the id. </summary>
-        public string Id { get; }
+        /// <summary> Gets or sets the id. </summary>
+        public string Id { get; set; }
     }
 }

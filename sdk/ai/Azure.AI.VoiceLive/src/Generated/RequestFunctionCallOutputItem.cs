@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="output"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        internal RequestFunctionCallOutputItem(string callId, string output)
+        public RequestFunctionCallOutputItem(string callId, string output)
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(output, nameof(output));

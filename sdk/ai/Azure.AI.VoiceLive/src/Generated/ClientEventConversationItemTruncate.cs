@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// will respond with an error.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs)
+        public ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs)
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 

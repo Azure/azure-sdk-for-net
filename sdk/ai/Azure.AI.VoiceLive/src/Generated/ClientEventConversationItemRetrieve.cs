@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemRetrieve"/>. </summary>
         /// <param name="itemId"> The ID of the item to retrieve. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ClientEventConversationItemRetrieve(string itemId)
+        public ClientEventConversationItemRetrieve(string itemId)
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 

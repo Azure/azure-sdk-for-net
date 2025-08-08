@@ -131,7 +131,7 @@ namespace Azure.AI.VoiceLive
             ConversationItemWithReferenceObject? @object = default;
             ConversationItemWithReferenceStatus? status = default;
             ConversationItemWithReferenceRole? role = default;
-            IReadOnlyList<ConversationItemWithReferenceContent> content = default;
+            IList<ConversationItemWithReferenceContent> content = default;
             string callId = default;
             string name = default;
             string arguments = default;

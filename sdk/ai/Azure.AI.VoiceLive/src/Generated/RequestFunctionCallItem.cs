@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="callId"/> or <paramref name="arguments"/> is null. </exception>
-        internal RequestFunctionCallItem(string name, string callId, string arguments)
+        public RequestFunctionCallItem(string name, string callId, string arguments)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(callId, nameof(callId));
@@ -57,7 +57,7 @@ namespace Azure.AI.VoiceLive
         public string CallId { get; }
         /// <summary> Gets the arguments. </summary>
         public string Arguments { get; }
-        /// <summary> Gets the status. </summary>
-        public ItemStatus? Status { get; }
+        /// <summary> Gets or sets the status. </summary>
+        public ItemStatus? Status { get; set; }
     }
 }

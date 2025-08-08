@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
     public partial class RequestMessageItem : ConversationRequestItem
     {
         /// <summary> Initializes a new instance of <see cref="RequestMessageItem"/>. </summary>
-        internal RequestMessageItem()
+        public RequestMessageItem()
         {
             Role = new MessageRole("message");
         }
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the role. </summary>
         internal MessageRole Role { get; set; }
-        /// <summary> Gets the status. </summary>
-        public ItemStatus? Status { get; }
+        /// <summary> Gets or sets the status. </summary>
+        public ItemStatus? Status { get; set; }
     }
 }

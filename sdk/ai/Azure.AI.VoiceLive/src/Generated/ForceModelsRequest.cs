@@ -46,21 +46,21 @@ namespace Azure.AI.VoiceLive
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ForceModelsRequest"/>. </summary>
-        /// <param name="session"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="session"/> is null. </exception>
-        internal ForceModelsRequest(ClientEventSessionUpdate session)
+        /// <param name="event"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="event"/> is null. </exception>
+        internal ForceModelsRequest(BinaryData @event)
         {
-            Argument.AssertNotNull(session, nameof(session));
+            Argument.AssertNotNull(@event, nameof(@event));
 
-            Session = session;
+            Event = @event;
         }
 
         /// <summary> Initializes a new instance of <see cref="ForceModelsRequest"/>. </summary>
-        /// <param name="session"></param>
+        /// <param name="event"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForceModelsRequest(ClientEventSessionUpdate session, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ForceModelsRequest(BinaryData @event, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Session = session;
+            Event = @event;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,7 +69,89 @@ namespace Azure.AI.VoiceLive
         {
         }
 
-        /// <summary> Gets the session. </summary>
-        public ClientEventSessionUpdate Session { get; }
+        /// <summary>
+        /// Gets the event
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description><see cref="ClientEventSessionUpdate"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventInputAudioBufferAppend"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventInputAudioBufferCommit"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventInputAudioBufferClear"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventInputAudioTurnStart"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventInputAudioTurnAppend"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventInputAudioTurnEnd"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventInputAudioTurnCancel"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventInputAudioClear"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventConversationItemCreate"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventConversationItemRetrieve"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventConversationItemTruncate"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventConversationItemDelete"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventResponseCreate"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventResponseCancel"/></description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="ClientEventSessionAvatarConnect"/></description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Event { get; }
     }
 }

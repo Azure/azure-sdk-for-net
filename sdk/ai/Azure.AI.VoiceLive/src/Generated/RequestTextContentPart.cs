@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     public partial class RequestTextContentPart : ContentPart
     {
         /// <summary> Initializes a new instance of <see cref="RequestTextContentPart"/>. </summary>
-        internal RequestTextContentPart()
+        public RequestTextContentPart()
         {
             Type = ContentPartType.InputText;
         }
@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
             Text = text;
         }
 
-        /// <summary> Gets the text. </summary>
-        public string Text { get; }
+        /// <summary> Gets or sets the text. </summary>
+        public string Text { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     public partial class ClientEventInputAudioClear : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioClear"/>. </summary>
-        internal ClientEventInputAudioClear()
+        public ClientEventInputAudioClear()
         {
             Type = ClientEventType.InputAudioClear;
         }

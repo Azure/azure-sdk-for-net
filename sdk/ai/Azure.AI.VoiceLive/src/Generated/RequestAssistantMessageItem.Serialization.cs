@@ -64,7 +64,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            IReadOnlyList<RequestTextContentPart> content = default;
+            IList<RequestTextContentPart> content = default;
             MessageRole role = default;
             ItemStatus? status = default;
             ItemType type = default;

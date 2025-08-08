@@ -56,6 +56,8 @@ namespace Azure.AI.VoiceLive
         private const string ResponseAudioTimestampDoneValue = "response.audio_timestamp.done";
         private const string ResponseAnimationVisemeDeltaValue = "response.animation_viseme.delta";
         private const string ResponseAnimationVisemeDoneValue = "response.animation_viseme.done";
+        private const string ResponseFunctionCallArgumentsDeltaValue = "response.function_call_arguments.delta";
+        private const string ResponseFunctionCallArgumentsDoneValue = "response.function_call_arguments.done";
 
         /// <summary> error. </summary>
         public static ServerEventType Error { get; } = new ServerEventType(ErrorValue);
@@ -125,6 +127,10 @@ namespace Azure.AI.VoiceLive
         public static ServerEventType ResponseAnimationVisemeDelta { get; } = new ServerEventType(ResponseAnimationVisemeDeltaValue);
         /// <summary> response.animation_viseme.done. </summary>
         public static ServerEventType ResponseAnimationVisemeDone { get; } = new ServerEventType(ResponseAnimationVisemeDoneValue);
+        /// <summary> response.function_call_arguments.delta. </summary>
+        public static ServerEventType ResponseFunctionCallArgumentsDelta { get; } = new ServerEventType(ResponseFunctionCallArgumentsDeltaValue);
+        /// <summary> response.function_call_arguments.done. </summary>
+        public static ServerEventType ResponseFunctionCallArgumentsDone { get; } = new ServerEventType(ResponseFunctionCallArgumentsDoneValue);
         /// <summary> Determines if two <see cref="ServerEventType"/> values are the same. </summary>
         public static bool operator ==(ServerEventType left, ServerEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerEventType"/> values are not the same. </summary>

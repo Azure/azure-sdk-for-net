@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResponseCreateParams"/>. </summary>
-        internal ResponseCreateParams()
+        public ResponseCreateParams()
         {
             AppendInputItems = new ChangeTrackingList<ConversationRequestItem>();
             InputItems = new ChangeTrackingList<ConversationRequestItem>();
@@ -105,7 +105,7 @@ namespace Azure.AI.VoiceLive
         /// given model. Defaults to `inf`.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IReadOnlyList<ConversationRequestItem> appendInputItems, IReadOnlyList<ConversationRequestItem> inputItems, IReadOnlyList<InputModality> modalities, string instructions, BinaryData voice, AudioFormat? outputAudioFormat, IReadOnlyList<ToolCall> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InputModality> modalities, string instructions, BinaryData voice, AudioFormat? outputAudioFormat, IList<ToolCall> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Commit = commit;
             CancelPrevious = cancelPrevious;
@@ -123,27 +123,27 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Whether to commit the response to the conversation. Defaults to true. </summary>
-        public bool? Commit { get; }
+        public bool? Commit { get; set; }
         /// <summary> Whether to cancel any ongoing generation before starting this one. Defaults to true. </summary>
-        public bool? CancelPrevious { get; }
+        public bool? CancelPrevious { get; set; }
         /// <summary>
         /// Input items to append to the conversation context before generating a response.
         /// Please note <see cref="ConversationRequestItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RequestAssistantMessageItem"/>, <see cref="RequestFunctionCallItem"/>, <see cref="RequestFunctionCallOutputItem"/>, <see cref="RequestMessageItem"/>, <see cref="RequestSystemMessageItem"/> and <see cref="RequestUserMessageItem"/>.
         /// </summary>
-        public IReadOnlyList<ConversationRequestItem> AppendInputItems { get; }
+        public IList<ConversationRequestItem> AppendInputItems { get; }
         /// <summary>
         /// Input items to be used as the context for this response.
         /// An empty array clears previous context.
         /// Please note <see cref="ConversationRequestItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RequestAssistantMessageItem"/>, <see cref="RequestFunctionCallItem"/>, <see cref="RequestFunctionCallOutputItem"/>, <see cref="RequestMessageItem"/>, <see cref="RequestSystemMessageItem"/> and <see cref="RequestUserMessageItem"/>.
         /// </summary>
-        public IReadOnlyList<ConversationRequestItem> InputItems { get; }
+        public IList<ConversationRequestItem> InputItems { get; }
         /// <summary>
         /// The set of modalities the model can respond with. To disable audio,
         /// set this to ["text"].
         /// </summary>
-        public IReadOnlyList<InputModality> Modalities { get; }
+        public IList<InputModality> Modalities { get; }
         /// <summary>
         /// The default system instructions (i.e. system message) prepended to model
         /// calls. This field allows the client to guide the model on desired
@@ -158,7 +158,7 @@ namespace Azure.AI.VoiceLive
         /// field is not set and are visible in the `session.created` event at the
         /// start of the session.
         /// </summary>
-        public string Instructions { get; }
+        public string Instructions { get; set; }
         /// <summary>
         /// supported voice identifiers and configurations.
         /// <para>
@@ -209,22 +209,22 @@ namespace Azure.AI.VoiceLive
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Voice { get; }
+        public BinaryData Voice { get; set; }
         /// <summary> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </summary>
-        public AudioFormat? OutputAudioFormat { get; }
+        public AudioFormat? OutputAudioFormat { get; set; }
         /// <summary>
         /// Tools (functions) available to the model.
         /// Please note <see cref="ToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FunctionTool"/>.
         /// </summary>
-        public IReadOnlyList<ToolCall> Tools { get; }
+        public IList<ToolCall> Tools { get; }
         /// <summary>
         /// How the model chooses tools. Options are `auto`, `none`, `required`, or
         /// specify a function, like `{"type": "function", "function": {"name": "my_function"}}`.
         /// </summary>
-        public string ToolChoice { get; }
+        public string ToolChoice { get; set; }
         /// <summary> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </summary>
-        public float? Temperature { get; }
+        public float? Temperature { get; set; }
         /// <summary>
         /// Maximum number of output tokens for a single assistant response,
         /// inclusive of tool calls. Provide an integer between 1 and 4096 to
@@ -269,6 +269,6 @@ namespace Azure.AI.VoiceLive
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData MaxOutputTokens { get; }
+        public BinaryData MaxOutputTokens { get; set; }
     }
 }

@@ -76,7 +76,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            IReadOnlyList<BinaryData> content = default;
+            IList<BinaryData> content = default;
             MessageRole role = default;
             ItemStatus? status = default;
             ItemType type = default;

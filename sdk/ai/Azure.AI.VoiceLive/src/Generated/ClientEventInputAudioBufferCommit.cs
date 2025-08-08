@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
     public partial class ClientEventInputAudioBufferCommit : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferCommit"/>. </summary>
-        internal ClientEventInputAudioBufferCommit()
+        public ClientEventInputAudioBufferCommit()
         {
             Type = ClientEventType.InputAudioBufferCommit;
         }

@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     public partial class RequestAudioContentPart : ContentPart
     {
         /// <summary> Initializes a new instance of <see cref="RequestAudioContentPart"/>. </summary>
-        internal RequestAudioContentPart()
+        public RequestAudioContentPart()
         {
             Type = ContentPartType.InputAudio;
         }
@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
             Transcript = transcript;
         }
 
-        /// <summary> Gets the transcript. </summary>
-        public string Transcript { get; }
+        /// <summary> Gets or sets the transcript. </summary>
+        public string Transcript { get; set; }
     }
 }

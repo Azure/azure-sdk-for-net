@@ -167,13 +167,13 @@ namespace Azure.AI.VoiceLive
             }
             bool? commit = default;
             bool? cancelPrevious = default;
-            IReadOnlyList<ConversationRequestItem> appendInputItems = default;
-            IReadOnlyList<ConversationRequestItem> inputItems = default;
-            IReadOnlyList<InputModality> modalities = default;
+            IList<ConversationRequestItem> appendInputItems = default;
+            IList<ConversationRequestItem> inputItems = default;
+            IList<InputModality> modalities = default;
             string instructions = default;
             BinaryData voice = default;
             AudioFormat? outputAudioFormat = default;
-            IReadOnlyList<ToolCall> tools = default;
+            IList<ToolCall> tools = default;
             string toolChoice = default;
             float? temperature = default;
             BinaryData maxOutputTokens = default;

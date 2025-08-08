@@ -34,8 +34,15 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ForceModelsRequest)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("session"u8);
-            writer.WriteObjectValue(Session, options);
+            writer.WritePropertyName("event"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Event);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Event, ModelSerializationExtensions.JsonDocumentOptions))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,14 +80,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ClientEventSessionUpdate session = default;
+            BinaryData @event = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("session"u8))
+                if (property.NameEquals("event"u8))
                 {
-                    session = ClientEventSessionUpdate.DeserializeClientEventSessionUpdate(property.Value, options);
+                    @event = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +96,7 @@ namespace Azure.AI.VoiceLive
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ForceModelsRequest(session, serializedAdditionalRawData);
+            return new ForceModelsRequest(@event, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForceModelsRequest>.Write(ModelReaderWriterOptions options)

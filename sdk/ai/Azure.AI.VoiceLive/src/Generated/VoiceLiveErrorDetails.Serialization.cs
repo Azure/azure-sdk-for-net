@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class ErrorDetails : IUtf8JsonSerializable, IJsonModel<ErrorDetails>
+    public partial class VoiceLiveErrorDetails : IUtf8JsonSerializable, IJsonModel<VoiceLiveErrorDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ErrorDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceLiveErrorDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VoiceLiveErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceLiveErrorDetails)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Code))
@@ -73,19 +73,19 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ErrorDetails IJsonModel<ErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VoiceLiveErrorDetails IJsonModel<VoiceLiveErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceLiveErrorDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeErrorDetails(document.RootElement, options);
+            return DeserializeVoiceLiveErrorDetails(document.RootElement, options);
         }
 
-        internal static ErrorDetails DeserializeErrorDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VoiceLiveErrorDetails DeserializeVoiceLiveErrorDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -133,7 +133,7 @@ namespace Azure.AI.VoiceLive
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ErrorDetails(
+            return new VoiceLiveErrorDetails(
                 code,
                 message,
                 param,
@@ -142,43 +142,43 @@ namespace Azure.AI.VoiceLive
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ErrorDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VoiceLiveErrorDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceLiveErrorDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ErrorDetails IPersistableModel<ErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VoiceLiveErrorDetails IPersistableModel<VoiceLiveErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeErrorDetails(document.RootElement, options);
+                        return DeserializeVoiceLiveErrorDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceLiveErrorDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VoiceLiveErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ErrorDetails FromResponse(Azure.Response response)
+        internal static VoiceLiveErrorDetails FromResponse(Azure.Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeErrorDetails(document.RootElement);
+            return DeserializeVoiceLiveErrorDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

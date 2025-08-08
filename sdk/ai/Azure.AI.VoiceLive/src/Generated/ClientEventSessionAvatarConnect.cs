@@ -19,7 +19,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionAvatarConnect"/>. </summary>
         /// <param name="clientSdp"> The client's SDP offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientSdp"/> is null. </exception>
-        internal ClientEventSessionAvatarConnect(string clientSdp)
+        public ClientEventSessionAvatarConnect(string clientSdp)
         {
             Argument.AssertNotNull(clientSdp, nameof(clientSdp));
 

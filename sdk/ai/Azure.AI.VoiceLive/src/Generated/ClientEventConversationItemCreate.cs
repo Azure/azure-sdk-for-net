@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
     public partial class ClientEventConversationItemCreate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemCreate"/>. </summary>
-        internal ClientEventConversationItemCreate()
+        public ClientEventConversationItemCreate()
         {
             Type = ClientEventType.ConversationItemCreate;
         }
@@ -52,8 +52,8 @@ namespace Azure.AI.VoiceLive
         /// If set to an existing ID, it allows an item to be inserted mid-conversation. If the
         /// ID cannot be found, an error will be returned and the item will not be added.
         /// </summary>
-        public string PreviousItemId { get; }
-        /// <summary> Gets the item. </summary>
-        public ConversationItemWithReference Item { get; }
+        public string PreviousItemId { get; set; }
+        /// <summary> Gets or sets the item. </summary>
+        public ConversationItemWithReference Item { get; set; }
     }
 }

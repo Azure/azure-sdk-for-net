@@ -50,13 +50,16 @@ namespace Azure.AI.VoiceLive
             return new AudioEchoCancellation(type, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventSessionAvatarConnect"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventInputAudioBufferAppend"/>. </summary>
         /// <param name="eventId"></param>
-        /// <param name="clientSdp"> The client's SDP offer. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventSessionAvatarConnect"/> instance for mocking. </returns>
-        public static ClientEventSessionAvatarConnect ClientEventSessionAvatarConnect(string eventId = null, string clientSdp = null)
+        /// <param name="audio">
+        /// Base64-encoded audio. This must be in the format specified by the
+        /// `input_audio_format` field in the session configuration.
+        /// </param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioBufferAppend"/> instance for mocking. </returns>
+        public static ClientEventInputAudioBufferAppend ClientEventInputAudioBufferAppend(string eventId = null, string audio = null)
         {
-            return new ClientEventSessionAvatarConnect(ClientEventType.SessionAvatarConnect, eventId, serializedAdditionalRawData: null, clientSdp);
+            return new ClientEventInputAudioBufferAppend(ClientEventType.InputAudioBufferAppend, eventId, serializedAdditionalRawData: null, audio);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventInputAudioTurnStart"/>. </summary>
@@ -96,109 +99,13 @@ namespace Azure.AI.VoiceLive
             return new ClientEventInputAudioTurnCancel(ClientEventType.InputAudioTurnCancel, eventId, serializedAdditionalRawData: null, turnId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventInputAudioBufferAppend"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventConversationItemRetrieve"/>. </summary>
         /// <param name="eventId"></param>
-        /// <param name="audio">
-        /// Base64-encoded audio. This must be in the format specified by the
-        /// `input_audio_format` field in the session configuration.
-        /// </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioBufferAppend"/> instance for mocking. </returns>
-        public static ClientEventInputAudioBufferAppend ClientEventInputAudioBufferAppend(string eventId = null, string audio = null)
+        /// <param name="itemId"> The ID of the item to retrieve. </param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemRetrieve"/> instance for mocking. </returns>
+        public static ClientEventConversationItemRetrieve ClientEventConversationItemRetrieve(string eventId = null, string itemId = null)
         {
-            return new ClientEventInputAudioBufferAppend(ClientEventType.InputAudioBufferAppend, eventId, serializedAdditionalRawData: null, audio);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventConversationItemCreate"/>. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="previousItemId">
-        /// The ID of the preceding item after which the new item will be inserted.
-        /// If not set, the new item will be appended to the end of the conversation.
-        /// If set to `root`, the new item will be added to the beginning of the conversation.
-        /// If set to an existing ID, it allows an item to be inserted mid-conversation. If the
-        /// ID cannot be found, an error will be returned and the item will not be added.
-        /// </param>
-        /// <param name="item"></param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemCreate"/> instance for mocking. </returns>
-        public static ClientEventConversationItemCreate ClientEventConversationItemCreate(string eventId = null, string previousItemId = null, ConversationItemWithReference item = null)
-        {
-            return new ClientEventConversationItemCreate(ClientEventType.ConversationItemCreate, eventId, serializedAdditionalRawData: null, previousItemId, item);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ConversationItemWithReference"/>. </summary>
-        /// <param name="id">
-        /// For an item of type (`message` | `function_call` | `function_call_output`)
-        /// this field allows the client to assign the unique ID of the item. It is
-        /// not required because the server will generate one if not provided.
-        ///
-        /// For an item of type `item_reference`, this field is required and is a
-        /// reference to any item that has previously existed in the conversation.
-        /// </param>
-        /// <param name="type"> The type of the item (`message`, `function_call`, `function_call_output`, `item_reference`). </param>
-        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. </param>
-        /// <param name="status">
-        /// The status of the item (`completed`, `incomplete`). These have no effect
-        /// on the conversation, but are accepted for consistency with the
-        /// `conversation.item.created` event.
-        /// </param>
-        /// <param name="role">
-        /// The role of the message sender (`user`, `assistant`, `system`), only
-        /// applicable for `message` items.
-        /// </param>
-        /// <param name="content">
-        /// The content of the message, applicable for `message` items.
-        /// - Message items of role `system` support only `input_text` content
-        /// - Message items of role `user` support `input_text` and `input_audio`
-        ///   content
-        /// - Message items of role `assistant` support `text` content.
-        /// </param>
-        /// <param name="callId">
-        /// The ID of the function call (for `function_call` and
-        /// `function_call_output` items). If passed on a `function_call_output`
-        /// item, the server will check that a `function_call` item with the same
-        /// ID exists in the conversation history.
-        /// </param>
-        /// <param name="name"> The name of the function being called (for `function_call` items). </param>
-        /// <param name="arguments"> The arguments of the function call (for `function_call` items). </param>
-        /// <param name="output"> The output of the function call (for `function_call_output` items). </param>
-        /// <returns> A new <see cref="VoiceLive.ConversationItemWithReference"/> instance for mocking. </returns>
-        public static ConversationItemWithReference ConversationItemWithReference(string id = null, ConversationItemWithReferenceType? type = null, ConversationItemWithReferenceObject? @object = null, ConversationItemWithReferenceStatus? status = null, ConversationItemWithReferenceRole? role = null, IEnumerable<ConversationItemWithReferenceContent> content = null, string callId = null, string name = null, string arguments = null, string output = null)
-        {
-            content ??= new List<ConversationItemWithReferenceContent>();
-
-            return new ConversationItemWithReference(
-                id,
-                type,
-                @object,
-                status,
-                role,
-                content?.ToList(),
-                callId,
-                name,
-                arguments,
-                output,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ConversationItemWithReferenceContent"/>. </summary>
-        /// <param name="type"> The content type (`input_text`, `input_audio`, `item_reference`, `text`). </param>
-        /// <param name="text"> The text content, used for `input_text` and `text` content types. </param>
-        /// <param name="id">
-        /// ID of a previous conversation item to reference (for `item_reference`
-        /// content types in `response.create` events). These can reference both
-        /// client and server created items.
-        /// </param>
-        /// <param name="audio"> Base64-encoded audio bytes, used for `input_audio` content type. </param>
-        /// <param name="transcript"> The transcript of the audio, used for `input_audio` content type. </param>
-        /// <returns> A new <see cref="VoiceLive.ConversationItemWithReferenceContent"/> instance for mocking. </returns>
-        public static ConversationItemWithReferenceContent ConversationItemWithReferenceContent(ConversationItemWithReferenceContentType? type = null, string text = null, string id = null, string audio = null, string transcript = null)
-        {
-            return new ConversationItemWithReferenceContent(
-                type,
-                text,
-                id,
-                audio,
-                transcript,
-                serializedAdditionalRawData: null);
+            return new ClientEventConversationItemRetrieve(ClientEventType.ConversationItemRetrieve, eventId, serializedAdditionalRawData: null, itemId);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventConversationItemTruncate"/>. </summary>
@@ -232,115 +139,6 @@ namespace Azure.AI.VoiceLive
         public static ClientEventConversationItemDelete ClientEventConversationItemDelete(string eventId = null, string itemId = null)
         {
             return new ClientEventConversationItemDelete(ClientEventType.ConversationItemDelete, eventId, serializedAdditionalRawData: null, itemId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventResponseCreate"/>. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="response"></param>
-        /// <param name="additionalInstructions"> additional instructions (system prompt) appended to the default instructions of the session. Only affects this response only. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventResponseCreate"/> instance for mocking. </returns>
-        public static ClientEventResponseCreate ClientEventResponseCreate(string eventId = null, ResponseCreateParams response = null, string additionalInstructions = null)
-        {
-            return new ClientEventResponseCreate(ClientEventType.ResponseCreate, eventId, serializedAdditionalRawData: null, response, additionalInstructions);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ResponseCreateParams"/>. </summary>
-        /// <param name="commit"> Whether to commit the response to the conversation. Defaults to true. </param>
-        /// <param name="cancelPrevious"> Whether to cancel any ongoing generation before starting this one. Defaults to true. </param>
-        /// <param name="appendInputItems">
-        /// Input items to append to the conversation context before generating a response.
-        /// Please note <see cref="VoiceLive.ConversationRequestItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RequestAssistantMessageItem"/>, <see cref="VoiceLive.RequestFunctionCallItem"/>, <see cref="VoiceLive.RequestFunctionCallOutputItem"/>, <see cref="RequestMessageItem"/>, <see cref="RequestSystemMessageItem"/> and <see cref="RequestUserMessageItem"/>.
-        /// </param>
-        /// <param name="inputItems">
-        /// Input items to be used as the context for this response.
-        /// An empty array clears previous context.
-        /// Please note <see cref="VoiceLive.ConversationRequestItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RequestAssistantMessageItem"/>, <see cref="VoiceLive.RequestFunctionCallItem"/>, <see cref="VoiceLive.RequestFunctionCallOutputItem"/>, <see cref="RequestMessageItem"/>, <see cref="RequestSystemMessageItem"/> and <see cref="RequestUserMessageItem"/>.
-        /// </param>
-        /// <param name="modalities">
-        /// The set of modalities the model can respond with. To disable audio,
-        /// set this to ["text"].
-        /// </param>
-        /// <param name="instructions">
-        /// The default system instructions (i.e. system message) prepended to model
-        /// calls. This field allows the client to guide the model on desired
-        /// responses. The model can be instructed on response content and format,
-        /// (e.g. "be extremely succinct", "act friendly", "here are examples of good
-        /// responses") and on audio behavior (e.g. "talk quickly", "inject emotion
-        /// into your voice", "laugh frequently"). The instructions are not guaranteed
-        /// to be followed by the model, but they provide guidance to the model on the
-        /// desired behavior.
-        ///
-        /// Note that the server sets default instructions which will be used if this
-        /// field is not set and are visible in the `session.created` event at the
-        /// start of the session.
-        /// </param>
-        /// <param name="voice"> supported voice identifiers and configurations. </param>
-        /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
-        /// <param name="tools">
-        /// Tools (functions) available to the model.
-        /// Please note <see cref="ToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionTool"/>.
-        /// </param>
-        /// <param name="toolChoice">
-        /// How the model chooses tools. Options are `auto`, `none`, `required`, or
-        /// specify a function, like `{"type": "function", "function": {"name": "my_function"}}`.
-        /// </param>
-        /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
-        /// <param name="maxOutputTokens">
-        /// Maximum number of output tokens for a single assistant response,
-        /// inclusive of tool calls. Provide an integer between 1 and 4096 to
-        /// limit output tokens, or `inf` for the maximum available tokens for a
-        /// given model. Defaults to `inf`.
-        /// </param>
-        /// <returns> A new <see cref="VoiceLive.ResponseCreateParams"/> instance for mocking. </returns>
-        public static ResponseCreateParams ResponseCreateParams(bool? commit = null, bool? cancelPrevious = null, IEnumerable<ConversationRequestItem> appendInputItems = null, IEnumerable<ConversationRequestItem> inputItems = null, IEnumerable<InputModality> modalities = null, string instructions = null, BinaryData voice = null, AudioFormat? outputAudioFormat = null, IEnumerable<ToolCall> tools = null, string toolChoice = null, float? temperature = null, BinaryData maxOutputTokens = null)
-        {
-            appendInputItems ??= new List<ConversationRequestItem>();
-            inputItems ??= new List<ConversationRequestItem>();
-            modalities ??= new List<InputModality>();
-            tools ??= new List<ToolCall>();
-
-            return new ResponseCreateParams(
-                commit,
-                cancelPrevious,
-                appendInputItems?.ToList(),
-                inputItems?.ToList(),
-                modalities?.ToList(),
-                instructions,
-                voice,
-                outputAudioFormat,
-                tools?.ToList(),
-                toolChoice,
-                temperature,
-                maxOutputTokens,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ConversationRequestItem"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <returns> A new <see cref="VoiceLive.ConversationRequestItem"/> instance for mocking. </returns>
-        public static ConversationRequestItem ConversationRequestItem(string type = null, string id = null)
-        {
-            return new UnknownConversationRequestItem(type == null ? default : new ItemType(type), id, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.RequestTextContentPart"/>. </summary>
-        /// <param name="text"></param>
-        /// <returns> A new <see cref="VoiceLive.RequestTextContentPart"/> instance for mocking. </returns>
-        public static RequestTextContentPart RequestTextContentPart(string text = null)
-        {
-            return new RequestTextContentPart(ContentPartType.InputText, serializedAdditionalRawData: null, text);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.RequestAudioContentPart"/>. </summary>
-        /// <param name="transcript"></param>
-        /// <returns> A new <see cref="VoiceLive.RequestAudioContentPart"/> instance for mocking. </returns>
-        public static RequestAudioContentPart RequestAudioContentPart(string transcript = null)
-        {
-            return new RequestAudioContentPart(ContentPartType.InputAudio, serializedAdditionalRawData: null, transcript);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ResponseTextContentPart"/>. </summary>
@@ -388,34 +186,40 @@ namespace Azure.AI.VoiceLive
             return new RequestFunctionCallOutputItem(ItemType.FunctionCallOutput, id, serializedAdditionalRawData: null, callId, output);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventResponseCancel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventSessionAvatarConnect"/>. </summary>
         /// <param name="eventId"></param>
-        /// <param name="responseId">
-        /// A specific response ID to cancel - if not provided, will cancel an
-        /// in-progress response in the default conversation.
-        /// </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventResponseCancel"/> instance for mocking. </returns>
-        public static ClientEventResponseCancel ClientEventResponseCancel(string eventId = null, string responseId = null)
+        /// <param name="clientSdp"> The client's SDP offer. </param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventSessionAvatarConnect"/> instance for mocking. </returns>
+        public static ClientEventSessionAvatarConnect ClientEventSessionAvatarConnect(string eventId = null, string clientSdp = null)
         {
-            return new ClientEventResponseCancel(ClientEventType.ResponseCancel, eventId, serializedAdditionalRawData: null, responseId);
+            return new ClientEventSessionAvatarConnect(ClientEventType.SessionAvatarConnect, eventId, serializedAdditionalRawData: null, clientSdp);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventConversationItemRetrieve"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventSessionAvatarConnecting"/>. </summary>
         /// <param name="eventId"></param>
-        /// <param name="itemId"> The ID of the item to retrieve. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemRetrieve"/> instance for mocking. </returns>
-        public static ClientEventConversationItemRetrieve ClientEventConversationItemRetrieve(string eventId = null, string itemId = null)
+        /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
+        /// <returns> A new <see cref="VoiceLive.ServerEventSessionAvatarConnecting"/> instance for mocking. </returns>
+        public static ServerEventSessionAvatarConnecting ServerEventSessionAvatarConnecting(string eventId = null, string serverSdp = null)
         {
-            return new ClientEventConversationItemRetrieve(ClientEventType.ConversationItemRetrieve, eventId, serializedAdditionalRawData: null, itemId);
+            return new ServerEventSessionAvatarConnecting(ServerEventType.SessionAvatarConnecting, eventId, serializedAdditionalRawData: null, serverSdp);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventSessionUpdated"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEvent"/>. </summary>
+        /// <param name="type"> The type of event. </param>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="VoiceLive.ServerEvent"/> instance for mocking. </returns>
+        public static ServerEvent ServerEvent(string type = null, string eventId = null)
+        {
+            return new UnknownServerEvent(type == null ? default : new ServerEventType(type), eventId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventSessionCreated"/>. </summary>
         /// <param name="eventId"></param>
         /// <param name="session"></param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventSessionUpdated"/> instance for mocking. </returns>
-        public static ServerEventSessionUpdated ServerEventSessionUpdated(string eventId = null, ResponseSession session = null)
+        /// <returns> A new <see cref="VoiceLive.ServerEventSessionCreated"/> instance for mocking. </returns>
+        public static ServerEventSessionCreated ServerEventSessionCreated(string eventId = null, ResponseSession session = null)
         {
-            return new ServerEventSessionUpdated(ServerEventType.SessionUpdated, eventId, serializedAdditionalRawData: null, session);
+            return new ServerEventSessionCreated(ServerEventType.SessionCreated, eventId, serializedAdditionalRawData: null, session);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ResponseSession"/>. </summary>
@@ -496,22 +300,13 @@ namespace Azure.AI.VoiceLive
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEvent"/>. </summary>
-        /// <param name="type"> The type of event. </param>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.ServerEvent"/> instance for mocking. </returns>
-        public static ServerEvent ServerEvent(string type = null, string eventId = null)
-        {
-            return new UnknownServerEvent(type == null ? default : new ServerEventType(type), eventId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventSessionCreated"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventSessionUpdated"/>. </summary>
         /// <param name="eventId"></param>
         /// <param name="session"></param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventSessionCreated"/> instance for mocking. </returns>
-        public static ServerEventSessionCreated ServerEventSessionCreated(string eventId = null, ResponseSession session = null)
+        /// <returns> A new <see cref="VoiceLive.ServerEventSessionUpdated"/> instance for mocking. </returns>
+        public static ServerEventSessionUpdated ServerEventSessionUpdated(string eventId = null, ResponseSession session = null)
         {
-            return new ServerEventSessionCreated(ServerEventType.SessionCreated, eventId, serializedAdditionalRawData: null, session);
+            return new ServerEventSessionUpdated(ServerEventType.SessionUpdated, eventId, serializedAdditionalRawData: null, session);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventError"/>. </summary>
@@ -687,7 +482,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventConversationItemInputAudioTranscriptionFailed"/> instance for mocking. </returns>
-        public static ServerEventConversationItemInputAudioTranscriptionFailed ServerEventConversationItemInputAudioTranscriptionFailed(string eventId = null, string itemId = null, int contentIndex = default, ErrorDetails error = null)
+        public static ServerEventConversationItemInputAudioTranscriptionFailed ServerEventConversationItemInputAudioTranscriptionFailed(string eventId = null, string itemId = null, int contentIndex = default, VoiceLiveErrorDetails error = null)
         {
             return new ServerEventConversationItemInputAudioTranscriptionFailed(
                 ServerEventType.ConversationItemInputAudioTranscriptionFailed,
@@ -698,16 +493,16 @@ namespace Azure.AI.VoiceLive
                 error);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.VoiceLiveErrorDetails"/>. </summary>
         /// <param name="code"> Error code, or null if unspecified. </param>
         /// <param name="message"> Human-readable error message. </param>
         /// <param name="param"> Parameter name related to the error, if applicable. </param>
         /// <param name="type"> Type or category of the error. </param>
         /// <param name="eventId"> Event id of the error. </param>
-        /// <returns> A new <see cref="VoiceLive.ErrorDetails"/> instance for mocking. </returns>
-        public static ErrorDetails ErrorDetails(string code = null, string message = null, string param = null, string type = null, string eventId = null)
+        /// <returns> A new <see cref="VoiceLive.VoiceLiveErrorDetails"/> instance for mocking. </returns>
+        public static VoiceLiveErrorDetails VoiceLiveErrorDetails(string code = null, string message = null, string param = null, string type = null, string eventId = null)
         {
-            return new ErrorDetails(
+            return new VoiceLiveErrorDetails(
                 code,
                 message,
                 param,
@@ -882,7 +677,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="content">
         /// Please note <see cref="ContentPart"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VoiceLive.ResponseAudioContentPart"/>, <see cref="VoiceLive.RequestAudioContentPart"/>, <see cref="VoiceLive.RequestTextContentPart"/> and <see cref="VoiceLive.ResponseTextContentPart"/>.
+        /// The available derived classes include <see cref="VoiceLive.ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="VoiceLive.ResponseTextContentPart"/>.
         /// </param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="VoiceLive.ResponseMessageItem"/> instance for mocking. </returns>
@@ -1039,7 +834,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="part">
         /// The content part that was added.
         /// Please note <see cref="ContentPart"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VoiceLive.ResponseAudioContentPart"/>, <see cref="VoiceLive.RequestAudioContentPart"/>, <see cref="VoiceLive.RequestTextContentPart"/> and <see cref="VoiceLive.ResponseTextContentPart"/>.
+        /// The available derived classes include <see cref="VoiceLive.ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="VoiceLive.ResponseTextContentPart"/>.
         /// </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseContentPartAdded"/> instance for mocking. </returns>
         public static ServerEventResponseContentPartAdded ServerEventResponseContentPartAdded(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, int contentIndex = default, ContentPart part = null)
@@ -1064,7 +859,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="part">
         /// The content part that is done.
         /// Please note <see cref="ContentPart"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VoiceLive.ResponseAudioContentPart"/>, <see cref="VoiceLive.RequestAudioContentPart"/>, <see cref="VoiceLive.RequestTextContentPart"/> and <see cref="VoiceLive.ResponseTextContentPart"/>.
+        /// The available derived classes include <see cref="VoiceLive.ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="VoiceLive.ResponseTextContentPart"/>.
         /// </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseContentPartDone"/> instance for mocking. </returns>
         public static ServerEventResponseContentPartDone ServerEventResponseContentPartDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, int contentIndex = default, ContentPart part = null)
@@ -1160,15 +955,6 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 outputIndex,
                 contentIndex);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventSessionAvatarConnecting"/>. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventSessionAvatarConnecting"/> instance for mocking. </returns>
-        public static ServerEventSessionAvatarConnecting ServerEventSessionAvatarConnecting(string eventId = null, string serverSdp = null)
-        {
-            return new ServerEventSessionAvatarConnecting(ServerEventType.SessionAvatarConnecting, eventId, serializedAdditionalRawData: null, serverSdp);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ResponseAnimationBlendshapeDeltaEvent"/>. </summary>
@@ -1331,6 +1117,48 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 outputIndex,
                 contentIndex);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDelta"/>. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"> The ID of the response. </param>
+        /// <param name="itemId"> The ID of the function call item. </param>
+        /// <param name="outputIndex"> The index of the output item in the response. </param>
+        /// <param name="callId"> The ID of the function call. </param>
+        /// <param name="delta"> The arguments delta as a JSON string. </param>
+        /// <returns> A new <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDelta"/> instance for mocking. </returns>
+        public static ServerEventResponseFunctionCallArgumentsDelta ServerEventResponseFunctionCallArgumentsDelta(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string delta = null)
+        {
+            return new ServerEventResponseFunctionCallArgumentsDelta(
+                ServerEventType.ResponseFunctionCallArgumentsDelta,
+                eventId,
+                serializedAdditionalRawData: null,
+                responseId,
+                itemId,
+                outputIndex,
+                callId,
+                delta);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDone"/>. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"> The ID of the response. </param>
+        /// <param name="itemId"> The ID of the function call item. </param>
+        /// <param name="outputIndex"> The index of the output item in the response. </param>
+        /// <param name="callId"> The ID of the function call. </param>
+        /// <param name="arguments"> The final arguments as a JSON string. </param>
+        /// <returns> A new <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDone"/> instance for mocking. </returns>
+        public static ServerEventResponseFunctionCallArgumentsDone ServerEventResponseFunctionCallArgumentsDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string arguments = null)
+        {
+            return new ServerEventResponseFunctionCallArgumentsDone(
+                ServerEventType.ResponseFunctionCallArgumentsDone,
+                eventId,
+                serializedAdditionalRawData: null,
+                responseId,
+                itemId,
+                outputIndex,
+                callId,
+                arguments);
         }
     }
 }

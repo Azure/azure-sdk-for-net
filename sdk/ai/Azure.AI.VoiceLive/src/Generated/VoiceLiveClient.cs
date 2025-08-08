@@ -88,15 +88,15 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Force models. </summary>
         /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="session"></param>
+        /// <param name="event"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="session"/> is null. </exception>
-        internal virtual async Task<Response<ServerEventResponseAudioDone>> ForceModelsAsync(string accept, ClientEventSessionUpdate session, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="event"/> is null. </exception>
+        internal virtual async Task<Response<ServerEventResponseAudioDone>> ForceModelsAsync(string accept, BinaryData @event, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(session, nameof(session));
+            Argument.AssertNotNull(@event, nameof(@event));
 
-            ForceModelsRequest forceModelsRequest = new ForceModelsRequest(session, null);
+            ForceModelsRequest forceModelsRequest = new ForceModelsRequest(@event, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Azure.Response response = await ForceModelsAsync(accept, forceModelsRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Azure.Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
@@ -104,15 +104,15 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Force models. </summary>
         /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="session"></param>
+        /// <param name="event"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="session"/> is null. </exception>
-        internal virtual Response<ServerEventResponseAudioDone> ForceModels(string accept, ClientEventSessionUpdate session, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="event"/> is null. </exception>
+        internal virtual Response<ServerEventResponseAudioDone> ForceModels(string accept, BinaryData @event, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(session, nameof(session));
+            Argument.AssertNotNull(@event, nameof(@event));
 
-            ForceModelsRequest forceModelsRequest = new ForceModelsRequest(session, null);
+            ForceModelsRequest forceModelsRequest = new ForceModelsRequest(@event, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Azure.Response response = ForceModels(accept, forceModelsRequest.ToRequestContent(), context);
             return Azure.Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
@@ -128,7 +128,7 @@ namespace Azure.AI.VoiceLive
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ForceModelsAsync(string,ClientEventSessionUpdate,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ForceModelsAsync(string,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -168,7 +168,7 @@ namespace Azure.AI.VoiceLive
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ForceModels(string,ClientEventSessionUpdate,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ForceModels(string,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

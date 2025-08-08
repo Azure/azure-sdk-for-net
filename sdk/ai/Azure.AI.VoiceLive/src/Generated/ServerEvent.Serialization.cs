@@ -109,6 +109,8 @@ namespace Azure.AI.VoiceLive
                     case "response.created": return ServerEventResponseCreated.DeserializeServerEventResponseCreated(element, options);
                     case "response.done": return ServerEventResponseDone.DeserializeServerEventResponseDone(element, options);
                     case "response.emotion_hypothesis": return ResponseEmotionHypothesis.DeserializeResponseEmotionHypothesis(element, options);
+                    case "response.function_call_arguments.delta": return ServerEventResponseFunctionCallArgumentsDelta.DeserializeServerEventResponseFunctionCallArgumentsDelta(element, options);
+                    case "response.function_call_arguments.done": return ServerEventResponseFunctionCallArgumentsDone.DeserializeServerEventResponseFunctionCallArgumentsDone(element, options);
                     case "response.output_item.added": return ServerEventResponseOutputItemAdded.DeserializeServerEventResponseOutputItemAdded(element, options);
                     case "response.output_item.done": return ServerEventResponseOutputItemDone.DeserializeServerEventResponseOutputItemDone(element, options);
                     case "response.text.delta": return ServerEventResponseTextDelta.DeserializeServerEventResponseTextDelta(element, options);

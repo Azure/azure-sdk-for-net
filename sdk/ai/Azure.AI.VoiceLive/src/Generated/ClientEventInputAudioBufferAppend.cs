@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// `input_audio_format` field in the session configuration.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
-        internal ClientEventInputAudioBufferAppend(string audio)
+        public ClientEventInputAudioBufferAppend(string audio)
         {
             Argument.AssertNotNull(audio, nameof(audio));
 
