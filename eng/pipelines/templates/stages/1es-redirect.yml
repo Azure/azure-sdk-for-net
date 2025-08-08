@@ -76,6 +76,5 @@ extends:
       credscan:
         suppressionsFile: $(Build.SourcesDirectory)/eng/CredScanSuppression.json
         scanFolder: $(Build.SourcesDirectory)/credscan.tsv
-        toolVersion: 2.3.12.23
 
     stages: ${{ parameters.stages }}
