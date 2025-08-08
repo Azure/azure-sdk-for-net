@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.StorageActions.Models
     public readonly partial struct StorageTaskOperationName : IEquatable<StorageTaskOperationName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageTaskOperationName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageTaskOperationName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SetBlobTierValue = "SetBlobTier";
         private const string SetBlobTagsValue = "SetBlobTags";
         private const string SetBlobImmutabilityPolicyValue = "SetBlobImmutabilityPolicy";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.StorageActions.Models
         private const string DeleteBlobValue = "DeleteBlob";
         private const string UndeleteBlobValue = "UndeleteBlob";
 
-        /// <summary> SetBlobTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskOperationName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageTaskOperationName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SetBlobTier. </summary>
         public static StorageTaskOperationName SetBlobTier { get; } = new StorageTaskOperationName(SetBlobTierValue);
-        /// <summary> SetBlobTags. </summary>
+
+        /// <summary> Gets the SetBlobTags. </summary>
         public static StorageTaskOperationName SetBlobTags { get; } = new StorageTaskOperationName(SetBlobTagsValue);
-        /// <summary> SetBlobImmutabilityPolicy. </summary>
+
+        /// <summary> Gets the SetBlobImmutabilityPolicy. </summary>
         public static StorageTaskOperationName SetBlobImmutabilityPolicy { get; } = new StorageTaskOperationName(SetBlobImmutabilityPolicyValue);
-        /// <summary> SetBlobLegalHold. </summary>
+
+        /// <summary> Gets the SetBlobLegalHold. </summary>
         public static StorageTaskOperationName SetBlobLegalHold { get; } = new StorageTaskOperationName(SetBlobLegalHoldValue);
-        /// <summary> SetBlobExpiry. </summary>
+
+        /// <summary> Gets the SetBlobExpiry. </summary>
         public static StorageTaskOperationName SetBlobExpiry { get; } = new StorageTaskOperationName(SetBlobExpiryValue);
-        /// <summary> DeleteBlob. </summary>
+
+        /// <summary> Gets the DeleteBlob. </summary>
         public static StorageTaskOperationName DeleteBlob { get; } = new StorageTaskOperationName(DeleteBlobValue);
-        /// <summary> UndeleteBlob. </summary>
+
+        /// <summary> Gets the UndeleteBlob. </summary>
         public static StorageTaskOperationName UndeleteBlob { get; } = new StorageTaskOperationName(UndeleteBlobValue);
+
         /// <summary> Determines if two <see cref="StorageTaskOperationName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageTaskOperationName left, StorageTaskOperationName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageTaskOperationName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageTaskOperationName left, StorageTaskOperationName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageTaskOperationName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageTaskOperationName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageTaskOperationName(string value) => new StorageTaskOperationName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageTaskOperationName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageTaskOperationName?(string value) => value == null ? null : new StorageTaskOperationName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageTaskOperationName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageTaskOperationName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
