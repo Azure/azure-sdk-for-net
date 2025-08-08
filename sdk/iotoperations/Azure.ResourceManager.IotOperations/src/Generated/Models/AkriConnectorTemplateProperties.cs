@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Diagnostics settings for the Connector template. </summary>
         internal AkriConnectorTemplateDiagnostics Diagnostics { get; set; }
         /// <summary> The log level. Examples - 'debug', 'info', 'warn', 'error', 'trace'. </summary>
+        public string LogsLevel
+        {
+            get => Diagnostics is null ? default : Diagnostics.LogsLevel;
+            set => Diagnostics = new AkriConnectorTemplateDiagnostics(value);
+        }
 
         /// <summary> Device inbound endpoint types. </summary>
         public IList<AkriConnectorTemplateDeviceInboundEndpointType> DeviceInboundEndpointTypes { get; }

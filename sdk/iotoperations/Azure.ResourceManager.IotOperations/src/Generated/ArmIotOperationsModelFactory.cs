@@ -417,32 +417,6 @@ namespace Azure.ResourceManager.IotOperations.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AkriConnectorTemplateProperties"/>. </summary>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="aioMetadata"> Metadata about AIO. </param>
-        /// <param name="runtimeConfiguration">
-        /// The runtime configuration for the Connector template.
-        /// Please note <see cref="AkriConnectorTemplateRuntimeConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorTemplateHelmConfiguration"/> and <see cref="AkriConnectorTemplateManagedConfiguration"/>.
-        /// </param>
-        /// <param name="logsLevel"> Diagnostics settings for the Connector template. </param>
-        /// <param name="deviceInboundEndpointTypes"> Device inbound endpoint types. </param>
-        /// <param name="mqttConnectionConfiguration"> Mqtt connection configuration settings. </param>
-        /// <returns> A new <see cref="Models.AkriConnectorTemplateProperties"/> instance for mocking. </returns>
-        public static AkriConnectorTemplateProperties AkriConnectorTemplateProperties(IotOperationsProvisioningState? provisioningState = null, AkriConnectorTemplateAioMetadata aioMetadata = null, AkriConnectorTemplateRuntimeConfiguration runtimeConfiguration = null, string logsLevel = null, IEnumerable<AkriConnectorTemplateDeviceInboundEndpointType> deviceInboundEndpointTypes = null, AkriConnectorsMqttConnectionConfiguration mqttConnectionConfiguration = null)
-        {
-            deviceInboundEndpointTypes ??= new List<AkriConnectorTemplateDeviceInboundEndpointType>();
-
-            return new AkriConnectorTemplateProperties(
-                provisioningState,
-                aioMetadata,
-                runtimeConfiguration,
-                logsLevel != null ? new AkriConnectorTemplateDiagnostics(new AkriConnectorsDiagnosticsLogs(logsLevel, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
-                deviceInboundEndpointTypes?.ToList(),
-                mqttConnectionConfiguration,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="IotOperations.AkriConnectorResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
