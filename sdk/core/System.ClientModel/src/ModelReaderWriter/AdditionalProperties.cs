@@ -64,11 +64,7 @@ public partial struct AdditionalProperties
         if (_properties == null)
             return false;
 
-#if NET9_0_OR_GREATER
-        return _alternateProperties.ContainsKey(jsonPath);
-#else
-        return _properties.ContainsKey(jsonPath.ToArray());
-#endif
+        return _properties.ContainsKey(jsonPath);
     }
 
     /// <summary>
@@ -359,14 +355,14 @@ public partial struct AdditionalProperties
         if (_properties == null)
             return;
 
-        if (!TryGetValueFromProperties(array, out var value))
+        if (!_properties.TryGetValue(array, out var value))
             return;
 
         if (value.Kind == ValueKind.Removed)
             return;
 
         value.Kind |= ValueKind.Written;
-        SetValueOnProperties(array, value);
+        _properties.Set(array, value);
         writer.WriteRawValue(value.Value.Span.Slice(1, value.Value.Length - 2));
     }
 
@@ -459,7 +455,7 @@ public partial struct AdditionalProperties
         if (_properties is null)
             return false;
 
-        return TryGetValueFromProperties(jsonPath, out var value) && value.Kind == ValueKind.Removed;
+        return _properties.TryGetValue(jsonPath, out var value) && value.Kind == ValueKind.Removed;
     }
 
     /// <summary>

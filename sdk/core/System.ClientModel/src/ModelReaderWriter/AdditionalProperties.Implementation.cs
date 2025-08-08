@@ -17,9 +17,6 @@ public partial struct AdditionalProperties
 {
     // Dictionary-based storage using UTF8 byte arrays as keys and encoded byte arrays as values
     private Dictionary<byte[], EncodedValue>? _properties;
-#if NET9_0_OR_GREATER
-    private Dictionary<byte[], EncodedValue>.AlternateLookup<ReadOnlySpan<byte>> _alternateProperties;
-#endif
 
     private PropagatorSetter? _propagatorSetter;
     private PropagatorGetter? _propagatorGetter;
@@ -41,28 +38,6 @@ public partial struct AdditionalProperties
         s_trueBooleanArray = new(ValueKind.BooleanTrue, "true"u8.ToArray());
         // Initialize false boolean array
         s_falseBooleanArray = new(ValueKind.BooleanFalse, "false"u8.ToArray());
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private bool TryGetValueFromProperties(ReadOnlySpan<byte> jsonPath, out EncodedValue value)
-    {
-        // This is just to minimize the #if we expect you have done the null check before calling this method
-#if NET9_0_OR_GREATER
-        return _alternateProperties.TryGetValue(jsonPath, out value);
-#else
-        return _properties!.TryGetValue(jsonPath.ToArray(), out value);
-#endif
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void SetValueOnProperties(ReadOnlySpan<byte> jsonPath, EncodedValue value)
-    {
-        // This is just to minimize the #if we expect you have done the null check before calling this method
-#if NET9_0_OR_GREATER
-        _alternateProperties[jsonPath] = value;
-#else
-        _properties![jsonPath.ToArray()] = value;
-#endif
     }
 
     private ReadOnlyMemory<byte> GetValue(ReadOnlySpan<byte> jsonPath)
@@ -104,7 +79,7 @@ public partial struct AdditionalProperties
             return false;
         }
 
-        if (!TryGetValueFromProperties(jsonPath, out var encodedValue))
+        if (!_properties.TryGetValue(jsonPath, out var encodedValue))
         {
             if (TryGetParentMatch(jsonPath, true, out var parentPath, out var currentValue))
             {
@@ -158,7 +133,7 @@ public partial struct AdditionalProperties
         }
         else
         {
-            if (TryGetValueFromProperties(jsonPath, out var encodedValue))
+            if (_properties.TryGetValue(jsonPath, out var encodedValue))
             {
                 value = encodedValue.Value;
                 return true;
@@ -188,7 +163,7 @@ public partial struct AdditionalProperties
         parentPath = jsonPath.GetParent();
         while (parentPath.Length > 0)
         {
-            if (TryGetValueFromProperties(parentPath, out encodedValue))
+            if (_properties.TryGetValue(parentPath, out encodedValue))
             {
                 return true;
             }
@@ -231,7 +206,7 @@ public partial struct AdditionalProperties
         if (count == 0)
         {
             //check for the full array entry
-            if (TryGetValueFromProperties(jsonPath.GetParent(), out var fullArrayValue))
+            if (_properties.TryGetValue(jsonPath.GetParent(), out var fullArrayValue))
             {
                 return fullArrayValue.Value;
             }
@@ -409,15 +384,12 @@ public partial struct AdditionalProperties
         if (_properties == null)
         {
             _properties = new(JsonPathComparer.Default);
-#if NET9_0_OR_GREATER
-            _alternateProperties = _properties.GetAlternateLookup<ReadOnlySpan<byte>>();
-#endif
         }
 
         if (encodedValue.Kind.HasFlag(ValueKind.Removed))
         {
             // if its remove we need to look at parents before inserting
-            if (!TryGetValueFromProperties(jsonPath, out var currentValue))
+            if (!_properties.TryGetValue(jsonPath, out var currentValue))
             {
                 if (TryGetParentMatch(jsonPath, false, out var parentBytes, out currentValue))
                 {
@@ -426,11 +398,11 @@ public partial struct AdditionalProperties
                     childPath[0] = (byte)'$';
                     childSlice.CopyTo(childPath.Slice(1));
                     var modifiedValue = currentValue.Value.Remove(childPath);
-                    SetValueOnProperties(parentBytes, new(currentValue.Kind, modifiedValue));
+                    _properties.Set(parentBytes, new(currentValue.Kind, modifiedValue));
                 }
                 else
                 {
-                    SetValueOnProperties(jsonPath, encodedValue);
+                    _properties.Set(jsonPath, encodedValue);
                 }
             }
         }
@@ -438,15 +410,15 @@ public partial struct AdditionalProperties
         {
             if (jsonPath.EndsWith("[-]"u8))
             {
-                if (TryGetValueFromProperties(jsonPath, out var currentValue))
+                if (_properties.TryGetValue(jsonPath, out var currentValue))
                 {
                     byte[] newValue = [.. currentValue.Value.Span.Slice(0, currentValue.Value.Span.Length - 1), (byte)',', .. encodedValue.Value.Span, (byte)']'];
-                    SetValueOnProperties(jsonPath, new(currentValue.Kind, newValue));
+                    _properties.Set(jsonPath, new(currentValue.Kind, newValue));
                 }
                 else
                 {
                     byte[] newValue = [(byte)'[', .. encodedValue.Value.Span, (byte)']'];
-                    SetValueOnProperties(jsonPath, new(encodedValue.Kind, newValue));
+                    _properties.Set(jsonPath, new(encodedValue.Kind, newValue));
                 }
             }
             else
@@ -459,11 +431,11 @@ public partial struct AdditionalProperties
                     childPath[0] = (byte)'$';
                     childSlice.CopyTo(childPath.Slice(1));
                     var modifiedValue = currentValue.Value.Set(childPath, encodedValue.Value);
-                    SetValueOnProperties(parentBytes, new(currentValue.Kind, modifiedValue));
+                    _properties.Set(parentBytes, new(currentValue.Kind, modifiedValue));
                 }
                 else
                 {
-                    SetValueOnProperties(jsonPath, encodedValue);
+                    _properties.Set(jsonPath, encodedValue);
                 }
             }
         }

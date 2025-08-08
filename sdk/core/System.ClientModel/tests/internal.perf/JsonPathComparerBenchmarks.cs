@@ -6,7 +6,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {
-    public class JsonPathEqualityComparerBenchmarks
+    public class JsonPathComparerBenchmarks
     {
         private byte[] _path1a = "$.properties.virtualMachines[0].name"u8.ToArray();
         private byte[] _path1b = "$.properties.virtualMachines[0].name"u8.ToArray();
