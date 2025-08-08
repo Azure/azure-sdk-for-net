@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
-using Azure.Generator.Tests.Common;
 using Microsoft.TypeSpec.Generator.Input;
 using System.Text.Json;
 using System.Text.Json.Serialization;
