@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 namespace Azure.Generator.Management.Tests.Common
 {
     /// <summary>
-    /// Helper methods for Auzre plugin tests
+    /// Helper methods for Azure plugin tests
     /// </summary>
     public static class Helpers
     {
