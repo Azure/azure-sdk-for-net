@@ -100,7 +100,7 @@ public class AudioProcessor : IDisposable
 
                 _logger.LogInformation($"{i}: {deviceInfo.ProductName}");
             }
-            _waveIn.DeviceNumber = 1;
+            _waveIn.DeviceNumber = 0; // Default to first device
 
             _waveIn.StartRecording();
             

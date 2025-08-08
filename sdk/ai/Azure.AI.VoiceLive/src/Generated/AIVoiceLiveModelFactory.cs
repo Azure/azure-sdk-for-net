@@ -1146,9 +1146,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the function call item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="callId"> The ID of the function call. </param>
+        /// <param name="name"> function name. </param>
         /// <param name="arguments"> The final arguments as a JSON string. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDone"/> instance for mocking. </returns>
-        public static ServerEventResponseFunctionCallArgumentsDone ServerEventResponseFunctionCallArgumentsDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string arguments = null)
+        public static ServerEventResponseFunctionCallArgumentsDone ServerEventResponseFunctionCallArgumentsDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string name = null, string arguments = null)
         {
             return new ServerEventResponseFunctionCallArgumentsDone(
                 ServerEventType.ResponseFunctionCallArgumentsDone,
@@ -1158,6 +1159,7 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 outputIndex,
                 callId,
+                name,
                 arguments);
         }
     }

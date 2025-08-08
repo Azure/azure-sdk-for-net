@@ -469,32 +469,25 @@ public class CustomerServiceBot : IDisposable
                 break;
             case ServerEventResponseDone responseDone:
                 _logger.LogInformation("✅ Response complete");
+                break;
+            case ServerEventResponseFunctionCallArgumentsDone functionCallArgumentsDone:
+                _logger.LogInformation("🔧 Function call arguments done for call ID: {CallId}", functionCallArgumentsDone.CallId);
+                await HandleFunctionCallAsync(functionCallArgumentsDone.Name, functionCallArgumentsDone.CallId, functionCallArgumentsDone.Arguments, cancellationToken);
 
-                // We could have assembled a function call on the fly from delta notifications, but since these function
-                // calls would not benefit from partial information we're going to wait for the entire call to be here
-                // before doing anything with it.
-                foreach(var responseItem in responseDone.Response.Output)
-                {
-                    switch (responseItem)
-                    {
-                        case ResponseMessageItem messageItem:
-
-                            // In addition to the audio, write the assistants 
-                            if(messageItem.Role == MessageRole.Assistant)
-                            {
-
-                            }
-                            break;
-                        case ResponseFunctionCallItem functionCall:
-                            break;
-                    }
-                }
                 break;
             case ServerEventResponseAudioTranscriptDelta transcriptDelta:
                 // For now, only deal with the assistant responses.
                 if(_assistantMessageResponses.Contains( transcriptDelta.ResponseId))
                 {
                     Console.Write($"{transcriptDelta.Delta}");
+                }
+                break;
+
+            case ServerEventResponseAudioTranscriptDone transcriptDone:
+                // For now, only deal with the assistant responses.
+                if (_assistantMessageResponses.Contains(transcriptDone.ResponseId))
+                {
+                    Console.WriteLine();
                 }
                 break;
             case ServerEventError errorEvent:

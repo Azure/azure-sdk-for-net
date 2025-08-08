@@ -267,7 +267,7 @@ namespace Azure.AI.VoiceLive
             var itemCreateData = new
             {
                 type = "conversation.item.create",
-                item = item,
+                item = item.ToRequestContent(),
                 previous_item_id = previousItemId
             };
 

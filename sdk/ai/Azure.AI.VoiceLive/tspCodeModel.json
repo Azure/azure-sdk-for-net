@@ -14203,11 +14203,32 @@
               {
                 "$id": "1047",
                 "kind": "property",
+                "name": "name",
+                "serializedName": "name",
+                "doc": "function name",
+                "type": {
+                  "$id": "1048",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "VoiceLive.ServerEventResponseFunctionCallArgumentsDone.name",
+                "serializationOptions": {}
+              },
+              {
+                "$id": "1049",
+                "kind": "property",
                 "name": "arguments",
                 "serializedName": "arguments",
                 "doc": "The final arguments as a JSON string.",
                 "type": {
-                  "$id": "1048",
+                  "$id": "1050",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -14227,13 +14248,13 @@
       },
       "properties": [
         {
-          "$id": "1049",
+          "$id": "1051",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The event type, must be 'session.avatar.connecting'.",
           "type": {
-            "$id": "1050",
+            "$id": "1052",
             "kind": "enumvalue",
             "name": "session_avatar_connecting",
             "value": "session.avatar.connecting",
@@ -14258,13 +14279,13 @@
           }
         },
         {
-          "$id": "1051",
+          "$id": "1053",
           "kind": "property",
           "name": "server_sdp",
           "serializedName": "server_sdp",
           "doc": "The server's SDP answer for the avatar connection.",
           "type": {
-            "$id": "1052",
+            "$id": "1054",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -14443,13 +14464,13 @@
   ],
   "clients": [
     {
-      "$id": "1053",
+      "$id": "1055",
       "kind": "client",
       "name": "VoiceLiveClient",
       "namespace": "Azure.AI.VoiceLive",
       "methods": [
         {
-          "$id": "1054",
+          "$id": "1056",
           "kind": "basic",
           "name": "force_models",
           "accessibility": "internal",
@@ -14457,13 +14478,13 @@
             "2025-05-01-preview"
           ],
           "operation": {
-            "$id": "1055",
+            "$id": "1057",
             "name": "force_models",
             "resourceName": "VoiceLive",
             "accessibility": "internal",
             "parameters": [
               {
-                "$id": "1056",
+                "$id": "1058",
                 "name": "contentType",
                 "nameInRequest": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
@@ -14481,11 +14502,11 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "1057",
+                "$id": "1059",
                 "name": "accept",
                 "nameInRequest": "Accept",
                 "type": {
-                  "$id": "1058",
+                  "$id": "1060",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -14502,7 +14523,7 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "1059",
+                "$id": "1061",
                 "name": "forceModelsRequest",
                 "nameInRequest": "forceModelsRequest",
                 "type": {
@@ -14574,7 +14595,7 @@
           },
           "parameters": [
             {
-              "$id": "1060",
+              "$id": "1062",
               "name": "event",
               "nameInRequest": "event",
               "type": {
@@ -14591,7 +14612,7 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "1061",
+              "$id": "1063",
               "name": "contentType",
               "nameInRequest": "contentType",
               "doc": "Body parameter's content type. Known values are application/json",
@@ -14609,11 +14630,11 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "1062",
+              "$id": "1064",
               "name": "accept",
               "nameInRequest": "accept",
               "type": {
-                "$ref": "1058"
+                "$ref": "1060"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -14639,12 +14660,12 @@
       ],
       "parameters": [
         {
-          "$id": "1063",
+          "$id": "1065",
           "name": "endpoint",
           "nameInRequest": "endpoint",
           "doc": "Azure AI VoiceLive endpoint.",
           "type": {
-            "$id": "1064",
+            "$id": "1066",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
