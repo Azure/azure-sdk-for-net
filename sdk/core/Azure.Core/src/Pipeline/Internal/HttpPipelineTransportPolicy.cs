@@ -9,11 +9,9 @@ namespace Azure.Core.Pipeline
 {
     internal class HttpPipelineTransportPolicy : HttpPipelinePolicy
     {
-        private volatile HttpPipelineTransport _transport;
+        private readonly HttpPipelineTransport _transport;
         private readonly HttpMessageSanitizer _sanitizer;
         private readonly RequestFailedDetailsParser? _errorParser;
-
-        public HttpPipelineTransport Transport => _transport;
 
         public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, RequestFailedDetailsParser? failureContentExtractor = null)
         {
@@ -26,11 +24,7 @@ namespace Azure.Core.Pipeline
         {
             Debug.Assert(pipeline.IsEmpty);
 
-            // Capture current transport reference - this ensures that even if _transport
-            // is swapped during execution, this call will complete with the original transport
-            var currentTransport = _transport;
-
-            await currentTransport.ProcessAsync(message).ConfigureAwait(false);
+            await _transport.ProcessAsync(message).ConfigureAwait(false);
 
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
@@ -41,11 +35,7 @@ namespace Azure.Core.Pipeline
         {
             Debug.Assert(pipeline.IsEmpty);
 
-            // Capture current transport reference - this ensures that even if _transport
-            // is swapped during execution, this call will complete with the original transport
-            var currentTransport = _transport;
-
-            currentTransport.Process(message);
+            _transport.Process(message);
 
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;

@@ -423,7 +423,6 @@ namespace Azure.Core
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
-        public System.Func<Azure.Core.Pipeline.HttpPipelineTransportOptions, Azure.Core.Pipeline.HttpPipelineTransport>? TransportFactory { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
@@ -544,10 +543,6 @@ namespace Azure.Core
         PerCall = 0,
         PerRetry = 1,
         BeforeTransport = 2,
-    }
-    public enum HttpPipelineUpdatePosition
-    {
-        Transport = 0,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessageProcessingContext
@@ -1064,10 +1059,12 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport() { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
+        public static Azure.Core.Pipeline.HttpClientTransport Create(System.Func<Azure.Core.Pipeline.HttpPipelineTransportOptions, Azure.Core.Pipeline.HttpClientTransport> transportUpdateFactory, Azure.Core.Pipeline.HttpPipelineTransportOptions? options = null) { throw null; }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
         public void Dispose() { }
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
+        public override bool TryUpdateTransport(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { throw null; }
     }
     public partial class HttpPipeline
     {
@@ -1083,7 +1080,6 @@ namespace Azure.Core.Pipeline
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
         public Azure.Response SendRequest(Azure.Core.Request request, System.Threading.CancellationToken cancellationToken) { throw null; }
         public System.Threading.Tasks.ValueTask<Azure.Response> SendRequestAsync(Azure.Core.Request request, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public void UpdatePolicy(Azure.Core.HttpPipelineUpdatePosition position, object options) { }
     }
     public static partial class HttpPipelineBuilder
     {
@@ -1105,12 +1101,10 @@ namespace Azure.Core.Pipeline
     public abstract partial class HttpPipelinePolicy
     {
         protected HttpPipelinePolicy() { }
-        public Azure.Core.Pipeline.HttpPipeline? OwningPipeline { get { throw null; } }
         public abstract void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);
         protected static void ProcessNext(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         protected static System.Threading.Tasks.ValueTask ProcessNextAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-        public virtual void Update(object options) { }
     }
     [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
     public abstract partial class HttpPipelineSynchronousPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
@@ -1127,6 +1121,7 @@ namespace Azure.Core.Pipeline
         public abstract Azure.Core.Request CreateRequest();
         public abstract void Process(Azure.Core.HttpMessage message);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message);
+        public virtual bool TryUpdateTransport(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { throw null; }
     }
     public partial class HttpPipelineTransportOptions
     {
@@ -1134,12 +1129,12 @@ namespace Azure.Core.Pipeline
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public bool IsClientRedirectEnabled { get { throw null; } set { } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
-        public System.Func<Azure.Core.Pipeline.HttpPipelineTransportOptions, Azure.Core.Pipeline.HttpPipelineTransport>? TransportFactory { get { throw null; } set { } }
     }
     public partial class PopTokenAuthenticationPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
-        public PopTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, Azure.Core.Pipeline.HttpPipeline httpPipeline) { }
-        public PopTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope, Azure.Core.Pipeline.HttpPipeline httpPipeline) { }
+        public PopTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
+        public PopTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
+        public event System.Action<Azure.Core.Pipeline.HttpPipelineTransportOptions>? TransportUpdated { add { } remove { } }
         protected void AuthenticateAndAuthorizeRequest(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { }
         protected System.Threading.Tasks.ValueTask AuthenticateAndAuthorizeRequestAsync(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { throw null; }
         protected virtual void AuthorizeRequest(Azure.Core.HttpMessage message) { }

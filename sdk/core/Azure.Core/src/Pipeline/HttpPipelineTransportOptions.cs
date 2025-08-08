@@ -46,7 +46,7 @@ namespace Azure.Core.Pipeline
         /// Creates a clone of the current <see cref="HttpPipelineTransportOptions"/> instance with the same settings.
         /// </summary>
         /// <returns></returns>
-        public HttpPipelineTransportOptions Clone()
+        internal HttpPipelineTransportOptions Clone()
         {
             var clone = new HttpPipelineTransportOptions
             {
