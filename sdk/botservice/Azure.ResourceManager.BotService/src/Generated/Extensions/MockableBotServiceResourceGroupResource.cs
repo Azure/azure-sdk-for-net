@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

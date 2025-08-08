@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(BotIconUri))
             {
                 writer.WritePropertyName("botIconUrl"u8);
-                writer.WriteStringValue(BotIconUri);
+                writer.WriteStringValue(BotIconUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.BotService.Models
             }
             string extensionKey1 = default;
             string extensionKey2 = default;
-            IReadOnlyList<BotChannelSite> sites = default;
+            IList<BotChannelSite> sites = default;
             string channelId = default;
             string channelDisplayName = default;
             string botId = default;
-            string botIconUrl = default;
+            Uri botIconUrl = default;
             bool? isEnabled = default;
             bool? disableLocalAuth = default;
             bool? requireTermsAgreement = default;
@@ -181,7 +181,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("botIconUrl"u8))
                 {
-                    botIconUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    botIconUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isEnabled"u8))

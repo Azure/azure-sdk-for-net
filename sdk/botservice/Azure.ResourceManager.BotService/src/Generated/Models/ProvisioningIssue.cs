@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.BotService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        internal ProvisioningIssue()
+        public ProvisioningIssue()
         {
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Name of the issue. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Properties of Provisioning Issue. </summary>
         public ProvisioningIssueProperties Properties { get; }
     }

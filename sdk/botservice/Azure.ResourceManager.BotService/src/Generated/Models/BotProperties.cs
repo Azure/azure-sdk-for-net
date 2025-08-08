@@ -50,11 +50,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="endpoint"> The bot's endpoint. </param>
         /// <param name="msaAppId"> Microsoft App Id for the bot. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="endpoint"/> or <paramref name="msaAppId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="msaAppId"/> is null. </exception>
         public BotProperties(string displayName, Uri endpoint, string msaAppId)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(msaAppId, nameof(msaAppId));
 
             DisplayName = displayName;
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="publishingCredentials"> Publishing credentials of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotProperties(string displayName, string description, string iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, string manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IReadOnlyList<string> configuredChannels, IReadOnlyList<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IList<string> luisAppIds, string luisKey, bool? isCmekEnabled, string cmekKeyVaultUri, string cmekEncryptionStatus, string tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<NetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IReadOnlyList<string> configuredChannels, IReadOnlyList<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IList<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<NetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The description of the bot. </summary>
         public string Description { get; set; }
         /// <summary> The Icon Url of the bot. </summary>
-        public string IconUri { get; set; }
+        public Uri IconUri { get; set; }
         /// <summary> The bot's endpoint. </summary>
         public Uri Endpoint { get; set; }
         /// <summary> The bot's endpoint version. </summary>
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Contains resource parameters defined as key/value pairs. </summary>
         public IDictionary<string, string> Parameters { get; }
         /// <summary> The bot's manifest url. </summary>
-        public string ManifestUri { get; set; }
+        public Uri ManifestUri { get; set; }
         /// <summary> Microsoft App Type for the bot. </summary>
         public BotMsaAppType? MsaAppType { get; set; }
         /// <summary> Microsoft App Id for the bot. </summary>
@@ -194,11 +193,11 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Whether Cmek is enabled. </summary>
         public bool? IsCmekEnabled { get; set; }
         /// <summary> The CMK Url. </summary>
-        public string CmekKeyVaultUri { get; set; }
+        public Uri CmekKeyVaultUri { get; set; }
         /// <summary> The CMK encryption status. </summary>
         public string CmekEncryptionStatus { get; }
         /// <summary> The Tenant Id for the bot. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         /// <summary> Whether the bot is in an isolated network. </summary>
         public BotServicePublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Whether the bot is streaming supported. </summary>

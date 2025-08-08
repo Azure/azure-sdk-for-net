@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="iconUri"> The URL of icon. </param>
         /// <param name="parameters"> The list of parameters for the Service Provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotServiceProviderProperties(string id, string displayName, string serviceProviderName, string devPortalUri, string iconUri, IReadOnlyList<BotServiceProviderParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotServiceProviderProperties(string id, string displayName, string serviceProviderName, Uri devPortalUri, Uri iconUri, IReadOnlyList<BotServiceProviderParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Name of the Service Provider. </summary>
         public string ServiceProviderName { get; }
         /// <summary> URL of Dev Portal. </summary>
-        public string DevPortalUri { get; }
+        public Uri DevPortalUri { get; }
         /// <summary> The URL of icon. </summary>
-        public string IconUri { get; }
+        public Uri IconUri { get; }
         /// <summary> The list of parameters for the Service Provider. </summary>
         public IReadOnlyList<BotServiceProviderParameter> Parameters { get; }
     }

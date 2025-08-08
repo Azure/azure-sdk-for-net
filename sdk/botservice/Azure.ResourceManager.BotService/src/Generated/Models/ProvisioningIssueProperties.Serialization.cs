@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string issueType = default;
-            BotServiceSeverity? severity = default;
+            Severity? severity = default;
             string description = default;
             IReadOnlyList<ResourceIdentifier> suggestedResourceIds = default;
             IReadOnlyList<NspAccessRule> suggestedAccessRules = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    severity = new BotServiceSeverity(property.Value.GetString());
+                    severity = new Severity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (options.Format != "W" && Optional.IsDefined(CallbackUri))
             {
                 writer.WritePropertyName("callbackUrl"u8);
-                writer.WriteStringValue(CallbackUri);
+                writer.WriteStringValue(CallbackUri.AbsoluteUri);
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.BotService.Models
             IList<FacebookPage> pages = default;
             string appId = default;
             string appSecret = default;
-            string callbackUrl = default;
+            Uri callbackUrl = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("callbackUrl"u8))
                 {
-                    callbackUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    callbackUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isEnabled"u8))

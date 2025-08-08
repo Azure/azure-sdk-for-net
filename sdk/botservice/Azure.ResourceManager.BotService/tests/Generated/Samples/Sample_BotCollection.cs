@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateBot()
         {
-            // Generated from example definition: 2023-09-15-preview/CreateBot.json
-            // this example is just showing the usage of "Bot_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/CreateBot.json
+            // this example is just showing the usage of "Bots_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.BotService.Samples
                 Properties = new BotProperties("The Name of the bot", new Uri("http://mybot.coffee"), "exampleappid")
                 {
                     Description = "The description of the bot",
-                    IconUri = "http://myicon",
+                    IconUri = new Uri("http://myicon"),
                     MsaAppType = BotMsaAppType.UserAssignedMSI,
                     MsaAppTenantId = "exampleapptenantid",
                     MsaAppMSIResourceId = new ResourceIdentifier("/subscriptions/foo/resourcegroups/bar/providers/microsoft.managedidentity/userassignedidentities/sampleId"),
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.BotService.Samples
                     LuisAppIds = { "luisappid1", "luisappid2" },
                     LuisKey = "luiskey",
                     IsCmekEnabled = true,
-                    CmekKeyVaultUri = "https://myCmekKey",
+                    CmekKeyVaultUri = new Uri("https://myCmekKey"),
                     PublicNetworkAccess = BotServicePublicNetworkAccess.Enabled,
                     IsLocalAuthDisabled = true,
                     SchemaTransformationVersion = "1.0",
                 },
                 Sku = new BotServiceSku(BotServiceSkuName.S1),
                 Kind = BotServiceKind.Sdk,
-                ETag = "etag1",
+                ETag = new ETag("etag1"),
                 Tags =
 {
 ["tag1"] = "value1",
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBot()
         {
-            // Generated from example definition: 2023-09-15-preview/GetBot.json
-            // this example is just showing the usage of "Bot_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetBot.json
+            // this example is just showing the usage of "Bots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListBotsByResourceGroup()
         {
-            // Generated from example definition: 2023-09-15-preview/ListBotsByResourceGroup.json
-            // this example is just showing the usage of "Bot_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/ListBotsByResourceGroup.json
+            // this example is just showing the usage of "Bots_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetBot()
         {
-            // Generated from example definition: 2023-09-15-preview/GetBot.json
-            // this example is just showing the usage of "Bot_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetBot.json
+            // this example is just showing the usage of "Bots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetBot()
         {
-            // Generated from example definition: 2023-09-15-preview/GetBot.json
-            // this example is just showing the usage of "Bot_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetBot.json
+            // this example is just showing the usage of "Bots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

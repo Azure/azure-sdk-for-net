@@ -44,10 +44,17 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUrl"u8);
-                writer.WriteStringValue(IconUri);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(Endpoint.AbsoluteUri);
+            if (Endpoint != null)
+            {
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNull("endpoint");
+            }
             if (options.Format != "W" && Optional.IsDefined(EndpointVersion))
             {
                 writer.WritePropertyName("endpointVersion"u8);
@@ -78,7 +85,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(ManifestUri))
             {
                 writer.WritePropertyName("manifestUrl"u8);
-                writer.WriteStringValue(ManifestUri);
+                writer.WriteStringValue(ManifestUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MsaAppType))
             {
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(CmekKeyVaultUri))
             {
                 writer.WritePropertyName("cmekKeyVaultUrl"u8);
-                writer.WriteStringValue(CmekKeyVaultUri);
+                writer.WriteStringValue(CmekKeyVaultUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(CmekEncryptionStatus))
             {
@@ -165,7 +172,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -288,12 +295,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
             string displayName = default;
             string description = default;
-            string iconUrl = default;
+            Uri iconUrl = default;
             Uri endpoint = default;
             string endpointVersion = default;
             IDictionary<string, string> allSettings = default;
             IDictionary<string, string> parameters = default;
-            string manifestUrl = default;
+            Uri manifestUrl = default;
             BotMsaAppType? msaAppType = default;
             string msaAppId = default;
             string msaAppTenantId = default;
@@ -306,9 +313,9 @@ namespace Azure.ResourceManager.BotService.Models
             IList<string> luisAppIds = default;
             string luisKey = default;
             bool? isCmekEnabled = default;
-            string cmekKeyVaultUrl = default;
+            Uri cmekKeyVaultUrl = default;
             string cmekEncryptionStatus = default;
-            string tenantId = default;
+            Guid? tenantId = default;
             BotServicePublicNetworkAccess? publicNetworkAccess = default;
             bool? isStreamingSupported = default;
             bool? isDeveloperAppInsightsApiKeySet = default;
@@ -338,11 +345,20 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("iconUrl"u8))
                 {
-                    iconUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iconUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("endpoint"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endpoint = null;
+                        continue;
+                    }
                     endpoint = new Uri(property.Value.GetString());
                     continue;
                 }
@@ -381,7 +397,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("manifestUrl"u8))
                 {
-                    manifestUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    manifestUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("msaAppType"u8))
@@ -485,7 +505,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("cmekKeyVaultUrl"u8))
                 {
-                    cmekKeyVaultUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cmekKeyVaultUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cmekEncryptionStatus"u8))
@@ -495,7 +519,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))

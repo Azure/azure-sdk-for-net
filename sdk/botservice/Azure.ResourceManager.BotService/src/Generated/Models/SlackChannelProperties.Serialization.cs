@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(LandingPageUri))
             {
                 writer.WritePropertyName("landingPageUrl"u8);
-                writer.WriteStringValue(LandingPageUri);
+                writer.WriteStringValue(LandingPageUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(RedirectAction))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.BotService.Models
             string clientSecret = default;
             string verificationToken = default;
             string scopes = default;
-            string landingPageUrl = default;
+            Uri landingPageUrl = default;
             string redirectAction = default;
             string lastSubmissionId = default;
             bool? registerBeforeOAuthFlow = default;
@@ -160,7 +160,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("landingPageUrl"u8))
                 {
-                    landingPageUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    landingPageUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("redirectAction"u8))

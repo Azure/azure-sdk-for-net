@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(OAuthUri))
             {
                 writer.WritePropertyName("OAuthUrl"u8);
-                writer.WriteStringValue(OAuthUri);
+                writer.WriteStringValue(OAuthUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ToBotFromChannelOpenIdMetadataUri))
             {
                 writer.WritePropertyName("ToBotFromChannelOpenIdMetadataUrl"u8);
-                writer.WriteStringValue(ToBotFromChannelOpenIdMetadataUri);
+                writer.WriteStringValue(ToBotFromChannelOpenIdMetadataUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ToBotFromChannelTokenIssuer))
             {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(ToBotFromEmulatorOpenIdMetadataUri))
             {
                 writer.WritePropertyName("ToBotFromEmulatorOpenIdMetadataUrl"u8);
-                writer.WriteStringValue(ToBotFromEmulatorOpenIdMetadataUri);
+                writer.WriteStringValue(ToBotFromEmulatorOpenIdMetadataUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ToChannelFromBotLoginUri))
             {
                 writer.WritePropertyName("ToChannelFromBotLoginUrl"u8);
-                writer.WriteStringValue(ToChannelFromBotLoginUri);
+                writer.WriteStringValue(ToChannelFromBotLoginUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ToChannelFromBotOAuthScope))
             {
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            string oAuthUrl = default;
-            string toBotFromChannelOpenIdMetadataUrl = default;
+            Uri oAuthUrl = default;
+            Uri toBotFromChannelOpenIdMetadataUrl = default;
             string toBotFromChannelTokenIssuer = default;
-            string toBotFromEmulatorOpenIdMetadataUrl = default;
-            string toChannelFromBotLoginUrl = default;
+            Uri toBotFromEmulatorOpenIdMetadataUrl = default;
+            Uri toChannelFromBotLoginUrl = default;
             string toChannelFromBotOAuthScope = default;
             bool? validateAuthority = default;
             string botOpenIdMetadata = default;
@@ -125,12 +125,20 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 if (property.NameEquals("OAuthUrl"u8))
                 {
-                    oAuthUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    oAuthUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ToBotFromChannelOpenIdMetadataUrl"u8))
                 {
-                    toBotFromChannelOpenIdMetadataUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toBotFromChannelOpenIdMetadataUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ToBotFromChannelTokenIssuer"u8))
@@ -140,12 +148,20 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("ToBotFromEmulatorOpenIdMetadataUrl"u8))
                 {
-                    toBotFromEmulatorOpenIdMetadataUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toBotFromEmulatorOpenIdMetadataUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ToChannelFromBotLoginUrl"u8))
                 {
-                    toChannelFromBotLoginUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toChannelFromBotLoginUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ToChannelFromBotOAuthScope"u8))

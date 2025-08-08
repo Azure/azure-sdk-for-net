@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.BotService.Models
             if (options.Format != "W" && Optional.IsDefined(DevPortalUri))
             {
                 writer.WritePropertyName("devPortalUrl"u8);
-                writer.WriteStringValue(DevPortalUri);
+                writer.WriteStringValue(DevPortalUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUrl"u8);
-                writer.WriteStringValue(IconUri);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.BotService.Models
             string id = default;
             string displayName = default;
             string serviceProviderName = default;
-            string devPortalUrl = default;
-            string iconUrl = default;
+            Uri devPortalUrl = default;
+            Uri iconUrl = default;
             IReadOnlyList<BotServiceProviderParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -133,12 +133,20 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("devPortalUrl"u8))
                 {
-                    devPortalUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    devPortalUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("iconUrl"u8))
                 {
-                    iconUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iconUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

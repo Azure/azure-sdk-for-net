@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        etag = null;
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());

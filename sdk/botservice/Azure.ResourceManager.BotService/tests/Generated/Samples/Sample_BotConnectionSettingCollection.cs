@@ -14,14 +14,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.BotService.Samples
 {
-    public partial class Sample_BotServicePrivateEndpointConnectionCollection
+    public partial class Sample_BotConnectionSettingCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_PutPrivateEndpointConnection()
+        public async Task CreateOrUpdate_CreateConnectionSetting()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/PutPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/PutConnection.json
+            // this example is just showing the usage of "BotConnection_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,41 +30,53 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res7687";
-            string resourceName = "sto9699";
+            string subscriptionId = "subscription-id";
+            string resourceGroupName = "OneResourceGroupName";
+            string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             BotResource bot = client.GetBotResource(botResourceId);
 
-            // get the collection of this BotServicePrivateEndpointConnectionResource
-            BotServicePrivateEndpointConnectionCollection collection = bot.GetBotServicePrivateEndpointConnections();
+            // get the collection of this BotConnectionSettingResource
+            BotConnectionSettingCollection collection = bot.GetBotConnectionSettings();
 
             // invoke the operation
-            string privateEndpointConnectionName = "{privateEndpointConnectionName}";
-            BotServicePrivateEndpointConnectionData data = new BotServicePrivateEndpointConnectionData
+            string connectionName = "sampleConnection";
+            BotConnectionSettingData data = new BotConnectionSettingData(new AzureLocation("West US"))
             {
-                ConnectionState = new BotServicePrivateLinkServiceConnectionState
+                Properties = new BotConnectionSettingProperties
                 {
-                    Status = BotServicePrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "Auto-Approved",
+                    ClientId = "sampleclientid",
+                    ClientSecret = "samplesecret",
+                    Scopes = "samplescope",
+                    ServiceProviderId = "serviceproviderid",
+                    Parameters = {new BotConnectionSettingParameter
+{
+Key = "key1",
+Value = "value1",
+}, new BotConnectionSettingParameter
+{
+Key = "key2",
+Value = "value2",
+}},
                 },
+                ETag = new ETag("etag1"),
             };
-            ArmOperation<BotServicePrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            BotServicePrivateEndpointConnectionResource result = lro.Value;
+            ArmOperation<BotConnectionSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
+            BotConnectionSettingResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BotServicePrivateEndpointConnectionData resourceData = result.Data;
+            BotConnectionSettingData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetPrivateEndpointConnection()
+        public async Task Get_GetConnectionSetting()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetConnection.json
+            // this example is just showing the usage of "BotConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -73,32 +85,32 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res6977";
-            string resourceName = "sto2527";
+            string subscriptionId = "subscription-id";
+            string resourceGroupName = "OneResourceGroupName";
+            string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             BotResource bot = client.GetBotResource(botResourceId);
 
-            // get the collection of this BotServicePrivateEndpointConnectionResource
-            BotServicePrivateEndpointConnectionCollection collection = bot.GetBotServicePrivateEndpointConnections();
+            // get the collection of this BotConnectionSettingResource
+            BotConnectionSettingCollection collection = bot.GetBotConnectionSettings();
 
             // invoke the operation
-            string privateEndpointConnectionName = "{privateEndpointConnectionName}";
-            BotServicePrivateEndpointConnectionResource result = await collection.GetAsync(privateEndpointConnectionName);
+            string connectionName = "sampleConnection";
+            BotConnectionSettingResource result = await collection.GetAsync(connectionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            BotServicePrivateEndpointConnectionData resourceData = result.Data;
+            BotConnectionSettingData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListPrivateEndpointConnections()
+        public async Task GetAll_ListConnectionSettings()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/ListPrivateEndpointConnections.json
-            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/ListConnectionsByBotService.json
+            // this example is just showing the usage of "BotConnection_ListByBotService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -107,21 +119,21 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res6977";
-            string resourceName = "sto2527";
+            string subscriptionId = "subscription-id";
+            string resourceGroupName = "OneResourceGroupName";
+            string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             BotResource bot = client.GetBotResource(botResourceId);
 
-            // get the collection of this BotServicePrivateEndpointConnectionResource
-            BotServicePrivateEndpointConnectionCollection collection = bot.GetBotServicePrivateEndpointConnections();
+            // get the collection of this BotConnectionSettingResource
+            BotConnectionSettingCollection collection = bot.GetBotConnectionSettings();
 
             // invoke the operation and iterate over the result
-            await foreach (BotServicePrivateEndpointConnectionResource item in collection.GetAllAsync())
+            await foreach (BotConnectionSettingResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                BotServicePrivateEndpointConnectionData resourceData = item.Data;
+                BotConnectionSettingData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -131,10 +143,10 @@ namespace Azure.ResourceManager.BotService.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetPrivateEndpointConnection()
+        public async Task Exists_GetConnectionSetting()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetConnection.json
+            // this example is just showing the usage of "BotConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -143,28 +155,28 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res6977";
-            string resourceName = "sto2527";
+            string subscriptionId = "subscription-id";
+            string resourceGroupName = "OneResourceGroupName";
+            string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             BotResource bot = client.GetBotResource(botResourceId);
 
-            // get the collection of this BotServicePrivateEndpointConnectionResource
-            BotServicePrivateEndpointConnectionCollection collection = bot.GetBotServicePrivateEndpointConnections();
+            // get the collection of this BotConnectionSettingResource
+            BotConnectionSettingCollection collection = bot.GetBotConnectionSettings();
 
             // invoke the operation
-            string privateEndpointConnectionName = "{privateEndpointConnectionName}";
-            bool result = await collection.ExistsAsync(privateEndpointConnectionName);
+            string connectionName = "sampleConnection";
+            bool result = await collection.ExistsAsync(connectionName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetPrivateEndpointConnection()
+        public async Task GetIfExists_GetConnectionSetting()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetConnection.json
+            // this example is just showing the usage of "BotConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -173,19 +185,19 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res6977";
-            string resourceName = "sto2527";
+            string subscriptionId = "subscription-id";
+            string resourceGroupName = "OneResourceGroupName";
+            string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             BotResource bot = client.GetBotResource(botResourceId);
 
-            // get the collection of this BotServicePrivateEndpointConnectionResource
-            BotServicePrivateEndpointConnectionCollection collection = bot.GetBotServicePrivateEndpointConnections();
+            // get the collection of this BotConnectionSettingResource
+            BotConnectionSettingCollection collection = bot.GetBotConnectionSettings();
 
             // invoke the operation
-            string privateEndpointConnectionName = "{privateEndpointConnectionName}";
-            NullableResponse<BotServicePrivateEndpointConnectionResource> response = await collection.GetIfExistsAsync(privateEndpointConnectionName);
-            BotServicePrivateEndpointConnectionResource result = response.HasValue ? response.Value : null;
+            string connectionName = "sampleConnection";
+            NullableResponse<BotConnectionSettingResource> response = await collection.GetIfExistsAsync(connectionName);
+            BotConnectionSettingResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -195,7 +207,7 @@ namespace Azure.ResourceManager.BotService.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                BotServicePrivateEndpointConnectionData resourceData = result.Data;
+                BotConnectionSettingData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="validateAuthority"> Per cloud OAuth setting on whether authority is validated. </param>
         /// <param name="botOpenIdMetadata"> Same as toBotFromChannelOpenIdMetadataUrl, used by SDK &lt; v4.12. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotServiceHostSettingsResult(string oAuthUri, string toBotFromChannelOpenIdMetadataUri, string toBotFromChannelTokenIssuer, string toBotFromEmulatorOpenIdMetadataUri, string toChannelFromBotLoginUri, string toChannelFromBotOAuthScope, bool? validateAuthority, string botOpenIdMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotServiceHostSettingsResult(Uri oAuthUri, Uri toBotFromChannelOpenIdMetadataUri, string toBotFromChannelTokenIssuer, Uri toBotFromEmulatorOpenIdMetadataUri, Uri toChannelFromBotLoginUri, string toChannelFromBotOAuthScope, bool? validateAuthority, string botOpenIdMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OAuthUri = oAuthUri;
             ToBotFromChannelOpenIdMetadataUri = toBotFromChannelOpenIdMetadataUri;
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> For in-conversation bot user authentication. </summary>
-        public string OAuthUri { get; }
+        public Uri OAuthUri { get; }
         /// <summary> For verifying incoming tokens from the channels. </summary>
-        public string ToBotFromChannelOpenIdMetadataUri { get; }
+        public Uri ToBotFromChannelOpenIdMetadataUri { get; }
         /// <summary> For verifying incoming tokens from the channels. </summary>
         public string ToBotFromChannelTokenIssuer { get; }
         /// <summary> For verifying incoming tokens from bot emulator. </summary>
-        public string ToBotFromEmulatorOpenIdMetadataUri { get; }
+        public Uri ToBotFromEmulatorOpenIdMetadataUri { get; }
         /// <summary> For getting access token to channels from bot host. </summary>
-        public string ToChannelFromBotLoginUri { get; }
+        public Uri ToChannelFromBotLoginUri { get; }
         /// <summary> For getting access token to channels from bot host. </summary>
         public string ToChannelFromBotOAuthScope { get; }
         /// <summary> Per cloud OAuth setting on whether authority is validated. </summary>

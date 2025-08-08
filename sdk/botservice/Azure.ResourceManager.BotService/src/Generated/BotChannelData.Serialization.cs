@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.BotService
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.BotService
             BotChannelProperties properties = default;
             BotServiceSku sku = default;
             BotServiceKind? kind = default;
-            string etag = default;
+            ETag? etag = default;
             IReadOnlyList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -133,7 +133,11 @@ namespace Azure.ResourceManager.BotService
                 }
                 if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"u8))

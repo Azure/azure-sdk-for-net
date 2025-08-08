@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="isWebChatSpeechEnabled"> Whether this site is enabled for Webchat Speech. </param>
         /// <param name="isWebchatPreviewEnabled"> Whether this site is enabled for preview versions of Webchat. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotChannelSite(string tenantId, string siteId, string siteName, string key, string key2, bool isEnabled, bool? isTokenEnabled, bool? isEndpointParametersEnabled, bool? isDetailedLoggingEnabled, bool? isBlockUserUploadEnabled, bool? isNoStorageEnabled, string etag, string appId, bool? isV1Enabled, bool? isV3Enabled, bool? isSecureSiteEnabled, IList<string> trustedOrigins, bool? isWebChatSpeechEnabled, bool? isWebchatPreviewEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotChannelSite(Guid? tenantId, string siteId, string siteName, string key, string key2, bool isEnabled, bool? isTokenEnabled, bool? isEndpointParametersEnabled, bool? isDetailedLoggingEnabled, bool? isBlockUserUploadEnabled, bool? isNoStorageEnabled, ETag? etag, string appId, bool? isV1Enabled, bool? isV3Enabled, bool? isSecureSiteEnabled, IList<string> trustedOrigins, bool? isWebChatSpeechEnabled, bool? isWebchatPreviewEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             SiteId = siteId;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Tenant Id. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         /// <summary> Site Id. </summary>
         public string SiteId { get; }
         /// <summary> Site name. </summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Whether this no-storage site is disabled detailed logging for. </summary>
         public bool? IsNoStorageEnabled { get; set; }
         /// <summary> Entity Tag. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
         /// <summary> DirectLine application id. </summary>
         public string AppId { get; set; }
         /// <summary> Whether this site is enabled for Bot Framework V1 protocol. </summary>

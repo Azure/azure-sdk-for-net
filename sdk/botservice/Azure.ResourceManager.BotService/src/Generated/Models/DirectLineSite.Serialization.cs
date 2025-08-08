@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            string tenantId = default;
+            Guid? tenantId = default;
             string siteId = default;
             string siteName = default;
             string key = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isDetailedLoggingEnabled = default;
             bool? isBlockUserUploadEnabled = default;
             bool? isNoStorageEnabled = default;
-            string etag = default;
+            ETag? etag = default;
             string appId = default;
             bool? isV1Enabled = default;
             bool? isV3Enabled = default;
@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 if (property.NameEquals("tenantId"u8))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("siteId"u8))
@@ -158,7 +162,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appId"u8))

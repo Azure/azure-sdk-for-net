@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             ProvisioningState? provisioningState = default;
-            IReadOnlyList<ProvisioningIssue> provisioningIssues = default;
+            IList<ProvisioningIssue> provisioningIssues = default;
             NetworkSecurityPerimeter networkSecurityPerimeter = default;
             ResourceAssociation resourceAssociation = default;
             Profile profile = default;

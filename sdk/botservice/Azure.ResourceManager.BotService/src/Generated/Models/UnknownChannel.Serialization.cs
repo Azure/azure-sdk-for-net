@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    internal partial class UnknownBotChannelProperties : IUtf8JsonSerializable, IJsonModel<BotChannelProperties>
+    internal partial class UnknownChannel : IUtf8JsonSerializable, IJsonModel<BotChannelProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.BotService.Models
             return DeserializeBotChannelProperties(document.RootElement, options);
         }
 
-        internal static UnknownBotChannelProperties DeserializeUnknownBotChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownChannel DeserializeUnknownChannel(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        etag = null;
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownBotChannelProperties(channelName, etag, provisioningState, location, serializedAdditionalRawData);
+            return new UnknownChannel(channelName, etag, provisioningState, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotChannelProperties>.Write(ModelReaderWriterOptions options)

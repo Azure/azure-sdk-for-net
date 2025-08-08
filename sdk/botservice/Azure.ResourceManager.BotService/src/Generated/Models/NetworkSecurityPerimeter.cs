@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="perimeterGuid"> Guid of the Network Security Perimeter. </param>
         /// <param name="location"> Location of the Network Security Perimeter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeter(ResourceIdentifier id, string perimeterGuid, string location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeter(ResourceIdentifier id, string perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Guid of the Network Security Perimeter. </summary>
         public string PerimeterGuid { get; }
         /// <summary> Location of the Network Security Perimeter. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

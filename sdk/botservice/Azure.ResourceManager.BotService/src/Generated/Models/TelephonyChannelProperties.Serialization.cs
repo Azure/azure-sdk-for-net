@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("defaultLocale");
                 }
             }
-            if (Optional.IsDefined(PremiumSKU))
+            if (Optional.IsDefined(PremiumSku))
             {
-                if (PremiumSKU != null)
+                if (PremiumSku != null)
                 {
                     writer.WritePropertyName("premiumSKU"u8);
-                    writer.WriteStringValue(PremiumSKU);
+                    writer.WriteStringValue(PremiumSku);
                 }
                 else
                 {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.BotService.Models
             string cognitiveServiceSubscriptionKey = default;
             string cognitiveServiceRegion = default;
             string defaultLocale = default;
-            string premiumSKU = default;
+            string premiumSku = default;
             bool? isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        premiumSKU = null;
+                        premiumSku = null;
                         continue;
                     }
-                    premiumSKU = property.Value.GetString();
+                    premiumSku = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isEnabled"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.BotService.Models
                 cognitiveServiceSubscriptionKey,
                 cognitiveServiceRegion,
                 defaultLocale,
-                premiumSKU,
+                premiumSku,
                 isEnabled,
                 serializedAdditionalRawData);
         }

@@ -38,8 +38,10 @@ namespace Azure.ResourceManager.BotService
 
         private readonly ClientDiagnostics _botClientDiagnostics;
         private readonly BotsRestOperations _botRestClient;
-        private readonly ClientDiagnostics _botChannelClientDiagnostics;
-        private readonly BotChannelsRestOperations _botChannelRestClient;
+        private readonly ClientDiagnostics _emailClientDiagnostics;
+        private readonly EmailRestOperations _emailRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly BotData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -67,9 +69,10 @@ namespace Azure.ResourceManager.BotService
             _botClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string botApiVersion);
             _botRestClient = new BotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botApiVersion);
-            _botChannelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotChannelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BotChannelResource.ResourceType, out string botChannelApiVersion);
-            _botChannelRestClient = new BotChannelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botChannelApiVersion);
+            _emailClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _emailRestClient = new EmailRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,75 +99,6 @@ namespace Azure.ResourceManager.BotService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of BotChannelResources in the Bot. </summary>
-        /// <returns> An object representing collection of BotChannelResources and their operations over a BotChannelResource. </returns>
-        public virtual BotChannelCollection GetBotChannels()
-        {
-            return GetCachedClient(client => new BotChannelCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns a BotService Channel registration specified by the parameters.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotChannel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotChannelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> The name of the Bot resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(string channelName, CancellationToken cancellationToken = default)
-        {
-            return await GetBotChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a BotService Channel registration specified by the parameters.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotChannel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotChannelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> The name of the Bot resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BotChannelResource> GetBotChannel(string channelName, CancellationToken cancellationToken = default)
-        {
-            return GetBotChannels().Get(channelName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of BotConnectionSettingResources in the Bot. </summary>
         /// <returns> An object representing collection of BotConnectionSettingResources and their operations over a BotConnectionSettingResource. </returns>
         public virtual BotConnectionSettingCollection GetBotConnectionSettings()
@@ -181,7 +115,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConnectionSetting_Get</description>
+        /// <description>BotConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -212,7 +146,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConnectionSetting_Get</description>
+        /// <description>BotConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -234,23 +168,23 @@ namespace Azure.ResourceManager.BotService
             return GetBotConnectionSettings().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BotServicePrivateEndpointConnectionResources in the Bot. </summary>
-        /// <returns> An object representing collection of BotServicePrivateEndpointConnectionResources and their operations over a BotServicePrivateEndpointConnectionResource. </returns>
-        public virtual BotServicePrivateEndpointConnectionCollection GetBotServicePrivateEndpointConnections()
+        /// <summary> Gets a collection of BotChannelResources in the Bot. </summary>
+        /// <returns> An object representing collection of BotChannelResources and their operations over a BotChannelResource. </returns>
+        public virtual BotChannelCollection GetBotChannels()
         {
-            return GetCachedClient(client => new BotServicePrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new BotChannelCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection associated with the Bot.
+        /// Returns a BotService Channel registration specified by the parameters.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Get</description>
+        /// <description>Channels_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -258,30 +192,28 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BotServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="BotChannelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BotServicePrivateEndpointConnectionResource>> GetBotServicePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
-            return await GetBotServicePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetBotChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection associated with the Bot.
+        /// Returns a BotService Channel registration specified by the parameters.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Get</description>
+        /// <description>Channels_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -289,18 +221,16 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BotServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="BotChannelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BotServicePrivateEndpointConnectionResource> GetBotServicePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> GetBotChannel(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
-            return GetBotServicePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetBotChannels().Get(channelName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurationResources in the Bot. </summary>
@@ -319,7 +249,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfiguration_Get</description>
+        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -350,7 +280,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfiguration_Get</description>
+        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -372,6 +302,75 @@ namespace Azure.ResourceManager.BotService
             return GetNetworkSecurityPerimeterConfigurations().Get(networkSecurityPerimeterConfigurationName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of BotServicePrivateEndpointConnectionResources in the Bot. </summary>
+        /// <returns> An object representing collection of BotServicePrivateEndpointConnectionResources and their operations over a BotServicePrivateEndpointConnectionResource. </returns>
+        public virtual BotServicePrivateEndpointConnectionCollection GetBotServicePrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new BotServicePrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the Bot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotServicePrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BotServicePrivateEndpointConnectionResource>> GetBotServicePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetBotServicePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the Bot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotServicePrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BotServicePrivateEndpointConnectionResource> GetBotServicePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetBotServicePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
         /// <summary>
         /// Returns a BotService specified by the parameters.
         /// <list type="bullet">
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -421,7 +420,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -461,7 +460,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Delete</description>
+        /// <description>Bots_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -505,7 +504,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Delete</description>
+        /// <description>Bots_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -549,7 +548,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Update</description>
+        /// <description>Bots_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -591,7 +590,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Update</description>
+        /// <description>Bots_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -633,26 +632,22 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_CreateSignInUrl</description>
+        /// <description>Email_CreateSignInUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-09-15-preview</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BotCreateEmailSignInUriResult>> CreateSignInUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotCreateEmailSignInUriResult>> CreateEmailSignInUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _botClientDiagnostics.CreateScope("BotResource.CreateSignInUrl");
+            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateEmailSignInUri");
             scope.Start();
             try
             {
-                var response = await _botRestClient.CreateSignInUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _emailRestClient.CreateSignInUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -671,26 +666,22 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_CreateSignInUrl</description>
+        /// <description>Email_CreateSignInUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-09-15-preview</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BotCreateEmailSignInUriResult> CreateSignInUrl(CancellationToken cancellationToken = default)
+        public virtual Response<BotCreateEmailSignInUriResult> CreateEmailSignInUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _botClientDiagnostics.CreateScope("BotResource.CreateSignInUrl");
+            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateEmailSignInUri");
             scope.Start();
             try
             {
-                var response = _botRestClient.CreateSignInUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _emailRestClient.CreateSignInUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -709,24 +700,20 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_ListByBotResource</description>
+        /// <description>PrivateLinkResources_ListByBotResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BotServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BotServicePrivateLinkResourceData> GetByBotResourceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResourceAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _botRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _botClientDiagnostics, Pipeline, "BotResource.GetByBotResource", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -738,188 +725,20 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_ListByBotResource</description>
+        /// <description>PrivateLinkResources_ListByBotResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BotServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BotServicePrivateLinkResourceData> GetByBotResource(CancellationToken cancellationToken = default)
+        public virtual Pageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResource(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _botRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _botClientDiagnostics, Pipeline, "BotResource.GetByBotResource", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists a Channel registration for a Bot Service including secrets
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/listChannelWithKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotChannels_ListWithKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotChannelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BotChannelGetWithKeysResult>> GetWithKeysBotChannelAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _botChannelClientDiagnostics.CreateScope("BotResource.GetWithKeysBotChannel");
-            scope.Start();
-            try
-            {
-                var response = await _botChannelRestClient.ListWithKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists a Channel registration for a Bot Service including secrets
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/listChannelWithKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotChannels_ListWithKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotChannelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BotChannelGetWithKeysResult> GetWithKeysBotChannel(BotChannelName channelName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _botChannelClientDiagnostics.CreateScope("BotResource.GetWithKeysBotChannel");
-            scope.Start();
-            try
-            {
-                var response = _botChannelRestClient.ListWithKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotChannels_RegenerateKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotChannelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
-        /// <param name="content"> The parameters to provide for the created bot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BotChannelResource>> RegenerateKeysBotChannelAsync(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _botChannelClientDiagnostics.CreateScope("BotResource.RegenerateKeysBotChannel");
-            scope.Start();
-            try
-            {
-                var response = await _botChannelRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotChannels_RegenerateKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotChannelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
-        /// <param name="content"> The parameters to provide for the created bot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BotChannelResource> RegenerateKeysBotChannel(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _botChannelClientDiagnostics.CreateScope("BotResource.RegenerateKeysBotChannel");
-            scope.Start();
-            try
-            {
-                var response = _botChannelRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, content, cancellationToken);
-                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -931,7 +750,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -993,7 +812,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1055,7 +874,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1112,7 +931,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1169,7 +988,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1229,7 +1048,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bot_Get</description>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
