@@ -400,13 +400,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="childConfigurationTypes"> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </param>
         /// <param name="groupedChildConfigurations"> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </param>
         /// <param name="supportedTermCommitmentDurations"> The Term Commitment Durations that are supported for a configuration. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <returns> A new <see cref="Models.ProductConfiguration"/> instance for mocking. </returns>
-        public static ProductConfiguration ProductConfiguration(IEnumerable<ProductSpecification> specifications = null, ProductDimensions dimensions = null, ProvisioningSupport? provisioningSupport = null, IEnumerable<ChildConfigurationType> childConfigurationTypes = null, IEnumerable<GroupedChildConfigurations> groupedChildConfigurations = null, IEnumerable<TimeSpan> supportedTermCommitmentDurations = null)
+        public static ProductConfiguration ProductConfiguration(IEnumerable<ProductSpecification> specifications = null, ProductDimensions dimensions = null, ProvisioningSupport? provisioningSupport = null, IEnumerable<ChildConfigurationType> childConfigurationTypes = null, IEnumerable<GroupedChildConfigurations> groupedChildConfigurations = null, IEnumerable<TimeSpan> supportedTermCommitmentDurations = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null)
         {
             specifications ??= new List<ProductSpecification>();
             childConfigurationTypes ??= new List<ChildConfigurationType>();
             groupedChildConfigurations ??= new List<GroupedChildConfigurations>();
             supportedTermCommitmentDurations ??= new List<TimeSpan>();
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+            filterableProperties ??= new List<FilterableProperty>();
 
             return new ProductConfiguration(
                 specifications?.ToList(),
@@ -415,6 +424,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 childConfigurationTypes?.ToList(),
                 groupedChildConfigurations?.ToList(),
                 supportedTermCommitmentDurations?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -660,23 +676,60 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="Models.ProductFamily"/>. </summary>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
         /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <returns> A new <see cref="Models.ProductFamily"/> instance for mocking. </returns>
-        public static ProductFamily ProductFamily(IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null)
+        public static ProductFamily ProductFamily(IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null)
         {
             productLines ??= new List<ProductLine>();
             resourceProviderDetails ??= new List<ResourceProviderDetails>();
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+            filterableProperties ??= new List<FilterableProperty>();
 
-            return new ProductFamily(productLines?.ToList(), resourceProviderDetails?.ToList(), serializedAdditionalRawData: null);
+            return new ProductFamily(
+                productLines?.ToList(),
+                resourceProviderDetails?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductLine"/>. </summary>
         /// <param name="products"> List of products in the product line. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <returns> A new <see cref="Models.ProductLine"/> instance for mocking. </returns>
-        public static ProductLine ProductLine(IEnumerable<EdgeOrderProduct> products = null)
+        public static ProductLine ProductLine(IEnumerable<EdgeOrderProduct> products = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null)
         {
             products ??= new List<EdgeOrderProduct>();
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+            filterableProperties ??= new List<FilterableProperty>();
 
-            return new ProductLine(products?.ToList(), serializedAdditionalRawData: null);
+            return new ProductLine(
+                products?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProduct"/>. </summary>
@@ -692,13 +745,32 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="Models.ProductFamiliesMetadata"/>. </summary>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
         /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <returns> A new <see cref="Models.ProductFamiliesMetadata"/> instance for mocking. </returns>
-        public static ProductFamiliesMetadata ProductFamiliesMetadata(IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null)
+        public static ProductFamiliesMetadata ProductFamiliesMetadata(IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null)
         {
             productLines ??= new List<ProductLine>();
             resourceProviderDetails ??= new List<ResourceProviderDetails>();
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+            filterableProperties ??= new List<FilterableProperty>();
 
-            return new ProductFamiliesMetadata(productLines?.ToList(), resourceProviderDetails?.ToList(), serializedAdditionalRawData: null);
+            return new ProductFamiliesMetadata(
+                productLines?.ToList(),
+                resourceProviderDetails?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.EdgeOrder.EdgeOrderAddressData" />. </summary>
@@ -727,6 +799,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderItemAddressProperties EdgeOrderItemAddressProperties(EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus)
         {
             return EdgeOrderItemAddressProperties(addressClassification: default, shippingAddress: shippingAddress, contactDetails: contactDetails, addressValidationStatus: addressValidationStatus, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration" />. </summary>
+        /// <param name="displayName"> Display Name for the product system. </param>
+        /// <param name="description"> Description related to the product system. </param>
+        /// <param name="imageInformation"> Image information for the product system. </param>
+        /// <param name="costInformation"> Cost information for the product system. </param>
+        /// <param name="availabilityInformation"> Availability information of the product system. </param>
+        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
+        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="specifications"> Specifications of the configuration. </param>
+        /// <param name="dimensions"> Dimensions of the configuration. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProductConfiguration ProductConfiguration(string displayName, ProductDescription description, IEnumerable<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperties, IEnumerable<ProductSpecification> specifications, ProductDimensions dimensions)
+        {
+            return ProductConfiguration(specifications: specifications, dimensions: dimensions, provisioningSupport: default, childConfigurationTypes: default, groupedChildConfigurations: default, supportedTermCommitmentDurations: default, displayName: displayName, description: description, imageInformation: imageInformation, costInformation: costInformation, availabilityInformation: availabilityInformation, hierarchyInformation: hierarchyInformation, filterableProperties: filterableProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductBillingMeterDetails" />. </summary>

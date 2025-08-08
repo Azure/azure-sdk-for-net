@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ChildConfigurationTypes = new ChangeTrackingList<ChildConfigurationType>();
             GroupedChildConfigurations = new ChangeTrackingList<GroupedChildConfigurations>();
             SupportedTermCommitmentDurations = new ChangeTrackingList<TimeSpan>();
+            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
+            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductConfiguration"/>. </summary>
@@ -61,8 +63,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="childConfigurationTypes"> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </param>
         /// <param name="groupedChildConfigurations"> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </param>
         /// <param name="supportedTermCommitmentDurations"> The Term Commitment Durations that are supported for a configuration. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductConfiguration(IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, ProvisioningSupport? provisioningSupport, IReadOnlyList<ChildConfigurationType> childConfigurationTypes, IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductConfiguration(IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, ProvisioningSupport? provisioningSupport, IReadOnlyList<ChildConfigurationType> childConfigurationTypes, IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations, string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Specifications = specifications;
             Dimensions = dimensions;
@@ -70,6 +79,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ChildConfigurationTypes = childConfigurationTypes;
             GroupedChildConfigurations = groupedChildConfigurations;
             SupportedTermCommitmentDurations = supportedTermCommitmentDurations;
+            DisplayName = displayName;
+            Description = description;
+            ImageInformation = imageInformation;
+            CostInformation = costInformation;
+            AvailabilityInformation = availabilityInformation;
+            HierarchyInformation = hierarchyInformation;
+            FilterableProperties = filterableProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

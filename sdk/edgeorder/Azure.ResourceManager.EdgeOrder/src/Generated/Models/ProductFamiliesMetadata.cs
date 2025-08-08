@@ -50,16 +50,32 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             ProductLines = new ChangeTrackingList<ProductLine>();
             ResourceProviderDetails = new ChangeTrackingList<ResourceProviderDetails>();
+            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
+            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadata"/>. </summary>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
         /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductFamiliesMetadata(IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductFamiliesMetadata(IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails, string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductLines = productLines;
             ResourceProviderDetails = resourceProviderDetails;
+            DisplayName = displayName;
+            Description = description;
+            ImageInformation = imageInformation;
+            CostInformation = costInformation;
+            AvailabilityInformation = availabilityInformation;
+            HierarchyInformation = hierarchyInformation;
+            FilterableProperties = filterableProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
