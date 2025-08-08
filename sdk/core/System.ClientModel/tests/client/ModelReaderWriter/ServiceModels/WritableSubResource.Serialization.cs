@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
+using System.ClientModel.Tests.ModelReaderWriterTests;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
@@ -27,12 +29,21 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(writer));
             }
 
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+
             writer.WriteStartObject();
-            if (OptionalProperty.IsDefined(Id))
+            if (OptionalProperty.IsDefined(Id) && !Patch.Contains("$.id"u8))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
+
+            Patch.Write(writer);
+
             writer.WriteEndObject();
         }
 
@@ -41,11 +52,12 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
         /// </summary>
         /// <param name="element">The JSON element to be deserialized.</param>
         /// <returns>Deserialized WritableSubResource object.</returns>
-        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions? options = default)
+        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions? options, BinaryData? data)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
             string? id = default;
+            AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -57,8 +69,12 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                     id = property.Value.GetString();
                     continue;
                 }
+
+                additionalProperties.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
             }
-            return new WritableSubResource(id);
+            var model = new WritableSubResource(id, additionalProperties);
+
+            return model;
         }
 
         private struct WritableSubResourceProperties
@@ -69,7 +85,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
         WritableSubResource IJsonModel<WritableSubResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeWritableSubResource(doc.RootElement, options);
+            return DeserializeWritableSubResource(doc.RootElement, options, null);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref WritableSubResourceProperties properties, ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -89,7 +105,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
         WritableSubResource IPersistableModel<WritableSubResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
-            return DeserializeWritableSubResource(doc.RootElement, options);
+            return DeserializeWritableSubResource(doc.RootElement, options, data);
         }
 
         internal partial class WritableSubResourceConverter : JsonConverter<WritableSubResource>
@@ -101,7 +117,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterHelper.WireOptions);
+                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterHelper.WireOptions, null);
             }
         }
 

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using ClientModel.Tests.ClientShared;
 
@@ -29,7 +30,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        protected TrackedResourceData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, string> tags, string location) : base(id, name, resourceType, systemData)
+        protected TrackedResourceData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, string> tags, string location, in AdditionalProperties additionalProperties) : base(id, name, resourceType, systemData, additionalProperties)
         {
             Tags = tags;
             Location = location;
