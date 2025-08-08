@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Confluent.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ClusterStatusEntity"/>. </summary>
-        internal ClusterStatusEntity()
+        public ClusterStatusEntity()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> The lifecycle phase of the cluster. </summary>
-        public string Phase { get; }
+        public string Phase { get; set; }
         /// <summary> The number of Confluent Kafka Units. </summary>
-        public int? Cku { get; }
+        public int? Cku { get; set; }
     }
 }
