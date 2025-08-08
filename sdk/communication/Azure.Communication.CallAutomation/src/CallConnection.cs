@@ -833,13 +833,13 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Move multiple participants from another call to this call.
         /// </summary>
-        /// <param name="fromCall">The call connection id to move the participants from.</param>
         /// <param name="targetParticipants">The participants to move.</param>
+        /// <param name="fromCall">The call connection id to move the participants from.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
         public virtual async Task<Response<MoveParticipantsResult>> MoveParticipantsAsync(
-            string fromCall,
             IEnumerable<CommunicationIdentifier> targetParticipants,
+             string fromCall,
             CancellationToken cancellationToken = default)
         {
             MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCall);
@@ -849,13 +849,13 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Move multiple participants from another call to this call.
         /// </summary>
-        /// <param name="fromCall">The call connection id to move the participants from.</param>
         /// <param name="targetParticipants">The participants to move.</param>
+        /// <param name="fromCall">The call connection id to move the participants from.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
         public virtual Response<MoveParticipantsResult> MoveParticipants(
-            string fromCall,
             IEnumerable<CommunicationIdentifier> targetParticipants,
+            string fromCall,
             CancellationToken cancellationToken = default)
         {
             MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCall);
