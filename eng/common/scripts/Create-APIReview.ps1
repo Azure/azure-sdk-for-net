@@ -241,6 +241,27 @@ function ProcessPackage($packageName)
                 }
                 Process-ReviewStatusCode $respCode $packageName $apiStatus $pkgNameStatus
 
+                # Management plane namespace approval only gating for Java, JS, Python, Go.
+                $isMgmtNamespaceOnly = (
+                  $pkgInfo.SdkType -eq 'mgmt' -and
+                  ($LanguageShort -in @('java','js','python','go'))
+                )
+                if ($isMgmtNamespaceOnly)
+                {
+                    if (!$pkgInfo.ReleaseStatus -or $pkgInfo.ReleaseStatus -eq 'Unreleased')
+                    {
+                        Write-Host "Management plane package $packageName ($LanguageShort) is Unreleased; skipping namespace approval enforcement for now."
+                        return 0
+                    }
+                    if (-not $pkgNameStatus.IsApproved)
+                    {
+                        Write-Error "Namespace (package name) approval is REQUIRED for management plane package $packageName ($LanguageShort) and is not approved."
+                        return 1
+                    }
+                    Write-Host "Namespace approved for management plane package $packageName ($LanguageShort). API surface approval not required for this language."
+                    return 0
+                }
+
                 if ($apiStatus.IsApproved) {
                     Write-Host "API status: $($apiStatus.Details)"
                 }
