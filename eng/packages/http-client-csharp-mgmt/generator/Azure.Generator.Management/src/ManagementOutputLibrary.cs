@@ -32,6 +32,9 @@ namespace Azure.Generator.Management
         private PageableWrapperProvider? _asyncPageableWrapper;
         internal PageableWrapperProvider AsyncPageableWrapper => _asyncPageableWrapper ??= new PageableWrapperProvider(true);
 
+        private ProviderConstantsProvider? _providerConstants;
+        internal ProviderConstantsProvider ProviderConstants => _providerConstants ??= new ProviderConstantsProvider();
+
         private IReadOnlyList<ResourceClientProvider>? _resourceClients;
         internal IReadOnlyList<ResourceClientProvider> ResourceClients => _resourceClients ??= BuildResources();
 
@@ -169,7 +172,7 @@ namespace Azure.Generator.Management
                 .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 ArmOperation,
                 ArmOperationOfT,
-                new ProviderConstantsProvider(),
+                ProviderConstants,
                 .. resources,
                 .. collections,
                 .. extensions,

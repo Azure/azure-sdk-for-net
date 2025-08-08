@@ -21,7 +21,7 @@ namespace Azure.Generator.Management.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             var defaultProviderNamespaceProperty = new PropertyProvider(
-                $"",
+                null,
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
                 typeof(string),
                 "DefaultProviderNamespace",
