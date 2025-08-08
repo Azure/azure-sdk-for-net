@@ -228,7 +228,8 @@
           "json": {
             "name": "kind"
           }
-        }
+        },
+        "isHttpMetadata": false
       },
       "properties": [
         {
@@ -256,7 +257,8 @@
             "json": {
               "name": "wingspan"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ],
       "discriminatedSubtypes": {
@@ -292,7 +294,8 @@
                 "json": {
                   "name": "kind"
                 }
-              }
+              },
+              "isHttpMetadata": false
             }
           ]
         },
@@ -328,7 +331,8 @@
                 "json": {
                   "name": "kind"
                 }
-              }
+              },
+              "isHttpMetadata": false
             }
           ]
         },
@@ -364,7 +368,8 @@
                 "json": {
                   "name": "kind"
                 }
-              }
+              },
+              "isHttpMetadata": false
             }
           ]
         },
@@ -400,7 +405,8 @@
                 "json": {
                   "name": "kind"
                 }
-              }
+              },
+              "isHttpMetadata": false
             },
             {
               "$id": "38",
@@ -427,7 +433,8 @@
                 "json": {
                   "name": "friends"
                 }
-              }
+              },
+              "isHttpMetadata": false
             },
             {
               "$id": "40",
@@ -459,7 +466,8 @@
                 "json": {
                   "name": "hate"
                 }
-              }
+              },
+              "isHttpMetadata": false
             },
             {
               "$id": "43",
@@ -479,7 +487,8 @@
                 "json": {
                   "name": "partner"
                 }
-              }
+              },
+              "isHttpMetadata": false
             }
           ]
         }
@@ -529,7 +538,8 @@
           "json": {
             "name": "kind"
           }
-        }
+        },
+        "isHttpMetadata": false
       },
       "properties": [
         {
@@ -557,7 +567,8 @@
             "json": {
               "name": "size"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ],
       "discriminatedSubtypes": {
@@ -593,7 +604,8 @@
                 "json": {
                   "name": "kind"
                 }
-              }
+              },
+              "isHttpMetadata": false
             }
           ]
         }
@@ -669,7 +681,7 @@
             {
               "$id": "55",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "11"
               },
@@ -784,14 +796,14 @@
             {
               "$id": "61",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "13"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -864,7 +876,7 @@
             {
               "$id": "65",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "15"
               },
@@ -979,14 +991,14 @@
             {
               "$id": "71",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "17"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -1059,7 +1071,7 @@
             {
               "$id": "75",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "19"
               },
@@ -1142,7 +1154,7 @@
             {
               "$id": "79",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "21"
               },
@@ -1225,7 +1237,7 @@
             {
               "$id": "83",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "23"
               },

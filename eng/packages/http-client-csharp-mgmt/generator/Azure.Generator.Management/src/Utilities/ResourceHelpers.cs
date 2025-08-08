@@ -32,6 +32,7 @@ namespace Azure.Generator.Management.Utilities
             return operationKind switch
             {
                 ResourceOperationKind.Create => isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate",
+                ResourceOperationKind.List => isAsync ? "GetAllAsync" : "GetAll",
                 _ => null
             };
         }

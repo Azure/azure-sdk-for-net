@@ -7,9 +7,13 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed an issue that could cause an exception when trying to resume a transfer that contained resources with special characters in the name.
 
 ### Other Changes
+
+## 12.2.1 (2025-08-06)
+
+### Bugs Fixed
+- Fixed an issue that could cause an exception when trying to resume a transfer that contained resources with special characters in the name.
 
 ## 12.2.0 (2025-07-21)
 
