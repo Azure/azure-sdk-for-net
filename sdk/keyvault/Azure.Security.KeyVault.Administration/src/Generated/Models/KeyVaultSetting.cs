@@ -16,6 +16,19 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSetting"/>. </summary>
+        /// <param name="name"> The account setting to be updated. </param>
+        /// <param name="content"></param>
+        /// <param name="settingType"> Gets the type specifier of the value. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultSetting(string name, string content, KeyVaultSettingType? settingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Name = name;
+            Content = content;
+            SettingType = settingType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> The account setting to be updated. </summary>
         public string Name { get; }
     }
