@@ -345,9 +345,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal virtual Task<bool> TryRemoveTransferAsync(string id)
+        internal virtual bool TryRemoveTransferAsync(string id)
         {
-            throw new NotImplementedException();
+            return _transfers.TryRemove(id, out TransferOperation transfer);
         }
         #endregion Transfer Job Management
 
@@ -480,18 +480,19 @@ namespace Azure.Storage.DataMovement
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
+                _cancellationTokenSource.Dispose();
             }
             if (_jobsProcessor != default)
             {
-                await _jobsProcessor.DisposeAsync().ConfigureAwait(false);
+                await _jobsProcessor.TryCompleteAsync().ConfigureAwait(false);
             }
             if (_partsProcessor != default)
             {
-                await _partsProcessor.DisposeAsync().ConfigureAwait(false);
+                await _partsProcessor.TryCompleteAsync().ConfigureAwait(false);
             }
             if (_chunksProcessor != default)
             {
-                await _chunksProcessor.DisposeAsync().ConfigureAwait(false);
+                await _chunksProcessor.TryCompleteAsync().ConfigureAwait(false);
             }
             GC.SuppressFinalize(this);
         }

@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement.Tests
             int expectedCompleteFileCount,
             int maxWaitTimeInSec = 6)
         {
-            CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
             CancellationToken cancellationToken = cancellationSource.Token;
             int currentFailedEventCount = behaviors.InvokeFailedEventHandlerTask.Invocations.Count;
             int currentPutBlockCount = behaviors.PutBlockTask.Invocations.Count;
@@ -490,7 +490,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task DisposeAsync()
+        public async Task TryComplete()
         {
             // Arrange - Create CommitChunkHandler then Dispose it so the event handler is disposed
             MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
@@ -512,7 +512,7 @@ namespace Azure.Storage.DataMovement.Tests
                 CancellationToken.None);
 
             // Act
-            await commitBlockHandler.DisposeAsync();
+            await commitBlockHandler.TryComplete();
 
             Assert.ThrowsAsync<ChannelClosedException>(async () =>
                 await commitBlockHandler.QueueChunkAsync(default));
