@@ -40,12 +40,6 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedConnectionsOperations, new ConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConnectionsOperations;
         }
 
-        /// <summary> Initializes a new instance of DatasetsOperations. </summary>
-        public virtual DatasetsOperations GetDatasetsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedDatasetsOperations, new DatasetsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDatasetsOperations;
-        }
-
         /// <summary> Initializes a new instance of IndexesOperations. </summary>
         public virtual IndexesOperations GetIndexesOperationsClient()
         {

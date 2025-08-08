@@ -97,6 +97,13 @@ namespace Azure.AI.Projects
         /// </summary>
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
 
+        /// <summary> Initializes a new instance of Datasets. </summary>
+        public virtual DatasetsOperations GetDatasetsOperationsClient()
+        {
+            // Custom method to allow for passing of credential used when SAS is not provided.
+            return Volatile.Read(ref _cachedDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedDatasetsOperations, new DatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedDatasetsOperations;
+        }
+
         public ConnectionsOperations Connections { get => GetConnectionsOperationsClient(); }
         public DatasetsOperations Datasets { get => GetDatasetsOperationsClient(); }
         public DeploymentsOperations Deployments { get => GetDeploymentsOperationsClient(); }
