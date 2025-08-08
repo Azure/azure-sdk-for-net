@@ -43,8 +43,11 @@ namespace Azure.ResourceManager.IotOperations
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                writer.WriteObjectValue(ExtendedLocation, options);
+            }
         }
 
         IotOperationsBrokerAuthenticationData IJsonModel<IotOperationsBrokerAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,6 +91,10 @@ namespace Azure.ResourceManager.IotOperations
                 }
                 if (property.NameEquals("extendedLocation"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     extendedLocation = IotOperationsExtendedLocation.DeserializeIotOperationsExtendedLocation(property.Value, options);
                     continue;
                 }
