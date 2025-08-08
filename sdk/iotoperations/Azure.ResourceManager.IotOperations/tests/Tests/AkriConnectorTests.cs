@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure; // for RequestFailedException, WaitUntil, ArmOperation
 using Azure.Core.TestFramework;
-
+using Azure.ResourceManager.IotOperations.Models; // for AkriConnector* models
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotOperations.Tests
@@ -14,10 +15,55 @@ namespace Azure.ResourceManager.IotOperations.Tests
             : base(isAsync) { }
 
         [SetUp]
-        public async Task SetUp()
+        public async Task ClearAndInitialize()
         {
-            // Ensure AkriConnectorTemplateName is set
-            AkriConnectorTemplateName = "default";
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                await InitializeClients();
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestAkriConnectorCrud()
+        {
+            // Ensure AkriConnectorTemplateName is set and exists
+            AkriConnectorTemplateName = "sdk-test-akriconnector-template";
+            var templateCollection = await GetAkriConnectorTemplateResourceCollectionAsync(ResourceGroup);
+            if (!await templateCollection.ExistsAsync(AkriConnectorTemplateName))
+            {
+                // Create a minimal template compatible with ManagedConfiguration used elsewhere
+                var imageSettings = new AkriConnectorTemplateRuntimeImageConfigurationSettings("aio-connectors/media-connector")
+                {
+                    RegistrySettings = new AkriConnectorsContainerRegistry(
+                        new AkriConnectorsContainerRegistrySettings("mcr.microsoft.com")
+                    ),
+                    TagDigestSettings = new AkriConnectorsTag("1.2.13"),
+                };
+                var managedImageConfig = new AkriConnectorTemplateRuntimeImageConfiguration(imageSettings)
+                {
+                    Allocation = new AkriConnectorTemplateBucketizedAllocation(5),
+                };
+                var runtimeConfiguration = new AkriConnectorTemplateManagedConfiguration(managedImageConfig);
+                var mediaSchemaRefs = new AkriConnectorTemplateDeviceInboundEndpointConfigurationSchemaRefs
+                {
+                    DefaultStreamsConfigSchemaRef = "aio-sr://${schemaRegistry.properties.namespace}/media-stream-config-schema:1",
+                };
+                var inboundEndpoints = new[]
+                {
+                    new AkriConnectorTemplateDeviceInboundEndpointType("Microsoft.Media")
+                    {
+                        ConfigurationSchemaRefs = mediaSchemaRefs
+                    }
+                };
+                var templateData = new AkriConnectorTemplateResourceData
+                {
+                    ExtendedLocation = new IotOperationsExtendedLocation(ExtendedLocation, IotOperationsExtendedLocationType.CustomLocation),
+                    Properties = new AkriConnectorTemplateProperties(runtimeConfiguration, inboundEndpoints)
+                };
+
+                await templateCollection.CreateOrUpdateAsync(WaitUntil.Completed, AkriConnectorTemplateName, templateData);
+            }
+
             var connectorCollection = await GetAkriConnectorResourceCollectionAsync();
 
             // Get existing AkriConnectorResource (if any)

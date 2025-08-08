@@ -60,31 +60,42 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
         private AkriConnectorTemplateResourceData CreateAkriConnectorTemplateResourceData()
         {
-            // Step 1: Create Helm configuration settings
-            var helmSettings = new AkriConnectorTemplateHelmConfigurationSettings(
-                releaseName: "my-release",
-                repositoryName: "my-repo",
-                version: "1.0.0"
-            );
-
-            // Step 2: Add Helm chart values
-            helmSettings.Values["image"] = "my-image";
-            helmSettings.Values["replicaCount"] = "2";
-
-            // Step 3: Create Helm runtime configuration
-            var helmConfiguration = new AkriConnectorTemplateHelmConfiguration(helmSettings);
-
-            // Step 4: Define device inbound endpoint types
-            var inboundEndpoints = new[]
+            // ManagedConfiguration with ImageConfiguration (registry, tag) and bucketized allocation
+            var imageSettings = new AkriConnectorTemplateRuntimeImageConfigurationSettings("aio-connectors/media-connector")
             {
-                new AkriConnectorTemplateDeviceInboundEndpointType("Custom")
+                RegistrySettings = new AkriConnectorsContainerRegistry(
+                    new AkriConnectorsContainerRegistrySettings("mcr.microsoft.com")
+                ),
+                TagDigestSettings = new AkriConnectorsTag("1.2.13"),
             };
 
-            // Step 5: Build and return the resource data
+            var managedImageConfig = new AkriConnectorTemplateRuntimeImageConfiguration(imageSettings)
+            {
+                Allocation = new AkriConnectorTemplateBucketizedAllocation(5),
+            };
+
+            var runtimeConfiguration = new AkriConnectorTemplateManagedConfiguration(managedImageConfig);
+
+            // Device inbound endpoint type: Microsoft.Media with default streams config schema ref
+            var mediaSchemaRefs = new AkriConnectorTemplateDeviceInboundEndpointConfigurationSchemaRefs
+            {
+                DefaultStreamsConfigSchemaRef = "aio-sr://${schemaRegistry.properties.namespace}/media-stream-config-schema:1",
+            };
+
+            var inboundEndpoints = new[]
+            {
+                new AkriConnectorTemplateDeviceInboundEndpointType("Microsoft.Media")
+                {
+                    ConfigurationSchemaRefs = mediaSchemaRefs
+                }
+            };
+
+            // Build and return the resource data, including extended location (CustomLocation)
             return new AkriConnectorTemplateResourceData
             {
+                ExtendedLocation = new IotOperationsExtendedLocation(ExtendedLocation, IotOperationsExtendedLocationType.CustomLocation),
                 Properties = new AkriConnectorTemplateProperties(
-                    runtimeConfiguration: helmConfiguration,
+                    runtimeConfiguration: runtimeConfiguration,
                     deviceInboundEndpointTypes: inboundEndpoints
                 )
             };

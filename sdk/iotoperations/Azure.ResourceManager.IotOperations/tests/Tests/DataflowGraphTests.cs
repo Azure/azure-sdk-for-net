@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure; // RequestFailedException
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.IotOperations.Models;
@@ -28,11 +29,25 @@ namespace Azure.ResourceManager.IotOperations.Tests
             var dataflowProfileResource = await dataflowProfileCollection.GetAsync(DataflowProfilesName);
             var graphCollection = dataflowProfileResource.Value.GetDataflowGraphResources();
 
+            // Use a unique name to avoid conflicts with in-progress operations
+            var graphName = Recording.GenerateAssetName("sdk-test-dataflowgraph-");
+
+            // Best-effort cleanup if an earlier run left a resource
+            try
+            {
+                var existing = await graphCollection.GetAsync(graphName);
+                await existing.Value.DeleteAsync(WaitUntil.Completed);
+            }
+            catch (RequestFailedException)
+            {
+                // ignore if not found
+            }
+
             // Create DataflowGraph
             var graphData = CreateDataflowGraphResourceData();
             var createOperation = await graphCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                "sdk-test-dataflowgraph",
+                graphName,
                 graphData
             );
             var createdGraph = createOperation.Value;
