@@ -137,7 +137,8 @@
             "json": {
               "name": "stringProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "14",
@@ -175,7 +176,8 @@
                   "json": {
                     "name": "int32Property"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "18",
@@ -199,7 +201,8 @@
                   "json": {
                     "name": "float32Property"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "20",
@@ -219,7 +222,8 @@
                   "json": {
                     "name": "enumProperty"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -233,7 +237,8 @@
             "json": {
               "name": "modelProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "21",
@@ -264,7 +269,8 @@
             "json": {
               "name": "arrayProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "24",
@@ -300,7 +306,8 @@
             "json": {
               "name": "recordProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -338,7 +345,8 @@
             "json": {
               "name": "stringProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "31",
@@ -358,7 +366,8 @@
             "json": {
               "name": "modelProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "32",
@@ -378,7 +387,8 @@
             "json": {
               "name": "arrayProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "33",
@@ -398,7 +408,8 @@
             "json": {
               "name": "recordProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -640,14 +651,14 @@
             {
               "$id": "52",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "7"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -658,7 +669,7 @@
             {
               "$id": "53",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "9"
               },

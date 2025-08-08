@@ -59,7 +59,6 @@ $failingSpecs = @(
     Join-Path 'http' 'versioning' 'returnTypeChangedFrom'
     Join-Path 'http' 'versioning' 'typeChangedFrom'
     Join-Path 'http' 'client' 'naming' # pending until https://github.com/microsoft/typespec/issues/5653 is resolved
-    Join-Path 'http' 'resiliency' 'srv-driven'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
     # Azure scenarios not yet buildable
     Join-Path 'http' 'client' 'namespace'
