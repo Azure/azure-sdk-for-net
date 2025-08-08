@@ -938,7 +938,7 @@
 # ServiceLabel: %API Center %Mgmt
 # ServiceOwners:                                                   @alexyaang
 
-# PRLabel: %Arize AI
+# PRLabel: %Arize AI %Mgmt
 /sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @aggarwalsw
 
 # ServiceLabel: %Arize AI %Mgmt
@@ -950,25 +950,25 @@
 # ServiceLabel: %ARM %Mgmt
 # ServiceOwners:                                                   @Azure/arm-sdk-owners
 
-# ServiceLabel: %ARM
+# ServiceLabel: %ARM %Mgmt
 # ServiceOwners:                                                   @armleads-azure
 
-# ServiceLabel: %ARM - Core
+# ServiceLabel: %ARM - Core %Mgmt
 # ServiceOwners:                                                   @armleads-azure
 
-# ServiceLabel: %ARM - Managed Applications
+# ServiceLabel: %ARM - Managed Applications %Mgmt
 # ServiceOwners:                                                   @armleads-azure
 
-# ServiceLabel: %ARM - RBAC
+# ServiceLabel: %ARM - RBAC %Mgmt
 # ServiceOwners:                                                   @armleads-azure
 
-# ServiceLabel: %ARM - Service Catalog
+# ServiceLabel: %ARM - Service Catalog %Mgmt
 # ServiceOwners:                                                   @armleads-azure
 
-# ServiceLabel: %ARM - Tags
+# ServiceLabel: %ARM - Tags %Mgmt
 # ServiceOwners:                                                   @armleads-azure
 
-# ServiceLabel: %ARM - Templates
+# ServiceLabel: %ARM - Templates %Mgmt
 # ServiceOwners:                                                   @armleads-azure
 
 # PRLabel: %Astronomer
@@ -989,7 +989,7 @@
 # PRLabel: %Container Orchestrator Runtime
 /sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @ArthurMa1978
 
-# ServiceLabel: %Container Orchestrator Runtime
+# ServiceLabel: %Container Orchestrator Runtime %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Database Watcher
