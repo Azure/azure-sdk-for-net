@@ -17,7 +17,7 @@ using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> A class to add extension methods to Azure.ResourceManager.MgmtTypeSpec. </summary>
     public static partial class MgmtTypeSpecExtensions
     {
         /// <param name="client"></param>
