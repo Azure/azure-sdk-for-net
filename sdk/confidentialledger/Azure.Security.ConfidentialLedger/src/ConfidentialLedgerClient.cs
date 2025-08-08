@@ -81,6 +81,29 @@ namespace Azure.Security.ConfidentialLedger
                 new ConfidentialLedgerResponseClassifier());
             _ledgerEndpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
+
+            // Set up secondary endpoint if configured
+            _secondaryLedgerEndpoint = actualOptions.SecondaryLedgerEndpoint;
+            if (_secondaryLedgerEndpoint != null)
+            {
+                // Get certificate for secondary endpoint if needed
+                X509Certificate2 secondaryServiceCert = identityServiceCert ?? GetIdentityServerTlsCert(_secondaryLedgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions(), ledgerOptions: ledgerOptions).Cert;
+
+                var secondaryTransportOptions = GetIdentityServerTlsCertAndTrust(secondaryServiceCert, ledgerOptions?.VerifyConnection ?? true);
+                if (clientCertificate != null)
+                {
+                    secondaryTransportOptions.ClientCertificates.Add(clientCertificate);
+                }
+
+                _secondaryPipeline = HttpPipelineBuilder.Build(
+                    actualOptions,
+                    Array.Empty<HttpPipelinePolicy>(),
+                    _tokenCredential == null ?
+                        Array.Empty<HttpPipelinePolicy>() :
+                        new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
+                    secondaryTransportOptions,
+                    new ConfidentialLedgerResponseClassifier());
+            }
         }
 
         internal class ConfidentialLedgerResponseClassifier : ResponseClassifier
@@ -154,7 +177,7 @@ namespace Azure.Security.ConfidentialLedger
         /// }
         /// </code>
         /// </remarks>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation hascompleted on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="collectionId"> The collection id. </param>
         /// <param name="tags"> The tags. </param>
