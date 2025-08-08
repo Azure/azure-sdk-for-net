@@ -261,7 +261,7 @@ public class TestProxyProcess
     /// If debug logging is enabled, outputs the collected logs and clears the buffer.
     /// </summary>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public async Task CheckProxyOutputAsync()
+    public virtual async Task CheckProxyOutputAsync()
     {
         if (s_enableDebugProxyLogging)
         {

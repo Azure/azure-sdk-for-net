@@ -30,7 +30,7 @@ public class TestRecording : IAsyncDisposable
     private readonly string _sessionFile;
     private TestRandom? _random;
     private DateTimeOffset? _now; // The moment in time that this test is being run.
-    private readonly TestProxyProcess _proxy;
+    private readonly TestProxyProcess? _proxy;
     private readonly RecordedTestBase _recordedTestBase;
 
     internal TestRecordingMismatchException? MismatchException;
@@ -144,7 +144,7 @@ public class TestRecording : IAsyncDisposable
         _recordedTestBase = default!;
     }
 
-    internal TestRecording(RecordedTestMode mode, string sessionFile, TestProxyProcess proxy, RecordedTestBase recordedTestBase)
+    internal TestRecording(RecordedTestMode mode, string sessionFile, TestProxyProcess? proxy, RecordedTestBase recordedTestBase)
     {
         Mode = mode;
         _sessionFile = sessionFile;
@@ -163,7 +163,7 @@ public class TestRecording : IAsyncDisposable
     /// <returns>A configured TestRecording instance ready for use.</returns>
     /// <exception cref="InvalidOperationException">Thrown when the proxy client is not initialized.</exception>
     /// <exception cref="TestRecordingMismatchException">Thrown when a playback recording file is not found.</exception>
-    public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxyProcess proxy, RecordedTestBase recordedTestBase, CancellationToken? cancellationToken = default)
+    public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxyProcess? proxy, RecordedTestBase recordedTestBase, CancellationToken? cancellationToken = default)
     {
         var recording = new TestRecording(mode, sessionFile, proxy, recordedTestBase);
         await recording.InitializeProxySettingsAsync(cancellationToken ?? CancellationToken.None).ConfigureAwait(false);
@@ -180,6 +180,10 @@ public class TestRecording : IAsyncDisposable
     {
         if (Mode != RecordedTestMode.Live)
         {
+            if (_proxy is null)
+            {
+                throw new InvalidOperationException("A test recording cannot be created because the test proxy has not been started.");
+            }
             if (currentTransport is ProxyTransport)
             {
                 throw new InvalidOperationException(
@@ -343,7 +347,7 @@ public class TestRecording : IAsyncDisposable
     /// <returns>A task representing the asynchronous disposal operation.</returns>
     public async ValueTask DisposeAsync(bool save)
     {
-        if (_proxy.ProxyClient is null)
+        if (_proxy is null || _proxy.ProxyClient is null)
         {
             return;
         }
@@ -395,6 +399,10 @@ public class TestRecording : IAsyncDisposable
         switch (Mode)
         {
             case RecordedTestMode.Record:
+                if (_proxy is null)
+                {
+                    throw new InvalidOperationException("A test recording cannot be created because the test proxy has not been started.");
+                }
                 if (_proxy.ProxyClient == null)
                 {
                     throw new InvalidOperationException("TestProxyProcess.ProxyClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
@@ -408,6 +416,10 @@ public class TestRecording : IAsyncDisposable
 
                 break;
             case RecordedTestMode.Playback:
+                if (_proxy is null)
+                {
+                    throw new InvalidOperationException("A test recording cannot be created because the test proxy has not been started.");
+                }
                 if (_proxy.ProxyClient == null)
                 {
                     throw new InvalidOperationException("TestProxyProcess.ProxyClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
@@ -458,6 +470,10 @@ public class TestRecording : IAsyncDisposable
 
     private async Task ApplySanitizersAsync(CancellationToken cancellationToken)
     {
+        if (_proxy is null)
+        {
+            throw new InvalidOperationException("A test recording cannot be created because the test proxy has not been started.");
+        }
         if (_proxy.ProxyClient == null)
         {
             throw new InvalidOperationException("TestProxyProcess.ProxyClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");

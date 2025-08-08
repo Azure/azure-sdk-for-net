@@ -224,15 +224,6 @@ public abstract class RecordedTestBase : ClientTestBase
     public bool CompareBodies { get; set; } = true;
 
     /// <summary>
-    /// Gets or sets a value indicating whether to use the default GUID format for client request IDs.
-    /// The default GUID format includes hyphens, while the alternative format excludes them.
-    /// </summary>
-    /// <value>
-    /// true to use the default GUID format with hyphens; false to use a format without hyphens. The default is false.
-    /// </value>
-    public bool UseDefaultGuidFormatForClientRequestId { get; set; } = false;
-
-    /// <summary>
     /// Gets a collection of request headers whose values can change between recording and playback
     /// without causing request matching to fail. The presence or absence of the header itself is still respected.
     /// </summary>
@@ -271,6 +262,19 @@ public abstract class RecordedTestBase : ClientTestBase
     /// This is useful when running the proxy locally for debugging recorded test issues.
     /// </value>
     protected bool UseLocalDebugProxy { get; set; }
+
+    /// <summary>
+    /// Gets or sets the test proxy process for testing purposes.
+    /// This property is internal to allow injection of mock proxy instances during unit testing.
+    /// </summary>
+    /// <value>
+    /// The TestProxyProcess instance used for recording and playback operations.
+    /// </value>
+    internal TestProxyProcess? TestProxy
+    {
+        get => _proxy;
+        set => _proxy = value;
+    }
 
     // For mocking
     internal RecordedTestBase() : base(default)
@@ -311,7 +315,7 @@ public abstract class RecordedTestBase : ClientTestBase
     /// </remarks>
     protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile)
     {
-        if (_proxy is null)
+        if (_proxy is null && Mode != RecordedTestMode.Live)
         {
             throw new InvalidOperationException("A test recording cannot be created because the test proxy has not been started.");
         }

@@ -52,6 +52,8 @@ internal static class ProcessTracker
 
     public static void Add(Process process)
     {
+        Argument.AssertNotNull(process, nameof(process));
+
         if (_jobHandle != IntPtr.Zero)
         {
             var success = AssignProcessToJobObject(_jobHandle, process.Handle);
