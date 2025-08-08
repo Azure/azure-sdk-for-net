@@ -63,13 +63,13 @@ namespace MgmtTypeSpec.Models
                 properties);
         }
 
-        /// <summary> The FooSettingsProperties. </summary>
         /// <param name="accessControlEnabled"></param>
         /// <param name="provisioningState"></param>
+        /// <param name="metaDatas"> Gets the MetaDatas. </param>
         /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
-        public static FooSettingsProperties FooSettingsProperties(bool accessControlEnabled = default, ResourceProvisioningState? provisioningState = default)
+        public static FooSettingsProperties FooSettingsProperties(bool? accessControlEnabled = default, ResourceProvisioningState? provisioningState = default, IList<string> metaDatas = default)
         {
-            return new FooSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
+            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -150,6 +150,15 @@ namespace MgmtTypeSpec.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FooPreviewAction. </summary>
+        /// <param name="action"> The action to be performed. </param>
+        /// <param name="result"></param>
+        /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
+        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
+        {
+            return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>

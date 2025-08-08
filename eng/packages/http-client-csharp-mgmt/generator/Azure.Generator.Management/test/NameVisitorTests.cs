@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
+using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
-using Azure.Generator.Management.Visitors;
-using Azure.Generator.Tests.Common;
-using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 
 namespace Azure.Generator.Mgmt.Tests

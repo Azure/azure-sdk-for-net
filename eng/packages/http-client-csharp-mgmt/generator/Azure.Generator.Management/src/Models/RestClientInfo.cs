@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator.Management.Models
@@ -15,5 +16,8 @@ namespace Azure.Generator.Management.Models
             : this(restClientProvider, restClientField, null, diagnosticsField, null)
         {
         }
+
+        public MemberExpression Diagnostics => DiagnosticProperty != null ? DiagnosticProperty : DiagnosticsField;
+        public MemberExpression RestClient => RestClientProperty != null ? RestClientProperty : RestClientField;
     }
 }

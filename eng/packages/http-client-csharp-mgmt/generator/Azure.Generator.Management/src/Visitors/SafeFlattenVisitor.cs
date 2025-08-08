@@ -208,20 +208,26 @@ namespace Azure.Generator.Management.Visitors
         {
             var updatedParameters = new List<ParameterProvider>(method.Signature.Parameters.Count);
             var updated = false;
+            var parameterShouldBeNullable = false; // if the previous method parameter is nullable, we need to ensure that the current parameter is also set with default value
             foreach (var parameter in method.Signature.Parameters)
             {
                 if (propertyMap.TryGetValue(parameter.Type, out var flattenedProperty))
                 {
                     updated = true;
                     var updatedParameter = flattenedProperty.AsParameter;
-                    if (flattenedProperty.Type.IsNullable)
+                    if (parameterShouldBeNullable || flattenedProperty.Type.IsNullable)
                     {
+                        parameterShouldBeNullable = true;
                         updatedParameter.DefaultValue = Default; // Ensure that the default value is set to null for nullable types
                     }
                     updatedParameters.Add(updatedParameter);
                 }
                 else
                 {
+                    if (parameter.Type.IsNullable)
+                    {
+                        parameterShouldBeNullable = true;
+                    }
                     updatedParameters.Add(parameter);
                 }
             }
