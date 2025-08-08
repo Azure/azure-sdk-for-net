@@ -1,0 +1,4410 @@
+{
+  "name": "Azure.Messaging.EventGrid.Namespaces",
+  "apiVersions": [
+    "2023-11-01",
+    "2024-06-01"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "ServiceApiVersions",
+      "crossLanguageDefinitionId": "Microsoft.EventGrid.ServiceApiVersions",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "v2023_11_01",
+          "value": "2023-11-01",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "v2024_06_01",
+          "value": "2024-06-01",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": []
+    },
+    {
+      "$id": "5",
+      "kind": "enum",
+      "name": "ReleaseDelay",
+      "crossLanguageDefinitionId": "Microsoft.EventGrid.ReleaseDelay",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "7",
+          "kind": "enumvalue",
+          "name": "NoDelay",
+          "value": "0",
+          "valueType": {
+            "$ref": "6"
+          },
+          "enumType": {
+            "$ref": "5"
+          },
+          "doc": "Release the event after 0 seconds.",
+          "decorators": []
+        },
+        {
+          "$id": "8",
+          "kind": "enumvalue",
+          "name": "TenSeconds",
+          "value": "10",
+          "valueType": {
+            "$ref": "6"
+          },
+          "enumType": {
+            "$ref": "5"
+          },
+          "doc": "Release the event after 10 seconds.",
+          "decorators": []
+        },
+        {
+          "$id": "9",
+          "kind": "enumvalue",
+          "name": "OneMinute",
+          "value": "60",
+          "valueType": {
+            "$ref": "6"
+          },
+          "enumType": {
+            "$ref": "5"
+          },
+          "doc": "Release the event after 60 seconds.",
+          "decorators": []
+        },
+        {
+          "$id": "10",
+          "kind": "enumvalue",
+          "name": "TenMinutes",
+          "value": "600",
+          "valueType": {
+            "$ref": "6"
+          },
+          "enumType": {
+            "$ref": "5"
+          },
+          "doc": "Release the event after 600 seconds.",
+          "decorators": []
+        },
+        {
+          "$id": "11",
+          "kind": "enumvalue",
+          "name": "OneHour",
+          "value": "3600",
+          "valueType": {
+            "$ref": "6"
+          },
+          "enumType": {
+            "$ref": "5"
+          },
+          "doc": "Release the event after 3600 seconds.",
+          "decorators": []
+        }
+      ],
+      "access": "public",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "doc": "Supported delays for release operation.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Input",
+      "decorators": []
+    }
+  ],
+  "constants": [
+    {
+      "$id": "12",
+      "kind": "constant",
+      "name": "SendRequestContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "13",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/cloudevents+json; charset=utf-8",
+      "decorators": []
+    },
+    {
+      "$id": "14",
+      "kind": "constant",
+      "name": "sendContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "15",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "16",
+      "kind": "constant",
+      "name": "SendRequestContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "17",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/cloudevents+json; charset=utf-8",
+      "decorators": []
+    },
+    {
+      "$id": "18",
+      "kind": "constant",
+      "name": "SendEventsRequestContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "19",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/cloudevents-batch+json; charset=utf-8",
+      "decorators": []
+    },
+    {
+      "$id": "20",
+      "kind": "constant",
+      "name": "sendEventsContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "21",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "22",
+      "kind": "constant",
+      "name": "SendEventsRequestContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "23",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/cloudevents-batch+json; charset=utf-8",
+      "decorators": []
+    },
+    {
+      "$id": "24",
+      "kind": "constant",
+      "name": "receiveContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "25",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "26",
+      "kind": "constant",
+      "name": "acknowledgeContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "27",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "28",
+      "kind": "constant",
+      "name": "acknowledgeContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "29",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "30",
+      "kind": "constant",
+      "name": "releaseContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "31",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "32",
+      "kind": "constant",
+      "name": "releaseContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "33",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "34",
+      "kind": "constant",
+      "name": "rejectContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "35",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "36",
+      "kind": "constant",
+      "name": "rejectContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "37",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "38",
+      "kind": "constant",
+      "name": "renewLocksContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "39",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "40",
+      "kind": "constant",
+      "name": "renewLocksContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "41",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "42",
+      "kind": "model",
+      "name": "CloudEvent",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent",
+      "usage": "Input,Output,Json",
+      "doc": "Properties of an event published to an Azure Messaging EventGrid Namespace topic using the CloudEvent 1.0 Schema.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "43",
+          "kind": "property",
+          "name": "id",
+          "serializedName": "id",
+          "doc": "An identifier for the event. The combination of id and source must be unique for each distinct event.",
+          "type": {
+            "$id": "44",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.id",
+          "serializationOptions": {
+            "json": {
+              "name": "id"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "45",
+          "kind": "property",
+          "name": "source",
+          "serializedName": "source",
+          "doc": "Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event.",
+          "type": {
+            "$id": "46",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.source",
+          "serializationOptions": {
+            "json": {
+              "name": "source"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "47",
+          "kind": "property",
+          "name": "data",
+          "serializedName": "data",
+          "doc": "Event data specific to the event type.",
+          "type": {
+            "$id": "48",
+            "kind": "unknown",
+            "name": "unknown",
+            "crossLanguageDefinitionId": "",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.data",
+          "serializationOptions": {
+            "json": {
+              "name": "data"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "49",
+          "kind": "property",
+          "name": "data_base64",
+          "serializedName": "data_base64",
+          "doc": "Event data specific to the event type, encoded as a base64 string.",
+          "type": {
+            "$id": "50",
+            "kind": "bytes",
+            "name": "bytes",
+            "encode": "base64",
+            "crossLanguageDefinitionId": "TypeSpec.bytes",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.data_base64",
+          "serializationOptions": {
+            "json": {
+              "name": "data_base64"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "51",
+          "kind": "property",
+          "name": "type",
+          "serializedName": "type",
+          "doc": "Type of event related to the originating occurrence.",
+          "type": {
+            "$id": "52",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.type",
+          "serializationOptions": {
+            "json": {
+              "name": "type"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "53",
+          "kind": "property",
+          "name": "time",
+          "serializedName": "time",
+          "doc": "The time (in UTC) the event was generated, in RFC3339 format.",
+          "type": {
+            "$id": "54",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+              "$id": "55",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.time",
+          "serializationOptions": {
+            "json": {
+              "name": "time"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "56",
+          "kind": "property",
+          "name": "specversion",
+          "serializedName": "specversion",
+          "doc": "The version of the CloudEvents specification which the event uses.",
+          "type": {
+            "$id": "57",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.specversion",
+          "serializationOptions": {
+            "json": {
+              "name": "specversion"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "58",
+          "kind": "property",
+          "name": "dataschema",
+          "serializedName": "dataschema",
+          "doc": "Identifies the schema that data adheres to.",
+          "type": {
+            "$id": "59",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.dataschema",
+          "serializationOptions": {
+            "json": {
+              "name": "dataschema"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "60",
+          "kind": "property",
+          "name": "datacontenttype",
+          "serializedName": "datacontenttype",
+          "doc": "Content type of data value.",
+          "type": {
+            "$id": "61",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.datacontenttype",
+          "serializationOptions": {
+            "json": {
+              "name": "datacontenttype"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "62",
+          "kind": "property",
+          "name": "subject",
+          "serializedName": "subject",
+          "doc": "This describes the subject of the event in the context of the event producer (identified by source).",
+          "type": {
+            "$id": "63",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.CloudEvent.subject",
+          "serializationOptions": {
+            "json": {
+              "name": "subject"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "64",
+      "kind": "model",
+      "name": "PublishResult",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "crossLanguageDefinitionId": "Microsoft.EventGrid.PublishResult",
+      "usage": "Output,Json",
+      "doc": "The result of the Publish operation.",
+      "decorators": [],
+      "properties": []
+    },
+    {
+      "$id": "65",
+      "kind": "model",
+      "name": "ErrorResponse",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse",
+      "usage": "Json,Exception",
+      "doc": "A response containing error details.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "66",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "The error object.",
+          "type": {
+            "$id": "67",
+            "kind": "model",
+            "name": "Error",
+            "namespace": "Azure.Messaging.EventGrid.Namespaces",
+            "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
+            "usage": "Output,Json,Exception",
+            "doc": "The error object.",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "68",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "One of a server-defined set of error codes.",
+                "type": {
+                  "$id": "69",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "70",
+                "kind": "property",
+                "name": "message",
+                "serializedName": "message",
+                "doc": "A human-readable representation of the error.",
+                "type": {
+                  "$id": "71",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "72",
+                "kind": "property",
+                "name": "target",
+                "serializedName": "target",
+                "doc": "The target of the error.",
+                "type": {
+                  "$id": "73",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "74",
+                "kind": "property",
+                "name": "details",
+                "serializedName": "details",
+                "doc": "An array of details about specific errors that led to this reported error.",
+                "type": {
+                  "$id": "75",
+                  "kind": "array",
+                  "name": "ArrayError",
+                  "valueType": {
+                    "$ref": "67"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "76",
+                "kind": "property",
+                "name": "innererror",
+                "serializedName": "innererror",
+                "doc": "An object containing more specific information than the current object about the error.",
+                "type": {
+                  "$id": "77",
+                  "kind": "model",
+                  "name": "InnerError",
+                  "namespace": "Azure.Messaging.EventGrid.Namespaces",
+                  "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
+                  "usage": "Output,Json,Exception",
+                  "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
+                  "decorators": [],
+                  "properties": [
+                    {
+                      "$id": "78",
+                      "kind": "property",
+                      "name": "code",
+                      "serializedName": "code",
+                      "doc": "One of a server-defined set of error codes.",
+                      "type": {
+                        "$id": "79",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.code",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "code"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    },
+                    {
+                      "$id": "80",
+                      "kind": "property",
+                      "name": "innererror",
+                      "serializedName": "innererror",
+                      "doc": "Inner error.",
+                      "type": {
+                        "$ref": "77"
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.innererror",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "innererror"
+                        }
+                      },
+                      "isHttpMetadata": false
+                    }
+                  ]
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.innererror",
+                "serializationOptions": {
+                  "json": {
+                    "name": "innererror"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "81",
+          "kind": "property",
+          "name": "errorCode",
+          "serializedName": "errorCode",
+          "doc": "String error code indicating what went wrong.",
+          "type": {
+            "$id": "82",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.errorCode",
+          "serializationOptions": {
+            "json": {
+              "name": "errorCode"
+            }
+          },
+          "isHttpMetadata": true
+        }
+      ]
+    },
+    {
+      "$ref": "67"
+    },
+    {
+      "$ref": "77"
+    },
+    {
+      "$id": "83",
+      "kind": "model",
+      "name": "ReceiveResult",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "crossLanguageDefinitionId": "Microsoft.EventGrid.ReceiveResult",
+      "usage": "Output,Json",
+      "doc": "Details of the Receive operation response.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "84",
+          "kind": "property",
+          "name": "details",
+          "serializedName": "value",
+          "doc": "Array of receive responses, one per cloud event.",
+          "type": {
+            "$id": "85",
+            "kind": "array",
+            "name": "ArrayReceiveDetails",
+            "valueType": {
+              "$id": "86",
+              "kind": "model",
+              "name": "ReceiveDetails",
+              "namespace": "Azure.Messaging.EventGrid.Namespaces",
+              "crossLanguageDefinitionId": "Microsoft.EventGrid.ReceiveDetails",
+              "usage": "Output,Json",
+              "doc": "Receive operation details per Cloud Event.",
+              "decorators": [],
+              "properties": [
+                {
+                  "$id": "87",
+                  "kind": "property",
+                  "name": "brokerProperties",
+                  "serializedName": "brokerProperties",
+                  "doc": "The Event Broker details.",
+                  "type": {
+                    "$id": "88",
+                    "kind": "model",
+                    "name": "BrokerProperties",
+                    "namespace": "Azure.Messaging.EventGrid.Namespaces",
+                    "crossLanguageDefinitionId": "Microsoft.EventGrid.BrokerProperties",
+                    "usage": "Output,Json",
+                    "doc": "Properties of the Event Broker operation.",
+                    "decorators": [],
+                    "properties": [
+                      {
+                        "$id": "89",
+                        "kind": "property",
+                        "name": "lockToken",
+                        "serializedName": "lockToken",
+                        "doc": "The token of the lock on the event.",
+                        "type": {
+                          "$id": "90",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": false,
+                        "readOnly": false,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Microsoft.EventGrid.BrokerProperties.lockToken",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "lockToken"
+                          }
+                        },
+                        "isHttpMetadata": false
+                      },
+                      {
+                        "$id": "91",
+                        "kind": "property",
+                        "name": "deliveryCount",
+                        "serializedName": "deliveryCount",
+                        "doc": "The attempt count for delivering the event.",
+                        "type": {
+                          "$id": "92",
+                          "kind": "int32",
+                          "name": "int32",
+                          "crossLanguageDefinitionId": "TypeSpec.int32",
+                          "decorators": []
+                        },
+                        "optional": false,
+                        "readOnly": false,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Microsoft.EventGrid.BrokerProperties.deliveryCount",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "deliveryCount"
+                          }
+                        },
+                        "isHttpMetadata": false
+                      }
+                    ]
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Microsoft.EventGrid.ReceiveDetails.brokerProperties",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "brokerProperties"
+                    }
+                  },
+                  "isHttpMetadata": false
+                },
+                {
+                  "$id": "93",
+                  "kind": "property",
+                  "name": "event",
+                  "serializedName": "event",
+                  "doc": "Cloud Event details.",
+                  "type": {
+                    "$ref": "42"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Microsoft.EventGrid.ReceiveDetails.event",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "event"
+                    }
+                  },
+                  "isHttpMetadata": false
+                }
+              ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.ReceiveResult.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "86"
+    },
+    {
+      "$ref": "88"
+    },
+    {
+      "$id": "94",
+      "kind": "model",
+      "name": "AcknowledgeRequest",
+      "namespace": "",
+      "crossLanguageDefinitionId": "Customizations.acknowledge.Request.anonymous",
+      "usage": "Spread,Json",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "95",
+          "kind": "property",
+          "name": "lockTokens",
+          "serializedName": "lockTokens",
+          "doc": "Array of lock tokens.",
+          "type": {
+            "$id": "96",
+            "kind": "array",
+            "name": "Array",
+            "valueType": {
+              "$id": "97",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "acknowledge.Request.anonymous.lockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "lockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "98",
+      "kind": "model",
+      "name": "AcknowledgeResult",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "crossLanguageDefinitionId": "Microsoft.EventGrid.AcknowledgeResult",
+      "access": "public",
+      "usage": "Output,Json",
+      "doc": "The result of the Acknowledge operation.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "99",
+          "kind": "property",
+          "name": "failedLockTokens",
+          "serializedName": "failedLockTokens",
+          "doc": "Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description).",
+          "type": {
+            "$id": "100",
+            "kind": "array",
+            "name": "ArrayFailedLockToken",
+            "valueType": {
+              "$id": "101",
+              "kind": "model",
+              "name": "FailedLockToken",
+              "namespace": "Azure.Messaging.EventGrid.Namespaces",
+              "crossLanguageDefinitionId": "Microsoft.EventGrid.FailedLockToken",
+              "access": "public",
+              "usage": "Output,Json",
+              "doc": "Failed LockToken information.",
+              "decorators": [],
+              "properties": [
+                {
+                  "$id": "102",
+                  "kind": "property",
+                  "name": "lockToken",
+                  "serializedName": "lockToken",
+                  "doc": "The lock token of an entry in the request.",
+                  "type": {
+                    "$id": "103",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Microsoft.EventGrid.FailedLockToken.lockToken",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "lockToken"
+                    }
+                  },
+                  "isHttpMetadata": false
+                },
+                {
+                  "$id": "104",
+                  "kind": "property",
+                  "name": "error",
+                  "serializedName": "error",
+                  "doc": "Error information of the failed operation result for the lock token in the request.",
+                  "type": {
+                    "$ref": "67"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Microsoft.EventGrid.FailedLockToken.error",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "error"
+                    }
+                  },
+                  "isHttpMetadata": false
+                }
+              ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.AcknowledgeResult.failedLockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "failedLockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "105",
+          "kind": "property",
+          "name": "succeededLockTokens",
+          "serializedName": "succeededLockTokens",
+          "doc": "Array of lock tokens for the successfully acknowledged cloud events.",
+          "type": {
+            "$ref": "96"
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.AcknowledgeResult.succeededLockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "succeededLockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "101"
+    },
+    {
+      "$id": "106",
+      "kind": "model",
+      "name": "ReleaseRequest",
+      "namespace": "",
+      "crossLanguageDefinitionId": "Customizations.release.Request.anonymous",
+      "usage": "Spread,Json",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "107",
+          "kind": "property",
+          "name": "lockTokens",
+          "serializedName": "lockTokens",
+          "doc": "Array of lock tokens.",
+          "type": {
+            "$ref": "96"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "release.Request.anonymous.lockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "lockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "108",
+      "kind": "model",
+      "name": "ReleaseResult",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "crossLanguageDefinitionId": "Microsoft.EventGrid.ReleaseResult",
+      "access": "public",
+      "usage": "Output,Json",
+      "doc": "The result of the Release operation.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "109",
+          "kind": "property",
+          "name": "failedLockTokens",
+          "serializedName": "failedLockTokens",
+          "doc": "Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description).",
+          "type": {
+            "$ref": "100"
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.ReleaseResult.failedLockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "failedLockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "110",
+          "kind": "property",
+          "name": "succeededLockTokens",
+          "serializedName": "succeededLockTokens",
+          "doc": "Array of lock tokens for the successfully released cloud events.",
+          "type": {
+            "$ref": "96"
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.ReleaseResult.succeededLockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "succeededLockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "111",
+      "kind": "model",
+      "name": "RejectRequest",
+      "namespace": "",
+      "crossLanguageDefinitionId": "Customizations.reject.Request.anonymous",
+      "usage": "Spread,Json",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "112",
+          "kind": "property",
+          "name": "lockTokens",
+          "serializedName": "lockTokens",
+          "doc": "Array of lock tokens.",
+          "type": {
+            "$ref": "96"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "reject.Request.anonymous.lockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "lockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "113",
+      "kind": "model",
+      "name": "RejectResult",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "crossLanguageDefinitionId": "Microsoft.EventGrid.RejectResult",
+      "access": "public",
+      "usage": "Output,Json",
+      "doc": "The result of the Reject operation.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "114",
+          "kind": "property",
+          "name": "failedLockTokens",
+          "serializedName": "failedLockTokens",
+          "doc": "Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description).",
+          "type": {
+            "$ref": "100"
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.RejectResult.failedLockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "failedLockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "115",
+          "kind": "property",
+          "name": "succeededLockTokens",
+          "serializedName": "succeededLockTokens",
+          "doc": "Array of lock tokens for the successfully rejected cloud events.",
+          "type": {
+            "$ref": "96"
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.RejectResult.succeededLockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "succeededLockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "116",
+      "kind": "model",
+      "name": "RenewLocksRequest",
+      "namespace": "",
+      "crossLanguageDefinitionId": "Customizations.renewLocks.Request.anonymous",
+      "usage": "Spread,Json",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "117",
+          "kind": "property",
+          "name": "lockTokens",
+          "serializedName": "lockTokens",
+          "doc": "Array of lock tokens.",
+          "type": {
+            "$ref": "96"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "renewLocks.Request.anonymous.lockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "lockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "118",
+      "kind": "model",
+      "name": "RenewLocksResult",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "crossLanguageDefinitionId": "Microsoft.EventGrid.RenewCloudEventLocksResult",
+      "access": "public",
+      "usage": "Output,Json",
+      "doc": "The result of the RenewLock operation.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "119",
+          "kind": "property",
+          "name": "failedLockTokens",
+          "serializedName": "failedLockTokens",
+          "doc": "Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description).",
+          "type": {
+            "$ref": "100"
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.RenewCloudEventLocksResult.failedLockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "failedLockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "120",
+          "kind": "property",
+          "name": "succeededLockTokens",
+          "serializedName": "succeededLockTokens",
+          "doc": "Array of lock tokens for the successfully renewed locks.",
+          "type": {
+            "$ref": "96"
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.EventGrid.RenewCloudEventLocksResult.succeededLockTokens",
+          "serializationOptions": {
+            "json": {
+              "name": "succeededLockTokens"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "121",
+      "kind": "client",
+      "name": "EventGridSenderClient",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "methods": [
+        {
+          "$id": "122",
+          "kind": "basic",
+          "name": "send",
+          "accessibility": "internal",
+          "apiVersions": [
+            "2023-11-01",
+            "2024-06-01"
+          ],
+          "doc": "Publish a single Cloud Event to a namespace topic.",
+          "operation": {
+            "$id": "123",
+            "name": "send",
+            "resourceName": "ClientSender",
+            "doc": "Publish a single Cloud Event to a namespace topic.",
+            "accessibility": "internal",
+            "parameters": [
+              {
+                "$id": "124",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "125",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "126",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-06-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "127",
+                "name": "topicName",
+                "nameInRequest": "topicName",
+                "doc": "Topic Name.",
+                "type": {
+                  "$id": "128",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "129",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "content type",
+                "type": {
+                  "$ref": "12"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "130",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "14"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "131",
+                "name": "event",
+                "nameInRequest": "event",
+                "doc": "Single Cloud Event being published.",
+                "type": {
+                  "$ref": "42"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "64"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/topics/{topicName}:publish",
+            "requestMediaTypes": [
+              "application/cloudevents+json; charset=utf-8"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.ClientSender.send",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "132",
+              "name": "topicName",
+              "nameInRequest": "topicName",
+              "doc": "Topic Name.",
+              "type": {
+                "$id": "133",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "134",
+              "name": "contentType",
+              "nameInRequest": "Content-Type",
+              "doc": "content type",
+              "type": {
+                "$ref": "16"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": true,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "135",
+              "name": "event",
+              "nameInRequest": "event",
+              "doc": "Single Cloud Event being published.",
+              "type": {
+                "$ref": "42"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "136",
+              "name": "accept",
+              "nameInRequest": "Accept",
+              "type": {
+                "$ref": "14"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "64"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.ClientSender.send"
+        },
+        {
+          "$id": "137",
+          "kind": "basic",
+          "name": "sendEvents",
+          "accessibility": "internal",
+          "apiVersions": [
+            "2023-11-01",
+            "2024-06-01"
+          ],
+          "doc": "Publish a batch of Cloud Events to a namespace topic.",
+          "operation": {
+            "$id": "138",
+            "name": "sendEvents",
+            "resourceName": "ClientSender",
+            "doc": "Publish a batch of Cloud Events to a namespace topic.",
+            "accessibility": "internal",
+            "parameters": [
+              {
+                "$id": "139",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "140",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "141",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-06-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "142",
+                "name": "topicName",
+                "nameInRequest": "topicName",
+                "doc": "Topic Name.",
+                "type": {
+                  "$id": "143",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "144",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "content type",
+                "type": {
+                  "$ref": "18"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "145",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "20"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "146",
+                "name": "events",
+                "nameInRequest": "events",
+                "doc": "Array of Cloud Events being published.",
+                "type": {
+                  "$id": "147",
+                  "kind": "array",
+                  "name": "ArrayCloudEvent",
+                  "valueType": {
+                    "$ref": "42"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "64"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/topics/{topicName}:publish",
+            "requestMediaTypes": [
+              "application/cloudevents-batch+json; charset=utf-8"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.ClientSender.sendEvents",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "148",
+                "kind": "http",
+                "name": "Publish Cloud Event",
+                "description": "Publish Cloud Event",
+                "filePath": "2024-06-01/publish.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "142"
+                    },
+                    "value": {
+                      "$id": "149",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "143"
+                      },
+                      "value": "myTopic"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "139"
+                    },
+                    "value": {
+                      "$id": "150",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "140"
+                      },
+                      "value": "2024-06-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "146"
+                    },
+                    "value": {
+                      "$id": "151",
+                      "kind": "array",
+                      "type": {
+                        "$ref": "147"
+                      },
+                      "value": [
+                        {
+                          "$id": "152",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "42"
+                          },
+                          "value": {
+                            "id": {
+                              "$id": "153",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "44"
+                              },
+                              "value": "b3ccc7e3-c1cb-49bf-b7c8-0d4e60980616"
+                            },
+                            "source": {
+                              "$id": "154",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "46"
+                              },
+                              "value": "/microsoft/autorest/examples/eventgrid/cloud-events/publish"
+                            },
+                            "specversion": {
+                              "$id": "155",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "57"
+                              },
+                              "value": "1.0"
+                            },
+                            "data": {
+                              "$id": "156",
+                              "kind": "unknown",
+                              "type": {
+                                "$ref": "48"
+                              },
+                              "value": {
+                                "Property1": "Value1",
+                                "Property2": "Value2"
+                              }
+                            },
+                            "type": {
+                              "$id": "157",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "52"
+                              },
+                              "value": "Microsoft.Contoso.TestEvent"
+                            },
+                            "time": {
+                              "$id": "158",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "54"
+                              },
+                              "value": "2023-05-04T23:06:09.147165Z"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "64"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "159",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "64"
+                      },
+                      "value": {}
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "160",
+              "name": "topicName",
+              "nameInRequest": "topicName",
+              "doc": "Topic Name.",
+              "type": {
+                "$id": "161",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "162",
+              "name": "contentType",
+              "nameInRequest": "Content-Type",
+              "doc": "content type",
+              "type": {
+                "$ref": "22"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": true,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "163",
+              "name": "events",
+              "nameInRequest": "events",
+              "doc": "Array of Cloud Events being published.",
+              "type": {
+                "$ref": "147"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "164",
+              "name": "accept",
+              "nameInRequest": "Accept",
+              "type": {
+                "$ref": "20"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "64"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.ClientSender.sendEvents"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "165",
+          "name": "endpoint",
+          "nameInRequest": "endpoint",
+          "doc": "The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net",
+          "type": {
+            "$id": "166",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "location": "Uri",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isRequired": true,
+          "isEndpoint": true,
+          "skipUrlEncoding": false,
+          "explode": false,
+          "kind": "Client",
+          "serverUrlTemplate": "{endpoint}"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Customizations.ClientSender",
+      "apiVersions": [
+        "2023-11-01",
+        "2024-06-01"
+      ]
+    },
+    {
+      "$id": "167",
+      "kind": "client",
+      "name": "EventGridReceiverClient",
+      "namespace": "Azure.Messaging.EventGrid.Namespaces",
+      "methods": [
+        {
+          "$id": "168",
+          "kind": "basic",
+          "name": "receive",
+          "accessibility": "internal",
+          "apiVersions": [
+            "2023-11-01",
+            "2024-06-01"
+          ],
+          "doc": "Receive a batch of Cloud Events from a subscription.",
+          "operation": {
+            "$id": "169",
+            "name": "receive",
+            "resourceName": "ClientReceiver",
+            "doc": "Receive a batch of Cloud Events from a subscription.",
+            "accessibility": "internal",
+            "parameters": [
+              {
+                "$id": "170",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "171",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "172",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-06-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "173",
+                "name": "topicName",
+                "nameInRequest": "topicName",
+                "doc": "Topic Name.",
+                "type": {
+                  "$id": "174",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "175",
+                "name": "eventSubscriptionName",
+                "nameInRequest": "eventSubscriptionName",
+                "doc": "Event Subscription Name.",
+                "type": {
+                  "$id": "176",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "177",
+                "name": "maxEvents",
+                "nameInRequest": "maxEvents",
+                "doc": "Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1.",
+                "type": {
+                  "$id": "178",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "179",
+                "name": "maxWaitTime",
+                "nameInRequest": "maxWaitTime",
+                "doc": "Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds.",
+                "type": {
+                  "$id": "180",
+                  "kind": "duration",
+                  "name": "duration",
+                  "encode": "seconds",
+                  "wireType": {
+                    "$id": "181",
+                    "kind": "int32",
+                    "name": "int32",
+                    "crossLanguageDefinitionId": "TypeSpec.int32",
+                    "decorators": []
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.duration",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "182",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "24"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "83"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/topics/{topicName}/eventsubscriptions/{eventSubscriptionName}:receive",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.ClientReceiver.receive",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "183",
+                "kind": "http",
+                "name": "Receive Cloud Event",
+                "description": "Receive Cloud Event",
+                "filePath": "2024-06-01/receive.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "173"
+                    },
+                    "value": {
+                      "$id": "184",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "174"
+                      },
+                      "value": "myTopic"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "175"
+                    },
+                    "value": {
+                      "$id": "185",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "176"
+                      },
+                      "value": "myEventSubscription"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "170"
+                    },
+                    "value": {
+                      "$id": "186",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "171"
+                      },
+                      "value": "2024-06-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "177"
+                    },
+                    "value": {
+                      "$id": "187",
+                      "kind": "number",
+                      "type": {
+                        "$ref": "178"
+                      },
+                      "value": 1
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "179"
+                    },
+                    "value": {
+                      "$id": "188",
+                      "kind": "number",
+                      "type": {
+                        "$ref": "180"
+                      },
+                      "value": 60
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "83"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "189",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "83"
+                      },
+                      "value": {
+                        "value": {
+                          "$id": "190",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "85"
+                          },
+                          "value": [
+                            {
+                              "$id": "191",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "86"
+                              },
+                              "value": {
+                                "brokerProperties": {
+                                  "$id": "192",
+                                  "kind": "model",
+                                  "type": {
+                                    "$ref": "88"
+                                  },
+                                  "value": {
+                                    "lockToken": {
+                                      "$id": "193",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "90"
+                                      },
+                                      "value": "CgMKATESCQoHdG9rZW4tMQ=="
+                                    },
+                                    "deliveryCount": {
+                                      "$id": "194",
+                                      "kind": "number",
+                                      "type": {
+                                        "$ref": "92"
+                                      },
+                                      "value": 1
+                                    }
+                                  }
+                                },
+                                "event": {
+                                  "$id": "195",
+                                  "kind": "model",
+                                  "type": {
+                                    "$ref": "42"
+                                  },
+                                  "value": {
+                                    "specversion": {
+                                      "$id": "196",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "57"
+                                      },
+                                      "value": "1.0"
+                                    },
+                                    "type": {
+                                      "$id": "197",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "52"
+                                      },
+                                      "value": "demo-started"
+                                    },
+                                    "source": {
+                                      "$id": "198",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "46"
+                                      },
+                                      "value": "/test"
+                                    },
+                                    "subject": {
+                                      "$id": "199",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "63"
+                                      },
+                                      "value": "all-hands-0405"
+                                    },
+                                    "id": {
+                                      "$id": "200",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "44"
+                                      },
+                                      "value": "e770f36b-381a-41db-8b2b-b7199daeb202"
+                                    },
+                                    "time": {
+                                      "$id": "201",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "54"
+                                      },
+                                      "value": "2023-05-05T17:31:00Z"
+                                    },
+                                    "datacontenttype": {
+                                      "$id": "202",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "61"
+                                      },
+                                      "value": "application/json"
+                                    },
+                                    "data": {
+                                      "$id": "203",
+                                      "kind": "unknown",
+                                      "type": {
+                                        "$ref": "48"
+                                      },
+                                      "value": "test"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "204",
+              "name": "topicName",
+              "nameInRequest": "topicName",
+              "doc": "Topic Name.",
+              "type": {
+                "$id": "205",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "206",
+              "name": "eventSubscriptionName",
+              "nameInRequest": "eventSubscriptionName",
+              "doc": "Event Subscription Name.",
+              "type": {
+                "$id": "207",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "208",
+              "name": "maxEvents",
+              "nameInRequest": "maxEvents",
+              "doc": "Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1.",
+              "type": {
+                "$id": "209",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "210",
+              "name": "maxWaitTime",
+              "nameInRequest": "maxWaitTime",
+              "doc": "Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds.",
+              "type": {
+                "$id": "211",
+                "kind": "duration",
+                "name": "duration",
+                "encode": "seconds",
+                "wireType": {
+                  "$id": "212",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "crossLanguageDefinitionId": "TypeSpec.duration",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "213",
+              "name": "accept",
+              "nameInRequest": "Accept",
+              "type": {
+                "$ref": "24"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "83"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.ClientReceiver.receive"
+        },
+        {
+          "$id": "214",
+          "kind": "basic",
+          "name": "acknowledge",
+          "accessibility": "internal",
+          "apiVersions": [
+            "2023-11-01",
+            "2024-06-01"
+          ],
+          "doc": "Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer.",
+          "operation": {
+            "$id": "215",
+            "name": "acknowledge",
+            "resourceName": "ClientReceiver",
+            "doc": "Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer.",
+            "accessibility": "internal",
+            "parameters": [
+              {
+                "$id": "216",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "217",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "218",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-06-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "219",
+                "name": "topicName",
+                "nameInRequest": "topicName",
+                "doc": "Topic Name.",
+                "type": {
+                  "$id": "220",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "221",
+                "name": "eventSubscriptionName",
+                "nameInRequest": "eventSubscriptionName",
+                "doc": "Event Subscription Name.",
+                "type": {
+                  "$id": "222",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "223",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "26"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "224",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "28"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "225",
+                "name": "acknowledgeRequest",
+                "nameInRequest": "acknowledgeRequest",
+                "type": {
+                  "$ref": "94"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Spread",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "98"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/topics/{topicName}/eventsubscriptions/{eventSubscriptionName}:acknowledge",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.ClientReceiver.acknowledge",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "226",
+                "kind": "http",
+                "name": "Acknowledge Cloud Event",
+                "description": "Acknowledge Cloud Event",
+                "filePath": "2024-06-01/ack.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "219"
+                    },
+                    "value": {
+                      "$id": "227",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "220"
+                      },
+                      "value": "myTopic"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "221"
+                    },
+                    "value": {
+                      "$id": "228",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "222"
+                      },
+                      "value": "myEventSubscription"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "216"
+                    },
+                    "value": {
+                      "$id": "229",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "217"
+                      },
+                      "value": "2024-06-01"
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "98"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "230",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "98"
+                      },
+                      "value": {
+                        "failedLockTokens": {
+                          "$id": "231",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "100"
+                          },
+                          "value": [
+                            {
+                              "$id": "232",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "101"
+                              },
+                              "value": {
+                                "lockToken": {
+                                  "$id": "233",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "103"
+                                  },
+                                  "value": "CgMKATESCQoHdG9rZW4tMQ=="
+                                },
+                                "error": {
+                                  "$id": "234",
+                                  "kind": "model",
+                                  "type": {
+                                    "$ref": "67"
+                                  },
+                                  "value": {
+                                    "code": {
+                                      "$id": "235",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "69"
+                                      },
+                                      "value": "BadToken"
+                                    },
+                                    "message": {
+                                      "$id": "236",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "71"
+                                      },
+                                      "value": ""
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "succeededLockTokens": {
+                          "$id": "237",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "96"
+                          },
+                          "value": [
+                            {
+                              "$id": "238",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "97"
+                              },
+                              "value": "CgMKATESCQoHdG9rZW4tMQ=="
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "239",
+              "name": "topicName",
+              "nameInRequest": "topicName",
+              "doc": "Topic Name.",
+              "type": {
+                "$id": "240",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "241",
+              "name": "eventSubscriptionName",
+              "nameInRequest": "eventSubscriptionName",
+              "doc": "Event Subscription Name.",
+              "type": {
+                "$id": "242",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "243",
+              "name": "lockTokens",
+              "nameInRequest": "lockTokens",
+              "doc": "Array of lock tokens.",
+              "type": {
+                "$ref": "96"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "244",
+              "name": "contentType",
+              "nameInRequest": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "26"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": true,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "245",
+              "name": "accept",
+              "nameInRequest": "Accept",
+              "type": {
+                "$ref": "28"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "98"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.ClientReceiver.acknowledge"
+        },
+        {
+          "$id": "246",
+          "kind": "basic",
+          "name": "release",
+          "accessibility": "internal",
+          "apiVersions": [
+            "2023-11-01",
+            "2024-06-01"
+          ],
+          "doc": "Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers.",
+          "operation": {
+            "$id": "247",
+            "name": "release",
+            "resourceName": "ClientReceiver",
+            "doc": "Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers.",
+            "accessibility": "internal",
+            "parameters": [
+              {
+                "$id": "248",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "249",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "250",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-06-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "251",
+                "name": "topicName",
+                "nameInRequest": "topicName",
+                "doc": "Topic Name.",
+                "type": {
+                  "$id": "252",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "253",
+                "name": "eventSubscriptionName",
+                "nameInRequest": "eventSubscriptionName",
+                "doc": "Event Subscription Name.",
+                "type": {
+                  "$id": "254",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "255",
+                "name": "releaseDelayInSeconds",
+                "nameInRequest": "releaseDelayInSeconds",
+                "doc": "Release cloud events with the specified delay in seconds.",
+                "type": {
+                  "$ref": "5"
+                },
+                "location": "Query",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "256",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "30"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "257",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "32"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "258",
+                "name": "releaseRequest",
+                "nameInRequest": "releaseRequest",
+                "type": {
+                  "$ref": "106"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Spread",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "108"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/topics/{topicName}/eventsubscriptions/{eventSubscriptionName}:release",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.ClientReceiver.release",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "259",
+                "kind": "http",
+                "name": "Release Cloud Event with an optional delay.",
+                "description": "Release Cloud Event with an optional delay.",
+                "filePath": "2024-06-01/release.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "251"
+                    },
+                    "value": {
+                      "$id": "260",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "252"
+                      },
+                      "value": "myTopic"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "253"
+                    },
+                    "value": {
+                      "$id": "261",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "254"
+                      },
+                      "value": "myEventSubscription"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "248"
+                    },
+                    "value": {
+                      "$id": "262",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "249"
+                      },
+                      "value": "2024-06-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "255"
+                    },
+                    "value": {
+                      "$id": "263",
+                      "kind": "number",
+                      "type": {
+                        "$ref": "5"
+                      },
+                      "value": 10
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "108"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "264",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "108"
+                      },
+                      "value": {
+                        "failedLockTokens": {
+                          "$id": "265",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "100"
+                          },
+                          "value": []
+                        },
+                        "succeededLockTokens": {
+                          "$id": "266",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "96"
+                          },
+                          "value": [
+                            {
+                              "$id": "267",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "97"
+                              },
+                              "value": "CgMKATESCQoHdG9rZW4tMQ=="
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "268",
+              "name": "topicName",
+              "nameInRequest": "topicName",
+              "doc": "Topic Name.",
+              "type": {
+                "$id": "269",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "270",
+              "name": "eventSubscriptionName",
+              "nameInRequest": "eventSubscriptionName",
+              "doc": "Event Subscription Name.",
+              "type": {
+                "$id": "271",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "272",
+              "name": "lockTokens",
+              "nameInRequest": "lockTokens",
+              "doc": "Array of lock tokens.",
+              "type": {
+                "$ref": "96"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "273",
+              "name": "releaseDelayInSeconds",
+              "nameInRequest": "releaseDelayInSeconds",
+              "doc": "Release cloud events with the specified delay in seconds.",
+              "type": {
+                "$ref": "5"
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "274",
+              "name": "contentType",
+              "nameInRequest": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "30"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": true,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "275",
+              "name": "accept",
+              "nameInRequest": "Accept",
+              "type": {
+                "$ref": "32"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "108"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.ClientReceiver.release"
+        },
+        {
+          "$id": "276",
+          "kind": "basic",
+          "name": "reject",
+          "accessibility": "internal",
+          "apiVersions": [
+            "2023-11-01",
+            "2024-06-01"
+          ],
+          "doc": "Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer.",
+          "operation": {
+            "$id": "277",
+            "name": "reject",
+            "resourceName": "ClientReceiver",
+            "doc": "Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer.",
+            "accessibility": "internal",
+            "parameters": [
+              {
+                "$id": "278",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "279",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "280",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-06-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "281",
+                "name": "topicName",
+                "nameInRequest": "topicName",
+                "doc": "Topic Name.",
+                "type": {
+                  "$id": "282",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "283",
+                "name": "eventSubscriptionName",
+                "nameInRequest": "eventSubscriptionName",
+                "doc": "Event Subscription Name.",
+                "type": {
+                  "$id": "284",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "285",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "34"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "286",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "36"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "287",
+                "name": "rejectRequest",
+                "nameInRequest": "rejectRequest",
+                "type": {
+                  "$ref": "111"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Spread",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "113"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/topics/{topicName}/eventsubscriptions/{eventSubscriptionName}:reject",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.ClientReceiver.reject",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "288",
+                "kind": "http",
+                "name": "Reject Cloud Event",
+                "description": "Reject Cloud Event",
+                "filePath": "2024-06-01/reject.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "281"
+                    },
+                    "value": {
+                      "$id": "289",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "282"
+                      },
+                      "value": "myTopic"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "283"
+                    },
+                    "value": {
+                      "$id": "290",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "284"
+                      },
+                      "value": "myEventSubscription"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "278"
+                    },
+                    "value": {
+                      "$id": "291",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "279"
+                      },
+                      "value": "2024-06-01"
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "113"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "292",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "113"
+                      },
+                      "value": {
+                        "failedLockTokens": {
+                          "$id": "293",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "100"
+                          },
+                          "value": []
+                        },
+                        "succeededLockTokens": {
+                          "$id": "294",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "96"
+                          },
+                          "value": [
+                            {
+                              "$id": "295",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "97"
+                              },
+                              "value": "CgMKATESCQoHdG9rZW4tMQ=="
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "296",
+              "name": "topicName",
+              "nameInRequest": "topicName",
+              "doc": "Topic Name.",
+              "type": {
+                "$id": "297",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "298",
+              "name": "eventSubscriptionName",
+              "nameInRequest": "eventSubscriptionName",
+              "doc": "Event Subscription Name.",
+              "type": {
+                "$id": "299",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "300",
+              "name": "lockTokens",
+              "nameInRequest": "lockTokens",
+              "doc": "Array of lock tokens.",
+              "type": {
+                "$ref": "96"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "301",
+              "name": "contentType",
+              "nameInRequest": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "34"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": true,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "302",
+              "name": "accept",
+              "nameInRequest": "Accept",
+              "type": {
+                "$ref": "36"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "113"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.ClientReceiver.reject"
+        },
+        {
+          "$id": "303",
+          "kind": "basic",
+          "name": "renewLocks",
+          "accessibility": "internal",
+          "apiVersions": [
+            "2024-06-01"
+          ],
+          "doc": "Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock.",
+          "operation": {
+            "$id": "304",
+            "name": "renewLocks",
+            "resourceName": "ClientReceiver",
+            "doc": "Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock.",
+            "accessibility": "internal",
+            "parameters": [
+              {
+                "$id": "305",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "306",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "307",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-06-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "308",
+                "name": "topicName",
+                "nameInRequest": "topicName",
+                "doc": "Topic Name.",
+                "type": {
+                  "$id": "309",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "310",
+                "name": "eventSubscriptionName",
+                "nameInRequest": "eventSubscriptionName",
+                "doc": "Event Subscription Name.",
+                "type": {
+                  "$id": "311",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "312",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "38"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "313",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "40"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "314",
+                "name": "renewLocksRequest",
+                "nameInRequest": "renewLocksRequest",
+                "type": {
+                  "$ref": "116"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Spread",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "118"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/topics/{topicName}/eventsubscriptions/{eventSubscriptionName}:renewLock",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.ClientReceiver.renewLocks",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "315",
+                "kind": "http",
+                "name": "Renew lock for batch of Cloud Events",
+                "description": "Renew lock for batch of Cloud Events",
+                "filePath": "2024-06-01/renewlock.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "308"
+                    },
+                    "value": {
+                      "$id": "316",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "309"
+                      },
+                      "value": "myTopic"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "310"
+                    },
+                    "value": {
+                      "$id": "317",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "311"
+                      },
+                      "value": "myEventSubscription"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "305"
+                    },
+                    "value": {
+                      "$id": "318",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "306"
+                      },
+                      "value": "2024-06-01"
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "118"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "319",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "118"
+                      },
+                      "value": {
+                        "failedLockTokens": {
+                          "$id": "320",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "100"
+                          },
+                          "value": []
+                        },
+                        "succeededLockTokens": {
+                          "$id": "321",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "96"
+                          },
+                          "value": [
+                            {
+                              "$id": "322",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "97"
+                              },
+                              "value": "CgMKATESCQoHdG9rZW4tMQ=="
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "323",
+              "name": "topicName",
+              "nameInRequest": "topicName",
+              "doc": "Topic Name.",
+              "type": {
+                "$id": "324",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "325",
+              "name": "eventSubscriptionName",
+              "nameInRequest": "eventSubscriptionName",
+              "doc": "Event Subscription Name.",
+              "type": {
+                "$id": "326",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "327",
+              "name": "lockTokens",
+              "nameInRequest": "lockTokens",
+              "doc": "Array of lock tokens.",
+              "type": {
+                "$ref": "96"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "328",
+              "name": "contentType",
+              "nameInRequest": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "38"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": true,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "329",
+              "name": "accept",
+              "nameInRequest": "Accept",
+              "type": {
+                "$ref": "40"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "118"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.ClientReceiver.renewLocks"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "330",
+          "name": "endpoint",
+          "nameInRequest": "endpoint",
+          "doc": "The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net",
+          "type": {
+            "$id": "331",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "location": "Uri",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isRequired": true,
+          "isEndpoint": true,
+          "skipUrlEncoding": false,
+          "explode": false,
+          "kind": "Client",
+          "serverUrlTemplate": "{endpoint}"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Customizations.ClientReceiver",
+      "apiVersions": [
+        "2023-11-01",
+        "2024-06-01"
+      ]
+    }
+  ],
+  "auth": {
+    "apiKey": {
+      "name": "Authorization",
+      "in": "header",
+      "prefix": "SharedAccessKey"
+    },
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "https://eventgrid.azure.net/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      ]
+    }
+  }
+}
