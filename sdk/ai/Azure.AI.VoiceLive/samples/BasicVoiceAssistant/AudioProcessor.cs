@@ -30,7 +30,7 @@ public class AudioProcessor : IDisposable
     private readonly ILogger<AudioProcessor> _logger;
     
     // Audio configuration - PCM16, 24kHz, mono as specified
-    private const int SampleRate = 16000;
+    private const int SampleRate = 24000;
     private const int Channels = 1;
     private const int BitsPerSample = 16;
     

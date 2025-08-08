@@ -16,12 +16,12 @@ namespace Azure.AI.VoiceLive
     /// unless the item does not exist in the conversation history, in which case the
     /// server will respond with an error.
     /// </summary>
-    internal partial class ClientEventConversationItemDelete : ClientEvent
+    public partial class ClientEventConversationItemDelete : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemDelete"/>. </summary>
         /// <param name="itemId"> The ID of the item to delete. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ClientEventConversationItemDelete(string itemId)
+        public ClientEventConversationItemDelete(string itemId)
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 

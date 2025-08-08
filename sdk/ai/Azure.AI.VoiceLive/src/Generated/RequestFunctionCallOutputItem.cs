@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The RequestFunctionCallOutputItem. </summary>
-    internal partial class RequestFunctionCallOutputItem : ConversationRequestItem
+    public partial class RequestFunctionCallOutputItem : ConversationRequestItem
     {
         /// <summary> Initializes a new instance of <see cref="RequestFunctionCallOutputItem"/>. </summary>
         /// <param name="callId"></param>
         /// <param name="output"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        internal RequestFunctionCallOutputItem(string callId, string output)
+        public RequestFunctionCallOutputItem(string callId, string output)
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(output, nameof(output));

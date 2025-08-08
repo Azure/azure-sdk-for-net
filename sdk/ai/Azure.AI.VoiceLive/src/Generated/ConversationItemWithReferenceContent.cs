@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConversationItemWithReferenceContent"/>. </summary>
-        internal ConversationItemWithReferenceContent()
+        public ConversationItemWithReferenceContent()
         {
         }
 
@@ -72,18 +72,18 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> The content type (`input_text`, `input_audio`, `item_reference`, `text`). </summary>
-        public ConversationItemWithReferenceContentType? Type { get; }
+        public ConversationItemWithReferenceContentType? Type { get; set; }
         /// <summary> The text content, used for `input_text` and `text` content types. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
         /// <summary>
         /// ID of a previous conversation item to reference (for `item_reference`
         /// content types in `response.create` events). These can reference both
         /// client and server created items.
         /// </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> Base64-encoded audio bytes, used for `input_audio` content type. </summary>
-        public string Audio { get; }
+        public string Audio { get; set; }
         /// <summary> The transcript of the audio, used for `input_audio` content type. </summary>
-        public string Transcript { get; }
+        public string Transcript { get; set; }
     }
 }

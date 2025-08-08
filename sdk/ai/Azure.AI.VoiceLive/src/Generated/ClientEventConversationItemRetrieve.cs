@@ -16,12 +16,12 @@ namespace Azure.AI.VoiceLive
     /// unless the item does not exist in the conversation history, in which case the
     /// server will respond with an error.
     /// </summary>
-    internal partial class ClientEventConversationItemRetrieve : ClientEvent
+    public partial class ClientEventConversationItemRetrieve : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemRetrieve"/>. </summary>
         /// <param name="itemId"> The ID of the item to retrieve. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ClientEventConversationItemRetrieve(string itemId)
+        public ClientEventConversationItemRetrieve(string itemId)
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 

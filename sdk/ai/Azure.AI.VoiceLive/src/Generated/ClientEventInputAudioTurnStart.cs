@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>  Indicates the start of a new audio input turn. </summary>
-    internal partial class ClientEventInputAudioTurnStart : ClientEvent
+    public partial class ClientEventInputAudioTurnStart : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnStart"/>. </summary>
         /// <param name="turnId"> Unique identifier for the input audio turn. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="turnId"/> is null. </exception>
-        internal ClientEventInputAudioTurnStart(string turnId)
+        public ClientEventInputAudioTurnStart(string turnId)
         {
             Argument.AssertNotNull(turnId, nameof(turnId));
 

@@ -22,10 +22,10 @@ namespace Azure.AI.VoiceLive
     /// from the model. The server will respond with an `input_audio_buffer.committed`
     /// event.
     /// </summary>
-    internal partial class ClientEventInputAudioBufferCommit : ClientEvent
+    public partial class ClientEventInputAudioBufferCommit : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferCommit"/>. </summary>
-        internal ClientEventInputAudioBufferCommit()
+        public ClientEventInputAudioBufferCommit()
         {
             Type = ClientEventType.InputAudioBufferCommit;
         }

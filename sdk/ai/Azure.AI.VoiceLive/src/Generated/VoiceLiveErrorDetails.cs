@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Error object returned in case of API failure. </summary>
-    public partial class ErrorDetails
+    public partial class VoiceLiveErrorDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,24 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveErrorDetails"/>. </summary>
         /// <param name="message"> Human-readable error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal ErrorDetails(string message)
+        internal VoiceLiveErrorDetails(string message)
         {
             Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveErrorDetails"/>. </summary>
         /// <param name="code"> Error code, or null if unspecified. </param>
         /// <param name="message"> Human-readable error message. </param>
         /// <param name="param"> Parameter name related to the error, if applicable. </param>
         /// <param name="type"> Type or category of the error. </param>
         /// <param name="eventId"> Event id of the error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorDetails(string code, string message, string param, string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VoiceLiveErrorDetails(string code, string message, string param, string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
@@ -72,8 +72,8 @@ namespace Azure.AI.VoiceLive
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDetails"/> for deserialization. </summary>
-        internal ErrorDetails()
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveErrorDetails"/> for deserialization. </summary>
+        internal VoiceLiveErrorDetails()
         {
         }
 

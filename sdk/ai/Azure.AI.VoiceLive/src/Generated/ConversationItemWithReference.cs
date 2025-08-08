@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConversationItemWithReference"/>. </summary>
-        internal ConversationItemWithReference()
+        public ConversationItemWithReference()
         {
             Content = new ChangeTrackingList<ConversationItemWithReferenceContent>();
         }
@@ -88,7 +88,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="arguments"> The arguments of the function call (for `function_call` items). </param>
         /// <param name="output"> The output of the function call (for `function_call_output` items). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationItemWithReference(string id, ConversationItemWithReferenceType? type, ConversationItemWithReferenceObject? @object, ConversationItemWithReferenceStatus? status, ConversationItemWithReferenceRole? role, IReadOnlyList<ConversationItemWithReferenceContent> content, string callId, string name, string arguments, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationItemWithReference(string id, ConversationItemWithReferenceType? type, ConversationItemWithReferenceObject? @object, ConversationItemWithReferenceStatus? status, ConversationItemWithReferenceRole? role, IList<ConversationItemWithReferenceContent> content, string callId, string name, string arguments, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Type = type;
@@ -111,22 +111,22 @@ namespace Azure.AI.VoiceLive
         /// For an item of type `item_reference`, this field is required and is a
         /// reference to any item that has previously existed in the conversation.
         /// </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> The type of the item (`message`, `function_call`, `function_call_output`, `item_reference`). </summary>
-        public ConversationItemWithReferenceType? Type { get; }
+        public ConversationItemWithReferenceType? Type { get; set; }
         /// <summary> Identifier for the API object being returned - always `realtime.item`. </summary>
-        public ConversationItemWithReferenceObject? Object { get; }
+        public ConversationItemWithReferenceObject? Object { get; set; }
         /// <summary>
         /// The status of the item (`completed`, `incomplete`). These have no effect
         /// on the conversation, but are accepted for consistency with the
         /// `conversation.item.created` event.
         /// </summary>
-        public ConversationItemWithReferenceStatus? Status { get; }
+        public ConversationItemWithReferenceStatus? Status { get; set; }
         /// <summary>
         /// The role of the message sender (`user`, `assistant`, `system`), only
         /// applicable for `message` items.
         /// </summary>
-        public ConversationItemWithReferenceRole? Role { get; }
+        public ConversationItemWithReferenceRole? Role { get; set; }
         /// <summary>
         /// The content of the message, applicable for `message` items.
         /// - Message items of role `system` support only `input_text` content
@@ -134,19 +134,19 @@ namespace Azure.AI.VoiceLive
         ///   content
         /// - Message items of role `assistant` support `text` content.
         /// </summary>
-        public IReadOnlyList<ConversationItemWithReferenceContent> Content { get; }
+        public IList<ConversationItemWithReferenceContent> Content { get; }
         /// <summary>
         /// The ID of the function call (for `function_call` and
         /// `function_call_output` items). If passed on a `function_call_output`
         /// item, the server will check that a `function_call` item with the same
         /// ID exists in the conversation history.
         /// </summary>
-        public string CallId { get; }
+        public string CallId { get; set; }
         /// <summary> The name of the function being called (for `function_call` items). </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The arguments of the function call (for `function_call` items). </summary>
-        public string Arguments { get; }
+        public string Arguments { get; set; }
         /// <summary> The output of the function call (for `function_call_output` items). </summary>
-        public string Output { get; }
+        public string Output { get; set; }
     }
 }

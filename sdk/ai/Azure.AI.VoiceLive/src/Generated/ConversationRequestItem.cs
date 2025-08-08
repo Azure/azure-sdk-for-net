@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// Please note <see cref="ConversationRequestItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RequestAssistantMessageItem"/>, <see cref="RequestFunctionCallItem"/>, <see cref="RequestFunctionCallOutputItem"/>, <see cref="RequestMessageItem"/>, <see cref="RequestSystemMessageItem"/> and <see cref="RequestUserMessageItem"/>.
     /// </summary>
-    internal abstract partial class ConversationRequestItem
+    public abstract partial class ConversationRequestItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -67,7 +67,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the type. </summary>
         internal ItemType Type { get; set; }
-        /// <summary> Gets the id. </summary>
-        public string Id { get; }
+        /// <summary> Gets or sets the id. </summary>
+        public string Id { get; set; }
     }
 }

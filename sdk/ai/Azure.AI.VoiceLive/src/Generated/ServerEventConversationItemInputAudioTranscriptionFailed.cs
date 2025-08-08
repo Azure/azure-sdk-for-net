@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="error"/> is null. </exception>
-        internal ServerEventConversationItemInputAudioTranscriptionFailed(string itemId, int contentIndex, ErrorDetails error)
+        internal ServerEventConversationItemInputAudioTranscriptionFailed(string itemId, int contentIndex, VoiceLiveErrorDetails error)
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
             Argument.AssertNotNull(error, nameof(error));
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the user message item. </param>
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
-        internal ServerEventConversationItemInputAudioTranscriptionFailed(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, ErrorDetails error) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventConversationItemInputAudioTranscriptionFailed(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, VoiceLiveErrorDetails error) : base(type, eventId, serializedAdditionalRawData)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
@@ -57,6 +57,6 @@ namespace Azure.AI.VoiceLive
         /// <summary> The index of the content part containing the audio. </summary>
         public int ContentIndex { get; }
         /// <summary> Details of the transcription error. </summary>
-        public ErrorDetails Error { get; }
+        public VoiceLiveErrorDetails Error { get; }
     }
 }

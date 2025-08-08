@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
     /// Only the fields that are present are updated. To clear a field like
     /// `instructions`, pass an empty string.
     /// </summary>
-    internal partial class ClientEventSessionUpdate : ClientEvent
+    public partial class ClientEventSessionUpdate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionUpdate"/>. </summary>
         /// <param name="session"></param>

@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
     /// If successful, the server will respond with a `conversation.item.truncated`
     /// event.
     /// </summary>
-    internal partial class ClientEventConversationItemTruncate : ClientEvent
+    public partial class ClientEventConversationItemTruncate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemTruncate"/>. </summary>
         /// <param name="itemId">
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// will respond with an error.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs)
+        public ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs)
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 

@@ -14,12 +14,12 @@ namespace Azure.AI.VoiceLive
     ///   Sent when the client connects and provides its SDP (Session Description Protocol)
     ///   for avatar-related media negotiation.
     /// </summary>
-    internal partial class ClientEventSessionAvatarConnect : ClientEvent
+    public partial class ClientEventSessionAvatarConnect : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionAvatarConnect"/>. </summary>
         /// <param name="clientSdp"> The client's SDP offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientSdp"/> is null. </exception>
-        internal ClientEventSessionAvatarConnect(string clientSdp)
+        public ClientEventSessionAvatarConnect(string clientSdp)
         {
             Argument.AssertNotNull(clientSdp, nameof(clientSdp));
 

@@ -26,7 +26,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Type = VoiceLive.ItemType.Message;
+            Type = VoiceLive.ItemType?.Message;
             Role = role;
             Content = content.ToList();
             Status = status;

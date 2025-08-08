@@ -65,7 +65,7 @@ namespace Azure.AI.VoiceLive
             }
             string itemId = default;
             int contentIndex = default;
-            ErrorDetails error = default;
+            VoiceLiveErrorDetails error = default;
             ServerEventType type = default;
             string eventId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -84,7 +84,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (property.NameEquals("error"u8))
                 {
-                    error = ErrorDetails.DeserializeErrorDetails(property.Value, options);
+                    error = VoiceLiveErrorDetails.DeserializeVoiceLiveErrorDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

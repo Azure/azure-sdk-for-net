@@ -27,10 +27,10 @@ namespace Azure.AI.VoiceLive
     /// `instructions`, and `temperature`. These fields will override the Session's
     /// configuration for this Response only.
     /// </summary>
-    internal partial class ClientEventResponseCreate : ClientEvent
+    public partial class ClientEventResponseCreate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCreate"/>. </summary>
-        internal ClientEventResponseCreate()
+        public ClientEventResponseCreate()
         {
             Type = ClientEventType.ResponseCreate;
         }
@@ -47,9 +47,9 @@ namespace Azure.AI.VoiceLive
             AdditionalInstructions = additionalInstructions;
         }
 
-        /// <summary> Gets the response. </summary>
-        public ResponseCreateParams Response { get; }
+        /// <summary> Gets or sets the response. </summary>
+        public ResponseCreateParams Response { get; set; }
         /// <summary> additional instructions (system prompt) appended to the default instructions of the session. Only affects this response only. </summary>
-        public string AdditionalInstructions { get; }
+        public string AdditionalInstructions { get; set; }
     }
 }

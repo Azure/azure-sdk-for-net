@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class RequestAssistantMessageItem : IUtf8JsonSerializable, IJsonModel<RequestAssistantMessageItem>
+    public partial class RequestAssistantMessageItem : IUtf8JsonSerializable, IJsonModel<RequestAssistantMessageItem>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestAssistantMessageItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -64,7 +64,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            IReadOnlyList<RequestTextContentPart> content = default;
+            IList<RequestTextContentPart> content = default;
             MessageRole role = default;
             ItemStatus? status = default;
             ItemType type = default;

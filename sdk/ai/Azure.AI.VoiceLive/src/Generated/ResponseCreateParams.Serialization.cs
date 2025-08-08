@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ResponseCreateParams : IUtf8JsonSerializable, IJsonModel<ResponseCreateParams>
+    public partial class ResponseCreateParams : IUtf8JsonSerializable, IJsonModel<ResponseCreateParams>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResponseCreateParams>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -167,13 +167,13 @@ namespace Azure.AI.VoiceLive
             }
             bool? commit = default;
             bool? cancelPrevious = default;
-            IReadOnlyList<ConversationRequestItem> appendInputItems = default;
-            IReadOnlyList<ConversationRequestItem> inputItems = default;
-            IReadOnlyList<InputModality> modalities = default;
+            IList<ConversationRequestItem> appendInputItems = default;
+            IList<ConversationRequestItem> inputItems = default;
+            IList<InputModality> modalities = default;
             string instructions = default;
             BinaryData voice = default;
             AudioFormat? outputAudioFormat = default;
-            IReadOnlyList<ToolCall> tools = default;
+            IList<ToolCall> tools = default;
             string toolChoice = default;
             float? temperature = default;
             BinaryData maxOutputTokens = default;
