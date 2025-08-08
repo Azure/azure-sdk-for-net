@@ -402,7 +402,6 @@
 /sdk/containerregistry/                                            @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry
-# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @toddysm @shizhMSFT
 
 # ServiceLabel: %Container Service
