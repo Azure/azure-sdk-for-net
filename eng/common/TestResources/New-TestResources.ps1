@@ -129,6 +129,11 @@ param (
 
 $wellKnownTMETenants = @('70a036f6-8e4d-4615-bad6-149c02e7720d')
 
+# People keep passing this legacy parameter. Throw an error to save them future keystrokes
+if ($NewTestResourcesRemainingArguments -like '*UserAuth*') {
+    throw "The -UserAuth parameter is deprecated and is now the default behavior"
+}
+
 if (!$ServicePrincipalAuth) {
     # Clear secrets if not using Service Principal auth. This prevents secrets
     # from being passed to pre- and post-scripts.
