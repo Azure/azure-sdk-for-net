@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(arguments, nameof(arguments));
 
-            Type = VoiceLive.ItemType?.FunctionCall;
+            Type = VoiceLive.ItemType.FunctionCall;
             Name = name;
             CallId = callId;
             Arguments = arguments;

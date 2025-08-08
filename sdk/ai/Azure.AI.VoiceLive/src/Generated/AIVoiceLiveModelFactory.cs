@@ -687,7 +687,7 @@ namespace Azure.AI.VoiceLive
 
             return new ResponseMessageItem(
                 @object,
-                VoiceLive.ItemType?.Message,
+                VoiceLive.ItemType.Message,
                 id,
                 serializedAdditionalRawData: null,
                 role,
@@ -707,7 +707,7 @@ namespace Azure.AI.VoiceLive
         {
             return new ResponseFunctionCallItem(
                 @object,
-                VoiceLive.ItemType?.FunctionCall,
+                VoiceLive.ItemType.FunctionCall,
                 id,
                 serializedAdditionalRawData: null,
                 name,
@@ -726,7 +726,7 @@ namespace Azure.AI.VoiceLive
         {
             return new ResponseFunctionCallOutputItem(
                 @object,
-                VoiceLive.ItemType?.FunctionCallOutput,
+                VoiceLive.ItemType.FunctionCallOutput,
                 id,
                 serializedAdditionalRawData: null,
                 callId,

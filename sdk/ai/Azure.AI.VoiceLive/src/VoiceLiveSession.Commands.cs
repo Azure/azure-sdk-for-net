@@ -443,14 +443,13 @@ namespace Azure.AI.VoiceLive
             // Since the constructor and properties are internal/readonly, we need to
             // use the model factory or find another approach
             // For now, let's create a simple JSON payload
-            var itemCreateData = new
+            var itemCreate = new ClientEventConversationItemCreate()
             {
-                type = "conversation.item.create",
-                item = item.ToRequestContent(),
-                previous_item_id = previousItemId
+                Item = item,
+                PreviousItemId = previousItemId
             };
 
-            BinaryData requestData = BinaryData.FromObjectAsJson(itemCreateData);
+            BinaryData requestData = itemCreate.ToBinaryData();
             await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
         }
 
