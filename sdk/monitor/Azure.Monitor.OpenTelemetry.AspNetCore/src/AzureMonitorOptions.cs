@@ -56,6 +56,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public float SamplingRatio { get; set; } = 1.0F;
 
         /// <summary>
+        /// Gets or sets the number of traces per second to be sampled when using rate-limited sampling.
+        /// For example, specifying 0.5 means one request every two seconds.
+        /// When both TracesPerSecond and SamplingRatio are specified, TracesPerSecond takes precedence.
+        /// </summary>
+        public double? TracesPerSecond { get; set; }
+
+        /// <summary>
         /// Override the default directory for offline storage.
         /// </summary>
         public string StorageDirectory { get; set; }
@@ -76,6 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.Credential = Credential;
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
             exporterOptions.SamplingRatio = SamplingRatio;
+            exporterOptions.TracesPerSecond = TracesPerSecond;
             exporterOptions.StorageDirectory = StorageDirectory;
             exporterOptions.EnableLiveMetrics = EnableLiveMetrics;
             if (Transport != null)
