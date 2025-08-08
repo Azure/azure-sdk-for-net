@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
         {
             if (_connectionString == null)
             {
-                ConnectionProperties connection = _outerInstance.Connections.GetDefault(ConnectionType.ApplicationInsights, includeCredentials: true);
+                ConnectionProperties connection = _outerInstance.Connections.GetDefaultConnection(ConnectionType.ApplicationInsights, includeCredentials: true);
                 if (connection == null)
                 {
                     throw new RequestFailedException("No Application Insights connection found.");
@@ -66,7 +66,7 @@ namespace Azure.AI.Projects
         {
             if (_connectionString == null)
             {
-                ConnectionProperties connection = await _outerInstance.Connections.GetDefaultAsync(ConnectionType.ApplicationInsights, includeCredentials: true).ConfigureAwait(false);
+                ConnectionProperties connection = await _outerInstance.Connections.GetDefaultConnectionAsync(ConnectionType.ApplicationInsights, includeCredentials: true).ConfigureAwait(false);
                 if (connection == null)
                 {
                     throw new RequestFailedException("No Application Insights connection found.");
