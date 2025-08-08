@@ -46,7 +46,7 @@ namespace MgmtTypeSpec
         internal FooSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string fooSettingsApiVersion);
-            fooSettingsApiVersion = fooSettingsApiVersion ?? "2024-05-01";
+            fooSettingsApiVersion ??= "2024-05-01";
             _fooSettingsOperationsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _fooSettingsOperationsRestClient = new FooSettingsOperations(_fooSettingsOperationsClientDiagnostics, Pipeline, Endpoint, fooSettingsApiVersion);
             ValidateResourceId(id);
