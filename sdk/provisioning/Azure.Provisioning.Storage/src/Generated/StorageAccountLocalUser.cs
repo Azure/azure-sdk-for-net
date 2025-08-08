@@ -202,6 +202,7 @@ public partial class StorageAccountLocalUser : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _extendedGroups = DefineListProperty<int>("ExtendedGroups", ["properties", "extendedGroups"]);
         _groupId = DefineProperty<int>("GroupId", ["properties", "groupId"]);

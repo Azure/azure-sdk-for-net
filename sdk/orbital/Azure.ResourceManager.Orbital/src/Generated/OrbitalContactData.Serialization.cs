@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Orbital
             if (Optional.IsDefined(ContactProfile))
             {
                 writer.WritePropertyName("contactProfile"u8);
-                JsonSerializer.Serialize(writer, ContactProfile);
+                ((IJsonModel<WritableSubResource>)ContactProfile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.Orbital
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOrbitalContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -363,7 +364,7 @@ namespace Azure.ResourceManager.Orbital
                             {
                                 continue;
                             }
-                            contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            contactProfile = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerOrbitalContext.Default);
                             continue;
                         }
                     }

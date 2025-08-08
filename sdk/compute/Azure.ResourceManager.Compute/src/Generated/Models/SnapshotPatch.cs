@@ -65,8 +65,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
         /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
         /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
+        /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotPatch(IDictionary<string, string> tags, SnapshotSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SnapshotPatch(IDictionary<string, string> tags, SnapshotSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Sku = sku;
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
             PublicNetworkAccess = publicNetworkAccess;
             DataAccessAuthMode = dataAccessAuthMode;
             SupportedCapabilities = supportedCapabilities;
+            SnapshotAccessState = snapshotAccessState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -107,5 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DataAccessAuthMode? DataAccessAuthMode { get; set; }
         /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
         public SupportedCapabilities SupportedCapabilities { get; set; }
+        /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
+        public SnapshotAccessState? SnapshotAccessState { get; }
     }
 }

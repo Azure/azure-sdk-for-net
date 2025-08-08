@@ -5,6 +5,7 @@ using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 
@@ -19,12 +20,15 @@ namespace Azure.Generator.Management
         private const string SingletonResourceName = "singletonResourceName";
         private const string ResourceScope = "resourceScope";
         private const string Methods = "methods";
-        private const string ParentResource = "parentResource";
+        private const string ParentResourceId = "parentResourceId";
+        private const string ResourceName = "resourceName";
 
         private IReadOnlyDictionary<InputModelType, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
+
+        private IReadOnlyDictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
@@ -55,7 +59,32 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
-        private IReadOnlyDictionary<InputServiceMethod, InputClient> IntMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
+        private IReadOnlyDictionary<InputServiceMethod, InputClient> InputMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
+
+        private IReadOnlyDictionary<InputModelType, string> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
+
+        private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
+        {
+            Dictionary<InputModelType, string> map = new();
+
+            foreach (var (resourceModel, metadata) in ResourceMetadata)
+            {
+                var inputMethod = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Update).FirstOrDefault()?.InputMethod;
+                if (inputMethod is { Operation.HttpMethod: "PATCH" } patchMethod)
+                {
+                    foreach (var parameter in patchMethod.Parameters)
+                    {
+                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != resourceModel)
+                        {
+                            map[updateModel] = resourceModel.Name;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return map;
+        }
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()
         {
@@ -74,7 +103,7 @@ namespace Azure.Generator.Management
             => InputMethodsByCrossLanguageDefinitionId.TryGetValue(crossLanguageDefinitionId, out var method) ? method : null;
 
         internal InputClient? GetClientByMethod(InputServiceMethod method)
-            => IntMethodClientMap.TryGetValue(method, out var client) ? client : null;
+            => InputMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
         internal ResourceMetadata? GetResourceMetadata(InputModelType model)
             => ResourceMetadata.TryGetValue(model, out var metadata) ? metadata : null;
@@ -89,13 +118,13 @@ namespace Azure.Generator.Management
                 var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
                 if (decorator != null)
                 {
-                    var metadata = BuildResourceMetadata(decorator);
+                    var metadata = BuildResourceMetadata(decorator, model);
                     resourceMetadata.Add(model, metadata);
                 }
             }
             return resourceMetadata;
 
-            ResourceMetadata BuildResourceMetadata(InputDecoratorInfo decorator)
+            ResourceMetadata BuildResourceMetadata(InputDecoratorInfo decorator, InputModelType inputModel)
             {
                 var args = decorator.Arguments ?? throw new InvalidOperationException();
                 string? resourceIdPattern = null;
@@ -104,6 +133,7 @@ namespace Azure.Generator.Management
                 ResourceScope? resourceScope = null;
                 var methods = new List<ResourceMethod>();
                 string? parentResource = null;
+                string? resourceName = null;
                 if (args.TryGetValue(ResourceIdPattern, out var resourceIdPatternData))
                 {
                     resourceIdPattern = resourceIdPatternData.ToObjectFromJson<string>();
@@ -154,13 +184,24 @@ namespace Azure.Generator.Management
                                 operationKind = kind;
                             }
                         }
-                        methods.Add(new ResourceMethod(id ?? throw new InvalidOperationException("id cannot be null"), operationKind ?? throw new InvalidOperationException("operationKind cannot be null")));
+                        var inputMethod = GetMethodByCrossLanguageDefinitionId(id ?? throw new InvalidOperationException("id cannot be null"));
+                        var inputClient = GetClientByMethod(inputMethod ?? throw new InvalidOperationException($"cannot find InputServiceMethod {id}"));
+                        methods.Add(
+                            new ResourceMethod(
+                                operationKind ?? throw new InvalidOperationException("operationKind cannot be null"),
+                                inputMethod,
+                                inputClient ?? throw new InvalidOperationException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client")));
                     }
                 }
 
-                if (args.TryGetValue(ParentResource, out var parentResourceData))
+                if (args.TryGetValue(ParentResourceId, out var parentResourceData))
                 {
                     parentResource = parentResourceData.ToObjectFromJson<string>();
+                }
+
+                if (args.TryGetValue(ResourceName, out var resourceNameData))
+                {
+                    resourceName = resourceNameData.ToObjectFromJson<string>();
                 }
 
                 // TODO -- I know we should never throw the exception, but here we just put it here and refine it later
@@ -170,8 +211,14 @@ namespace Azure.Generator.Management
                     resourceScope ?? throw new InvalidOperationException("resourceScope cannot be null"),
                     methods,
                     singletonResourceName,
-                    parentResource);
+                    parentResource,
+                    resourceName ?? throw new InvalidOperationException("resourceName cannot be null"));
             }
+        }
+
+        internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName)
+        {
+            return ResourceUpdateModelToResourceNameMap.TryGetValue(model, out resourceName);
         }
     }
 }

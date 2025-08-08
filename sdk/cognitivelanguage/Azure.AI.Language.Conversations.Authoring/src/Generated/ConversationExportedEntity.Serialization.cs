@@ -36,6 +36,11 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             if (Optional.IsDefined(CompositionMode))
             {
                 writer.WritePropertyName("compositionSetting"u8);
@@ -109,6 +114,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 return null;
             }
             string category = default;
+            string description = default;
             ConversationAuthoringCompositionMode? compositionSetting = default;
             ConversationAuthoringExportedEntityList entities = default;
             IList<ConversationAuthoringExportedPrebuiltEntity> prebuilts = default;
@@ -121,6 +127,11 @@ namespace Azure.AI.Language.Conversations.Authoring
                 if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("compositionSetting"u8))
@@ -186,6 +197,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             serializedAdditionalRawData = rawDataDictionary;
             return new ConversationExportedEntity(
                 category,
+                description,
                 compositionSetting,
                 entities,
                 prebuilts ?? new ChangeTrackingList<ConversationAuthoringExportedPrebuiltEntity>(),
