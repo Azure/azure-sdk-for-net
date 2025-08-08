@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="identity"> The managed service identity of the resource. </param>
         /// <param name="properties"> Properties of the storage task. </param>
         /// <returns> A new <see cref="StorageActions.StorageTaskData"/> instance for mocking. </returns>
-        public static StorageTaskData StorageTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default, StorageTaskProperties properties = default)
+        public static StorageTaskData StorageTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, StorageTaskProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

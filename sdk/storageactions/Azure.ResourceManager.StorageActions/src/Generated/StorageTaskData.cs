@@ -23,10 +23,9 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identity of the resource. </param>
         /// <param name="properties"> Properties of the storage task. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="identity"/> or <paramref name="properties"/> is null. </exception>
-        public StorageTaskData(string location, ManagedServiceIdentity identity, StorageTaskProperties properties) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="identity"/> or <paramref name="properties"/> is null. </exception>
+        public StorageTaskData(AzureLocation location, ManagedServiceIdentity identity, StorageTaskProperties properties) : base(location)
         {
-            Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(identity, nameof(identity));
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identity of the resource. </param>
         /// <param name="properties"> Properties of the storage task. </param>
-        internal StorageTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity, StorageTaskProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageTaskProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Identity = identity;
