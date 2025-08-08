@@ -174,13 +174,13 @@ namespace Azure.Generator.Management.Providers
             var bodyStatements = new List<MethodBodyStatement>();
 
             bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
-            bodyStatements.Add(apiVersion.Assign(Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion), nullCoalesce: true).Terminate());
 
             // Initialize all client diagnostics and rest client fields
             foreach (var (inputClient, clientInfo) in _clientInfos)
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeExpression.Namespace(), thisCollection.Diagnostics())).Terminate());
-                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), apiVersion)).Terminate());
+                var effectiveApiVersion = apiVersion.NullCoalesce(Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion));
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
             bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());

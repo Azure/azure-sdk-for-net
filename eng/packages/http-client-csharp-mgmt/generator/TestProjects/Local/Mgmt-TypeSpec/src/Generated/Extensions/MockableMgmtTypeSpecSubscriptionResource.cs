@@ -37,7 +37,7 @@ namespace MgmtTypeSpec.Mocking
 
         private ClientDiagnostics FooTasksClientDiagnostics => _fooTasksClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", "TODO", Diagnostics);
 
-        private FooTasks FooTasksRestClient => _fooTasksRestClient ??= new FooTasks(FooTasksClientDiagnostics, Pipeline, Endpoint, null);
+        private FooTasks FooTasksRestClient => _fooTasksRestClient ??= new FooTasks(FooTasksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>

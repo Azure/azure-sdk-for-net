@@ -36,9 +36,8 @@ namespace MgmtTypeSpec
         internal FooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
-            fooApiVersion ??= "2024-05-01";
             _foosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", FooResource.ResourceType.Namespace, Diagnostics);
-            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
