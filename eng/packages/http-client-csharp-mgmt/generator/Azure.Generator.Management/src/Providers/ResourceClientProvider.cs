@@ -234,6 +234,7 @@ namespace Azure.Generator.Management.Providers
             var bodyStatements = new List<MethodBodyStatement>();
 
             bodyStatements.Add(thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
+            bodyStatements.Add(apiVersion.Assign(new BinaryOperatorExpression("??", apiVersion, Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion))).Terminate());
 
             // Initialize all client diagnostics and rest client fields
             foreach (var (inputClient, clientInfo) in _clientInfos)

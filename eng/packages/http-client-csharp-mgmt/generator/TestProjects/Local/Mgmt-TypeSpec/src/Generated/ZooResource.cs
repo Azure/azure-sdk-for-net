@@ -51,6 +51,7 @@ namespace MgmtTypeSpec
         internal ZooResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string zooApiVersion);
+            zooApiVersion = zooApiVersion ?? "2024-05-01";
             _zoosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion);
             _zooRecommendationClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);

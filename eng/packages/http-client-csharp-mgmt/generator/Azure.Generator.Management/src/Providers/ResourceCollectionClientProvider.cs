@@ -16,6 +16,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using Microsoft.TypeSpec.Generator.Expressions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -173,6 +174,7 @@ namespace Azure.Generator.Management.Providers
             var bodyStatements = new List<MethodBodyStatement>();
 
             bodyStatements.Add(thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
+            bodyStatements.Add(apiVersion.Assign(new BinaryOperatorExpression("??", apiVersion, Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion))).Terminate());
 
             // Initialize all client diagnostics and rest client fields
             foreach (var (inputClient, clientInfo) in _clientInfos)
