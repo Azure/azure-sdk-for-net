@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -92,9 +94,24 @@ namespace Azure.Search.Documents.Models
         private SearchClient _pagingClient;
 
         /// <summary>
+        /// Metadata about the type to deserialize.
+        /// This is only used when deserializing using the APIs that take type info.
+        /// </summary>
+        private JsonTypeInfo<T> _typeInfo;
+
+        /// <summary>
         /// Initializes a new instance of the SearchResults class.
         /// </summary>
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         internal SearchResults() { }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchResults class with type info.
+        /// </summary>
+        internal SearchResults(JsonTypeInfo<T> typeInfo)
+        {
+            _typeInfo = typeInfo;
+        }
 
         /// <summary>
         /// Get all of the <see cref="SearchResult{T}"/>s synchronously.
@@ -143,16 +160,38 @@ namespace Azure.Search.Documents.Models
             SearchResults<T> next = null;
             if (_pagingClient != null && NextOptions != null)
             {
-                next = async ?
-                    await _pagingClient.SearchAsync<T>(
-                        NextOptions.SearchText,
-                        NextOptions,
-                        cancellationToken)
-                        .ConfigureAwait(false) :
-                    _pagingClient.Search<T>(
-                        NextOptions.SearchText,
-                        NextOptions,
-                        cancellationToken);
+                if (_typeInfo != null)
+                {
+                    next = async ?
+                        await _pagingClient.SearchAsync<T>(
+                            NextOptions.SearchText,
+                            _typeInfo,
+                            NextOptions,
+                            cancellationToken)
+                            .ConfigureAwait(false) :
+                        _pagingClient.Search<T>(
+                            NextOptions.SearchText,
+                            _typeInfo,
+                            NextOptions,
+                            cancellationToken);
+                }
+                else
+                {
+                    if (!JsonSerialization.IsReflectionEnabled)
+                    {
+                        throw new InvalidOperationException("Reflection-based serialization has been disabled in the app configuration.");
+                    }
+                    next = async ?
+                        await _pagingClient.SearchAsync<T>(
+                            NextOptions.SearchText,
+                            NextOptions,
+                            cancellationToken)
+                            .ConfigureAwait(false) :
+                        _pagingClient.Search<T>(
+                            NextOptions.SearchText,
+                            NextOptions,
+                            cancellationToken);
+                }
             }
             return next;
         }
@@ -172,6 +211,7 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>Deserialized SearchResults.</returns>
+        [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         internal static async Task<SearchResults<T>> DeserializeAsync(
             Stream json,
             ObjectSerializer serializer,
@@ -187,6 +227,61 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
 
             SearchResults<T> results = new SearchResults<T>();
+            await DeserializeEnvelope(doc, async, results, (JsonElement element, bool async) =>
+            {
+                return SearchResult<T>.DeserializeAsync(
+                    element,
+                    serializer,
+                    defaultSerializerOptions,
+                    async,
+                    cancellationToken);
+            }).ConfigureAwait(false);
+            return results;
+        }
+
+        /// <summary>
+        /// Deserialize the SearchResults.
+        /// </summary>
+        /// <param name="json">A JSON stream.</param>
+        /// <param name="typeInfo">Metadata about the type to deserialize.</param>
+        /// <param name="serializer">
+        /// Optional serializer that can be used to customize the serialization
+        /// of strongly typed models.
+        /// </param>
+        /// <param name="async">Whether to execute sync or async.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>Deserialized SearchResults.</returns>
+        internal static async Task<SearchResults<T>> DeserializeAsync(
+            Stream json,
+            JsonTypeInfo<T> typeInfo,
+            ObjectSerializer serializer,
+            bool async,
+            CancellationToken cancellationToken)
+#pragma warning restore CS1572
+        {
+            // Parse the JSON
+            using JsonDocument doc = async ?
+                await JsonDocument.ParseAsync(json, cancellationToken: cancellationToken).ConfigureAwait(false) :
+                JsonDocument.Parse(json);
+
+            SearchResults<T> results = new SearchResults<T>(typeInfo);
+            await DeserializeEnvelope(doc, async, results, (JsonElement element, bool async) =>
+            {
+                return SearchResult<T>.DeserializeAsync(
+                    element,
+                    serializer,
+                    typeInfo,
+                    async,
+                    cancellationToken);
+            }).ConfigureAwait(false);
+            return results;
+        }
+
+        private static async Task DeserializeEnvelope(JsonDocument doc, bool async, SearchResults<T> results, Func<JsonElement, bool, Task<SearchResult<T>>> deserializeValue)
+        {
             results.SemanticSearch = new SemanticSearchResults();
             foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
             {
@@ -309,18 +404,16 @@ namespace Azure.Search.Documents.Models
                 {
                     foreach (JsonElement element in prop.Value.EnumerateArray())
                     {
-                        SearchResult<T> result = await SearchResult<T>.DeserializeAsync(
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                        SearchResult<T> result = await deserializeValue(
                             element,
-                            serializer,
-                            defaultSerializerOptions,
-                            async,
-                            cancellationToken)
+                            async)
                             .ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                         results.Values.Add(result);
                     }
                 }
             }
-            return results;
         }
     }
 
