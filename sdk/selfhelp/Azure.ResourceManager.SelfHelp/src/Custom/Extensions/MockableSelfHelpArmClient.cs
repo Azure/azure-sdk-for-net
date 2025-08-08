@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(filter, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, filter, skiptoken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateDiscoverSolutionsRequest(filter, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateDiscoverSolutionsNextPageRequest(nextLink, filter, skiptoken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(e), DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
         }
 
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(filter, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, filter, skiptoken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateDiscoverSolutionsRequest(filter, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateDiscoverSolutionsNextPageRequest(nextLink, filter, skiptoken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(e), DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions", "value", "nextLink", cancellationToken);
         }
     }
