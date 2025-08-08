@@ -4365,6 +4365,23 @@
         {
           "name": "Azure.ResourceManager.@armProviderNamespace",
           "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@nonResourceMethodSchema",
+          "arguments": {
+            "nonResourceMethods": [
+              {
+                "methodId": "Azure.ResourceManager.Operations.list",
+                "operationPath": "/providers/Microsoft.StorageActions/operations",
+                "operationScope": "Tenant"
+              },
+              {
+                "methodId": "Microsoft.StorageActions.StorageTasksOperationGroup.previewActions",
+                "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/locations/{location}/previewActions",
+                "operationScope": "Subscription"
+              }
+            ]
+          }
         }
       ],
       "crossLanguageDefinitionId": "Microsoft.StorageActions",

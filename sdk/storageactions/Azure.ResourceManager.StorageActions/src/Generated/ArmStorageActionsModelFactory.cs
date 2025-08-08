@@ -121,6 +121,51 @@ namespace Azure.ResourceManager.StorageActions.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Storage task preview action properties. </summary>
+        /// <param name="container"> Properties of a sample container to test for a match with the preview action. </param>
+        /// <param name="blobs"> Properties of some sample blobs in the container to test for matches with the preview action. </param>
+        /// <param name="action"> Preview action to test. </param>
+        /// <returns> A new <see cref="Models.StorageTaskPreviewActionProperties"/> instance for mocking. </returns>
+        public static StorageTaskPreviewActionProperties StorageTaskPreviewActionProperties(StorageTaskPreviewContainerProperties container = default, IEnumerable<StorageTaskPreviewBlobProperties> blobs = default, StorageTaskPreviewActionCondition action = default)
+        {
+            blobs ??= new ChangeTrackingList<StorageTaskPreviewBlobProperties>();
+
+            return new StorageTaskPreviewActionProperties(container, blobs.ToList(), action, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Storage task preview container properties. </summary>
+        /// <param name="name"> Name of test container. </param>
+        /// <param name="metadata"> metadata key value pairs to be tested for a match against the provided condition. </param>
+        /// <returns> A new <see cref="Models.StorageTaskPreviewContainerProperties"/> instance for mocking. </returns>
+        public static StorageTaskPreviewContainerProperties StorageTaskPreviewContainerProperties(string name = default, IEnumerable<StorageTaskPreviewKeyValueProperties> metadata = default)
+        {
+            metadata ??= new ChangeTrackingList<StorageTaskPreviewKeyValueProperties>();
+
+            return new StorageTaskPreviewContainerProperties(name, metadata.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Storage task preview container properties. </summary>
+        /// <param name="name"> Name of test blob. </param>
+        /// <param name="properties"> properties key value pairs to be tested for a match against the provided condition. </param>
+        /// <param name="metadata"> metadata key value pairs to be tested for a match against the provided condition. </param>
+        /// <param name="tags"> tags key value pairs to be tested for a match against the provided condition. </param>
+        /// <param name="matchedBlock"> Represents the condition block name that matched blob properties. </param>
+        /// <returns> A new <see cref="Models.StorageTaskPreviewBlobProperties"/> instance for mocking. </returns>
+        public static StorageTaskPreviewBlobProperties StorageTaskPreviewBlobProperties(string name = default, IEnumerable<StorageTaskPreviewKeyValueProperties> properties = default, IEnumerable<StorageTaskPreviewKeyValueProperties> metadata = default, IEnumerable<StorageTaskPreviewKeyValueProperties> tags = default, MatchedBlockName? matchedBlock = default)
+        {
+            properties ??= new ChangeTrackingList<StorageTaskPreviewKeyValueProperties>();
+            metadata ??= new ChangeTrackingList<StorageTaskPreviewKeyValueProperties>();
+            tags ??= new ChangeTrackingList<StorageTaskPreviewKeyValueProperties>();
+
+            return new StorageTaskPreviewBlobProperties(
+                name,
+                properties.ToList(),
+                metadata.ToList(),
+                tags.ToList(),
+                matchedBlock,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Storage Tasks run report instance. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageActions.Mocking;
+using Azure.ResourceManager.StorageActions.Models;
 
 namespace Azure.ResourceManager.StorageActions
 {
@@ -29,6 +30,12 @@ namespace Azure.ResourceManager.StorageActions
         private static MockableStorageActionsResourceGroupResource GetMockableStorageActionsResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient(client => new MockableStorageActionsResourceGroupResource(client, resourceGroupResource.Id));
+        }
+
+        /// <param name="subscriptionResource"></param>
+        private static MockableStorageActionsSubscriptionResource GetMockableStorageActionsSubscriptionResource(SubscriptionResource subscriptionResource)
+        {
+            return subscriptionResource.GetCachedClient(client => new MockableStorageActionsSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary> Gets an object representing a <see cref="StorageTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -84,6 +91,36 @@ namespace Azure.ResourceManager.StorageActions
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
 
             return await GetMockableStorageActionsResourceGroupResource(resourceGroupResource).GetStorageTaskAsync(storageTaskName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"></param>
+        /// <param name="parameters"> The parameters to preview action condition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="parameters"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<StorageTaskPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            return GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActions(location, parameters, cancellationToken);
+        }
+
+        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"></param>
+        /// <param name="parameters"> The parameters to preview action condition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="parameters"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<StorageTaskPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            return await GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, parameters, cancellationToken).ConfigureAwait(false);
         }
     }
 }
