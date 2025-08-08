@@ -244,6 +244,5 @@ This basic sample can be extended with:
 
 ## References
 
-- [Azure VoiceLive SDK Documentation](https://docs.microsoft.com/azure/cognitive-services/voicelive/)
 - [NAudio Documentation](https://github.com/naudio/NAudio)
 - [System.CommandLine Documentation](https://docs.microsoft.com/dotnet/standard/commandline/)
