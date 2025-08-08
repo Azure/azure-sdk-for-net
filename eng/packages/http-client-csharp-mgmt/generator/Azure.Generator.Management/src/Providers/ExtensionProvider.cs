@@ -32,7 +32,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Extensions", $"{Name}.cs");
 
-        protected override FormattableString BuildDescription() => $"A class to add extension methods to Azure.ResourceManager.{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}.";
+        protected override FormattableString BuildDescription() => $"A class to add extension methods to {ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace}.";
 
         protected override MethodProvider[] BuildMethods()
         {
