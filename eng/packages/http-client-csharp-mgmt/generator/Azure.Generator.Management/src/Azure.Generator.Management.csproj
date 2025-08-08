@@ -15,7 +15,7 @@
 	<!-- temporarily. remove once Azure.Generator version update is done -->
 	<ItemGroup>
 		<PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" VersionOverride="1.0.0-alpha.20250731.2" />
-    <PackageReference Update="Microsoft.TypeSpec.Generator.Input" VersionOverride="1.0.0-alpha.20250731.2" />
+		<PackageReference Update="Microsoft.TypeSpec.Generator.Input" VersionOverride="1.0.0-alpha.20250731.2" />
 	</ItemGroup>
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
