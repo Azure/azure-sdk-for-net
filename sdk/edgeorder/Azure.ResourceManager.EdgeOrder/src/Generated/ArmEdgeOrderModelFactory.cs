@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -23,11 +24,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="addressClassification"> Type of address based on its usage context. </param>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="EdgeOrder.EdgeOrderAddressData"/> instance for mocking. </returns>
-        public static EdgeOrderAddressData EdgeOrderAddressData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null)
+        public static EdgeOrderAddressData EdgeOrderAddressData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AddressClassification? addressClassification = null, EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, AddressValidationStatus? addressValidationStatus = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -38,20 +41,344 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 systemData,
                 tags,
                 location,
+                addressClassification,
                 shippingAddress,
                 contactDetails,
                 addressValidationStatus,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemAddressProperties"/>. </summary>
+        /// <param name="addressClassification"> Type of address based on its usage context. </param>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.EdgeOrderItemAddressProperties"/> instance for mocking. </returns>
-        public static EdgeOrderItemAddressProperties EdgeOrderItemAddressProperties(EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null)
+        public static EdgeOrderItemAddressProperties EdgeOrderItemAddressProperties(AddressClassification? addressClassification = null, EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, AddressValidationStatus? addressValidationStatus = null, ProvisioningState? provisioningState = null)
         {
-            return new EdgeOrderItemAddressProperties(shippingAddress, contactDetails, addressValidationStatus, serializedAdditionalRawData: null);
+            return new EdgeOrderItemAddressProperties(
+                addressClassification,
+                shippingAddress,
+                contactDetails,
+                addressValidationStatus,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderItemData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="orderItemDetails"> Represents order item details. </param>
+        /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
+        /// <param name="startOn"> Start time of order item. </param>
+        /// <param name="orderId"> Id of the order to which order item belongs to. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <returns> A new <see cref="EdgeOrder.EdgeOrderItemData"/> instance for mocking. </returns>
+        public static EdgeOrderItemData EdgeOrderItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, OrderItemDetails orderItemDetails = null, EdgeOrderItemAddressDetails addressDetails = null, DateTimeOffset? startOn = null, string orderId = null, ProvisioningState? provisioningState = null, ManagedServiceIdentity identity = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new EdgeOrderItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                orderItemDetails,
+                addressDetails,
+                startOn,
+                orderId,
+                provisioningState,
+                identity,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OrderItemDetails"/>. </summary>
+        /// <param name="productDetails"> Represents product details. </param>
+        /// <param name="orderItemType"> Order item type. </param>
+        /// <param name="orderItemMode"> Defines the mode of the Order item. </param>
+        /// <param name="siteId"> Site Related Details. </param>
+        /// <param name="currentStage"> Current Order item Status. </param>
+        /// <param name="orderItemStageHistory"> Order item status history. </param>
+        /// <param name="preferences"> Customer notification Preferences. </param>
+        /// <param name="forwardShippingDetails"> Forward Package Shipping details. </param>
+        /// <param name="reverseShippingDetails"> Reverse Package Shipping details. </param>
+        /// <param name="notificationEmailList"> Additional notification email list. </param>
+        /// <param name="cancellationReason"> Cancellation reason. </param>
+        /// <param name="cancellationStatus"> Describes whether the order item is cancellable or not. </param>
+        /// <param name="deletionStatus"> Describes whether the order item is deletable or not. </param>
+        /// <param name="returnReason"> Return reason. </param>
+        /// <param name="returnStatus"> Describes whether the order item is returnable or not. </param>
+        /// <param name="managementRpDetailsList"> List of parent RP details supported for configuration. </param>
+        /// <param name="error"> Top level error for the job. </param>
+        /// <returns> A new <see cref="Models.OrderItemDetails"/> instance for mocking. </returns>
+        public static OrderItemDetails OrderItemDetails(ProductDetails productDetails = null, OrderItemType orderItemType = default, OrderMode? orderItemMode = null, string siteId = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderItemStageHistory = null, OrderItemPreferences preferences = null, ForwardShippingDetails forwardShippingDetails = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<string> notificationEmailList = null, string cancellationReason = null, OrderItemCancellationEnum? cancellationStatus = null, ActionStatusEnum? deletionStatus = null, string returnReason = null, OrderItemReturnEnum? returnStatus = null, IEnumerable<ResourceProviderDetails> managementRpDetailsList = null, ResponseError error = null)
+        {
+            orderItemStageHistory ??= new List<EdgeOrderStageDetails>();
+            notificationEmailList ??= new List<string>();
+            managementRpDetailsList ??= new List<ResourceProviderDetails>();
+
+            return new OrderItemDetails(
+                productDetails,
+                orderItemType,
+                orderItemMode,
+                siteId != null ? new SiteDetails(siteId, serializedAdditionalRawData: null) : null,
+                currentStage,
+                orderItemStageHistory?.ToList(),
+                preferences,
+                forwardShippingDetails,
+                reverseShippingDetails,
+                notificationEmailList?.ToList(),
+                cancellationReason,
+                cancellationStatus,
+                deletionStatus,
+                returnReason,
+                returnStatus,
+                managementRpDetailsList?.ToList(),
+                error,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductDetails"/>. </summary>
+        /// <param name="displayInfo"> Display details of the product. </param>
+        /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
+        /// <param name="productDoubleEncryptionStatus"> Double encryption status of the configuration. Read-only field. </param>
+        /// <param name="identificationType"> Identification type of the configuration. </param>
+        /// <param name="parentDeviceDetails"> Device details of the parent configuration. </param>
+        /// <param name="parentProvisioningDetails"> Device Provisioning Details for Parent. </param>
+        /// <param name="optInAdditionalConfigurations"> List of additional configurations customer wants in the order item apart from the ones included in the base configuration. </param>
+        /// <param name="childConfigurationDeviceDetails"> Details of all child configurations that are part of the order item. </param>
+        /// <param name="termCommitmentInformation"> Term Commitment Information of the Device. </param>
+        /// <returns> A new <see cref="Models.ProductDetails"/> instance for mocking. </returns>
+        public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, DoubleEncryptionStatus? productDoubleEncryptionStatus = null, IdentificationType? identificationType = null, EdgeOrderProductDeviceDetails parentDeviceDetails = null, ProvisioningDetails parentProvisioningDetails = null, IEnumerable<AdditionalConfiguration> optInAdditionalConfigurations = null, IEnumerable<ConfigurationDeviceDetails> childConfigurationDeviceDetails = null, TermCommitmentInformation termCommitmentInformation = null)
+        {
+            optInAdditionalConfigurations ??= new List<AdditionalConfiguration>();
+            childConfigurationDeviceDetails ??= new List<ConfigurationDeviceDetails>();
+
+            return new ProductDetails(
+                displayInfo,
+                hierarchyInformation,
+                productDoubleEncryptionStatus,
+                identificationType,
+                parentDeviceDetails,
+                parentProvisioningDetails,
+                optInAdditionalConfigurations?.ToList(),
+                childConfigurationDeviceDetails?.ToList(),
+                termCommitmentInformation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductDisplayInfo"/>. </summary>
+        /// <param name="productFamilyDisplayName"> Product family display name. </param>
+        /// <param name="configurationDisplayName"> Configuration display name. </param>
+        /// <returns> A new <see cref="Models.ProductDisplayInfo"/> instance for mocking. </returns>
+        public static ProductDisplayInfo ProductDisplayInfo(string productFamilyDisplayName = null, string configurationDisplayName = null)
+        {
+            return new ProductDisplayInfo(productFamilyDisplayName, configurationDisplayName, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductDeviceDetails"/>. </summary>
+        /// <param name="serialNumber"> Device serial number. </param>
+        /// <param name="displaySerialNumber"> Device serial number to be displayed. </param>
+        /// <param name="managementResourceId"> Management Resource Id. </param>
+        /// <param name="managementResourceTenantId"> Management Resource Tenant ID. </param>
+        /// <param name="provisioningSupport"> Determining nature of provisioning that the configuration supports. </param>
+        /// <param name="provisioningDetails"> Provisioning Details for the device. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderProductDeviceDetails"/> instance for mocking. </returns>
+        public static EdgeOrderProductDeviceDetails EdgeOrderProductDeviceDetails(string serialNumber = null, string displaySerialNumber = null, string managementResourceId = null, string managementResourceTenantId = null, ProvisioningSupport? provisioningSupport = null, ProvisioningDetails provisioningDetails = null)
+        {
+            return new EdgeOrderProductDeviceDetails(
+                serialNumber,
+                displaySerialNumber,
+                managementResourceId,
+                managementResourceTenantId,
+                provisioningSupport,
+                provisioningDetails,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningDetails"/>. </summary>
+        /// <param name="quantity"> Quantity of the devices. </param>
+        /// <param name="provisioningArmId"> Provisioning Resource Arm ID. </param>
+        /// <param name="provisioningEndPoint"> Provisioning End Point. </param>
+        /// <param name="serialNumber"> Serial Number for the Device. </param>
+        /// <param name="vendorName"> Vendor Name for the Device , (for 1P devices - Microsoft). </param>
+        /// <param name="readyToConnectArmId"> Arc Enabled Resource Arm id. </param>
+        /// <param name="managementResourceArmId"> Management Resource ArmId. </param>
+        /// <param name="uniqueDeviceIdentifier"> Unique Identity for a Device. </param>
+        /// <param name="autoProvisioningStatus"> Auto Provisioning Details. </param>
+        /// <param name="devicePresenceVerification"> Proof of possession details. </param>
+        /// <returns> A new <see cref="Models.ProvisioningDetails"/> instance for mocking. </returns>
+        public static ProvisioningDetails ProvisioningDetails(int? quantity = null, ResourceIdentifier provisioningArmId = null, string provisioningEndPoint = null, string serialNumber = null, string vendorName = null, ResourceIdentifier readyToConnectArmId = null, ResourceIdentifier managementResourceArmId = null, string uniqueDeviceIdentifier = null, AutoProvisioningStatus? autoProvisioningStatus = null, DevicePresenceVerificationDetails devicePresenceVerification = null)
+        {
+            return new ProvisioningDetails(
+                quantity,
+                provisioningArmId,
+                provisioningEndPoint,
+                serialNumber,
+                vendorName,
+                readyToConnectArmId,
+                managementResourceArmId,
+                uniqueDeviceIdentifier,
+                autoProvisioningStatus,
+                devicePresenceVerification,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevicePresenceVerificationDetails"/>. </summary>
+        /// <param name="status"> Proof of possession status. </param>
+        /// <param name="message"> Insights on current status. </param>
+        /// <returns> A new <see cref="Models.DevicePresenceVerificationDetails"/> instance for mocking. </returns>
+        public static DevicePresenceVerificationDetails DevicePresenceVerificationDetails(DevicePresenceVerificationStatus? status = null, string message = null)
+        {
+            return new DevicePresenceVerificationDetails(status, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationDeviceDetails"/>. </summary>
+        /// <param name="displayInfo"> Display details of the product. </param>
+        /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the configuration. </param>
+        /// <param name="quantity"> Quantity of the product. </param>
+        /// <param name="identificationType"> Identification type of the configuration. </param>
+        /// <param name="deviceDetails"> List of device details. </param>
+        /// <param name="termCommitmentInformation"> Term Commitment Information of the Device. </param>
+        /// <returns> A new <see cref="Models.ConfigurationDeviceDetails"/> instance for mocking. </returns>
+        public static ConfigurationDeviceDetails ConfigurationDeviceDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, int? quantity = null, IdentificationType? identificationType = null, IEnumerable<EdgeOrderProductDeviceDetails> deviceDetails = null, TermCommitmentInformation termCommitmentInformation = null)
+        {
+            deviceDetails ??= new List<EdgeOrderProductDeviceDetails>();
+
+            return new ConfigurationDeviceDetails(
+                displayInfo,
+                hierarchyInformation,
+                quantity,
+                identificationType,
+                deviceDetails?.ToList(),
+                termCommitmentInformation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TermCommitmentInformation"/>. </summary>
+        /// <param name="termCommitmentType"> Term Commitment Type. </param>
+        /// <param name="termCommitmentTypeDuration"> Term Commitment Duration. Currently Supporting P365D, P1095D. </param>
+        /// <param name="pendingDaysForTerm"> Number of Days Pending for Term Commitment. </param>
+        /// <returns> A new <see cref="Models.TermCommitmentInformation"/> instance for mocking. </returns>
+        public static TermCommitmentInformation TermCommitmentInformation(TermCommitmentType termCommitmentType = default, TimeSpan? termCommitmentTypeDuration = null, int? pendingDaysForTerm = null)
+        {
+            return new TermCommitmentInformation(termCommitmentType, termCommitmentTypeDuration, pendingDaysForTerm, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderStageDetails"/>. </summary>
+        /// <param name="stageStatus"> Stage status. </param>
+        /// <param name="stageName"> Stage name. </param>
+        /// <param name="displayName"> Display name of the resource stage. </param>
+        /// <param name="startOn"> Stage start time. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderStageDetails"/> instance for mocking. </returns>
+        public static EdgeOrderStageDetails EdgeOrderStageDetails(StageStatus? stageStatus = null, StageName? stageName = null, string displayName = null, DateTimeOffset? startOn = null)
+        {
+            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, startOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ForwardShippingDetails"/>. </summary>
+        /// <param name="carrierName"> Name of the carrier. </param>
+        /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
+        /// <param name="trackingId"> TrackingId of the package. </param>
+        /// <param name="trackingUri"> TrackingUrl of the package. </param>
+        /// <returns> A new <see cref="Models.ForwardShippingDetails"/> instance for mocking. </returns>
+        public static ForwardShippingDetails ForwardShippingDetails(string carrierName = null, string carrierDisplayName = null, string trackingId = null, string trackingUri = null)
+        {
+            return new ForwardShippingDetails(carrierName, carrierDisplayName, trackingId, trackingUri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReverseShippingDetails"/>. </summary>
+        /// <param name="sasKeyForLabel"> SAS key to download the reverse shipment label of the package. </param>
+        /// <param name="carrierName"> Name of the carrier. </param>
+        /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
+        /// <param name="trackingId"> TrackingId of the package. </param>
+        /// <param name="trackingUri"> TrackingUrl of the package. </param>
+        /// <returns> A new <see cref="Models.ReverseShippingDetails"/> instance for mocking. </returns>
+        public static ReverseShippingDetails ReverseShippingDetails(string sasKeyForLabel = null, string carrierName = null, string carrierDisplayName = null, string trackingId = null, string trackingUri = null)
+        {
+            return new ReverseShippingDetails(
+                sasKeyForLabel,
+                carrierName,
+                carrierDisplayName,
+                trackingId,
+                trackingUri,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderDetails"/>. </summary>
+        /// <param name="resourceProviderNamespace"> Resource provider namespace. </param>
+        /// <returns> A new <see cref="Models.ResourceProviderDetails"/> instance for mocking. </returns>
+        public static ResourceProviderDetails ResourceProviderDetails(string resourceProviderNamespace = null)
+        {
+            return new ResourceProviderDetails(resourceProviderNamespace, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemAddressDetails"/>. </summary>
+        /// <param name="forwardAddress"> Customer address and contact details. </param>
+        /// <param name="returnAddress"> Return shipping address. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderItemAddressDetails"/> instance for mocking. </returns>
+        public static EdgeOrderItemAddressDetails EdgeOrderItemAddressDetails(EdgeOrderItemAddressProperties forwardAddress = null, EdgeOrderItemAddressProperties returnAddress = null)
+        {
+            return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemReturnContent"/>. </summary>
+        /// <param name="returnAddress"> Customer return address. </param>
+        /// <param name="returnReason"> Return Reason. </param>
+        /// <param name="serviceTag"> Service tag (located on the bottom-right corner of the device). </param>
+        /// <param name="shippingBoxRequired"> Shipping Box required. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderItemReturnContent"/> instance for mocking. </returns>
+        public static EdgeOrderItemReturnContent EdgeOrderItemReturnContent(EdgeOrderItemAddressProperties returnAddress = null, string returnReason = null, string serviceTag = null, bool? shippingBoxRequired = null)
+        {
+            return new EdgeOrderItemReturnContent(returnAddress, returnReason, serviceTag, shippingBoxRequired, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="orderItemIds"> List of order item ARM Ids which are part of an order. </param>
+        /// <param name="currentStage"> Order current status. </param>
+        /// <param name="orderStageHistory"> Order status history. </param>
+        /// <param name="orderMode"> Order mode. </param>
+        /// <returns> A new <see cref="EdgeOrder.EdgeOrderData"/> instance for mocking. </returns>
+        public static EdgeOrderData EdgeOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> orderItemIds = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderStageHistory = null, OrderMode? orderMode = null)
+        {
+            orderItemIds ??= new List<string>();
+            orderStageHistory ??= new List<EdgeOrderStageDetails>();
+
+            return new EdgeOrderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                orderItemIds?.ToList(),
+                currentStage,
+                orderStageHistory?.ToList(),
+                orderMode,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationFilter"/>. </summary>
+        /// <param name="hierarchyInformation"> Product hierarchy information. </param>
+        /// <param name="filterableProperty"> Filters specific to product. </param>
+        /// <param name="childConfigurationFilter"> Filter to fetch specific child configurations that exist in the configuration. This must be passed to either fetch a list of specific child configurations, or all child configurations of specific types of child configurations. </param>
+        /// <returns> A new <see cref="Models.ConfigurationFilter"/> instance for mocking. </returns>
+        public static ConfigurationFilter ConfigurationFilter(HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperty = null, ChildConfigurationFilter childConfigurationFilter = null)
+        {
+            filterableProperty ??= new List<FilterableProperty>();
+
+            return new ConfigurationFilter(hierarchyInformation, filterableProperty?.ToList(), childConfigurationFilter, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomerSubscriptionDetails"/>. </summary>
@@ -66,120 +393,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new CustomerSubscriptionDetails(registeredFeatures?.ToList(), locationPlacementId, quotaId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProductFamily"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
-        /// <param name="productLines"> List of product lines supported in the product family. </param>
-        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
-        /// <returns> A new <see cref="Models.ProductFamily"/> instance for mocking. </returns>
-        public static ProductFamily ProductFamily(string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null, IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null)
-        {
-            imageInformation ??= new List<EdgeOrderProductImageInformation>();
-            filterableProperties ??= new List<FilterableProperty>();
-            productLines ??= new List<ProductLine>();
-            resourceProviderDetails ??= new List<ResourceProviderDetails>();
-
-            return new ProductFamily(
-                displayName,
-                description,
-                imageInformation?.ToList(),
-                costInformation,
-                availabilityInformation,
-                hierarchyInformation,
-                filterableProperties?.ToList(),
-                productLines?.ToList(),
-                resourceProviderDetails?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProductLine"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
-        /// <param name="products"> List of products in the product line. </param>
-        /// <returns> A new <see cref="Models.ProductLine"/> instance for mocking. </returns>
-        public static ProductLine ProductLine(string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null, IEnumerable<EdgeOrderProduct> products = null)
-        {
-            imageInformation ??= new List<EdgeOrderProductImageInformation>();
-            filterableProperties ??= new List<FilterableProperty>();
-            products ??= new List<EdgeOrderProduct>();
-
-            return new ProductLine(
-                displayName,
-                description,
-                imageInformation?.ToList(),
-                costInformation,
-                availabilityInformation,
-                hierarchyInformation,
-                filterableProperties?.ToList(),
-                products?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProduct"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
-        /// <param name="configurations"> List of configurations for the product. </param>
-        /// <returns> A new <see cref="Models.EdgeOrderProduct"/> instance for mocking. </returns>
-        public static EdgeOrderProduct EdgeOrderProduct(string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null, IEnumerable<ProductConfiguration> configurations = null)
-        {
-            imageInformation ??= new List<EdgeOrderProductImageInformation>();
-            filterableProperties ??= new List<FilterableProperty>();
-            configurations ??= new List<ProductConfiguration>();
-
-            return new EdgeOrderProduct(
-                displayName,
-                description,
-                imageInformation?.ToList(),
-                costInformation,
-                availabilityInformation,
-                hierarchyInformation,
-                filterableProperties?.ToList(),
-                configurations?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProductConfiguration"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderConfiguration"/>. </summary>
         /// <param name="specifications"> Specifications of the configuration. </param>
         /// <param name="dimensions"> Dimensions of the configuration. </param>
-        /// <returns> A new <see cref="Models.ProductConfiguration"/> instance for mocking. </returns>
-        public static ProductConfiguration ProductConfiguration(string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null, IEnumerable<ProductSpecification> specifications = null, ProductDimensions dimensions = null)
+        /// <param name="provisioningSupport"> Determining nature of provisioning that the configuration supports. </param>
+        /// <param name="childConfigurationTypes"> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </param>
+        /// <param name="groupedChildConfigurations"> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </param>
+        /// <param name="supportedTermCommitmentDurations"> The Term Commitment Durations that are supported for a configuration. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderConfiguration"/> instance for mocking. </returns>
+        public static EdgeOrderConfiguration EdgeOrderConfiguration(IEnumerable<ProductSpecification> specifications = null, ProductDimensions dimensions = null, ProvisioningSupport? provisioningSupport = null, IEnumerable<ChildConfigurationType> childConfigurationTypes = null, IEnumerable<GroupedChildConfigurations> groupedChildConfigurations = null, IEnumerable<TimeSpan> supportedTermCommitmentDurations = null)
         {
-            imageInformation ??= new List<EdgeOrderProductImageInformation>();
-            filterableProperties ??= new List<FilterableProperty>();
             specifications ??= new List<ProductSpecification>();
+            childConfigurationTypes ??= new List<ChildConfigurationType>();
+            groupedChildConfigurations ??= new List<GroupedChildConfigurations>();
+            supportedTermCommitmentDurations ??= new List<TimeSpan>();
 
-            return new ProductConfiguration(
-                displayName,
-                description,
-                imageInformation?.ToList(),
-                costInformation,
-                availabilityInformation,
-                hierarchyInformation,
-                filterableProperties?.ToList(),
+            return new EdgeOrderConfiguration(
                 specifications?.ToList(),
                 dimensions,
+                provisioningSupport,
+                childConfigurationTypes?.ToList(),
+                groupedChildConfigurations?.ToList(),
+                supportedTermCommitmentDurations?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -201,7 +436,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="depth"> Depth of the device. </param>
         /// <param name="weightUnit"> Unit for the dimensions of weight. </param>
         /// <returns> A new <see cref="Models.ProductDimensions"/> instance for mocking. </returns>
-        public static ProductDimensions ProductDimensions(double? length = null, double? height = null, double? width = null, ProductLengthHeightWidthUnit? lengthHeightUnit = null, double? weight = null, double? depth = null, ProductWeightMeasurementUnit? weightUnit = null)
+        public static ProductDimensions ProductDimensions(double? length = null, double? height = null, double? width = null, LengthHeightUnit? lengthHeightUnit = null, double? weight = null, double? depth = null, WeightMeasurementUnit? weightUnit = null)
         {
             return new ProductDimensions(
                 length,
@@ -214,6 +449,90 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.GroupedChildConfigurations"/>. </summary>
+        /// <param name="categoryInformation"> Category information. </param>
+        /// <param name="childConfigurations"> List of child configurations. </param>
+        /// <returns> A new <see cref="Models.GroupedChildConfigurations"/> instance for mocking. </returns>
+        public static GroupedChildConfigurations GroupedChildConfigurations(CategoryInformation categoryInformation = null, IEnumerable<ChildConfiguration> childConfigurations = null)
+        {
+            childConfigurations ??= new List<ChildConfiguration>();
+
+            return new GroupedChildConfigurations(categoryInformation, childConfigurations?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CategoryInformation"/>. </summary>
+        /// <param name="categoryName"> Category name of the child configuration. </param>
+        /// <param name="categoryDisplayName"> Category display name of the child configuration. </param>
+        /// <param name="description"> Description text for the category. </param>
+        /// <param name="links"> Links for the category. </param>
+        /// <returns> A new <see cref="Models.CategoryInformation"/> instance for mocking. </returns>
+        public static CategoryInformation CategoryInformation(string categoryName = null, string categoryDisplayName = null, string description = null, IEnumerable<ProductLink> links = null)
+        {
+            links ??= new List<ProductLink>();
+
+            return new CategoryInformation(categoryName, categoryDisplayName, description, links?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductLink"/>. </summary>
+        /// <param name="linkType"> Type of link. </param>
+        /// <param name="linkUri"> Url of the link. </param>
+        /// <returns> A new <see cref="Models.ProductLink"/> instance for mocking. </returns>
+        public static ProductLink ProductLink(LinkType? linkType = null, string linkUri = null)
+        {
+            return new ProductLink(linkType, linkUri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ChildConfiguration"/>. </summary>
+        /// <param name="childConfigurationType"> Child configuration type. </param>
+        /// <param name="isPartOfBaseConfiguration"> Flag to indicate if the child configuration is part of the base configuration, which means the customer need not pass this configuration in OptInAdditionalConfigurations while placing an order, it will be shipped by default. </param>
+        /// <param name="minimumQuantity"> Minimum quantity a customer can order while choosing this configuration. </param>
+        /// <param name="maximumQuantity"> Maximum quantity a customer can order while choosing this configuration. </param>
+        /// <param name="specifications"> Specifications of the configuration. </param>
+        /// <param name="dimensions"> Dimensions of the configuration. </param>
+        /// <param name="provisioningSupport"> Determining nature of provisioning that the configuration supports. </param>
+        /// <param name="childConfigurationTypes"> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </param>
+        /// <param name="groupedChildConfigurations"> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </param>
+        /// <param name="supportedTermCommitmentDurations"> The Term Commitment Durations that are supported for a configuration. </param>
+        /// <param name="filterableProperties"> List of filters supported for a product. </param>
+        /// <param name="displayName"> Display Name for the product system. </param>
+        /// <param name="description"> Description related to the product system. </param>
+        /// <param name="imageInformation"> Image information for the product system. </param>
+        /// <param name="costInformation"> Cost information for the product system. </param>
+        /// <param name="availabilityInformation"> Availability information of the product system. </param>
+        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
+        /// <param name="fulfilledBy"> The entity responsible for fulfillment of the item at the given hierarchy level. </param>
+        /// <returns> A new <see cref="Models.ChildConfiguration"/> instance for mocking. </returns>
+        public static ChildConfiguration ChildConfiguration(ChildConfigurationType? childConfigurationType = null, bool? isPartOfBaseConfiguration = null, int? minimumQuantity = null, int? maximumQuantity = null, IEnumerable<ProductSpecification> specifications = null, ProductDimensions dimensions = null, ProvisioningSupport? provisioningSupport = null, IEnumerable<ChildConfigurationType> childConfigurationTypes = null, IEnumerable<GroupedChildConfigurations> groupedChildConfigurations = null, IEnumerable<TimeSpan> supportedTermCommitmentDurations = null, IEnumerable<FilterableProperty> filterableProperties = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, FulfillmentType? fulfilledBy = null)
+        {
+            specifications ??= new List<ProductSpecification>();
+            childConfigurationTypes ??= new List<ChildConfigurationType>();
+            groupedChildConfigurations ??= new List<GroupedChildConfigurations>();
+            supportedTermCommitmentDurations ??= new List<TimeSpan>();
+            filterableProperties ??= new List<FilterableProperty>();
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+
+            return new ChildConfiguration(
+                childConfigurationType,
+                isPartOfBaseConfiguration,
+                minimumQuantity,
+                maximumQuantity,
+                specifications?.ToList(),
+                dimensions,
+                provisioningSupport,
+                childConfigurationTypes?.ToList(),
+                groupedChildConfigurations?.ToList(),
+                supportedTermCommitmentDurations?.ToList(),
+                filterableProperties?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                fulfilledBy,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ProductDescription"/>. </summary>
         /// <param name="descriptionType"> Type of description. </param>
         /// <param name="shortDescription"> Short description of the product system. </param>
@@ -222,7 +541,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="attributes"> Attributes for the product system. </param>
         /// <param name="links"> Links for the product system. </param>
         /// <returns> A new <see cref="Models.ProductDescription"/> instance for mocking. </returns>
-        public static ProductDescription ProductDescription(ProductDescriptionType? descriptionType = null, string shortDescription = null, string longDescription = null, IEnumerable<string> keywords = null, IEnumerable<string> attributes = null, IEnumerable<ProductLink> links = null)
+        public static ProductDescription ProductDescription(DescriptionType? descriptionType = null, string shortDescription = null, string longDescription = null, IEnumerable<string> keywords = null, IEnumerable<string> attributes = null, IEnumerable<ProductLink> links = null)
         {
             keywords ??= new List<string>();
             attributes ??= new List<string>();
@@ -238,20 +557,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProductLink"/>. </summary>
-        /// <param name="linkType"> Type of link. </param>
-        /// <param name="linkUri"> Url of the link. </param>
-        /// <returns> A new <see cref="Models.ProductLink"/> instance for mocking. </returns>
-        public static ProductLink ProductLink(ProductLinkType? linkType = null, Uri linkUri = null)
-        {
-            return new ProductLink(linkType, linkUri, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductImageInformation"/>. </summary>
         /// <param name="imageType"> Type of the image. </param>
         /// <param name="imageUri"> Url of the image. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductImageInformation"/> instance for mocking. </returns>
-        public static EdgeOrderProductImageInformation EdgeOrderProductImageInformation(EdgeOrderProductImageType? imageType = null, Uri imageUri = null)
+        public static EdgeOrderProductImageInformation EdgeOrderProductImageInformation(EdgeOrderProductImageType? imageType = null, string imageUri = null)
         {
             return new EdgeOrderProductImageInformation(imageType, imageUri, serializedAdditionalRawData: null);
         }
@@ -260,7 +570,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="billingMeterDetails"> Details on the various billing aspects for the product system. </param>
         /// <param name="billingInfoUri"> Default url to display billing information. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductCostInformation"/> instance for mocking. </returns>
-        public static EdgeOrderProductCostInformation EdgeOrderProductCostInformation(IEnumerable<EdgeOrderProductBillingMeterDetails> billingMeterDetails = null, Uri billingInfoUri = null)
+        public static EdgeOrderProductCostInformation EdgeOrderProductCostInformation(IEnumerable<EdgeOrderProductBillingMeterDetails> billingMeterDetails = null, string billingInfoUri = null)
         {
             billingMeterDetails ??= new List<EdgeOrderProductBillingMeterDetails>();
 
@@ -270,16 +580,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductBillingMeterDetails"/>. </summary>
         /// <param name="name"> Represents Billing type name. </param>
         /// <param name="meterDetails">
-        /// Represents MeterDetails
+        /// Represents MeterDetails.
         /// Please note <see cref="Models.EdgeOrderProductMeterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.Pav2MeterDetails"/> and <see cref="Models.PurchaseMeterDetails"/>.
         /// </param>
         /// <param name="meteringType"> Represents Metering type (eg one-time or recurrent). </param>
         /// <param name="frequency"> Frequency of recurrence. </param>
+        /// <param name="termTypeDetails"> Represent Term Type details. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductBillingMeterDetails"/> instance for mocking. </returns>
-        public static EdgeOrderProductBillingMeterDetails EdgeOrderProductBillingMeterDetails(string name = null, EdgeOrderProductMeterDetails meterDetails = null, EdgeOrderProductMeteringType? meteringType = null, string frequency = null)
+        public static EdgeOrderProductBillingMeterDetails EdgeOrderProductBillingMeterDetails(string name = null, EdgeOrderProductMeterDetails meterDetails = null, MeteringType? meteringType = null, string frequency = null, TermTypeDetails termTypeDetails = null)
         {
-            return new EdgeOrderProductBillingMeterDetails(name, meterDetails, meteringType, frequency, serializedAdditionalRawData: null);
+            return new EdgeOrderProductBillingMeterDetails(
+                name,
+                meterDetails,
+                meteringType,
+                frequency,
+                termTypeDetails,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductMeterDetails"/>. </summary>
@@ -287,267 +604,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductMeterDetails"/> instance for mocking. </returns>
-        public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = null, double? multiplier = null, EdgeOrderProductChargingType? chargingType = null)
+        public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = null, double? multiplier = null, ChargingType? chargingType = null)
         {
-            return new UnknownMeterDetails(billingType == null ? default : new BillingType(billingType), multiplier, chargingType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProductAvailabilityInformation"/>. </summary>
-        /// <param name="availabilityStage"> Current availability stage of the product. Availability stage. </param>
-        /// <param name="disabledReason"> Reason why the product is disabled. </param>
-        /// <param name="disabledReasonMessage"> Message for why the product is disabled. </param>
-        /// <returns> A new <see cref="Models.ProductAvailabilityInformation"/> instance for mocking. </returns>
-        public static ProductAvailabilityInformation ProductAvailabilityInformation(ProductAvailabilityStage? availabilityStage = null, ProductDisabledReason? disabledReason = null, string disabledReasonMessage = null)
-        {
-            return new ProductAvailabilityInformation(availabilityStage, disabledReason, disabledReasonMessage, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderDetails"/>. </summary>
-        /// <param name="resourceProviderNamespace"> Resource provider namespace. </param>
-        /// <returns> A new <see cref="Models.ResourceProviderDetails"/> instance for mocking. </returns>
-        public static ResourceProviderDetails ResourceProviderDetails(string resourceProviderNamespace = null)
-        {
-            return new ResourceProviderDetails(resourceProviderNamespace, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationFilters"/>. </summary>
-        /// <param name="hierarchyInformation"> Product hierarchy information. </param>
-        /// <param name="filterableProperty"> Filters specific to product. </param>
-        /// <returns> A new <see cref="Models.ConfigurationFilters"/> instance for mocking. </returns>
-        public static ConfigurationFilters ConfigurationFilters(HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperty = null)
-        {
-            filterableProperty ??= new List<FilterableProperty>();
-
-            return new ConfigurationFilters(hierarchyInformation, filterableProperty?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProductFamiliesMetadata"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
-        /// <param name="productLines"> List of product lines supported in the product family. </param>
-        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
-        /// <returns> A new <see cref="Models.ProductFamiliesMetadata"/> instance for mocking. </returns>
-        public static ProductFamiliesMetadata ProductFamiliesMetadata(string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null, IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null)
-        {
-            imageInformation ??= new List<EdgeOrderProductImageInformation>();
-            filterableProperties ??= new List<FilterableProperty>();
-            productLines ??= new List<ProductLine>();
-            resourceProviderDetails ??= new List<ResourceProviderDetails>();
-
-            return new ProductFamiliesMetadata(
-                displayName,
-                description,
-                imageInformation?.ToList(),
-                costInformation,
-                availabilityInformation,
-                hierarchyInformation,
-                filterableProperties?.ToList(),
-                productLines?.ToList(),
-                resourceProviderDetails?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="orderItemIds"> List of order item ARM Ids which are part of an order. </param>
-        /// <param name="currentStage"> Order current status. </param>
-        /// <param name="orderStageHistory"> Order status history. </param>
-        /// <returns> A new <see cref="EdgeOrder.EdgeOrderData"/> instance for mocking. </returns>
-        public static EdgeOrderData EdgeOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ResourceIdentifier> orderItemIds = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderStageHistory = null)
-        {
-            orderItemIds ??= new List<ResourceIdentifier>();
-            orderStageHistory ??= new List<EdgeOrderStageDetails>();
-
-            return new EdgeOrderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                orderItemIds?.ToList(),
-                currentStage,
-                orderStageHistory?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderStageDetails"/>. </summary>
-        /// <param name="stageStatus"> Stage status. </param>
-        /// <param name="stageName"> Stage name. </param>
-        /// <param name="displayName"> Display name of the resource stage. </param>
-        /// <param name="startOn"> Stage start time. </param>
-        /// <returns> A new <see cref="Models.EdgeOrderStageDetails"/> instance for mocking. </returns>
-        public static EdgeOrderStageDetails EdgeOrderStageDetails(EdgeOrderStageStatus? stageStatus = null, EdgeOrderStageName? stageName = null, string displayName = null, DateTimeOffset? startOn = null)
-        {
-            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, startOn, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderItemData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="orderItemDetails"> Represents order item details. </param>
-        /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
-        /// <param name="startOn"> Start time of order item. </param>
-        /// <param name="orderId"> Id of the order to which order item belongs to. </param>
-        /// <returns> A new <see cref="EdgeOrder.EdgeOrderItemData"/> instance for mocking. </returns>
-        public static EdgeOrderItemData EdgeOrderItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeOrderItemDetails orderItemDetails = null, EdgeOrderItemAddressDetails addressDetails = null, DateTimeOffset? startOn = null, ResourceIdentifier orderId = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new EdgeOrderItemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                orderItemDetails,
-                addressDetails,
-                startOn,
-                orderId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemDetails"/>. </summary>
-        /// <param name="productDetails"> Unique identifier for configuration. </param>
-        /// <param name="orderItemType"> Order item type. </param>
-        /// <param name="currentStage"> Current Order item Status. </param>
-        /// <param name="orderItemStageHistory"> Order item status history. </param>
-        /// <param name="preferences"> Customer notification Preferences. </param>
-        /// <param name="forwardShippingDetails"> Forward Package Shipping details. </param>
-        /// <param name="reverseShippingDetails"> Reverse Package Shipping details. </param>
-        /// <param name="notificationEmailList"> Additional notification email list. </param>
-        /// <param name="cancellationReason"> Cancellation reason. </param>
-        /// <param name="cancellationStatus"> Describes whether the order item is cancellable or not. </param>
-        /// <param name="deletionStatus"> Describes whether the order item is deletable or not. </param>
-        /// <param name="returnReason"> Return reason. </param>
-        /// <param name="returnStatus"> Describes whether the order item is returnable or not. </param>
-        /// <param name="firstOrDefaultManagementResourceProviderNamespace"> Parent RP details - this returns only the first or default parent RP from the entire list. </param>
-        /// <param name="managementRPDetailsList"> List of parent RP details supported for configuration. </param>
-        /// <param name="error"> Top level error for the job. </param>
-        /// <returns> A new <see cref="Models.EdgeOrderItemDetails"/> instance for mocking. </returns>
-        public static EdgeOrderItemDetails EdgeOrderItemDetails(ProductDetails productDetails = null, OrderItemType orderItemType = default, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderItemStageHistory = null, OrderItemPreferences preferences = null, ForwardShippingDetails forwardShippingDetails = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<string> notificationEmailList = null, string cancellationReason = null, OrderItemCancellationStatus? cancellationStatus = null, EdgeOrderActionStatus? deletionStatus = null, string returnReason = null, OrderItemReturnStatus? returnStatus = null, string firstOrDefaultManagementResourceProviderNamespace = null, IEnumerable<ResourceProviderDetails> managementRPDetailsList = null, ResponseError error = null)
-        {
-            orderItemStageHistory ??= new List<EdgeOrderStageDetails>();
-            notificationEmailList ??= new List<string>();
-            managementRPDetailsList ??= new List<ResourceProviderDetails>();
-
-            return new EdgeOrderItemDetails(
-                productDetails,
-                orderItemType,
-                currentStage,
-                orderItemStageHistory?.ToList(),
-                preferences,
-                forwardShippingDetails,
-                reverseShippingDetails,
-                notificationEmailList?.ToList(),
-                cancellationReason,
-                cancellationStatus,
-                deletionStatus,
-                returnReason,
-                returnStatus,
-                firstOrDefaultManagementResourceProviderNamespace != null ? new ResourceProviderDetails(firstOrDefaultManagementResourceProviderNamespace, serializedAdditionalRawData: null) : null,
-                managementRPDetailsList?.ToList(),
-                error,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProductDetails"/>. </summary>
-        /// <param name="displayInfo"> Display details of the product. </param>
-        /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
-        /// <param name="count"> Quantity of the product. </param>
-        /// <param name="productDoubleEncryptionStatus"> Double encryption status of the configuration. Read-only field. </param>
-        /// <param name="deviceDetails"> list of device details. </param>
-        /// <returns> A new <see cref="Models.ProductDetails"/> instance for mocking. </returns>
-        public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, int? count = null, DoubleEncryptionStatus? productDoubleEncryptionStatus = null, IEnumerable<EdgeOrderProductDeviceDetails> deviceDetails = null)
-        {
-            deviceDetails ??= new List<EdgeOrderProductDeviceDetails>();
-
-            return new ProductDetails(
-                displayInfo,
-                hierarchyInformation,
-                count,
-                productDoubleEncryptionStatus,
-                deviceDetails?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProductDisplayInfo"/>. </summary>
-        /// <param name="productFamilyDisplayName"> Product family display name. </param>
-        /// <param name="configurationDisplayName"> Configuration display name. </param>
-        /// <returns> A new <see cref="Models.ProductDisplayInfo"/> instance for mocking. </returns>
-        public static ProductDisplayInfo ProductDisplayInfo(string productFamilyDisplayName = null, string configurationDisplayName = null)
-        {
-            return new ProductDisplayInfo(productFamilyDisplayName, configurationDisplayName, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductDeviceDetails"/>. </summary>
-        /// <param name="serialNumber"> device serial number. </param>
-        /// <param name="managementResourceId"> Management Resource Id. </param>
-        /// <param name="managementResourceTenantId"> Management Resource Tenant ID. </param>
-        /// <returns> A new <see cref="Models.EdgeOrderProductDeviceDetails"/> instance for mocking. </returns>
-        public static EdgeOrderProductDeviceDetails EdgeOrderProductDeviceDetails(string serialNumber = null, string managementResourceId = null, string managementResourceTenantId = null)
-        {
-            return new EdgeOrderProductDeviceDetails(serialNumber, managementResourceId, managementResourceTenantId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ForwardShippingDetails"/>. </summary>
-        /// <param name="carrierName"> Name of the carrier. </param>
-        /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
-        /// <param name="trackingId"> TrackingId of the package. </param>
-        /// <param name="trackingUri"> TrackingUrl of the package. </param>
-        /// <returns> A new <see cref="Models.ForwardShippingDetails"/> instance for mocking. </returns>
-        public static ForwardShippingDetails ForwardShippingDetails(string carrierName = null, string carrierDisplayName = null, string trackingId = null, Uri trackingUri = null)
-        {
-            return new ForwardShippingDetails(carrierName, carrierDisplayName, trackingId, trackingUri, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReverseShippingDetails"/>. </summary>
-        /// <param name="sasKeyForLabel"> SAS key to download the reverse shipment label of the package. </param>
-        /// <param name="carrierName"> Name of the carrier. </param>
-        /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
-        /// <param name="trackingId"> TrackingId of the package. </param>
-        /// <param name="trackingUri"> TrackingUrl of the package. </param>
-        /// <returns> A new <see cref="Models.ReverseShippingDetails"/> instance for mocking. </returns>
-        public static ReverseShippingDetails ReverseShippingDetails(string sasKeyForLabel = null, string carrierName = null, string carrierDisplayName = null, string trackingId = null, Uri trackingUri = null)
-        {
-            return new ReverseShippingDetails(
-                sasKeyForLabel,
-                carrierName,
-                carrierDisplayName,
-                trackingId,
-                trackingUri,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemAddressDetails"/>. </summary>
-        /// <param name="forwardAddress"> Customer address and contact details. It should be address resource. </param>
-        /// <param name="returnAddress"> Return shipping address. </param>
-        /// <returns> A new <see cref="Models.EdgeOrderItemAddressDetails"/> instance for mocking. </returns>
-        public static EdgeOrderItemAddressDetails EdgeOrderItemAddressDetails(EdgeOrderItemAddressProperties forwardAddress = null, EdgeOrderItemAddressProperties returnAddress = null)
-        {
-            return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemReturnContent"/>. </summary>
-        /// <param name="returnAddress"> customer return address. </param>
-        /// <param name="returnReason"> Return Reason. </param>
-        /// <param name="serviceTag"> Service tag (located on the bottom-right corner of the device). </param>
-        /// <param name="isShippingBoxRequired"> Shipping Box required. </param>
-        /// <returns> A new <see cref="Models.EdgeOrderItemReturnContent"/> instance for mocking. </returns>
-        public static EdgeOrderItemReturnContent EdgeOrderItemReturnContent(EdgeOrderItemAddressProperties returnAddress = null, string returnReason = null, string serviceTag = null, bool? isShippingBoxRequired = null)
-        {
-            return new EdgeOrderItemReturnContent(returnAddress, returnReason, serviceTag, isShippingBoxRequired, serializedAdditionalRawData: null);
+            return new UnknownEdgeOrderProductMeterDetails(billingType == null ? default : new BillingType(billingType), multiplier, chargingType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Pav2MeterDetails"/>. </summary>
@@ -555,7 +614,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="chargingType"> Charging type. </param>
         /// <param name="meterGuid"> Validation status of requested data center and transport. </param>
         /// <returns> A new <see cref="Models.Pav2MeterDetails"/> instance for mocking. </returns>
-        public static Pav2MeterDetails Pav2MeterDetails(double? multiplier = null, EdgeOrderProductChargingType? chargingType = null, Guid? meterGuid = null)
+        public static Pav2MeterDetails Pav2MeterDetails(double? multiplier = null, ChargingType? chargingType = null, string meterGuid = null)
         {
             return new Pav2MeterDetails(BillingType.Pav2, multiplier, chargingType, serializedAdditionalRawData: null, meterGuid);
         }
@@ -567,7 +626,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="skuId"> Sku Id. </param>
         /// <param name="termId"> Term Id. </param>
         /// <returns> A new <see cref="Models.PurchaseMeterDetails"/> instance for mocking. </returns>
-        public static PurchaseMeterDetails PurchaseMeterDetails(double? multiplier = null, EdgeOrderProductChargingType? chargingType = null, string productId = null, string skuId = null, string termId = null)
+        public static PurchaseMeterDetails PurchaseMeterDetails(double? multiplier = null, ChargingType? chargingType = null, string productId = null, string skuId = null, string termId = null)
         {
             return new PurchaseMeterDetails(
                 BillingType.Purchase,
@@ -577,6 +636,80 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 productId,
                 skuId,
                 termId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TermTypeDetails"/>. </summary>
+        /// <param name="termType"> Term Commitment Type. </param>
+        /// <param name="termTypeDuration"> Duration for the term type. </param>
+        /// <returns> A new <see cref="Models.TermTypeDetails"/> instance for mocking. </returns>
+        public static TermTypeDetails TermTypeDetails(TermCommitmentType termType = default, TimeSpan termTypeDuration = default)
+        {
+            return new TermTypeDetails(termType, termTypeDuration, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductAvailabilityInformation"/>. </summary>
+        /// <param name="availabilityStage"> Current availability stage of the product. </param>
+        /// <param name="disabledReason"> Reason why the product is disabled. </param>
+        /// <param name="disabledReasonMessage"> Message for why the product is disabled. </param>
+        /// <returns> A new <see cref="Models.ProductAvailabilityInformation"/> instance for mocking. </returns>
+        public static ProductAvailabilityInformation ProductAvailabilityInformation(AvailabilityStage? availabilityStage = null, DisabledReason? disabledReason = null, string disabledReasonMessage = null)
+        {
+            return new ProductAvailabilityInformation(availabilityStage, disabledReason, disabledReasonMessage, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductFamily"/>. </summary>
+        /// <param name="productLines"> List of product lines supported in the product family. </param>
+        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderProductFamily"/> instance for mocking. </returns>
+        public static EdgeOrderProductFamily EdgeOrderProductFamily(IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null)
+        {
+            productLines ??= new List<ProductLine>();
+            resourceProviderDetails ??= new List<ResourceProviderDetails>();
+
+            return new EdgeOrderProductFamily(productLines?.ToList(), resourceProviderDetails?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductLine"/>. </summary>
+        /// <param name="products"> List of products in the product line. </param>
+        /// <returns> A new <see cref="Models.ProductLine"/> instance for mocking. </returns>
+        public static ProductLine ProductLine(IEnumerable<Product> products = null)
+        {
+            products ??= new List<Product>();
+
+            return new ProductLine(products?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Product"/>. </summary>
+        /// <param name="configurations"> List of configurations for the product. </param>
+        /// <returns> A new <see cref="Models.Product"/> instance for mocking. </returns>
+        public static Product Product(IEnumerable<EdgeOrderConfiguration> configurations = null)
+        {
+            configurations ??= new List<EdgeOrderConfiguration>();
+
+            return new Product(configurations?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductFamiliesMetadataDetails"/>. </summary>
+        /// <param name="productLines"> List of product lines supported in the product family. </param>
+        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <returns> A new <see cref="Models.ProductFamiliesMetadataDetails"/> instance for mocking. </returns>
+        public static ProductFamiliesMetadataDetails ProductFamiliesMetadataDetails(IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null)
+        {
+            productLines ??= new List<ProductLine>();
+            resourceProviderDetails ??= new List<ResourceProviderDetails>();
+
+            return new ProductFamiliesMetadataDetails(productLines?.ToList(), resourceProviderDetails?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails" />. </summary>
+        /// <param name="serialNumber"> device serial number. </param>
+        /// <param name="managementResourceId"> Management Resource Id. </param>
+        /// <param name="managementResourceTenantId"> Management Resource Tenant ID. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.EdgeOrder.Models.EdgeOrderProductDeviceDetails" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeOrderProductDeviceDetails EdgeOrderProductDeviceDetails(string serialNumber, string managementResourceId, string managementResourceTenantId)
+        {
+            return EdgeOrderProductDeviceDetails(serialNumber: serialNumber, displaySerialNumber: default, managementResourceId: managementResourceId, managementResourceTenantId: managementResourceTenantId, provisioningSupport: default, provisioningDetails: default);
         }
     }
 }

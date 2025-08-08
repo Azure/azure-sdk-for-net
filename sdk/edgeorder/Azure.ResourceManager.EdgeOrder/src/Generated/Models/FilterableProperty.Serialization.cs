@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(SupportedFilterType.ToString());
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("supportedValues"u8);
             writer.WriteStartArray();
             foreach (var item in SupportedValues)
