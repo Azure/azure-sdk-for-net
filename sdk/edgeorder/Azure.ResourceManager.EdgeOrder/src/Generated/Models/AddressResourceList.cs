@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AddressResourceList"/>. </summary>
-        internal AddressResourceList()
+        /// <param name="value"> The AddressResource items on this page. </param>
+        internal AddressResourceList(IEnumerable<EdgeOrderAddressData> value)
         {
-            Value = new ChangeTrackingList<EdgeOrderAddressData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AddressResourceList"/>. </summary>
-        /// <param name="value"> List of address resources. </param>
-        /// <param name="nextLink"> Link for the next set of job resources. </param>
+        /// <param name="value"> The AddressResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AddressResourceList(IReadOnlyList<EdgeOrderAddressData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AddressResourceList(IReadOnlyList<EdgeOrderAddressData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of address resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressResourceList"/> for deserialization. </summary>
+        internal AddressResourceList()
+        {
+        }
+
+        /// <summary> The AddressResource items on this page. </summary>
         public IReadOnlyList<EdgeOrderAddressData> Value { get; }
-        /// <summary> Link for the next set of job resources. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

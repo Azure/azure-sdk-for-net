@@ -34,8 +34,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 throw new FormatException($"The model {nameof(EdgeOrderShippingAddress)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("streetAddress1"u8);
-            writer.WriteStringValue(StreetAddress1);
+            if (Optional.IsDefined(StreetAddress1))
+            {
+                writer.WritePropertyName("streetAddress1"u8);
+                writer.WriteStringValue(StreetAddress1);
+            }
             if (Optional.IsDefined(StreetAddress2))
             {
                 writer.WritePropertyName("streetAddress2"u8);
