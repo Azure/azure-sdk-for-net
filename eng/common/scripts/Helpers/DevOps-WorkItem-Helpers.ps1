@@ -1026,14 +1026,11 @@ function Get-LanguageDevOpsName($LanguageShort)
         "java" { return "Java" }
         "go" { return "Go" }
         "python" { return "Python" }
-        "rust" { return "Rust" }
-        "cpp" { return "Cpp" }
-        "c" { return "C" }
         default { return $null }
     }
 }
 
-function Get-ReleasePlanForPullRequest($prLink)
+function Get-ReleasePlanForPackage($packageName)
 {
     $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
     if (!$devopsFieldLanguage)
@@ -1042,8 +1039,8 @@ function Get-ReleasePlanForPullRequest($prLink)
         return $null
     }
 
-    $prFieldName = "SDKPullRequestFor$($devopsFieldLanguage)"
-    $releaseStatusField = "ReleaseStatusFor$($devopsFieldLanguage)"
+    $prStatusFieldName = "SDKPullRequestStatusFor$($devopsFieldLanguage)"
+    $packageNameFieldName = "$($devopsFieldLanguage) Package Name"
     $fields = @()
     $fields += "System.ID"
     $fields += "System.State"
@@ -1052,9 +1049,9 @@ function Get-ReleasePlanForPullRequest($prLink)
     $fields += "System.Tags"
 
     $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
-    $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [$prFieldName] = '${prLink}'"
-    $query += " AND [$releaseStatusField] <> 'Released'"
-    $query += " AND [System.State] NOT IN ('Finished', 'Abandoned')"
+    $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [${packageNameFieldName}] = '${packageName}'"
+    $query += " AND [${prStatusFieldName}] = 'merged'"
+    $query += " AND [System.State] IN ('In Progress') ORDER BY [System.CreatedDate]"
     $workItems = Invoke-Query $fields $query
     return $workItems
 }
