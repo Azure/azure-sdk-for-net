@@ -104,7 +104,7 @@ namespace Azure.Generator
 
         /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override ValueExpression DeserializeJsonValue(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             var expression = DeserializeJsonValueCore(valueType, element, format);
@@ -112,7 +112,7 @@ namespace Azure.Generator
         }
 
         private ValueExpression? DeserializeJsonValueCore(
-            CSharpType valueType,
+            Type valueType,
             ScopedApi<JsonElement> element,
             SerializationFormat format)
         {
@@ -122,7 +122,7 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        public override MethodBodyStatement SerializeJsonValue(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
         {
             var statement = SerializeValueTypeCore(serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
             return statement ?? base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
