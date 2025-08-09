@@ -32,6 +32,21 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("speechLanguage"u8);
                 writer.WriteStringValue(SpeechLanguage);
             }
+            if (Optional.IsCollectionDefined(SpeechLanguages))
+            {
+                writer.WritePropertyName("speechLanguages"u8);
+                writer.WriteStartArray();
+                foreach (var item in SpeechLanguages)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EnableSentimentAnalysis))
+            {
+                writer.WritePropertyName("enableSentimentAnalysis"u8);
+                writer.WriteBooleanValue(EnableSentimentAnalysis.Value);
+            }
             if (Optional.IsDefined(SpeechRecognitionModelEndpointId))
             {
                 writer.WritePropertyName("speechRecognitionModelEndpointId"u8);

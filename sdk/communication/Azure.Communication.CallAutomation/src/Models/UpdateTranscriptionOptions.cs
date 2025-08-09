@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Defines Locale for the transcription e,g en-US. </summary>
-        internal string Locale { get; set; }
+        internal string Locale { get; }
 
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
@@ -31,5 +31,14 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public Uri OperationCallbackUri { get; set; }
+
+        /// <summary> PII redaction configuration options. </summary>
+        public PiiRedactionOptions PiiRedactionOptions { get; set; }
+
+        /// <summary> Indicating if sentiment analysis should be used. </summary>
+        public bool? IsSentimentAnalysisEnabled { get; set; }
+
+        /// <summary> Summarization configuration options. </summary>
+        public SummarizationOptions SummarizationOptions { get; set; }
     }
 }

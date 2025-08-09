@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
@@ -14,9 +16,12 @@ namespace Azure.Communication.CallAutomation
         {
             TranscriptionSubscriptionId = transcriptionMetadataInternal.TranscriptionSubscriptionId;
             Locale = transcriptionMetadataInternal.Locale;
+            Locales = transcriptionMetadataInternal.Locales;
             CallConnectionId = transcriptionMetadataInternal.CallConnectionId;
             CorrelationId = transcriptionMetadataInternal.CorrelationId;
             SpeechRecognitionModelEndpointId = transcriptionMetadataInternal.SpeechRecognitionModelEndpointId;
+            IsSentimentAnalysisEnabled = transcriptionMetadataInternal.IsSentimentAnalysisEnabled;
+            PiiRedactionOptions = ConvertToPiiRedactionOptions(transcriptionMetadataInternal.PiiRedactionOptions);
         }
         /// <summary>
         /// Transcription Subscription Id.
@@ -27,6 +32,9 @@ namespace Azure.Communication.CallAutomation
         /// The target locale in which the translated text needs to be
         /// </summary>
         public string Locale { get; }
+
+        /// <summary> List of languages for Language Identification. </summary>
+        public IList<string> Locales { get; }
 
         /// <summary>
         /// call connection Id.
@@ -42,5 +50,25 @@ namespace Azure.Communication.CallAutomation
         /// The custom speech recognition model endpoint id
         /// </summary>
         public string SpeechRecognitionModelEndpointId { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating if sentiment analysis should be used
+        /// </summary>
+        public bool? IsSentimentAnalysisEnabled { get; }
+
+        /// <summary>
+        /// Gets or sets Options for Pii redaction
+        /// </summary>
+        public PiiRedactionOptions PiiRedactionOptions { get; }
+
+        private static PiiRedactionOptions ConvertToPiiRedactionOptions(PiiRedactionOptionsInternal piiRedactionOptions)
+        {
+            if (piiRedactionOptions == null)
+            {
+                return null;
+            }
+
+            return new PiiRedactionOptions() { IsEnabled = piiRedactionOptions.Enable, RedactionType = piiRedactionOptions.RedactionType };
+        }
     }
 }

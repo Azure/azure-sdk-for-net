@@ -62,6 +62,17 @@ namespace Azure.Communication.CallAutomation
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CallAutomationClientOptions())
         { }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/> with custom PMA endpoint.</summary>
+        /// <param name="pmaEndpoint">Endpoint for PMA</param>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallAutomationClient(Uri pmaEndpoint, string connectionString, CallAutomationClientOptions options = default)
+        : this(
+              pmaEndpoint,
+              options ?? new CallAutomationClientOptions(),
+              ConnectionString.Parse(connectionString))
+        { }
         #endregion
 
         #region private constructors
@@ -71,6 +82,13 @@ namespace Azure.Communication.CallAutomation
 
         private CallAutomationClient(string endpoint, TokenCredential tokenCredential, CallAutomationClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
+        { }
+
+        private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
+        : this(
+        endpoint: endpoint,
+        httpPipeline: options.CustomBuildHttpPipeline(connectionString),
+        options: options)
         { }
 
         private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
@@ -209,6 +227,7 @@ namespace Azure.Communication.CallAutomation
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -675,6 +694,7 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -701,6 +721,7 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -716,6 +737,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
             };
+
+            connectRequest.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return connectRequest;
         }
@@ -738,18 +761,33 @@ namespace Azure.Communication.CallAutomation
 
         private static WebSocketTranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
         {
-            return configuration == default
-                ? default
-                : new WebSocketTranscriptionOptionsInternal(
-                configuration.Locale)
+            if (configuration == default)
+            {
+                return default;
+            }
+
+            WebSocketTranscriptionOptionsInternal webSocketTranscriptionOptionsInternal = new WebSocketTranscriptionOptionsInternal()
+            {
+                Locale = configuration.Locale,
+                SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
+                StartTranscription = configuration.StartTranscription,
+                TransportUrl = configuration.TransportUri?.AbsoluteUri,
+                TransportType = configuration.TranscriptionTransport,
+                EnableIntermediateResults = configuration.EnableIntermediateResults,
+                PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.IsEnabled, configuration.PiiRedactionOptions.RedactionType),
+                EnableSentimentAnalysis = configuration.IsSentimentAnalysisEnabled,
+                SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.IsEndCallSummaryEnabled, configuration.SummarizationOptions.Locale)
+            };
+
+            if (configuration.Locales != null && configuration.Locales.Any())
+            {
+                foreach (string locale in configuration.Locales)
                 {
-                    SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
-                    StartTranscription = configuration.StartTranscription,
-                    TransportUrl = configuration.TransportUri?.AbsoluteUri,
-                    TransportType = configuration.TranscriptionTransport,
-                    EnableIntermediateResults = configuration.EnableIntermediateResults,
-                    SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId
-                };
+                    webSocketTranscriptionOptionsInternal.Locales.Add(locale);
+                }
+            }
+
+            return webSocketTranscriptionOptionsInternal;
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>

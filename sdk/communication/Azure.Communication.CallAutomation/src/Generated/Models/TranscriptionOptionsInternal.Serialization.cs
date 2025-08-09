@@ -17,8 +17,11 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("transportType"u8);
             writer.WriteStringValue(TransportType.ToString());
-            writer.WritePropertyName("locale"u8);
-            writer.WriteStringValue(Locale);
+            if (Optional.IsDefined(Locale))
+            {
+                writer.WritePropertyName("locale"u8);
+                writer.WriteStringValue(Locale);
+            }
             writer.WriteEndObject();
         }
 
