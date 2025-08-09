@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
                         Offer = "WindowsServer",
                         Sku = "2022-datacenter-azure-edition",
                         Version = "latest",
-                    }
+                    },
                 }
             };
 

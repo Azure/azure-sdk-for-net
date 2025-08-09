@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -124,6 +125,69 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new StartResourceOperationResult(description, resourceType, location, results?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ExecuteCreateContent"/>. </summary>
+        /// <param name="resourceConfigParameters"> resource creation payload. </param>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="correlationid"> CorrelationId item. </param>
+        /// <returns> A new <see cref="Models.ExecuteCreateContent"/> instance for mocking. </returns>
+        public static ExecuteCreateContent ExecuteCreateContent(ResourceProvisionPayload resourceConfigParameters = null, ScheduledActionExecutionParameterDetail executionParameters = null, string correlationid = null)
+        {
+            return new ExecuteCreateContent(resourceConfigParameters, executionParameters, correlationid, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceProvisionPayload"/>. </summary>
+        /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </param>
+        /// <param name="resourceOverrides"> JSON array, that contains VM properties that should to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </param>
+        /// <param name="resourceCount"> Number of VMs to be created. </param>
+        /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
+        /// <returns> A new <see cref="Models.ResourceProvisionPayload"/> instance for mocking. </returns>
+        public static ResourceProvisionPayload ResourceProvisionPayload(IDictionary<string, BinaryData> baseProfile = null, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides = null, int resourceCount = default, string resourcePrefix = null)
+        {
+            baseProfile ??= new Dictionary<string, BinaryData>();
+            resourceOverrides ??= new List<IDictionary<string, BinaryData>>();
+
+            return new ResourceProvisionPayload(baseProfile, resourceOverrides?.ToList(), resourceCount, resourcePrefix, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CreateResourceOperationResult"/>. </summary>
+        /// <param name="description"> The description of the operation response. </param>
+        /// <param name="type"> The type of resources used in the create request eg virtual machines. </param>
+        /// <param name="location"> The location of the start request eg westus. </param>
+        /// <param name="results"> The results from the start request if no errors exist. </param>
+        /// <returns> A new <see cref="Models.CreateResourceOperationResult"/> instance for mocking. </returns>
+        public static CreateResourceOperationResult CreateResourceOperationResult(string description = null, string type = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
+        {
+            results ??= new List<ResourceOperationResult>();
+
+            return new CreateResourceOperationResult(description, type, location, results?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExecuteDeleteContent"/>. </summary>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="resourcesIds"> The resources for the request. </param>
+        /// <param name="correlationid"> CorrelationId item. </param>
+        /// <param name="forceDeletion"> Forced delete resource item. </param>
+        /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
+        public static ExecuteDeleteContent ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters = null, IEnumerable<ResourceIdentifier> resourcesIds = null, string correlationid = null, bool? forceDeletion = null)
+        {
+            resourcesIds ??= new List<ResourceIdentifier>();
+
+            return new ExecuteDeleteContent(executionParameters, resourcesIds != null ? new UserRequestResources(resourcesIds?.ToList(), serializedAdditionalRawData: null) : null, correlationid, forceDeletion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeleteResourceOperationResult"/>. </summary>
+        /// <param name="description"> The description of the operation response. </param>
+        /// <param name="type"> The type of resources used in the delete request eg virtual machines. </param>
+        /// <param name="location"> The location of the start request eg westus. </param>
+        /// <param name="results"> The results from the start request if no errors exist. </param>
+        /// <returns> A new <see cref="Models.DeleteResourceOperationResult"/> instance for mocking. </returns>
+        public static DeleteResourceOperationResult DeleteResourceOperationResult(string description = null, string type = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
+        {
+            results ??= new List<ResourceOperationResult>();
+
+            return new DeleteResourceOperationResult(description, type, location, results?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.GetOperationStatusResult"/>. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
         /// <returns> A new <see cref="Models.GetOperationStatusResult"/> instance for mocking. </returns>
@@ -195,6 +259,243 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 errorDetailsTimestamp,
                 azureOperationName,
                 crpOperationId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledAction"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ScheduledAction"/> instance for mocking. </returns>
+        public static ScheduledAction ScheduledAction(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ScheduledActionProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ScheduledAction(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledActionProperties"/>. </summary>
+        /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
+        /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
+        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
+        /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
+        /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
+        /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionProperties"/> instance for mocking. </returns>
+        public static ScheduledActionProperties ScheduledActionProperties(ResourceType resourceType = default, ActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = null, ScheduledActionsSchedule schedule = null, IEnumerable<NotificationProperties> notificationSettings = null, bool? disabled = null, ProvisioningState? provisioningState = null)
+        {
+            notificationSettings ??= new List<NotificationProperties>();
+
+            return new ScheduledActionProperties(
+                resourceType,
+                actionType,
+                startOn,
+                endOn,
+                schedule,
+                notificationSettings?.ToList(),
+                disabled,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledActionResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="resourceId">
+        /// The ARM Id of the resource.
+        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+        /// </param>
+        /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionResource"/> instance for mocking. </returns>
+        public static ScheduledActionResource ScheduledActionResource(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier resourceId = null, IEnumerable<NotificationProperties> notificationSettings = null)
+        {
+            notificationSettings ??= new List<NotificationProperties>();
+
+            return new ScheduledActionResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceId,
+                notificationSettings?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecurringActionsResourceOperationResult"/>. </summary>
+        /// <param name="totalResources"> The total number of resources operated on. </param>
+        /// <param name="resourcesStatuses"> The resource status of for each resource. </param>
+        /// <returns> A new <see cref="Models.RecurringActionsResourceOperationResult"/> instance for mocking. </returns>
+        public static RecurringActionsResourceOperationResult RecurringActionsResourceOperationResult(int totalResources = default, IEnumerable<ResourceStatus> resourcesStatuses = null)
+        {
+            resourcesStatuses ??= new List<ResourceStatus>();
+
+            return new RecurringActionsResourceOperationResult(totalResources, resourcesStatuses?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceStatus"/>. </summary>
+        /// <param name="resourceId"> The arm identifier of the resource. </param>
+        /// <param name="status"> The state the resource is currently on. </param>
+        /// <param name="error"> Errors encountered while trying to perform. </param>
+        /// <returns> A new <see cref="Models.ResourceStatus"/> instance for mocking. </returns>
+        public static ResourceStatus ResourceStatus(ResourceIdentifier resourceId = null, ResourceOperationStatus status = default, ResponseError error = null)
+        {
+            return new ResourceStatus(resourceId, status, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComputeSchedule.OccurrenceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeSchedule.OccurrenceData"/> instance for mocking. </returns>
+        public static OccurrenceData OccurrenceData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, OccurrenceProperties properties = null)
+        {
+            return new OccurrenceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OccurrenceProperties"/>. </summary>
+        /// <param name="scheduledOn"> The time the occurrence is scheduled for. This value can be changed by calling the delay API. </param>
+        /// <param name="resultSummary"> The result for occurrences that achieved a terminal state. </param>
+        /// <param name="provisioningState"> The aggregated provisioning state of the occurrence. </param>
+        /// <returns> A new <see cref="Models.OccurrenceProperties"/> instance for mocking. </returns>
+        public static OccurrenceProperties OccurrenceProperties(DateTimeOffset scheduledOn = default, OccurrenceResultSummary resultSummary = null, OccurrenceState? provisioningState = null)
+        {
+            return new OccurrenceProperties(scheduledOn, resultSummary, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OccurrenceResultSummary"/>. </summary>
+        /// <param name="total"> The total number of resources that the occurrence was supposed to act on. </param>
+        /// <param name="statuses"> The summarized status of the resources. </param>
+        /// <returns> A new <see cref="Models.OccurrenceResultSummary"/> instance for mocking. </returns>
+        public static OccurrenceResultSummary OccurrenceResultSummary(int total = default, IEnumerable<ResourceResultSummary> statuses = null)
+        {
+            statuses ??= new List<ResourceResultSummary>();
+
+            return new OccurrenceResultSummary(total, statuses?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceResultSummary"/>. </summary>
+        /// <param name="code"> The error code for those resources. In case of success, code is populated with Success. </param>
+        /// <param name="count"> The number of resources that the code applies to. </param>
+        /// <param name="errorDetails"> The error details for the resources. Not populated on success cases. </param>
+        /// <returns> A new <see cref="Models.ResourceResultSummary"/> instance for mocking. </returns>
+        public static ResourceResultSummary ResourceResultSummary(string code = null, int count = default, ResponseError errorDetails = null)
+        {
+            return new ResourceResultSummary(code, count, errorDetails, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledActionResources"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionResources"/> instance for mocking. </returns>
+        public static ScheduledActionResources ScheduledActionResources(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ScheduledActionProperties properties = null)
+        {
+            return new ScheduledActionResources(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OccurrenceResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="resourceId">
+        /// The ARM Id of the resource.
+        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+        /// </param>
+        /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
+        /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
+        /// <param name="provisioningState"> The current state of the resource. </param>
+        /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
+        /// <returns> A new <see cref="Models.OccurrenceResource"/> instance for mocking. </returns>
+        public static OccurrenceResource OccurrenceResource(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier resourceId = null, IEnumerable<NotificationProperties> notificationSettings = null, DateTimeOffset scheduledOn = default, ResourceProvisioningState? provisioningState = null, ResponseError errorDetails = null)
+        {
+            notificationSettings ??= new List<NotificationProperties>();
+
+            return new OccurrenceResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceId,
+                notificationSettings?.ToList(),
+                scheduledOn,
+                provisioningState,
+                errorDetails,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OccurrenceExtensionResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.OccurrenceExtensionResource"/> instance for mocking. </returns>
+        public static OccurrenceExtensionResource OccurrenceExtensionResource(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, OccurrenceExtensionProperties properties = null)
+        {
+            return new OccurrenceExtensionResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OccurrenceExtensionProperties"/>. </summary>
+        /// <param name="resourceId">
+        /// The ARM Id of the resource.
+        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+        /// </param>
+        /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
+        /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. Specified in UTC. </param>
+        /// <param name="provisioningState"> The current state of the resource. </param>
+        /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
+        /// <param name="scheduledActionId"> The arm identifier of the scheduled action the occurrence belongs to. </param>
+        /// <returns> A new <see cref="Models.OccurrenceExtensionProperties"/> instance for mocking. </returns>
+        public static OccurrenceExtensionProperties OccurrenceExtensionProperties(ResourceIdentifier resourceId = null, IEnumerable<NotificationProperties> notificationSettings = null, DateTimeOffset scheduledOn = default, ResourceProvisioningState? provisioningState = null, ResponseError errorDetails = null, ResourceIdentifier scheduledActionId = null)
+        {
+            notificationSettings ??= new List<NotificationProperties>();
+
+            return new OccurrenceExtensionProperties(
+                resourceId,
+                notificationSettings?.ToList(),
+                scheduledOn,
+                provisioningState,
+                errorDetails,
+                scheduledActionId,
                 serializedAdditionalRawData: null);
         }
     }

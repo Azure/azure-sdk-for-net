@@ -477,6 +477,82 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
+        protected static async Task<DeleteResourceOperationResult> TestExecuteDeleteAsync(string location, ExecuteDeleteContent executeDeleteRequest, string subid, ArmClient client)
+        {
+            SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
+            ExecuteDeleteContent content = executeDeleteRequest;
+            DeleteResourceOperationResult result;
+
+            try
+            {
+                result = await subscriptionResource.VirtualMachinesExecuteDeleteScheduledActionAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+            return result;
+        }
+
+        protected static async Task<CreateResourceOperationResult> TestExecuteCreateAsync(string location, ExecuteCreateContent executeCreateRequest, string subid, ArmClient client)
+        {
+            SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
+            ExecuteCreateContent content = executeCreateRequest;
+            CreateResourceOperationResult result;
+
+            try
+            {
+                result = await subscriptionResource.VirtualMachinesExecuteCreateScheduledActionAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+            return result;
+        }
+
+        #endregion
+
+        #region Recurring scheduledactions operations
+
+        public static async Task<Response<ScheduledAction>> GetScheduledActions(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+        {
+            Response<ScheduledAction> test = null;
+
+            try
+            {
+                test = await rgResource.GetScheduledActionAsync(scheduledActionName);
+            }
+            catch (RequestFailedException ex) when (ex.ErrorCode == "ResourceNotFound")
+            {
+                Console.WriteLine($" {scheduledActionName} scheduledaction deleted");
+
+                if (shouldThrow)
+                {
+                    throw;
+                }
+            }
+
+            return test;
+        }
+
+        public static async Task DeleteScheduledAction(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+        {
+            await rgResource.DeleteScheduledActionAsync(WaitUntil.Completed, scheduledActionName);
+            await GetScheduledActions(subid, client, scheduledActionName, rgResource, shouldThrow);
+        }
         #endregion
     }
 }
