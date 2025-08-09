@@ -165,10 +165,10 @@
 # ServiceOwners:                                                   @ilayrn @orhasban @zoharHenMicrosoft @Aviv-Yaniv
 
 # PRLabel: %Azure Stack
-/sdk/azurestack*/                                                  @sarathys @bganapa @rakku-ms
+/sdk/azurestack*/                                                  @bganapa @rakku-ms
 
 # ServiceLabel: %Azure Stack
-# ServiceOwners:                                                   @sarathys @bganapa @rakku-ms
+# ServiceOwners:                                                   @bganapa @rakku-ms
 
 # ServiceLabel: %Azure Arc Enabled Servers
 # ServiceOwners:                                                   @rpsqrd @edyoung
@@ -402,8 +402,7 @@
 /sdk/containerregistry/                                            @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry
-# AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @toddysm @yugangw-MSFT
+# ServiceOwners:                                                   @toddysm @shizhMSFT
 
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
@@ -561,10 +560,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @Azure/azure-sdk-write-keyvault
+/sdk/keyvault/                                                     @cheathamb36 @chen-karen @jackrichins @vickm
 
 # ServiceLabel: %KeyVault
-# ServiceOwners:                                                   @cheathamb36 @chen-karen @Azure/azure-sdk-write-keyvault
+# ServiceOwners:                                                   @cheathamb36 @chen-karen @jackrichins @vickm
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
@@ -756,10 +755,10 @@
 # ServiceOwners:                                                   @rhurey @dargilco
 
 # PRLabel: %Microsoft Playwright Testing
-/sdk/playwrighttesting/                                            @Sid200026 @puagarwa @ShreyaAnand
+/sdk/playwrighttesting/                                            @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Microsoft Playwright Testing
-# ServiceOwners:                                                   @Sid200026 @puagarwa @ShreyaAnand
+# ServiceOwners:                                                   @puagarwa @ShreyaAnand
 
 # ServiceLabel: %Policy
 # ServiceOwners:                                                   @aperezcloud @kenieva
@@ -1055,7 +1054,7 @@
 # ServiceOwners:                                                   @alluri02
 
 # PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
+/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
@@ -1064,7 +1063,7 @@
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
 
 # ServiceLabel:  %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
@@ -1079,10 +1078,10 @@
 # ServiceOwners:                                                   @vipray-ms
 
 # PRLabel: %Nginx
-/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93
+/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh
 
 # ServiceLabel: %Nginx %Mgmt
-# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh
 
 # PRLabel: %Operator Nexus - Network Cloud
 /sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud

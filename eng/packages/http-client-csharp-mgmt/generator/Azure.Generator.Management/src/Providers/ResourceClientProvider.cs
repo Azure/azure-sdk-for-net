@@ -12,7 +12,6 @@ using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Humanizer;
 using Microsoft.CodeAnalysis;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -35,20 +34,20 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal sealed class ResourceClientProvider : TypeProvider
     {
-        internal static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
+        internal static ResourceClientProvider Create(ResourceMetadata resourceMetadata)
         {
             // Create a resource that supports multiple clients, using ResourceName from metadata
-            var resource = new ResourceClientProvider(resourceMetadata.ResourceName, model, resourceMetadata);
+            var resource = new ResourceClientProvider(resourceMetadata.ResourceName, resourceMetadata.ResourceModel, resourceMetadata);
             if (!resource.IsSingleton)
             {
-                var collection = new ResourceCollectionClientProvider(resource, model, resourceMetadata);
+                var collection = new ResourceCollectionClientProvider(resource, resourceMetadata.ResourceModel, resourceMetadata);
                 resource.ResourceCollection = collection;
             }
 
             return resource;
         }
 
-        private IEnumerable<(ResourceOperationKind, InputServiceMethod)> _resourceServiceMethods;
+        private IReadOnlyList<ResourceMethod> _resourceServiceMethods;
 
         private readonly FieldProvider _dataField;
         private readonly FieldProvider _resourceTypeField;
@@ -56,21 +55,22 @@ namespace Azure.Generator.Management.Providers
 
         private readonly ResourceMetadata _resourceMetadata;
 
+        private readonly RequestPathPattern _contextualPath;
+
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
         private ResourceClientProvider(string resourceName, InputModelType model, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            ContextualPath = new RequestPathPattern(resourceMetadata.ResourceIdPattern);
+            _contextualPath = new RequestPathPattern(resourceMetadata.ResourceIdPattern);
             _inputModel = model;
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
 
             ResourceName = resourceName;
 
-            // We should be able to assume that all operations in the resource client are for the same resource
-            _resourceServiceMethods = resourceMetadata.Methods.Select(m => (m.Kind, ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!));
+            _resourceServiceMethods = resourceMetadata.Methods;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
 
             // Initialize client info dictionary using extension method
@@ -79,21 +79,21 @@ namespace Azure.Generator.Management.Providers
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
         }
 
-        public RequestPathPattern ContextualPath { get; }
-
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
-        protected override string BuildName() => $"{ResourceName}Resource";
+        protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 
         private OperationSourceProvider? _source;
         internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
 
         internal ModelProvider ResourceData { get; }
         internal string ResourceName { get; }
-        internal IEnumerable<(ResourceOperationKind Kind, InputServiceMethod Method)> ResourceServiceMethods => _resourceServiceMethods;
+        // TODO -- we should not need to expose this.
+        // Instead, if some method needs more method, we should prepare them and pass it in as an argument
+        internal IEnumerable<ResourceMethod> ResourceServiceMethods => _resourceServiceMethods;
 
         internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
 
@@ -162,8 +162,25 @@ namespace Azure.Generator.Management.Providers
                     Return(_dataField)
                 }),
                 this);
+            var properties = new List<PropertyProvider>
+            {
+                hasDataProperty,
+                dataProperty
+            };
 
-            return [hasDataProperty, dataProperty];
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                if (clientInfo.DiagnosticProperty is not null)
+                {
+                    properties.Add(clientInfo.DiagnosticProperty);
+                }
+                if (clientInfo.RestClientProperty is not null)
+                {
+                    properties.Add(clientInfo.RestClientProperty);
+                }
+            }
+
+            return [.. properties];
         }
 
         protected override TypeProvider[] BuildSerializationProviders() => [new ResourceSerializationProvider(this)];
@@ -216,12 +233,14 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new List<MethodBodyStatement>();
 
+            bodyStatements.Add(thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
+
             // Initialize all client diagnostics and rest client fields
             foreach (var (inputClient, clientInfo) in _clientInfos)
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate());
-                bodyStatements.Add(thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
-                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), apiVersion)).Terminate());
+                var effectiveApiVersion = apiVersion.NullCoalesce(Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion));
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
             bodyStatements.Add(Static(Type).As<ArmResource>().ValidateResourceId(idParameter).Terminate());
@@ -232,7 +251,7 @@ namespace Azure.Generator.Management.Providers
         // TODO -- this is temporary. We should change this to find the corresponding parameters in ContextualParameters after it is refactored to consume parent resources.
         private CSharpType GetPathParameterType(string parameterName)
         {
-            foreach (var (kind, method) in _resourceServiceMethods)
+            foreach (var (kind, method, _) in _resourceServiceMethods)
             {
                 if (!kind.IsCrudKind())
                 {
@@ -273,7 +292,7 @@ namespace Azure.Generator.Management.Providers
             var formatBuilder = new StringBuilder();
             var refCount = 0;
 
-            foreach (var segment in ContextualPath)
+            foreach (var segment in _contextualPath)
             {
                 if (segment.IsConstant)
                 {
@@ -318,7 +337,7 @@ namespace Azure.Generator.Management.Providers
             var operationMethods = new List<MethodProvider>();
             UpdateOperationMethodProvider? updateMethodProvider = null;
 
-            foreach (var (methodKind, method) in _resourceServiceMethods)
+            foreach (var (methodKind, method, inputClient) in _resourceServiceMethods)
             {
                 // exclude the List operations for resource and Create operations for non-singleton resources (they will be in ResourceCollection)
                 if (methodKind == ResourceOperationKind.List || (!IsSingleton && methodKind == ResourceOperationKind.Create))
@@ -326,19 +345,19 @@ namespace Azure.Generator.Management.Providers
                     continue;
                 }
 
+                var isFakeLro = ResourceHelpers.ShouldMakeLro(methodKind);
+
                 // Get the appropriate rest client for this specific method
-                var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(method, _clientInfos);
+                var restClientInfo = _clientInfos[inputClient];
 
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
+                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
 
-                if (method is InputPagingServiceMethod)
+                if (method is InputPagingServiceMethod pagingMethod)
                 {
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
-                    var itemType = convenienceMethod.Signature.ReturnType!.UnWrap();
-                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, itemType, methodKind));
-
-                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, itemType, methodKind));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true)));
 
                     continue;
                 }
@@ -348,20 +367,18 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, convenienceMethod, false);
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, false);
                     operationMethods.Add(updateMethodProvider);
 
-                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, asyncConvenienceMethod, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName));
-                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
                 }
             }
 
@@ -379,16 +396,15 @@ namespace Azure.Generator.Management.Providers
                 var updateMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update || m.Kind == ResourceOperationKind.Create);
                 if (updateMethod is not null)
                 {
-                    var updateRestClientInfo = _resourceMetadata.GetRestClientForServiceMethod(
-                        ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(updateMethod.Id)!, _clientInfos);
+                    var updateRestClientInfo = _clientInfos[updateMethod.InputClient];
 
                     methods.AddRange([
-                        new AddTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, true),
-                        new AddTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, false),
-                        new SetTagsMethodProvider(this, updateMethodProvider, updateRestClientInfo, true),
-                        new SetTagsMethodProvider(this, updateMethodProvider, updateRestClientInfo, false),
-                        new RemoveTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, true),
-                        new RemoveTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, false)
+                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
+                        new AddTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false),
+                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
+                        new SetTagsMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false),
+                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, true),
+                        new RemoveTagMethodProvider(this, _contextualPath, updateMethodProvider, updateRestClientInfo, false)
                     ]);
                 }
             }

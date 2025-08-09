@@ -60,6 +60,24 @@ export function convertResourceMetadataToArguments(
   };
 }
 
+export interface NonResourceMethod {
+  methodId: string;
+  operationPath: string;
+  operationScope: ResourceScope;
+}
+
+export function convertMethodMetadataToArguments(
+  metadata: NonResourceMethod[]
+): Record<string, any> {
+  return {
+    nonResourceMethods: metadata.map((m) => ({
+      methodId: m.methodId,
+      operationPath: m.operationPath,
+      operationScope: m.operationScope
+    }))
+  };
+}
+
 export interface ResourceMethod {
   id: string;
   kind: ResourceOperationKind;
