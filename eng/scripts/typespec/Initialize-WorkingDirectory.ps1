@@ -60,6 +60,43 @@ function Initialize-Package($emitterPackagePath) {
                 Write-Host "##vso[task.setvariable variable=emitterVersion;isOutput=true]$emitterVersion"
             }
 
+            # Update management package dependency if this is the http-client-csharp emitter
+            if ($emitterPackagePath -eq "eng/azure-typespec-http-client-csharp") {
+                Write-Host "Updating http-client-csharp-mgmt package dependency to version $emitterVersion"
+
+                $mgmtPackagePath = Join-Path $RepoRoot "eng/packages/http-client-csharp-mgmt"
+                Push-Location $mgmtPackagePath
+                try {
+                    # Update the dependency version
+                    Invoke-LoggedCommand "npm pkg set dependencies[@azure-typespec/http-client-csharp]=$emitterVersion"
+
+                    # Run npm install to update package-lock.json
+                    Write-Host "Running npm install in management package directory"
+                    Invoke-LoggedCommand "npm install"
+                }
+                finally {
+                    Pop-Location
+                }
+
+                # Update AzureGeneratorVersion in Package.Data.props
+                $propsFileContent = Get-Content $propsFilePath -Raw
+
+                # Update the UnbrandedGeneratorVersion property in the file
+                $pattern = '<AzureGeneratorVersion>[^<]*</AzureGeneratorVersion>'
+                $replacement = '<AzureGeneratorVersion>' + $PackageVersion + '</AzureGeneratorVersion>'
+
+                $updatedContent = $propsFileContent -replace $pattern, $replacement
+                if ($updatedContent -eq $propsFileContent) {
+                    Write-Warning "No changes were made to eng/Packages.Data.props. The AzureGeneratorVersion property might not exist or have a different format."
+                    Write-Host "Current content around AzureGeneratorVersion:"
+                    $propsFileContent | Select-String -Pattern "AzureGeneratorVersion" -Context 2, 2
+                } else {
+                    $propsFileUpdated = $true
+                    # Write the updated file back
+                    Set-Content -Path $propsFilePath -Value $updatedContent -NoNewline
+                }
+            }
+
             if ($UseTypeSpecNext) {
                 if (Test-Path "./package-lock.json") {
                     Remove-Item -Force "./package-lock.json"
