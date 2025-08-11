@@ -18,13 +18,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="DeviceTelemetryEventProperties"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
-        /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
-        /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
-        internal DeviceTelemetryEventProperties(object body, IDictionary<string, string> properties, IDictionary<string, string> systemProperties)
+        internal DeviceTelemetryEventProperties(object body)
         {
             Body = body;
-            Properties = properties;
-            SystemProperties = systemProperties;
+            Properties = new ChangeTrackingDictionary<string, string>();
+            SystemProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceTelemetryEventProperties"/>. </summary>
@@ -32,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceTelemetryEventProperties(object body, IDictionary<string, string> properties, IDictionary<string, string> systemProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceTelemetryEventProperties(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Body = body;
             Properties = properties;
@@ -41,9 +39,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> Application properties are user-defined strings that can be added to the message. These fields are optional. </summary>
-        public IDictionary<string, string> Properties { get; }
+        public IReadOnlyDictionary<string, string> Properties { get; }
 
         /// <summary> System properties help identify contents and source of the messages. </summary>
-        public IDictionary<string, string> SystemProperties { get; }
+        public IReadOnlyDictionary<string, string> SystemProperties { get; }
     }
 }

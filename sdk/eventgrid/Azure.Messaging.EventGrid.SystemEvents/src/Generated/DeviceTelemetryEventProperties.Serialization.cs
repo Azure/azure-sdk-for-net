@@ -40,32 +40,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("body"u8);
             writer.WriteObjectValue<object>(Body, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            foreach (var item in Properties)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("systemProperties"u8);
-            writer.WriteStartObject();
-            foreach (var item in SystemProperties)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("systemProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in SystemProperties)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -109,8 +115,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             object body = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> systemProperties = default;
+            IReadOnlyDictionary<string, string> properties = default;
+            IReadOnlyDictionary<string, string> systemProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

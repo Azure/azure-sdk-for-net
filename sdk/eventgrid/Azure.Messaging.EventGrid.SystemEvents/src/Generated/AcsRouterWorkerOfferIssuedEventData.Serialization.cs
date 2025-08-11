@@ -17,11 +17,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(AcsRouterWorkerOfferIssuedEventDataConverter))]
     public partial class AcsRouterWorkerOfferIssuedEventData : IJsonModel<AcsRouterWorkerOfferIssuedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferIssuedEventData"/> for deserialization. </summary>
-        internal AcsRouterWorkerOfferIssuedEventData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRouterWorkerOfferIssuedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -56,19 +51,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("jobPriority"u8);
                 writer.WriteNumberValue(JobPriority.Value);
             }
-            writer.WritePropertyName("workerLabels"u8);
-            writer.WriteStartObject();
-            foreach (var item in WorkerLabels)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("workerLabels"u8);
+                writer.WriteStartObject();
+                foreach (var item in WorkerLabels)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (Optional.IsDefined(OfferedOn))
             {
                 writer.WritePropertyName("offeredOn"u8);
@@ -79,45 +77,54 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            writer.WritePropertyName("workerTags"u8);
-            writer.WriteStartObject();
-            foreach (var item in WorkerTags)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("workerTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in WorkerTags)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("jobLabels"u8);
-            writer.WriteStartObject();
-            foreach (var item in JobLabels)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("jobLabels"u8);
+                writer.WriteStartObject();
+                foreach (var item in JobLabels)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("jobTags"u8);
-            writer.WriteStartObject();
-            foreach (var item in JobTags)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("jobTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in JobTags)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -153,12 +160,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string queueId = default;
             string offerId = default;
             int? jobPriority = default;
-            IDictionary<string, string> workerLabels = default;
+            IReadOnlyDictionary<string, string> workerLabels = default;
             DateTimeOffset? offeredOn = default;
             DateTimeOffset? expiresOn = default;
-            IDictionary<string, string> workerTags = default;
-            IDictionary<string, string> jobLabels = default;
-            IDictionary<string, string> jobTags = default;
+            IReadOnlyDictionary<string, string> workerTags = default;
+            IReadOnlyDictionary<string, string> jobLabels = default;
+            IReadOnlyDictionary<string, string> jobTags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jobId"u8))

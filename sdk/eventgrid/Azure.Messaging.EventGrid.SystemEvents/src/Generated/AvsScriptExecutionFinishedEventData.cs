@@ -16,10 +16,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionFinishedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
-        /// <param name="namedOutputs"> Named outputs of completed execution, if any. </param>
-        internal AvsScriptExecutionFinishedEventData(string operationId, string cmdletId, IDictionary<string, string> namedOutputs) : base(operationId, cmdletId)
+        internal AvsScriptExecutionFinishedEventData(string operationId, string cmdletId) : base(operationId, cmdletId)
         {
-            NamedOutputs = namedOutputs;
+            NamedOutputs = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionFinishedEventData"/>. </summary>
@@ -28,12 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="namedOutputs"> Named outputs of completed execution, if any. </param>
-        internal AvsScriptExecutionFinishedEventData(string operationId, string cmdletId, IReadOnlyList<string> output, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> namedOutputs) : base(operationId, cmdletId, output, additionalBinaryDataProperties)
+        internal AvsScriptExecutionFinishedEventData(string operationId, string cmdletId, IReadOnlyList<string> output, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> namedOutputs) : base(operationId, cmdletId, output, additionalBinaryDataProperties)
         {
             NamedOutputs = namedOutputs;
         }
 
         /// <summary> Named outputs of completed execution, if any. </summary>
-        public IDictionary<string, string> NamedOutputs { get; }
+        public IReadOnlyDictionary<string, string> NamedOutputs { get; }
     }
 }

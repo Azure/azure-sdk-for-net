@@ -15,11 +15,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Router Queue Details. </summary>
     public partial class AcsRouterQueueDetails : IJsonModel<AcsRouterQueueDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterQueueDetails"/> for deserialization. </summary>
-        internal AcsRouterQueueDetails()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRouterQueueDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -48,19 +43,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("labels"u8);
-            writer.WriteStartObject();
-            foreach (var item in Labels)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in Labels)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -105,7 +103,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string id = default;
             string name = default;
-            IDictionary<string, string> labels = default;
+            IReadOnlyDictionary<string, string> labels = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

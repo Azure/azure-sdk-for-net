@@ -14,9 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobSchedulingFailedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobSchedulingFailedEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        internal AcsRouterJobSchedulingFailedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
+        internal AcsRouterJobSchedulingFailedEventData()
         {
             ExpiredAttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
             ExpiredRequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();

@@ -14,9 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobClassificationFailedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        internal AcsRouterJobClassificationFailedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
+        internal AcsRouterJobClassificationFailedEventData()
         {
             ErrorsInternal = new ChangeTrackingList<AcsRouterCommunicationError>();
         }

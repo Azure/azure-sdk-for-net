@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
-        internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IDictionary<string, string> metadata) : base(transactionId, threadId, additionalBinaryDataProperties, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, @type, version)
+        internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId, additionalBinaryDataProperties, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, @type, version)
         {
             MessageBody = messageBody;
             Metadata = metadata;
@@ -47,6 +47,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string MessageBody { get; }
 
         /// <summary> The chat message metadata. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

@@ -17,11 +17,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(AcsRouterWorkerUpdatedEventDataConverter))]
     public partial class AcsRouterWorkerUpdatedEventData : IJsonModel<AcsRouterWorkerUpdatedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerUpdatedEventData"/> for deserialization. </summary>
-        internal AcsRouterWorkerUpdatedEventData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRouterWorkerUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -70,32 +65,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("totalCapacity"u8);
                 writer.WriteNumberValue(TotalCapacity.Value);
             }
-            writer.WritePropertyName("labels"u8);
-            writer.WriteStartObject();
-            foreach (var item in Labels)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in Labels)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("tags"u8);
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (options.Format != "W")
             {
                 writer.WritePropertyName("updatedWorkerProperties"u8);
@@ -152,8 +153,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             IReadOnlyList<AcsRouterQueueDetails> queueAssignments = default;
             IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations = default;
             int? totalCapacity = default;
-            IDictionary<string, string> labels = default;
-            IDictionary<string, string> tags = default;
+            IReadOnlyDictionary<string, string> labels = default;
+            IReadOnlyDictionary<string, string> tags = default;
             IReadOnlyList<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

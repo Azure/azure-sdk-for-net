@@ -15,9 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
-        /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
-        /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
-        internal IotHubDeviceTelemetryEventData(object body, IDictionary<string, string> properties, IDictionary<string, string> systemProperties) : base(body, properties, systemProperties)
+        internal IotHubDeviceTelemetryEventData(object body) : base(body)
         {
         }
 
@@ -26,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDeviceTelemetryEventData(object body, IDictionary<string, string> properties, IDictionary<string, string> systemProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(body, properties, systemProperties, additionalBinaryDataProperties)
+        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(body, properties, systemProperties, additionalBinaryDataProperties)
         {
         }
     }

@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
         /// <param name="metadata"> The metadata of the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ParticipantCommunicationIdentifier = participantCommunicationIdentifier;
@@ -44,6 +44,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public CommunicationIdentifierModel ParticipantCommunicationIdentifier { get; }
 
         /// <summary> The metadata of the user. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

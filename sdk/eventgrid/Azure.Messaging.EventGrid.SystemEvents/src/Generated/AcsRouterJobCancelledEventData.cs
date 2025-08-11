@@ -14,9 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobCancelledEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobCancelledEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        internal AcsRouterJobCancelledEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
+        internal AcsRouterJobCancelledEventData()
         {
         }
 

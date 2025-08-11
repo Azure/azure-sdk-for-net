@@ -14,10 +14,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobClassifiedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="queueDetails"> Router Job Queue Info. </param>
-        internal AcsRouterJobClassifiedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails) : base(labels, tags)
+        internal AcsRouterJobClassifiedEventData(AcsRouterQueueDetails queueDetails)
         {
             QueueDetails = queueDetails;
             AttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();

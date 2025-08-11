@@ -69,8 +69,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             object body = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> systemProperties = default;
+            IReadOnlyDictionary<string, string> properties = default;
+            IReadOnlyDictionary<string, string> systemProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

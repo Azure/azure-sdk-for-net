@@ -15,11 +15,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The details of the authorization for the resource. </summary>
     public partial class ResourceAuthorization : IJsonModel<ResourceAuthorization>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/> for deserialization. </summary>
-        internal ResourceAuthorization()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -48,19 +43,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            writer.WritePropertyName("evidence"u8);
-            writer.WriteStartObject();
-            foreach (var item in Evidence)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("evidence"u8);
+                writer.WriteStartObject();
+                foreach (var item in Evidence)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -105,7 +103,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string scope = default;
             string action = default;
-            IDictionary<string, string> evidence = default;
+            IReadOnlyDictionary<string, string> evidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

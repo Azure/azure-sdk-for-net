@@ -536,7 +536,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <param name="namedOutputs"> Named outputs of completed execution, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionFinishedEventData"/> instance for mocking. </returns>
-        public static AvsScriptExecutionFinishedEventData AvsScriptExecutionFinishedEventData(string operationId = default, string cmdletId = default, IEnumerable<string> output = default, IDictionary<string, string> namedOutputs = default)
+        public static AvsScriptExecutionFinishedEventData AvsScriptExecutionFinishedEventData(string operationId = default, string cmdletId = default, IEnumerable<string> output = default, IReadOnlyDictionary<string, string> namedOutputs = default)
         {
             output ??= new ChangeTrackingList<string>();
             namedOutputs ??= new ChangeTrackingDictionary<string, string>();
@@ -652,7 +652,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
         /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
         /// <returns> A new <see cref="SystemEvents.AcsIncomingCallCustomContext"/> instance for mocking. </returns>
-        public static AcsIncomingCallCustomContext AcsIncomingCallCustomContext(IDictionary<string, string> sipHeaders = default, IDictionary<string, string> voipHeaders = default)
+        public static AcsIncomingCallCustomContext AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders = default, IReadOnlyDictionary<string, string> voipHeaders = default)
         {
             sipHeaders ??= new ChangeTrackingDictionary<string, string>();
             voipHeaders ??= new ChangeTrackingDictionary<string, string>();
@@ -875,6 +875,15 @@ namespace Azure.Messaging.EventGrid
                 userAgent);
         }
 
+        /// <summary> Schema of common properties of all thread-level chat events. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatEventInThreadBaseProperties"/> instance for mocking. </returns>
+        public static AcsChatEventInThreadBaseProperties AcsChatEventInThreadBaseProperties(string transactionId = default, string threadId = default)
+        {
+            return new AcsChatEventInThreadBaseProperties(transactionId, threadId, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Schema of common properties of all chat events. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
@@ -883,15 +892,6 @@ namespace Azure.Messaging.EventGrid
         public static AcsChatEventBaseProperties AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default)
         {
             return new AcsChatEventBaseProperties(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of common properties of all thread-level chat events. </summary>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatEventInThreadBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatEventInThreadBaseProperties AcsChatEventInThreadBaseProperties(string transactionId = default, string threadId = default)
-        {
-            return new AcsChatEventInThreadBaseProperties(transactionId, threadId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Schema of common properties of all chat message events. </summary>
@@ -933,7 +933,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default)
+        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -988,7 +988,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatAzureBotCommandReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatAzureBotCommandReceivedInThreadEventData AcsChatAzureBotCommandReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default)
+        public static AcsChatAzureBotCommandReceivedInThreadEventData AcsChatAzureBotCommandReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1018,7 +1018,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatTypingIndicatorReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatTypingIndicatorReceivedInThreadEventData AcsChatTypingIndicatorReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default)
+        public static AcsChatTypingIndicatorReceivedInThreadEventData AcsChatTypingIndicatorReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1048,7 +1048,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default)
+        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1080,7 +1080,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
+        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1113,7 +1113,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
+        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IReadOnlyDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1186,6 +1186,18 @@ namespace Azure.Messaging.EventGrid
                 deleteTime);
         }
 
+        /// <summary> Schema of the chat thread participant. </summary>
+        /// <param name="displayName"> The name of the user. </param>
+        /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
+        /// <param name="metadata"> The metadata of the user. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadParticipantProperties"/> instance for mocking. </returns>
+        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName = default, CommunicationIdentifierModel participantCommunicationIdentifier = default, IReadOnlyDictionary<string, string> metadata = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Schema of common properties of all chat thread events. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
@@ -1215,7 +1227,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default)
+        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default)
         {
             properties ??= new ChangeTrackingDictionary<string, object>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1232,18 +1244,6 @@ namespace Azure.Messaging.EventGrid
                 properties,
                 metadata,
                 participants.ToList());
-        }
-
-        /// <summary> Schema of the chat thread participant. </summary>
-        /// <param name="displayName"> The name of the user. </param>
-        /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
-        /// <param name="metadata"> The metadata of the user. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatThreadParticipantProperties"/> instance for mocking. </returns>
-        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName = default, CommunicationIdentifierModel participantCommunicationIdentifier = default, IDictionary<string, string> metadata = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Schema of common properties of all chat thread events. </summary>
@@ -1267,7 +1267,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default)
+        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default)
         {
             properties ??= new ChangeTrackingDictionary<string, object>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1338,7 +1338,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="properties"> The properties of the chat thread that were updated for the user. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IDictionary<string, string> metadata = default, IReadOnlyDictionary<string, object> properties = default)
+        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, string> metadata = default, IReadOnlyDictionary<string, object> properties = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             properties ??= new ChangeTrackingDictionary<string, object>();
@@ -1366,7 +1366,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="properties"> Gets the properties of the chat thread updated event. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, object> properties = default, IDictionary<string, string> metadata = default)
+        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             properties ??= new ChangeTrackingDictionary<string, object>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1739,7 +1739,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="name"> Router Queue Name. </param>
         /// <param name="labels"> Router Queue Labels. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterQueueDetails"/> instance for mocking. </returns>
-        public static AcsRouterQueueDetails AcsRouterQueueDetails(string id = default, string name = default, IDictionary<string, string> labels = default)
+        public static AcsRouterQueueDetails AcsRouterQueueDetails(string id = default, string name = default, IReadOnlyDictionary<string, string> labels = default)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2109,7 +2109,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="jobLabels"> Router Worker Offer Accepted Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Accepted Job Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferAcceptedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerOfferAcceptedEventData AcsRouterWorkerOfferAcceptedEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default, string queueId = default, string offerId = default, string assignmentId = default, int? jobPriority = default, IDictionary<string, string> workerLabels = default, IDictionary<string, string> workerTags = default, IDictionary<string, string> jobLabels = default, IDictionary<string, string> jobTags = default)
+        public static AcsRouterWorkerOfferAcceptedEventData AcsRouterWorkerOfferAcceptedEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default, string queueId = default, string offerId = default, string assignmentId = default, int? jobPriority = default, IReadOnlyDictionary<string, string> workerLabels = default, IReadOnlyDictionary<string, string> workerTags = default, IReadOnlyDictionary<string, string> jobLabels = default, IReadOnlyDictionary<string, string> jobTags = default)
         {
             workerLabels ??= new ChangeTrackingDictionary<string, string>();
             workerTags ??= new ChangeTrackingDictionary<string, string>();
@@ -2187,7 +2187,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="jobLabels"> Router Worker Offer Issued Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Issued Job Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferIssuedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerOfferIssuedEventData AcsRouterWorkerOfferIssuedEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default, string queueId = default, string offerId = default, int? jobPriority = default, IDictionary<string, string> workerLabels = default, DateTimeOffset? offeredOn = default, DateTimeOffset? expiresOn = default, IDictionary<string, string> workerTags = default, IDictionary<string, string> jobLabels = default, IDictionary<string, string> jobTags = default)
+        public static AcsRouterWorkerOfferIssuedEventData AcsRouterWorkerOfferIssuedEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default, string queueId = default, string offerId = default, int? jobPriority = default, IReadOnlyDictionary<string, string> workerLabels = default, DateTimeOffset? offeredOn = default, DateTimeOffset? expiresOn = default, IReadOnlyDictionary<string, string> workerTags = default, IReadOnlyDictionary<string, string> jobLabels = default, IReadOnlyDictionary<string, string> jobTags = default)
         {
             workerLabels ??= new ChangeTrackingDictionary<string, string>();
             workerTags ??= new ChangeTrackingDictionary<string, string>();
@@ -2239,7 +2239,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="labels"> Router Worker Registered Labels. </param>
         /// <param name="tags"> Router Worker Registered Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerRegisteredEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerRegisteredEventData AcsRouterWorkerRegisteredEventData(string workerId = default, IEnumerable<AcsRouterQueueDetails> queueAssignments = default, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = default, int? totalCapacity = default, IDictionary<string, string> labels = default, IDictionary<string, string> tags = default)
+        public static AcsRouterWorkerRegisteredEventData AcsRouterWorkerRegisteredEventData(string workerId = default, IEnumerable<AcsRouterQueueDetails> queueAssignments = default, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = default, int? totalCapacity = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default)
         {
             queueAssignments ??= new ChangeTrackingList<AcsRouterQueueDetails>();
             channelConfigurations ??= new ChangeTrackingList<AcsRouterChannelConfiguration>();
@@ -2275,7 +2275,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="tags"> Router Worker Updated Tags. </param>
         /// <param name="updatedWorkerProperties"> Router Worker Properties Updated. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerUpdatedEventData AcsRouterWorkerUpdatedEventData(string workerId = default, IEnumerable<AcsRouterQueueDetails> queueAssignments = default, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = default, int? totalCapacity = default, IDictionary<string, string> labels = default, IDictionary<string, string> tags = default, IEnumerable<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties = default)
+        public static AcsRouterWorkerUpdatedEventData AcsRouterWorkerUpdatedEventData(string workerId = default, IEnumerable<AcsRouterQueueDetails> queueAssignments = default, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = default, int? totalCapacity = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, IEnumerable<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties = default)
         {
             queueAssignments ??= new ChangeTrackingList<AcsRouterQueueDetails>();
             channelConfigurations ??= new ChangeTrackingList<AcsRouterChannelConfiguration>();
@@ -2917,7 +2917,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceTelemetryEventProperties"/> instance for mocking. </returns>
-        public static DeviceTelemetryEventProperties DeviceTelemetryEventProperties(object body = default, IDictionary<string, string> properties = default, IDictionary<string, string> systemProperties = default)
+        public static DeviceTelemetryEventProperties DeviceTelemetryEventProperties(object body = default, IReadOnlyDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> systemProperties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             systemProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -2972,7 +2972,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceTelemetryEventData"/> instance for mocking. </returns>
-        public static IotHubDeviceTelemetryEventData IotHubDeviceTelemetryEventData(object body = default, IDictionary<string, string> properties = default, IDictionary<string, string> systemProperties = default)
+        public static IotHubDeviceTelemetryEventData IotHubDeviceTelemetryEventData(object body = default, IReadOnlyDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> systemProperties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             systemProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -3499,7 +3499,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="action"> The action being requested. </param>
         /// <param name="evidence"> The evidence for the authorization. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceAuthorization"/> instance for mocking. </returns>
-        public static ResourceAuthorization ResourceAuthorization(string scope = default, string action = default, IDictionary<string, string> evidence = default)
+        public static ResourceAuthorization ResourceAuthorization(string scope = default, string action = default, IReadOnlyDictionary<string, string> evidence = default)
         {
             evidence ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4334,12 +4334,12 @@ namespace Azure.Messaging.EventGrid
         /// <param name="createdOn"> Time the client resource is created based on the provider's UTC time. </param>
         /// <param name="updatedOn">
         /// Time the client resource is last updated based on the provider's UTC time. If
-        /// the client resource was never updated, this value is identical to the value of
-        /// the 'createdOn' property.
+        ///   the client resource was never updated, this value is identical to the value of
+        ///   the 'createdOn' property.
         /// </param>
         /// <param name="attributes"> The key-value attributes that are assigned to the client resource. </param>
         /// <returns> A new <see cref="SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData"/> instance for mocking. </returns>
-        public static EventGridMqttClientCreatedOrUpdatedEventData EventGridMqttClientCreatedOrUpdatedEventData(string clientAuthenticationName = default, string clientName = default, string namespaceName = default, EventGridMqttClientState? state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, IDictionary<string, string> attributes = default)
+        public static EventGridMqttClientCreatedOrUpdatedEventData EventGridMqttClientCreatedOrUpdatedEventData(string clientAuthenticationName = default, string clientName = default, string namespaceName = default, EventGridMqttClientState? state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, IReadOnlyDictionary<string, string> attributes = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, string>();
 

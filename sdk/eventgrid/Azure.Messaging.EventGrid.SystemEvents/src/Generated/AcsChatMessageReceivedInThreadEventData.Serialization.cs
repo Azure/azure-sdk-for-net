@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("messageBody"u8);
             writer.WriteStringValue(MessageBody);
-            if (Optional.IsCollectionDefined(Metadata))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string @type = default;
             long? version = default;
             string messageBody = default;
-            IDictionary<string, string> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("transactionId"u8))

@@ -17,19 +17,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/>. </summary>
-        /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
-        /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
-        internal AcsIncomingCallCustomContext(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
+        internal AcsIncomingCallCustomContext()
         {
-            SipHeaders = sipHeaders;
-            VoipHeaders = voipHeaders;
+            SipHeaders = new ChangeTrackingDictionary<string, string>();
+            VoipHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/>. </summary>
         /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
         /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsIncomingCallCustomContext(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders, IReadOnlyDictionary<string, string> voipHeaders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SipHeaders = sipHeaders;
             VoipHeaders = voipHeaders;
@@ -37,9 +35,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> Sip Headers for incoming call. </summary>
-        public IDictionary<string, string> SipHeaders { get; }
+        public IReadOnlyDictionary<string, string> SipHeaders { get; }
 
         /// <summary> Voip Headers for incoming call. </summary>
-        public IDictionary<string, string> VoipHeaders { get; }
+        public IReadOnlyDictionary<string, string> VoipHeaders { get; }
     }
 }

@@ -14,9 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobWorkerSelectorsExpiredEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        internal AcsRouterJobWorkerSelectorsExpiredEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
+        internal AcsRouterJobWorkerSelectorsExpiredEventData()
         {
             ExpiredRequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
             ExpiredAttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();

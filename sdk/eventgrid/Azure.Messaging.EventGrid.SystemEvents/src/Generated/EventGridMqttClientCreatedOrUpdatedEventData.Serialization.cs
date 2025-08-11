@@ -56,19 +56,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("updatedOn"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            writer.WritePropertyName("attributes"u8);
-            writer.WriteStartObject();
-            foreach (var item in Attributes)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("attributes"u8);
+                writer.WriteStartObject();
+                foreach (var item in Attributes)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -103,7 +106,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             EventGridMqttClientState? state = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? updatedOn = default;
-            IDictionary<string, string> attributes = default;
+            IReadOnlyDictionary<string, string> attributes = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clientAuthenticationName"u8))

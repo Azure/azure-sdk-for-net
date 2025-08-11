@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (Optional.IsCollectionDefined(ResourceTags))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();

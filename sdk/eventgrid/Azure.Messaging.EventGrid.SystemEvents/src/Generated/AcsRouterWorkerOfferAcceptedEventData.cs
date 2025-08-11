@@ -14,16 +14,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterWorkerOfferAcceptedEventData : AcsRouterWorkerEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferAcceptedEventData"/>. </summary>
-        /// <param name="workerLabels"> Router Worker Offer Accepted Worker Labels. </param>
-        /// <param name="workerTags"> Router Worker Offer Accepted Worker Tags. </param>
-        /// <param name="jobLabels"> Router Worker Offer Accepted Job Labels. </param>
-        /// <param name="jobTags"> Router Worker Offer Accepted Job Tags. </param>
-        internal AcsRouterWorkerOfferAcceptedEventData(IDictionary<string, string> workerLabels, IDictionary<string, string> workerTags, IDictionary<string, string> jobLabels, IDictionary<string, string> jobTags)
+        internal AcsRouterWorkerOfferAcceptedEventData()
         {
-            WorkerLabels = workerLabels;
-            WorkerTags = workerTags;
-            JobLabels = jobLabels;
-            JobTags = jobTags;
+            WorkerLabels = new ChangeTrackingDictionary<string, string>();
+            WorkerTags = new ChangeTrackingDictionary<string, string>();
+            JobLabels = new ChangeTrackingDictionary<string, string>();
+            JobTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferAcceptedEventData"/>. </summary>
@@ -40,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="workerTags"> Router Worker Offer Accepted Worker Tags. </param>
         /// <param name="jobLabels"> Router Worker Offer Accepted Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Accepted Job Tags. </param>
-        internal AcsRouterWorkerOfferAcceptedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId, string queueId, string offerId, string assignmentId, int? jobPriority, IDictionary<string, string> workerLabels, IDictionary<string, string> workerTags, IDictionary<string, string> jobLabels, IDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
+        internal AcsRouterWorkerOfferAcceptedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId, string queueId, string offerId, string assignmentId, int? jobPriority, IReadOnlyDictionary<string, string> workerLabels, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
         {
             QueueId = queueId;
             OfferId = offerId;
@@ -65,15 +61,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public int? JobPriority { get; }
 
         /// <summary> Router Worker Offer Accepted Worker Labels. </summary>
-        public IDictionary<string, string> WorkerLabels { get; }
+        public IReadOnlyDictionary<string, string> WorkerLabels { get; }
 
         /// <summary> Router Worker Offer Accepted Worker Tags. </summary>
-        public IDictionary<string, string> WorkerTags { get; }
+        public IReadOnlyDictionary<string, string> WorkerTags { get; }
 
         /// <summary> Router Worker Offer Accepted Job Labels. </summary>
-        public IDictionary<string, string> JobLabels { get; }
+        public IReadOnlyDictionary<string, string> JobLabels { get; }
 
         /// <summary> Router Worker Offer Accepted Job Tags. </summary>
-        public IDictionary<string, string> JobTags { get; }
+        public IReadOnlyDictionary<string, string> JobTags { get; }
     }
 }

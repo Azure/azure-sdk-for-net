@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("editTime"u8);
                 writer.WriteStringValue(EditTime.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             long? version = default;
             CommunicationIdentifierModel editedByCommunicationIdentifier = default;
             DateTimeOffset? editTime = default;
-            IDictionary<string, string> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             IReadOnlyDictionary<string, object> properties = default;
             foreach (var prop in element.EnumerateObject())
             {

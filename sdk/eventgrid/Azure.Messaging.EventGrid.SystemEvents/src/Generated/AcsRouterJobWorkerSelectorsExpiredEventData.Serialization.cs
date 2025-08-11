@@ -17,11 +17,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(AcsRouterJobWorkerSelectorsExpiredEventDataConverter))]
     public partial class AcsRouterJobWorkerSelectorsExpiredEventData : IJsonModel<AcsRouterJobWorkerSelectorsExpiredEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobWorkerSelectorsExpiredEventData"/> for deserialization. </summary>
-        internal AcsRouterJobWorkerSelectorsExpiredEventData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRouterJobWorkerSelectorsExpiredEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

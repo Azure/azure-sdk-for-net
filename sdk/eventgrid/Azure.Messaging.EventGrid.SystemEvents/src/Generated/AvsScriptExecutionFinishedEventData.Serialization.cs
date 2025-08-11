@@ -41,19 +41,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AvsScriptExecutionFinishedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("namedOutputs"u8);
-            writer.WriteStartObject();
-            foreach (var item in NamedOutputs)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("namedOutputs"u8);
+                writer.WriteStartObject();
+                foreach (var item in NamedOutputs)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -85,7 +88,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string cmdletId = default;
             IReadOnlyList<string> output = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> namedOutputs = default;
+            IReadOnlyDictionary<string, string> namedOutputs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("operationId"u8))

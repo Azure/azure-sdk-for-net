@@ -17,10 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/>. </summary>
-        /// <param name="evidence"> The evidence for the authorization. </param>
-        internal ResourceAuthorization(IDictionary<string, string> evidence)
+        internal ResourceAuthorization()
         {
-            Evidence = evidence;
+            Evidence = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/>. </summary>
@@ -28,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="action"> The action being requested. </param>
         /// <param name="evidence"> The evidence for the authorization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceAuthorization(string scope, string action, IDictionary<string, string> evidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceAuthorization(string scope, string action, IReadOnlyDictionary<string, string> evidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Action = action;
@@ -43,6 +42,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Action { get; }
 
         /// <summary> The evidence for the authorization. </summary>
-        public IDictionary<string, string> Evidence { get; }
+        public IReadOnlyDictionary<string, string> Evidence { get; }
     }
 }

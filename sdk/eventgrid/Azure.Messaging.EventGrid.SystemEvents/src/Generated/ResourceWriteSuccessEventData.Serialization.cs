@@ -77,8 +77,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("authorization"u8);
             AuthorizationJson.WriteTo(writer);
-            writer.WritePropertyName("claims"u8);
-            ClaimsJson.WriteTo(writer);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("claims"u8);
+                ClaimsJson.WriteTo(writer);
+            }
             if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);

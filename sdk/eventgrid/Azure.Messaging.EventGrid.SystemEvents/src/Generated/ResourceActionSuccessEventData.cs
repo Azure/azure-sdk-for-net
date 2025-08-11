@@ -19,12 +19,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="ResourceActionSuccessEventData"/>. </summary>
         /// <param name="authorizationJson"></param>
-        /// <param name="claimsJson"></param>
         /// <param name="httpRequestJson"></param>
-        internal ResourceActionSuccessEventData(JsonElement authorizationJson, JsonElement claimsJson, JsonElement httpRequestJson)
+        internal ResourceActionSuccessEventData(JsonElement authorizationJson, JsonElement httpRequestJson)
         {
             AuthorizationJson = authorizationJson;
-            ClaimsJson = claimsJson;
             HttpRequestJson = httpRequestJson;
         }
 

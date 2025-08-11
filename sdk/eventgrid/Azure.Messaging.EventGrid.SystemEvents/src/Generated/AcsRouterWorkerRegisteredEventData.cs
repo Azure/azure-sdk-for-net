@@ -17,14 +17,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
-        /// <param name="labels"> Router Worker Registered Labels. </param>
-        /// <param name="tags"> Router Worker Registered Tags. </param>
-        internal AcsRouterWorkerRegisteredEventData(IDictionary<string, string> labels, IDictionary<string, string> tags)
+        internal AcsRouterWorkerRegisteredEventData()
         {
             QueueAssignments = new ChangeTrackingList<AcsRouterQueueDetails>();
             ChannelConfigurations = new ChangeTrackingList<AcsRouterChannelConfiguration>();
-            Labels = labels;
-            Tags = tags;
+            Labels = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerRegisteredEventData"/>. </summary>
@@ -35,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Worker Registered Labels. </param>
         /// <param name="tags"> Router Worker Registered Tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterWorkerRegisteredEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IDictionary<string, string> labels, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsRouterWorkerRegisteredEventData(string workerId, IReadOnlyList<AcsRouterQueueDetails> queueAssignments, IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations, int? totalCapacity, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkerId = workerId;
             QueueAssignments = queueAssignments;
@@ -59,9 +57,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public int? TotalCapacity { get; }
 
         /// <summary> Router Worker Registered Labels. </summary>
-        public IDictionary<string, string> Labels { get; }
+        public IReadOnlyDictionary<string, string> Labels { get; }
 
         /// <summary> Router Worker Registered Tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

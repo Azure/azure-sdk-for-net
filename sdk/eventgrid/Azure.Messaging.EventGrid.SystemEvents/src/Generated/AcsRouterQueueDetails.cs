@@ -17,10 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterQueueDetails"/>. </summary>
-        /// <param name="labels"> Router Queue Labels. </param>
-        internal AcsRouterQueueDetails(IDictionary<string, string> labels)
+        internal AcsRouterQueueDetails()
         {
-            Labels = labels;
+            Labels = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterQueueDetails"/>. </summary>
@@ -28,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="name"> Router Queue Name. </param>
         /// <param name="labels"> Router Queue Labels. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRouterQueueDetails(string id, string name, IDictionary<string, string> labels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsRouterQueueDetails(string id, string name, IReadOnlyDictionary<string, string> labels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -43,6 +42,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Name { get; }
 
         /// <summary> Router Queue Labels. </summary>
-        public IDictionary<string, string> Labels { get; }
+        public IReadOnlyDictionary<string, string> Labels { get; }
     }
 }

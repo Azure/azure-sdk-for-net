@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
-        internal AcsChatMessageEditedInThreadEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IDictionary<string, string> metadata, DateTimeOffset? editTime) : base(transactionId, threadId, additionalBinaryDataProperties, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, @type, version)
+        internal AcsChatMessageEditedInThreadEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata, DateTimeOffset? editTime) : base(transactionId, threadId, additionalBinaryDataProperties, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, @type, version)
         {
             MessageBody = messageBody;
             Metadata = metadata;
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string MessageBody { get; }
 
         /// <summary> The chat message metadata. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IReadOnlyDictionary<string, string> Metadata { get; }
 
         /// <summary> The time at which the message was edited. </summary>
         public DateTimeOffset? EditTime { get; }

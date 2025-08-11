@@ -15,11 +15,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Custom Context of Incoming Call. </summary>
     public partial class AcsIncomingCallCustomContext : IJsonModel<AcsIncomingCallCustomContext>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallCustomContext"/> for deserialization. </summary>
-        internal AcsIncomingCallCustomContext()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsIncomingCallCustomContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -38,32 +33,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new FormatException($"The model {nameof(AcsIncomingCallCustomContext)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("sipHeaders"u8);
-            writer.WriteStartObject();
-            foreach (var item in SipHeaders)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("sipHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in SipHeaders)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("voipHeaders"u8);
-            writer.WriteStartObject();
-            foreach (var item in VoipHeaders)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("voipHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in VoipHeaders)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -106,8 +107,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            IDictionary<string, string> sipHeaders = default;
-            IDictionary<string, string> voipHeaders = default;
+            IReadOnlyDictionary<string, string> sipHeaders = default;
+            IReadOnlyDictionary<string, string> voipHeaders = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

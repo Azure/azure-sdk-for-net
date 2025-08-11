@@ -14,12 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobEventData : AcsRouterEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        internal AcsRouterJobEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags)
+        internal AcsRouterJobEventData()
         {
-            Labels = labels;
-            Tags = tags;
+            Labels = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobEventData"/>. </summary>

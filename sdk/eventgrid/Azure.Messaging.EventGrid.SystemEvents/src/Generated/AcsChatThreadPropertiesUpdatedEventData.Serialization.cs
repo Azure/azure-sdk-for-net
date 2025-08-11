@@ -61,19 +61,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteObjectValue<object>(item.Value, options);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("metadata"u8);
-            writer.WriteStartObject();
-            foreach (var item in Metadata)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -109,7 +112,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CommunicationIdentifierModel editedByCommunicationIdentifier = default;
             DateTimeOffset? editTime = default;
             IReadOnlyDictionary<string, object> properties = default;
-            IDictionary<string, string> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("transactionId"u8))

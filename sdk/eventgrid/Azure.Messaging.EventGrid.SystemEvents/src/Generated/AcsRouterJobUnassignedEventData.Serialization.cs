@@ -17,11 +17,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(AcsRouterJobUnassignedEventDataConverter))]
     public partial class AcsRouterJobUnassignedEventData : IJsonModel<AcsRouterJobUnassignedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobUnassignedEventData"/> for deserialization. </summary>
-        internal AcsRouterJobUnassignedEventData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRouterJobUnassignedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

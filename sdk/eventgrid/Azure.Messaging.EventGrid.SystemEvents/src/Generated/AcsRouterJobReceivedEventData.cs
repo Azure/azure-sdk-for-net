@@ -14,10 +14,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobReceivedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
-        internal AcsRouterJobReceivedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, bool unavailableForMatching) : base(labels, tags)
+        internal AcsRouterJobReceivedEventData(bool unavailableForMatching)
         {
             RequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
             UnavailableForMatching = unavailableForMatching;

@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("participantCommunicationIdentifier"u8);
             writer.WriteObjectValue(ParticipantCommunicationIdentifier, options);
-            if (Optional.IsCollectionDefined(Metadata))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string displayName = default;
             CommunicationIdentifierModel participantCommunicationIdentifier = default;
-            IDictionary<string, string> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
