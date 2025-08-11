@@ -83,7 +83,7 @@ function Initialize-Package($emitterPackagePath) {
 
                 # Update the UnbrandedGeneratorVersion property in the file
                 $pattern = '<AzureGeneratorVersion>[^<]*</AzureGeneratorVersion>'
-                $replacement = '<AzureGeneratorVersion>' + $PackageVersion + '</AzureGeneratorVersion>'
+                $replacement = '<AzureGeneratorVersion>' + $emitterVersion + '</AzureGeneratorVersion>'
 
                 $updatedContent = $propsFileContent -replace $pattern, $replacement
                 if ($updatedContent -eq $propsFileContent) {
@@ -109,7 +109,7 @@ function Initialize-Package($emitterPackagePath) {
             else {
                 Invoke-LoggedCommand "npm ci"
             }
-        
+
 
             $lockFilesPath = Join-Path $OutputDirectory "lock-files"
 
