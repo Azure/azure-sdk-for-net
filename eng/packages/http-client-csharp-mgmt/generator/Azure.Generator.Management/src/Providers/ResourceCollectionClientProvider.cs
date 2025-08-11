@@ -10,6 +10,7 @@ using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -108,6 +109,8 @@ namespace Azure.Generator.Management.Providers
         protected override TypeProvider[] BuildSerializationProviders() => [];
 
         protected override string BuildName() => $"{ResourceName}Collection";
+
+        protected override FormattableString BuildDescription() => $"A class representing a collection of <see cref=\"{_resource.Type}\"/> and their operations. Each <see cref=\"{_resource.Type}\"/> in the collection will belong to the same instance of <see cref=\"{GetParentResourceTypeName()}\"/>. To get a {Name} instance call the Get{ResourceName.Pluralize()} method from an instance of <see cref=\"{GetParentResourceTypeName()}\"/>.";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -339,6 +342,18 @@ namespace Azure.Generator.Management.Providers
             }
 
             return result;
+        }
+
+        private string GetParentResourceTypeName()
+        {
+            return ResourceScope switch
+            {
+                ResourceScope.ResourceGroup => "ResourceGroupResource",
+                ResourceScope.Subscription => "SubscriptionResource",
+                ResourceScope.Tenant => "TenantResource",
+                ResourceScope.ManagementGroup => "ManagementGroupResource",
+                _ => "ArmResource"
+            };
         }
     }
 }

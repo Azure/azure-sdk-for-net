@@ -16,7 +16,7 @@ using Azure.ResourceManager;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> A Class representing a BarSettingsResource along with the instance operations that can be performed on it. If you have a ResourceIdentifier you can construct a BarSettingsResource from an instance of ArmClient using the GetResource method. Otherwise you can get one from its parent resource <see cref="Azure.ResourceManager.Resources.ResourceGroupResource"/> using the GetBarSettingsResource method. </summary>
     public partial class BarSettingsResource : ArmResource
     {
         private readonly ClientDiagnostics _barSettingsOperationsClientDiagnostics;
