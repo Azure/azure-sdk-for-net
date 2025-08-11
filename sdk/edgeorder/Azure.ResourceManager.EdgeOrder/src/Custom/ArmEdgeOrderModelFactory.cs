@@ -56,5 +56,148 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 error,
                 serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductLine"/>. </summary>
+        /// <param name="displayName"> Display Name for the product system. </param>
+        /// <param name="description"> Description related to the product system. </param>
+        /// <param name="imageInformation"> Image information for the product system. </param>
+        /// <param name="costInformation"> Cost information for the product system. </param>
+        /// <param name="availabilityInformation"> Availability information of the product system. </param>
+        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
+        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="products"> List of products in the product line. </param>
+        /// <returns> A new <see cref="Models.ProductLine"/> instance for mocking. </returns>
+        public static ProductLine ProductLine(string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null, IEnumerable<EdgeOrderProduct> products = null)
+        {
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+            filterableProperties ??= new List<FilterableProperty>();
+            products ??= new List<EdgeOrderProduct>();
+
+            return new ProductLine(
+                products?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductFamily"/>. </summary>
+        /// <param name="displayName"> Display Name for the product system. </param>
+        /// <param name="description"> Description related to the product system. </param>
+        /// <param name="imageInformation"> Image information for the product system. </param>
+        /// <param name="costInformation"> Cost information for the product system. </param>
+        /// <param name="availabilityInformation"> Availability information of the product system. </param>
+        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
+        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="productLines"> List of product lines supported in the product family. </param>
+        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <returns> A new <see cref="Models.ProductFamily"/> instance for mocking. </returns>
+        public static ProductFamily ProductFamily(string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null, IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null)
+        {
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+            filterableProperties ??= new List<FilterableProperty>();
+            productLines ??= new List<ProductLine>();
+            resourceProviderDetails ??= new List<ResourceProviderDetails>();
+
+            return new ProductFamily(
+                productLines?.ToList(),
+                resourceProviderDetails?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductFamiliesMetadata"/>. </summary>
+        /// <param name="displayName"> Display Name for the product system. </param>
+        /// <param name="description"> Description related to the product system. </param>
+        /// <param name="imageInformation"> Image information for the product system. </param>
+        /// <param name="costInformation"> Cost information for the product system. </param>
+        /// <param name="availabilityInformation"> Availability information of the product system. </param>
+        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
+        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="productLines"> List of product lines supported in the product family. </param>
+        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <returns> A new <see cref="Models.ProductFamiliesMetadata"/> instance for mocking. </returns>
+        public static ProductFamiliesMetadata ProductFamiliesMetadata(string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null, IEnumerable<ProductLine> productLines = null, IEnumerable<ResourceProviderDetails> resourceProviderDetails = null)
+        {
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+            filterableProperties ??= new List<FilterableProperty>();
+            productLines ??= new List<ProductLine>();
+            resourceProviderDetails ??= new List<ResourceProviderDetails>();
+
+            return new ProductFamiliesMetadata(
+                productLines?.ToList(),
+                resourceProviderDetails?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductDetails"/>. </summary>
+        /// <param name="displayInfo"> Display details of the product. </param>
+        /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
+        /// <param name="count"> Quantity of the product. </param>
+        /// <param name="productDoubleEncryptionStatus"> Double encryption status of the configuration. Read-only field. </param>
+        /// <param name="deviceDetails"> list of device details. </param>
+        /// <returns> A new <see cref="Models.ProductDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, int? count = null, DoubleEncryptionStatus? productDoubleEncryptionStatus = null, IEnumerable<EdgeOrderProductDeviceDetails> deviceDetails = null)
+        {
+            deviceDetails ??= new List<EdgeOrderProductDeviceDetails>();
+
+            return new ProductDetails(
+                displayInfo,
+                hierarchyInformation,
+                productDoubleEncryptionStatus,
+                null, // identificationType
+                deviceDetails?.ToList().FirstOrDefault(),
+                null, // parentProvisioningDetails
+                new ChangeTrackingList<AdditionalConfiguration>(),
+                new ChangeTrackingList<ConfigurationDeviceDetails>(),
+                null, // termCommitmentInformation
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProduct"/>. </summary>
+        /// <param name="displayName"> Display Name for the product system. </param>
+        /// <param name="description"> Description related to the product system. </param>
+        /// <param name="imageInformation"> Image information for the product system. </param>
+        /// <param name="costInformation"> Cost information for the product system. </param>
+        /// <param name="availabilityInformation"> Availability information of the product system. </param>
+        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
+        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="configurations"> List of configurations for the product. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderProduct"/> instance for mocking. </returns>
+        public static EdgeOrderProduct EdgeOrderProduct(string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null, IEnumerable<ProductConfiguration> configurations = null)
+        {
+            imageInformation ??= new List<EdgeOrderProductImageInformation>();
+            filterableProperties ??= new List<FilterableProperty>();
+            configurations ??= new List<ProductConfiguration>();
+
+            return new EdgeOrderProduct(
+                configurations?.ToList(),
+                displayName,
+                description,
+                imageInformation?.ToList(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties?.ToList(),
+                serializedAdditionalRawData: null);
+        }
     }
 }

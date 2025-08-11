@@ -48,16 +48,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
         public ConfigurationsContent()
         {
+            ConfigurationFilters = new ChangeTrackingList<ConfigurationFilters>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
         /// <param name="configurationFilter"> Holds details about product hierarchy information and filterable property. </param>
         /// <param name="customerSubscriptionDetails"> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </param>
+        /// <param name="configurationFilters"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationsContent(ConfigurationFilters configurationFilter, CustomerSubscriptionDetails customerSubscriptionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigurationsContent(ConfigurationFilters configurationFilter, CustomerSubscriptionDetails customerSubscriptionDetails, IList<ConfigurationFilters> configurationFilters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationFilter = configurationFilter;
             CustomerSubscriptionDetails = customerSubscriptionDetails;
+            ConfigurationFilters = configurationFilters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

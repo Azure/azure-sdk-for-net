@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(TermCommitmentPreferences))]
     [ModelReaderWriterBuildable(typeof(TermTypeDetails))]
     [ModelReaderWriterBuildable(typeof(TransportPreferences))]
-    [ModelReaderWriterBuildable(typeof(UnknownEdgeOrderProductMeterDetails))]
+    [ModelReaderWriterBuildable(typeof(UnknownMeterDetails))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerEdgeOrderContext : ModelReaderWriterContext
     {

@@ -44,6 +44,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
                 writer.WriteObjectValue(CustomerSubscriptionDetails, options);
             }
+            if (Optional.IsCollectionDefined(ConfigurationFilters))
+            {
+                writer.WritePropertyName("configurationFilters"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConfigurationFilters)
+                {
+                    writer.WriteObjectValue<ConfigurationFilters>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +93,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             ConfigurationFilters configurationFilter = default;
             CustomerSubscriptionDetails customerSubscriptionDetails = default;
+            IList<ConfigurationFilters> configurationFilters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +116,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("configurationFilters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ConfigurationFilters> array = new List<ConfigurationFilters>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.ConfigurationFilters.DeserializeConfigurationFilters(item, options));
+                    }
+                    configurationFilters = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConfigurationsContent(configurationFilter, customerSubscriptionDetails, serializedAdditionalRawData);
+            return new ConfigurationsContent(configurationFilter, customerSubscriptionDetails, configurationFilters ?? new ChangeTrackingList<ConfigurationFilters>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationsContent>.Write(ModelReaderWriterOptions options)

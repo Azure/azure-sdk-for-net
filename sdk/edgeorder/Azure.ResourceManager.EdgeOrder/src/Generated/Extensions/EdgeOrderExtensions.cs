@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListConfigurations</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetConfigurationsProductsAndConfigurationsOperationGroups(ConfigurationsContent,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetConfigurations(ConfigurationsContent,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -626,11 +626,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductConfiguration> GetConfigurationsProductsAndConfigurationsOperationGroupsAsync(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetConfigurationsProductsAndConfigurationsOperationGroupsAsync(content, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetConfigurationsAsync(content, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListConfigurations</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetConfigurationsProductsAndConfigurationsOperationGroups(ConfigurationsContent,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetConfigurations(ConfigurationsContent,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -660,11 +660,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductConfiguration> GetConfigurationsProductsAndConfigurationsOperationGroups(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ProductConfiguration> GetConfigurations(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetConfigurationsProductsAndConfigurationsOperationGroups(content, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetConfigurations(content, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamilies</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetProductFamilies</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamiliesProductsAndConfigurationsOperationGroups(ProductFamiliesContent,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamilies(ProductFamiliesContent,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -695,11 +695,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductFamily"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductFamily> GetProductFamiliesProductsAndConfigurationsOperationGroupsAsync(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesProductsAndConfigurationsOperationGroupsAsync(content, expand, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesAsync(content, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamilies</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetProductFamilies</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamiliesProductsAndConfigurationsOperationGroups(ProductFamiliesContent,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamilies(ProductFamiliesContent,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -730,11 +730,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductFamily"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductFamily> GetProductFamiliesProductsAndConfigurationsOperationGroups(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ProductFamily> GetProductFamilies(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesProductsAndConfigurationsOperationGroups(content, expand, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamilies(content, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamiliesMetadata</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetProductFamiliesMetadata</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadataProductsAndConfigurationsOperationGroups(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -763,11 +763,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductFamiliesMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataProductsAndConfigurationsOperationGroupsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesMetadataProductsAndConfigurationsOperationGroupsAsync(skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesMetadataAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamiliesMetadata</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetProductFamiliesMetadata</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadataProductsAndConfigurationsOperationGroups(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -796,11 +796,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductFamiliesMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadataProductsAndConfigurationsOperationGroups(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadata(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesMetadataProductsAndConfigurationsOperationGroups(skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesMetadata(skipToken, cancellationToken);
         }
 
         /// <summary>

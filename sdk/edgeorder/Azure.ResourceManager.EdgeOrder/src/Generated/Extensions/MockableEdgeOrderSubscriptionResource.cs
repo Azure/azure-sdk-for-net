@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListConfigurations</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductConfiguration> GetConfigurationsProductsAndConfigurationsOperationGroupsAsync(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductConfiguration> GetConfigurationsAsync(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductConfiguration.DeserializeProductConfiguration(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurationsProductsAndConfigurationsOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetConfigurationsRequest(Id.SubscriptionId, content, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductConfiguration.DeserializeProductConfiguration(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListConfigurations</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -240,13 +240,13 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductConfiguration> GetConfigurationsProductsAndConfigurationsOperationGroups(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductConfiguration> GetConfigurations(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductConfiguration.DeserializeProductConfiguration(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurationsProductsAndConfigurationsOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetConfigurationsRequest(Id.SubscriptionId, content, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductConfiguration.DeserializeProductConfiguration(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamilies</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetProductFamilies</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -272,13 +272,13 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductFamily"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductFamily> GetProductFamiliesProductsAndConfigurationsOperationGroupsAsync(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductFamily> GetProductFamiliesAsync(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductFamily.DeserializeProductFamily(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesProductsAndConfigurationsOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductFamily.DeserializeProductFamily(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamilies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamilies</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetProductFamilies</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -304,13 +304,13 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductFamily"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductFamily> GetProductFamiliesProductsAndConfigurationsOperationGroups(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductFamily> GetProductFamilies(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductFamily.DeserializeProductFamily(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesProductsAndConfigurationsOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductFamily.DeserializeProductFamily(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamilies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamiliesMetadata</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetProductFamiliesMetadata</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -333,11 +333,11 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProductFamiliesMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataProductsAndConfigurationsOperationGroupsAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadataProductsAndConfigurationsOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProductsAndConfigurationsOperationGroup_ListProductFamiliesMetadata</description>
+        /// <description>ProductsAndConfigurationsOperationGroup_GetProductFamiliesMetadata</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -360,11 +360,11 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProductFamiliesMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadataProductsAndConfigurationsOperationGroups(string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadata(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadataProductsAndConfigurationsOperationGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsOperationGroupRestClient.CreateGetProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(e), ProductsAndConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

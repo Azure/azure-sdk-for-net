@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListConfigurationsRequestUri(string subscriptionId, ConfigurationsContent content, string skipToken)
+        internal RequestUriBuilder CreateGetConfigurationsRequestUri(string subscriptionId, ConfigurationsContent content, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return uri;
         }
 
-        internal HttpMessage CreateListConfigurationsRequest(string subscriptionId, ConfigurationsContent content, string skipToken)
+        internal HttpMessage CreateGetConfigurationsRequest(string subscriptionId, ConfigurationsContent content, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Configurations>> ListConfigurationsAsync(string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Configurations>> GetConfigurationsAsync(string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListConfigurationsRequest(subscriptionId, content, skipToken);
+            using var message = CreateGetConfigurationsRequest(subscriptionId, content, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Configurations> ListConfigurations(string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<Configurations> GetConfigurations(string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListConfigurationsRequest(subscriptionId, content, skipToken);
+            using var message = CreateGetConfigurationsRequest(subscriptionId, content, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal RequestUriBuilder CreateListProductFamiliesRequestUri(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        internal RequestUriBuilder CreateGetProductFamiliesRequestUri(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return uri;
         }
 
-        internal HttpMessage CreateListProductFamiliesRequest(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        internal HttpMessage CreateGetProductFamiliesRequest(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductFamilies>> ListProductFamiliesAsync(string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductFamilies>> GetProductFamiliesAsync(string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListProductFamiliesRequest(subscriptionId, content, expand, skipToken);
+            using var message = CreateGetProductFamiliesRequest(subscriptionId, content, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductFamilies> ListProductFamilies(string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductFamilies> GetProductFamilies(string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListProductFamiliesRequest(subscriptionId, content, expand, skipToken);
+            using var message = CreateGetProductFamiliesRequest(subscriptionId, content, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal RequestUriBuilder CreateListProductFamiliesMetadataRequestUri(string subscriptionId, string skipToken)
+        internal RequestUriBuilder CreateGetProductFamiliesMetadataRequestUri(string subscriptionId, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return uri;
         }
 
-        internal HttpMessage CreateListProductFamiliesMetadataRequest(string subscriptionId, string skipToken)
+        internal HttpMessage CreateGetProductFamiliesMetadataRequest(string subscriptionId, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -280,11 +280,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductFamiliesMetadataListResult>> ListProductFamiliesMetadataAsync(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductFamiliesMetadataListResult>> GetProductFamiliesMetadataAsync(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListProductFamiliesMetadataRequest(subscriptionId, skipToken);
+            using var message = CreateGetProductFamiliesMetadataRequest(subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -306,11 +306,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductFamiliesMetadataListResult> ListProductFamiliesMetadata(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductFamiliesMetadataListResult> GetProductFamiliesMetadata(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListProductFamiliesMetadataRequest(subscriptionId, skipToken);
+            using var message = CreateGetProductFamiliesMetadataRequest(subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal RequestUriBuilder CreateListConfigurationsNextPageRequestUri(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
+        internal RequestUriBuilder CreateGetConfigurationsNextPageRequestUri(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return uri;
         }
 
-        internal HttpMessage CreateListConfigurationsNextPageRequest(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
+        internal HttpMessage CreateGetConfigurationsNextPageRequest(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -356,13 +356,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Configurations>> ListConfigurationsNextPageAsync(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Configurations>> GetConfigurationsNextPageAsync(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
+            using var message = CreateGetConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -386,13 +386,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Configurations> ListConfigurationsNextPage(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<Configurations> GetConfigurationsNextPage(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
+            using var message = CreateGetConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal RequestUriBuilder CreateListProductFamiliesNextPageRequestUri(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        internal RequestUriBuilder CreateGetProductFamiliesNextPageRequestUri(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return uri;
         }
 
-        internal HttpMessage CreateListProductFamiliesNextPageRequest(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        internal HttpMessage CreateGetProductFamiliesNextPageRequest(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -439,13 +439,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductFamilies>> ListProductFamiliesNextPageAsync(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductFamilies>> GetProductFamiliesNextPageAsync(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
+            using var message = CreateGetProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -470,13 +470,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductFamilies> ListProductFamiliesNextPage(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductFamilies> GetProductFamiliesNextPage(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
+            using var message = CreateGetProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal RequestUriBuilder CreateListProductFamiliesMetadataNextPageRequestUri(string nextLink, string subscriptionId, string skipToken)
+        internal RequestUriBuilder CreateGetProductFamiliesMetadataNextPageRequestUri(string nextLink, string subscriptionId, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return uri;
         }
 
-        internal HttpMessage CreateListProductFamiliesMetadataNextPageRequest(string nextLink, string subscriptionId, string skipToken)
+        internal HttpMessage CreateGetProductFamiliesMetadataNextPageRequest(string nextLink, string subscriptionId, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -521,12 +521,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductFamiliesMetadataListResult>> ListProductFamiliesMetadataNextPageAsync(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductFamiliesMetadataListResult>> GetProductFamiliesMetadataNextPageAsync(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
+            using var message = CreateGetProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -549,12 +549,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductFamiliesMetadataListResult> ListProductFamiliesMetadataNextPage(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductFamiliesMetadataListResult> GetProductFamiliesMetadataNextPage(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
+            using var message = CreateGetProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

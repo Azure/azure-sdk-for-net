@@ -7,9 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
+    [CodeGenSerialization(nameof(ConfigurationFilters), new string[] { "configurationFilters" })]
     public partial class ConfigurationsContent
     {
         /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
