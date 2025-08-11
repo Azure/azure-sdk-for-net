@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Make `Azure.ResourceManager.AppContainers` AOT-compatible
+- Make `Azure.ResourceManager.AppService` AOT-compatible
 
 ### Bugs Fixed
 
