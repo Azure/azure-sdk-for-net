@@ -14,57 +14,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsRecordingContentType : IEquatable<AcsRecordingContentType>
     {
         private readonly string _value;
-        /// <summary> AudioVideo content type. </summary>
-        private const string AudioVideoValue = "AudioVideo";
-        /// <summary> Audio content type. </summary>
-        private const string AudioValue = "Audio";
 
         /// <summary> Initializes a new instance of <see cref="AcsRecordingContentType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsRecordingContentType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string AudioVideoValue = "AudioVideo";
+        private const string AudioValue = "Audio";
 
         /// <summary> AudioVideo content type. </summary>
         public static AcsRecordingContentType AudioVideo { get; } = new AcsRecordingContentType(AudioVideoValue);
-
         /// <summary> Audio content type. </summary>
         public static AcsRecordingContentType Audio { get; } = new AcsRecordingContentType(AudioValue);
-
         /// <summary> Determines if two <see cref="AcsRecordingContentType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsRecordingContentType left, AcsRecordingContentType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AcsRecordingContentType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsRecordingContentType left, AcsRecordingContentType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AcsRecordingContentType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsRecordingContentType"/>. </summary>
         public static implicit operator AcsRecordingContentType(string value) => new AcsRecordingContentType(value);
 
-        /// <summary> Converts a string to a <see cref="AcsRecordingContentType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AcsRecordingContentType?(string value) => value == null ? null : new AcsRecordingContentType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsRecordingContentType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AcsRecordingContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

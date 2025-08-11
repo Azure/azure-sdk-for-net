@@ -10,20 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadDeleted event. </summary>
     [JsonConverter(typeof(AcsChatThreadDeletedEventDataConverter))]
-    public partial class AcsChatThreadDeletedEventData : IJsonModel<AcsChatThreadDeletedEventData>
+    public partial class AcsChatThreadDeletedEventData : IUtf8JsonSerializable, IJsonModel<AcsChatThreadDeletedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadDeletedEventData"/> for deserialization. </summary>
-        internal AcsChatThreadDeletedEventData()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatThreadDeletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsChatThreadDeletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -35,11 +30,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsChatThreadDeletedEventData)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("deletedByCommunicationIdentifier"u8);
             writer.WriteObjectValue(DeletedByCommunicationIdentifier, options);
@@ -50,104 +46,98 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsChatThreadDeletedEventData IJsonModel<AcsChatThreadDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsChatThreadDeletedEventData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AcsChatEventInThreadBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AcsChatThreadDeletedEventData IJsonModel<AcsChatThreadDeletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsChatThreadDeletedEventData)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAcsChatThreadDeletedEventData(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AcsChatThreadDeletedEventData DeserializeAcsChatThreadDeletedEventData(JsonElement element, ModelReaderWriterOptions options)
+        internal static AcsChatThreadDeletedEventData DeserializeAcsChatThreadDeletedEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string transactionId = default;
-            string threadId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? createTime = default;
-            long? version = default;
             CommunicationIdentifierModel deletedByCommunicationIdentifier = default;
             DateTimeOffset? deleteTime = default;
-            foreach (var prop in element.EnumerateObject())
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            string transactionId = default;
+            string threadId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("transactionId"u8))
+                if (property.NameEquals("deletedByCommunicationIdentifier"u8))
                 {
-                    transactionId = prop.Value.GetString();
+                    deletedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("threadId"u8))
+                if (property.NameEquals("deleteTime"u8))
                 {
-                    threadId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("createTime"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createTime = prop.Value.GetDateTimeOffset("O");
+                    deleteTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("version"u8))
+                if (property.NameEquals("createTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    version = prop.Value.GetInt64();
+                    createTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("deletedByCommunicationIdentifier"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    deletedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("deleteTime"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deleteTime = prop.Value.GetDateTimeOffset("O");
+                    version = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("transactionId"u8))
+                {
+                    transactionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("threadId"u8))
+                {
+                    threadId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AcsChatThreadDeletedEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 createTime,
                 version,
                 deletedByCommunicationIdentifier,
                 deleteTime);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsChatThreadDeletedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AcsChatThreadDeletedEventData>.Write(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
@@ -157,20 +147,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsChatThreadDeletedEventData IPersistableModel<AcsChatThreadDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsChatThreadDeletedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AcsChatEventInThreadBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        AcsChatThreadDeletedEventData IPersistableModel<AcsChatThreadDeletedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsChatThreadDeletedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsChatThreadDeletedEventData(document.RootElement, options);
                     }
                 default:
@@ -178,28 +163,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsChatThreadDeletedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsChatThreadDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAcsChatThreadDeletedEventData(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
         internal partial class AcsChatThreadDeletedEventDataConverter : JsonConverter<AcsChatThreadDeletedEventData>
         {
-            /// <summary> Writes the JSON representation of the model. </summary>
-            /// <param name="writer"> The writer. </param>
-            /// <param name="model"> The model to write. </param>
-            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsChatThreadDeletedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AcsChatThreadDeletedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
-            /// <summary> Reads the JSON representation and converts into the model. </summary>
-            /// <param name="reader"> The reader. </param>
-            /// <param name="typeToConvert"> The type to convert. </param>
-            /// <param name="options"> The serialization options. </param>
             public override AcsChatThreadDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsChatThreadDeletedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatThreadDeletedEventData(document.RootElement);
             }
         }
     }

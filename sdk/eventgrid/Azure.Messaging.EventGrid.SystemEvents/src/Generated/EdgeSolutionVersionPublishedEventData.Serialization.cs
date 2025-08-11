@@ -10,20 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Edge.SolutionVersionPublished event. </summary>
     [JsonConverter(typeof(EdgeSolutionVersionPublishedEventDataConverter))]
-    public partial class EdgeSolutionVersionPublishedEventData : IJsonModel<EdgeSolutionVersionPublishedEventData>
+    public partial class EdgeSolutionVersionPublishedEventData : IUtf8JsonSerializable, IJsonModel<EdgeSolutionVersionPublishedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="EdgeSolutionVersionPublishedEventData"/> for deserialization. </summary>
-        internal EdgeSolutionVersionPublishedEventData()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeSolutionVersionPublishedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeSolutionVersionPublishedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -35,11 +30,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionPublishedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionPublishedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionVersionPublishedEventData)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("externalValidationId"u8);
             writer.WriteStringValue(ExternalValidationId);
             writer.WritePropertyName("targetId"u8);
@@ -54,15 +50,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStringValue(ApiVersion);
             writer.WritePropertyName("callbackUrl"u8);
             writer.WriteStringValue(CallbackUrl.AbsoluteUri);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,27 +67,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeSolutionVersionPublishedEventData IJsonModel<EdgeSolutionVersionPublishedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeSolutionVersionPublishedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EdgeSolutionVersionPublishedEventData IJsonModel<EdgeSolutionVersionPublishedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionPublishedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionPublishedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionVersionPublishedEventData)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEdgeSolutionVersionPublishedEventData(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EdgeSolutionVersionPublishedEventData DeserializeEdgeSolutionVersionPublishedEventData(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeSolutionVersionPublishedEventData DeserializeEdgeSolutionVersionPublishedEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,49 +94,51 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string solutionVersionId = default;
             string apiVersion = default;
             Uri callbackUrl = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("externalValidationId"u8))
+                if (property.NameEquals("externalValidationId"u8))
                 {
-                    externalValidationId = prop.Value.GetString();
+                    externalValidationId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetId"u8))
+                if (property.NameEquals("targetId"u8))
                 {
-                    targetId = prop.Value.GetString();
+                    targetId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("solutionTemplateId"u8))
+                if (property.NameEquals("solutionTemplateId"u8))
                 {
-                    solutionTemplateId = prop.Value.GetString();
+                    solutionTemplateId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("solutionTemplateVersionId"u8))
+                if (property.NameEquals("solutionTemplateVersionId"u8))
                 {
-                    solutionTemplateVersionId = prop.Value.GetString();
+                    solutionTemplateVersionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("solutionVersionId"u8))
+                if (property.NameEquals("solutionVersionId"u8))
                 {
-                    solutionVersionId = prop.Value.GetString();
+                    solutionVersionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("apiVersion"u8))
+                if (property.NameEquals("apiVersion"u8))
                 {
-                    apiVersion = prop.Value.GetString();
+                    apiVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("callbackUrl"u8))
+                if (property.NameEquals("callbackUrl"u8))
                 {
-                    callbackUrl = new Uri(prop.Value.GetString());
+                    callbackUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeSolutionVersionPublishedEventData(
                 externalValidationId,
                 targetId,
@@ -154,16 +147,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 solutionVersionId,
                 apiVersion,
                 callbackUrl,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeSolutionVersionPublishedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EdgeSolutionVersionPublishedEventData>.Write(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionPublishedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionPublishedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
@@ -173,20 +163,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeSolutionVersionPublishedEventData IPersistableModel<EdgeSolutionVersionPublishedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeSolutionVersionPublishedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        EdgeSolutionVersionPublishedEventData IPersistableModel<EdgeSolutionVersionPublishedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionPublishedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionVersionPublishedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEdgeSolutionVersionPublishedEventData(document.RootElement, options);
                     }
                 default:
@@ -194,28 +179,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeSolutionVersionPublishedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EdgeSolutionVersionPublishedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEdgeSolutionVersionPublishedEventData(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
         internal partial class EdgeSolutionVersionPublishedEventDataConverter : JsonConverter<EdgeSolutionVersionPublishedEventData>
         {
-            /// <summary> Writes the JSON representation of the model. </summary>
-            /// <param name="writer"> The writer. </param>
-            /// <param name="model"> The model to write. </param>
-            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, EdgeSolutionVersionPublishedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<EdgeSolutionVersionPublishedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
-            /// <summary> Reads the JSON representation and converts into the model. </summary>
-            /// <param name="reader"> The reader. </param>
-            /// <param name="typeToConvert"> The type to convert. </param>
-            /// <param name="options"> The serialization options. </param>
             public override EdgeSolutionVersionPublishedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeEdgeSolutionVersionPublishedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeEdgeSolutionVersionPublishedEventData(document.RootElement);
             }
         }
     }

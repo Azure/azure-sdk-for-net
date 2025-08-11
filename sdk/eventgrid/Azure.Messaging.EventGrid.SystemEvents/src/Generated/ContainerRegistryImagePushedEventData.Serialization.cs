@@ -10,20 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ImagePushed event. </summary>
     [JsonConverter(typeof(ContainerRegistryImagePushedEventDataConverter))]
-    public partial class ContainerRegistryImagePushedEventData : IJsonModel<ContainerRegistryImagePushedEventData>
+    public partial class ContainerRegistryImagePushedEventData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryImagePushedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImagePushedEventData"/> for deserialization. </summary>
-        internal ContainerRegistryImagePushedEventData()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryImagePushedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerRegistryImagePushedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -35,35 +30,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryImagePushedEventData)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryImagePushedEventData IJsonModel<ContainerRegistryImagePushedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerRegistryImagePushedEventData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ContainerRegistryEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerRegistryImagePushedEventData IJsonModel<ContainerRegistryImagePushedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryImagePushedEventData)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerRegistryImagePushedEventData(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerRegistryImagePushedEventData DeserializeContainerRegistryImagePushedEventData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerRegistryImagePushedEventData DeserializeContainerRegistryImagePushedEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,79 +68,81 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ContainerRegistryEventActor actor = default;
             ContainerRegistryEventSource source = default;
             ContainerRegistryEventConnectedRegistry connectedRegistry = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("timestamp"u8))
+                if (property.NameEquals("timestamp"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("action"u8))
+                if (property.NameEquals("action"u8))
                 {
-                    action = prop.Value.GetString();
+                    action = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
+                if (property.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("target"u8))
+                if (property.NameEquals("target"u8))
                 {
-                    target = ContainerRegistryEventTarget.DeserializeContainerRegistryEventTarget(prop.Value, options);
+                    target = ContainerRegistryEventTarget.DeserializeContainerRegistryEventTarget(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("request"u8))
+                if (property.NameEquals("request"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    request = ContainerRegistryEventRequest.DeserializeContainerRegistryEventRequest(prop.Value, options);
+                    request = ContainerRegistryEventRequest.DeserializeContainerRegistryEventRequest(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("actor"u8))
+                if (property.NameEquals("actor"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    actor = ContainerRegistryEventActor.DeserializeContainerRegistryEventActor(prop.Value, options);
+                    actor = ContainerRegistryEventActor.DeserializeContainerRegistryEventActor(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("source"u8))
+                if (property.NameEquals("source"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    source = ContainerRegistryEventSource.DeserializeContainerRegistryEventSource(prop.Value, options);
+                    source = ContainerRegistryEventSource.DeserializeContainerRegistryEventSource(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("connectedRegistry"u8))
+                if (property.NameEquals("connectedRegistry"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(prop.Value, options);
+                    connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryImagePushedEventData(
                 id,
                 timestamp,
@@ -160,16 +153,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 actor,
                 source,
                 connectedRegistry,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerRegistryImagePushedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerRegistryImagePushedEventData>.Write(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
@@ -179,20 +169,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryImagePushedEventData IPersistableModel<ContainerRegistryImagePushedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerRegistryImagePushedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ContainerRegistryEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        ContainerRegistryImagePushedEventData IPersistableModel<ContainerRegistryImagePushedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImagePushedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerRegistryImagePushedEventData(document.RootElement, options);
                     }
                 default:
@@ -200,28 +185,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ContainerRegistryImagePushedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ContainerRegistryImagePushedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeContainerRegistryImagePushedEventData(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
         internal partial class ContainerRegistryImagePushedEventDataConverter : JsonConverter<ContainerRegistryImagePushedEventData>
         {
-            /// <summary> Writes the JSON representation of the model. </summary>
-            /// <param name="writer"> The writer. </param>
-            /// <param name="model"> The model to write. </param>
-            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, ContainerRegistryImagePushedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<ContainerRegistryImagePushedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
-            /// <summary> Reads the JSON representation and converts into the model. </summary>
-            /// <param name="reader"> The reader. </param>
-            /// <param name="typeToConvert"> The type to convert. </param>
-            /// <param name="options"> The serialization options. </param>
             public override ContainerRegistryImagePushedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeContainerRegistryImagePushedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerRegistryImagePushedEventData(document.RootElement);
             }
         }
     }

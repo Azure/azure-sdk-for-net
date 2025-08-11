@@ -9,19 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Information about the device twin, which is the cloud representation of application device metadata. </summary>
-    public partial class DeviceTwinInfo : IJsonModel<DeviceTwinInfo>
+    public partial class DeviceTwinInfo : IUtf8JsonSerializable, IJsonModel<DeviceTwinInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfo"/> for deserialization. </summary>
-        internal DeviceTwinInfo()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceTwinInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceTwinInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -33,11 +28,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceTwinInfo)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType);
             if (Optional.IsDefined(CloudToDeviceMessageCount))
@@ -66,15 +62,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("x509Thumbprint"u8);
             writer.WriteObjectValue(X509Thumbprint, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,27 +79,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeviceTwinInfo IJsonModel<DeviceTwinInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeviceTwinInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeviceTwinInfo IJsonModel<DeviceTwinInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceTwinInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeviceTwinInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeviceTwinInfo DeserializeDeviceTwinInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeviceTwinInfo DeserializeDeviceTwinInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -119,77 +110,79 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string statusUpdateTime = default;
             float? version = default;
             DeviceTwinInfoX509Thumbprint x509Thumbprint = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("authenticationType"u8))
+                if (property.NameEquals("authenticationType"u8))
                 {
-                    authenticationType = prop.Value.GetString();
+                    authenticationType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("cloudToDeviceMessageCount"u8))
+                if (property.NameEquals("cloudToDeviceMessageCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudToDeviceMessageCount = prop.Value.GetSingle();
+                    cloudToDeviceMessageCount = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("connectionState"u8))
+                if (property.NameEquals("connectionState"u8))
                 {
-                    connectionState = prop.Value.GetString();
+                    connectionState = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deviceId"u8))
+                if (property.NameEquals("deviceId"u8))
                 {
-                    deviceId = prop.Value.GetString();
+                    deviceId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("etag"u8))
+                if (property.NameEquals("etag"u8))
                 {
-                    etag = prop.Value.GetString();
+                    etag = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lastActivityTime"u8))
+                if (property.NameEquals("lastActivityTime"u8))
                 {
-                    lastActivityTime = prop.Value.GetString();
+                    lastActivityTime = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    properties = DeviceTwinInfoProperties.DeserializeDeviceTwinInfoProperties(prop.Value, options);
+                    properties = DeviceTwinInfoProperties.DeserializeDeviceTwinInfoProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("statusUpdateTime"u8))
+                if (property.NameEquals("statusUpdateTime"u8))
                 {
-                    statusUpdateTime = prop.Value.GetString();
+                    statusUpdateTime = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("version"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    version = prop.Value.GetSingle();
+                    version = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("x509Thumbprint"u8))
+                if (property.NameEquals("x509Thumbprint"u8))
                 {
-                    x509Thumbprint = DeviceTwinInfoX509Thumbprint.DeserializeDeviceTwinInfoX509Thumbprint(prop.Value, options);
+                    x509Thumbprint = DeviceTwinInfoX509Thumbprint.DeserializeDeviceTwinInfoX509Thumbprint(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceTwinInfo(
                 authenticationType,
                 cloudToDeviceMessageCount,
@@ -202,16 +195,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 statusUpdateTime,
                 version,
                 x509Thumbprint,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeviceTwinInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeviceTwinInfo>.Write(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfo>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
@@ -221,20 +211,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeviceTwinInfo IPersistableModel<DeviceTwinInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeviceTwinInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        DeviceTwinInfo IPersistableModel<DeviceTwinInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfo>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceTwinInfo(document.RootElement, options);
                     }
                 default:
@@ -242,7 +227,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceTwinInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceTwinInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDeviceTwinInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

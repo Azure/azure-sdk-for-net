@@ -8,568 +8,567 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class EventGridModelFactory
     {
-        /// <summary> Schema of the data property of an EventGridEvent for a Microsoft.ApiCenter.ApiDefinitionAdded event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiDefinitionAddedEventData"/>. </summary>
         /// <param name="title"> API definition title. </param>
         /// <param name="description"> API definition description. </param>
         /// <param name="specification"> API definition specification. </param>
         /// <returns> A new <see cref="SystemEvents.ApiCenterApiDefinitionAddedEventData"/> instance for mocking. </returns>
-        public static ApiCenterApiDefinitionAddedEventData ApiCenterApiDefinitionAddedEventData(string title = default, string description = default, ApiCenterApiSpecification specification = default)
+        public static ApiCenterApiDefinitionAddedEventData ApiCenterApiDefinitionAddedEventData(string title = null, string description = null, ApiCenterApiSpecification specification = null)
         {
-            return new ApiCenterApiDefinitionAddedEventData(title, description, specification, additionalBinaryDataProperties: null);
+            return new ApiCenterApiDefinitionAddedEventData(title, description, specification, serializedAdditionalRawData: null);
         }
 
-        /// <summary> API specification details. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiSpecification"/>. </summary>
         /// <param name="name"> Specification name. </param>
         /// <param name="version"> Specification version. </param>
         /// <returns> A new <see cref="SystemEvents.ApiCenterApiSpecification"/> instance for mocking. </returns>
-        public static ApiCenterApiSpecification ApiCenterApiSpecification(string name = default, string version = default)
+        public static ApiCenterApiSpecification ApiCenterApiSpecification(string name = null, string version = null)
         {
-            return new ApiCenterApiSpecification(name, version, additionalBinaryDataProperties: null);
+            return new ApiCenterApiSpecification(name, version, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the data property of an EventGridEvent for a Microsoft.ApiCenter.ApiDefinitionUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiDefinitionUpdatedEventData"/>. </summary>
         /// <param name="title"> API definition title. </param>
         /// <param name="description"> API definition description. </param>
         /// <param name="specification"> API definition specification. </param>
         /// <returns> A new <see cref="SystemEvents.ApiCenterApiDefinitionUpdatedEventData"/> instance for mocking. </returns>
-        public static ApiCenterApiDefinitionUpdatedEventData ApiCenterApiDefinitionUpdatedEventData(string title = default, string description = default, ApiCenterApiSpecification specification = default)
+        public static ApiCenterApiDefinitionUpdatedEventData ApiCenterApiDefinitionUpdatedEventData(string title = null, string description = null, ApiCenterApiSpecification specification = null)
         {
-            return new ApiCenterApiDefinitionUpdatedEventData(title, description, specification, additionalBinaryDataProperties: null);
+            return new ApiCenterApiDefinitionUpdatedEventData(title, description, specification, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.UserCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementUserCreatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementUserCreatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementUserCreatedEventData ApiManagementUserCreatedEventData(string resourceUri = default)
+        public static ApiManagementUserCreatedEventData ApiManagementUserCreatedEventData(string resourceUri = null)
         {
-            return new ApiManagementUserCreatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementUserCreatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.UserUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementUserUpdatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementUserUpdatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementUserUpdatedEventData ApiManagementUserUpdatedEventData(string resourceUri = default)
+        public static ApiManagementUserUpdatedEventData ApiManagementUserUpdatedEventData(string resourceUri = null)
         {
-            return new ApiManagementUserUpdatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementUserUpdatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.UserDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementUserDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementUserDeletedEventData"/> instance for mocking. </returns>
-        public static ApiManagementUserDeletedEventData ApiManagementUserDeletedEventData(string resourceUri = default)
+        public static ApiManagementUserDeletedEventData ApiManagementUserDeletedEventData(string resourceUri = null)
         {
-            return new ApiManagementUserDeletedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementUserDeletedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.SubscriptionCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementSubscriptionCreatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementSubscriptionCreatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementSubscriptionCreatedEventData ApiManagementSubscriptionCreatedEventData(string resourceUri = default)
+        public static ApiManagementSubscriptionCreatedEventData ApiManagementSubscriptionCreatedEventData(string resourceUri = null)
         {
-            return new ApiManagementSubscriptionCreatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementSubscriptionCreatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.SubscriptionUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementSubscriptionUpdatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementSubscriptionUpdatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementSubscriptionUpdatedEventData ApiManagementSubscriptionUpdatedEventData(string resourceUri = default)
+        public static ApiManagementSubscriptionUpdatedEventData ApiManagementSubscriptionUpdatedEventData(string resourceUri = null)
         {
-            return new ApiManagementSubscriptionUpdatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementSubscriptionUpdatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.SubscriptionDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementSubscriptionDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementSubscriptionDeletedEventData"/> instance for mocking. </returns>
-        public static ApiManagementSubscriptionDeletedEventData ApiManagementSubscriptionDeletedEventData(string resourceUri = default)
+        public static ApiManagementSubscriptionDeletedEventData ApiManagementSubscriptionDeletedEventData(string resourceUri = null)
         {
-            return new ApiManagementSubscriptionDeletedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementSubscriptionDeletedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.ProductCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementProductCreatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementProductCreatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementProductCreatedEventData ApiManagementProductCreatedEventData(string resourceUri = default)
+        public static ApiManagementProductCreatedEventData ApiManagementProductCreatedEventData(string resourceUri = null)
         {
-            return new ApiManagementProductCreatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementProductCreatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.ProductUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementProductUpdatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementProductUpdatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementProductUpdatedEventData ApiManagementProductUpdatedEventData(string resourceUri = default)
+        public static ApiManagementProductUpdatedEventData ApiManagementProductUpdatedEventData(string resourceUri = null)
         {
-            return new ApiManagementProductUpdatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementProductUpdatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.ProductDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementProductDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementProductDeletedEventData"/> instance for mocking. </returns>
-        public static ApiManagementProductDeletedEventData ApiManagementProductDeletedEventData(string resourceUri = default)
+        public static ApiManagementProductDeletedEventData ApiManagementProductDeletedEventData(string resourceUri = null)
         {
-            return new ApiManagementProductDeletedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementProductDeletedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.APICreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementApiCreatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementApiCreatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementApiCreatedEventData ApiManagementApiCreatedEventData(string resourceUri = default)
+        public static ApiManagementApiCreatedEventData ApiManagementApiCreatedEventData(string resourceUri = null)
         {
-            return new ApiManagementApiCreatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementApiCreatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.APIUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementApiUpdatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementApiUpdatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementApiUpdatedEventData ApiManagementApiUpdatedEventData(string resourceUri = default)
+        public static ApiManagementApiUpdatedEventData ApiManagementApiUpdatedEventData(string resourceUri = null)
         {
-            return new ApiManagementApiUpdatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementApiUpdatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.APIDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementApiDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementApiDeletedEventData"/> instance for mocking. </returns>
-        public static ApiManagementApiDeletedEventData ApiManagementApiDeletedEventData(string resourceUri = default)
+        public static ApiManagementApiDeletedEventData ApiManagementApiDeletedEventData(string resourceUri = null)
         {
-            return new ApiManagementApiDeletedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementApiDeletedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.APIReleaseCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementApiReleaseCreatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementApiReleaseCreatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementApiReleaseCreatedEventData ApiManagementApiReleaseCreatedEventData(string resourceUri = default)
+        public static ApiManagementApiReleaseCreatedEventData ApiManagementApiReleaseCreatedEventData(string resourceUri = null)
         {
-            return new ApiManagementApiReleaseCreatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementApiReleaseCreatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.APIReleaseUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementApiReleaseUpdatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementApiReleaseUpdatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementApiReleaseUpdatedEventData ApiManagementApiReleaseUpdatedEventData(string resourceUri = default)
+        public static ApiManagementApiReleaseUpdatedEventData ApiManagementApiReleaseUpdatedEventData(string resourceUri = null)
         {
-            return new ApiManagementApiReleaseUpdatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementApiReleaseUpdatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.APIReleaseDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementApiReleaseDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/&lt;ResourceType&gt;/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementApiReleaseDeletedEventData"/> instance for mocking. </returns>
-        public static ApiManagementApiReleaseDeletedEventData ApiManagementApiReleaseDeletedEventData(string resourceUri = default)
+        public static ApiManagementApiReleaseDeletedEventData ApiManagementApiReleaseDeletedEventData(string resourceUri = null)
         {
-            return new ApiManagementApiReleaseDeletedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementApiReleaseDeletedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayCreatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayCreatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayCreatedEventData ApiManagementGatewayCreatedEventData(string resourceUri = default)
+        public static ApiManagementGatewayCreatedEventData ApiManagementGatewayCreatedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayCreatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayCreatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayUpdatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayUpdatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayUpdatedEventData ApiManagementGatewayUpdatedEventData(string resourceUri = default)
+        public static ApiManagementGatewayUpdatedEventData ApiManagementGatewayUpdatedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayUpdatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayUpdatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayDeletedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayDeletedEventData ApiManagementGatewayDeletedEventData(string resourceUri = default)
+        public static ApiManagementGatewayDeletedEventData ApiManagementGatewayDeletedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayDeletedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayDeletedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayHostnameConfigurationCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayHostnameConfigurationCreatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/hostnameConfigurations/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayHostnameConfigurationCreatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayHostnameConfigurationCreatedEventData ApiManagementGatewayHostnameConfigurationCreatedEventData(string resourceUri = default)
+        public static ApiManagementGatewayHostnameConfigurationCreatedEventData ApiManagementGatewayHostnameConfigurationCreatedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayHostnameConfigurationCreatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayHostnameConfigurationCreatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayHostnameConfigurationUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayHostnameConfigurationUpdatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/hostnameConfigurations/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayHostnameConfigurationUpdatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayHostnameConfigurationUpdatedEventData ApiManagementGatewayHostnameConfigurationUpdatedEventData(string resourceUri = default)
+        public static ApiManagementGatewayHostnameConfigurationUpdatedEventData ApiManagementGatewayHostnameConfigurationUpdatedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayHostnameConfigurationUpdatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayHostnameConfigurationUpdatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayHostnameConfigurationDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayHostnameConfigurationDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/hostnameConfigurations/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayHostnameConfigurationDeletedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayHostnameConfigurationDeletedEventData ApiManagementGatewayHostnameConfigurationDeletedEventData(string resourceUri = default)
+        public static ApiManagementGatewayHostnameConfigurationDeletedEventData ApiManagementGatewayHostnameConfigurationDeletedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayHostnameConfigurationDeletedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayHostnameConfigurationDeletedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayCertificateAuthorityCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayCertificateAuthorityCreatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/certificateAuthorities/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayCertificateAuthorityCreatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayCertificateAuthorityCreatedEventData ApiManagementGatewayCertificateAuthorityCreatedEventData(string resourceUri = default)
+        public static ApiManagementGatewayCertificateAuthorityCreatedEventData ApiManagementGatewayCertificateAuthorityCreatedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayCertificateAuthorityCreatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayCertificateAuthorityCreatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayCertificateAuthorityUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayCertificateAuthorityUpdatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/certificateAuthorities/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayCertificateAuthorityUpdatedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayCertificateAuthorityUpdatedEventData ApiManagementGatewayCertificateAuthorityUpdatedEventData(string resourceUri = default)
+        public static ApiManagementGatewayCertificateAuthorityUpdatedEventData ApiManagementGatewayCertificateAuthorityUpdatedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayCertificateAuthorityUpdatedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayCertificateAuthorityUpdatedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayCertificateAuthorityDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayCertificateAuthorityDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/certificateAuthorities/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayCertificateAuthorityDeletedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayCertificateAuthorityDeletedEventData ApiManagementGatewayCertificateAuthorityDeletedEventData(string resourceUri = default)
+        public static ApiManagementGatewayCertificateAuthorityDeletedEventData ApiManagementGatewayCertificateAuthorityDeletedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayCertificateAuthorityDeletedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayCertificateAuthorityDeletedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayAPIAdded event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayApiAddedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/apis/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayApiAddedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayApiAddedEventData ApiManagementGatewayApiAddedEventData(string resourceUri = default)
+        public static ApiManagementGatewayApiAddedEventData ApiManagementGatewayApiAddedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayApiAddedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayApiAddedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayAPIRemoved event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayApiRemovedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/apis/&lt;ResourceName&gt;`. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayApiRemovedEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayApiRemovedEventData ApiManagementGatewayApiRemovedEventData(string resourceUri = default)
+        public static ApiManagementGatewayApiRemovedEventData ApiManagementGatewayApiRemovedEventData(string resourceUri = null)
         {
-            return new ApiManagementGatewayApiRemovedEventData(resourceUri, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayApiRemovedEventData(resourceUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.CircuitBreaker.Opened event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementCircuitBreakerOpenedEventData"/>. </summary>
         /// <param name="backendName"> Name of the backend for which the circuit has opened. </param>
         /// <param name="circuitBreaker"> Information related to the circuit breaker configured on the backend. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementCircuitBreakerOpenedEventData"/> instance for mocking. </returns>
-        public static ApiManagementCircuitBreakerOpenedEventData ApiManagementCircuitBreakerOpenedEventData(string backendName = default, ApiManagementCircuitBreakerProperties circuitBreaker = default)
+        public static ApiManagementCircuitBreakerOpenedEventData ApiManagementCircuitBreakerOpenedEventData(string backendName = null, ApiManagementCircuitBreakerProperties circuitBreaker = null)
         {
-            return new ApiManagementCircuitBreakerOpenedEventData(backendName, circuitBreaker, additionalBinaryDataProperties: null);
+            return new ApiManagementCircuitBreakerOpenedEventData(backendName, circuitBreaker, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Information related to the circuit breaker configured on the backend. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementCircuitBreakerProperties"/>. </summary>
         /// <param name="rules"> Overview of all configured rules and respective details. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementCircuitBreakerProperties"/> instance for mocking. </returns>
-        public static ApiManagementCircuitBreakerProperties ApiManagementCircuitBreakerProperties(IReadOnlyDictionary<string, object> rules = default)
+        public static ApiManagementCircuitBreakerProperties ApiManagementCircuitBreakerProperties(IReadOnlyDictionary<string, object> rules = null)
         {
-            rules ??= new ChangeTrackingDictionary<string, object>();
+            rules ??= new Dictionary<string, object>();
 
-            return new ApiManagementCircuitBreakerProperties(rules, additionalBinaryDataProperties: null);
+            return new ApiManagementCircuitBreakerProperties(rules, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.CircuitBreaker.Closed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementCircuitBreakerClosedEventData"/>. </summary>
         /// <param name="backendName"> Name of the backend for which the circuit has closed. </param>
         /// <param name="circuitBreaker"> Information related to the circuit breaker configured on the backend. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementCircuitBreakerClosedEventData"/> instance for mocking. </returns>
-        public static ApiManagementCircuitBreakerClosedEventData ApiManagementCircuitBreakerClosedEventData(string backendName = default, ApiManagementCircuitBreakerProperties circuitBreaker = default)
+        public static ApiManagementCircuitBreakerClosedEventData ApiManagementCircuitBreakerClosedEventData(string backendName = null, ApiManagementCircuitBreakerProperties circuitBreaker = null)
         {
-            return new ApiManagementCircuitBreakerClosedEventData(backendName, circuitBreaker, additionalBinaryDataProperties: null);
+            return new ApiManagementCircuitBreakerClosedEventData(backendName, circuitBreaker, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayTokenNearExpiry event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryEventData"/>. </summary>
         /// <param name="gateway"> Information related to a given self-hosted gateway deployment. </param>
         /// <param name="token"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayTokenNearExpiryEventData ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway = default, ApiManagementGatewayTokenNearExpiryProperties token = default)
+        public static ApiManagementGatewayTokenNearExpiryEventData ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway = null, ApiManagementGatewayTokenNearExpiryProperties token = null)
         {
-            return new ApiManagementGatewayTokenNearExpiryEventData(gateway, token, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayTokenNearExpiryEventData(gateway, token, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Information related to a given self-hosted gateway deployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayProperties"/>. </summary>
         /// <param name="gatewayId"> Id of Gateway that is used to deploy the gateway to get the configuration for. This is the ARM resource ID referenced in the Azure API Management instance. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateway/&lt;GatewayName&gt;`. </param>
         /// <param name="instanceId"> Unique instance ID of the deployed gateway. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayProperties"/> instance for mocking. </returns>
-        public static ApiManagementGatewayProperties ApiManagementGatewayProperties(string gatewayId = default, string instanceId = default)
+        public static ApiManagementGatewayProperties ApiManagementGatewayProperties(string gatewayId = null, string instanceId = null)
         {
-            return new ApiManagementGatewayProperties(gatewayId, instanceId, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayProperties(gatewayId, instanceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Information related to a gateway token that is near expiry for a self-hosted gateway deployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryProperties"/>. </summary>
         /// <param name="expiresOn"> Timestamp when the gateway token will expire. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryProperties"/> instance for mocking. </returns>
-        public static ApiManagementGatewayTokenNearExpiryProperties ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset? expiresOn = default)
+        public static ApiManagementGatewayTokenNearExpiryProperties ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset? expiresOn = null)
         {
-            return new ApiManagementGatewayTokenNearExpiryProperties(expiresOn, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayTokenNearExpiryProperties(expiresOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayTokenExpired event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayTokenExpiredEventData"/>. </summary>
         /// <param name="gateway"> Information related to a given self-hosted gateway deployment. </param>
         /// <param name="token"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenExpiredEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayTokenExpiredEventData ApiManagementGatewayTokenExpiredEventData(ApiManagementGatewayProperties gateway = default, ApiManagementExpiredGatewayTokenProperties token = default)
+        public static ApiManagementGatewayTokenExpiredEventData ApiManagementGatewayTokenExpiredEventData(ApiManagementGatewayProperties gateway = null, ApiManagementExpiredGatewayTokenProperties token = null)
         {
-            return new ApiManagementGatewayTokenExpiredEventData(gateway, token, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayTokenExpiredEventData(gateway, token, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Information related to a gateway token that has expired for a self-hosted gateway deployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementExpiredGatewayTokenProperties"/>. </summary>
         /// <param name="expiresOn"> Timestamp when the gateway token has expired. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementExpiredGatewayTokenProperties"/> instance for mocking. </returns>
-        public static ApiManagementExpiredGatewayTokenProperties ApiManagementExpiredGatewayTokenProperties(DateTimeOffset? expiresOn = default)
+        public static ApiManagementExpiredGatewayTokenProperties ApiManagementExpiredGatewayTokenProperties(DateTimeOffset? expiresOn = null)
         {
-            return new ApiManagementExpiredGatewayTokenProperties(expiresOn, additionalBinaryDataProperties: null);
+            return new ApiManagementExpiredGatewayTokenProperties(expiresOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.KeyValueModified event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AppConfigurationKeyValueModifiedEventData"/>. </summary>
         /// <param name="key"> The key used to identify the key-value that was modified. </param>
         /// <param name="label"> The label, if any, used to identify the key-value that was modified. </param>
         /// <param name="etag"> The etag representing the new state of the key-value. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationKeyValueModifiedEventData"/> instance for mocking. </returns>
-        public static AppConfigurationKeyValueModifiedEventData AppConfigurationKeyValueModifiedEventData(string key = default, string label = default, string etag = default, string syncToken = default)
+        public static AppConfigurationKeyValueModifiedEventData AppConfigurationKeyValueModifiedEventData(string key = null, string label = null, string etag = null, string syncToken = null)
         {
-            return new AppConfigurationKeyValueModifiedEventData(key, label, etag, syncToken, additionalBinaryDataProperties: null);
+            return new AppConfigurationKeyValueModifiedEventData(key, label, etag, syncToken, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.KeyValueDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AppConfigurationKeyValueDeletedEventData"/>. </summary>
         /// <param name="key"> The key used to identify the key-value that was deleted. </param>
         /// <param name="label"> The label, if any, used to identify the key-value that was deleted. </param>
         /// <param name="etag"> The etag representing the key-value that was deleted. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationKeyValueDeletedEventData"/> instance for mocking. </returns>
-        public static AppConfigurationKeyValueDeletedEventData AppConfigurationKeyValueDeletedEventData(string key = default, string label = default, string etag = default, string syncToken = default)
+        public static AppConfigurationKeyValueDeletedEventData AppConfigurationKeyValueDeletedEventData(string key = null, string label = null, string etag = null, string syncToken = null)
         {
-            return new AppConfigurationKeyValueDeletedEventData(key, label, etag, syncToken, additionalBinaryDataProperties: null);
+            return new AppConfigurationKeyValueDeletedEventData(key, label, etag, syncToken, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of snapshot events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AppConfigurationSnapshotEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotEventData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotEventData AppConfigurationSnapshotEventData(string name = default, string eTag = default, string syncToken = default)
+        public static AppConfigurationSnapshotEventData AppConfigurationSnapshotEventData(string name = null, string eTag = null, string syncToken = null)
         {
-            return new AppConfigurationSnapshotEventData(name, eTag, syncToken, additionalBinaryDataProperties: null);
+            return new AppConfigurationSnapshotEventData(name, eTag, syncToken, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AppConfigurationSnapshotCreatedEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotCreatedEventData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotCreatedEventData AppConfigurationSnapshotCreatedEventData(string name = default, string eTag = default, string syncToken = default)
+        public static AppConfigurationSnapshotCreatedEventData AppConfigurationSnapshotCreatedEventData(string name = null, string eTag = null, string syncToken = null)
         {
-            return new AppConfigurationSnapshotCreatedEventData(name, eTag, syncToken, additionalBinaryDataProperties: null);
+            return new AppConfigurationSnapshotCreatedEventData(name, eTag, syncToken, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotModified event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AppConfigurationSnapshotModifiedEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotModifiedEventData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotModifiedEventData AppConfigurationSnapshotModifiedEventData(string name = default, string eTag = default, string syncToken = default)
+        public static AppConfigurationSnapshotModifiedEventData AppConfigurationSnapshotModifiedEventData(string name = null, string eTag = null, string syncToken = null)
         {
-            return new AppConfigurationSnapshotModifiedEventData(name, eTag, syncToken, additionalBinaryDataProperties: null);
+            return new AppConfigurationSnapshotModifiedEventData(name, eTag, syncToken, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for Microsoft.AVS/privateClouds events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsPrivateCloudEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <returns> A new <see cref="SystemEvents.AvsPrivateCloudEventData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudEventData AvsPrivateCloudEventData(string operationId = default)
+        public static AvsPrivateCloudEventData AvsPrivateCloudEventData(string operationId = null)
         {
-            return new AvsPrivateCloudEventData(operationId, additionalBinaryDataProperties: null);
+            return new AvsPrivateCloudEventData(operationId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.PrivateCloudUpdating event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsPrivateCloudUpdatingEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <returns> A new <see cref="SystemEvents.AvsPrivateCloudUpdatingEventData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudUpdatingEventData AvsPrivateCloudUpdatingEventData(string operationId = default)
+        public static AvsPrivateCloudUpdatingEventData AvsPrivateCloudUpdatingEventData(string operationId = null)
         {
-            return new AvsPrivateCloudUpdatingEventData(operationId, additionalBinaryDataProperties: null);
+            return new AvsPrivateCloudUpdatingEventData(operationId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.PrivateCloudUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsPrivateCloudUpdatedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <returns> A new <see cref="SystemEvents.AvsPrivateCloudUpdatedEventData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudUpdatedEventData AvsPrivateCloudUpdatedEventData(string operationId = default)
+        public static AvsPrivateCloudUpdatedEventData AvsPrivateCloudUpdatedEventData(string operationId = null)
         {
-            return new AvsPrivateCloudUpdatedEventData(operationId, additionalBinaryDataProperties: null);
+            return new AvsPrivateCloudUpdatedEventData(operationId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.PrivateCloudFailed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsPrivateCloudFailedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="failureMessage"> Failure reason of an event. </param>
         /// <returns> A new <see cref="SystemEvents.AvsPrivateCloudFailedEventData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudFailedEventData AvsPrivateCloudFailedEventData(string operationId = default, string failureMessage = default)
+        public static AvsPrivateCloudFailedEventData AvsPrivateCloudFailedEventData(string operationId = null, string failureMessage = null)
         {
-            return new AvsPrivateCloudFailedEventData(operationId, additionalBinaryDataProperties: null, failureMessage);
+            return new AvsPrivateCloudFailedEventData(operationId, serializedAdditionalRawData: null, failureMessage);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for Microsoft.AVS/clusters events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
         /// <param name="removedHostNames"> Hosts removed from the cluster in this event, if any. </param>
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsClusterEventData"/> instance for mocking. </returns>
-        public static AvsClusterEventData AvsClusterEventData(string operationId = default, IEnumerable<string> addedHostNames = default, IEnumerable<string> removedHostNames = default, IEnumerable<string> inMaintenanceHostNames = default)
+        public static AvsClusterEventData AvsClusterEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
         {
-            addedHostNames ??= new ChangeTrackingList<string>();
-            removedHostNames ??= new ChangeTrackingList<string>();
-            inMaintenanceHostNames ??= new ChangeTrackingList<string>();
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
 
-            return new AvsClusterEventData(operationId, addedHostNames.ToList(), removedHostNames.ToList(), inMaintenanceHostNames.ToList(), additionalBinaryDataProperties: null);
+            return new AvsClusterEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterCreatedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
         /// <param name="removedHostNames"> Hosts removed from the cluster in this event, if any. </param>
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsClusterCreatedEventData"/> instance for mocking. </returns>
-        public static AvsClusterCreatedEventData AvsClusterCreatedEventData(string operationId = default, IEnumerable<string> addedHostNames = default, IEnumerable<string> removedHostNames = default, IEnumerable<string> inMaintenanceHostNames = default)
+        public static AvsClusterCreatedEventData AvsClusterCreatedEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
         {
-            addedHostNames ??= new ChangeTrackingList<string>();
-            removedHostNames ??= new ChangeTrackingList<string>();
-            inMaintenanceHostNames ??= new ChangeTrackingList<string>();
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
 
-            return new AvsClusterCreatedEventData(operationId, addedHostNames.ToList(), removedHostNames.ToList(), inMaintenanceHostNames.ToList(), additionalBinaryDataProperties: null);
+            return new AvsClusterCreatedEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterDeletedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
         /// <param name="removedHostNames"> Hosts removed from the cluster in this event, if any. </param>
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsClusterDeletedEventData"/> instance for mocking. </returns>
-        public static AvsClusterDeletedEventData AvsClusterDeletedEventData(string operationId = default, IEnumerable<string> addedHostNames = default, IEnumerable<string> removedHostNames = default, IEnumerable<string> inMaintenanceHostNames = default)
+        public static AvsClusterDeletedEventData AvsClusterDeletedEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
         {
-            addedHostNames ??= new ChangeTrackingList<string>();
-            removedHostNames ??= new ChangeTrackingList<string>();
-            inMaintenanceHostNames ??= new ChangeTrackingList<string>();
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
 
-            return new AvsClusterDeletedEventData(operationId, addedHostNames.ToList(), removedHostNames.ToList(), inMaintenanceHostNames.ToList(), additionalBinaryDataProperties: null);
+            return new AvsClusterDeletedEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterUpdating event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterUpdatingEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
         /// <param name="removedHostNames"> Hosts removed from the cluster in this event, if any. </param>
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsClusterUpdatingEventData"/> instance for mocking. </returns>
-        public static AvsClusterUpdatingEventData AvsClusterUpdatingEventData(string operationId = default, IEnumerable<string> addedHostNames = default, IEnumerable<string> removedHostNames = default, IEnumerable<string> inMaintenanceHostNames = default)
+        public static AvsClusterUpdatingEventData AvsClusterUpdatingEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
         {
-            addedHostNames ??= new ChangeTrackingList<string>();
-            removedHostNames ??= new ChangeTrackingList<string>();
-            inMaintenanceHostNames ??= new ChangeTrackingList<string>();
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
 
-            return new AvsClusterUpdatingEventData(operationId, addedHostNames.ToList(), removedHostNames.ToList(), inMaintenanceHostNames.ToList(), additionalBinaryDataProperties: null);
+            return new AvsClusterUpdatingEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterUpdatedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
         /// <param name="removedHostNames"> Hosts removed from the cluster in this event, if any. </param>
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsClusterUpdatedEventData"/> instance for mocking. </returns>
-        public static AvsClusterUpdatedEventData AvsClusterUpdatedEventData(string operationId = default, IEnumerable<string> addedHostNames = default, IEnumerable<string> removedHostNames = default, IEnumerable<string> inMaintenanceHostNames = default)
+        public static AvsClusterUpdatedEventData AvsClusterUpdatedEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null)
         {
-            addedHostNames ??= new ChangeTrackingList<string>();
-            removedHostNames ??= new ChangeTrackingList<string>();
-            inMaintenanceHostNames ??= new ChangeTrackingList<string>();
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
 
-            return new AvsClusterUpdatedEventData(operationId, addedHostNames.ToList(), removedHostNames.ToList(), inMaintenanceHostNames.ToList(), additionalBinaryDataProperties: null);
+            return new AvsClusterUpdatedEventData(operationId, addedHostNames?.ToList(), removedHostNames?.ToList(), inMaintenanceHostNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterFailed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsClusterFailedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
         /// <param name="removedHostNames"> Hosts removed from the cluster in this event, if any. </param>
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
         /// <param name="failureMessage"> Failure reason of an event. </param>
         /// <returns> A new <see cref="SystemEvents.AvsClusterFailedEventData"/> instance for mocking. </returns>
-        public static AvsClusterFailedEventData AvsClusterFailedEventData(string operationId = default, IEnumerable<string> addedHostNames = default, IEnumerable<string> removedHostNames = default, IEnumerable<string> inMaintenanceHostNames = default, string failureMessage = default)
+        public static AvsClusterFailedEventData AvsClusterFailedEventData(string operationId = null, IEnumerable<string> addedHostNames = null, IEnumerable<string> removedHostNames = null, IEnumerable<string> inMaintenanceHostNames = null, string failureMessage = null)
         {
-            addedHostNames ??= new ChangeTrackingList<string>();
-            removedHostNames ??= new ChangeTrackingList<string>();
-            inMaintenanceHostNames ??= new ChangeTrackingList<string>();
+            addedHostNames ??= new List<string>();
+            removedHostNames ??= new List<string>();
+            inMaintenanceHostNames ??= new List<string>();
 
             return new AvsClusterFailedEventData(
                 operationId,
-                addedHostNames.ToList(),
-                removedHostNames.ToList(),
-                inMaintenanceHostNames.ToList(),
-                additionalBinaryDataProperties: null,
+                addedHostNames?.ToList(),
+                removedHostNames?.ToList(),
+                inMaintenanceHostNames?.ToList(),
+                serializedAdditionalRawData: null,
                 failureMessage);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for Microsoft.AVS/scriptExecutions events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionEventData"/> instance for mocking. </returns>
-        public static AvsScriptExecutionEventData AvsScriptExecutionEventData(string operationId = default, string cmdletId = default, IEnumerable<string> output = default)
+        public static AvsScriptExecutionEventData AvsScriptExecutionEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null)
         {
-            output ??= new ChangeTrackingList<string>();
+            output ??= new List<string>();
 
-            return new AvsScriptExecutionEventData(operationId, cmdletId, output.ToList(), additionalBinaryDataProperties: null);
+            return new AvsScriptExecutionEventData(operationId, cmdletId, output?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ScriptExecutionStarted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionStartedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionStartedEventData"/> instance for mocking. </returns>
-        public static AvsScriptExecutionStartedEventData AvsScriptExecutionStartedEventData(string operationId = default, string cmdletId = default, IEnumerable<string> output = default)
+        public static AvsScriptExecutionStartedEventData AvsScriptExecutionStartedEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null)
         {
-            output ??= new ChangeTrackingList<string>();
+            output ??= new List<string>();
 
-            return new AvsScriptExecutionStartedEventData(operationId, cmdletId, output.ToList(), additionalBinaryDataProperties: null);
+            return new AvsScriptExecutionStartedEventData(operationId, cmdletId, output?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ScriptExecutionFinished event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionFinishedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <param name="namedOutputs"> Named outputs of completed execution, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionFinishedEventData"/> instance for mocking. </returns>
-        public static AvsScriptExecutionFinishedEventData AvsScriptExecutionFinishedEventData(string operationId = default, string cmdletId = default, IEnumerable<string> output = default, IDictionary<string, string> namedOutputs = default)
+        public static AvsScriptExecutionFinishedEventData AvsScriptExecutionFinishedEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null, IReadOnlyDictionary<string, string> namedOutputs = null)
         {
-            output ??= new ChangeTrackingList<string>();
-            namedOutputs ??= new ChangeTrackingDictionary<string, string>();
+            output ??= new List<string>();
+            namedOutputs ??= new Dictionary<string, string>();
 
-            return new AvsScriptExecutionFinishedEventData(operationId, cmdletId, output.ToList(), additionalBinaryDataProperties: null, namedOutputs);
+            return new AvsScriptExecutionFinishedEventData(operationId, cmdletId, output?.ToList(), serializedAdditionalRawData: null, namedOutputs);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ScriptExecutionCancelled event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionCancelledEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionCancelledEventData"/> instance for mocking. </returns>
-        public static AvsScriptExecutionCancelledEventData AvsScriptExecutionCancelledEventData(string operationId = default, string cmdletId = default, IEnumerable<string> output = default)
+        public static AvsScriptExecutionCancelledEventData AvsScriptExecutionCancelledEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null)
         {
-            output ??= new ChangeTrackingList<string>();
+            output ??= new List<string>();
 
-            return new AvsScriptExecutionCancelledEventData(operationId, cmdletId, output.ToList(), additionalBinaryDataProperties: null);
+            return new AvsScriptExecutionCancelledEventData(operationId, cmdletId, output?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ScriptExecutionFailed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsScriptExecutionFailedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <param name="failureMessage"> Failure reason of an event. </param>
         /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionFailedEventData"/> instance for mocking. </returns>
-        public static AvsScriptExecutionFailedEventData AvsScriptExecutionFailedEventData(string operationId = default, string cmdletId = default, IEnumerable<string> output = default, string failureMessage = default)
+        public static AvsScriptExecutionFailedEventData AvsScriptExecutionFailedEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null, string failureMessage = null)
         {
-            output ??= new ChangeTrackingList<string>();
+            output ??= new List<string>();
 
-            return new AvsScriptExecutionFailedEventData(operationId, cmdletId, output.ToList(), additionalBinaryDataProperties: null, failureMessage);
+            return new AvsScriptExecutionFailedEventData(operationId, cmdletId, output?.ToList(), serializedAdditionalRawData: null, failureMessage);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.IncomingCall event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsIncomingCallEventData"/>. </summary>
         /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
         /// <param name="serverCallId"> The Id of the server call. </param>
@@ -579,7 +578,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
         /// <returns> A new <see cref="SystemEvents.AcsIncomingCallEventData"/> instance for mocking. </returns>
-        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier = default, CommunicationIdentifierModel fromCommunicationIdentifier = default, string serverCallId = default, string callerDisplayName = default, AcsIncomingCallCustomContext customContext = default, string incomingCallContext = default, CommunicationIdentifierModel onBehalfOfCallee = default, string correlationId = default)
+        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier = null, CommunicationIdentifierModel fromCommunicationIdentifier = null, string serverCallId = null, string callerDisplayName = null, AcsIncomingCallCustomContext customContext = null, string incomingCallContext = null, CommunicationIdentifierModel onBehalfOfCallee = null, string correlationId = null)
         {
             return new AcsIncomingCallEventData(
                 toCommunicationIdentifier,
@@ -590,10 +589,10 @@ namespace Azure.Messaging.EventGrid
                 incomingCallContext,
                 onBehalfOfCallee,
                 correlationId,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.CommunicationIdentifierModel"/>. </summary>
         /// <param name="kind"> The identifier kind. Only required in responses. </param>
         /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <param name="communicationUser"> The communication user. </param>
@@ -601,7 +600,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <returns> A new <see cref="SystemEvents.CommunicationIdentifierModel"/> instance for mocking. </returns>
-        public static CommunicationIdentifierModel CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind = default, string rawId = default, CommunicationUserIdentifierModel communicationUser = default, PhoneNumberIdentifierModel phoneNumber = default, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp = default)
+        public static CommunicationIdentifierModel CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp = null)
         {
             return new CommunicationIdentifierModel(
                 kind,
@@ -610,65 +609,65 @@ namespace Azure.Messaging.EventGrid
                 phoneNumber,
                 microsoftTeamsUser,
                 microsoftTeamsApp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.CommunicationUserIdentifierModel"/>. </summary>
         /// <param name="id"> The Id of the communication user. </param>
         /// <returns> A new <see cref="SystemEvents.CommunicationUserIdentifierModel"/> instance for mocking. </returns>
-        public static CommunicationUserIdentifierModel CommunicationUserIdentifierModel(string id = default)
+        public static CommunicationUserIdentifierModel CommunicationUserIdentifierModel(string id = null)
         {
-            return new CommunicationUserIdentifierModel(id, additionalBinaryDataProperties: null);
+            return new CommunicationUserIdentifierModel(id, serializedAdditionalRawData: null);
         }
 
-        /// <summary> A phone number. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.PhoneNumberIdentifierModel"/>. </summary>
         /// <param name="value"> The phone number in E.164 format. </param>
         /// <returns> A new <see cref="SystemEvents.PhoneNumberIdentifierModel"/> instance for mocking. </returns>
-        public static PhoneNumberIdentifierModel PhoneNumberIdentifierModel(string value = default)
+        public static PhoneNumberIdentifierModel PhoneNumberIdentifierModel(string value = null)
         {
-            return new PhoneNumberIdentifierModel(value, additionalBinaryDataProperties: null);
+            return new PhoneNumberIdentifierModel(value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> A Microsoft Teams user. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MicrosoftTeamsUserIdentifierModel"/>. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
         /// <param name="isAnonymous"> True if the Microsoft Teams user is anonymous. By default false if missing. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </param>
         /// <returns> A new <see cref="SystemEvents.MicrosoftTeamsUserIdentifierModel"/> instance for mocking. </returns>
-        public static MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUserIdentifierModel(string userId = default, bool? isAnonymous = default, CommunicationCloudEnvironmentModel? cloud = default)
+        public static MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUserIdentifierModel(string userId = null, bool? isAnonymous = null, CommunicationCloudEnvironmentModel? cloud = null)
         {
-            return new MicrosoftTeamsUserIdentifierModel(userId, isAnonymous, cloud, additionalBinaryDataProperties: null);
+            return new MicrosoftTeamsUserIdentifierModel(userId, isAnonymous, cloud, serializedAdditionalRawData: null);
         }
 
-        /// <summary> A Microsoft Teams application. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMicrosoftTeamsAppIdentifier"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMicrosoftTeamsAppIdentifier"/> instance for mocking. </returns>
-        public static AcsMicrosoftTeamsAppIdentifier AcsMicrosoftTeamsAppIdentifier(string appId = default, CommunicationCloudEnvironmentModel? cloud = default)
+        public static AcsMicrosoftTeamsAppIdentifier AcsMicrosoftTeamsAppIdentifier(string appId = null, CommunicationCloudEnvironmentModel? cloud = null)
         {
-            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud, additionalBinaryDataProperties: null);
+            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Custom Context of Incoming Call. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsIncomingCallCustomContext"/>. </summary>
         /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
         /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
         /// <returns> A new <see cref="SystemEvents.AcsIncomingCallCustomContext"/> instance for mocking. </returns>
-        public static AcsIncomingCallCustomContext AcsIncomingCallCustomContext(IDictionary<string, string> sipHeaders = default, IDictionary<string, string> voipHeaders = default)
+        public static AcsIncomingCallCustomContext AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders = null, IReadOnlyDictionary<string, string> voipHeaders = null)
         {
-            sipHeaders ??= new ChangeTrackingDictionary<string, string>();
-            voipHeaders ??= new ChangeTrackingDictionary<string, string>();
+            sipHeaders ??= new Dictionary<string, string>();
+            voipHeaders ??= new Dictionary<string, string>();
 
-            return new AcsIncomingCallCustomContext(sipHeaders, voipHeaders, additionalBinaryDataProperties: null);
+            return new AcsIncomingCallCustomContext(sipHeaders, voipHeaders, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.UserDisconnected event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsUserDisconnectedEventData"/>. </summary>
         /// <param name="userCommunicationIdentifier"> The communication identifier of the user who was disconnected. </param>
         /// <returns> A new <see cref="SystemEvents.AcsUserDisconnectedEventData"/> instance for mocking. </returns>
-        public static AcsUserDisconnectedEventData AcsUserDisconnectedEventData(CommunicationIdentifierModel userCommunicationIdentifier = default)
+        public static AcsUserDisconnectedEventData AcsUserDisconnectedEventData(CommunicationIdentifierModel userCommunicationIdentifier = null)
         {
-            return new AcsUserDisconnectedEventData(userCommunicationIdentifier, additionalBinaryDataProperties: null);
+            return new AcsUserDisconnectedEventData(userCommunicationIdentifier, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of all calling events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallingEventProperties"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="group"> The group metadata. </param>
@@ -677,45 +676,45 @@ namespace Azure.Messaging.EventGrid
         /// <param name="correlationId"> The correlationId of calling event. </param>
         /// <param name="isRoomsCall"> Is the calling event a room call. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallingEventProperties"/> instance for mocking. </returns>
-        public static AcsCallingEventProperties AcsCallingEventProperties(AcsCallParticipantProperties startedBy = default, string serverCallId = default, AcsCallGroupProperties @group = default, AcsCallRoomProperties room = default, bool? isTwoParty = default, string correlationId = default, bool? isRoomsCall = default)
+        public static AcsCallingEventProperties AcsCallingEventProperties(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null)
         {
             return new AcsCallingEventProperties(
                 startedBy,
                 serverCallId,
-                @group,
+                group,
                 room,
                 isTwoParty,
                 correlationId,
                 isRoomsCall,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of all participant event user. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallParticipantProperties"/>. </summary>
         /// <param name="communicationIdentifier"> The communication identifier of the participant user. </param>
         /// <param name="role"> The role of the participant. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallParticipantProperties"/> instance for mocking. </returns>
-        public static AcsCallParticipantProperties AcsCallParticipantProperties(CommunicationIdentifierModel communicationIdentifier = default, AcsCallParticipantKind? role = default)
+        public static AcsCallParticipantProperties AcsCallParticipantProperties(CommunicationIdentifierModel communicationIdentifier = null, AcsCallParticipantKind? role = null)
         {
-            return new AcsCallParticipantProperties(communicationIdentifier, role, additionalBinaryDataProperties: null);
+            return new AcsCallParticipantProperties(communicationIdentifier, role, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of calling event group properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallGroupProperties"/>. </summary>
         /// <param name="id"> Group Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallGroupProperties"/> instance for mocking. </returns>
-        public static AcsCallGroupProperties AcsCallGroupProperties(string id = default)
+        public static AcsCallGroupProperties AcsCallGroupProperties(string id = null)
         {
-            return new AcsCallGroupProperties(id, additionalBinaryDataProperties: null);
+            return new AcsCallGroupProperties(id, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of calling event room properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallRoomProperties"/>. </summary>
         /// <param name="id"> Room Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallRoomProperties"/> instance for mocking. </returns>
-        public static AcsCallRoomProperties AcsCallRoomProperties(string id = default)
+        public static AcsCallRoomProperties AcsCallRoomProperties(string id = null)
         {
-            return new AcsCallRoomProperties(id, additionalBinaryDataProperties: null);
+            return new AcsCallRoomProperties(id, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.CallStarted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallStartedEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="group"> The group metadata. </param>
@@ -724,20 +723,20 @@ namespace Azure.Messaging.EventGrid
         /// <param name="correlationId"> The correlationId of calling event. </param>
         /// <param name="isRoomsCall"> Is the calling event a room call. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallStartedEventData"/> instance for mocking. </returns>
-        public static AcsCallStartedEventData AcsCallStartedEventData(AcsCallParticipantProperties startedBy = default, string serverCallId = default, AcsCallGroupProperties @group = default, AcsCallRoomProperties room = default, bool? isTwoParty = default, string correlationId = default, bool? isRoomsCall = default)
+        public static AcsCallStartedEventData AcsCallStartedEventData(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null)
         {
             return new AcsCallStartedEventData(
                 startedBy,
                 serverCallId,
-                @group,
+                group,
                 room,
                 isTwoParty,
                 correlationId,
                 isRoomsCall,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.CallEnded event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallEndedEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="group"> The group metadata. </param>
@@ -747,45 +746,45 @@ namespace Azure.Messaging.EventGrid
         /// <param name="isRoomsCall"> Is the calling event a room call. </param>
         /// <param name="endedBy"> The communication identifier of the user who was disconnected. </param>
         /// <param name="reason"> The reason for ending the call. </param>
-        /// <param name="callDuration"> Duration of the call. </param>
+        /// <param name="callDuration"> Duration of the call in seconds. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallEndedEventData"/> instance for mocking. </returns>
-        public static AcsCallEndedEventData AcsCallEndedEventData(AcsCallParticipantProperties startedBy = default, string serverCallId = default, AcsCallGroupProperties @group = default, AcsCallRoomProperties room = default, bool? isTwoParty = default, string correlationId = default, bool? isRoomsCall = default, AcsCallEndedByProperties endedBy = default, AcsCallEndReasonProperties reason = default, TimeSpan? callDuration = default)
+        public static AcsCallEndedEventData AcsCallEndedEventData(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null, AcsCallEndedByProperties endedBy = null, AcsCallEndReasonProperties reason = null, TimeSpan? callDuration = null)
         {
             return new AcsCallEndedEventData(
                 startedBy,
                 serverCallId,
-                @group,
+                group,
                 room,
                 isTwoParty,
                 correlationId,
                 isRoomsCall,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 endedBy,
                 reason,
                 callDuration);
         }
 
-        /// <summary> Schema of calling event ended by properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallEndedByProperties"/>. </summary>
         /// <param name="communicationIdentifier"> The communication identifier of the call ended by. </param>
         /// <param name="kind"> The type of call ended by. </param>
         /// <param name="name"> The name of the call ended by. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallEndedByProperties"/> instance for mocking. </returns>
-        public static AcsCallEndedByProperties AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier = default, AcsCallEndedByKind? kind = default, string name = default)
+        public static AcsCallEndedByProperties AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier = null, AcsCallEndedByKind? kind = null, string name = null)
         {
-            return new AcsCallEndedByProperties(communicationIdentifier, kind, name, additionalBinaryDataProperties: null);
+            return new AcsCallEndedByProperties(communicationIdentifier, kind, name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of calling event reason properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallEndReasonProperties"/>. </summary>
         /// <param name="code"> Reason code for ending the call. </param>
         /// <param name="subCode"> Reason subcode for ending the call. </param>
         /// <param name="phrase"> Reason for the ending the call. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallEndReasonProperties"/> instance for mocking. </returns>
-        public static AcsCallEndReasonProperties AcsCallEndReasonProperties(int? code = default, int? subCode = default, string phrase = default)
+        public static AcsCallEndReasonProperties AcsCallEndReasonProperties(int? code = null, int? subCode = null, string phrase = null)
         {
-            return new AcsCallEndReasonProperties(code, subCode, phrase, additionalBinaryDataProperties: null);
+            return new AcsCallEndReasonProperties(code, subCode, phrase, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of all participant events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallParticipantEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="group"> The group metadata. </param>
@@ -798,24 +797,24 @@ namespace Azure.Messaging.EventGrid
         /// <param name="participantId"> The id of the participant. </param>
         /// <param name="userAgent"> The user agent of the participant. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallParticipantEventData"/> instance for mocking. </returns>
-        public static AcsCallParticipantEventData AcsCallParticipantEventData(AcsCallParticipantProperties startedBy = default, string serverCallId = default, AcsCallGroupProperties @group = default, AcsCallRoomProperties room = default, bool? isTwoParty = default, string correlationId = default, bool? isRoomsCall = default, AcsCallParticipantProperties user = default, string displayName = default, string participantId = default, string userAgent = default)
+        public static AcsCallParticipantEventData AcsCallParticipantEventData(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null, AcsCallParticipantProperties user = null, string displayName = null, string participantId = null, string userAgent = null)
         {
             return new AcsCallParticipantEventData(
                 startedBy,
                 serverCallId,
-                @group,
+                group,
                 room,
                 isTwoParty,
                 correlationId,
                 isRoomsCall,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 user,
                 displayName,
                 participantId,
                 userAgent);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.CallParticipantAdded event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallParticipantAddedEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="group"> The group metadata. </param>
@@ -828,24 +827,24 @@ namespace Azure.Messaging.EventGrid
         /// <param name="participantId"> The id of the participant. </param>
         /// <param name="userAgent"> The user agent of the participant. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallParticipantAddedEventData"/> instance for mocking. </returns>
-        public static AcsCallParticipantAddedEventData AcsCallParticipantAddedEventData(AcsCallParticipantProperties startedBy = default, string serverCallId = default, AcsCallGroupProperties @group = default, AcsCallRoomProperties room = default, bool? isTwoParty = default, string correlationId = default, bool? isRoomsCall = default, AcsCallParticipantProperties user = default, string displayName = default, string participantId = default, string userAgent = default)
+        public static AcsCallParticipantAddedEventData AcsCallParticipantAddedEventData(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null, AcsCallParticipantProperties user = null, string displayName = null, string participantId = null, string userAgent = null)
         {
             return new AcsCallParticipantAddedEventData(
                 startedBy,
                 serverCallId,
-                @group,
+                group,
                 room,
                 isTwoParty,
                 correlationId,
                 isRoomsCall,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 user,
                 displayName,
                 participantId,
                 userAgent);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.CallParticipantRemoved event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallParticipantRemovedEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="group"> The group metadata. </param>
@@ -858,43 +857,43 @@ namespace Azure.Messaging.EventGrid
         /// <param name="participantId"> The id of the participant. </param>
         /// <param name="userAgent"> The user agent of the participant. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallParticipantRemovedEventData"/> instance for mocking. </returns>
-        public static AcsCallParticipantRemovedEventData AcsCallParticipantRemovedEventData(AcsCallParticipantProperties startedBy = default, string serverCallId = default, AcsCallGroupProperties @group = default, AcsCallRoomProperties room = default, bool? isTwoParty = default, string correlationId = default, bool? isRoomsCall = default, AcsCallParticipantProperties user = default, string displayName = default, string participantId = default, string userAgent = default)
+        public static AcsCallParticipantRemovedEventData AcsCallParticipantRemovedEventData(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null, AcsCallParticipantProperties user = null, string displayName = null, string participantId = null, string userAgent = null)
         {
             return new AcsCallParticipantRemovedEventData(
                 startedBy,
                 serverCallId,
-                @group,
+                group,
                 room,
                 isTwoParty,
                 correlationId,
                 isRoomsCall,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 user,
                 displayName,
                 participantId,
                 userAgent);
         }
 
-        /// <summary> Schema of common properties of all chat events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatEventBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatEventBaseProperties AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default)
+        public static AcsChatEventBaseProperties AcsChatEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null)
         {
-            return new AcsChatEventBaseProperties(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties: null);
+            return new AcsChatEventBaseProperties(recipientCommunicationIdentifier, transactionId, threadId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of all thread-level chat events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatEventInThreadBaseProperties"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatEventInThreadBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatEventInThreadBaseProperties AcsChatEventInThreadBaseProperties(string transactionId = default, string threadId = default)
+        public static AcsChatEventInThreadBaseProperties AcsChatEventInThreadBaseProperties(string transactionId = null, string threadId = null)
         {
-            return new AcsChatEventInThreadBaseProperties(transactionId, threadId, additionalBinaryDataProperties: null);
+            return new AcsChatEventInThreadBaseProperties(transactionId, threadId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of all chat message events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -905,22 +904,22 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEventBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatMessageEventBaseProperties AcsChatMessageEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default)
+        public static AcsChatMessageEventBaseProperties AcsChatMessageEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null)
         {
             return new AcsChatMessageEventBaseProperties(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageReceived event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageReceivedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -933,26 +932,26 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default)
+        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            metadata ??= new Dictionary<string, string>();
 
             return new AcsChatMessageReceivedEventData(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version,
                 messageBody,
                 metadata);
         }
 
-        /// <summary> Schema of common properties of all thread-level chat message events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageEventInThreadBaseProperties"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>
@@ -962,21 +961,21 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEventInThreadBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatMessageEventInThreadBaseProperties AcsChatMessageEventInThreadBaseProperties(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default)
+        public static AcsChatMessageEventInThreadBaseProperties AcsChatMessageEventInThreadBaseProperties(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null)
         {
             return new AcsChatMessageEventInThreadBaseProperties(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatAzureBotCommandReceivedInThread event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatAzureBotCommandReceivedInThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>
@@ -988,25 +987,25 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatAzureBotCommandReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatAzureBotCommandReceivedInThreadEventData AcsChatAzureBotCommandReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default)
+        public static AcsChatAzureBotCommandReceivedInThreadEventData AcsChatAzureBotCommandReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            metadata ??= new Dictionary<string, string>();
 
             return new AcsChatAzureBotCommandReceivedInThreadEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version,
                 messageBody,
                 metadata);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatTypingIndicatorReceivedInThread event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatTypingIndicatorReceivedInThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>
@@ -1018,25 +1017,25 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatTypingIndicatorReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatTypingIndicatorReceivedInThreadEventData AcsChatTypingIndicatorReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default)
+        public static AcsChatTypingIndicatorReceivedInThreadEventData AcsChatTypingIndicatorReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            metadata ??= new Dictionary<string, string>();
 
             return new AcsChatTypingIndicatorReceivedInThreadEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version,
                 messageBody,
                 metadata);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageReceivedInThread event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>
@@ -1048,25 +1047,25 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default)
+        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            metadata ??= new Dictionary<string, string>();
 
             return new AcsChatMessageReceivedInThreadEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version,
                 messageBody,
                 metadata);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageEdited event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageEditedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -1080,27 +1079,27 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
+        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null, DateTimeOffset? editTime = null)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            metadata ??= new Dictionary<string, string>();
 
             return new AcsChatMessageEditedEventData(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version,
                 messageBody,
                 metadata,
                 editTime);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageEditedInThread event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>
@@ -1113,26 +1112,26 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, string messageBody = default, IDictionary<string, string> metadata = default, DateTimeOffset? editTime = default)
+        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null, DateTimeOffset? editTime = null)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            metadata ??= new Dictionary<string, string>();
 
             return new AcsChatMessageEditedInThreadEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version,
                 messageBody,
                 metadata,
                 editTime);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageDeletedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -1144,23 +1143,23 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> The version of the message. </param>
         /// <param name="deleteTime"> The time at which the message was deleted. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageDeletedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageDeletedEventData AcsChatMessageDeletedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, DateTimeOffset? deleteTime = default)
+        public static AcsChatMessageDeletedEventData AcsChatMessageDeletedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, DateTimeOffset? deleteTime = null)
         {
             return new AcsChatMessageDeletedEventData(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version,
                 deleteTime);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageDeletedInThread event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageDeletedInThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>
@@ -1171,121 +1170,121 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> The version of the message. </param>
         /// <param name="deleteTime"> The time at which the message was deleted. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageDeletedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageDeletedInThreadEventData AcsChatMessageDeletedInThreadEventData(string transactionId = default, string threadId = default, string messageId = default, CommunicationIdentifierModel senderCommunicationIdentifier = default, string senderDisplayName = default, DateTimeOffset? composeTime = default, string @type = default, long? version = default, DateTimeOffset? deleteTime = default)
+        public static AcsChatMessageDeletedInThreadEventData AcsChatMessageDeletedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, DateTimeOffset? deleteTime = null)
         {
             return new AcsChatMessageDeletedInThreadEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                @type,
+                type,
                 version,
                 deleteTime);
         }
 
-        /// <summary> Schema of common properties of all chat thread events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadEventBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatThreadEventBaseProperties AcsChatThreadEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default)
+        public static AcsChatThreadEventBaseProperties AcsChatThreadEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null)
         {
             return new AcsChatThreadEventBaseProperties(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 createTime,
                 version);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadCreatedWithUser event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> Gets the properties of the chat thread created with user event. </param>
+        /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default)
+        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, object> properties = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
         {
-            properties ??= new ChangeTrackingDictionary<string, object>();
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-            participants ??= new ChangeTrackingList<AcsChatThreadParticipantProperties>();
+            properties ??= new Dictionary<string, object>();
+            metadata ??= new Dictionary<string, string>();
+            participants ??= new List<AcsChatThreadParticipantProperties>();
 
             return new AcsChatThreadCreatedWithUserEventData(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 createTime,
                 version,
                 createdByCommunicationIdentifier,
                 properties,
                 metadata,
-                participants.ToList());
+                participants?.ToList());
         }
 
-        /// <summary> Schema of the chat thread participant. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadParticipantProperties"/>. </summary>
         /// <param name="displayName"> The name of the user. </param>
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
         /// <param name="metadata"> The metadata of the user. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadParticipantProperties"/> instance for mocking. </returns>
-        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName = default, CommunicationIdentifierModel participantCommunicationIdentifier = default, IDictionary<string, string> metadata = default)
+        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName = null, CommunicationIdentifierModel participantCommunicationIdentifier = null, IReadOnlyDictionary<string, string> metadata = null)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            metadata ??= new Dictionary<string, string>();
 
-            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata, additionalBinaryDataProperties: null);
+            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of all chat thread events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadEventInThreadBaseProperties"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadEventInThreadBaseProperties"/> instance for mocking. </returns>
-        public static AcsChatThreadEventInThreadBaseProperties AcsChatThreadEventInThreadBaseProperties(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default)
+        public static AcsChatThreadEventInThreadBaseProperties AcsChatThreadEventInThreadBaseProperties(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null)
         {
-            return new AcsChatThreadEventInThreadBaseProperties(transactionId, threadId, additionalBinaryDataProperties: null, createTime, version);
+            return new AcsChatThreadEventInThreadBaseProperties(transactionId, threadId, serializedAdditionalRawData: null, createTime, version);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadCreatedEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> Gets the properties of the chat thread created event. </param>
+        /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel createdByCommunicationIdentifier = default, IReadOnlyDictionary<string, object> properties = default, IDictionary<string, string> metadata = default, IEnumerable<AcsChatThreadParticipantProperties> participants = default)
+        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, object> properties = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
         {
-            properties ??= new ChangeTrackingDictionary<string, object>();
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-            participants ??= new ChangeTrackingList<AcsChatThreadParticipantProperties>();
+            properties ??= new Dictionary<string, object>();
+            metadata ??= new Dictionary<string, string>();
+            participants ??= new List<AcsChatThreadParticipantProperties>();
 
             return new AcsChatThreadCreatedEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 createTime,
                 version,
                 createdByCommunicationIdentifier,
                 properties,
                 metadata,
-                participants.ToList());
+                participants?.ToList());
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadWithUserDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadWithUserDeletedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -1294,20 +1293,20 @@ namespace Azure.Messaging.EventGrid
         /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
         /// <param name="deleteTime"> The deletion time of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadWithUserDeletedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadWithUserDeletedEventData AcsChatThreadWithUserDeletedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel deletedByCommunicationIdentifier = default, DateTimeOffset? deleteTime = default)
+        public static AcsChatThreadWithUserDeletedEventData AcsChatThreadWithUserDeletedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel deletedByCommunicationIdentifier = null, DateTimeOffset? deleteTime = null)
         {
             return new AcsChatThreadWithUserDeletedEventData(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 createTime,
                 version,
                 deletedByCommunicationIdentifier,
                 deleteTime);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadDeletedEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
@@ -1315,19 +1314,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
         /// <param name="deleteTime"> The deletion time of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadDeletedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadDeletedEventData AcsChatThreadDeletedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel deletedByCommunicationIdentifier = default, DateTimeOffset? deleteTime = default)
+        public static AcsChatThreadDeletedEventData AcsChatThreadDeletedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel deletedByCommunicationIdentifier = null, DateTimeOffset? deleteTime = null)
         {
             return new AcsChatThreadDeletedEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 createTime,
                 version,
                 deletedByCommunicationIdentifier,
                 deleteTime);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -1336,18 +1335,18 @@ namespace Azure.Messaging.EventGrid
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="metadata"> The thread metadata. </param>
-        /// <param name="properties"> The properties of the chat thread that were updated for the user. </param>
+        /// <param name="properties"> The updated thread properties. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IDictionary<string, string> metadata = default, IReadOnlyDictionary<string, object> properties = default)
+        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, string> metadata = null, IReadOnlyDictionary<string, object> properties = null)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-            properties ??= new ChangeTrackingDictionary<string, object>();
+            metadata ??= new Dictionary<string, string>();
+            properties ??= new Dictionary<string, object>();
 
             return new AcsChatThreadPropertiesUpdatedPerUserEventData(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 createTime,
                 version,
                 editedByCommunicationIdentifier,
@@ -1356,25 +1355,25 @@ namespace Azure.Messaging.EventGrid
                 properties);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadPropertiesUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
-        /// <param name="properties"> Gets the properties of the chat thread updated event. </param>
+        /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, object> properties = default, IDictionary<string, string> metadata = default)
+        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, object> properties = null, IReadOnlyDictionary<string, string> metadata = null)
         {
-            properties ??= new ChangeTrackingDictionary<string, object>();
-            metadata ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new Dictionary<string, object>();
+            metadata ??= new Dictionary<string, string>();
 
             return new AcsChatThreadPropertiesUpdatedEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 createTime,
                 version,
                 editedByCommunicationIdentifier,
@@ -1383,7 +1382,7 @@ namespace Azure.Messaging.EventGrid
                 metadata);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatParticipantAddedToThreadWithUser event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatParticipantAddedToThreadWithUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -1393,13 +1392,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
         /// <param name="participantAdded"> The details of the user who was added. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatParticipantAddedToThreadWithUserEventData"/> instance for mocking. </returns>
-        public static AcsChatParticipantAddedToThreadWithUserEventData AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, DateTimeOffset? time = default, CommunicationIdentifierModel addedByCommunicationIdentifier = default, AcsChatThreadParticipantProperties participantAdded = default)
+        public static AcsChatParticipantAddedToThreadWithUserEventData AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, DateTimeOffset? time = null, CommunicationIdentifierModel addedByCommunicationIdentifier = null, AcsChatThreadParticipantProperties participantAdded = null)
         {
             return new AcsChatParticipantAddedToThreadWithUserEventData(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 createTime,
                 version,
                 time,
@@ -1407,7 +1406,7 @@ namespace Azure.Messaging.EventGrid
                 participantAdded);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatParticipantRemovedFromThreadWithUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -1417,13 +1416,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="removedByCommunicationIdentifier"> The communication identifier of the user who removed the user. </param>
         /// <param name="participantRemoved"> The details of the user who was removed. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatParticipantRemovedFromThreadWithUserEventData"/> instance for mocking. </returns>
-        public static AcsChatParticipantRemovedFromThreadWithUserEventData AcsChatParticipantRemovedFromThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, DateTimeOffset? time = default, CommunicationIdentifierModel removedByCommunicationIdentifier = default, AcsChatThreadParticipantProperties participantRemoved = default)
+        public static AcsChatParticipantRemovedFromThreadWithUserEventData AcsChatParticipantRemovedFromThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, DateTimeOffset? time = null, CommunicationIdentifierModel removedByCommunicationIdentifier = null, AcsChatThreadParticipantProperties participantRemoved = null)
         {
             return new AcsChatParticipantRemovedFromThreadWithUserEventData(
                 recipientCommunicationIdentifier,
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 createTime,
                 version,
                 time,
@@ -1431,7 +1430,7 @@ namespace Azure.Messaging.EventGrid
                 participantRemoved);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadParticipantAdded event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatParticipantAddedToThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="time"> The time at which the user was added to the thread. </param>
@@ -1439,19 +1438,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="participantAdded"> The details of the user who was added. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatParticipantAddedToThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatParticipantAddedToThreadEventData AcsChatParticipantAddedToThreadEventData(string transactionId = default, string threadId = default, DateTimeOffset? time = default, CommunicationIdentifierModel addedByCommunicationIdentifier = default, AcsChatThreadParticipantProperties participantAdded = default, long? version = default)
+        public static AcsChatParticipantAddedToThreadEventData AcsChatParticipantAddedToThreadEventData(string transactionId = null, string threadId = null, DateTimeOffset? time = null, CommunicationIdentifierModel addedByCommunicationIdentifier = null, AcsChatThreadParticipantProperties participantAdded = null, long? version = null)
         {
             return new AcsChatParticipantAddedToThreadEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 time,
                 addedByCommunicationIdentifier,
                 participantAdded,
                 version);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadParticipantRemoved event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatParticipantRemovedFromThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="time"> The time at which the user was removed to the thread. </param>
@@ -1459,29 +1458,29 @@ namespace Azure.Messaging.EventGrid
         /// <param name="participantRemoved"> The details of the user who was removed. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatParticipantRemovedFromThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatParticipantRemovedFromThreadEventData AcsChatParticipantRemovedFromThreadEventData(string transactionId = default, string threadId = default, DateTimeOffset? time = default, CommunicationIdentifierModel removedByCommunicationIdentifier = default, AcsChatThreadParticipantProperties participantRemoved = default, long? version = default)
+        public static AcsChatParticipantRemovedFromThreadEventData AcsChatParticipantRemovedFromThreadEventData(string transactionId = null, string threadId = null, DateTimeOffset? time = null, CommunicationIdentifierModel removedByCommunicationIdentifier = null, AcsChatThreadParticipantProperties participantRemoved = null, long? version = null)
         {
             return new AcsChatParticipantRemovedFromThreadEventData(
                 transactionId,
                 threadId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 time,
                 removedByCommunicationIdentifier,
                 participantRemoved,
                 version);
         }
 
-        /// <summary> Schema of common properties of all SMS events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsSmsEventBaseProperties"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
         /// <returns> A new <see cref="SystemEvents.AcsSmsEventBaseProperties"/> instance for mocking. </returns>
-        public static AcsSmsEventBaseProperties AcsSmsEventBaseProperties(string messageId = default, string @from = default, string to = default)
+        public static AcsSmsEventBaseProperties AcsSmsEventBaseProperties(string messageId = null, string @from = null, string to = null)
         {
-            return new AcsSmsEventBaseProperties(messageId, @from, to, additionalBinaryDataProperties: null);
+            return new AcsSmsEventBaseProperties(messageId, @from, to, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSDeliveryReportReceived event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsSmsDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
@@ -1491,33 +1490,33 @@ namespace Azure.Messaging.EventGrid
         /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
         /// <param name="tag"> Customer Content. </param>
         /// <returns> A new <see cref="SystemEvents.AcsSmsDeliveryReportReceivedEventData"/> instance for mocking. </returns>
-        public static AcsSmsDeliveryReportReceivedEventData AcsSmsDeliveryReportReceivedEventData(string messageId = default, string @from = default, string to = default, string deliveryStatus = default, string deliveryStatusDetails = default, IEnumerable<AcsSmsDeliveryAttemptProperties> deliveryAttempts = default, DateTimeOffset? receivedTimestamp = default, string tag = default)
+        public static AcsSmsDeliveryReportReceivedEventData AcsSmsDeliveryReportReceivedEventData(string messageId = null, string @from = null, string to = null, string deliveryStatus = null, string deliveryStatusDetails = null, IEnumerable<AcsSmsDeliveryAttemptProperties> deliveryAttempts = null, DateTimeOffset? receivedTimestamp = null, string tag = null)
         {
-            deliveryAttempts ??= new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>();
+            deliveryAttempts ??= new List<AcsSmsDeliveryAttemptProperties>();
 
             return new AcsSmsDeliveryReportReceivedEventData(
                 messageId,
                 @from,
                 to,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 deliveryStatus,
                 deliveryStatusDetails,
-                deliveryAttempts.ToList(),
+                deliveryAttempts?.ToList(),
                 receivedTimestamp,
                 tag);
         }
 
-        /// <summary> Schema for details of a delivery attempt. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsSmsDeliveryAttemptProperties"/>. </summary>
         /// <param name="timestamp"> TimeStamp when delivery was attempted. </param>
         /// <param name="segmentsSucceeded"> Number of segments that were successfully delivered. </param>
         /// <param name="segmentsFailed"> Number of segments whose delivery failed. </param>
         /// <returns> A new <see cref="SystemEvents.AcsSmsDeliveryAttemptProperties"/> instance for mocking. </returns>
-        public static AcsSmsDeliveryAttemptProperties AcsSmsDeliveryAttemptProperties(DateTimeOffset? timestamp = default, int? segmentsSucceeded = default, int? segmentsFailed = default)
+        public static AcsSmsDeliveryAttemptProperties AcsSmsDeliveryAttemptProperties(DateTimeOffset? timestamp = null, int? segmentsSucceeded = null, int? segmentsFailed = null)
         {
-            return new AcsSmsDeliveryAttemptProperties(timestamp, segmentsSucceeded, segmentsFailed, additionalBinaryDataProperties: null);
+            return new AcsSmsDeliveryAttemptProperties(timestamp, segmentsSucceeded, segmentsFailed, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSReceived event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsSmsReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
@@ -1525,19 +1524,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
         /// <param name="segmentCount"> Number of segments in the message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsSmsReceivedEventData"/> instance for mocking. </returns>
-        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = default, string @from = default, string to = default, string message = default, DateTimeOffset? receivedTimestamp = default, int segmentCount = default)
+        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = null, string @from = null, string to = null, string message = null, DateTimeOffset? receivedTimestamp = null, int segmentCount = default)
         {
             return new AcsSmsReceivedEventData(
                 messageId,
                 @from,
                 to,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 message,
                 receivedTimestamp,
                 segmentCount);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RecordingFileStatusUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/>. </summary>
         /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
         /// <param name="recordingStartTime"> The time at which the recording started. </param>
         /// <param name="recordingDurationMs"> The recording duration in milliseconds. </param>
@@ -1546,7 +1545,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="formatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = default, DateTimeOffset? recordingStartTime = default, long? recordingDurationMs = default, AcsRecordingContentType? contentType = default, AcsRecordingChannelType? channelType = default, AcsRecordingFormatType? formatType = default, string sessionEndReason = default)
+        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, AcsRecordingContentType? contentType = null, AcsRecordingChannelType? channelType = null, AcsRecordingFormatType? formatType = null, string sessionEndReason = null)
         {
             return new AcsRecordingFileStatusUpdatedEventData(
                 recordingStorageInfo,
@@ -1556,20 +1555,20 @@ namespace Azure.Messaging.EventGrid
                 channelType,
                 formatType,
                 sessionEndReason,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema for all properties of Recording Storage Information. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRecordingStorageInfoProperties"/>. </summary>
         /// <param name="recordingChunks"> List of details of recording chunks information. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingStorageInfoProperties"/> instance for mocking. </returns>
-        public static AcsRecordingStorageInfoProperties AcsRecordingStorageInfoProperties(IEnumerable<AcsRecordingChunkInfoProperties> recordingChunks = default)
+        public static AcsRecordingStorageInfoProperties AcsRecordingStorageInfoProperties(IEnumerable<AcsRecordingChunkInfoProperties> recordingChunks = null)
         {
-            recordingChunks ??= new ChangeTrackingList<AcsRecordingChunkInfoProperties>();
+            recordingChunks ??= new List<AcsRecordingChunkInfoProperties>();
 
-            return new AcsRecordingStorageInfoProperties(recordingChunks.ToList(), additionalBinaryDataProperties: null);
+            return new AcsRecordingStorageInfoProperties(recordingChunks?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema for all properties of  Recording Chunk Information. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRecordingChunkInfoProperties"/>. </summary>
         /// <param name="documentId"> The documentId of the recording chunk. </param>
         /// <param name="index"> The index of the recording chunk. </param>
         /// <param name="endReason"> The reason for ending the recording chunk. </param>
@@ -1577,7 +1576,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="contentLocation"> The location of the content for this chunk. </param>
         /// <param name="deleteLocation"> The location to delete all chunk storage. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingChunkInfoProperties"/> instance for mocking. </returns>
-        public static AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = default, long? index = default, string endReason = default, string metadataLocation = default, string contentLocation = default, string deleteLocation = default)
+        public static AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = null, long? index = null, string endReason = null, string metadataLocation = null, string contentLocation = null, string deleteLocation = null)
         {
             return new AcsRecordingChunkInfoProperties(
                 documentId,
@@ -1586,10 +1585,10 @@ namespace Azure.Messaging.EventGrid
                 metadataLocation,
                 contentLocation,
                 deleteLocation,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.EmailDeliveryReportReceived event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The recipient Email Address. </param>
         /// <param name="internetMessageId"> The Internet Message Id of the email that has been sent. </param>
@@ -1598,7 +1597,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="deliveryStatusDetails"> Detailed information about the status if any. </param>
         /// <param name="deliveryAttemptTimestamp"> The time at which the email delivery report received timestamp. </param>
         /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/> instance for mocking. </returns>
-        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = default, string recipient = default, string internetMessageId = default, string messageId = default, AcsEmailDeliveryReportStatus? status = default, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = default, DateTimeOffset? deliveryAttemptTimestamp = default)
+        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string internetMessageId = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = null, DateTimeOffset? deliveryAttemptTimestamp = null)
         {
             return new AcsEmailDeliveryReportReceivedEventData(
                 sender,
@@ -1608,19 +1607,19 @@ namespace Azure.Messaging.EventGrid
                 status,
                 deliveryStatusDetails,
                 deliveryAttemptTimestamp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Detailed information about the status if any. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/>. </summary>
         /// <param name="statusMessage"> Detailed status message. </param>
         /// <param name="recipientMailServerHostName"> Recipient mail server host name. </param>
         /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/> instance for mocking. </returns>
-        public static AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage = default, string recipientMailServerHostName = default)
+        public static AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage = null, string recipientMailServerHostName = null)
         {
-            return new AcsEmailDeliveryReportStatusDetails(statusMessage, recipientMailServerHostName, additionalBinaryDataProperties: null);
+            return new AcsEmailDeliveryReportStatusDetails(statusMessage, recipientMailServerHostName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.EmailEngagementTrackingReportReceived event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The Recipient Email Address. </param>
         /// <param name="messageId"> The Id of the email that has been sent. </param>
@@ -1629,7 +1628,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="userAgent"> The user agent interacting with the email. </param>
         /// <param name="engagement"> The type of engagement user have with email. </param>
         /// <returns> A new <see cref="SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/> instance for mocking. </returns>
-        public static AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = default, string recipient = default, string messageId = default, DateTimeOffset? userActionTimestamp = default, string engagementContext = default, string userAgent = default, AcsUserEngagement? engagement = default)
+        public static AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, DateTimeOffset? userActionTimestamp = null, string engagementContext = null, string userAgent = null, AcsUserEngagement? engagement = null)
         {
             return new AcsEmailEngagementTrackingReportReceivedEventData(
                 sender,
@@ -1639,20 +1638,20 @@ namespace Azure.Messaging.EventGrid
                 engagementContext,
                 userAgent,
                 engagement,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of all Router events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterEventData"/> instance for mocking. </returns>
-        public static AcsRouterEventData AcsRouterEventData(string jobId = default, string channelReference = default, string channelId = default)
+        public static AcsRouterEventData AcsRouterEventData(string jobId = null, string channelReference = null, string channelId = null)
         {
-            return new AcsRouterEventData(jobId, channelReference, channelId, additionalBinaryDataProperties: null);
+            return new AcsRouterEventData(jobId, channelReference, channelId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of all Router Job events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1660,22 +1659,22 @@ namespace Azure.Messaging.EventGrid
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobEventData AcsRouterJobEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default)
+        public static AcsRouterJobEventData AcsRouterJobEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new AcsRouterJobEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobCancelled event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobCancelledEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1685,16 +1684,16 @@ namespace Azure.Messaging.EventGrid
         /// <param name="note"> Router Job Note. </param>
         /// <param name="dispositionCode"> Router Job Disposition Code. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobCancelledEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobCancelledEventData AcsRouterJobCancelledEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, string note = default, string dispositionCode = default)
+        public static AcsRouterJobCancelledEventData AcsRouterJobCancelledEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string note = null, string dispositionCode = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new AcsRouterJobCancelledEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
@@ -1702,7 +1701,7 @@ namespace Azure.Messaging.EventGrid
                 dispositionCode);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClassified event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobClassifiedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1714,59 +1713,39 @@ namespace Azure.Messaging.EventGrid
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="attachedWorkerSelectors"> Router Job Attached Worker Selector. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobClassifiedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobClassifiedEventData AcsRouterJobClassifiedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, AcsRouterQueueDetails queueDetails = default, string classificationPolicyId = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = default)
+        public static AcsRouterJobClassifiedEventData AcsRouterJobClassifiedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, AcsRouterQueueDetails queueDetails = null, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            attachedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            attachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
 
             return new AcsRouterJobClassifiedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
                 queueDetails,
                 classificationPolicyId,
                 priority,
-                attachedWorkerSelectors.ToList());
+                attachedWorkerSelectors?.ToList());
         }
 
-        /// <summary> Router Queue Details. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterQueueDetails"/>. </summary>
         /// <param name="id"> Router Queue Id. </param>
         /// <param name="name"> Router Queue Name. </param>
         /// <param name="labels"> Router Queue Labels. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterQueueDetails"/> instance for mocking. </returns>
-        public static AcsRouterQueueDetails AcsRouterQueueDetails(string id = default, string name = default, IDictionary<string, string> labels = default)
+        public static AcsRouterQueueDetails AcsRouterQueueDetails(string id = null, string name = null, IReadOnlyDictionary<string, string> labels = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new Dictionary<string, string>();
 
-            return new AcsRouterQueueDetails(id, name, labels, additionalBinaryDataProperties: null);
+            return new AcsRouterQueueDetails(id, name, labels, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Router Job Worker Selector. </summary>
-        /// <param name="key"> Router Job Worker Selector Key. </param>
-        /// <param name="operator"> Router Job Worker Selector Label Operator. </param>
-        /// <param name="labelValue"> Router Job Worker Selector Value. </param>
-        /// <param name="ttlSeconds"></param>
-        /// <param name="selectorState"> Router Job Worker Selector State. </param>
-        /// <param name="expirationTime"> Router Job Worker Selector Expiration Time. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerSelector"/> instance for mocking. </returns>
-        public static AcsRouterWorkerSelector AcsRouterWorkerSelector(string key = default, AcsRouterLabelOperator? @operator = default, object labelValue = default, double? ttlSeconds = default, AcsRouterWorkerSelectorState? selectorState = default, DateTimeOffset? expirationTime = default)
-        {
-            return new AcsRouterWorkerSelector(
-                key,
-                @operator,
-                labelValue,
-                ttlSeconds,
-                selectorState,
-                expirationTime,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClosed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobClosedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1777,16 +1756,16 @@ namespace Azure.Messaging.EventGrid
         /// <param name="workerId"> Router Job Closed Worker Id. </param>
         /// <param name="dispositionCode"> Router Job Closed Disposition Code. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobClosedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobClosedEventData AcsRouterJobClosedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, string assignmentId = default, string workerId = default, string dispositionCode = default)
+        public static AcsRouterJobClosedEventData AcsRouterJobClosedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null, string dispositionCode = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new AcsRouterJobClosedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
@@ -1795,7 +1774,7 @@ namespace Azure.Messaging.EventGrid
                 dispositionCode);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobCompletedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1805,16 +1784,16 @@ namespace Azure.Messaging.EventGrid
         /// <param name="assignmentId"> Router Job Completed Assignment Id. </param>
         /// <param name="workerId"> Router Job Completed Worker Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobCompletedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobCompletedEventData AcsRouterJobCompletedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, string assignmentId = default, string workerId = default)
+        public static AcsRouterJobCompletedEventData AcsRouterJobCompletedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new AcsRouterJobCompletedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
@@ -1822,7 +1801,7 @@ namespace Azure.Messaging.EventGrid
                 workerId);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobDeletedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1830,22 +1809,22 @@ namespace Azure.Messaging.EventGrid
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobDeletedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobDeletedEventData AcsRouterJobDeletedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default)
+        public static AcsRouterJobDeletedEventData AcsRouterJobDeletedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new AcsRouterJobDeletedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobExceptionTriggered event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobExceptionTriggeredEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1855,16 +1834,16 @@ namespace Azure.Messaging.EventGrid
         /// <param name="ruleKey"> Router Job Exception Triggered Rule Key. </param>
         /// <param name="exceptionRuleId"> Router Job Exception Triggered Rule Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobExceptionTriggeredEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobExceptionTriggeredEventData AcsRouterJobExceptionTriggeredEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, string ruleKey = default, string exceptionRuleId = default)
+        public static AcsRouterJobExceptionTriggeredEventData AcsRouterJobExceptionTriggeredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string ruleKey = null, string exceptionRuleId = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new AcsRouterJobExceptionTriggeredEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
@@ -1872,7 +1851,7 @@ namespace Azure.Messaging.EventGrid
                 exceptionRuleId);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobQueued event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobQueuedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1883,27 +1862,27 @@ namespace Azure.Messaging.EventGrid
         /// <param name="attachedWorkerSelectors"> Router Job Queued Attached Worker Selector. </param>
         /// <param name="requestedWorkerSelectors"> Router Job Queued Requested Worker Selector. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobQueuedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobQueuedEventData AcsRouterJobQueuedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = default, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = default)
+        public static AcsRouterJobQueuedEventData AcsRouterJobQueuedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            attachedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
-            requestedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            attachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            requestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
 
             return new AcsRouterJobQueuedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
                 priority,
-                attachedWorkerSelectors.ToList(),
-                requestedWorkerSelectors.ToList());
+                attachedWorkerSelectors?.ToList(),
+                requestedWorkerSelectors?.ToList());
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobReceived event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobReceivedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1917,29 +1896,29 @@ namespace Azure.Messaging.EventGrid
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobReceivedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, AcsRouterJobStatus? status = default, string classificationPolicyId = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = default, DateTimeOffset? scheduledOn = default, bool unavailableForMatching = default)
+        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, AcsRouterJobStatus? status = null, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null, DateTimeOffset? scheduledOn = null, bool unavailableForMatching = default)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            requestedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            requestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
 
             return new AcsRouterJobReceivedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
                 status,
                 classificationPolicyId,
                 priority,
-                requestedWorkerSelectors.ToList(),
+                requestedWorkerSelectors?.ToList(),
                 scheduledOn,
                 unavailableForMatching);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobSchedulingFailed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobSchedulingFailedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1952,29 +1931,29 @@ namespace Azure.Messaging.EventGrid
         /// <param name="scheduledOn"> Router Job Scheduling Failed Scheduled Time in UTC. </param>
         /// <param name="failureReason"> Router Job Scheduling Failed Reason. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobSchedulingFailedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobSchedulingFailedEventData AcsRouterJobSchedulingFailedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = default, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = default, DateTimeOffset? scheduledOn = default, string failureReason = default)
+        public static AcsRouterJobSchedulingFailedEventData AcsRouterJobSchedulingFailedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, DateTimeOffset? scheduledOn = null, string failureReason = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            expiredAttachedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
-            expiredRequestedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            expiredAttachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            expiredRequestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
 
             return new AcsRouterJobSchedulingFailedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
                 priority,
-                expiredAttachedWorkerSelectors.ToList(),
-                expiredRequestedWorkerSelectors.ToList(),
+                expiredAttachedWorkerSelectors?.ToList(),
+                expiredRequestedWorkerSelectors?.ToList(),
                 scheduledOn,
                 failureReason);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobUnassigned event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobUnassignedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -1984,16 +1963,16 @@ namespace Azure.Messaging.EventGrid
         /// <param name="assignmentId"> Router Job Unassigned Assignment Id. </param>
         /// <param name="workerId"> Router Job Unassigned Worker Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobUnassignedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobUnassignedEventData AcsRouterJobUnassignedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, string assignmentId = default, string workerId = default)
+        public static AcsRouterJobUnassignedEventData AcsRouterJobUnassignedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new AcsRouterJobUnassignedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
@@ -2001,7 +1980,7 @@ namespace Azure.Messaging.EventGrid
                 workerId);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobWaitingForActivation event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobWaitingForActivationEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -2014,29 +1993,29 @@ namespace Azure.Messaging.EventGrid
         /// <param name="scheduledOn"> Router Job Waiting For Activation Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Router Job Waiting For Activation Unavailable For Matching. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobWaitingForActivationEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobWaitingForActivationEventData AcsRouterJobWaitingForActivationEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = default, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = default, DateTimeOffset? scheduledOn = default, bool unavailableForMatching = default)
+        public static AcsRouterJobWaitingForActivationEventData AcsRouterJobWaitingForActivationEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, DateTimeOffset? scheduledOn = null, bool unavailableForMatching = default)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            expiredAttachedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
-            expiredRequestedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            expiredAttachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            expiredRequestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
 
             return new AcsRouterJobWaitingForActivationEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
                 priority,
-                expiredAttachedWorkerSelectors.ToList(),
-                expiredRequestedWorkerSelectors.ToList(),
+                expiredAttachedWorkerSelectors?.ToList(),
+                expiredRequestedWorkerSelectors?.ToList(),
                 scheduledOn,
                 unavailableForMatching);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobWorkerSelectorsExpired event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -2046,56 +2025,56 @@ namespace Azure.Messaging.EventGrid
         /// <param name="expiredRequestedWorkerSelectors"> Router Job Worker Selectors Expired Requested Worker Selectors. </param>
         /// <param name="expiredAttachedWorkerSelectors"> Router Job Worker Selectors Expired Attached Worker Selectors. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobWorkerSelectorsExpiredEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobWorkerSelectorsExpiredEventData AcsRouterJobWorkerSelectorsExpiredEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = default, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = default)
+        public static AcsRouterJobWorkerSelectorsExpiredEventData AcsRouterJobWorkerSelectorsExpiredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            expiredRequestedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
-            expiredAttachedWorkerSelectors ??= new ChangeTrackingList<AcsRouterWorkerSelector>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            expiredRequestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            expiredAttachedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
 
             return new AcsRouterJobWorkerSelectorsExpiredEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 queueId,
                 labels,
                 tags,
-                expiredRequestedWorkerSelectors.ToList(),
-                expiredAttachedWorkerSelectors.ToList());
+                expiredRequestedWorkerSelectors?.ToList(),
+                expiredAttachedWorkerSelectors?.ToList());
         }
 
-        /// <summary> Schema of common properties of all Router Worker events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerEventData AcsRouterWorkerEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default)
+        public static AcsRouterWorkerEventData AcsRouterWorkerEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null)
         {
-            return new AcsRouterWorkerEventData(jobId, channelReference, channelId, additionalBinaryDataProperties: null, workerId);
+            return new AcsRouterWorkerEventData(jobId, channelReference, channelId, serializedAdditionalRawData: null, workerId);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerDeletedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerDeletedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerDeletedEventData AcsRouterWorkerDeletedEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default)
+        public static AcsRouterWorkerDeletedEventData AcsRouterWorkerDeletedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null)
         {
-            return new AcsRouterWorkerDeletedEventData(jobId, channelReference, channelId, additionalBinaryDataProperties: null, workerId);
+            return new AcsRouterWorkerDeletedEventData(jobId, channelReference, channelId, serializedAdditionalRawData: null, workerId);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerDeregistered event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerDeregisteredEventData"/>. </summary>
         /// <param name="workerId"> Router Worker Deregistered Worker Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerDeregisteredEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerDeregisteredEventData AcsRouterWorkerDeregisteredEventData(string workerId = default)
+        public static AcsRouterWorkerDeregisteredEventData AcsRouterWorkerDeregisteredEventData(string workerId = null)
         {
-            return new AcsRouterWorkerDeregisteredEventData(workerId, additionalBinaryDataProperties: null);
+            return new AcsRouterWorkerDeregisteredEventData(workerId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferAccepted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerOfferAcceptedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -2109,18 +2088,18 @@ namespace Azure.Messaging.EventGrid
         /// <param name="jobLabels"> Router Worker Offer Accepted Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Accepted Job Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferAcceptedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerOfferAcceptedEventData AcsRouterWorkerOfferAcceptedEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default, string queueId = default, string offerId = default, string assignmentId = default, int? jobPriority = default, IDictionary<string, string> workerLabels = default, IDictionary<string, string> workerTags = default, IDictionary<string, string> jobLabels = default, IDictionary<string, string> jobTags = default)
+        public static AcsRouterWorkerOfferAcceptedEventData AcsRouterWorkerOfferAcceptedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, string assignmentId = null, int? jobPriority = null, IReadOnlyDictionary<string, string> workerLabels = null, IReadOnlyDictionary<string, string> workerTags = null, IReadOnlyDictionary<string, string> jobLabels = null, IReadOnlyDictionary<string, string> jobTags = null)
         {
-            workerLabels ??= new ChangeTrackingDictionary<string, string>();
-            workerTags ??= new ChangeTrackingDictionary<string, string>();
-            jobLabels ??= new ChangeTrackingDictionary<string, string>();
-            jobTags ??= new ChangeTrackingDictionary<string, string>();
+            workerLabels ??= new Dictionary<string, string>();
+            workerTags ??= new Dictionary<string, string>();
+            jobLabels ??= new Dictionary<string, string>();
+            jobTags ??= new Dictionary<string, string>();
 
             return new AcsRouterWorkerOfferAcceptedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 workerId,
                 queueId,
                 offerId,
@@ -2132,7 +2111,7 @@ namespace Azure.Messaging.EventGrid
                 jobTags);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferDeclined event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerOfferDeclinedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -2140,19 +2119,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="queueId"> Router Worker Offer Declined Queue Id. </param>
         /// <param name="offerId"> Router Worker Offer Declined Offer Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferDeclinedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerOfferDeclinedEventData AcsRouterWorkerOfferDeclinedEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default, string queueId = default, string offerId = default)
+        public static AcsRouterWorkerOfferDeclinedEventData AcsRouterWorkerOfferDeclinedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null)
         {
             return new AcsRouterWorkerOfferDeclinedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 workerId,
                 queueId,
                 offerId);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferExpired event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerOfferExpiredEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -2160,19 +2139,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="queueId"> Router Worker Offer Expired Queue Id. </param>
         /// <param name="offerId"> Router Worker Offer Expired Offer Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferExpiredEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerOfferExpiredEventData AcsRouterWorkerOfferExpiredEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default, string queueId = default, string offerId = default)
+        public static AcsRouterWorkerOfferExpiredEventData AcsRouterWorkerOfferExpiredEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null)
         {
             return new AcsRouterWorkerOfferExpiredEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 workerId,
                 queueId,
                 offerId);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferIssued event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerOfferIssuedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -2187,18 +2166,18 @@ namespace Azure.Messaging.EventGrid
         /// <param name="jobLabels"> Router Worker Offer Issued Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Issued Job Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferIssuedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerOfferIssuedEventData AcsRouterWorkerOfferIssuedEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default, string queueId = default, string offerId = default, int? jobPriority = default, IDictionary<string, string> workerLabels = default, DateTimeOffset? offeredOn = default, DateTimeOffset? expiresOn = default, IDictionary<string, string> workerTags = default, IDictionary<string, string> jobLabels = default, IDictionary<string, string> jobTags = default)
+        public static AcsRouterWorkerOfferIssuedEventData AcsRouterWorkerOfferIssuedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, int? jobPriority = null, IReadOnlyDictionary<string, string> workerLabels = null, DateTimeOffset? offeredOn = null, DateTimeOffset? expiresOn = null, IReadOnlyDictionary<string, string> workerTags = null, IReadOnlyDictionary<string, string> jobLabels = null, IReadOnlyDictionary<string, string> jobTags = null)
         {
-            workerLabels ??= new ChangeTrackingDictionary<string, string>();
-            workerTags ??= new ChangeTrackingDictionary<string, string>();
-            jobLabels ??= new ChangeTrackingDictionary<string, string>();
-            jobTags ??= new ChangeTrackingDictionary<string, string>();
+            workerLabels ??= new Dictionary<string, string>();
+            workerTags ??= new Dictionary<string, string>();
+            jobLabels ??= new Dictionary<string, string>();
+            jobTags ??= new Dictionary<string, string>();
 
             return new AcsRouterWorkerOfferIssuedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 workerId,
                 queueId,
                 offerId,
@@ -2211,7 +2190,7 @@ namespace Azure.Messaging.EventGrid
                 jobTags);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferRevoked event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerOfferRevokedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -2219,19 +2198,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="queueId"> Router Worker Offer Revoked Queue Id. </param>
         /// <param name="offerId"> Router Worker Offer Revoked Offer Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferRevokedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerOfferRevokedEventData AcsRouterWorkerOfferRevokedEventData(string jobId = default, string channelReference = default, string channelId = default, string workerId = default, string queueId = default, string offerId = default)
+        public static AcsRouterWorkerOfferRevokedEventData AcsRouterWorkerOfferRevokedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null)
         {
             return new AcsRouterWorkerOfferRevokedEventData(
                 jobId,
                 channelReference,
                 channelId,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 workerId,
                 queueId,
                 offerId);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerRegistered event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerRegisteredEventData"/>. </summary>
         /// <param name="workerId"> Router Worker Registered Worker Id. </param>
         /// <param name="queueAssignments"> Router Worker Registered Queue Info. </param>
         /// <param name="channelConfigurations"> Router Worker Registered Channel Configuration. </param>
@@ -2239,34 +2218,34 @@ namespace Azure.Messaging.EventGrid
         /// <param name="labels"> Router Worker Registered Labels. </param>
         /// <param name="tags"> Router Worker Registered Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerRegisteredEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerRegisteredEventData AcsRouterWorkerRegisteredEventData(string workerId = default, IEnumerable<AcsRouterQueueDetails> queueAssignments = default, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = default, int? totalCapacity = default, IDictionary<string, string> labels = default, IDictionary<string, string> tags = default)
+        public static AcsRouterWorkerRegisteredEventData AcsRouterWorkerRegisteredEventData(string workerId = null, IEnumerable<AcsRouterQueueDetails> queueAssignments = null, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            queueAssignments ??= new ChangeTrackingList<AcsRouterQueueDetails>();
-            channelConfigurations ??= new ChangeTrackingList<AcsRouterChannelConfiguration>();
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            queueAssignments ??= new List<AcsRouterQueueDetails>();
+            channelConfigurations ??= new List<AcsRouterChannelConfiguration>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new AcsRouterWorkerRegisteredEventData(
                 workerId,
-                queueAssignments.ToList(),
-                channelConfigurations.ToList(),
+                queueAssignments?.ToList(),
+                channelConfigurations?.ToList(),
                 totalCapacity,
                 labels,
                 tags,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Router Channel Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterChannelConfiguration"/>. </summary>
         /// <param name="channelId"> Channel ID for Router Job. </param>
         /// <param name="capacityCostPerJob"> Capacity Cost Per Job for Router Job. </param>
         /// <param name="maxNumberOfJobs"> Max Number of Jobs for Router Job. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterChannelConfiguration"/> instance for mocking. </returns>
-        public static AcsRouterChannelConfiguration AcsRouterChannelConfiguration(string channelId = default, int? capacityCostPerJob = default, int? maxNumberOfJobs = default)
+        public static AcsRouterChannelConfiguration AcsRouterChannelConfiguration(string channelId = null, int? capacityCostPerJob = null, int? maxNumberOfJobs = null)
         {
-            return new AcsRouterChannelConfiguration(channelId, capacityCostPerJob, maxNumberOfJobs, additionalBinaryDataProperties: null);
+            return new AcsRouterChannelConfiguration(channelId, capacityCostPerJob, maxNumberOfJobs, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerUpdatedEventData"/>. </summary>
         /// <param name="workerId"> Router Worker Updated Worker Id. </param>
         /// <param name="queueAssignments"> Router Worker Updated Queue Info. </param>
         /// <param name="channelConfigurations"> Router Worker Updated Channel Configuration. </param>
@@ -2275,33 +2254,33 @@ namespace Azure.Messaging.EventGrid
         /// <param name="tags"> Router Worker Updated Tags. </param>
         /// <param name="updatedWorkerProperties"> Router Worker Properties Updated. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerUpdatedEventData AcsRouterWorkerUpdatedEventData(string workerId = default, IEnumerable<AcsRouterQueueDetails> queueAssignments = default, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = default, int? totalCapacity = default, IDictionary<string, string> labels = default, IDictionary<string, string> tags = default, IEnumerable<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties = default)
+        public static AcsRouterWorkerUpdatedEventData AcsRouterWorkerUpdatedEventData(string workerId = null, IEnumerable<AcsRouterQueueDetails> queueAssignments = null, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, IEnumerable<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties = null)
         {
-            queueAssignments ??= new ChangeTrackingList<AcsRouterQueueDetails>();
-            channelConfigurations ??= new ChangeTrackingList<AcsRouterChannelConfiguration>();
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            updatedWorkerProperties ??= new ChangeTrackingList<AcsRouterUpdatedWorkerProperty>();
+            queueAssignments ??= new List<AcsRouterQueueDetails>();
+            channelConfigurations ??= new List<AcsRouterChannelConfiguration>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            updatedWorkerProperties ??= new List<AcsRouterUpdatedWorkerProperty>();
 
             return new AcsRouterWorkerUpdatedEventData(
                 workerId,
-                queueAssignments.ToList(),
-                channelConfigurations.ToList(),
+                queueAssignments?.ToList(),
+                channelConfigurations?.ToList(),
                 totalCapacity,
                 labels,
                 tags,
-                updatedWorkerProperties.ToList(),
-                additionalBinaryDataProperties: null);
+                updatedWorkerProperties?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Message Media Content. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageMediaContent"/>. </summary>
         /// <param name="mimeType"> Required. The MIME type of the file this media represents. </param>
         /// <param name="mediaId"> Required. The media identifier. </param>
         /// <param name="fileName"> Optional. The filename of the underlying media file as specified when uploaded. </param>
         /// <param name="caption"> Optional. The caption for the media object, if supported and provided. </param>
         /// <param name="animated"> Optional. Set to true if the sticker is animated; false otherwise. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageMediaContent"/> instance for mocking. </returns>
-        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = default, string mediaId = default, string fileName = default, string caption = default, bool? animated = default)
+        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null, bool? animated = null)
         {
             return new AcsMessageMediaContent(
                 mimeType,
@@ -2309,66 +2288,66 @@ namespace Azure.Messaging.EventGrid
                 fileName,
                 caption,
                 animated,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Message Reaction Content. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageReactionContent"/>. </summary>
         /// <param name="messageId"> Required. WhatsApp message ID of the message that the emoji is applied to. </param>
         /// <param name="emoji"> Optional. Unicode escape sequence of the emoji. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageReactionContent"/> instance for mocking. </returns>
-        public static AcsMessageReactionContent AcsMessageReactionContent(string messageId = default, string emoji = default)
+        public static AcsMessageReactionContent AcsMessageReactionContent(string messageId = null, string emoji = null)
         {
-            return new AcsMessageReactionContent(messageId, emoji, additionalBinaryDataProperties: null);
+            return new AcsMessageReactionContent(messageId, emoji, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Message Context. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageContext"/>. </summary>
         /// <param name="from"> The WhatsApp ID for the customer who replied to an inbound message. </param>
         /// <param name="messageId"> The message ID for the sent message for an inbound reply. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageContext"/> instance for mocking. </returns>
-        public static AcsMessageContext AcsMessageContext(string @from = default, string messageId = default)
+        public static AcsMessageContext AcsMessageContext(string @from = null, string messageId = null)
         {
-            return new AcsMessageContext(@from, messageId, additionalBinaryDataProperties: null);
+            return new AcsMessageContext(@from, messageId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Message Button Content. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageButtonContent"/>. </summary>
         /// <param name="text"> The Text of the button. </param>
         /// <param name="payload"> The Payload of the button which was clicked by the user, setup by the business. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageButtonContent"/> instance for mocking. </returns>
-        public static AcsMessageButtonContent AcsMessageButtonContent(string text = default, string payload = default)
+        public static AcsMessageButtonContent AcsMessageButtonContent(string text = null, string payload = null)
         {
-            return new AcsMessageButtonContent(text, payload, additionalBinaryDataProperties: null);
+            return new AcsMessageButtonContent(text, payload, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Message Interactive Content. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveContent"/>. </summary>
         /// <param name="replyKind"> The Message interactive reply type. </param>
         /// <param name="buttonReply"> The Message Sent when a customer clicks a button. </param>
         /// <param name="listReply"> The Message Sent when a customer selects an item from a list. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveContent"/> instance for mocking. </returns>
-        public static AcsMessageInteractiveContent AcsMessageInteractiveContent(AcsInteractiveReplyKind? replyKind = default, AcsMessageInteractiveButtonReplyContent buttonReply = default, AcsMessageInteractiveListReplyContent listReply = default)
+        public static AcsMessageInteractiveContent AcsMessageInteractiveContent(AcsInteractiveReplyKind? replyKind = null, AcsMessageInteractiveButtonReplyContent buttonReply = null, AcsMessageInteractiveListReplyContent listReply = null)
         {
-            return new AcsMessageInteractiveContent(replyKind, buttonReply, listReply, additionalBinaryDataProperties: null);
+            return new AcsMessageInteractiveContent(replyKind, buttonReply, listReply, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Message Interactive button reply content for a user to business message. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveButtonReplyContent"/>. </summary>
         /// <param name="buttonId"> The ID of the button. </param>
         /// <param name="title"> The title of the button. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveButtonReplyContent"/> instance for mocking. </returns>
-        public static AcsMessageInteractiveButtonReplyContent AcsMessageInteractiveButtonReplyContent(string buttonId = default, string title = default)
+        public static AcsMessageInteractiveButtonReplyContent AcsMessageInteractiveButtonReplyContent(string buttonId = null, string title = null)
         {
-            return new AcsMessageInteractiveButtonReplyContent(buttonId, title, additionalBinaryDataProperties: null);
+            return new AcsMessageInteractiveButtonReplyContent(buttonId, title, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Message Interactive list reply content for a user to business message. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveListReplyContent"/>. </summary>
         /// <param name="listItemId"> The ID of the selected list item. </param>
         /// <param name="title"> The title of the selected list item. </param>
         /// <param name="description"> The description of the selected row. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveListReplyContent"/> instance for mocking. </returns>
-        public static AcsMessageInteractiveListReplyContent AcsMessageInteractiveListReplyContent(string listItemId = default, string title = default, string description = default)
+        public static AcsMessageInteractiveListReplyContent AcsMessageInteractiveListReplyContent(string listItemId = null, string title = null, string description = null)
         {
-            return new AcsMessageInteractiveListReplyContent(listItemId, title, description, additionalBinaryDataProperties: null);
+            return new AcsMessageInteractiveListReplyContent(listItemId, title, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The content of the event request message. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryEventData"/>. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="action"> The action that encompasses the provided event. </param>
@@ -2379,7 +2358,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="source"> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </param>
         /// <param name="connectedRegistry"> The connected registry information if the event is generated by a connected registry. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryEventData"/> instance for mocking. </returns>
-        public static ContainerRegistryEventData ContainerRegistryEventData(string id = default, DateTimeOffset? timestamp = default, string action = default, string location = default, ContainerRegistryEventTarget target = default, ContainerRegistryEventRequest request = default, ContainerRegistryEventActor actor = default, ContainerRegistryEventSource source = default, ContainerRegistryEventConnectedRegistry connectedRegistry = default)
+        public static ContainerRegistryEventData ContainerRegistryEventData(string id = null, DateTimeOffset? timestamp = null, string action = null, string location = null, ContainerRegistryEventTarget target = null, ContainerRegistryEventRequest request = null, ContainerRegistryEventActor actor = null, ContainerRegistryEventSource source = null, ContainerRegistryEventConnectedRegistry connectedRegistry = null)
         {
             return new ContainerRegistryEventData(
                 id,
@@ -2391,10 +2370,10 @@ namespace Azure.Messaging.EventGrid
                 actor,
                 source,
                 connectedRegistry,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> The target of the event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. </param>
         /// <param name="size"> The number of bytes of the content. Same as Length field. </param>
         /// <param name="digest"> The digest of the content, as defined by the Registry V2 HTTP API Specification. </param>
@@ -2403,7 +2382,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="url"> The direct URL to the content. </param>
         /// <param name="tag"> The tag name. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryEventTarget"/> instance for mocking. </returns>
-        public static ContainerRegistryEventTarget ContainerRegistryEventTarget(string mediaType = default, long? size = default, string digest = default, long? length = default, string repository = default, string url = default, string tag = default)
+        public static ContainerRegistryEventTarget ContainerRegistryEventTarget(string mediaType = null, long? size = null, string digest = null, long? length = null, string repository = null, string url = null, string tag = null)
         {
             return new ContainerRegistryEventTarget(
                 mediaType,
@@ -2413,53 +2392,53 @@ namespace Azure.Messaging.EventGrid
                 repository,
                 url,
                 tag,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> The request that generated the event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryEventRequest"/>. </summary>
         /// <param name="id"> The ID of the request that initiated the event. </param>
         /// <param name="addr"> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </param>
         /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>
         /// <param name="method"> The request method that generated the event. </param>
         /// <param name="useragent"> The user agent header of the request. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryEventRequest"/> instance for mocking. </returns>
-        public static ContainerRegistryEventRequest ContainerRegistryEventRequest(string id = default, string addr = default, string host = default, string @method = default, string useragent = default)
+        public static ContainerRegistryEventRequest ContainerRegistryEventRequest(string id = null, string addr = null, string host = null, string method = null, string useragent = null)
         {
             return new ContainerRegistryEventRequest(
                 id,
                 addr,
                 host,
-                @method,
+                method,
                 useragent,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryEventActor"/>. </summary>
         /// <param name="name"> The subject or username associated with the request context that generated the event. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryEventActor"/> instance for mocking. </returns>
-        public static ContainerRegistryEventActor ContainerRegistryEventActor(string name = default)
+        public static ContainerRegistryEventActor ContainerRegistryEventActor(string name = null)
         {
-            return new ContainerRegistryEventActor(name, additionalBinaryDataProperties: null);
+            return new ContainerRegistryEventActor(name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryEventSource"/>. </summary>
         /// <param name="addr"> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </param>
         /// <param name="instanceID"> The running instance of an application. Changes after each restart. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryEventSource"/> instance for mocking. </returns>
-        public static ContainerRegistryEventSource ContainerRegistryEventSource(string addr = default, string instanceID = default)
+        public static ContainerRegistryEventSource ContainerRegistryEventSource(string addr = null, string instanceID = null)
         {
-            return new ContainerRegistryEventSource(addr, instanceID, additionalBinaryDataProperties: null);
+            return new ContainerRegistryEventSource(addr, instanceID, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The connected registry information if the event is generated by a connected registry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryEventConnectedRegistry"/>. </summary>
         /// <param name="name"> The name of the connected registry that generated this event. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryEventConnectedRegistry"/> instance for mocking. </returns>
-        public static ContainerRegistryEventConnectedRegistry ContainerRegistryEventConnectedRegistry(string name = default)
+        public static ContainerRegistryEventConnectedRegistry ContainerRegistryEventConnectedRegistry(string name = null)
         {
-            return new ContainerRegistryEventConnectedRegistry(name, additionalBinaryDataProperties: null);
+            return new ContainerRegistryEventConnectedRegistry(name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ImagePushed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryImagePushedEventData"/>. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="action"> The action that encompasses the provided event. </param>
@@ -2470,7 +2449,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="source"> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </param>
         /// <param name="connectedRegistry"> The connected registry information if the event is generated by a connected registry. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryImagePushedEventData"/> instance for mocking. </returns>
-        public static ContainerRegistryImagePushedEventData ContainerRegistryImagePushedEventData(string id = default, DateTimeOffset? timestamp = default, string action = default, string location = default, ContainerRegistryEventTarget target = default, ContainerRegistryEventRequest request = default, ContainerRegistryEventActor actor = default, ContainerRegistryEventSource source = default, ContainerRegistryEventConnectedRegistry connectedRegistry = default)
+        public static ContainerRegistryImagePushedEventData ContainerRegistryImagePushedEventData(string id = null, DateTimeOffset? timestamp = null, string action = null, string location = null, ContainerRegistryEventTarget target = null, ContainerRegistryEventRequest request = null, ContainerRegistryEventActor actor = null, ContainerRegistryEventSource source = null, ContainerRegistryEventConnectedRegistry connectedRegistry = null)
         {
             return new ContainerRegistryImagePushedEventData(
                 id,
@@ -2482,10 +2461,10 @@ namespace Azure.Messaging.EventGrid
                 actor,
                 source,
                 connectedRegistry,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ImageDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryImageDeletedEventData"/>. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="action"> The action that encompasses the provided event. </param>
@@ -2496,7 +2475,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="source"> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </param>
         /// <param name="connectedRegistry"> The connected registry information if the event is generated by a connected registry. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryImageDeletedEventData"/> instance for mocking. </returns>
-        public static ContainerRegistryImageDeletedEventData ContainerRegistryImageDeletedEventData(string id = default, DateTimeOffset? timestamp = default, string action = default, string location = default, ContainerRegistryEventTarget target = default, ContainerRegistryEventRequest request = default, ContainerRegistryEventActor actor = default, ContainerRegistryEventSource source = default, ContainerRegistryEventConnectedRegistry connectedRegistry = default)
+        public static ContainerRegistryImageDeletedEventData ContainerRegistryImageDeletedEventData(string id = null, DateTimeOffset? timestamp = null, string action = null, string location = null, ContainerRegistryEventTarget target = null, ContainerRegistryEventRequest request = null, ContainerRegistryEventActor actor = null, ContainerRegistryEventSource source = null, ContainerRegistryEventConnectedRegistry connectedRegistry = null)
         {
             return new ContainerRegistryImageDeletedEventData(
                 id,
@@ -2508,10 +2487,10 @@ namespace Azure.Messaging.EventGrid
                 actor,
                 source,
                 connectedRegistry,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> The content of the event request message. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryArtifactEventData"/>. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="action"> The action that encompasses the provided event. </param>
@@ -2519,7 +2498,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="target"> The target of the event. </param>
         /// <param name="connectedRegistry"> The connected registry information if the event is generated by a connected registry. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryArtifactEventData"/> instance for mocking. </returns>
-        public static ContainerRegistryArtifactEventData ContainerRegistryArtifactEventData(string id = default, DateTimeOffset? timestamp = default, string action = default, string location = default, ContainerRegistryArtifactEventTarget target = default, ContainerRegistryEventConnectedRegistry connectedRegistry = default)
+        public static ContainerRegistryArtifactEventData ContainerRegistryArtifactEventData(string id = null, DateTimeOffset? timestamp = null, string action = null, string location = null, ContainerRegistryArtifactEventTarget target = null, ContainerRegistryEventConnectedRegistry connectedRegistry = null)
         {
             return new ContainerRegistryArtifactEventData(
                 id,
@@ -2528,10 +2507,10 @@ namespace Azure.Messaging.EventGrid
                 location,
                 target,
                 connectedRegistry,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> The target of the event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryArtifactEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the artifact. </param>
         /// <param name="size"> The size in bytes of the artifact. </param>
         /// <param name="digest"> The digest of the artifact. </param>
@@ -2540,7 +2519,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="name"> The name of the artifact. </param>
         /// <param name="version"> The version of the artifact. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryArtifactEventTarget"/> instance for mocking. </returns>
-        public static ContainerRegistryArtifactEventTarget ContainerRegistryArtifactEventTarget(string mediaType = default, long? size = default, string digest = default, string repository = default, string tag = default, string name = default, string version = default)
+        public static ContainerRegistryArtifactEventTarget ContainerRegistryArtifactEventTarget(string mediaType = null, long? size = null, string digest = null, string repository = null, string tag = null, string name = null, string version = null)
         {
             return new ContainerRegistryArtifactEventTarget(
                 mediaType,
@@ -2550,10 +2529,10 @@ namespace Azure.Messaging.EventGrid
                 tag,
                 name,
                 version,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ChartPushed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryChartPushedEventData"/>. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="action"> The action that encompasses the provided event. </param>
@@ -2561,7 +2540,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="target"> The target of the event. </param>
         /// <param name="connectedRegistry"> The connected registry information if the event is generated by a connected registry. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryChartPushedEventData"/> instance for mocking. </returns>
-        public static ContainerRegistryChartPushedEventData ContainerRegistryChartPushedEventData(string id = default, DateTimeOffset? timestamp = default, string action = default, string location = default, ContainerRegistryArtifactEventTarget target = default, ContainerRegistryEventConnectedRegistry connectedRegistry = default)
+        public static ContainerRegistryChartPushedEventData ContainerRegistryChartPushedEventData(string id = null, DateTimeOffset? timestamp = null, string action = null, string location = null, ContainerRegistryArtifactEventTarget target = null, ContainerRegistryEventConnectedRegistry connectedRegistry = null)
         {
             return new ContainerRegistryChartPushedEventData(
                 id,
@@ -2570,10 +2549,10 @@ namespace Azure.Messaging.EventGrid
                 location,
                 target,
                 connectedRegistry,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ChartDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerRegistryChartDeletedEventData"/>. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="action"> The action that encompasses the provided event. </param>
@@ -2581,7 +2560,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="target"> The target of the event. </param>
         /// <param name="connectedRegistry"> The connected registry information if the event is generated by a connected registry. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerRegistryChartDeletedEventData"/> instance for mocking. </returns>
-        public static ContainerRegistryChartDeletedEventData ContainerRegistryChartDeletedEventData(string id = default, DateTimeOffset? timestamp = default, string action = default, string location = default, ContainerRegistryArtifactEventTarget target = default, ContainerRegistryEventConnectedRegistry connectedRegistry = default)
+        public static ContainerRegistryChartDeletedEventData ContainerRegistryChartDeletedEventData(string id = null, DateTimeOffset? timestamp = null, string action = null, string location = null, ContainerRegistryArtifactEventTarget target = null, ContainerRegistryEventConnectedRegistry connectedRegistry = null)
         {
             return new ContainerRegistryChartDeletedEventData(
                 id,
@@ -2590,107 +2569,107 @@ namespace Azure.Messaging.EventGrid
                 location,
                 target,
                 connectedRegistry,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NewKubernetesVersionAvailable event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerServiceNewKubernetesVersionAvailableEventData"/>. </summary>
         /// <param name="latestSupportedKubernetesVersion"> The highest PATCH Kubernetes version for the highest MINOR version supported by ManagedCluster resource. </param>
         /// <param name="latestStableKubernetesVersion"> The highest PATCH Kubernetes version for the MINOR version considered stable for the ManagedCluster resource. </param>
         /// <param name="lowestMinorKubernetesVersion"> The highest PATCH Kubernetes version for the lowest applicable MINOR version available for the ManagedCluster resource. </param>
         /// <param name="latestPreviewKubernetesVersion"> The highest PATCH Kubernetes version considered preview for the ManagedCluster resource. There might not be any version in preview at the time of publishing the event. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerServiceNewKubernetesVersionAvailableEventData"/> instance for mocking. </returns>
-        public static ContainerServiceNewKubernetesVersionAvailableEventData ContainerServiceNewKubernetesVersionAvailableEventData(string latestSupportedKubernetesVersion = default, string latestStableKubernetesVersion = default, string lowestMinorKubernetesVersion = default, string latestPreviewKubernetesVersion = default)
+        public static ContainerServiceNewKubernetesVersionAvailableEventData ContainerServiceNewKubernetesVersionAvailableEventData(string latestSupportedKubernetesVersion = null, string latestStableKubernetesVersion = null, string lowestMinorKubernetesVersion = null, string latestPreviewKubernetesVersion = null)
         {
-            return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion, latestStableKubernetesVersion, lowestMinorKubernetesVersion, latestPreviewKubernetesVersion, additionalBinaryDataProperties: null);
+            return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion, latestStableKubernetesVersion, lowestMinorKubernetesVersion, latestPreviewKubernetesVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of cluster support events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerServiceClusterSupportEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerServiceClusterSupportEventData"/> instance for mocking. </returns>
-        public static ContainerServiceClusterSupportEventData ContainerServiceClusterSupportEventData(string kubernetesVersion = default)
+        public static ContainerServiceClusterSupportEventData ContainerServiceClusterSupportEventData(string kubernetesVersion = null)
         {
-            return new ContainerServiceClusterSupportEventData(kubernetesVersion, additionalBinaryDataProperties: null);
+            return new ContainerServiceClusterSupportEventData(kubernetesVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.ClusterSupportEnded event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerServiceClusterSupportEndedEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerServiceClusterSupportEndedEventData"/> instance for mocking. </returns>
-        public static ContainerServiceClusterSupportEndedEventData ContainerServiceClusterSupportEndedEventData(string kubernetesVersion = default)
+        public static ContainerServiceClusterSupportEndedEventData ContainerServiceClusterSupportEndedEventData(string kubernetesVersion = null)
         {
-            return new ContainerServiceClusterSupportEndedEventData(kubernetesVersion, additionalBinaryDataProperties: null);
+            return new ContainerServiceClusterSupportEndedEventData(kubernetesVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.ClusterSupportEnding event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerServiceClusterSupportEndingEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerServiceClusterSupportEndingEventData"/> instance for mocking. </returns>
-        public static ContainerServiceClusterSupportEndingEventData ContainerServiceClusterSupportEndingEventData(string kubernetesVersion = default)
+        public static ContainerServiceClusterSupportEndingEventData ContainerServiceClusterSupportEndingEventData(string kubernetesVersion = null)
         {
-            return new ContainerServiceClusterSupportEndingEventData(kubernetesVersion, additionalBinaryDataProperties: null);
+            return new ContainerServiceClusterSupportEndingEventData(kubernetesVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of common properties of node pool rolling events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerServiceNodePoolRollingEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerServiceNodePoolRollingEventData"/> instance for mocking. </returns>
-        public static ContainerServiceNodePoolRollingEventData ContainerServiceNodePoolRollingEventData(string nodePoolName = default)
+        public static ContainerServiceNodePoolRollingEventData ContainerServiceNodePoolRollingEventData(string nodePoolName = null)
         {
-            return new ContainerServiceNodePoolRollingEventData(nodePoolName, additionalBinaryDataProperties: null);
+            return new ContainerServiceNodePoolRollingEventData(nodePoolName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingStarted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerServiceNodePoolRollingStartedEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerServiceNodePoolRollingStartedEventData"/> instance for mocking. </returns>
-        public static ContainerServiceNodePoolRollingStartedEventData ContainerServiceNodePoolRollingStartedEventData(string nodePoolName = default)
+        public static ContainerServiceNodePoolRollingStartedEventData ContainerServiceNodePoolRollingStartedEventData(string nodePoolName = null)
         {
-            return new ContainerServiceNodePoolRollingStartedEventData(nodePoolName, additionalBinaryDataProperties: null);
+            return new ContainerServiceNodePoolRollingStartedEventData(nodePoolName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingSucceeded event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerServiceNodePoolRollingSucceededEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerServiceNodePoolRollingSucceededEventData"/> instance for mocking. </returns>
-        public static ContainerServiceNodePoolRollingSucceededEventData ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName = default)
+        public static ContainerServiceNodePoolRollingSucceededEventData ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName = null)
         {
-            return new ContainerServiceNodePoolRollingSucceededEventData(nodePoolName, additionalBinaryDataProperties: null);
+            return new ContainerServiceNodePoolRollingSucceededEventData(nodePoolName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingFailed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ContainerServiceNodePoolRollingFailedEventData"/>. </summary>
         /// <param name="nodePoolName"> The name of the node pool in the ManagedCluster resource. </param>
         /// <returns> A new <see cref="SystemEvents.ContainerServiceNodePoolRollingFailedEventData"/> instance for mocking. </returns>
-        public static ContainerServiceNodePoolRollingFailedEventData ContainerServiceNodePoolRollingFailedEventData(string nodePoolName = default)
+        public static ContainerServiceNodePoolRollingFailedEventData ContainerServiceNodePoolRollingFailedEventData(string nodePoolName = null)
         {
-            return new ContainerServiceNodePoolRollingFailedEventData(nodePoolName, additionalBinaryDataProperties: null);
+            return new ContainerServiceNodePoolRollingFailedEventData(nodePoolName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.DataBox.CopyStarted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DataBoxCopyStartedEventData"/>. </summary>
         /// <param name="serialNumber"> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </param>
         /// <param name="stageName"> Name of the current Stage. </param>
         /// <param name="stageTime"> The time at which the stage happened. </param>
         /// <returns> A new <see cref="SystemEvents.DataBoxCopyStartedEventData"/> instance for mocking. </returns>
-        public static DataBoxCopyStartedEventData DataBoxCopyStartedEventData(string serialNumber = default, DataBoxStageName? stageName = default, DateTimeOffset? stageTime = default)
+        public static DataBoxCopyStartedEventData DataBoxCopyStartedEventData(string serialNumber = null, DataBoxStageName? stageName = null, DateTimeOffset? stageTime = null)
         {
-            return new DataBoxCopyStartedEventData(serialNumber, stageName, stageTime, additionalBinaryDataProperties: null);
+            return new DataBoxCopyStartedEventData(serialNumber, stageName, stageTime, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.DataBox.CopyCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DataBoxCopyCompletedEventData"/>. </summary>
         /// <param name="serialNumber"> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </param>
         /// <param name="stageName"> Name of the current Stage. </param>
         /// <param name="stageTime"> The time at which the stage happened. </param>
         /// <returns> A new <see cref="SystemEvents.DataBoxCopyCompletedEventData"/> instance for mocking. </returns>
-        public static DataBoxCopyCompletedEventData DataBoxCopyCompletedEventData(string serialNumber = default, DataBoxStageName? stageName = default, DateTimeOffset? stageTime = default)
+        public static DataBoxCopyCompletedEventData DataBoxCopyCompletedEventData(string serialNumber = null, DataBoxStageName? stageName = null, DateTimeOffset? stageTime = null)
         {
-            return new DataBoxCopyCompletedEventData(serialNumber, stageName, stageTime, additionalBinaryDataProperties: null);
+            return new DataBoxCopyCompletedEventData(serialNumber, stageName, stageTime, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.DataBox.OrderCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DataBoxOrderCompletedEventData"/>. </summary>
         /// <param name="serialNumber"> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </param>
         /// <param name="stageName"> Name of the current Stage. </param>
         /// <param name="stageTime"> The time at which the stage happened. </param>
         /// <returns> A new <see cref="SystemEvents.DataBoxOrderCompletedEventData"/> instance for mocking. </returns>
-        public static DataBoxOrderCompletedEventData DataBoxOrderCompletedEventData(string serialNumber = default, DataBoxStageName? stageName = default, DateTimeOffset? stageTime = default)
+        public static DataBoxOrderCompletedEventData DataBoxOrderCompletedEventData(string serialNumber = null, DataBoxStageName? stageName = null, DateTimeOffset? stageTime = null)
         {
-            return new DataBoxOrderCompletedEventData(serialNumber, stageName, stageTime, additionalBinaryDataProperties: null);
+            return new DataBoxOrderCompletedEventData(serialNumber, stageName, stageTime, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Edge.SolutionVersionPublished event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.EdgeSolutionVersionPublishedEventData"/>. </summary>
         /// <param name="externalValidationId"> A GUID to uniquely track External Solution Validation. </param>
         /// <param name="targetId"> ARM ID of the Target resource. </param>
         /// <param name="solutionTemplateId"> ARM ID of the Solution Template resource. </param>
@@ -2699,7 +2678,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="apiVersion"> API Version supported for the resources. </param>
         /// <param name="callbackUrl"> Direct URL to callback for updating validation status. </param>
         /// <returns> A new <see cref="SystemEvents.EdgeSolutionVersionPublishedEventData"/> instance for mocking. </returns>
-        public static EdgeSolutionVersionPublishedEventData EdgeSolutionVersionPublishedEventData(string externalValidationId = default, string targetId = default, string solutionTemplateId = default, string solutionTemplateVersionId = default, string solutionVersionId = default, string apiVersion = default, Uri callbackUrl = default)
+        public static EdgeSolutionVersionPublishedEventData EdgeSolutionVersionPublishedEventData(string externalValidationId = null, string targetId = null, string solutionTemplateId = null, string solutionTemplateVersionId = null, string solutionVersionId = null, string apiVersion = null, Uri callbackUrl = null)
         {
             return new EdgeSolutionVersionPublishedEventData(
                 externalValidationId,
@@ -2709,10 +2688,10 @@ namespace Azure.Messaging.EventGrid
                 solutionVersionId,
                 apiVersion,
                 callbackUrl,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventHub.CaptureFileCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.EventHubCaptureFileCreatedEventData"/>. </summary>
         /// <param name="fileurl"> The path to the capture file. </param>
         /// <param name="fileType"> The file type of the capture file. </param>
         /// <param name="partitionId"> The shard ID. </param>
@@ -2723,7 +2702,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="firstEnqueueTime"> The first time from the queue. </param>
         /// <param name="lastEnqueueTime"> The last time from the queue. </param>
         /// <returns> A new <see cref="SystemEvents.EventHubCaptureFileCreatedEventData"/> instance for mocking. </returns>
-        public static EventHubCaptureFileCreatedEventData EventHubCaptureFileCreatedEventData(string fileurl = default, string fileType = default, string partitionId = default, int? sizeInBytes = default, int? eventCount = default, int? firstSequenceNumber = default, int? lastSequenceNumber = default, DateTimeOffset? firstEnqueueTime = default, DateTimeOffset? lastEnqueueTime = default)
+        public static EventHubCaptureFileCreatedEventData EventHubCaptureFileCreatedEventData(string fileurl = null, string fileType = null, string partitionId = null, int? sizeInBytes = null, int? eventCount = null, int? firstSequenceNumber = null, int? lastSequenceNumber = null, DateTimeOffset? firstEnqueueTime = null, DateTimeOffset? lastEnqueueTime = null)
         {
             return new EventHubCaptureFileCreatedEventData(
                 fileurl,
@@ -2735,25 +2714,25 @@ namespace Azure.Messaging.EventGrid
                 lastSequenceNumber,
                 firstEnqueueTime,
                 lastEnqueueTime,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Geofence event (GeofenceEntered, GeofenceExited, GeofenceResult). </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MapsGeofenceEventProperties"/>. </summary>
         /// <param name="expiredGeofenceGeometryId"> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </param>
         /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
         /// <param name="invalidPeriodGeofenceGeometryId"> Lists of the geometry ID of the geofence which is in invalid period relative to the user time in the request. </param>
         /// <param name="isEventPublished"> True if at least one event is published to the Azure Maps event subscriber, false if no event is published to the Azure Maps event subscriber. </param>
         /// <returns> A new <see cref="SystemEvents.MapsGeofenceEventProperties"/> instance for mocking. </returns>
-        public static MapsGeofenceEventProperties MapsGeofenceEventProperties(IEnumerable<string> expiredGeofenceGeometryId = default, IEnumerable<MapsGeofenceGeometry> geometries = default, IEnumerable<string> invalidPeriodGeofenceGeometryId = default, bool? isEventPublished = default)
+        public static MapsGeofenceEventProperties MapsGeofenceEventProperties(IEnumerable<string> expiredGeofenceGeometryId = null, IEnumerable<MapsGeofenceGeometry> geometries = null, IEnumerable<string> invalidPeriodGeofenceGeometryId = null, bool? isEventPublished = null)
         {
-            expiredGeofenceGeometryId ??= new ChangeTrackingList<string>();
-            geometries ??= new ChangeTrackingList<MapsGeofenceGeometry>();
-            invalidPeriodGeofenceGeometryId ??= new ChangeTrackingList<string>();
+            expiredGeofenceGeometryId ??= new List<string>();
+            geometries ??= new List<MapsGeofenceGeometry>();
+            invalidPeriodGeofenceGeometryId ??= new List<string>();
 
-            return new MapsGeofenceEventProperties(expiredGeofenceGeometryId.ToList(), geometries.ToList(), invalidPeriodGeofenceGeometryId.ToList(), isEventPublished, additionalBinaryDataProperties: null);
+            return new MapsGeofenceEventProperties(expiredGeofenceGeometryId?.ToList(), geometries?.ToList(), invalidPeriodGeofenceGeometryId?.ToList(), isEventPublished, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The geofence geometry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MapsGeofenceGeometry"/>. </summary>
         /// <param name="deviceId"> ID of the device. </param>
         /// <param name="distance"> Distance from the coordinate to the closest border of the geofence. Positive means the coordinate is outside of the geofence. If the coordinate is outside of the geofence, but more than the value of searchBuffer away from the closest geofence border, then the value is 999. Negative means the coordinate is inside of the geofence. If the coordinate is inside the polygon, but more than the value of searchBuffer away from the closest geofencing border,then the value is -999. A value of 999 means that there is great confidence the coordinate is well outside the geofence. A value of -999 means that there is great confidence the coordinate is well within the geofence. </param>
         /// <param name="geometryId"> The unique ID for the geofence geometry. </param>
@@ -2761,7 +2740,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nearestLon"> Longitude of the nearest point of the geometry. </param>
         /// <param name="udId"> The unique id returned from user upload service when uploading a geofence. Will not be included in geofencing post API. </param>
         /// <returns> A new <see cref="SystemEvents.MapsGeofenceGeometry"/> instance for mocking. </returns>
-        public static MapsGeofenceGeometry MapsGeofenceGeometry(string deviceId = default, float? distance = default, string geometryId = default, float? nearestLat = default, float? nearestLon = default, string udId = default)
+        public static MapsGeofenceGeometry MapsGeofenceGeometry(string deviceId = null, float? distance = null, string geometryId = null, float? nearestLat = null, float? nearestLon = null, string udId = null)
         {
             return new MapsGeofenceGeometry(
                 deviceId,
@@ -2770,65 +2749,65 @@ namespace Azure.Messaging.EventGrid
                 nearestLat,
                 nearestLon,
                 udId,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Maps.GeofenceEntered event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MapsGeofenceEnteredEventData"/>. </summary>
         /// <param name="expiredGeofenceGeometryId"> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </param>
         /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
         /// <param name="invalidPeriodGeofenceGeometryId"> Lists of the geometry ID of the geofence which is in invalid period relative to the user time in the request. </param>
         /// <param name="isEventPublished"> True if at least one event is published to the Azure Maps event subscriber, false if no event is published to the Azure Maps event subscriber. </param>
         /// <returns> A new <see cref="SystemEvents.MapsGeofenceEnteredEventData"/> instance for mocking. </returns>
-        public static MapsGeofenceEnteredEventData MapsGeofenceEnteredEventData(IEnumerable<string> expiredGeofenceGeometryId = default, IEnumerable<MapsGeofenceGeometry> geometries = default, IEnumerable<string> invalidPeriodGeofenceGeometryId = default, bool? isEventPublished = default)
+        public static MapsGeofenceEnteredEventData MapsGeofenceEnteredEventData(IEnumerable<string> expiredGeofenceGeometryId = null, IEnumerable<MapsGeofenceGeometry> geometries = null, IEnumerable<string> invalidPeriodGeofenceGeometryId = null, bool? isEventPublished = null)
         {
-            expiredGeofenceGeometryId ??= new ChangeTrackingList<string>();
-            geometries ??= new ChangeTrackingList<MapsGeofenceGeometry>();
-            invalidPeriodGeofenceGeometryId ??= new ChangeTrackingList<string>();
+            expiredGeofenceGeometryId ??= new List<string>();
+            geometries ??= new List<MapsGeofenceGeometry>();
+            invalidPeriodGeofenceGeometryId ??= new List<string>();
 
-            return new MapsGeofenceEnteredEventData(expiredGeofenceGeometryId.ToList(), geometries.ToList(), invalidPeriodGeofenceGeometryId.ToList(), isEventPublished, additionalBinaryDataProperties: null);
+            return new MapsGeofenceEnteredEventData(expiredGeofenceGeometryId?.ToList(), geometries?.ToList(), invalidPeriodGeofenceGeometryId?.ToList(), isEventPublished, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Maps.GeofenceExited event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MapsGeofenceExitedEventData"/>. </summary>
         /// <param name="expiredGeofenceGeometryId"> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </param>
         /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
         /// <param name="invalidPeriodGeofenceGeometryId"> Lists of the geometry ID of the geofence which is in invalid period relative to the user time in the request. </param>
         /// <param name="isEventPublished"> True if at least one event is published to the Azure Maps event subscriber, false if no event is published to the Azure Maps event subscriber. </param>
         /// <returns> A new <see cref="SystemEvents.MapsGeofenceExitedEventData"/> instance for mocking. </returns>
-        public static MapsGeofenceExitedEventData MapsGeofenceExitedEventData(IEnumerable<string> expiredGeofenceGeometryId = default, IEnumerable<MapsGeofenceGeometry> geometries = default, IEnumerable<string> invalidPeriodGeofenceGeometryId = default, bool? isEventPublished = default)
+        public static MapsGeofenceExitedEventData MapsGeofenceExitedEventData(IEnumerable<string> expiredGeofenceGeometryId = null, IEnumerable<MapsGeofenceGeometry> geometries = null, IEnumerable<string> invalidPeriodGeofenceGeometryId = null, bool? isEventPublished = null)
         {
-            expiredGeofenceGeometryId ??= new ChangeTrackingList<string>();
-            geometries ??= new ChangeTrackingList<MapsGeofenceGeometry>();
-            invalidPeriodGeofenceGeometryId ??= new ChangeTrackingList<string>();
+            expiredGeofenceGeometryId ??= new List<string>();
+            geometries ??= new List<MapsGeofenceGeometry>();
+            invalidPeriodGeofenceGeometryId ??= new List<string>();
 
-            return new MapsGeofenceExitedEventData(expiredGeofenceGeometryId.ToList(), geometries.ToList(), invalidPeriodGeofenceGeometryId.ToList(), isEventPublished, additionalBinaryDataProperties: null);
+            return new MapsGeofenceExitedEventData(expiredGeofenceGeometryId?.ToList(), geometries?.ToList(), invalidPeriodGeofenceGeometryId?.ToList(), isEventPublished, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Maps.GeofenceResult event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MapsGeofenceResultEventData"/>. </summary>
         /// <param name="expiredGeofenceGeometryId"> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </param>
         /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
         /// <param name="invalidPeriodGeofenceGeometryId"> Lists of the geometry ID of the geofence which is in invalid period relative to the user time in the request. </param>
         /// <param name="isEventPublished"> True if at least one event is published to the Azure Maps event subscriber, false if no event is published to the Azure Maps event subscriber. </param>
         /// <returns> A new <see cref="SystemEvents.MapsGeofenceResultEventData"/> instance for mocking. </returns>
-        public static MapsGeofenceResultEventData MapsGeofenceResultEventData(IEnumerable<string> expiredGeofenceGeometryId = default, IEnumerable<MapsGeofenceGeometry> geometries = default, IEnumerable<string> invalidPeriodGeofenceGeometryId = default, bool? isEventPublished = default)
+        public static MapsGeofenceResultEventData MapsGeofenceResultEventData(IEnumerable<string> expiredGeofenceGeometryId = null, IEnumerable<MapsGeofenceGeometry> geometries = null, IEnumerable<string> invalidPeriodGeofenceGeometryId = null, bool? isEventPublished = null)
         {
-            expiredGeofenceGeometryId ??= new ChangeTrackingList<string>();
-            geometries ??= new ChangeTrackingList<MapsGeofenceGeometry>();
-            invalidPeriodGeofenceGeometryId ??= new ChangeTrackingList<string>();
+            expiredGeofenceGeometryId ??= new List<string>();
+            geometries ??= new List<MapsGeofenceGeometry>();
+            invalidPeriodGeofenceGeometryId ??= new List<string>();
 
-            return new MapsGeofenceResultEventData(expiredGeofenceGeometryId.ToList(), geometries.ToList(), invalidPeriodGeofenceGeometryId.ToList(), isEventPublished, additionalBinaryDataProperties: null);
+            return new MapsGeofenceResultEventData(expiredGeofenceGeometryId?.ToList(), geometries?.ToList(), invalidPeriodGeofenceGeometryId?.ToList(), isEventPublished, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a device life cycle event (DeviceCreated, DeviceDeleted). </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DeviceLifeCycleEventProperties"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceLifeCycleEventProperties"/> instance for mocking. </returns>
-        public static DeviceLifeCycleEventProperties DeviceLifeCycleEventProperties(string deviceId = default, string hubName = default, DeviceTwinInfo twin = default)
+        public static DeviceLifeCycleEventProperties DeviceLifeCycleEventProperties(string deviceId = null, string hubName = null, DeviceTwinInfo twin = null)
         {
-            return new DeviceLifeCycleEventProperties(deviceId, hubName, twin, additionalBinaryDataProperties: null);
+            return new DeviceLifeCycleEventProperties(deviceId, hubName, twin, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Information about the device twin, which is the cloud representation of application device metadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DeviceTwinInfo"/>. </summary>
         /// <param name="authenticationType"> Authentication type used for this device: either SAS, SelfSigned, or CertificateAuthority. </param>
         /// <param name="cloudToDeviceMessageCount"> Count of cloud to device messages sent to this device. </param>
         /// <param name="connectionState"> Whether the device is connected or disconnected. </param>
@@ -2841,7 +2820,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> An integer that is incremented by one each time the device twin is updated. </param>
         /// <param name="x509Thumbprint"> The thumbprint is a unique value for the x509 certificate, commonly used to find a particular certificate in a certificate store. The thumbprint is dynamically generated using the SHA1 algorithm, and does not physically exist in the certificate. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceTwinInfo"/> instance for mocking. </returns>
-        public static DeviceTwinInfo DeviceTwinInfo(string authenticationType = default, float? cloudToDeviceMessageCount = default, string connectionState = default, string deviceId = default, string etag = default, string lastActivityTime = default, DeviceTwinInfoProperties properties = default, string status = default, string statusUpdateTime = default, float? version = default, DeviceTwinInfoX509Thumbprint x509Thumbprint = default)
+        public static DeviceTwinInfo DeviceTwinInfo(string authenticationType = null, float? cloudToDeviceMessageCount = null, string connectionState = null, string deviceId = null, string etag = null, string lastActivityTime = null, DeviceTwinInfoProperties properties = null, string status = null, string statusUpdateTime = null, float? version = null, DeviceTwinInfoX509Thumbprint x509Thumbprint = null)
         {
             return new DeviceTwinInfo(
                 authenticationType,
@@ -2855,165 +2834,165 @@ namespace Azure.Messaging.EventGrid
                 statusUpdateTime,
                 version,
                 x509Thumbprint,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Properties JSON element. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DeviceTwinInfoProperties"/>. </summary>
         /// <param name="desired"> A portion of the properties that can be written only by the application back-end, and read by the device. </param>
         /// <param name="reported"> A portion of the properties that can be written only by the device, and read by the application back-end. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceTwinInfoProperties"/> instance for mocking. </returns>
-        public static DeviceTwinInfoProperties DeviceTwinInfoProperties(DeviceTwinProperties desired = default, DeviceTwinProperties reported = default)
+        public static DeviceTwinInfoProperties DeviceTwinInfoProperties(DeviceTwinProperties desired = null, DeviceTwinProperties reported = null)
         {
-            return new DeviceTwinInfoProperties(desired, reported, additionalBinaryDataProperties: null);
+            return new DeviceTwinInfoProperties(desired, reported, serializedAdditionalRawData: null);
         }
 
-        /// <summary> A portion of the properties that can be written only by the application back-end, and read by the device. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DeviceTwinProperties"/>. </summary>
         /// <param name="metadata"> Metadata information for the properties JSON document. </param>
         /// <param name="version"> Version of device twin properties. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceTwinProperties"/> instance for mocking. </returns>
-        public static DeviceTwinProperties DeviceTwinProperties(DeviceTwinMetadata metadata = default, float? version = default)
+        public static DeviceTwinProperties DeviceTwinProperties(DeviceTwinMetadata metadata = null, float? version = null)
         {
-            return new DeviceTwinProperties(metadata, version, additionalBinaryDataProperties: null);
+            return new DeviceTwinProperties(metadata, version, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Metadata information for the properties JSON document. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DeviceTwinMetadata"/>. </summary>
         /// <param name="lastUpdated"> The ISO8601 timestamp of the last time the properties were updated. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceTwinMetadata"/> instance for mocking. </returns>
-        public static DeviceTwinMetadata DeviceTwinMetadata(string lastUpdated = default)
+        public static DeviceTwinMetadata DeviceTwinMetadata(string lastUpdated = null)
         {
-            return new DeviceTwinMetadata(lastUpdated, additionalBinaryDataProperties: null);
+            return new DeviceTwinMetadata(lastUpdated, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The thumbprint is a unique value for the x509 certificate, commonly used to find a particular certificate in a certificate store. The thumbprint is dynamically generated using the SHA1 algorithm, and does not physically exist in the certificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DeviceTwinInfoX509Thumbprint"/>. </summary>
         /// <param name="primaryThumbprint"> Primary thumbprint for the x509 certificate. </param>
         /// <param name="secondaryThumbprint"> Secondary thumbprint for the x509 certificate. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceTwinInfoX509Thumbprint"/> instance for mocking. </returns>
-        public static DeviceTwinInfoX509Thumbprint DeviceTwinInfoX509Thumbprint(string primaryThumbprint = default, string secondaryThumbprint = default)
+        public static DeviceTwinInfoX509Thumbprint DeviceTwinInfoX509Thumbprint(string primaryThumbprint = null, string secondaryThumbprint = null)
         {
-            return new DeviceTwinInfoX509Thumbprint(primaryThumbprint, secondaryThumbprint, additionalBinaryDataProperties: null);
+            return new DeviceTwinInfoX509Thumbprint(primaryThumbprint, secondaryThumbprint, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a device connection state event (DeviceConnected, DeviceDisconnected). </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DeviceConnectionStateEventProperties"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="deviceConnectionStateEventInfo"> Information about the device connection state event. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceConnectionStateEventProperties"/> instance for mocking. </returns>
-        public static DeviceConnectionStateEventProperties DeviceConnectionStateEventProperties(string deviceId = default, string moduleId = default, string hubName = default, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = default)
+        public static DeviceConnectionStateEventProperties DeviceConnectionStateEventProperties(string deviceId = null, string moduleId = null, string hubName = null, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = null)
         {
-            return new DeviceConnectionStateEventProperties(deviceId, moduleId, hubName, deviceConnectionStateEventInfo, additionalBinaryDataProperties: null);
+            return new DeviceConnectionStateEventProperties(deviceId, moduleId, hubName, deviceConnectionStateEventInfo, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Information about the device connection state event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DeviceConnectionStateEventInfo"/>. </summary>
         /// <param name="sequenceNumber"> Sequence number is string representation of a hexadecimal number. string compare can be used to identify the larger number because both in ASCII and HEX numbers come after alphabets. If you are converting the string to hex, then the number is a 256 bit number. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceConnectionStateEventInfo"/> instance for mocking. </returns>
-        public static DeviceConnectionStateEventInfo DeviceConnectionStateEventInfo(string sequenceNumber = default)
+        public static DeviceConnectionStateEventInfo DeviceConnectionStateEventInfo(string sequenceNumber = null)
         {
-            return new DeviceConnectionStateEventInfo(sequenceNumber, additionalBinaryDataProperties: null);
+            return new DeviceConnectionStateEventInfo(sequenceNumber, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a device telemetry event (DeviceTelemetry). </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.DeviceTelemetryEventProperties"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceTelemetryEventProperties"/> instance for mocking. </returns>
-        public static DeviceTelemetryEventProperties DeviceTelemetryEventProperties(object body = default, IDictionary<string, string> properties = default, IDictionary<string, string> systemProperties = default)
+        public static DeviceTelemetryEventProperties DeviceTelemetryEventProperties(object body = null, IReadOnlyDictionary<string, string> properties = null, IReadOnlyDictionary<string, string> systemProperties = null)
         {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            systemProperties ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new Dictionary<string, string>();
+            systemProperties ??= new Dictionary<string, string>();
 
-            return new DeviceTelemetryEventProperties(body, properties, systemProperties, additionalBinaryDataProperties: null);
+            return new DeviceTelemetryEventProperties(body, properties, systemProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Event data for Microsoft.Devices.DeviceCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.IotHubDeviceCreatedEventData"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceCreatedEventData"/> instance for mocking. </returns>
-        public static IotHubDeviceCreatedEventData IotHubDeviceCreatedEventData(string deviceId = default, string hubName = default, DeviceTwinInfo twin = default)
+        public static IotHubDeviceCreatedEventData IotHubDeviceCreatedEventData(string deviceId = null, string hubName = null, DeviceTwinInfo twin = null)
         {
-            return new IotHubDeviceCreatedEventData(deviceId, hubName, twin, additionalBinaryDataProperties: null);
+            return new IotHubDeviceCreatedEventData(deviceId, hubName, twin, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Event data for Microsoft.Devices.DeviceDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.IotHubDeviceDeletedEventData"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceDeletedEventData"/> instance for mocking. </returns>
-        public static IotHubDeviceDeletedEventData IotHubDeviceDeletedEventData(string deviceId = default, string hubName = default, DeviceTwinInfo twin = default)
+        public static IotHubDeviceDeletedEventData IotHubDeviceDeletedEventData(string deviceId = null, string hubName = null, DeviceTwinInfo twin = null)
         {
-            return new IotHubDeviceDeletedEventData(deviceId, hubName, twin, additionalBinaryDataProperties: null);
+            return new IotHubDeviceDeletedEventData(deviceId, hubName, twin, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Event data for Microsoft.Devices.DeviceConnected event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.IotHubDeviceConnectedEventData"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="deviceConnectionStateEventInfo"> Information about the device connection state event. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceConnectedEventData"/> instance for mocking. </returns>
-        public static IotHubDeviceConnectedEventData IotHubDeviceConnectedEventData(string deviceId = default, string moduleId = default, string hubName = default, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = default)
+        public static IotHubDeviceConnectedEventData IotHubDeviceConnectedEventData(string deviceId = null, string moduleId = null, string hubName = null, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = null)
         {
-            return new IotHubDeviceConnectedEventData(deviceId, moduleId, hubName, deviceConnectionStateEventInfo, additionalBinaryDataProperties: null);
+            return new IotHubDeviceConnectedEventData(deviceId, moduleId, hubName, deviceConnectionStateEventInfo, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Event data for Microsoft.Devices.DeviceDisconnected event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.IotHubDeviceDisconnectedEventData"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="moduleId"> The unique identifier of the module. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="deviceConnectionStateEventInfo"> Information about the device connection state event. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceDisconnectedEventData"/> instance for mocking. </returns>
-        public static IotHubDeviceDisconnectedEventData IotHubDeviceDisconnectedEventData(string deviceId = default, string moduleId = default, string hubName = default, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = default)
+        public static IotHubDeviceDisconnectedEventData IotHubDeviceDisconnectedEventData(string deviceId = null, string moduleId = null, string hubName = null, DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = null)
         {
-            return new IotHubDeviceDisconnectedEventData(deviceId, moduleId, hubName, deviceConnectionStateEventInfo, additionalBinaryDataProperties: null);
+            return new IotHubDeviceDisconnectedEventData(deviceId, moduleId, hubName, deviceConnectionStateEventInfo, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Event data for Microsoft.Devices.DeviceTelemetry event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.IotHubDeviceTelemetryEventData"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceTelemetryEventData"/> instance for mocking. </returns>
-        public static IotHubDeviceTelemetryEventData IotHubDeviceTelemetryEventData(object body = default, IDictionary<string, string> properties = default, IDictionary<string, string> systemProperties = default)
+        public static IotHubDeviceTelemetryEventData IotHubDeviceTelemetryEventData(object body = null, IReadOnlyDictionary<string, string> properties = null, IReadOnlyDictionary<string, string> systemProperties = null)
         {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            systemProperties ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new Dictionary<string, string>();
+            systemProperties ??= new Dictionary<string, string>();
 
-            return new IotHubDeviceTelemetryEventData(body, properties, systemProperties, additionalBinaryDataProperties: null);
+            return new IotHubDeviceTelemetryEventData(body, properties, systemProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.FhirResourceCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.HealthcareFhirResourceCreatedEventData"/>. </summary>
         /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
         /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
         /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
         /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceCreatedEventData"/> instance for mocking. </returns>
-        public static HealthcareFhirResourceCreatedEventData HealthcareFhirResourceCreatedEventData(HealthcareFhirResourceType? fhirResourceType = default, string fhirServiceHostName = default, string fhirResourceId = default, long? fhirResourceVersionId = default)
+        public static HealthcareFhirResourceCreatedEventData HealthcareFhirResourceCreatedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
         {
-            return new HealthcareFhirResourceCreatedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId, additionalBinaryDataProperties: null);
+            return new HealthcareFhirResourceCreatedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.FhirResourceUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.HealthcareFhirResourceUpdatedEventData"/>. </summary>
         /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
         /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
         /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
         /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceUpdatedEventData"/> instance for mocking. </returns>
-        public static HealthcareFhirResourceUpdatedEventData HealthcareFhirResourceUpdatedEventData(HealthcareFhirResourceType? fhirResourceType = default, string fhirServiceHostName = default, string fhirResourceId = default, long? fhirResourceVersionId = default)
+        public static HealthcareFhirResourceUpdatedEventData HealthcareFhirResourceUpdatedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
         {
-            return new HealthcareFhirResourceUpdatedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId, additionalBinaryDataProperties: null);
+            return new HealthcareFhirResourceUpdatedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.FhirResourceDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.HealthcareFhirResourceDeletedEventData"/>. </summary>
         /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
         /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
         /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
         /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceDeletedEventData"/> instance for mocking. </returns>
-        public static HealthcareFhirResourceDeletedEventData HealthcareFhirResourceDeletedEventData(HealthcareFhirResourceType? fhirResourceType = default, string fhirServiceHostName = default, string fhirResourceId = default, long? fhirResourceVersionId = default)
+        public static HealthcareFhirResourceDeletedEventData HealthcareFhirResourceDeletedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
         {
-            return new HealthcareFhirResourceDeletedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId, additionalBinaryDataProperties: null);
+            return new HealthcareFhirResourceDeletedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.DicomImageCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.HealthcareDicomImageCreatedEventData"/>. </summary>
         /// <param name="partitionName"> Data partition name. </param>
         /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
         /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
@@ -3021,7 +3000,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
         /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
         /// <returns> A new <see cref="SystemEvents.HealthcareDicomImageCreatedEventData"/> instance for mocking. </returns>
-        public static HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string partitionName = default, string imageStudyInstanceUid = default, string imageSeriesInstanceUid = default, string imageSopInstanceUid = default, string serviceHostName = default, long? sequenceNumber = default)
+        public static HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
         {
             return new HealthcareDicomImageCreatedEventData(
                 partitionName,
@@ -3030,10 +3009,10 @@ namespace Azure.Messaging.EventGrid
                 imageSopInstanceUid,
                 serviceHostName,
                 sequenceNumber,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.DicomImageDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.HealthcareDicomImageDeletedEventData"/>. </summary>
         /// <param name="partitionName"> Data partition name. </param>
         /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
         /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
@@ -3041,7 +3020,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="serviceHostName"> Host name of the DICOM account for this image. </param>
         /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
         /// <returns> A new <see cref="SystemEvents.HealthcareDicomImageDeletedEventData"/> instance for mocking. </returns>
-        public static HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string partitionName = default, string imageStudyInstanceUid = default, string imageSeriesInstanceUid = default, string imageSopInstanceUid = default, string serviceHostName = default, long? sequenceNumber = default)
+        public static HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
         {
             return new HealthcareDicomImageDeletedEventData(
                 partitionName,
@@ -3050,10 +3029,10 @@ namespace Azure.Messaging.EventGrid
                 imageSopInstanceUid,
                 serviceHostName,
                 sequenceNumber,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.DicomImageUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.HealthcareDicomImageUpdatedEventData"/>. </summary>
         /// <param name="partitionName"> Data partition name. </param>
         /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
         /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
@@ -3061,7 +3040,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
         /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation, updation and deletion within the service. </param>
         /// <returns> A new <see cref="SystemEvents.HealthcareDicomImageUpdatedEventData"/> instance for mocking. </returns>
-        public static HealthcareDicomImageUpdatedEventData HealthcareDicomImageUpdatedEventData(string partitionName = default, string imageStudyInstanceUid = default, string imageSeriesInstanceUid = default, string imageSopInstanceUid = default, string serviceHostName = default, long? sequenceNumber = default)
+        public static HealthcareDicomImageUpdatedEventData HealthcareDicomImageUpdatedEventData(string partitionName = null, string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
         {
             return new HealthcareDicomImageUpdatedEventData(
                 partitionName,
@@ -3070,10 +3049,10 @@ namespace Azure.Messaging.EventGrid
                 imageSopInstanceUid,
                 serviceHostName,
                 sequenceNumber,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.CertificateNewVersionCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultCertificateNewVersionCreatedEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3082,7 +3061,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultCertificateNewVersionCreatedEventData"/> instance for mocking. </returns>
-        public static KeyVaultCertificateNewVersionCreatedEventData KeyVaultCertificateNewVersionCreatedEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultCertificateNewVersionCreatedEventData KeyVaultCertificateNewVersionCreatedEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultCertificateNewVersionCreatedEventData(
                 id,
@@ -3092,10 +3071,10 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.CertificateNearExpiry event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultCertificateNearExpiryEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3104,7 +3083,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultCertificateNearExpiryEventData"/> instance for mocking. </returns>
-        public static KeyVaultCertificateNearExpiryEventData KeyVaultCertificateNearExpiryEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultCertificateNearExpiryEventData KeyVaultCertificateNearExpiryEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultCertificateNearExpiryEventData(
                 id,
@@ -3114,10 +3093,10 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.CertificateExpired event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultCertificateExpiredEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3126,7 +3105,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultCertificateExpiredEventData"/> instance for mocking. </returns>
-        public static KeyVaultCertificateExpiredEventData KeyVaultCertificateExpiredEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultCertificateExpiredEventData KeyVaultCertificateExpiredEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultCertificateExpiredEventData(
                 id,
@@ -3136,10 +3115,10 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.KeyNewVersionCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultKeyNewVersionCreatedEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3148,7 +3127,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultKeyNewVersionCreatedEventData"/> instance for mocking. </returns>
-        public static KeyVaultKeyNewVersionCreatedEventData KeyVaultKeyNewVersionCreatedEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultKeyNewVersionCreatedEventData KeyVaultKeyNewVersionCreatedEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultKeyNewVersionCreatedEventData(
                 id,
@@ -3158,10 +3137,10 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.KeyNearExpiry event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultKeyNearExpiryEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3170,7 +3149,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultKeyNearExpiryEventData"/> instance for mocking. </returns>
-        public static KeyVaultKeyNearExpiryEventData KeyVaultKeyNearExpiryEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultKeyNearExpiryEventData KeyVaultKeyNearExpiryEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultKeyNearExpiryEventData(
                 id,
@@ -3180,10 +3159,10 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.KeyExpired event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultKeyExpiredEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3192,7 +3171,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultKeyExpiredEventData"/> instance for mocking. </returns>
-        public static KeyVaultKeyExpiredEventData KeyVaultKeyExpiredEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultKeyExpiredEventData KeyVaultKeyExpiredEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultKeyExpiredEventData(
                 id,
@@ -3202,10 +3181,10 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.SecretNewVersionCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultSecretNewVersionCreatedEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3214,7 +3193,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultSecretNewVersionCreatedEventData"/> instance for mocking. </returns>
-        public static KeyVaultSecretNewVersionCreatedEventData KeyVaultSecretNewVersionCreatedEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultSecretNewVersionCreatedEventData KeyVaultSecretNewVersionCreatedEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultSecretNewVersionCreatedEventData(
                 id,
@@ -3224,10 +3203,10 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.SecretNearExpiry event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultSecretNearExpiryEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3236,7 +3215,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultSecretNearExpiryEventData"/> instance for mocking. </returns>
-        public static KeyVaultSecretNearExpiryEventData KeyVaultSecretNearExpiryEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultSecretNearExpiryEventData KeyVaultSecretNearExpiryEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultSecretNearExpiryEventData(
                 id,
@@ -3246,10 +3225,10 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.SecretExpired event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultSecretExpiredEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3258,7 +3237,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultSecretExpiredEventData"/> instance for mocking. </returns>
-        public static KeyVaultSecretExpiredEventData KeyVaultSecretExpiredEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultSecretExpiredEventData KeyVaultSecretExpiredEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultSecretExpiredEventData(
                 id,
@@ -3268,10 +3247,10 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.VaultAccessPolicyChanged event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.KeyVaultAccessPolicyChangedEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -3280,7 +3259,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
         /// <returns> A new <see cref="SystemEvents.KeyVaultAccessPolicyChangedEventData"/> instance for mocking. </returns>
-        public static KeyVaultAccessPolicyChangedEventData KeyVaultAccessPolicyChangedEventData(string id = default, string vaultName = default, string objectType = default, string objectName = default, string version = default, float? nbf = default, float? exp = default)
+        public static KeyVaultAccessPolicyChangedEventData KeyVaultAccessPolicyChangedEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = null, float? exp = null)
         {
             return new KeyVaultAccessPolicyChangedEventData(
                 id,
@@ -3290,28 +3269,28 @@ namespace Azure.Messaging.EventGrid
                 version,
                 nbf,
                 exp,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelRegistered event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MachineLearningServicesModelRegisteredEventData"/>. </summary>
         /// <param name="modelName"> The name of the model that was registered. </param>
         /// <param name="modelVersion"> The version of the model that was registered. </param>
         /// <param name="modelTags"> The tags of the model that was registered. </param>
         /// <param name="modelProperties"> The properties of the model that was registered. </param>
         /// <returns> A new <see cref="SystemEvents.MachineLearningServicesModelRegisteredEventData"/> instance for mocking. </returns>
-        public static MachineLearningServicesModelRegisteredEventData MachineLearningServicesModelRegisteredEventData(string modelName = default, string modelVersion = default, object modelTags = default, object modelProperties = default)
+        public static MachineLearningServicesModelRegisteredEventData MachineLearningServicesModelRegisteredEventData(string modelName = null, string modelVersion = null, object modelTags = null, object modelProperties = null)
         {
-            return new MachineLearningServicesModelRegisteredEventData(modelName, modelVersion, modelTags, modelProperties, additionalBinaryDataProperties: null);
+            return new MachineLearningServicesModelRegisteredEventData(modelName, modelVersion, modelTags, modelProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelDeployed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MachineLearningServicesModelDeployedEventData"/>. </summary>
         /// <param name="serviceName"> The name of the deployed service. </param>
         /// <param name="serviceComputeType"> The compute type (e.g. ACI, AKS) of the deployed service. </param>
         /// <param name="modelIds"> A common separated list of model IDs. The IDs of the models deployed in the service. </param>
         /// <param name="serviceTags"> The tags of the deployed service. </param>
         /// <param name="serviceProperties"> The properties of the deployed service. </param>
         /// <returns> A new <see cref="SystemEvents.MachineLearningServicesModelDeployedEventData"/> instance for mocking. </returns>
-        public static MachineLearningServicesModelDeployedEventData MachineLearningServicesModelDeployedEventData(string serviceName = default, string serviceComputeType = default, string modelIds = default, object serviceTags = default, object serviceProperties = default)
+        public static MachineLearningServicesModelDeployedEventData MachineLearningServicesModelDeployedEventData(string serviceName = null, string serviceComputeType = null, string modelIds = null, object serviceTags = null, object serviceProperties = null)
         {
             return new MachineLearningServicesModelDeployedEventData(
                 serviceName,
@@ -3319,10 +3298,10 @@ namespace Azure.Messaging.EventGrid
                 modelIds,
                 serviceTags,
                 serviceProperties,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MachineLearningServicesRunCompletedEventData"/>. </summary>
         /// <param name="experimentId"> The ID of the experiment that the run belongs to. </param>
         /// <param name="experimentName"> The name of the experiment that the run belongs to. </param>
         /// <param name="runId"> The ID of the Run that was completed. </param>
@@ -3330,7 +3309,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="runTags"> The tags of the completed Run. </param>
         /// <param name="runProperties"> The properties of the completed Run. </param>
         /// <returns> A new <see cref="SystemEvents.MachineLearningServicesRunCompletedEventData"/> instance for mocking. </returns>
-        public static MachineLearningServicesRunCompletedEventData MachineLearningServicesRunCompletedEventData(string experimentId = default, string experimentName = default, string runId = default, string runType = default, object runTags = default, object runProperties = default)
+        public static MachineLearningServicesRunCompletedEventData MachineLearningServicesRunCompletedEventData(string experimentId = null, string experimentName = null, string runId = null, string runType = null, object runTags = null, object runProperties = null)
         {
             return new MachineLearningServicesRunCompletedEventData(
                 experimentId,
@@ -3339,10 +3318,10 @@ namespace Azure.Messaging.EventGrid
                 runType,
                 runTags,
                 runProperties,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.DatasetDriftDetected event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
         /// <param name="dataDriftId"> The ID of the data drift monitor that triggered the event. </param>
         /// <param name="dataDriftName"> The name of the data drift monitor that triggered the event. </param>
         /// <param name="runId"> The ID of the Run that detected data drift. </param>
@@ -3352,7 +3331,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="startTime"> The start time of the target dataset time series that resulted in drift detection. </param>
         /// <param name="endTime"> The end time of the target dataset time series that resulted in drift detection. </param>
         /// <returns> A new <see cref="SystemEvents.MachineLearningServicesDatasetDriftDetectedEventData"/> instance for mocking. </returns>
-        public static MachineLearningServicesDatasetDriftDetectedEventData MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId = default, string dataDriftName = default, string runId = default, string baseDatasetId = default, string targetDatasetId = default, double? driftCoefficient = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default)
+        public static MachineLearningServicesDatasetDriftDetectedEventData MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId = null, string dataDriftName = null, string runId = null, string baseDatasetId = null, string targetDatasetId = null, double? driftCoefficient = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null)
         {
             return new MachineLearningServicesDatasetDriftDetectedEventData(
                 dataDriftId,
@@ -3363,10 +3342,10 @@ namespace Azure.Messaging.EventGrid
                 driftCoefficient,
                 startTime,
                 endTime,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunStatusChanged event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MachineLearningServicesRunStatusChangedEventData"/>. </summary>
         /// <param name="experimentId"> The ID of the experiment that the Machine Learning Run belongs to. </param>
         /// <param name="experimentName"> The name of the experiment that the Machine Learning Run belongs to. </param>
         /// <param name="runId"> The ID of the Machine Learning Run. </param>
@@ -3375,7 +3354,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="runProperties"> The properties of the Machine Learning Run. </param>
         /// <param name="runStatus"> The status of the Machine Learning Run. </param>
         /// <returns> A new <see cref="SystemEvents.MachineLearningServicesRunStatusChangedEventData"/> instance for mocking. </returns>
-        public static MachineLearningServicesRunStatusChangedEventData MachineLearningServicesRunStatusChangedEventData(string experimentId = default, string experimentName = default, string runId = default, string runType = default, object runTags = default, object runProperties = default, string runStatus = default)
+        public static MachineLearningServicesRunStatusChangedEventData MachineLearningServicesRunStatusChangedEventData(string experimentId = null, string experimentName = null, string runId = null, string runType = null, object runTags = null, object runProperties = null, string runStatus = null)
         {
             return new MachineLearningServicesRunStatusChangedEventData(
                 experimentId,
@@ -3385,10 +3364,10 @@ namespace Azure.Messaging.EventGrid
                 runTags,
                 runProperties,
                 runStatus,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.PolicyInsights.PolicyStateCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.PolicyInsightsPolicyStateCreatedEventData"/>. </summary>
         /// <param name="timestamp"> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>
@@ -3397,7 +3376,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
         /// <returns> A new <see cref="SystemEvents.PolicyInsightsPolicyStateCreatedEventData"/> instance for mocking. </returns>
-        public static PolicyInsightsPolicyStateCreatedEventData PolicyInsightsPolicyStateCreatedEventData(DateTimeOffset? timestamp = default, string policyAssignmentId = default, string policyDefinitionId = default, string policyDefinitionReferenceId = default, string complianceState = default, string subscriptionId = default, string complianceReasonCode = default)
+        public static PolicyInsightsPolicyStateCreatedEventData PolicyInsightsPolicyStateCreatedEventData(DateTimeOffset? timestamp = null, string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null)
         {
             return new PolicyInsightsPolicyStateCreatedEventData(
                 timestamp,
@@ -3407,10 +3386,10 @@ namespace Azure.Messaging.EventGrid
                 complianceState,
                 subscriptionId,
                 complianceReasonCode,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.PolicyInsights.PolicyStateChanged event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.PolicyInsightsPolicyStateChangedEventData"/>. </summary>
         /// <param name="timestamp"> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>
@@ -3419,7 +3398,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
         /// <returns> A new <see cref="SystemEvents.PolicyInsightsPolicyStateChangedEventData"/> instance for mocking. </returns>
-        public static PolicyInsightsPolicyStateChangedEventData PolicyInsightsPolicyStateChangedEventData(DateTimeOffset? timestamp = default, string policyAssignmentId = default, string policyDefinitionId = default, string policyDefinitionReferenceId = default, string complianceState = default, string subscriptionId = default, string complianceReasonCode = default)
+        public static PolicyInsightsPolicyStateChangedEventData PolicyInsightsPolicyStateChangedEventData(DateTimeOffset? timestamp = null, string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null)
         {
             return new PolicyInsightsPolicyStateChangedEventData(
                 timestamp,
@@ -3429,10 +3408,10 @@ namespace Azure.Messaging.EventGrid
                 complianceState,
                 subscriptionId,
                 complianceReasonCode,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.PolicyInsights.PolicyStateDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.PolicyInsightsPolicyStateDeletedEventData"/>. </summary>
         /// <param name="timestamp"> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>
@@ -3441,7 +3420,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
         /// <returns> A new <see cref="SystemEvents.PolicyInsightsPolicyStateDeletedEventData"/> instance for mocking. </returns>
-        public static PolicyInsightsPolicyStateDeletedEventData PolicyInsightsPolicyStateDeletedEventData(DateTimeOffset? timestamp = default, string policyAssignmentId = default, string policyDefinitionId = default, string policyDefinitionReferenceId = default, string complianceState = default, string subscriptionId = default, string complianceReasonCode = default)
+        public static PolicyInsightsPolicyStateDeletedEventData PolicyInsightsPolicyStateDeletedEventData(DateTimeOffset? timestamp = null, string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null)
         {
             return new PolicyInsightsPolicyStateDeletedEventData(
                 timestamp,
@@ -3451,73 +3430,62 @@ namespace Azure.Messaging.EventGrid
                 complianceState,
                 subscriptionId,
                 complianceReasonCode,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.PatchingCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.RedisPatchingCompletedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="name"> The name of this event. </param>
         /// <param name="status"> The status of this event. Failed or  succeeded. </param>
         /// <returns> A new <see cref="SystemEvents.RedisPatchingCompletedEventData"/> instance for mocking. </returns>
-        public static RedisPatchingCompletedEventData RedisPatchingCompletedEventData(DateTimeOffset? timestamp = default, string name = default, string status = default)
+        public static RedisPatchingCompletedEventData RedisPatchingCompletedEventData(DateTimeOffset? timestamp = null, string name = null, string status = null)
         {
-            return new RedisPatchingCompletedEventData(timestamp, name, status, additionalBinaryDataProperties: null);
+            return new RedisPatchingCompletedEventData(timestamp, name, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.ScalingCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.RedisScalingCompletedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="name"> The name of this event. </param>
         /// <param name="status"> The status of this event. Failed or  succeeded. </param>
         /// <returns> A new <see cref="SystemEvents.RedisScalingCompletedEventData"/> instance for mocking. </returns>
-        public static RedisScalingCompletedEventData RedisScalingCompletedEventData(DateTimeOffset? timestamp = default, string name = default, string status = default)
+        public static RedisScalingCompletedEventData RedisScalingCompletedEventData(DateTimeOffset? timestamp = null, string name = null, string status = null)
         {
-            return new RedisScalingCompletedEventData(timestamp, name, status, additionalBinaryDataProperties: null);
+            return new RedisScalingCompletedEventData(timestamp, name, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.ExportRDBCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.RedisExportRdbCompletedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="name"> The name of this event. </param>
         /// <param name="status"> The status of this event. Failed or  succeeded. </param>
         /// <returns> A new <see cref="SystemEvents.RedisExportRdbCompletedEventData"/> instance for mocking. </returns>
-        public static RedisExportRdbCompletedEventData RedisExportRdbCompletedEventData(DateTimeOffset? timestamp = default, string name = default, string status = default)
+        public static RedisExportRdbCompletedEventData RedisExportRdbCompletedEventData(DateTimeOffset? timestamp = null, string name = null, string status = null)
         {
-            return new RedisExportRdbCompletedEventData(timestamp, name, status, additionalBinaryDataProperties: null);
+            return new RedisExportRdbCompletedEventData(timestamp, name, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.ImportRDBCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.RedisImportRdbCompletedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="name"> The name of this event. </param>
         /// <param name="status"> The status of this event. Failed or  succeeded. </param>
         /// <returns> A new <see cref="SystemEvents.RedisImportRdbCompletedEventData"/> instance for mocking. </returns>
-        public static RedisImportRdbCompletedEventData RedisImportRdbCompletedEventData(DateTimeOffset? timestamp = default, string name = default, string status = default)
+        public static RedisImportRdbCompletedEventData RedisImportRdbCompletedEventData(DateTimeOffset? timestamp = null, string name = null, string status = null)
         {
-            return new RedisImportRdbCompletedEventData(timestamp, name, status, additionalBinaryDataProperties: null);
+            return new RedisImportRdbCompletedEventData(timestamp, name, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The details of the authorization for the resource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceAuthorization"/>. </summary>
         /// <param name="scope"> The scope of the authorization. </param>
         /// <param name="action"> The action being requested. </param>
         /// <param name="evidence"> The evidence for the authorization. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceAuthorization"/> instance for mocking. </returns>
-        public static ResourceAuthorization ResourceAuthorization(string scope = default, string action = default, IDictionary<string, string> evidence = default)
+        public static ResourceAuthorization ResourceAuthorization(string scope = null, string action = null, IReadOnlyDictionary<string, string> evidence = null)
         {
-            evidence ??= new ChangeTrackingDictionary<string, string>();
+            evidence ??= new Dictionary<string, string>();
 
-            return new ResourceAuthorization(scope, action, evidence, additionalBinaryDataProperties: null);
+            return new ResourceAuthorization(scope, action, evidence, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The details of the HTTP request. </summary>
-        /// <param name="clientRequestId"> The client request ID. </param>
-        /// <param name="clientIpAddress"> The client IP address. </param>
-        /// <param name="methodString"></param>
-        /// <param name="url"> The url used in the request. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceHttpRequest"/> instance for mocking. </returns>
-        public static ResourceHttpRequest ResourceHttpRequest(string clientRequestId = default, string clientIpAddress = default, string methodString = default, string url = default)
-        {
-            return new ResourceHttpRequest(clientRequestId, clientIpAddress, methodString, url, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ServiceBusActiveMessagesAvailableWithNoListenersEventData"/>. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
         /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
@@ -3525,7 +3493,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
         /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
         /// <returns> A new <see cref="SystemEvents.ServiceBusActiveMessagesAvailableWithNoListenersEventData"/> instance for mocking. </returns>
-        public static ServiceBusActiveMessagesAvailableWithNoListenersEventData ServiceBusActiveMessagesAvailableWithNoListenersEventData(string namespaceName = default, string requestUri = default, string entityType = default, string queueName = default, string topicName = default, string subscriptionName = default)
+        public static ServiceBusActiveMessagesAvailableWithNoListenersEventData ServiceBusActiveMessagesAvailableWithNoListenersEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null)
         {
             return new ServiceBusActiveMessagesAvailableWithNoListenersEventData(
                 namespaceName,
@@ -3534,10 +3502,10 @@ namespace Azure.Messaging.EventGrid
                 queueName,
                 topicName,
                 subscriptionName,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListeners event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ServiceBusDeadletterMessagesAvailableWithNoListenersEventData"/>. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
         /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
@@ -3545,7 +3513,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
         /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
         /// <returns> A new <see cref="SystemEvents.ServiceBusDeadletterMessagesAvailableWithNoListenersEventData"/> instance for mocking. </returns>
-        public static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(string namespaceName = default, string requestUri = default, string entityType = default, string queueName = default, string topicName = default, string subscriptionName = default)
+        public static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null)
         {
             return new ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(
                 namespaceName,
@@ -3554,10 +3522,10 @@ namespace Azure.Messaging.EventGrid
                 queueName,
                 topicName,
                 subscriptionName,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.ActiveMessagesAvailablePeriodicNotifications event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/>. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
         /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
@@ -3565,7 +3533,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
         /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
         /// <returns> A new <see cref="SystemEvents.ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData"/> instance for mocking. </returns>
-        public static ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData(string namespaceName = default, string requestUri = default, string entityType = default, string queueName = default, string topicName = default, string subscriptionName = default)
+        public static ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null)
         {
             return new ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData(
                 namespaceName,
@@ -3574,10 +3542,10 @@ namespace Azure.Messaging.EventGrid
                 queueName,
                 topicName,
                 subscriptionName,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.DeadletterMessagesAvailablePeriodicNotifications event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData"/>. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
         /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>
@@ -3585,7 +3553,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
         /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
         /// <returns> A new <see cref="SystemEvents.ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData"/> instance for mocking. </returns>
-        public static ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(string namespaceName = default, string requestUri = default, string entityType = default, string queueName = default, string topicName = default, string subscriptionName = default)
+        public static ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(string namespaceName = null, string requestUri = null, string entityType = null, string queueName = null, string topicName = null, string subscriptionName = null)
         {
             return new ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(
                 namespaceName,
@@ -3594,28 +3562,28 @@ namespace Azure.Messaging.EventGrid
                 queueName,
                 topicName,
                 subscriptionName,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.SignalRService.ClientConnectionConnected event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.SignalRServiceClientConnectionConnectedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="hubName"> The hub of connected client connection. </param>
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
         /// <param name="userId"> The user Id of connected client connection. </param>
         /// <returns> A new <see cref="SystemEvents.SignalRServiceClientConnectionConnectedEventData"/> instance for mocking. </returns>
-        public static SignalRServiceClientConnectionConnectedEventData SignalRServiceClientConnectionConnectedEventData(DateTimeOffset? timestamp = default, string hubName = default, string connectionId = default, string userId = default)
+        public static SignalRServiceClientConnectionConnectedEventData SignalRServiceClientConnectionConnectedEventData(DateTimeOffset? timestamp = null, string hubName = null, string connectionId = null, string userId = null)
         {
-            return new SignalRServiceClientConnectionConnectedEventData(timestamp, hubName, connectionId, userId, additionalBinaryDataProperties: null);
+            return new SignalRServiceClientConnectionConnectedEventData(timestamp, hubName, connectionId, userId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.SignalRService.ClientConnectionDisconnected event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.SignalRServiceClientConnectionDisconnectedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="hubName"> The hub of connected client connection. </param>
         /// <param name="connectionId"> The connection Id of connected client connection. </param>
         /// <param name="userId"> The user Id of connected client connection. </param>
         /// <param name="errorMessage"> The message of error that cause the client connection disconnected. </param>
         /// <returns> A new <see cref="SystemEvents.SignalRServiceClientConnectionDisconnectedEventData"/> instance for mocking. </returns>
-        public static SignalRServiceClientConnectionDisconnectedEventData SignalRServiceClientConnectionDisconnectedEventData(DateTimeOffset? timestamp = default, string hubName = default, string connectionId = default, string userId = default, string errorMessage = default)
+        public static SignalRServiceClientConnectionDisconnectedEventData SignalRServiceClientConnectionDisconnectedEventData(DateTimeOffset? timestamp = null, string hubName = null, string connectionId = null, string userId = null, string errorMessage = null)
         {
             return new SignalRServiceClientConnectionDisconnectedEventData(
                 timestamp,
@@ -3623,10 +3591,10 @@ namespace Azure.Messaging.EventGrid
                 connectionId,
                 userId,
                 errorMessage,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.BlobCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageBlobCreatedEventData"/>. </summary>
         /// <param name="api"> The name of the API/operation that triggered this event. </param>
         /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
         /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
@@ -3641,7 +3609,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobCreatedEventData"/> instance for mocking. </returns>
-        public static StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = default, string clientRequestId = default, string requestId = default, string eTag = default, string contentType = default, long? contentLength = default, long? contentOffset = default, string blobType = default, StorageBlobAccessTier accessTier = default, string url = default, string sequencer = default, string identity = default, object storageDiagnostics = default)
+        public static StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string contentType = null, long? contentLength = null, long? contentOffset = null, string blobType = null, StorageBlobAccessTier accessTier = default, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageBlobCreatedEventData(
                 api,
@@ -3657,10 +3625,10 @@ namespace Azure.Messaging.EventGrid
                 sequencer,
                 identity,
                 storageDiagnostics,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.BlobDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageBlobDeletedEventData"/>. </summary>
         /// <param name="api"> The name of the API/operation that triggered this event. </param>
         /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
         /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
@@ -3671,7 +3639,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobDeletedEventData"/> instance for mocking. </returns>
-        public static StorageBlobDeletedEventData StorageBlobDeletedEventData(string api = default, string clientRequestId = default, string requestId = default, string contentType = default, string blobType = default, string url = default, string sequencer = default, string identity = default, object storageDiagnostics = default)
+        public static StorageBlobDeletedEventData StorageBlobDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, string blobType = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageBlobDeletedEventData(
                 api,
@@ -3683,10 +3651,10 @@ namespace Azure.Messaging.EventGrid
                 sequencer,
                 identity,
                 storageDiagnostics,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.DirectoryCreated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageDirectoryCreatedEventData"/>. </summary>
         /// <param name="api"> The name of the API/operation that triggered this event. </param>
         /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
         /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
@@ -3696,7 +3664,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageDirectoryCreatedEventData"/> instance for mocking. </returns>
-        public static StorageDirectoryCreatedEventData StorageDirectoryCreatedEventData(string api = default, string clientRequestId = default, string requestId = default, string eTag = default, string url = default, string sequencer = default, string identity = default, object storageDiagnostics = default)
+        public static StorageDirectoryCreatedEventData StorageDirectoryCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageDirectoryCreatedEventData(
                 api,
@@ -3707,34 +3675,10 @@ namespace Azure.Messaging.EventGrid
                 sequencer,
                 identity,
                 storageDiagnostics,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.DirectoryDeleted event. </summary>
-        /// <param name="api"> The name of the API/operation that triggered this event. </param>
-        /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
-        /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
-        /// <param name="url"> The path to the deleted directory. </param>
-        /// <param name="recursiveString"></param>
-        /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular directory name. Users can use standard string comparison to understand the relative sequence of two events on the same directory name. </param>
-        /// <param name="identity"> The identity of the requester that triggered this event. </param>
-        /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
-        /// <returns> A new <see cref="SystemEvents.StorageDirectoryDeletedEventData"/> instance for mocking. </returns>
-        public static StorageDirectoryDeletedEventData StorageDirectoryDeletedEventData(string api = default, string clientRequestId = default, string requestId = default, string url = default, string recursiveString = default, string sequencer = default, string identity = default, object storageDiagnostics = default)
-        {
-            return new StorageDirectoryDeletedEventData(
-                api,
-                clientRequestId,
-                requestId,
-                url,
-                recursiveString,
-                sequencer,
-                identity,
-                storageDiagnostics,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.BlobRenamed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageBlobRenamedEventData"/>. </summary>
         /// <param name="api"> The name of the API/operation that triggered this event. </param>
         /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
         /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
@@ -3744,7 +3688,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobRenamedEventData"/> instance for mocking. </returns>
-        public static StorageBlobRenamedEventData StorageBlobRenamedEventData(string api = default, string clientRequestId = default, string requestId = default, string sourceUrl = default, string destinationUrl = default, string sequencer = default, string identity = default, object storageDiagnostics = default)
+        public static StorageBlobRenamedEventData StorageBlobRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageBlobRenamedEventData(
                 api,
@@ -3755,10 +3699,10 @@ namespace Azure.Messaging.EventGrid
                 sequencer,
                 identity,
                 storageDiagnostics,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.DirectoryRenamed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageDirectoryRenamedEventData"/>. </summary>
         /// <param name="api"> The name of the API/operation that triggered this event. </param>
         /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
         /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
@@ -3768,7 +3712,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageDirectoryRenamedEventData"/> instance for mocking. </returns>
-        public static StorageDirectoryRenamedEventData StorageDirectoryRenamedEventData(string api = default, string clientRequestId = default, string requestId = default, string sourceUrl = default, string destinationUrl = default, string sequencer = default, string identity = default, object storageDiagnostics = default)
+        public static StorageDirectoryRenamedEventData StorageDirectoryRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageDirectoryRenamedEventData(
                 api,
@@ -3779,10 +3723,10 @@ namespace Azure.Messaging.EventGrid
                 sequencer,
                 identity,
                 storageDiagnostics,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.LifecyclePolicyCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
         /// <param name="policyRunSummary"> Policy execution summary which shows the completion status of a LCM run". </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
@@ -3790,7 +3734,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/> instance for mocking. </returns>
-        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = default, StorageLifecyclePolicyRunSummary policyRunSummary = default, StorageLifecyclePolicyActionSummaryDetail deleteSummary = default, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = default, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = default, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = default)
+        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, StorageLifecyclePolicyRunSummary policyRunSummary = null, StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = null)
         {
             return new StorageLifecyclePolicyCompletedEventData(
                 scheduleTime,
@@ -3799,28 +3743,28 @@ namespace Azure.Messaging.EventGrid
                 tierToCoolSummary,
                 tierToArchiveSummary,
                 tierToColdSummary,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Policy run status of an account in a Blob Management cycle. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyRunSummary"/>. </summary>
         /// <param name="completionStatus"> Policy status can be Completed/CompletedWithError/Incomplete. </param>
         /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyRunSummary"/> instance for mocking. </returns>
         public static StorageLifecyclePolicyRunSummary StorageLifecyclePolicyRunSummary(StorageLifecycleCompletionStatus completionStatus = default)
         {
-            return new StorageLifecyclePolicyRunSummary(completionStatus, additionalBinaryDataProperties: null);
+            return new StorageLifecyclePolicyRunSummary(completionStatus, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
         /// <param name="totalObjectsCount"> Total number of objects to be acted on by this action. </param>
         /// <param name="successCount"> Number of success operations of this action. </param>
         /// <param name="errorList"> Error messages of this action if any. </param>
         /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyActionSummaryDetail"/> instance for mocking. </returns>
-        public static StorageLifecyclePolicyActionSummaryDetail StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount = default, long? successCount = default, string errorList = default)
+        public static StorageLifecyclePolicyActionSummaryDetail StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount = null, long? successCount = null, string errorList = null)
         {
-            return new StorageLifecyclePolicyActionSummaryDetail(totalObjectsCount, successCount, errorList, additionalBinaryDataProperties: null);
+            return new StorageLifecyclePolicyActionSummaryDetail(totalObjectsCount, successCount, errorList, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.BlobTierChanged event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageBlobTierChangedEventData"/>. </summary>
         /// <param name="api"> The name of the API/operation that triggered this event. </param>
         /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
         /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
@@ -3834,7 +3778,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobTierChangedEventData"/> instance for mocking. </returns>
-        public static StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = default, string clientRequestId = default, string requestId = default, string contentType = default, long? contentLength = default, string blobType = default, StorageBlobAccessTier accessTier = default, StorageBlobAccessTier previousTier = default, string url = default, string sequencer = default, string identity = default, object storageDiagnostics = default)
+        public static StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, StorageBlobAccessTier accessTier = default, StorageBlobAccessTier previousTier = default, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageBlobTierChangedEventData(
                 api,
@@ -3849,10 +3793,10 @@ namespace Azure.Messaging.EventGrid
                 sequencer,
                 identity,
                 storageDiagnostics,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.AsyncOperationInitiated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageAsyncOperationInitiatedEventData"/>. </summary>
         /// <param name="api"> The name of the API/operation that triggered this event. </param>
         /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
         /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
@@ -3864,7 +3808,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageAsyncOperationInitiatedEventData"/> instance for mocking. </returns>
-        public static StorageAsyncOperationInitiatedEventData StorageAsyncOperationInitiatedEventData(string api = default, string clientRequestId = default, string requestId = default, string contentType = default, long? contentLength = default, string blobType = default, string url = default, string sequencer = default, string identity = default, object storageDiagnostics = default)
+        public static StorageAsyncOperationInitiatedEventData StorageAsyncOperationInitiatedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageAsyncOperationInitiatedEventData(
                 api,
@@ -3877,10 +3821,10 @@ namespace Azure.Messaging.EventGrid
                 sequencer,
                 identity,
                 storageDiagnostics,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.BlobInventoryPolicyCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageBlobInventoryPolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleDateTime"> The time at which inventory policy was scheduled. </param>
         /// <param name="accountName"> The account name for which inventory policy is registered. </param>
         /// <param name="ruleName"> The rule name for inventory policy. </param>
@@ -3889,7 +3833,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="policyRunId"> The policy run id for inventory run. </param>
         /// <param name="manifestBlobUrl"> The blob URL for manifest file for inventory run. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobInventoryPolicyCompletedEventData"/> instance for mocking. </returns>
-        public static StorageBlobInventoryPolicyCompletedEventData StorageBlobInventoryPolicyCompletedEventData(DateTimeOffset? scheduleDateTime = default, string accountName = default, string ruleName = default, string policyRunStatus = default, string policyRunStatusMessage = default, string policyRunId = default, string manifestBlobUrl = default)
+        public static StorageBlobInventoryPolicyCompletedEventData StorageBlobInventoryPolicyCompletedEventData(DateTimeOffset? scheduleDateTime = null, string accountName = null, string ruleName = null, string policyRunStatus = null, string policyRunStatusMessage = null, string policyRunId = null, string manifestBlobUrl = null)
         {
             return new StorageBlobInventoryPolicyCompletedEventData(
                 scheduleDateTime,
@@ -3899,17 +3843,17 @@ namespace Azure.Messaging.EventGrid
                 policyRunStatusMessage,
                 policyRunId,
                 manifestBlobUrl,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.StorageTaskCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageTaskCompletedEventData"/>. </summary>
         /// <param name="status"> The status for a storage task. </param>
         /// <param name="completedDateTime"> The time at which a storage task was completed. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>
         /// <param name="taskName"> The task name for a storage task. </param>
         /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
         /// <returns> A new <see cref="SystemEvents.StorageTaskCompletedEventData"/> instance for mocking. </returns>
-        public static StorageTaskCompletedEventData StorageTaskCompletedEventData(StorageTaskCompletedStatus? status = default, DateTimeOffset? completedDateTime = default, string taskExecutionId = default, string taskName = default, Uri summaryReportBlobUri = default)
+        public static StorageTaskCompletedEventData StorageTaskCompletedEventData(StorageTaskCompletedStatus? status = null, DateTimeOffset? completedDateTime = null, string taskExecutionId = null, string taskName = null, Uri summaryReportBlobUri = null)
         {
             return new StorageTaskCompletedEventData(
                 status,
@@ -3917,35 +3861,35 @@ namespace Azure.Messaging.EventGrid
                 taskExecutionId,
                 taskName,
                 summaryReportBlobUri,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.StorageTaskQueued event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageTaskQueuedEventData"/>. </summary>
         /// <param name="queuedDateTime"> The time at which a storage task was queued. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>
         /// <returns> A new <see cref="SystemEvents.StorageTaskQueuedEventData"/> instance for mocking. </returns>
-        public static StorageTaskQueuedEventData StorageTaskQueuedEventData(DateTimeOffset? queuedDateTime = default, string taskExecutionId = default)
+        public static StorageTaskQueuedEventData StorageTaskQueuedEventData(DateTimeOffset? queuedDateTime = null, string taskExecutionId = null)
         {
-            return new StorageTaskQueuedEventData(queuedDateTime, taskExecutionId, additionalBinaryDataProperties: null);
+            return new StorageTaskQueuedEventData(queuedDateTime, taskExecutionId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.StorageTaskAssignmentQueued event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageTaskAssignmentQueuedEventData"/>. </summary>
         /// <param name="queuedOn"> The time at which a storage task was queued. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>
         /// <returns> A new <see cref="SystemEvents.StorageTaskAssignmentQueuedEventData"/> instance for mocking. </returns>
-        public static StorageTaskAssignmentQueuedEventData StorageTaskAssignmentQueuedEventData(DateTimeOffset? queuedOn = default, string taskExecutionId = default)
+        public static StorageTaskAssignmentQueuedEventData StorageTaskAssignmentQueuedEventData(DateTimeOffset? queuedOn = null, string taskExecutionId = null)
         {
-            return new StorageTaskAssignmentQueuedEventData(queuedOn, taskExecutionId, additionalBinaryDataProperties: null);
+            return new StorageTaskAssignmentQueuedEventData(queuedOn, taskExecutionId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.StorageTaskAssignmentCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageTaskAssignmentCompletedEventData"/>. </summary>
         /// <param name="status"> The status for a storage task. </param>
         /// <param name="completedOn"> The time at which a storage task was completed. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>
         /// <param name="taskName"> The task name for a storage task. </param>
         /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
         /// <returns> A new <see cref="SystemEvents.StorageTaskAssignmentCompletedEventData"/> instance for mocking. </returns>
-        public static StorageTaskAssignmentCompletedEventData StorageTaskAssignmentCompletedEventData(StorageTaskAssignmentCompletedStatus? status = default, DateTimeOffset? completedOn = default, string taskExecutionId = default, string taskName = default, Uri summaryReportBlobUri = default)
+        public static StorageTaskAssignmentCompletedEventData StorageTaskAssignmentCompletedEventData(StorageTaskAssignmentCompletedStatus? status = null, DateTimeOffset? completedOn = null, string taskExecutionId = null, string taskName = null, Uri summaryReportBlobUri = null)
         {
             return new StorageTaskAssignmentCompletedEventData(
                 status,
@@ -3953,18 +3897,18 @@ namespace Azure.Messaging.EventGrid
                 taskExecutionId,
                 taskName,
                 summaryReportBlobUri,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Detail of action on the app. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AppEventTypeDetail"/>. </summary>
         /// <param name="action"> Type of action of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.AppEventTypeDetail"/> instance for mocking. </returns>
-        public static AppEventTypeDetail AppEventTypeDetail(AppAction? action = default)
+        public static AppEventTypeDetail AppEventTypeDetail(AppAction? action = null)
         {
-            return new AppEventTypeDetail(action, additionalBinaryDataProperties: null);
+            return new AppEventTypeDetail(action, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.AppUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebAppUpdatedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -3973,7 +3917,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebAppUpdatedEventData"/> instance for mocking. </returns>
-        public static WebAppUpdatedEventData WebAppUpdatedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebAppUpdatedEventData WebAppUpdatedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebAppUpdatedEventData(
                 appEventTypeDetail,
@@ -3983,10 +3927,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.BackupOperationStarted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebBackupOperationStartedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -3995,7 +3939,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebBackupOperationStartedEventData"/> instance for mocking. </returns>
-        public static WebBackupOperationStartedEventData WebBackupOperationStartedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebBackupOperationStartedEventData WebBackupOperationStartedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebBackupOperationStartedEventData(
                 appEventTypeDetail,
@@ -4005,10 +3949,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.BackupOperationCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebBackupOperationCompletedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4017,7 +3961,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebBackupOperationCompletedEventData"/> instance for mocking. </returns>
-        public static WebBackupOperationCompletedEventData WebBackupOperationCompletedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebBackupOperationCompletedEventData WebBackupOperationCompletedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebBackupOperationCompletedEventData(
                 appEventTypeDetail,
@@ -4027,10 +3971,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.BackupOperationFailed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebBackupOperationFailedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4039,7 +3983,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebBackupOperationFailedEventData"/> instance for mocking. </returns>
-        public static WebBackupOperationFailedEventData WebBackupOperationFailedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebBackupOperationFailedEventData WebBackupOperationFailedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebBackupOperationFailedEventData(
                 appEventTypeDetail,
@@ -4049,10 +3993,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.RestoreOperationStarted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebRestoreOperationStartedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4061,7 +4005,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebRestoreOperationStartedEventData"/> instance for mocking. </returns>
-        public static WebRestoreOperationStartedEventData WebRestoreOperationStartedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebRestoreOperationStartedEventData WebRestoreOperationStartedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebRestoreOperationStartedEventData(
                 appEventTypeDetail,
@@ -4071,10 +4015,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.RestoreOperationCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebRestoreOperationCompletedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4083,7 +4027,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebRestoreOperationCompletedEventData"/> instance for mocking. </returns>
-        public static WebRestoreOperationCompletedEventData WebRestoreOperationCompletedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebRestoreOperationCompletedEventData WebRestoreOperationCompletedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebRestoreOperationCompletedEventData(
                 appEventTypeDetail,
@@ -4093,10 +4037,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.RestoreOperationFailed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebRestoreOperationFailedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4105,7 +4049,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebRestoreOperationFailedEventData"/> instance for mocking. </returns>
-        public static WebRestoreOperationFailedEventData WebRestoreOperationFailedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebRestoreOperationFailedEventData WebRestoreOperationFailedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebRestoreOperationFailedEventData(
                 appEventTypeDetail,
@@ -4115,10 +4059,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.SlotSwapStarted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebSlotSwapStartedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4127,7 +4071,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebSlotSwapStartedEventData"/> instance for mocking. </returns>
-        public static WebSlotSwapStartedEventData WebSlotSwapStartedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebSlotSwapStartedEventData WebSlotSwapStartedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebSlotSwapStartedEventData(
                 appEventTypeDetail,
@@ -4137,10 +4081,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.SlotSwapCompleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebSlotSwapCompletedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4149,7 +4093,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebSlotSwapCompletedEventData"/> instance for mocking. </returns>
-        public static WebSlotSwapCompletedEventData WebSlotSwapCompletedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebSlotSwapCompletedEventData WebSlotSwapCompletedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebSlotSwapCompletedEventData(
                 appEventTypeDetail,
@@ -4159,10 +4103,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.SlotSwapFailed event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebSlotSwapFailedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4171,7 +4115,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebSlotSwapFailedEventData"/> instance for mocking. </returns>
-        public static WebSlotSwapFailedEventData WebSlotSwapFailedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebSlotSwapFailedEventData WebSlotSwapFailedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebSlotSwapFailedEventData(
                 appEventTypeDetail,
@@ -4181,10 +4125,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.SlotSwapWithPreviewStarted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebSlotSwapWithPreviewStartedEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4193,7 +4137,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebSlotSwapWithPreviewStartedEventData"/> instance for mocking. </returns>
-        public static WebSlotSwapWithPreviewStartedEventData WebSlotSwapWithPreviewStartedEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebSlotSwapWithPreviewStartedEventData WebSlotSwapWithPreviewStartedEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebSlotSwapWithPreviewStartedEventData(
                 appEventTypeDetail,
@@ -4203,10 +4147,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.SlotSwapWithPreviewCancelled event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebSlotSwapWithPreviewCancelledEventData"/>. </summary>
         /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
         /// <param name="name"> name of the web site that had this event. </param>
         /// <param name="clientRequestId"> The client request id generated by the app service for the site API operation that triggered this event. </param>
@@ -4215,7 +4159,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebSlotSwapWithPreviewCancelledEventData"/> instance for mocking. </returns>
-        public static WebSlotSwapWithPreviewCancelledEventData WebSlotSwapWithPreviewCancelledEventData(AppEventTypeDetail appEventTypeDetail = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebSlotSwapWithPreviewCancelledEventData WebSlotSwapWithPreviewCancelledEventData(AppEventTypeDetail appEventTypeDetail = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebSlotSwapWithPreviewCancelledEventData(
                 appEventTypeDetail,
@@ -4225,10 +4169,10 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.AppServicePlanUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebAppServicePlanUpdatedEventData"/>. </summary>
         /// <param name="appServicePlanEventTypeDetail"> Detail of action on the app service plan. </param>
         /// <param name="sku"> sku of app service plan. </param>
         /// <param name="name"> name of the app service plan that had this event. </param>
@@ -4238,7 +4182,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="address"> HTTP request URL of this operation. </param>
         /// <param name="verb"> HTTP verb of this operation. </param>
         /// <returns> A new <see cref="SystemEvents.WebAppServicePlanUpdatedEventData"/> instance for mocking. </returns>
-        public static WebAppServicePlanUpdatedEventData WebAppServicePlanUpdatedEventData(AppServicePlanEventTypeDetail appServicePlanEventTypeDetail = default, WebAppServicePlanUpdatedEventDataSku sku = default, string name = default, string clientRequestId = default, string correlationRequestId = default, string requestId = default, string address = default, string verb = default)
+        public static WebAppServicePlanUpdatedEventData WebAppServicePlanUpdatedEventData(AppServicePlanEventTypeDetail appServicePlanEventTypeDetail = null, WebAppServicePlanUpdatedEventDataSku sku = null, string name = null, string clientRequestId = null, string correlationRequestId = null, string requestId = null, string address = null, string verb = null)
         {
             return new WebAppServicePlanUpdatedEventData(
                 appServicePlanEventTypeDetail,
@@ -4249,27 +4193,27 @@ namespace Azure.Messaging.EventGrid
                 requestId,
                 address,
                 verb,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Detail of action on the app service plan. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AppServicePlanEventTypeDetail"/>. </summary>
         /// <param name="stampKind"> Kind of environment where app service plan is. </param>
         /// <param name="action"> Type of action on the app service plan. </param>
         /// <param name="status"> Asynchronous operation status of the operation on the app service plan. </param>
         /// <returns> A new <see cref="SystemEvents.AppServicePlanEventTypeDetail"/> instance for mocking. </returns>
-        public static AppServicePlanEventTypeDetail AppServicePlanEventTypeDetail(StampKind? stampKind = default, AppServicePlanAction? action = default, AsyncStatus? status = default)
+        public static AppServicePlanEventTypeDetail AppServicePlanEventTypeDetail(StampKind? stampKind = null, AppServicePlanAction? action = null, AsyncStatus? status = null)
         {
-            return new AppServicePlanEventTypeDetail(stampKind, action, status, additionalBinaryDataProperties: null);
+            return new AppServicePlanEventTypeDetail(stampKind, action, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> sku of app service plan. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.WebAppServicePlanUpdatedEventDataSku"/>. </summary>
         /// <param name="name"> name of app service plan sku. </param>
         /// <param name="tier"> tier of app service plan sku. </param>
         /// <param name="size"> size of app service plan sku. </param>
         /// <param name="family"> family of app service plan sku. </param>
         /// <param name="capacity"> capacity of app service plan sku. </param>
         /// <returns> A new <see cref="SystemEvents.WebAppServicePlanUpdatedEventDataSku"/> instance for mocking. </returns>
-        public static WebAppServicePlanUpdatedEventDataSku WebAppServicePlanUpdatedEventDataSku(string name = default, string tier = default, string size = default, string family = default, string capacity = default)
+        public static WebAppServicePlanUpdatedEventDataSku WebAppServicePlanUpdatedEventDataSku(string name = null, string tier = null, string size = null, string family = null, string capacity = null)
         {
             return new WebAppServicePlanUpdatedEventDataSku(
                 name,
@@ -4277,10 +4221,10 @@ namespace Azure.Messaging.EventGrid
                 size,
                 family,
                 capacity,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventGrid.SubscriptionValidationEvent event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.SubscriptionValidationEventData"/>. </summary>
         /// <param name="validationCode">
         /// The validation code sent by Azure Event Grid to validate an event subscription.
         /// To complete the validation handshake, the subscriber must either respond with this validation code as part of the validation response,
@@ -4292,23 +4236,20 @@ namespace Azure.Messaging.EventGrid
         /// or perform a GET request on the validationUrl (available starting version 2018-05-01-preview).
         /// </param>
         /// <returns> A new <see cref="SystemEvents.SubscriptionValidationEventData"/> instance for mocking. </returns>
-        public static SubscriptionValidationEventData SubscriptionValidationEventData(string validationCode = default, string validationUrl = default)
+        public static SubscriptionValidationEventData SubscriptionValidationEventData(string validationCode = null, string validationUrl = null)
         {
-            return new SubscriptionValidationEventData(validationCode, validationUrl, additionalBinaryDataProperties: null);
+            return new SubscriptionValidationEventData(validationCode, validationUrl, serializedAdditionalRawData: null);
         }
 
-        /// <summary>
-        /// Schema of the Data property of an EventGridEvent for a
-        /// Microsoft.EventGrid.SubscriptionDeletedEvent event.
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.SubscriptionDeletedEventData"/>. </summary>
         /// <param name="eventSubscriptionId"> The Azure resource ID of the deleted event subscription. </param>
         /// <returns> A new <see cref="SystemEvents.SubscriptionDeletedEventData"/> instance for mocking. </returns>
-        public static SubscriptionDeletedEventData SubscriptionDeletedEventData(string eventSubscriptionId = default)
+        public static SubscriptionDeletedEventData SubscriptionDeletedEventData(string eventSubscriptionId = null)
         {
-            return new SubscriptionDeletedEventData(eventSubscriptionId, additionalBinaryDataProperties: null);
+            return new SubscriptionDeletedEventData(eventSubscriptionId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for MQTT Client state changes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.EventGridMqttClientEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -4317,12 +4258,12 @@ namespace Azure.Messaging.EventGrid
         /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
         /// <returns> A new <see cref="SystemEvents.EventGridMqttClientEventData"/> instance for mocking. </returns>
-        public static EventGridMqttClientEventData EventGridMqttClientEventData(string clientAuthenticationName = default, string clientName = default, string namespaceName = default)
+        public static EventGridMqttClientEventData EventGridMqttClientEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null)
         {
-            return new EventGridMqttClientEventData(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties: null);
+            return new EventGridMqttClientEventData(clientAuthenticationName, clientName, namespaceName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Event data for Microsoft.EventGrid.MQTTClientCreatedOrUpdated event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -4339,22 +4280,22 @@ namespace Azure.Messaging.EventGrid
         /// </param>
         /// <param name="attributes"> The key-value attributes that are assigned to the client resource. </param>
         /// <returns> A new <see cref="SystemEvents.EventGridMqttClientCreatedOrUpdatedEventData"/> instance for mocking. </returns>
-        public static EventGridMqttClientCreatedOrUpdatedEventData EventGridMqttClientCreatedOrUpdatedEventData(string clientAuthenticationName = default, string clientName = default, string namespaceName = default, EventGridMqttClientState? state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, IDictionary<string, string> attributes = default)
+        public static EventGridMqttClientCreatedOrUpdatedEventData EventGridMqttClientCreatedOrUpdatedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, EventGridMqttClientState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, IReadOnlyDictionary<string, string> attributes = null)
         {
-            attributes ??= new ChangeTrackingDictionary<string, string>();
+            attributes ??= new Dictionary<string, string>();
 
             return new EventGridMqttClientCreatedOrUpdatedEventData(
                 clientAuthenticationName,
                 clientName,
                 namespaceName,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 state,
                 createdOn,
                 updatedOn,
                 attributes);
         }
 
-        /// <summary> Event data for Microsoft.EventGrid.MQTTClientDeleted event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.EventGridMqttClientDeletedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -4363,12 +4304,12 @@ namespace Azure.Messaging.EventGrid
         /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
         /// <returns> A new <see cref="SystemEvents.EventGridMqttClientDeletedEventData"/> instance for mocking. </returns>
-        public static EventGridMqttClientDeletedEventData EventGridMqttClientDeletedEventData(string clientAuthenticationName = default, string clientName = default, string namespaceName = default)
+        public static EventGridMqttClientDeletedEventData EventGridMqttClientDeletedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null)
         {
-            return new EventGridMqttClientDeletedEventData(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties: null);
+            return new EventGridMqttClientDeletedEventData(clientAuthenticationName, clientName, namespaceName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Event data for Microsoft.EventGrid.MQTTClientSessionConnected event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.EventGridMqttClientSessionConnectedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -4386,18 +4327,18 @@ namespace Azure.Messaging.EventGrid
         /// than the previous event.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.EventGridMqttClientSessionConnectedEventData"/> instance for mocking. </returns>
-        public static EventGridMqttClientSessionConnectedEventData EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName = default, string clientName = default, string namespaceName = default, string clientSessionName = default, long? sequenceNumber = default)
+        public static EventGridMqttClientSessionConnectedEventData EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = null)
         {
             return new EventGridMqttClientSessionConnectedEventData(
                 clientAuthenticationName,
                 clientName,
                 namespaceName,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 clientSessionName,
                 sequenceNumber);
         }
 
-        /// <summary> Event data for Microsoft.EventGrid.MQTTClientSessionDisconnected event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.EventGridMqttClientSessionDisconnectedEventData"/>. </summary>
         /// <param name="clientAuthenticationName">
         /// Unique identifier for the MQTT client that the client presents to the service
         /// for authentication. This case-sensitive string can be up to 128 characters
@@ -4419,43 +4360,40 @@ namespace Azure.Messaging.EventGrid
         /// one of the values in the disconnection reasons table.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.EventGridMqttClientSessionDisconnectedEventData"/> instance for mocking. </returns>
-        public static EventGridMqttClientSessionDisconnectedEventData EventGridMqttClientSessionDisconnectedEventData(string clientAuthenticationName = default, string clientName = default, string namespaceName = default, string clientSessionName = default, long? sequenceNumber = default, EventGridMqttClientDisconnectionReason? disconnectionReason = default)
+        public static EventGridMqttClientSessionDisconnectedEventData EventGridMqttClientSessionDisconnectedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, string clientSessionName = null, long? sequenceNumber = null, EventGridMqttClientDisconnectionReason? disconnectionReason = null)
         {
             return new EventGridMqttClientSessionDisconnectedEventData(
                 clientAuthenticationName,
                 clientName,
                 namespaceName,
-                additionalBinaryDataProperties: null,
+                serializedAdditionalRawData: null,
                 clientSessionName,
                 sequenceNumber,
                 disconnectionReason);
         }
 
-        /// <summary> Describes the schema of the common properties across all ARN system topic events. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsResourceUpdatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedEventData"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceUpdatedEventData ResourceNotificationsResourceUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = default, ResourceNotificationsOperationalDetails operationalDetails = default, string apiVersion = default)
+        public static ResourceNotificationsResourceUpdatedEventData ResourceNotificationsResourceUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
         {
-            return new ResourceNotificationsResourceUpdatedEventData(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties: null);
+            return new ResourceNotificationsResourceUpdatedEventData(resourceDetails, operationalDetails, apiVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary>
-        /// Describes the schema of the properties under resource info which are common
-        /// across all ARN system topic events
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsResourceUpdatedDetails"/>. </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
         /// <param name="location"> the location of the resource for which the event is being emitted. </param>
         /// <param name="resourceTags"> the tags on the resource for which the event is being emitted. </param>
-        /// <param name="properties"> The properties of the resource for which the event is being emitted. </param>
+        /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedDetails"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = default, string name = default, string resourceType = default, string location = default, IReadOnlyDictionary<string, string> resourceTags = default, IReadOnlyDictionary<string, object> properties = default)
+        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = null, string name = null, string resourceType = null, string location = null, IReadOnlyDictionary<string, string> resourceTags = null, IReadOnlyDictionary<string, object> properties = null)
         {
-            resourceTags ??= new ChangeTrackingDictionary<string, string>();
-            properties ??= new ChangeTrackingDictionary<string, object>();
+            resourceTags ??= new Dictionary<string, string>();
+            properties ??= new Dictionary<string, object>();
 
             return new ResourceNotificationsResourceUpdatedDetails(
                 id,
@@ -4464,102 +4402,73 @@ namespace Azure.Messaging.EventGrid
                 location,
                 resourceTags,
                 properties,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> details of operational info. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsOperationalDetails"/>. </summary>
         /// <param name="resourceEventTime"> Date and Time when resource was updated. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsOperationalDetails"/> instance for mocking. </returns>
-        public static ResourceNotificationsOperationalDetails ResourceNotificationsOperationalDetails(DateTimeOffset? resourceEventTime = default)
+        public static ResourceNotificationsOperationalDetails ResourceNotificationsOperationalDetails(DateTimeOffset? resourceEventTime = null)
         {
-            return new ResourceNotificationsOperationalDetails(resourceEventTime, additionalBinaryDataProperties: null);
+            return new ResourceNotificationsOperationalDetails(resourceEventTime, serializedAdditionalRawData: null);
         }
 
-        /// <summary>
-        /// Schema of the Data property of an EventGridEvent for a
-        /// Microsoft.ResourceNotifications.HealthResources.AvailabilityStatusChanged
-        /// event.
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData"/> instance for mocking. </returns>
-        public static ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = default, ResourceNotificationsOperationalDetails operationalDetails = default, string apiVersion = default)
+        public static ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
         {
-            return new ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties: null);
+            return new ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(resourceDetails, operationalDetails, apiVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary>
-        /// Schema of the Data property of an EventGridEvent for a
-        /// Microsoft.ResourceNotifications.HealthResources.ResourceAnnotated event.
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsHealthResourcesAnnotatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsHealthResourcesAnnotatedEventData"/> instance for mocking. </returns>
-        public static ResourceNotificationsHealthResourcesAnnotatedEventData ResourceNotificationsHealthResourcesAnnotatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = default, ResourceNotificationsOperationalDetails operationalDetails = default, string apiVersion = default)
+        public static ResourceNotificationsHealthResourcesAnnotatedEventData ResourceNotificationsHealthResourcesAnnotatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
         {
-            return new ResourceNotificationsHealthResourcesAnnotatedEventData(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties: null);
+            return new ResourceNotificationsHealthResourcesAnnotatedEventData(resourceDetails, operationalDetails, apiVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary>
-        /// Describes the schema of the properties under resource info which are common
-        /// across all ARN system topic delete events
-        /// </summary>
-        /// <param name="resource"> Resource for which the event is being emitted. </param>
-        /// <param name="name"></param>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceDeletedDetails"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceDeletedDetails ResourceNotificationsResourceDeletedDetails(ResourceIdentifier resource = default, string name = default, string @type = default)
-        {
-            return new ResourceNotificationsResourceDeletedDetails(resource, name, @type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Describes the schema of the common properties across all ARN system topic
-        /// delete events
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsResourceDeletedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceDeletedEventData"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceDeletedEventData ResourceNotificationsResourceDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails = default, ResourceNotificationsOperationalDetails operationalDetails = default)
+        public static ResourceNotificationsResourceDeletedEventData ResourceNotificationsResourceDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null)
         {
-            return new ResourceNotificationsResourceDeletedEventData(resourceDetails, operationalDetails, additionalBinaryDataProperties: null);
+            return new ResourceNotificationsResourceDeletedEventData(resourceDetails, operationalDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary>
-        /// Schema of the Data property of an EventGridEvent for a
-        /// Microsoft.ResourceNotifications.Resources.CreatedOrUpdated event.
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsResourceManagementCreatedOrUpdatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceManagementCreatedOrUpdatedEventData"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceManagementCreatedOrUpdatedEventData ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = default, ResourceNotificationsOperationalDetails operationalDetails = default, string apiVersion = default)
+        public static ResourceNotificationsResourceManagementCreatedOrUpdatedEventData ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
         {
-            return new ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties: null);
+            return new ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(resourceDetails, operationalDetails, apiVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary>
-        /// Schema of the Data property of an EventGridEvent for a
-        /// Microsoft.ResourceNotifications.Resources.Deleted event.
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsResourceManagementDeletedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for delete event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceManagementDeletedEventData"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceManagementDeletedEventData ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails = default, ResourceNotificationsOperationalDetails operationalDetails = default)
+        public static ResourceNotificationsResourceManagementDeletedEventData ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null)
         {
-            return new ResourceNotificationsResourceManagementDeletedEventData(resourceDetails, operationalDetails, additionalBinaryDataProperties: null);
+            return new ResourceNotificationsResourceManagementDeletedEventData(resourceDetails, operationalDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event.Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/> instance for mocking. </returns>
-        public static ResourceNotificationsContainerServiceEventResourcesScheduledEventData ResourceNotificationsContainerServiceEventResourcesScheduledEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = default, ResourceNotificationsOperationalDetails operationalDetails = default, string apiVersion = default)
+        public static ResourceNotificationsContainerServiceEventResourcesScheduledEventData ResourceNotificationsContainerServiceEventResourcesScheduledEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
         {
-            return new ResourceNotificationsContainerServiceEventResourcesScheduledEventData(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties: null);
+            return new ResourceNotificationsContainerServiceEventResourcesScheduledEventData(resourceDetails, operationalDetails, apiVersion, serializedAdditionalRawData: null);
         }
     }
 }

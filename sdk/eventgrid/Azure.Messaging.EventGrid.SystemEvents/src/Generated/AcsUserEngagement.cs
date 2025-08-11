@@ -14,57 +14,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsUserEngagement : IEquatable<AcsUserEngagement>
     {
         private readonly string _value;
-        /// <summary> View. </summary>
-        private const string ViewValue = "view";
-        /// <summary> Click. </summary>
-        private const string ClickValue = "click";
 
         /// <summary> Initializes a new instance of <see cref="AcsUserEngagement"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsUserEngagement(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ViewValue = "view";
+        private const string ClickValue = "click";
 
         /// <summary> View. </summary>
         public static AcsUserEngagement View { get; } = new AcsUserEngagement(ViewValue);
-
         /// <summary> Click. </summary>
         public static AcsUserEngagement Click { get; } = new AcsUserEngagement(ClickValue);
-
         /// <summary> Determines if two <see cref="AcsUserEngagement"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsUserEngagement left, AcsUserEngagement right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AcsUserEngagement"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsUserEngagement left, AcsUserEngagement right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AcsUserEngagement"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsUserEngagement"/>. </summary>
         public static implicit operator AcsUserEngagement(string value) => new AcsUserEngagement(value);
 
-        /// <summary> Converts a string to a <see cref="AcsUserEngagement"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AcsUserEngagement?(string value) => value == null ? null : new AcsUserEngagement(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsUserEngagement other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AcsUserEngagement other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

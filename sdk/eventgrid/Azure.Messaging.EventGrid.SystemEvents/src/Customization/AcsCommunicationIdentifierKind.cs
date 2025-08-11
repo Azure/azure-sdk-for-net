@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The identifier kind, for example 'communicationUser' or 'phoneNumber'. </summary>
-    [CodeGenType("CommunicationIdentifierModelKind")]
+    [CodeGenModel("CommunicationIdentifierModelKind")]
     public readonly partial struct AcsCommunicationIdentifierKind
     {
     }

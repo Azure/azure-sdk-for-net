@@ -18,8 +18,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="workerTags"> Router Worker Offer Accepted Worker Tags. </param>
         /// <param name="jobLabels"> Router Worker Offer Accepted Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Accepted Job Tags. </param>
-        internal AcsRouterWorkerOfferAcceptedEventData(IDictionary<string, string> workerLabels, IDictionary<string, string> workerTags, IDictionary<string, string> jobLabels, IDictionary<string, string> jobTags)
+        /// <exception cref="ArgumentNullException"> <paramref name="workerLabels"/>, <paramref name="workerTags"/>, <paramref name="jobLabels"/> or <paramref name="jobTags"/> is null. </exception>
+        internal AcsRouterWorkerOfferAcceptedEventData(IReadOnlyDictionary<string, string> workerLabels, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags)
         {
+            Argument.AssertNotNull(workerLabels, nameof(workerLabels));
+            Argument.AssertNotNull(workerTags, nameof(workerTags));
+            Argument.AssertNotNull(jobLabels, nameof(jobLabels));
+            Argument.AssertNotNull(jobTags, nameof(jobTags));
+
             WorkerLabels = workerLabels;
             WorkerTags = workerTags;
             JobLabels = jobLabels;
@@ -30,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
         /// <param name="queueId"> Router Worker Offer Accepted Queue Id. </param>
         /// <param name="offerId"> Router Worker Offer Accepted Offer Id. </param>
@@ -40,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="workerTags"> Router Worker Offer Accepted Worker Tags. </param>
         /// <param name="jobLabels"> Router Worker Offer Accepted Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Accepted Job Tags. </param>
-        internal AcsRouterWorkerOfferAcceptedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId, string queueId, string offerId, string assignmentId, int? jobPriority, IDictionary<string, string> workerLabels, IDictionary<string, string> workerTags, IDictionary<string, string> jobLabels, IDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
+        internal AcsRouterWorkerOfferAcceptedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string workerId, string queueId, string offerId, string assignmentId, int? jobPriority, IReadOnlyDictionary<string, string> workerLabels, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags) : base(jobId, channelReference, channelId, serializedAdditionalRawData, workerId)
         {
             QueueId = queueId;
             OfferId = offerId;
@@ -52,28 +58,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             JobTags = jobTags;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferAcceptedEventData"/> for deserialization. </summary>
+        internal AcsRouterWorkerOfferAcceptedEventData()
+        {
+        }
+
         /// <summary> Router Worker Offer Accepted Queue Id. </summary>
         public string QueueId { get; }
-
         /// <summary> Router Worker Offer Accepted Offer Id. </summary>
         public string OfferId { get; }
-
         /// <summary> Router Worker Offer Accepted Assignment Id. </summary>
         public string AssignmentId { get; }
-
         /// <summary> Router Worker Offer Accepted Job Priority. </summary>
         public int? JobPriority { get; }
-
         /// <summary> Router Worker Offer Accepted Worker Labels. </summary>
-        public IDictionary<string, string> WorkerLabels { get; }
-
+        public IReadOnlyDictionary<string, string> WorkerLabels { get; }
         /// <summary> Router Worker Offer Accepted Worker Tags. </summary>
-        public IDictionary<string, string> WorkerTags { get; }
-
+        public IReadOnlyDictionary<string, string> WorkerTags { get; }
         /// <summary> Router Worker Offer Accepted Job Labels. </summary>
-        public IDictionary<string, string> JobLabels { get; }
-
+        public IReadOnlyDictionary<string, string> JobLabels { get; }
         /// <summary> Router Worker Offer Accepted Job Tags. </summary>
-        public IDictionary<string, string> JobTags { get; }
+        public IReadOnlyDictionary<string, string> JobTags { get; }
     }
 }
