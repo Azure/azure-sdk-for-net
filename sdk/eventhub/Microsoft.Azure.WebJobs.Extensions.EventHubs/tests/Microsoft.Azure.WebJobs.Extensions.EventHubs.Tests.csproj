@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
-    <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" VersionOverride="2.22.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
