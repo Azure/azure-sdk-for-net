@@ -7,6 +7,7 @@ using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace Azure.Generator.Management.Utilities

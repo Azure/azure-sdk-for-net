@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
@@ -77,75 +78,8 @@ namespace Azure.Generator.Management
             // categorize the resource methods
             foreach (var resourceMetadata in resourceMetadatas)
             {
-                var methodsInResource = new List<ResourceMethod>();
-                var methodsInCollection = new List<ResourceMethod>();
-                var methodsInExtension = new List<ResourceMethod>();
-                foreach (var method in resourceMetadata.Methods)
-                {
-                    var isSingleton = resourceMetadata.SingletonResourceName is not null;
-                    switch (method.Kind)
-                    {
-                        case ResourceOperationKind.Create:
-                            // create method will go to the collection, or to resource when it is singleton
-                            if (isSingleton)
-                            {
-                                methodsInResource.Add(method);
-                            }
-                            else
-                            {
-                                methodsInCollection.Add(method);
-                            }
-                            break;
-                        case ResourceOperationKind.Get:
-                            // both resource and collection should have get method
-                            methodsInResource.Add(method);
-                            methodsInCollection.Add(method);
-                            break;
-                        case ResourceOperationKind.Update:
-                        case ResourceOperationKind.Delete:
-                            // only resource has get
-                            methodsInResource.Add(method);
-                            break;
-                        case ResourceOperationKind.Action:
-                            // actions should all go to the resource
-                            methodsInResource.Add(method);
-                            break;
-                        case ResourceOperationKind.List:
-                            // list methods might go to the collection or the extension
-                            // when the resource has a parent
-                            if (resourceMetadata.ParentResourceId is not null)
-                            {
-                                if (method.ResourceScope == resourceMetadata.ParentResourceId)
-                                {
-                                    methodsInCollection.Add(method);
-                                }
-                                else
-                                {
-                                    methodsInExtension.Add(method);
-                                }
-                            }
-                            else
-                            {
-                                if (method.OperationScope == resourceMetadata.ResourceScope)
-                                {
-                                    // if the operation scope is the resource scope, it is a collection method
-                                    methodsInCollection.Add(method);
-                                }
-                                else
-                                {
-                                    // otherwise, it is an extension method
-                                    methodsInExtension.Add(method);
-                                }
-                            }
-                            break;
-                        default:
-                            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                                "general-warning",
-                                $"Unknown resource operation kind '{method.Kind}' for method '{method.OperationPath}' in resource '{resourceMetadata.ResourceIdPattern}'.");
-                            break;
-                    }
-                }
-                resourceMethodCategories.Add(resourceMetadata, new ResourceMethodCategory(methodsInResource, methodsInCollection, methodsInExtension));
+                var categorizedMehtods = resourceMetadata.CategorizeMethods();
+                resourceMethodCategories.Add(resourceMetadata, categorizedMehtods);
             }
 
             // build resource methods per resource metadata
@@ -313,11 +247,6 @@ namespace Azure.Generator.Management
             _resourceDataTypes ??= ResourceProviders.ToDictionary(r => r.ResourceData.Type, r => r);
             return _resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider);
         }
-
-        private record ResourceMethodCategory(
-            List<ResourceMethod> MethodsInResource,
-            List<ResourceMethod> MethodsInCollection,
-            List<ResourceMethod> MethodsInExtension);
 
         private record ResourcesAndNonResourceMethodsInScope(
             List<ResourceClientProvider> ResourceClients,
