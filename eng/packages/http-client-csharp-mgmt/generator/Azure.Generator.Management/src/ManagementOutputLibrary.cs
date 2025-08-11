@@ -99,7 +99,7 @@ namespace Azure.Generator.Management
             {
                 if (resourcesInScope.Count > 0 || nonResourceMethods.Count > 0)
                 {
-                    var mockableExtension = new MockableResourceProvider(scope, resources, nonResourceMethods);
+                    var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, nonResourceMethods);
                     mockableResources.Add(mockableExtension);
                 }
             }
