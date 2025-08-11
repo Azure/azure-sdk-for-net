@@ -46,6 +46,11 @@ namespace Azure.Health.Deidentification
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
+            if (Optional.IsDefined(TaggedEntities))
+            {
+                writer.WritePropertyName("taggedEntities"u8);
+                writer.WriteObjectValue(TaggedEntities, options);
+            }
             if (Optional.IsDefined(Customizations))
             {
                 writer.WritePropertyName("customizations"u8);
@@ -95,6 +100,7 @@ namespace Azure.Health.Deidentification
             }
             string inputText = default;
             DeidentificationOperationType? operationType = default;
+            TaggedPhiEntities taggedEntities = default;
             DeidentificationCustomizationOptions customizations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -113,6 +119,15 @@ namespace Azure.Health.Deidentification
                     operationType = new DeidentificationOperationType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("taggedEntities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    taggedEntities = TaggedPhiEntities.DeserializeTaggedPhiEntities(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("customizations"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -127,7 +142,7 @@ namespace Azure.Health.Deidentification
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeidentificationContent(inputText, operationType, customizations, additionalBinaryDataProperties);
+            return new DeidentificationContent(inputText, operationType, taggedEntities, customizations, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

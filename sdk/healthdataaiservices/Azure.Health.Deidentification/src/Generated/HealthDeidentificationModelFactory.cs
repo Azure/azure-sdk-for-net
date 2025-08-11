@@ -88,10 +88,11 @@ namespace Azure.Health.Deidentification
         /// Please refer to https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format for more details.
         /// </param>
         /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
+        /// <param name="inputLocale"> Locale of the input text. Used for better PHI detection. Defaults to 'en-US'. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationJobCustomizationOptions"/> instance for mocking. </returns>
-        public static DeidentificationJobCustomizationOptions DeidentificationJobCustomizationOptions(string redactionFormat = default, string surrogateLocale = default)
+        public static DeidentificationJobCustomizationOptions DeidentificationJobCustomizationOptions(string redactionFormat = default, string surrogateLocale = default, string inputLocale = default)
         {
-            return new DeidentificationJobCustomizationOptions(redactionFormat, surrogateLocale, additionalBinaryDataProperties: null);
+            return new DeidentificationJobCustomizationOptions(redactionFormat, surrogateLocale, inputLocale, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Summary metrics of a job. </summary>
@@ -142,11 +143,34 @@ namespace Azure.Health.Deidentification
         /// <summary> Request body for de-identification operation. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
         /// <param name="operationType"> Operation to perform on the input documents. </param>
+        /// <param name="taggedEntities"> Grouped PHI entities with single encoding specification for SurrogateOnly operation. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        public static DeidentificationContent DeidentificationContent(string inputText = default, DeidentificationOperationType? operationType = default, DeidentificationCustomizationOptions customizations = default)
+        public static DeidentificationContent DeidentificationContent(string inputText = default, DeidentificationOperationType? operationType = default, TaggedPhiEntities taggedEntities = default, DeidentificationCustomizationOptions customizations = default)
         {
-            return new DeidentificationContent(inputText, operationType, customizations, additionalBinaryDataProperties: null);
+            return new DeidentificationContent(inputText, operationType, taggedEntities, customizations, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Grouped PHI entities with shared encoding specification. </summary>
+        /// <param name="encoding"> The encoding type used for all entities in this group. </param>
+        /// <param name="entities"> List of PHI entities using the specified encoding. </param>
+        /// <returns> A new <see cref="Deidentification.TaggedPhiEntities"/> instance for mocking. </returns>
+        public static TaggedPhiEntities TaggedPhiEntities(TextEncodingType encoding = default, IEnumerable<SimplePhiEntity> entities = default)
+        {
+            entities ??= new ChangeTrackingList<SimplePhiEntity>();
+
+            return new TaggedPhiEntities(encoding, entities.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Simple PHI entity with encoding-specific offset and length values. </summary>
+        /// <param name="category"> PHI Category of the entity. </param>
+        /// <param name="offset"> Starting index of the location from within the input text using the group's encoding. </param>
+        /// <param name="length"> Length of the input text using the group's encoding. </param>
+        /// <param name="text"> Text of the entity (optional). </param>
+        /// <returns> A new <see cref="Deidentification.SimplePhiEntity"/> instance for mocking. </returns>
+        public static SimplePhiEntity SimplePhiEntity(PhiCategory category = default, int offset = default, int length = default, string text = default)
+        {
+            return new SimplePhiEntity(category, offset, length, text, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Customizations options to override default service behaviors for synchronous usage. </summary>
@@ -155,10 +179,11 @@ namespace Azure.Health.Deidentification
         /// Please refer to https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format for more details.
         /// </param>
         /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
+        /// <param name="inputLocale"> Locale of the input text. Used for better PHI detection. Defaults to 'en-US'. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationCustomizationOptions"/> instance for mocking. </returns>
-        public static DeidentificationCustomizationOptions DeidentificationCustomizationOptions(string redactionFormat = default, string surrogateLocale = default)
+        public static DeidentificationCustomizationOptions DeidentificationCustomizationOptions(string redactionFormat = default, string surrogateLocale = default, string inputLocale = default)
         {
-            return new DeidentificationCustomizationOptions(redactionFormat, surrogateLocale, additionalBinaryDataProperties: null);
+            return new DeidentificationCustomizationOptions(redactionFormat, surrogateLocale, inputLocale, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response body for de-identification operation. </summary>
