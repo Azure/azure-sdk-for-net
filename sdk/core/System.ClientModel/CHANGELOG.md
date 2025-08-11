@@ -1,14 +1,14 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0 (2025-08-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added `UserAgentPolicy` pipeline policy to allow adding the user agent to the request headers.
 
 ### Other Changes
+
+- Various updates to the `System.ClientModel.SourceGeneration` package to support `ModelReaderWriterBuildableAttribute`.
 
 ## 1.5.1 (2025-07-14)
 

@@ -93,8 +93,10 @@ export async function updateClients(
       if (modelId && kind) {
         const entry = resourceModelToMetadataMap.get(modelId);
         entry?.methods.push({
-          id: method.crossLanguageDefinitionId,
-          kind
+          methodId: method.crossLanguageDefinitionId,
+          kind,
+          operationPath: method.operation.path,
+          operationScope: getOperationScope(method.operation.path)
         });
         if (entry && !entry.resourceType) {
           entry.resourceType = calculateResourceTypeFromPath(
@@ -115,8 +117,9 @@ export async function updateClients(
     }
   }
 
-  // after the resourceIdPattern has been populated, we can set the parentResourceId
+  // after the resourceIdPattern has been populated, we can set the parentResourceId and the resource scope of each resource method
   for (const [modelId, metadata] of resourceModelToMetadataMap) {
+    // get parent resource model id
     const parentResourceModelId = getParentResourceModelId(
       sdkContext,
       models.get(modelId)
@@ -125,6 +128,14 @@ export async function updateClients(
       metadata.parentResourceId = resourceModelToMetadataMap.get(
         parentResourceModelId
       )?.resourceIdPattern;
+    }
+
+    // figure out the resourceScope of all resource methods
+    for (const method of metadata.methods) {
+      method.resourceScope = getResourceScopeOfMethod(
+        method.operationPath,
+        resourceModelToMetadataMap.values()
+      );
     }
   }
 
@@ -289,6 +300,27 @@ function getResourceScope(model: InputModelType): ResourceScope {
     return ResourceScope.ResourceGroup;
   }
   return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
+}
+
+function getResourceScopeOfMethod(
+  path: string,
+  resources: MapIterator<ResourceMetadata>
+): string | undefined {
+  // loop all possible resource metadata and see if some of them match the operation path of this method as a prefix
+  const candidates: string[] = [];
+  for (const otherMetadata of resources) {
+    if (
+      otherMetadata.resourceIdPattern &&
+      path.startsWith(otherMetadata.resourceIdPattern)
+    ) {
+      candidates.push(otherMetadata.resourceIdPattern);
+    }
+  }
+  // finds the longest resource path id in candidates as the resource scope
+  if (candidates.length > 0) {
+    return candidates.reduce((a, b) => (a.length > b.length ? a : b));
+  }
+  return undefined;
 }
 
 // TODO -- this logic needs to be refined in the near future.
