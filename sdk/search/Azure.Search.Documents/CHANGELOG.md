@@ -5,6 +5,7 @@
 ### Features Added
 
 - Enable the new model serialization using System.ClientModel, refer to this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added new AOT-compatible overloads for `Search<T>` and `SearchAsync<T>` that take `JsonTypeInfo<T>`.
 
 ### Breaking Changes
 
