@@ -24,31 +24,42 @@ namespace Azure.Generator.Management.Providers
     internal class MockableResourceProvider : TypeProvider
     {
         private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
-        private protected readonly IReadOnlyList<NonResourceMethod> _methods;
+        private protected readonly IReadOnlyList<ResourceMethod> _resourceMethods;
+        private protected readonly IReadOnlyList<NonResourceMethod> _nonResourceMethods;
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
         private readonly RequestPathPattern _contextualPath;
 
-        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
-            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, nonResourceMethods)
+        /// <summary>
+        /// Creates a new instance of the <see cref="MockableResourceProvider"/> class.
+        /// </summary>
+        /// <param name="resourceScope">the scope of this mockable resource.</param>
+        /// <param name="resources">the resources in this scope.</param>
+        /// <param name="resourceMethods">the resource methods that belong to this scope.</param>
+        /// <param name="nonResourceMethods">the non-resource methods that belong to this scope.</param>
+        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<ResourceMethod> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+            : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, resourceMethods, nonResourceMethods)
         {
         }
 
-        private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> methods)
+        private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<ResourceMethod> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
         {
             _resources = resources;
-            _methods = methods;
+            _resourceMethods = resourceMethods;
+            _nonResourceMethods = nonResourceMethods;
             ArmCoreType = armCoreType;
             _contextualPath = contextualPath;
-            _clientInfos = BuildRestClientInfos(methods, this);
+            _clientInfos = BuildRestClientInfos(resourceMethods, nonResourceMethods, this);
         }
 
-        private static Dictionary<InputClient, RestClientInfo> BuildRestClientInfos(IReadOnlyList<NonResourceMethod> methods, TypeProvider enclosingType)
+        private static Dictionary<InputClient, RestClientInfo> BuildRestClientInfos(
+            IReadOnlyList<ResourceMethod> resourceMethods,
+            IReadOnlyList<NonResourceMethod> nonResourceMethods,
+            TypeProvider enclosingType)
         {
             var clientInfos = new Dictionary<InputClient, RestClientInfo>();
-            foreach (var method in methods)
+            foreach (var inputClient in resourceMethods.Select(m => m.InputClient).Concat(nonResourceMethods.Select(m => m.InputClient)))
             {
-                var inputClient = method.InputClient;
                 if (clientInfos.ContainsKey(inputClient))
                 {
                     continue;
@@ -164,17 +175,22 @@ namespace Azure.Generator.Management.Providers
 
         protected override MethodProvider[] BuildMethods()
         {
-            var methods = new List<MethodProvider>(_resources.Count * 3);
+            var methods = new List<MethodProvider>(_resources.Count * 3 + _resourceMethods.Count * 2 + _nonResourceMethods.Count * 2);
             foreach (var resource in _resources)
             {
                 methods.AddRange(BuildMethodsForResource(resource));
             }
 
-            foreach (var method in _methods)
+            foreach (var method in _resourceMethods)
             {
-                // add the method provider one by one.
-                methods.Add(BuildNonResourceMethod(method, true));
-                methods.Add(BuildNonResourceMethod(method, false));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+            }
+
+            foreach (var method in _nonResourceMethods)
+            {
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
+                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
             }
 
             return [.. methods];
@@ -257,13 +273,13 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        private MethodProvider BuildNonResourceMethod(NonResourceMethod method, bool isAsync)
+        private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync)
         {
-            var clientInfo = _clientInfos[method.InputClient];
-            return method.InputMethod switch
+            var clientInfo = _clientInfos[inputClient];
+            return method switch
             {
                 InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method.InputMethod, isAsync)
+                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync)
             };
         }
 
