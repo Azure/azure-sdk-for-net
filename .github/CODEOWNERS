@@ -388,13 +388,12 @@
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
 
-# ServiceLabel: %Cosmos
 # PRLabel: %contoso
 /sdk/contoso/                                                      @ReilleyMilne @shirelmr
 
 # ServiceLabel: %contoso
 # ServiceOwners: @ReilleyMilne @shirelmr
-
+# ServiceLabel: %Cosmos
 /sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
 
 # ServiceLabel: %Cost Management - Billing
