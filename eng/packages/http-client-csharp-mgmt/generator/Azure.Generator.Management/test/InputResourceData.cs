@@ -40,10 +40,11 @@ namespace Azure.Generator.Management.Tests.Common
                 TestClientName,
                 methods: [getMethod, createMethod, updateMethod],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
-            decorators.Add(BuildResourceMetadata(responseModel, client, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [
-                new ResourceMethod(ResourceOperationKind.Get, getMethod, client),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, client),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, client)
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            decorators.Add(BuildResourceMetadata(responseModel, client, resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [
+                new ResourceMethod(ResourceOperationKind.Get, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, client),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, client),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, client)
             ], "ResponseType"));
             return (client, [responseModel]);
         }
@@ -61,12 +62,7 @@ namespace Azure.Generator.Management.Tests.Common
                 ["resourceIdPattern"] = FromLiteralString(resourceIdPattern),
                 ["resourceType"] = FromLiteralString(resourceType),
                 ["resourceScope"] = FromLiteralString(resourceScope.ToString()),
-                ["methods"] = BinaryData.FromObjectAsJson(methods.Select(m => new Dictionary<string, string>
-                {
-                    ["id"] = m.InputMethod.CrossLanguageDefinitionId,
-                    ["kind"] = m.Kind.ToString()
-                }
-                ), options),
+                ["methods"] = BinaryData.FromObjectAsJson(methods.Select(SerializeResourceMethod), options),
                 ["singletonResourceName"] = BinaryData.FromObjectAsJson(singletonResourceName, options),
                 ["resourceName"] = BinaryData.FromObjectAsJson(resourceName, options),
             };
@@ -75,6 +71,22 @@ namespace Azure.Generator.Management.Tests.Common
 
             static BinaryData FromLiteralString(string literal)
                 => BinaryData.FromString($"\"{literal}\"");
+
+            static Dictionary<string, string> SerializeResourceMethod(ResourceMethod m)
+            {
+                var result = new Dictionary<string, string>
+                {
+                    ["methodId"] = m.InputMethod.CrossLanguageDefinitionId,
+                    ["kind"] = m.Kind.ToString(),
+                    ["operationPath"] = m.OperationPath,
+                    ["operationScope"] = m.OperationScope.ToString()
+                };
+                if (m.ResourceScope != null)
+                {
+                    result["resourceScope"] = m.ResourceScope;
+                }
+                return result;
+            }
         }
     }
 }

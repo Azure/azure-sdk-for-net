@@ -11,59 +11,60 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Data.SchemaRegistry.Models;
+using MgmtTypeSpec.Models;
 
-namespace Azure.Data.SchemaRegistry
+namespace MgmtTypeSpec
 {
-    internal partial class SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class ZoosGetBySubscriptionAsyncCollectionResult : AsyncPageable<BinaryData>
     {
-        private readonly SchemaRegistryClient _client;
+        private readonly Zoos _client;
+        private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The SchemaRegistryClient client used to send requests. </param>
+        /// <summary> Initializes a new instance of ZoosGetBySubscriptionAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Zoos client used to send requests. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult(SchemaRegistryClient client, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ZoosGetBySubscriptionAsyncCollectionResult(Zoos client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ZoosGetBySubscriptionAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of ZoosGetBySubscriptionAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            while (true)
+            do
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
+                ZooListResult responseWithType = ZooListResult.FromResponse(response);
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in ((SchemaGroups)response).Value)
+                foreach (var item in responseWithType.Value)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
+                nextPage = responseWithType.NextLink;
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                nextPage = ((SchemaGroups)response).NextLink;
-                if (nextPage == null)
-                {
-                    yield break;
-                }
             }
+            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSchemaGroupsRequest(nextLink, _context) : _client.CreateGetSchemaGroupsRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaGroups");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Zoos.GetBySubscription");
             scope.Start();
             try
             {

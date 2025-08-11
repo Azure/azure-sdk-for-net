@@ -10,55 +10,51 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using MgmtTypeSpec.Models;
 
-namespace Azure.Health.Deidentification
+namespace MgmtTypeSpec
 {
-    internal partial class DeidentificationClientGetJobsInternalCollectionResult : Pageable<BinaryData>
+    internal partial class ZoosGetBySubscriptionCollectionResult : Pageable<BinaryData>
     {
-        private readonly DeidentificationClient _client;
-        private readonly int? _maxpagesize;
-        private readonly string _continuationToken;
+        private readonly Zoos _client;
+        private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of DeidentificationClientGetJobsInternalCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DeidentificationClient client used to send requests. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Token to continue a previous query. </param>
+        /// <summary> Initializes a new instance of ZoosGetBySubscriptionCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Zoos client used to send requests. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeidentificationClientGetJobsInternalCollectionResult(DeidentificationClient client, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ZoosGetBySubscriptionCollectionResult(Zoos client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _maxpagesize = maxpagesize;
-            _continuationToken = continuationToken;
+            _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of DeidentificationClientGetJobsInternalCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ZoosGetBySubscriptionCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeidentificationClientGetJobsInternalCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of ZoosGetBySubscriptionCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            while (true)
+            do
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
+                ZooListResult responseWithType = ZooListResult.FromResponse(response);
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in ((PagedDeidentificationJob)response).Value)
+                foreach (var item in responseWithType.Value)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
+                nextPage = responseWithType.NextLink;
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                nextPage = ((PagedDeidentificationJob)response).NextLink;
-                if (nextPage == null)
-                {
-                    yield break;
-                }
             }
+            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
@@ -66,8 +62,8 @@ namespace Azure.Health.Deidentification
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetJobsInternalRequest(nextLink, _maxpagesize, _continuationToken, _context) : _client.CreateGetJobsInternalRequest(_maxpagesize, _continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Zoos.GetBySubscription");
             scope.Start();
             try
             {
