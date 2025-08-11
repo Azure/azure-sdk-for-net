@@ -103,12 +103,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             InputServiceMethod? getServiceMethod = null;
 
-            foreach (var (kind, method, _) in resourceClientProvider.ResourceServiceMethods)
+            foreach (var resourceMethod in resourceClientProvider.ResourceServiceMethods)
             {
-                var operation = method.Operation;
-                if (kind == ResourceOperationKind.Get)
+                if (resourceMethod.Kind == ResourceOperationKind.Get)
                 {
-                    getServiceMethod = method;
+                    getServiceMethod = resourceMethod.InputMethod;
                     break;
                 }
             }

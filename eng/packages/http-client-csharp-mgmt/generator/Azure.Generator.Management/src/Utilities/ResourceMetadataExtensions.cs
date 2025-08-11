@@ -23,8 +23,9 @@ namespace Azure.Generator.Management.Utilities
             var clientInfos = new Dictionary<InputClient, RestClientInfo>();
 
             // Create rest client providers and fields for each unique InputClient
-            foreach (var (_, _, inputClient) in resourceMetadata.Methods)
+            foreach (var resourceMethod in resourceMetadata.Methods)
             {
+                var inputClient = resourceMethod.InputClient;
                 if (clientInfos.ContainsKey(inputClient))
                 {
                     continue; // Skip if the client is already processed

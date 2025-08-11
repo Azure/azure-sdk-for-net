@@ -14,12 +14,22 @@ internal record NonResourceMethod(
 {
     internal static NonResourceMethod DeserializeNonResourceMethod(JsonElement element)
     {
-        var methodId = element.GetProperty("methodId").GetString() ?? throw new JsonException("methodId cannot be null");
-        var operationScopeString = element.GetProperty("operationScope").GetString() ?? throw new JsonException("operationScope cannot be null");
+        string? methodId = null;
+        ResourceScope operationScope = default;
+        foreach (var prop in element.EnumerateObject())
+        {
+            if (prop.NameEquals("methodId"u8))
+            {
+                methodId = prop.Value.GetString();
+            }
+            if (prop.NameEquals("operationScope"u8))
+            {
+                operationScope = Enum.Parse<ResourceScope>(prop.Value.GetString() ?? throw new JsonException("operationScope cannot be null"), true);
+            }
+        }
         // find the method by its ID
-        var method = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(methodId) ?? throw new JsonException($"cannot find the method with crossLanguageDefinitionId {methodId}");
+        var method = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(methodId ?? throw new JsonException("methodId cannot be null")) ?? throw new JsonException($"cannot find the method with crossLanguageDefinitionId {methodId}");
         var client = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(method) ?? throw new JsonException($"cannot find the client for method {methodId}");
-        var operationScope = Enum.Parse<ResourceScope>(operationScopeString, true);
         return new NonResourceMethod(
             operationScope,
             method,

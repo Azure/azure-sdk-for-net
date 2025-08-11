@@ -7,30 +7,49 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models
 {
-    internal record ResourceMethod(ResourceOperationKind Kind, InputServiceMethod InputMethod, InputClient InputClient)
+    internal record ResourceMethod(ResourceOperationKind Kind, InputServiceMethod InputMethod, string OperationPath, ResourceScope OperationScope, string? ResourceScope, InputClient InputClient)
     {
         internal static ResourceMethod DeserializeResourceMethod(JsonElement element)
         {
-            string? id = null;
+            string? methodId = null;
             ResourceOperationKind? operationKind = null;
-            if (element.TryGetProperty("methodId", out var idData))
+            string? operationPath = null;
+            ResourceScope? operationScope = null;
+            string? resourceScope = null;
+            foreach (var prop in element.EnumerateObject())
             {
-                id = idData.GetString();
-            }
-            if (element.TryGetProperty("kind", out var kindData) && kindData.GetString() is string kindString)
-            {
-                if (Enum.TryParse<ResourceOperationKind>(kindString, true, out var kind))
+                if (prop.NameEquals("methodId"u8))
                 {
-                    operationKind = kind;
+                    methodId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    operationKind = Enum.Parse<ResourceOperationKind>(prop.Value.GetString() ?? throw new JsonException("kind cannot be null"), true);
+                }
+                if (prop.NameEquals("operationPath"u8))
+                {
+                    operationPath = prop.Value.GetString();
+                }
+                if (prop.NameEquals("operationScope"u8))
+                {
+                    operationScope = Enum.Parse<ResourceScope>(prop.Value.GetString() ?? throw new JsonException("operationScope cannot be null"), true);
+                }
+                if (prop.NameEquals("resourceScope"u8))
+                {
+                    resourceScope = prop.Value.GetString();
                 }
             }
-            var inputMethod = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(id ?? throw new InvalidOperationException("id cannot be null"));
-            var inputClient = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(inputMethod ?? throw new InvalidOperationException($"cannot find InputServiceMethod {id}"));
+            var inputMethod = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(methodId ?? throw new JsonException("id cannot be null"));
+            var inputClient = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(inputMethod ?? throw new JsonException($"cannot find InputServiceMethod {methodId}"));
 
             return new ResourceMethod(
-                operationKind ?? throw new InvalidOperationException("operationKind cannot be null"),
+                operationKind ?? throw new JsonException("operationKind cannot be null"),
                 inputMethod,
-                inputClient ?? throw new InvalidOperationException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client"));
+                operationPath ?? throw new JsonException("operationPath cannot be null"),
+                operationScope ?? throw new JsonException("operationScope cannot be null"),
+                resourceScope,
+                inputClient ?? throw new JsonException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client"));
         }
     }
 }
