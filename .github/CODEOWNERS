@@ -83,9 +83,6 @@
 ####################
 
 # ServiceLabel: %AAD
-/sdk/contoso/                                                      @ReilleyMilne @shirelmr
-
-
 # ServiceOwners:                                                   @adamedx
 
 # ServiceLabel: %Advisor
@@ -101,6 +98,9 @@
 # ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
 
 # PRLabel: %AI Projects
+/sdk/contoso/                                                      @ReilleyMilne @shirelmr
+
+
 /sdk/ai/Azure.AI.Projects                                          @jhakulin @nick863
 
 # ServiceLabel: %AI Projects
