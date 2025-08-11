@@ -86,7 +86,8 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 
-        protected override FormattableString BuildDescription() => $"A Class representing a {ResourceName} along with the instance operations that can be performed on it. If you have a ResourceIdentifier you can construct a {Name} from an instance of ArmClient using the GetResource method. Otherwise you can get one from its parent resource <see cref=\"{GetParentResourceTypeName()}\"/> using the Get{ResourceName} method.";
+        // TODO: Add support for getting parent resource from a resource
+        protected override FormattableString BuildDescription() => $"A Class representing a {ResourceName} along with the instance operations that can be performed on it. If you have a {typeof(ResourceIdentifier):C} you can construct a {Name} from an instance of {typeof(ArmClient):C} using the GetResource method. Otherwise you can get one from its parent resource (TODO: add parent resource information).";
 
         private OperationSourceProvider? _source;
         internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
@@ -471,18 +472,6 @@ namespace Azure.Generator.Management.Providers
                 currentModel = currentModel.BaseModel;
             }
             return false;
-        }
-
-        private string GetParentResourceTypeName()
-        {
-            return ResourceScope switch
-            {
-                ResourceScope.ResourceGroup => "ResourceGroupResource",
-                ResourceScope.Subscription => "SubscriptionResource",
-                ResourceScope.Tenant => "TenantResource",
-                ResourceScope.ManagementGroup => "ManagementGroupResource",
-                _ => "ArmResource"
-            };
         }
     }
 }

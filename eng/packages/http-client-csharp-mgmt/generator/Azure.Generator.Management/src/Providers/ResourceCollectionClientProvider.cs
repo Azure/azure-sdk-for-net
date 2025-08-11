@@ -110,7 +110,8 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName() => $"{ResourceName}Collection";
 
-        protected override FormattableString BuildDescription() => $"A class representing a collection of <see cref=\"{_resource.Type}\"/> and their operations. Each <see cref=\"{_resource.Type}\"/> in the collection will belong to the same instance of <see cref=\"{GetParentResourceTypeName()}\"/>. To get a {Name} instance call the Get{ResourceName.Pluralize()} method from an instance of <see cref=\"{GetParentResourceTypeName()}\"/>.";
+        // TODO: Add support for getting parent resource from a resource collection
+        protected override FormattableString BuildDescription() => $"A class representing a collection of {_resource.Type:C} and their operations. Each {_resource.Type:C} in the collection will belong to the same instance of a parent resource (TODO: add parent resource information). To get a {Name} instance call the Get{ResourceName.Pluralize()} method from an instance of the parent resource.";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -342,18 +343,6 @@ namespace Azure.Generator.Management.Providers
             }
 
             return result;
-        }
-
-        private string GetParentResourceTypeName()
-        {
-            return ResourceScope switch
-            {
-                ResourceScope.ResourceGroup => "ResourceGroupResource",
-                ResourceScope.Subscription => "SubscriptionResource",
-                ResourceScope.Tenant => "TenantResource",
-                ResourceScope.ManagementGroup => "ManagementGroupResource",
-                _ => "ArmResource"
-            };
         }
     }
 }

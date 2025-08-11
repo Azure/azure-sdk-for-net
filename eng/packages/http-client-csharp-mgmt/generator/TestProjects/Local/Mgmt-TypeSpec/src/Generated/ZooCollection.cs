@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources;
 
 namespace MgmtTypeSpec
 {
-    /// <summary> A class representing a collection of <see cref="ZooResource"/> and their operations. Each <see cref="ZooResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>. To get a ZooCollection instance call the GetZoos method from an instance of <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class representing a collection of <see cref="ZooResource"/> and their operations. Each <see cref="ZooResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information). To get a ZooCollection instance call the GetZoos method from an instance of the parent resource. </summary>
     public partial class ZooCollection : ArmCollection, IEnumerable<ZooResource>, IAsyncEnumerable<ZooResource>
     {
         private readonly ClientDiagnostics _zoosClientDiagnostics;
