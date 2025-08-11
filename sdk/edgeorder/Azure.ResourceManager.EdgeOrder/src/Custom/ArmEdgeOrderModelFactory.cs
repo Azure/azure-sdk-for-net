@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 returnStatus,
                 managementRPDetailsList?.ToList(),
                 error,
+                firstOrDefaultManagementResourceProviderNamespace != null ? new ResourceProviderDetails(firstOrDefaultManagementResourceProviderNamespace, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -169,6 +170,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 new ChangeTrackingList<AdditionalConfiguration>(),
                 new ChangeTrackingList<ConfigurationDeviceDetails>(),
                 null, // termCommitmentInformation
+                count,
+                deviceDetails?.ToList(),
                 serializedAdditionalRawData: null);
         }
 

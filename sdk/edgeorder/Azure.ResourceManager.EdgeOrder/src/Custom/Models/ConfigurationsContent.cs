@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Argument.AssertNotNull(configurationFilters, nameof(configurationFilters));
 
             ConfigurationFilters = configurationFilters.ToList();
-            ConfigurationFilter = configurationFilters.FirstOrDefault();
         }
 
         /// <summary> Holds details about product hierarchy information and filterable property. </summary>

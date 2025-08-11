@@ -119,8 +119,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="returnStatus"> Describes whether the order item is returnable or not. </param>
         /// <param name="managementRPDetailsList"> List of parent RP details supported for configuration. </param>
         /// <param name="error"> Top level error for the job. </param>
+        /// <param name="firstOrDefaultManagementResourceProviderNamespace"></param>
         /// <returns> A new <see cref="Models.EdgeOrderItemDetails"/> instance for mocking. </returns>
-        public static EdgeOrderItemDetails EdgeOrderItemDetails(ProductDetails productDetails = null, OrderItemType orderItemType = default, OrderMode? orderItemMode = null, string siteId = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderItemStageHistory = null, OrderItemPreferences preferences = null, ForwardShippingDetails forwardShippingDetails = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<string> notificationEmailList = null, string cancellationReason = null, OrderItemCancellationStatus? cancellationStatus = null, EdgeOrderActionStatus? deletionStatus = null, string returnReason = null, OrderItemReturnStatus? returnStatus = null, IEnumerable<ResourceProviderDetails> managementRPDetailsList = null, ResponseError error = null)
+        public static EdgeOrderItemDetails EdgeOrderItemDetails(ProductDetails productDetails = null, OrderItemType orderItemType = default, OrderMode? orderItemMode = null, string siteId = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderItemStageHistory = null, OrderItemPreferences preferences = null, ForwardShippingDetails forwardShippingDetails = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<string> notificationEmailList = null, string cancellationReason = null, OrderItemCancellationStatus? cancellationStatus = null, EdgeOrderActionStatus? deletionStatus = null, string returnReason = null, OrderItemReturnStatus? returnStatus = null, IEnumerable<ResourceProviderDetails> managementRPDetailsList = null, ResponseError error = null, string firstOrDefaultManagementResourceProviderNamespace = null)
         {
             orderItemStageHistory ??= new List<EdgeOrderStageDetails>();
             notificationEmailList ??= new List<string>();
@@ -144,6 +145,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 returnStatus,
                 managementRPDetailsList?.ToList(),
                 error,
+                firstOrDefaultManagementResourceProviderNamespace != null ? new ResourceProviderDetails(firstOrDefaultManagementResourceProviderNamespace, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -157,11 +159,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="optInAdditionalConfigurations"> List of additional configurations customer wants in the order item apart from the ones included in the base configuration. </param>
         /// <param name="childConfigurationDeviceDetails"> Details of all child configurations that are part of the order item. </param>
         /// <param name="termCommitmentInformation"> Term Commitment Information of the Device. </param>
+        /// <param name="count"></param>
+        /// <param name="deviceDetails"></param>
         /// <returns> A new <see cref="Models.ProductDetails"/> instance for mocking. </returns>
-        public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, DoubleEncryptionStatus? productDoubleEncryptionStatus = null, IdentificationType? identificationType = null, EdgeOrderProductDeviceDetails parentDeviceDetails = null, ProvisioningDetails parentProvisioningDetails = null, IEnumerable<AdditionalConfiguration> optInAdditionalConfigurations = null, IEnumerable<ConfigurationDeviceDetails> childConfigurationDeviceDetails = null, TermCommitmentInformation termCommitmentInformation = null)
+        public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, DoubleEncryptionStatus? productDoubleEncryptionStatus = null, IdentificationType? identificationType = null, EdgeOrderProductDeviceDetails parentDeviceDetails = null, ProvisioningDetails parentProvisioningDetails = null, IEnumerable<AdditionalConfiguration> optInAdditionalConfigurations = null, IEnumerable<ConfigurationDeviceDetails> childConfigurationDeviceDetails = null, TermCommitmentInformation termCommitmentInformation = null, int? count = null, IEnumerable<EdgeOrderProductDeviceDetails> deviceDetails = null)
         {
             optInAdditionalConfigurations ??= new List<AdditionalConfiguration>();
             childConfigurationDeviceDetails ??= new List<ConfigurationDeviceDetails>();
+            deviceDetails ??= new List<EdgeOrderProductDeviceDetails>();
 
             return new ProductDetails(
                 displayInfo,
@@ -173,6 +178,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 optInAdditionalConfigurations?.ToList(),
                 childConfigurationDeviceDetails?.ToList(),
                 termCommitmentInformation,
+                count,
+                deviceDetails?.ToList(),
                 serializedAdditionalRawData: null);
         }
 

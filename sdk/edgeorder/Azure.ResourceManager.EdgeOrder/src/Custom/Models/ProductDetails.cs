@@ -5,9 +5,12 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
+    [CodeGenSerialization(nameof(Count), new string[] { "count" })]
+    [CodeGenSerialization(nameof(DeviceDetails), new string[] { "deviceDetails" })]
     public partial class ProductDetails
     {
         /// <summary> Quantity of the product. </summary>

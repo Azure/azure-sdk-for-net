@@ -129,6 +129,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("error"u8);
                 ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(FirstOrDefaultManagement))
+            {
+                writer.WritePropertyName("managementRpDetails"u8);
+                writer.WriteObjectValue<ResourceProviderDetails>(FirstOrDefaultManagement, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -183,6 +188,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             OrderItemReturnStatus? returnStatus = default;
             IReadOnlyList<ResourceProviderDetails> managementRpDetailsList = default;
             ResponseError error = default;
+            ResourceProviderDetails managementRpDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,6 +345,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerEdgeOrderContext.Default);
                     continue;
                 }
+                if (property.NameEquals("managementRpDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managementRpDetails = ResourceProviderDetails.DeserializeResourceProviderDetails(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -363,6 +378,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 returnStatus,
                 managementRpDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>(),
                 error,
+                managementRpDetails,
                 serializedAdditionalRawData);
         }
 

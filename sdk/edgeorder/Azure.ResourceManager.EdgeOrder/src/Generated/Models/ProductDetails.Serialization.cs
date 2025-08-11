@@ -86,6 +86,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("termCommitmentInformation"u8);
                 writer.WriteObjectValue(TermCommitmentInformation, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(Count))
+            {
+                if (Count != null)
+                {
+                    writer.WritePropertyName("count"u8);
+                    writer.WriteNumberValue(Count.Value);
+                }
+                else
+                {
+                    writer.WriteNull("count");
+                }
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceDetails))
+            {
+                writer.WritePropertyName("deviceDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in DeviceDetails)
+                {
+                    writer.WriteObjectValue<EdgeOrderProductDeviceDetails>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -132,6 +154,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             IList<AdditionalConfiguration> optInAdditionalConfigurations = default;
             IReadOnlyList<ConfigurationDeviceDetails> childConfigurationDeviceDetails = default;
             TermCommitmentInformation termCommitmentInformation = default;
+            int? count = default;
+            IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,6 +247,30 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     termCommitmentInformation = TermCommitmentInformation.DeserializeTermCommitmentInformation(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("count"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        count = null;
+                        continue;
+                    }
+                    count = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("deviceDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EdgeOrderProductDeviceDetails> array = new List<EdgeOrderProductDeviceDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EdgeOrderProductDeviceDetails.DeserializeEdgeOrderProductDeviceDetails(item, options));
+                    }
+                    deviceDetails = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -239,6 +287,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 optInAdditionalConfigurations ?? new ChangeTrackingList<AdditionalConfiguration>(),
                 childConfigurationDeviceDetails ?? new ChangeTrackingList<ConfigurationDeviceDetails>(),
                 termCommitmentInformation,
+                count,
+                deviceDetails ?? new ChangeTrackingList<EdgeOrderProductDeviceDetails>(),
                 serializedAdditionalRawData);
         }
 
