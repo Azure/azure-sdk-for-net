@@ -251,14 +251,14 @@ namespace Azure.Generator.Management.Providers
         // TODO -- this is temporary. We should change this to find the corresponding parameters in ContextualParameters after it is refactored to consume parent resources.
         private CSharpType GetPathParameterType(string parameterName)
         {
-            foreach (var (kind, method, _) in _resourceServiceMethods)
+            foreach (var resourceMethod in _resourceServiceMethods)
             {
-                if (!kind.IsCrudKind())
+                if (!resourceMethod.Kind.IsCrudKind())
                 {
                     continue; // Skip non-CRUD operations
                 }
                 // iterate through all parameters in this method to find a matching parameter
-                foreach (var parameter in method.Operation.Parameters)
+                foreach (var parameter in resourceMethod.InputMethod.Operation.Parameters)
                 {
                     if (parameter.Location != InputRequestLocation.Path)
                     {
@@ -337,8 +337,11 @@ namespace Azure.Generator.Management.Providers
             var operationMethods = new List<MethodProvider>();
             UpdateOperationMethodProvider? updateMethodProvider = null;
 
-            foreach (var (methodKind, method, inputClient) in _resourceServiceMethods)
+            foreach (var resourceMethod in _resourceServiceMethods)
             {
+                var methodKind = resourceMethod.Kind;
+                var method = resourceMethod.InputMethod;
+                var inputClient = resourceMethod.InputClient;
                 // exclude the List operations for resource and Create operations for non-singleton resources (they will be in ResourceCollection)
                 if (methodKind == ResourceOperationKind.List || (!IsSingleton && methodKind == ResourceOperationKind.Create))
                 {
