@@ -53,11 +53,11 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            return GetFoos().Get(fooName, cancellationToken);
+            return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Foo. </summary>
@@ -66,11 +66,11 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
+        public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
+            return GetFoos().Get(fooName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
@@ -93,11 +93,11 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BarResource> GetBar(string barName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BarResource>> GetBarAsync(string barName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            return GetBars().Get(barName, cancellationToken);
+            return await GetBars().GetAsync(barName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Bar. </summary>
@@ -106,11 +106,11 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BarResource>> GetBarAsync(string barName, CancellationToken cancellationToken = default)
+        public virtual Response<BarResource> GetBar(string barName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            return await GetBars().GetAsync(barName, cancellationToken).ConfigureAwait(false);
+            return GetBars().Get(barName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
@@ -133,11 +133,11 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ZooResource> GetZoo(string zooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ZooResource>> GetZooAsync(string zooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            return GetZoos().Get(zooName, cancellationToken);
+            return await GetZoos().GetAsync(zooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Zoo. </summary>
@@ -146,44 +146,11 @@ namespace MgmtTypeSpec.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ZooResource>> GetZooAsync(string zooName, CancellationToken cancellationToken = default)
+        public virtual Response<ZooResource> GetZoo(string zooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            return await GetZoos().GetAsync(zooName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
-        /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetZoos().Get(zooName, cancellationToken);
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
@@ -205,6 +172,39 @@ namespace MgmtTypeSpec.Mocking
                 };
                 HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <param name="location"></param>
+        /// <param name="body"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
                 {
