@@ -239,7 +239,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var (inputClient, clientInfo) in _clientInfos)
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate());
-                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), apiVersion)).Terminate());
+                var effectiveApiVersion = apiVersion.NullCoalesce(Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion));
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
             bodyStatements.Add(Static(Type).As<ArmResource>().ValidateResourceId(idParameter).Terminate());
@@ -355,8 +356,8 @@ namespace Azure.Generator.Management.Providers
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
-                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false)));
                     operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false)));
 
                     continue;
                 }
@@ -366,18 +367,18 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, false);
-                    operationMethods.Add(updateMethodProvider);
-
                     var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, true);
                     operationMethods.Add(updateAsyncMethodProvider);
+
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, false);
+                    operationMethods.Add(updateMethodProvider);
                 }
                 else
                 {
-                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
                     operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
+                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
                 }
             }
 

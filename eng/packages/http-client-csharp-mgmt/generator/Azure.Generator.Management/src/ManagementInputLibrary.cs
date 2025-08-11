@@ -74,6 +74,9 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputModelType, string> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
+        // If there're multiple API versions in the input namespace, use the last one as the default.
+        internal string DefaultApiVersion => InputNamespace.ApiVersions.Last();
+
         private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
         {
             Dictionary<InputModelType, string> map = new();

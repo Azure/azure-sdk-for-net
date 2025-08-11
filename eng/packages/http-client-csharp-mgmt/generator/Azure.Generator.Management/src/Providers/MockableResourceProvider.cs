@@ -67,10 +67,9 @@ namespace Azure.Generator.Management.Providers
                     MethodSignatureModifiers.Private,
                     typeof(ClientDiagnostics),
                     ResourceHelpers.GetClientDiagnosticsPropertyName(restClientProvider.Name),
-                    // TODO -- here we either need to use the corresponding ResourceType.Namespace or ProviderConstants.DefaultProviderNamespace, pending on https://github.com/Azure/azure-sdk-for-net/issues/50593
                     new ExpressionPropertyBody(
                         clientDiagnosticsField.Assign(
-                            New.Instance(typeof(ClientDiagnostics), Literal(enclosingType.Type.Namespace), Literal("TODO"), thisResource.Diagnostics()),
+                            New.Instance(typeof(ClientDiagnostics), Literal(enclosingType.Type.Namespace), ProviderConstantsProvider.DefaultProviderNamespace, thisResource.Diagnostics()),
                             nullCoalesce: true)),
                     enclosingType);
 
@@ -86,8 +85,7 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
                     new ExpressionPropertyBody(
                         restClientField.Assign(
-                            // TODO -- need to add apiVersion here in the future https://github.com/Azure/azure-sdk-for-net/issues/51791
-                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Null),
+                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion)),
                             nullCoalesce: true)),
                     enclosingType);
 
@@ -175,8 +173,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var method in _methods)
             {
                 // add the method provider one by one.
-                methods.Add(BuildNonResourceMethod(method, false));
                 methods.Add(BuildNonResourceMethod(method, true));
+                methods.Add(BuildNonResourceMethod(method, false));
             }
 
             return [.. methods];
@@ -227,16 +225,16 @@ namespace Azure.Generator.Management.Providers
                 // find the method
                 var getMethod = collection.Methods.FirstOrDefault(m => m.Signature.Name == "Get");
                 var getAsyncMethod = collection.Methods.FirstOrDefault(m => m.Signature.Name == "GetAsync");
-                if (getMethod is not null)
-                {
-                    // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, $"Get{resource.ResourceName}");
-                }
-
                 if (getAsyncMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
                     yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, $"Get{resource.ResourceName}Async");
+                }
+
+                if (getMethod is not null)
+                {
+                    // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
+                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, $"Get{resource.ResourceName}");
                 }
 
                 static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, string methodName)

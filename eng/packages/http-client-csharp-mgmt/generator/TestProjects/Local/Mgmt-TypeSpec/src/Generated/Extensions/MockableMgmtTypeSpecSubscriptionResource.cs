@@ -35,42 +35,9 @@ namespace MgmtTypeSpec.Mocking
         {
         }
 
-        private ClientDiagnostics FooTasksClientDiagnostics => _fooTasksClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", "TODO", Diagnostics);
+        private ClientDiagnostics FooTasksClientDiagnostics => _fooTasksClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FooTasks FooTasksRestClient => _fooTasksRestClient ??= new FooTasks(FooTasksClientDiagnostics, Pipeline, Endpoint, null);
-
-        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
-        /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        private FooTasks FooTasksRestClient => _fooTasksRestClient ??= new FooTasks(FooTasksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
@@ -91,6 +58,39 @@ namespace MgmtTypeSpec.Mocking
                 };
                 HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <param name="location"></param>
+        /// <param name="body"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
                 {
