@@ -1,4 +1,4 @@
 repo: Azure/azure-rest-api-specs
 directory: "specification/eventgrid/Azure.Messaging.EventGrid.SystemEvents"
-commit: 4c09d8bbeea862f6a84a75f703c3a30ed48fc5cc
+commit: 752dade436619ed28bd03ca2e77cfa5acf6222dd
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
