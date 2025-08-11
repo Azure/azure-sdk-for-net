@@ -213,7 +213,7 @@ namespace Azure.Generator.Management
                 {
                     resourcesAndMethodsPerScope[resourceMethod.OperationScope].ResourceMethods.Add(resourceMethod);
                 }
-                foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
+                foreach (var nonResourceMethod in nonResourceMethods)
                 {
                     resourcesAndMethodsPerScope[nonResourceMethod.OperationScope].NonResourceMethods.Add(nonResourceMethod);
                 }
