@@ -44,11 +44,11 @@ namespace MgmtTypeSpec.Mocking
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooPreviewAction>> PreviewActionsAsync(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActionsAsync");
             scope.Start();
             try
             {
@@ -57,7 +57,7 @@ namespace MgmtTypeSpec.Mocking
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
-                Response result = Pipeline.ProcessMessage(message, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
                 {
@@ -77,11 +77,11 @@ namespace MgmtTypeSpec.Mocking
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<FooPreviewAction>> PreviewActionsAsync(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActionsAsync");
+            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace MgmtTypeSpec.Mocking
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
                 {
