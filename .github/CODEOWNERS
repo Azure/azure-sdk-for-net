@@ -98,9 +98,6 @@
 # ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
 
 # PRLabel: %AI Projects
-/sdk/contoso/                                                      @ReilleyMilne @shirelmr
-
-
 /sdk/ai/Azure.AI.Projects                                          @jhakulin @nick863
 
 # ServiceLabel: %AI Projects
@@ -912,6 +909,10 @@
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
+/sdk/contoso/                                                      @ReilleyMilne @shirelmr
+
+# ServiceOwners: @ReilleyMilne @shirelmr
+
 
 ####################
 # Management Libraries
