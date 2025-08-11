@@ -25,7 +25,7 @@ namespace MgmtTypeSpec
         private readonly ClientDiagnostics _barsClientDiagnostics;
         private readonly Bars _barsRestClient;
 
-        /// <summary> Initializes a new instance of BarCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BarCollection"/> class for mocking. </summary>
         protected BarCollection()
         {
         }

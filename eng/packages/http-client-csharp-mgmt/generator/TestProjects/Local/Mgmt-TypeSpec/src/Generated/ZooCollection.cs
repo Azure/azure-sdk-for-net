@@ -27,7 +27,7 @@ namespace MgmtTypeSpec
         private readonly ClientDiagnostics _zooRecommendationClientDiagnostics;
         private readonly ZooRecommendation _zooRecommendationRestClient;
 
-        /// <summary> Initializes a new instance of ZooCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ZooCollection"/> class for mocking. </summary>
         protected ZooCollection()
         {
         }

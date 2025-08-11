@@ -25,7 +25,7 @@ namespace MgmtTypeSpec
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos/bars/settings";
 
-        /// <summary> Initializes a new instance of BarSettingsResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BarSettingsResource"/> class for mocking. </summary>
         protected BarSettingsResource()
         {
         }

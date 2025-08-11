@@ -25,7 +25,7 @@ namespace MgmtTypeSpec
         private readonly ClientDiagnostics _foosClientDiagnostics;
         private readonly Foos _foosRestClient;
 
-        /// <summary> Initializes a new instance of FooCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FooCollection"/> class for mocking. </summary>
         protected FooCollection()
         {
         }

@@ -23,7 +23,7 @@ namespace MgmtTypeSpec.Mocking
         private ClientDiagnostics _fooTasksClientDiagnostics;
         private FooTasks _fooTasksRestClient;
 
-        /// <summary> Initializes a new instance of MockableMgmtTypeSpecSubscriptionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableMgmtTypeSpecSubscriptionResource"/> class for mocking. </summary>
         protected MockableMgmtTypeSpecSubscriptionResource()
         {
         }
