@@ -83,6 +83,9 @@
 ####################
 
 # ServiceLabel: %AAD
+/sdk/contoso/                                                      @ReilleyMilne @shirelmr
+
+
 # ServiceOwners:                                                   @adamedx
 
 # ServiceLabel: %Advisor
@@ -909,9 +912,6 @@
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
-
-/sdk/contoso/                                                      @ReilleyMilne @shirelmr
-
 
 ####################
 # Management Libraries
