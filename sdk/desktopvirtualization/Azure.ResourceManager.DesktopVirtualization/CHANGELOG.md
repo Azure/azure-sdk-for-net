@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Make `Azure.ResourceManager.ContainerService` AOT-compatible
+- Make `Azure.ResourceManager.DesktopVirtualization` AOT-compatible
 
 ## 1.3.1 (2025-03-11)
 
