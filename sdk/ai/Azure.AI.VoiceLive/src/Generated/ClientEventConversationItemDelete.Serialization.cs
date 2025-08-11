@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventConversationItemDelete : IUtf8JsonSerializable, IJsonModel<ClientEventConversationItemDelete>
+    public partial class ClientEventConversationItemDelete : IUtf8JsonSerializable, IJsonModel<ClientEventConversationItemDelete>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientEventConversationItemDelete>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

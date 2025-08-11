@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
     /// If successful, the server will respond with a `conversation.item.truncated`
     /// event.
     /// </summary>
-    internal partial class ClientEventConversationItemTruncate : ClientEvent
+    public partial class ClientEventConversationItemTruncate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemTruncate"/>. </summary>
         /// <param name="itemId">

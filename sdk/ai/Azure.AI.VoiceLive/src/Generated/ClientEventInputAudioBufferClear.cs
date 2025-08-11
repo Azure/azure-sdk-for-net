@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Send this event to clear the audio bytes in the buffer. The server will
     /// respond with an `input_audio_buffer.cleared` event.
     /// </summary>
-    internal partial class ClientEventInputAudioBufferClear : ClientEvent
+    public partial class ClientEventInputAudioBufferClear : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferClear"/>. </summary>
         public ClientEventInputAudioBufferClear()

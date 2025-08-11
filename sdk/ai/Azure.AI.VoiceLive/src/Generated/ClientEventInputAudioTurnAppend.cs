@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>  Appends audio data to an ongoing input turn. </summary>
-    internal partial class ClientEventInputAudioTurnAppend : ClientEvent
+    public partial class ClientEventInputAudioTurnAppend : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnAppend"/>. </summary>
         /// <param name="turnId"> The ID of the turn this audio is part of. </param>

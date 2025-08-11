@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>  Cancels an in-progress input audio turn. </summary>
-    internal partial class ClientEventInputAudioTurnCancel : ClientEvent
+    public partial class ClientEventInputAudioTurnCancel : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnCancel"/>. </summary>
         /// <param name="turnId"> The ID of the turn to cancel. </param>

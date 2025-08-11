@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Create a new VoiceLive response with these parameters. </summary>
-    internal partial class ResponseCreateParams
+    public partial class ResponseCreateParams
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>  Marks the end of an audio input turn. </summary>
-    internal partial class ClientEventInputAudioTurnEnd : ClientEvent
+    public partial class ClientEventInputAudioTurnEnd : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnEnd"/>. </summary>
         /// <param name="turnId"> The ID of the audio turn being ended. </param>

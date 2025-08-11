@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// with a `response.cancelled` event or an error if there is no response to
     /// cancel.
     /// </summary>
-    internal partial class ClientEventResponseCancel : ClientEvent
+    public partial class ClientEventResponseCancel : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCancel"/>. </summary>
         public ClientEventResponseCancel()

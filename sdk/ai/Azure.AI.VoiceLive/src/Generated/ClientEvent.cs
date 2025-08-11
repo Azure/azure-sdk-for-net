@@ -12,7 +12,8 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// A voicelive client event.
-    /// Please note <see cref="ClientEvent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
+    /// Please note <see cref="ClientEvent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ClientEventConversationItemCreate"/>, <see cref="ClientEventConversationItemDelete"/>, <see cref="ClientEventConversationItemRetrieve"/>, <see cref="ClientEventConversationItemTruncate"/>, <see cref="ClientEventInputAudioBufferAppend"/>, <see cref="ClientEventInputAudioBufferClear"/>, <see cref="ClientEventInputAudioBufferCommit"/>, <see cref="ClientEventInputAudioClear"/>, <see cref="ClientEventInputAudioTurnAppend"/>, <see cref="ClientEventInputAudioTurnCancel"/>, <see cref="ClientEventInputAudioTurnEnd"/>, <see cref="ClientEventInputAudioTurnStart"/>, <see cref="ClientEventResponseCancel"/>, <see cref="ClientEventResponseCreate"/>, <see cref="ClientEventSessionAvatarConnect"/> and <see cref="ClientEventSessionUpdate"/>.
     /// </summary>
     public abstract partial class ClientEvent
     {

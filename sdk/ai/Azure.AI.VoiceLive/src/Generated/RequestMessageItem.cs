@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// Please note <see cref="RequestMessageItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RequestAssistantMessageItem"/>, <see cref="RequestSystemMessageItem"/> and <see cref="RequestUserMessageItem"/>.
     /// </summary>
-    internal partial class RequestMessageItem : ConversationRequestItem
+    public partial class RequestMessageItem : ConversationRequestItem
     {
         /// <summary> Initializes a new instance of <see cref="RequestMessageItem"/>. </summary>
         public RequestMessageItem()

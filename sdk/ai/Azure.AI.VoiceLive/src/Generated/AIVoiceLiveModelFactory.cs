@@ -14,6 +14,15 @@ namespace Azure.AI.VoiceLive
     /// <summary> Model factory for models. </summary>
     public static partial class AIVoiceLiveModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventSessionUpdate"/>. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="session"></param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventSessionUpdate"/> instance for mocking. </returns>
+        public static ClientEventSessionUpdate ClientEventSessionUpdate(string eventId = null, RequestSession session = null)
+        {
+            return new ClientEventSessionUpdate(ClientEventType.SessionUpdate, eventId, serializedAdditionalRawData: null, session);
+        }
+
         /// <summary> Initializes a new instance of <see cref="VoiceLive.InputAudio"/>. </summary>
         /// <param name="model"> The name of the model to use for input audio (currently only 'azure-standard' is supported). </param>
         /// <param name="phraseList"> Optional list of phrases to bias the speech recognition engine. </param>

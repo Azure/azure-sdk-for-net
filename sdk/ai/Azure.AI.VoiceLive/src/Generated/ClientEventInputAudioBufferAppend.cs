@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
     /// VAD to be more responsive. Unlike made other client events, the server will
     /// not send a confirmation response to this event.
     /// </summary>
-    internal partial class ClientEventInputAudioBufferAppend : ClientEvent
+    public partial class ClientEventInputAudioBufferAppend : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferAppend"/>. </summary>
         /// <param name="audio">

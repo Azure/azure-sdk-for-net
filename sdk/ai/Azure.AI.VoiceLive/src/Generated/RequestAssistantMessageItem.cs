@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The RequestAssistantMessageItem. </summary>
-    internal partial class RequestAssistantMessageItem : RequestMessageItem
+    public partial class RequestAssistantMessageItem : RequestMessageItem
     {
         /// <summary> Initializes a new instance of <see cref="RequestAssistantMessageItem"/>. </summary>
         /// <param name="content"></param>
