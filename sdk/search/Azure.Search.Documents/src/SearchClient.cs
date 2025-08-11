@@ -1631,7 +1631,6 @@ namespace Azure.Search.Documents
                 throw;
             }
         }
-
         #endregion Search
 
         #region Suggest

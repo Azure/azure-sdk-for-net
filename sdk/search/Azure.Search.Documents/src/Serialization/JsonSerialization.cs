@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -23,9 +22,6 @@ namespace Azure.Search.Documents
     /// </summary>
     internal static class JsonSerialization
     {
-        [FeatureSwitchDefinition("Azure.Search.Documents.JsonSerialization.IsReflectionEnabled")]
-        public static bool IsReflectionEnabled => AppContext.TryGetSwitch("Azure.Search.Documents.JsonSerialization.IsReflectionEnabled", out bool isEnabled) ? isEnabled : true;
-
         internal const string TrimWarning = "Uses reflection-based serialization which is not compatible with trimming.";
 
         /// <summary>
