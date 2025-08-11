@@ -1,14 +1,10 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.4.1 (2025-08-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.AppContainers` AOT-compatible
 
 ## 1.4.0 (2025-05-22)
 
