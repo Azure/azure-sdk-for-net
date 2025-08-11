@@ -1,5 +1,11 @@
 # Release History
 
+## 1.11.1 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Compute` AOT-compatible
+
 ## 1.11.0 (2025-07-25)
 
 ### Features Added
