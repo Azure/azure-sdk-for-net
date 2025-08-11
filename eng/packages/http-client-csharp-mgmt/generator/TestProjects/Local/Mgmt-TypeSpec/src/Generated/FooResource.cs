@@ -92,7 +92,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FooResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.GetAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.Get");
             scope.Start();
             try
             {
@@ -149,7 +149,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.DeleteAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.Delete");
             scope.Start();
             try
             {
@@ -211,7 +211,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.UpdateAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.Update");
             scope.Start();
             try
             {

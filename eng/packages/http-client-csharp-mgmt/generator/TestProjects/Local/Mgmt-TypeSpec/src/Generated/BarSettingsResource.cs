@@ -96,7 +96,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -169,7 +169,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BarSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.GetAsync");
+            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.Get");
             scope.Start();
             try
             {
