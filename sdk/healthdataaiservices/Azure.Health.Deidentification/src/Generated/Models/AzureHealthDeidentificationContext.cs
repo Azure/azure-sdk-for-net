@@ -25,8 +25,6 @@ namespace Azure.Health.Deidentification
     [ModelReaderWriterBuildable(typeof(DeidentificationDocumentDetails))]
     [ModelReaderWriterBuildable(typeof(DeidentificationDocumentLocation))]
     [ModelReaderWriterBuildable(typeof(DeidentificationContent))]
-    [ModelReaderWriterBuildable(typeof(TaggedPhiEntities))]
-    [ModelReaderWriterBuildable(typeof(SimplePhiEntity))]
     [ModelReaderWriterBuildable(typeof(DeidentificationCustomizationOptions))]
     [ModelReaderWriterBuildable(typeof(DeidentificationResult))]
     [ModelReaderWriterBuildable(typeof(PhiTaggerResult))]

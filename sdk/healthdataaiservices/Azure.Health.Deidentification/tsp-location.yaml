@@ -1,6 +1,6 @@
 directory: specification/healthdataaiservices/HealthDataAIServices.DeidServices
 repo: Azure/azure-rest-api-specs
-commit: cee8b51dc487fd473e2214a32d8eb1083cdabd21
+commit: 70d293f0964bb1e04738cc4192321f40d1dc93a1
 additionalDirectories: []
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
 
