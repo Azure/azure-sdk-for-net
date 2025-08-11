@@ -103,7 +103,7 @@ namespace Azure.Generator.Management
                             break;
                         case ResourceOperationKind.Update:
                         case ResourceOperationKind.Delete:
-                            // only resource have get
+                            // only resource has get
                             methodsInResource.Add(method);
                             break;
                         case ResourceOperationKind.Action:
