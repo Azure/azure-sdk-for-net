@@ -393,7 +393,6 @@
 
 # ServiceLabel: %contoso
 # ServiceOwners: @ReilleyMilne @shirelmr
-
 # ServiceLabel: %Cosmos
 /sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
 
