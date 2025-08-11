@@ -164,7 +164,7 @@
 /sdk/batch/                                                        @wiboris @dpwatrous @wanghoppe @skapur12 @cRui861
 
 # ServiceLabel: %Batch
-# ServiceOwners:                                                   @wiboris @dpwatrous
+# ServiceOwners: @wiboris @dpwatrous @ReilleyMilne @shirelmr
 
 # ServiceLabel: %BatchAI
 # ServiceOwners:                                                   @matthchr
