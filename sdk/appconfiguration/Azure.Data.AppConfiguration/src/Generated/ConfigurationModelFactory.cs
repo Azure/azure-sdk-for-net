@@ -16,47 +16,6 @@ namespace Azure.Data.AppConfiguration
     public static partial class ConfigurationModelFactory
     {
 
-        /// <summary> A key-value pair representing application settings. </summary>
-        /// <param name="key">
-        /// The primary identifier of the configuration setting.
-        ///     A  is used together with a  to uniquely identify a configuration setting.
-        /// </param>
-        /// <param name="label">
-        /// A value used to group configuration settings.
-        ///     A  is used together with a  to uniquely identify a configuration setting.
-        /// </param>
-        /// <param name="contentType">
-        /// The content type of the configuration setting's value.
-        ///     Providing a proper content-type can enable transformations of values when they are retrieved by applications.
-        /// </param>
-        /// <param name="value"> The configuration setting's value. </param>
-        /// <param name="lastModified"> The last time a modifying operation was performed on the given configuration setting. </param>
-        /// <param name="tags">
-        /// A dictionary of tags used to assign additional properties to a configuration setting.
-        ///     These can be used to indicate how a configuration setting may be applied.
-        /// </param>
-        /// <param name="isReadOnly">
-        /// A value indicating whether the configuration setting is read only.
-        ///     A read only configuration setting may not be modified until it is made writable.
-        /// </param>
-        /// <param name="eTag"> An ETag indicating the state of a configuration setting within a configuration store. </param>
-        /// <returns> A new <see cref="AppConfiguration.ConfigurationSetting"/> instance for mocking. </returns>
-        public static ConfigurationSetting ConfigurationSetting(string key = default, string label = default, string contentType = default, string value = default, DateTimeOffset? lastModified = default, IDictionary<string, string> tags = default, bool? isReadOnly = default, ETag eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConfigurationSetting(
-                key,
-                label,
-                contentType,
-                value,
-                lastModified,
-                tags,
-                isReadOnly,
-                eTag,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
