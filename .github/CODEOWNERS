@@ -221,9 +221,6 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/contoso/                                                      @ReilleyMilne @shirelmr
-
-
 /sdk/documentintelligence/                                         @ctstone @vkurpad
 
 # PRLabel: %Cognitive - Form Recognizer
@@ -912,6 +909,9 @@
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
+
+/sdk/contoso/                                                      @ReilleyMilne @shirelmr
+
 
 ####################
 # Management Libraries
