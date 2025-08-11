@@ -16,7 +16,7 @@ using Azure.ResourceManager;
 
 namespace MgmtTypeSpec
 {
-    /// <summary> A Class representing a BarSettingsResource along with the instance operations that can be performed on it. If you have a <see cref="ResourceIdentifier"/> you can construct a BarSettingsResource from an instance of <see cref="ArmClient"/> using the GetResource method. Otherwise you can get one from its parent resource (TODO: add parent resource information). </summary>
+    /// <summary> A Class representing a BarSettingsResource along with the instance operations that can be performed on it. If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BarSettingsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method. Otherwise you can get one from its parent resource (TODO: add parent resource information). </summary>
     public partial class BarSettingsResource : ArmResource
     {
         private readonly ClientDiagnostics _barSettingsOperationsClientDiagnostics;
