@@ -910,9 +910,6 @@
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
 
-/sdk/contoso/                                                      @ReilleyMilne @shirelmr
-
-
 ####################
 # Management Libraries
 ####################
@@ -994,6 +991,9 @@
 
 # ServiceLabel: %Container Orchestrator Runtime %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
+
+/sdk/contoso/                                                      @ReilleyMilne @shirelmr
+
 
 # PRLabel: %Database Watcher
 /sdk/databasewatcher/Azure.ResourceManager.*/                      @ArthurMa1978
