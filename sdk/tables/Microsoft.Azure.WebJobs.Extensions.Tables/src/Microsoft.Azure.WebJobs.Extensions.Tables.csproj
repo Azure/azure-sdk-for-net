@@ -29,6 +29,7 @@
       <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\StorageClientProvider.cs" />
       <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\WebJobsConfigurationExtensions.cs" />
       <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />
+      <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared" />
     </ItemGroup>
 
 </Project>
