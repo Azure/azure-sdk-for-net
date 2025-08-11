@@ -3175,28 +3175,42 @@
             "methods": [
               {
                 "$id": "293",
-                "id": "MgmtTypeSpec.Foos.createOrUpdate",
-                "kind": "Create"
+                "methodId": "MgmtTypeSpec.Foos.createOrUpdate",
+                "kind": "Create",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}"
               },
               {
                 "$id": "294",
-                "id": "MgmtTypeSpec.Foos.get",
-                "kind": "Get"
+                "methodId": "MgmtTypeSpec.Foos.get",
+                "kind": "Get",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}"
               },
               {
                 "$id": "295",
-                "id": "MgmtTypeSpec.Foos.delete",
-                "kind": "Delete"
+                "methodId": "MgmtTypeSpec.Foos.delete",
+                "kind": "Delete",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}"
               },
               {
                 "$id": "296",
-                "id": "MgmtTypeSpec.Foos.update",
-                "kind": "Update"
+                "methodId": "MgmtTypeSpec.Foos.update",
+                "kind": "Update",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}"
               },
               {
                 "$id": "297",
-                "id": "MgmtTypeSpec.Foos.list",
-                "kind": "List"
+                "methodId": "MgmtTypeSpec.Foos.list",
+                "kind": "List",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos",
+                "operationScope": "ResourceGroup"
               }
             ],
             "resourceScope": "ResourceGroup",
@@ -3649,23 +3663,35 @@
             "methods": [
               {
                 "$id": "331",
-                "id": "MgmtTypeSpec.FooSettingsOperations.get",
-                "kind": "Get"
+                "methodId": "MgmtTypeSpec.FooSettingsOperations.get",
+                "kind": "Get",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/FooSettings/default",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/FooSettings/default"
               },
               {
                 "$id": "332",
-                "id": "MgmtTypeSpec.FooSettingsOperations.createOrUpdate",
-                "kind": "Create"
+                "methodId": "MgmtTypeSpec.FooSettingsOperations.createOrUpdate",
+                "kind": "Create",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/FooSettings/default",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/FooSettings/default"
               },
               {
                 "$id": "333",
-                "id": "MgmtTypeSpec.FooSettingsOperations.update",
-                "kind": "Update"
+                "methodId": "MgmtTypeSpec.FooSettingsOperations.update",
+                "kind": "Update",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/FooSettings/default",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/FooSettings/default"
               },
               {
                 "$id": "334",
-                "id": "MgmtTypeSpec.FooSettingsOperations.delete",
-                "kind": "Delete"
+                "methodId": "MgmtTypeSpec.FooSettingsOperations.delete",
+                "kind": "Delete",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/FooSettings/default",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/FooSettings/default"
               }
             ],
             "resourceScope": "ResourceGroup",
@@ -3923,28 +3949,43 @@
             "methods": [
               {
                 "$id": "351",
-                "id": "MgmtTypeSpec.Bars.createOrUpdate",
-                "kind": "Create"
+                "methodId": "MgmtTypeSpec.Bars.createOrUpdate",
+                "kind": "Create",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}"
               },
               {
                 "$id": "352",
-                "id": "MgmtTypeSpec.Bars.get",
-                "kind": "Get"
+                "methodId": "MgmtTypeSpec.Bars.get",
+                "kind": "Get",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}"
               },
               {
                 "$id": "353",
-                "id": "MgmtTypeSpec.Bars.delete",
-                "kind": "Delete"
+                "methodId": "MgmtTypeSpec.Bars.delete",
+                "kind": "Delete",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}"
               },
               {
                 "$id": "354",
-                "id": "MgmtTypeSpec.Bars.update",
-                "kind": "Update"
+                "methodId": "MgmtTypeSpec.Bars.update",
+                "kind": "Update",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}"
               },
               {
                 "$id": "355",
-                "id": "MgmtTypeSpec.Bars.list",
-                "kind": "List"
+                "methodId": "MgmtTypeSpec.Bars.list",
+                "kind": "List",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}"
               }
             ],
             "resourceScope": "ResourceGroup",
@@ -4241,13 +4282,19 @@
             "methods": [
               {
                 "$id": "377",
-                "id": "MgmtTypeSpec.BarSettingsOperations.createOrUpdate",
-                "kind": "Create"
+                "methodId": "MgmtTypeSpec.BarSettingsOperations.createOrUpdate",
+                "kind": "Create",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current"
               },
               {
                 "$id": "378",
-                "id": "MgmtTypeSpec.BarSettingsOperations.get",
-                "kind": "Get"
+                "methodId": "MgmtTypeSpec.BarSettingsOperations.get",
+                "kind": "Get",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current"
               }
             ],
             "resourceScope": "ResourceGroup",
@@ -4383,43 +4430,65 @@
             "methods": [
               {
                 "$id": "387",
-                "id": "MgmtTypeSpec.Zoos.createOrUpdate",
-                "kind": "Create"
+                "methodId": "MgmtTypeSpec.Zoos.createOrUpdate",
+                "kind": "Create",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}"
               },
               {
                 "$id": "388",
-                "id": "MgmtTypeSpec.Zoos.get",
-                "kind": "Get"
+                "methodId": "MgmtTypeSpec.Zoos.get",
+                "kind": "Get",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}"
               },
               {
                 "$id": "389",
-                "id": "MgmtTypeSpec.Zoos.delete",
-                "kind": "Delete"
+                "methodId": "MgmtTypeSpec.Zoos.delete",
+                "kind": "Delete",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}"
               },
               {
                 "$id": "390",
-                "id": "MgmtTypeSpec.Zoos.update",
-                "kind": "Update"
+                "methodId": "MgmtTypeSpec.Zoos.update",
+                "kind": "Update",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}"
               },
               {
                 "$id": "391",
-                "id": "MgmtTypeSpec.Zoos.list",
-                "kind": "List"
+                "methodId": "MgmtTypeSpec.Zoos.list",
+                "kind": "List",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos",
+                "operationScope": "ResourceGroup"
               },
               {
                 "$id": "392",
-                "id": "MgmtTypeSpec.Zoos.listBySubscription",
-                "kind": "List"
+                "methodId": "MgmtTypeSpec.Zoos.listBySubscription",
+                "kind": "List",
+                "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/zoos",
+                "operationScope": "Subscription"
               },
               {
                 "$id": "393",
-                "id": "MgmtTypeSpec.Zoos.zooAddressList",
-                "kind": "Action"
+                "methodId": "MgmtTypeSpec.Zoos.zooAddressList",
+                "kind": "Action",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/zooAddressList",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}"
               },
               {
                 "$id": "394",
-                "id": "MgmtTypeSpec.Zoos.recommend",
-                "kind": "Action"
+                "methodId": "MgmtTypeSpec.Zoos.recommend",
+                "kind": "Action",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/recommend",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}"
               }
             ],
             "resourceScope": "ResourceGroup",
