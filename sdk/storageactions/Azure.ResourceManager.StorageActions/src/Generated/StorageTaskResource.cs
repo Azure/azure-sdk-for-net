@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.StorageActions
         {
             TryGetApiVersion(ResourceType, out string storageTaskApiVersion);
             _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion);
+            _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             _storageTasksReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion);
+            _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             _storageTaskAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            _storageTaskAssignmentRestClient = new StorageTaskAssignment(_storageTaskAssignmentClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion);
+            _storageTaskAssignmentRestClient = new StorageTaskAssignment(_storageTaskAssignmentClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             ValidateResourceId(id);
         }
 
@@ -100,34 +100,6 @@ namespace Azure.ResourceManager.StorageActions
 
         /// <summary> Get the storage task properties. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageTaskResource> Get(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storageTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageTaskData> response = Response.FromValue(StorageTaskData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new StorageTaskResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get the storage task properties. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StorageTaskResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.GetAsync");
@@ -154,16 +126,11 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Update storage task properties. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The parameters to provide to update the storage task resource. </param>
+        /// <summary> Get the storage task properties. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<StorageTaskResource> Update(WaitUntil waitUntil, StorageTaskPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<StorageTaskResource> Get(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Update");
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Get");
             scope.Start();
             try
             {
@@ -171,20 +138,14 @@ namespace Azure.ResourceManager.StorageActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageTasksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageTaskPatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
-                    new StorageTaskOperationSource(Client),
-                    _storageTasksClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
+                HttpMessage message = _storageTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageTaskData> response = Response.FromValue(StorageTaskData.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return Response.FromValue(new StorageTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,12 +193,16 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Delete the storage task resource. </summary>
+        /// <summary> Update storage task properties. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The parameters to provide to update the storage task resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<StorageTaskResource> Update(WaitUntil waitUntil, StorageTaskPatch patch, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Delete");
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Update");
             scope.Start();
             try
             {
@@ -245,12 +210,18 @@ namespace Azure.ResourceManager.StorageActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageTasksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _storageTasksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageTaskPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                StorageActionsArmOperation operation = new StorageActionsArmOperation(_storageTasksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
+                    new StorageTaskOperationSource(Client),
+                    _storageTasksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -290,24 +261,33 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Fetch the storage tasks run report summary for each assignment. </summary>
-        /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
-        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
+        /// <summary> Delete the storage task resource. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<StorageTaskReportInstance> GetStorageTasksReports(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Delete");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new StorageTasksReportGetStorageTasksReportsCollectionResultOfT(
-                _storageTasksReportRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxpagesize,
-                filter,
-                context);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageTasksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageActionsArmOperation operation = new StorageActionsArmOperation(_storageTasksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Fetch the storage tasks run report summary for each assignment. </summary>
@@ -330,21 +310,23 @@ namespace Azure.ResourceManager.StorageActions
                 context);
         }
 
-        /// <summary> Lists Resource IDs of the Storage Task Assignments associated with this Storage Task. </summary>
+        /// <summary> Fetch the storage tasks run report summary for each assignment. </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
+        /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<SubResource> GetStorageTaskAssignments(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<StorageTaskReportInstance> GetStorageTasksReports(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTaskAssignmentGetStorageTaskAssignmentsCollectionResultOfT(
-                _storageTaskAssignmentRestClient,
+            return new StorageTasksReportGetStorageTasksReportsCollectionResultOfT(
+                _storageTasksReportRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 maxpagesize,
+                filter,
                 context);
         }
 
@@ -358,6 +340,24 @@ namespace Azure.ResourceManager.StorageActions
                 CancellationToken = cancellationToken
             };
             return new StorageTaskAssignmentGetStorageTaskAssignmentsAsyncCollectionResultOfT(
+                _storageTaskAssignmentRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                maxpagesize,
+                context);
+        }
+
+        /// <summary> Lists Resource IDs of the Storage Task Assignments associated with this Storage Task. </summary>
+        /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<SubResource> GetStorageTaskAssignments(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new StorageTaskAssignmentGetStorageTaskAssignmentsCollectionResultOfT(
                 _storageTaskAssignmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

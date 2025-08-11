@@ -35,42 +35,9 @@ namespace Azure.ResourceManager.StorageActions.Mocking
         {
         }
 
-        private ClientDiagnostics StorageTasksClientDiagnostics => _storageTasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageActions.Mocking", "TODO", Diagnostics);
+        private ClientDiagnostics StorageTasksClientDiagnostics => _storageTasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageTasks StorageTasksRestClient => _storageTasksRestClient ??= new StorageTasks(StorageTasksClientDiagnostics, Pipeline, Endpoint, null);
-
-        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
-        /// <param name="location"></param>
-        /// <param name="parameters"> The parameters to preview action condition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<StorageTaskPreviewAction> PreviewActions(AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            using DiagnosticScope scope = StorageTasksClientDiagnostics.CreateScope("MockableStorageActionsSubscriptionResource.PreviewActions");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(parameters), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageTaskPreviewAction> response = Response.FromValue(StorageTaskPreviewAction.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        private StorageTasks StorageTasksRestClient => _storageTasksRestClient ??= new StorageTasks(StorageTasksClientDiagnostics, Pipeline, Endpoint, "2023-01-01");
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
@@ -91,6 +58,39 @@ namespace Azure.ResourceManager.StorageActions.Mocking
                 };
                 HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(parameters), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageTaskPreviewAction> response = Response.FromValue(StorageTaskPreviewAction.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <param name="location"></param>
+        /// <param name="parameters"> The parameters to preview action condition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<StorageTaskPreviewAction> PreviewActions(AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using DiagnosticScope scope = StorageTasksClientDiagnostics.CreateScope("MockableStorageActionsSubscriptionResource.PreviewActions");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(parameters), context);
+                Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageTaskPreviewAction> response = Response.FromValue(StorageTaskPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
                 {

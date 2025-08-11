@@ -2066,8 +2066,15 @@
             "type": {
               "$id": "182",
               "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
+              "name": "azureLocation",
+              "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+              "baseType": {
+                "$id": "183",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
               "decorators": []
             },
             "optional": false,
@@ -2086,13 +2093,13 @@
       },
       "properties": [
         {
-          "$id": "183",
+          "$id": "184",
           "kind": "path",
           "name": "name",
           "serializedName": "name",
           "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
           "type": {
-            "$id": "184",
+            "$id": "185",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2108,13 +2115,13 @@
           "correspondingMethodParams": []
         },
         {
-          "$id": "185",
+          "$id": "186",
           "kind": "property",
           "name": "identity",
           "serializedName": "identity",
           "doc": "The managed service identity of the resource.",
           "type": {
-            "$id": "186",
+            "$id": "187",
             "kind": "model",
             "name": "ManagedServiceIdentity",
             "namespace": "Azure.ResourceManager.StorageActions",
@@ -2124,18 +2131,18 @@
             "decorators": [],
             "properties": [
               {
-                "$id": "187",
+                "$id": "188",
                 "kind": "property",
                 "name": "principalId",
                 "serializedName": "principalId",
                 "doc": "The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity.",
                 "type": {
-                  "$id": "188",
+                  "$id": "189",
                   "kind": "string",
                   "name": "uuid",
                   "crossLanguageDefinitionId": "Azure.Core.uuid",
                   "baseType": {
-                    "$id": "189",
+                    "$id": "190",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2156,18 +2163,18 @@
                 }
               },
               {
-                "$id": "190",
+                "$id": "191",
                 "kind": "property",
                 "name": "tenantId",
                 "serializedName": "tenantId",
                 "doc": "The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity.",
                 "type": {
-                  "$id": "191",
+                  "$id": "192",
                   "kind": "string",
                   "name": "uuid",
                   "crossLanguageDefinitionId": "Azure.Core.uuid",
                   "baseType": {
-                    "$id": "192",
+                    "$id": "193",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2188,7 +2195,7 @@
                 }
               },
               {
-                "$id": "193",
+                "$id": "194",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -2209,26 +2216,26 @@
                 }
               },
               {
-                "$id": "194",
+                "$id": "195",
                 "kind": "property",
                 "name": "userAssignedIdentities",
                 "serializedName": "userAssignedIdentities",
                 "doc": "The identities assigned to this resource by the user.",
                 "type": {
-                  "$id": "195",
+                  "$id": "196",
                   "kind": "dict",
                   "keyType": {
-                    "$id": "196",
+                    "$id": "197",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
                     "decorators": []
                   },
                   "valueType": {
-                    "$id": "197",
+                    "$id": "198",
                     "kind": "nullable",
                     "type": {
-                      "$id": "198",
+                      "$id": "199",
                       "kind": "model",
                       "name": "UserAssignedIdentity",
                       "namespace": "Azure.ResourceManager.StorageActions",
@@ -2238,18 +2245,18 @@
                       "decorators": [],
                       "properties": [
                         {
-                          "$id": "199",
+                          "$id": "200",
                           "kind": "property",
                           "name": "principalId",
                           "serializedName": "principalId",
                           "doc": "The principal ID of the assigned identity.",
                           "type": {
-                            "$id": "200",
+                            "$id": "201",
                             "kind": "string",
                             "name": "uuid",
                             "crossLanguageDefinitionId": "Azure.Core.uuid",
                             "baseType": {
-                              "$id": "201",
+                              "$id": "202",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2270,18 +2277,18 @@
                           }
                         },
                         {
-                          "$id": "202",
+                          "$id": "203",
                           "kind": "property",
                           "name": "clientId",
                           "serializedName": "clientId",
                           "doc": "The client ID of the assigned identity.",
                           "type": {
-                            "$id": "203",
+                            "$id": "204",
                             "kind": "string",
                             "name": "uuid",
                             "crossLanguageDefinitionId": "Azure.Core.uuid",
                             "baseType": {
-                              "$id": "204",
+                              "$id": "205",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2334,13 +2341,13 @@
           }
         },
         {
-          "$id": "205",
+          "$id": "206",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
           "doc": "Properties of the storage task.",
           "type": {
-            "$id": "206",
+            "$id": "207",
             "kind": "model",
             "name": "StorageTaskProperties",
             "namespace": "Azure.ResourceManager.StorageActions",
@@ -2350,13 +2357,13 @@
             "decorators": [],
             "properties": [
               {
-                "$id": "207",
+                "$id": "208",
                 "kind": "property",
                 "name": "taskVersion",
                 "serializedName": "taskVersion",
                 "doc": "Storage task version.",
                 "type": {
-                  "$id": "208",
+                  "$id": "209",
                   "kind": "int64",
                   "name": "int64",
                   "crossLanguageDefinitionId": "TypeSpec.int64",
@@ -2375,13 +2382,13 @@
                 }
               },
               {
-                "$id": "209",
+                "$id": "210",
                 "kind": "property",
                 "name": "IsEnabled",
                 "serializedName": "enabled",
                 "doc": "Storage Task is enabled when set to true and disabled when set to false",
                 "type": {
-                  "$id": "210",
+                  "$id": "211",
                   "kind": "boolean",
                   "name": "boolean",
                   "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -2400,13 +2407,13 @@
                 }
               },
               {
-                "$id": "211",
+                "$id": "212",
                 "kind": "property",
                 "name": "description",
                 "serializedName": "description",
                 "doc": "Text that describes the purpose of the storage task",
                 "type": {
-                  "$id": "212",
+                  "$id": "213",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2425,13 +2432,13 @@
                 }
               },
               {
-                "$id": "213",
+                "$id": "214",
                 "kind": "property",
                 "name": "action",
                 "serializedName": "action",
                 "doc": "The storage task action that is executed",
                 "type": {
-                  "$id": "214",
+                  "$id": "215",
                   "kind": "model",
                   "name": "StorageTaskAction",
                   "namespace": "Azure.ResourceManager.StorageActions",
@@ -2441,13 +2448,13 @@
                   "decorators": [],
                   "properties": [
                     {
-                      "$id": "215",
+                      "$id": "216",
                       "kind": "property",
                       "name": "if",
                       "serializedName": "if",
                       "doc": "The if block of storage task operation",
                       "type": {
-                        "$id": "216",
+                        "$id": "217",
                         "kind": "model",
                         "name": "StorageTaskIfCondition",
                         "namespace": "Azure.ResourceManager.StorageActions",
@@ -2457,13 +2464,13 @@
                         "decorators": [],
                         "properties": [
                           {
-                            "$id": "217",
+                            "$id": "218",
                             "kind": "property",
                             "name": "condition",
                             "serializedName": "condition",
                             "doc": "Condition predicate to evaluate each object. See https://aka.ms/storagetaskconditions for valid properties and operators.",
                             "type": {
-                              "$id": "218",
+                              "$id": "219",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2482,17 +2489,17 @@
                             }
                           },
                           {
-                            "$id": "219",
+                            "$id": "220",
                             "kind": "property",
                             "name": "operations",
                             "serializedName": "operations",
                             "doc": "List of operations to execute when the condition predicate satisfies.",
                             "type": {
-                              "$id": "220",
+                              "$id": "221",
                               "kind": "array",
                               "name": "ArrayStorageTaskOperation",
                               "valueType": {
-                                "$id": "221",
+                                "$id": "222",
                                 "kind": "model",
                                 "name": "StorageTaskOperationInfo",
                                 "namespace": "Azure.ResourceManager.StorageActions",
@@ -2502,7 +2509,7 @@
                                 "decorators": [],
                                 "properties": [
                                   {
-                                    "$id": "222",
+                                    "$id": "223",
                                     "kind": "property",
                                     "name": "name",
                                     "serializedName": "name",
@@ -2523,7 +2530,7 @@
                                     }
                                   },
                                   {
-                                    "$id": "223",
+                                    "$id": "224",
                                     "kind": "property",
                                     "name": "parameters",
                                     "serializedName": "parameters",
@@ -2544,7 +2551,7 @@
                                     }
                                   },
                                   {
-                                    "$id": "224",
+                                    "$id": "225",
                                     "kind": "property",
                                     "name": "onSuccess",
                                     "serializedName": "onSuccess",
@@ -2565,7 +2572,7 @@
                                     }
                                   },
                                   {
-                                    "$id": "225",
+                                    "$id": "226",
                                     "kind": "property",
                                     "name": "onFailure",
                                     "serializedName": "onFailure",
@@ -2617,13 +2624,13 @@
                       }
                     },
                     {
-                      "$id": "226",
+                      "$id": "227",
                       "kind": "property",
                       "name": "else",
                       "serializedName": "else",
                       "doc": "The else block of storage task operation",
                       "type": {
-                        "$id": "227",
+                        "$id": "228",
                         "kind": "model",
                         "name": "StorageTaskElseCondition",
                         "namespace": "Azure.ResourceManager.StorageActions",
@@ -2633,13 +2640,13 @@
                         "decorators": [],
                         "properties": [
                           {
-                            "$id": "228",
+                            "$id": "229",
                             "kind": "property",
                             "name": "operations",
                             "serializedName": "operations",
                             "doc": "List of operations to execute in the else block",
                             "type": {
-                              "$ref": "220"
+                              "$ref": "221"
                             },
                             "optional": false,
                             "readOnly": false,
@@ -2682,7 +2689,7 @@
                 }
               },
               {
-                "$id": "229",
+                "$id": "230",
                 "kind": "property",
                 "name": "provisioningState",
                 "serializedName": "provisioningState",
@@ -2703,18 +2710,18 @@
                 }
               },
               {
-                "$id": "230",
+                "$id": "231",
                 "kind": "property",
                 "name": "creationTimeInUtc",
                 "serializedName": "creationTimeInUtc",
                 "doc": "The creation date and time of the storage task in UTC.",
                 "type": {
-                  "$id": "231",
+                  "$id": "232",
                   "kind": "utcDateTime",
                   "name": "utcDateTime",
                   "encode": "rfc3339",
                   "wireType": {
-                    "$id": "232",
+                    "$id": "233",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2752,25 +2759,25 @@
       ]
     },
     {
-      "$ref": "186"
+      "$ref": "187"
     },
     {
-      "$ref": "198"
+      "$ref": "199"
     },
     {
-      "$ref": "206"
+      "$ref": "207"
     },
     {
-      "$ref": "214"
+      "$ref": "215"
     },
     {
-      "$ref": "216"
+      "$ref": "217"
     },
     {
-      "$ref": "221"
+      "$ref": "222"
     },
     {
-      "$ref": "227"
+      "$ref": "228"
     },
     {
       "$ref": "153"
@@ -2782,7 +2789,7 @@
       "$ref": "164"
     },
     {
-      "$id": "233",
+      "$id": "234",
       "kind": "model",
       "name": "ArmOperationStatusResourceProvisioningState",
       "namespace": "Azure.ResourceManager.StorageActions",
@@ -2792,7 +2799,7 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "234",
+          "$id": "235",
           "kind": "property",
           "name": "status",
           "serializedName": "status",
@@ -2813,13 +2820,13 @@
           }
         },
         {
-          "$id": "235",
+          "$id": "236",
           "kind": "path",
           "name": "id",
           "serializedName": "id",
           "doc": "The unique identifier for the operationStatus resource",
           "type": {
-            "$id": "236",
+            "$id": "237",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2835,13 +2842,13 @@
           "correspondingMethodParams": []
         },
         {
-          "$id": "237",
+          "$id": "238",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "The name of the  operationStatus resource",
           "type": {
-            "$id": "238",
+            "$id": "239",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2860,18 +2867,18 @@
           }
         },
         {
-          "$id": "239",
+          "$id": "240",
           "kind": "property",
           "name": "startTime",
           "serializedName": "startTime",
           "doc": "Operation start time",
           "type": {
-            "$id": "240",
+            "$id": "241",
             "kind": "utcDateTime",
             "name": "utcDateTime",
             "encode": "rfc3339",
             "wireType": {
-              "$id": "241",
+              "$id": "242",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2893,18 +2900,18 @@
           }
         },
         {
-          "$id": "242",
+          "$id": "243",
           "kind": "property",
           "name": "endTime",
           "serializedName": "endTime",
           "doc": "Operation complete time",
           "type": {
-            "$id": "243",
+            "$id": "244",
             "kind": "utcDateTime",
             "name": "utcDateTime",
             "encode": "rfc3339",
             "wireType": {
-              "$id": "244",
+              "$id": "245",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2926,13 +2933,13 @@
           }
         },
         {
-          "$id": "245",
+          "$id": "246",
           "kind": "property",
           "name": "percentComplete",
           "serializedName": "percentComplete",
           "doc": "The progress made toward completing the operation",
           "type": {
-            "$id": "246",
+            "$id": "247",
             "kind": "float64",
             "name": "float64",
             "crossLanguageDefinitionId": "TypeSpec.float64",
@@ -2951,7 +2958,7 @@
           }
         },
         {
-          "$id": "247",
+          "$id": "248",
           "kind": "property",
           "name": "error",
           "serializedName": "error",
@@ -2974,7 +2981,7 @@
       ]
     },
     {
-      "$id": "248",
+      "$id": "249",
       "kind": "model",
       "name": "StorageTaskUpdateParameters",
       "namespace": "Azure.ResourceManager.StorageActions",
@@ -2984,13 +2991,13 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "249",
+          "$id": "250",
           "kind": "property",
           "name": "identity",
           "serializedName": "identity",
           "doc": "The identity of the resource.",
           "type": {
-            "$ref": "186"
+            "$ref": "187"
           },
           "optional": true,
           "readOnly": false,
@@ -3005,7 +3012,7 @@
           }
         },
         {
-          "$id": "250",
+          "$id": "251",
           "kind": "property",
           "name": "tags",
           "serializedName": "tags",
@@ -3026,13 +3033,13 @@
           }
         },
         {
-          "$id": "251",
+          "$id": "252",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
           "doc": "Properties of the storage task.",
           "type": {
-            "$id": "252",
+            "$id": "253",
             "kind": "model",
             "name": "StorageTaskUpdateProperties",
             "namespace": "Azure.ResourceManager.StorageActions",
@@ -3042,13 +3049,13 @@
             "decorators": [],
             "properties": [
               {
-                "$id": "253",
+                "$id": "254",
                 "kind": "property",
                 "name": "taskVersion",
                 "serializedName": "taskVersion",
                 "doc": "Storage task version.",
                 "type": {
-                  "$id": "254",
+                  "$id": "255",
                   "kind": "int64",
                   "name": "int64",
                   "crossLanguageDefinitionId": "TypeSpec.int64",
@@ -3067,13 +3074,13 @@
                 }
               },
               {
-                "$id": "255",
+                "$id": "256",
                 "kind": "property",
                 "name": "enabled",
                 "serializedName": "enabled",
                 "doc": "Storage Task is enabled when set to true and disabled when set to false",
                 "type": {
-                  "$id": "256",
+                  "$id": "257",
                   "kind": "boolean",
                   "name": "boolean",
                   "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -3092,13 +3099,13 @@
                 }
               },
               {
-                "$id": "257",
+                "$id": "258",
                 "kind": "property",
                 "name": "description",
                 "serializedName": "description",
                 "doc": "Text that describes the purpose of the storage task",
                 "type": {
-                  "$id": "258",
+                  "$id": "259",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3117,13 +3124,13 @@
                 }
               },
               {
-                "$id": "259",
+                "$id": "260",
                 "kind": "property",
                 "name": "action",
                 "serializedName": "action",
                 "doc": "The storage task action that is executed",
                 "type": {
-                  "$ref": "214"
+                  "$ref": "215"
                 },
                 "optional": true,
                 "readOnly": false,
@@ -3138,7 +3145,7 @@
                 }
               },
               {
-                "$id": "260",
+                "$id": "261",
                 "kind": "property",
                 "name": "provisioningState",
                 "serializedName": "provisioningState",
@@ -3159,18 +3166,18 @@
                 }
               },
               {
-                "$id": "261",
+                "$id": "262",
                 "kind": "property",
                 "name": "creationTimeInUtc",
                 "serializedName": "creationTimeInUtc",
                 "doc": "The creation date and time of the storage task in UTC.",
                 "type": {
-                  "$id": "262",
+                  "$id": "263",
                   "kind": "utcDateTime",
                   "name": "utcDateTime",
                   "encode": "rfc3339",
                   "wireType": {
-                    "$id": "263",
+                    "$id": "264",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3208,10 +3215,10 @@
       ]
     },
     {
-      "$ref": "252"
+      "$ref": "253"
     },
     {
-      "$id": "264",
+      "$id": "265",
       "kind": "model",
       "name": "StorageTasksListResult",
       "namespace": "Azure.ResourceManager.StorageActions",
@@ -3221,13 +3228,13 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "265",
+          "$id": "266",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "doc": "Gets the list of storage tasks and their properties.",
           "type": {
-            "$id": "266",
+            "$id": "267",
             "kind": "array",
             "name": "ArrayStorageTask",
             "valueType": {
@@ -3249,18 +3256,18 @@
           }
         },
         {
-          "$id": "267",
+          "$id": "268",
           "kind": "property",
           "name": "nextLink",
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
-            "$id": "268",
+            "$id": "269",
             "kind": "url",
             "name": "ResourceLocation",
             "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
             "baseType": {
-              "$id": "269",
+              "$id": "270",
               "kind": "url",
               "name": "url",
               "crossLanguageDefinitionId": "TypeSpec.url",
@@ -3283,7 +3290,7 @@
       ]
     },
     {
-      "$id": "270",
+      "$id": "271",
       "kind": "model",
       "name": "StorageTaskPreviewAction",
       "namespace": "Azure.ResourceManager.StorageActions",
@@ -3293,13 +3300,13 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "271",
+          "$id": "272",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
           "doc": "Properties of the storage task preview.",
           "type": {
-            "$id": "272",
+            "$id": "273",
             "kind": "model",
             "name": "StorageTaskPreviewActionProperties",
             "namespace": "Azure.ResourceManager.StorageActions",
@@ -3309,13 +3316,13 @@
             "decorators": [],
             "properties": [
               {
-                "$id": "273",
+                "$id": "274",
                 "kind": "property",
                 "name": "container",
                 "serializedName": "container",
                 "doc": "Properties of a sample container to test for a match with the preview action.",
                 "type": {
-                  "$id": "274",
+                  "$id": "275",
                   "kind": "model",
                   "name": "StorageTaskPreviewContainerProperties",
                   "namespace": "Azure.ResourceManager.StorageActions",
@@ -3325,13 +3332,13 @@
                   "decorators": [],
                   "properties": [
                     {
-                      "$id": "275",
+                      "$id": "276",
                       "kind": "property",
                       "name": "name",
                       "serializedName": "name",
                       "doc": "Name of test container",
                       "type": {
-                        "$id": "276",
+                        "$id": "277",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3350,17 +3357,17 @@
                       }
                     },
                     {
-                      "$id": "277",
+                      "$id": "278",
                       "kind": "property",
                       "name": "metadata",
                       "serializedName": "metadata",
                       "doc": "metadata key value pairs to be tested for a match against the provided condition.",
                       "type": {
-                        "$id": "278",
+                        "$id": "279",
                         "kind": "array",
                         "name": "ArrayStorageTaskPreviewKeyValueProperties",
                         "valueType": {
-                          "$id": "279",
+                          "$id": "280",
                           "kind": "model",
                           "name": "StorageTaskPreviewKeyValueProperties",
                           "namespace": "Azure.ResourceManager.StorageActions",
@@ -3370,13 +3377,13 @@
                           "decorators": [],
                           "properties": [
                             {
-                              "$id": "280",
+                              "$id": "281",
                               "kind": "property",
                               "name": "key",
                               "serializedName": "key",
                               "doc": "Represents the key property of the pair.",
                               "type": {
-                                "$id": "281",
+                                "$id": "282",
                                 "kind": "string",
                                 "name": "string",
                                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3395,13 +3402,13 @@
                               }
                             },
                             {
-                              "$id": "282",
+                              "$id": "283",
                               "kind": "property",
                               "name": "value",
                               "serializedName": "value",
                               "doc": "Represents the value property of the pair.",
                               "type": {
-                                "$id": "283",
+                                "$id": "284",
                                 "kind": "string",
                                 "name": "string",
                                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3451,17 +3458,17 @@
                 }
               },
               {
-                "$id": "284",
+                "$id": "285",
                 "kind": "property",
                 "name": "blobs",
                 "serializedName": "blobs",
                 "doc": "Properties of some sample blobs in the container to test for matches with the preview action.",
                 "type": {
-                  "$id": "285",
+                  "$id": "286",
                   "kind": "array",
                   "name": "ArrayStorageTaskPreviewBlobProperties",
                   "valueType": {
-                    "$id": "286",
+                    "$id": "287",
                     "kind": "model",
                     "name": "StorageTaskPreviewBlobProperties",
                     "namespace": "Azure.ResourceManager.StorageActions",
@@ -3471,13 +3478,13 @@
                     "decorators": [],
                     "properties": [
                       {
-                        "$id": "287",
+                        "$id": "288",
                         "kind": "property",
                         "name": "name",
                         "serializedName": "name",
                         "doc": "Name of test blob",
                         "type": {
-                          "$id": "288",
+                          "$id": "289",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3496,13 +3503,13 @@
                         }
                       },
                       {
-                        "$id": "289",
+                        "$id": "290",
                         "kind": "property",
                         "name": "properties",
                         "serializedName": "properties",
                         "doc": "properties key value pairs to be tested for a match against the provided condition.",
                         "type": {
-                          "$ref": "278"
+                          "$ref": "279"
                         },
                         "optional": true,
                         "readOnly": false,
@@ -3517,13 +3524,13 @@
                         }
                       },
                       {
-                        "$id": "290",
+                        "$id": "291",
                         "kind": "property",
                         "name": "metadata",
                         "serializedName": "metadata",
                         "doc": "metadata key value pairs to be tested for a match against the provided condition.",
                         "type": {
-                          "$ref": "278"
+                          "$ref": "279"
                         },
                         "optional": true,
                         "readOnly": false,
@@ -3538,13 +3545,13 @@
                         }
                       },
                       {
-                        "$id": "291",
+                        "$id": "292",
                         "kind": "property",
                         "name": "tags",
                         "serializedName": "tags",
                         "doc": "tags key value pairs to be tested for a match against the provided condition.",
                         "type": {
-                          "$ref": "278"
+                          "$ref": "279"
                         },
                         "optional": true,
                         "readOnly": false,
@@ -3559,7 +3566,7 @@
                         }
                       },
                       {
-                        "$id": "292",
+                        "$id": "293",
                         "kind": "property",
                         "name": "matchedBlock",
                         "serializedName": "matchedBlock",
@@ -3597,13 +3604,13 @@
                 }
               },
               {
-                "$id": "293",
+                "$id": "294",
                 "kind": "property",
                 "name": "action",
                 "serializedName": "action",
                 "doc": "Preview action to test",
                 "type": {
-                  "$id": "294",
+                  "$id": "295",
                   "kind": "model",
                   "name": "StorageTaskPreviewActionCondition",
                   "namespace": "Azure.ResourceManager.StorageActions",
@@ -3613,13 +3620,13 @@
                   "decorators": [],
                   "properties": [
                     {
-                      "$id": "295",
+                      "$id": "296",
                       "kind": "property",
                       "name": "if",
                       "serializedName": "if",
                       "doc": "The condition to be tested for a match with container and blob properties.",
                       "type": {
-                        "$id": "296",
+                        "$id": "297",
                         "kind": "model",
                         "name": "StorageTaskPreviewActionIfCondition",
                         "namespace": "Azure.ResourceManager.StorageActions",
@@ -3629,13 +3636,13 @@
                         "decorators": [],
                         "properties": [
                           {
-                            "$id": "297",
+                            "$id": "298",
                             "kind": "property",
                             "name": "condition",
                             "serializedName": "condition",
                             "doc": "Storage task condition to bes tested for a match.",
                             "type": {
-                              "$id": "298",
+                              "$id": "299",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3668,13 +3675,13 @@
                       }
                     },
                     {
-                      "$id": "299",
+                      "$id": "300",
                       "kind": "property",
                       "name": "elseBlockExists",
                       "serializedName": "elseBlockExists",
                       "doc": "Specify whether the else block is present in the condition.",
                       "type": {
-                        "$id": "300",
+                        "$id": "301",
                         "kind": "boolean",
                         "name": "boolean",
                         "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -3723,25 +3730,25 @@
       ]
     },
     {
-      "$ref": "272"
+      "$ref": "273"
     },
     {
-      "$ref": "274"
+      "$ref": "275"
     },
     {
-      "$ref": "279"
+      "$ref": "280"
     },
     {
-      "$ref": "286"
+      "$ref": "287"
     },
     {
-      "$ref": "294"
+      "$ref": "295"
     },
     {
-      "$ref": "296"
+      "$ref": "297"
     },
     {
-      "$id": "301",
+      "$id": "302",
       "kind": "model",
       "name": "StorageTaskReportSummary",
       "namespace": "Azure.ResourceManager.StorageActions",
@@ -3751,17 +3758,17 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "302",
+          "$id": "303",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "doc": "Gets storage tasks run result summary.",
           "type": {
-            "$id": "303",
+            "$id": "304",
             "kind": "array",
             "name": "ArrayStorageTaskReportInstance",
             "valueType": {
-              "$id": "304",
+              "$id": "305",
               "kind": "model",
               "name": "StorageTaskReportInstance",
               "namespace": "Azure.ResourceManager.StorageActions",
@@ -3770,7 +3777,7 @@
               "doc": "Storage Tasks run report instance",
               "decorators": [],
               "baseModel": {
-                "$id": "305",
+                "$id": "306",
                 "kind": "model",
                 "name": "ProxyResource",
                 "namespace": "Azure.ResourceManager.StorageActions",
@@ -3786,13 +3793,13 @@
               },
               "properties": [
                 {
-                  "$id": "306",
+                  "$id": "307",
                   "kind": "property",
                   "name": "properties",
                   "serializedName": "properties",
                   "doc": "Storage task execution report for a run instance.",
                   "type": {
-                    "$id": "307",
+                    "$id": "308",
                     "kind": "model",
                     "name": "StorageTaskReportProperties",
                     "namespace": "Azure.ResourceManager.StorageActions",
@@ -3802,18 +3809,18 @@
                     "decorators": [],
                     "properties": [
                       {
-                        "$id": "308",
+                        "$id": "309",
                         "kind": "property",
                         "name": "taskAssignmentId",
                         "serializedName": "taskAssignmentId",
                         "doc": "Resource ID of the Storage Task Assignment associated with this reported run.",
                         "type": {
-                          "$id": "309",
+                          "$id": "310",
                           "kind": "string",
                           "name": "armResourceIdentifier",
                           "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                           "baseType": {
-                            "$id": "310",
+                            "$id": "311",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3834,18 +3841,18 @@
                         }
                       },
                       {
-                        "$id": "311",
+                        "$id": "312",
                         "kind": "property",
                         "name": "storageAccountId",
                         "serializedName": "storageAccountId",
                         "doc": "Resource ID of the Storage Account where this reported run executed.",
                         "type": {
-                          "$id": "312",
+                          "$id": "313",
                           "kind": "string",
                           "name": "armResourceIdentifier",
                           "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                           "baseType": {
-                            "$id": "313",
+                            "$id": "314",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3866,13 +3873,13 @@
                         }
                       },
                       {
-                        "$id": "314",
+                        "$id": "315",
                         "kind": "property",
                         "name": "startTime",
                         "serializedName": "startTime",
                         "doc": "Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators",
                         "type": {
-                          "$id": "315",
+                          "$id": "316",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3891,13 +3898,13 @@
                         }
                       },
                       {
-                        "$id": "316",
+                        "$id": "317",
                         "kind": "property",
                         "name": "finishTime",
                         "serializedName": "finishTime",
                         "doc": "End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators",
                         "type": {
-                          "$id": "317",
+                          "$id": "318",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3916,13 +3923,13 @@
                         }
                       },
                       {
-                        "$id": "318",
+                        "$id": "319",
                         "kind": "property",
                         "name": "objectsTargetedCount",
                         "serializedName": "objectsTargetedCount",
                         "doc": "Total number of objects that meet the condition as defined in the storage task assignment execution context. Filter options such as objectsTargetedCount gt 50 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators",
                         "type": {
-                          "$id": "319",
+                          "$id": "320",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3941,13 +3948,13 @@
                         }
                       },
                       {
-                        "$id": "320",
+                        "$id": "321",
                         "kind": "property",
                         "name": "objectsOperatedOnCount",
                         "serializedName": "objectsOperatedOnCount",
                         "doc": "Total number of objects that meet the storage tasks condition and were operated upon. Filter options such as objectsOperatedOnCount ge 100 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators",
                         "type": {
-                          "$id": "321",
+                          "$id": "322",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3966,13 +3973,13 @@
                         }
                       },
                       {
-                        "$id": "322",
+                        "$id": "323",
                         "kind": "property",
                         "name": "objectFailedCount",
                         "serializedName": "objectFailedCount",
                         "doc": "Total number of objects where task operation failed when was attempted. Filter options such as objectFailedCount eq 0 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators",
                         "type": {
-                          "$id": "323",
+                          "$id": "324",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3991,13 +3998,13 @@
                         }
                       },
                       {
-                        "$id": "324",
+                        "$id": "325",
                         "kind": "property",
                         "name": "objectsSucceededCount",
                         "serializedName": "objectsSucceededCount",
                         "doc": "Total number of objects where task operation succeeded when was attempted.Filter options such as objectsSucceededCount gt 150 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators",
                         "type": {
-                          "$id": "325",
+                          "$id": "326",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4016,13 +4023,13 @@
                         }
                       },
                       {
-                        "$id": "326",
+                        "$id": "327",
                         "kind": "property",
                         "name": "runStatusError",
                         "serializedName": "runStatusError",
                         "doc": "Well known Azure Storage error code that represents the error encountered during execution of the run instance.",
                         "type": {
-                          "$id": "327",
+                          "$id": "328",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4041,7 +4048,7 @@
                         }
                       },
                       {
-                        "$id": "328",
+                        "$id": "329",
                         "kind": "property",
                         "name": "runStatusEnum",
                         "serializedName": "runStatusEnum",
@@ -4062,13 +4069,13 @@
                         }
                       },
                       {
-                        "$id": "329",
+                        "$id": "330",
                         "kind": "property",
                         "name": "summaryReportPath",
                         "serializedName": "summaryReportPath",
                         "doc": "Full path to the verbose report stored in the reporting container as specified in the assignment execution context for the storage account.",
                         "type": {
-                          "$id": "330",
+                          "$id": "331",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4087,18 +4094,18 @@
                         }
                       },
                       {
-                        "$id": "331",
+                        "$id": "332",
                         "kind": "property",
                         "name": "taskId",
                         "serializedName": "taskId",
                         "doc": "Resource ID of the Storage Task applied during this run.",
                         "type": {
-                          "$id": "332",
+                          "$id": "333",
                           "kind": "string",
                           "name": "armResourceIdentifier",
                           "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                           "baseType": {
-                            "$id": "333",
+                            "$id": "334",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4119,13 +4126,13 @@
                         }
                       },
                       {
-                        "$id": "334",
+                        "$id": "335",
                         "kind": "property",
                         "name": "taskVersion",
                         "serializedName": "taskVersion",
                         "doc": "Storage Task Version",
                         "type": {
-                          "$id": "335",
+                          "$id": "336",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4144,7 +4151,7 @@
                         }
                       },
                       {
-                        "$id": "336",
+                        "$id": "337",
                         "kind": "property",
                         "name": "runResult",
                         "serializedName": "runResult",
@@ -4196,18 +4203,18 @@
           }
         },
         {
-          "$id": "337",
+          "$id": "338",
           "kind": "property",
           "name": "nextLink",
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
-            "$id": "338",
+            "$id": "339",
             "kind": "url",
             "name": "ResourceLocation",
             "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
             "baseType": {
-              "$id": "339",
+              "$id": "340",
               "kind": "url",
               "name": "url",
               "crossLanguageDefinitionId": "TypeSpec.url",
@@ -4230,16 +4237,16 @@
       ]
     },
     {
-      "$ref": "304"
-    },
-    {
-      "$ref": "307"
-    },
-    {
       "$ref": "305"
     },
     {
-      "$id": "340",
+      "$ref": "308"
+    },
+    {
+      "$ref": "306"
+    },
+    {
+      "$id": "341",
       "kind": "model",
       "name": "StorageTaskAssignmentsListResult",
       "namespace": "Azure.ResourceManager.StorageActions",
@@ -4249,17 +4256,17 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "341",
+          "$id": "342",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "doc": "List of Storage Task Assignment Resource IDs associated with this Storage Task.",
           "type": {
-            "$id": "342",
+            "$id": "343",
             "kind": "array",
             "name": "ArraySubResource",
             "valueType": {
-              "$id": "343",
+              "$id": "344",
               "kind": "model",
               "name": "SubResource",
               "namespace": "Azure.ResourceManager.StorageActions",
@@ -4284,18 +4291,18 @@
           }
         },
         {
-          "$id": "344",
+          "$id": "345",
           "kind": "property",
           "name": "nextLink",
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
-            "$id": "345",
+            "$id": "346",
             "kind": "url",
             "name": "ResourceLocation",
             "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
             "baseType": {
-              "$id": "346",
+              "$id": "347",
               "kind": "url",
               "name": "url",
               "crossLanguageDefinitionId": "TypeSpec.url",
@@ -4318,12 +4325,12 @@
       ]
     },
     {
-      "$ref": "343"
+      "$ref": "344"
     }
   ],
   "clients": [
     {
-      "$id": "347",
+      "$id": "348",
       "kind": "client",
       "name": "StorageActionsClient",
       "namespace": "Azure.ResourceManager.StorageActions",
@@ -4331,12 +4338,12 @@
       "methods": [],
       "parameters": [
         {
-          "$id": "348",
+          "$id": "349",
           "name": "endpoint",
           "nameInRequest": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "349",
+            "$id": "350",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -4351,7 +4358,7 @@
           "kind": "Client",
           "defaultValue": {
             "type": {
-              "$id": "350",
+              "$id": "351",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4390,13 +4397,13 @@
       ],
       "children": [
         {
-          "$id": "351",
+          "$id": "352",
           "kind": "client",
           "name": "Operations",
           "namespace": "Azure.ResourceManager.StorageActions",
           "methods": [
             {
-              "$id": "352",
+              "$id": "353",
               "kind": "paging",
               "name": "list",
               "accessibility": "public",
@@ -4405,19 +4412,19 @@
               ],
               "doc": "Lists all of the available Storage Actions Rest API operations.",
               "operation": {
-                "$id": "353",
+                "$id": "354",
                 "name": "list",
                 "resourceName": "Operations",
                 "doc": "Lists all of the available Storage Actions Rest API operations.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "354",
+                    "$id": "355",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "355",
+                      "$id": "356",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4432,7 +4439,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "356",
+                        "$id": "357",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4443,7 +4450,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "357",
+                    "$id": "358",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -4486,7 +4493,7 @@
               },
               "parameters": [
                 {
-                  "$id": "358",
+                  "$id": "359",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -4530,12 +4537,12 @@
           ],
           "parameters": [
             {
-              "$id": "359",
+              "$id": "360",
               "name": "endpoint",
               "nameInRequest": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "360",
+                "$id": "361",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -4550,7 +4557,7 @@
               "kind": "Client",
               "defaultValue": {
                 "type": {
-                  "$id": "361",
+                  "$id": "362",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4566,17 +4573,17 @@
             "2023-01-01"
           ],
           "parent": {
-            "$ref": "347"
+            "$ref": "348"
           }
         },
         {
-          "$id": "362",
+          "$id": "363",
           "kind": "client",
           "name": "StorageTasks",
           "namespace": "Azure.ResourceManager.StorageActions",
           "methods": [
             {
-              "$id": "363",
+              "$id": "364",
               "kind": "basic",
               "name": "get",
               "accessibility": "public",
@@ -4585,19 +4592,19 @@
               ],
               "doc": "Get the storage task properties",
               "operation": {
-                "$id": "364",
+                "$id": "365",
                 "name": "get",
                 "resourceName": "StorageTask",
                 "doc": "Get the storage task properties",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "365",
+                    "$id": "366",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "366",
+                      "$id": "367",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4612,7 +4619,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "367",
+                        "$id": "368",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4623,17 +4630,17 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "368",
+                    "$id": "369",
                     "name": "subscriptionId",
                     "nameInRequest": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "369",
+                      "$id": "370",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "370",
+                        "$id": "371",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4652,12 +4659,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "371",
+                    "$id": "372",
                     "name": "resourceGroupName",
                     "nameInRequest": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "372",
+                      "$id": "373",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4674,12 +4681,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "373",
+                    "$id": "374",
                     "name": "storageTaskName",
                     "nameInRequest": "storageTaskName",
                     "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                     "type": {
-                      "$id": "374",
+                      "$id": "375",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4696,7 +4703,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "375",
+                    "$id": "376",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -4744,12 +4751,12 @@
               },
               "parameters": [
                 {
-                  "$id": "376",
+                  "$id": "377",
                   "name": "resourceGroupName",
                   "nameInRequest": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "377",
+                    "$id": "378",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4766,12 +4773,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "378",
+                  "$id": "379",
                   "name": "storageTaskName",
                   "nameInRequest": "storageTaskName",
                   "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                   "type": {
-                    "$id": "379",
+                    "$id": "380",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4788,7 +4795,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "380",
+                  "$id": "381",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -4816,7 +4823,7 @@
               "crossLanguageDefinitionId": "Microsoft.StorageActions.StorageTasks.get"
             },
             {
-              "$id": "381",
+              "$id": "382",
               "kind": "lro",
               "name": "create",
               "accessibility": "public",
@@ -4825,19 +4832,19 @@
               ],
               "doc": "Asynchronously creates a new storage task resource with the specified parameters. If a storage task is already created and a subsequent create request is issued with different properties, the storage task properties will be updated. If a storage task is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed.",
               "operation": {
-                "$id": "382",
+                "$id": "383",
                 "name": "create",
                 "resourceName": "StorageTask",
                 "doc": "Asynchronously creates a new storage task resource with the specified parameters. If a storage task is already created and a subsequent create request is issued with different properties, the storage task properties will be updated. If a storage task is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "383",
+                    "$id": "384",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "384",
+                      "$id": "385",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4852,7 +4859,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "385",
+                        "$id": "386",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4863,17 +4870,17 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "386",
+                    "$id": "387",
                     "name": "subscriptionId",
                     "nameInRequest": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "387",
+                      "$id": "388",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "388",
+                        "$id": "389",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4892,12 +4899,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "389",
+                    "$id": "390",
                     "name": "resourceGroupName",
                     "nameInRequest": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "390",
+                      "$id": "391",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4914,12 +4921,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "391",
+                    "$id": "392",
                     "name": "storageTaskName",
                     "nameInRequest": "storageTaskName",
                     "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                     "type": {
-                      "$id": "392",
+                      "$id": "393",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4936,7 +4943,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "393",
+                    "$id": "394",
                     "name": "contentType",
                     "nameInRequest": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
@@ -4954,7 +4961,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "394",
+                    "$id": "395",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -4971,7 +4978,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "395",
+                    "$id": "396",
                     "name": "parameters",
                     "nameInRequest": "parameters",
                     "doc": "The parameters to create a Storage Task.",
@@ -5016,7 +5023,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "396",
+                          "$id": "397",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5028,7 +5035,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "397",
+                          "$id": "398",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -5051,7 +5058,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "398",
+                          "$id": "399",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5063,7 +5070,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "399",
+                          "$id": "400",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -5099,12 +5106,12 @@
               },
               "parameters": [
                 {
-                  "$id": "400",
+                  "$id": "401",
                   "name": "resourceGroupName",
                   "nameInRequest": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "401",
+                    "$id": "402",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5121,12 +5128,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "402",
+                  "$id": "403",
                   "name": "storageTaskName",
                   "nameInRequest": "storageTaskName",
                   "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                   "type": {
-                    "$id": "403",
+                    "$id": "404",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5143,7 +5150,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "404",
+                  "$id": "405",
                   "name": "parameters",
                   "nameInRequest": "resource",
                   "doc": "The parameters to create a Storage Task.",
@@ -5161,7 +5168,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "405",
+                  "$id": "406",
                   "name": "contentType",
                   "nameInRequest": "contentType",
                   "doc": "Body parameter's content type. Known values are application/json",
@@ -5179,7 +5186,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "406",
+                  "$id": "407",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -5218,7 +5225,7 @@
               }
             },
             {
-              "$id": "407",
+              "$id": "408",
               "kind": "lro",
               "name": "update",
               "accessibility": "public",
@@ -5227,19 +5234,19 @@
               ],
               "doc": "Update storage task properties",
               "operation": {
-                "$id": "408",
+                "$id": "409",
                 "name": "update",
                 "resourceName": "StorageTask",
                 "doc": "Update storage task properties",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "409",
+                    "$id": "410",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "410",
+                      "$id": "411",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5254,7 +5261,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "411",
+                        "$id": "412",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5265,17 +5272,17 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "412",
+                    "$id": "413",
                     "name": "subscriptionId",
                     "nameInRequest": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "413",
+                      "$id": "414",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "414",
+                        "$id": "415",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5294,12 +5301,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "415",
+                    "$id": "416",
                     "name": "resourceGroupName",
                     "nameInRequest": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "416",
+                      "$id": "417",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5316,12 +5323,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "417",
+                    "$id": "418",
                     "name": "storageTaskName",
                     "nameInRequest": "storageTaskName",
                     "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                     "type": {
-                      "$id": "418",
+                      "$id": "419",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5338,7 +5345,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "419",
+                    "$id": "420",
                     "name": "contentType",
                     "nameInRequest": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
@@ -5356,7 +5363,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "420",
+                    "$id": "421",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -5373,12 +5380,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "421",
+                    "$id": "422",
                     "name": "parameters",
                     "nameInRequest": "parameters",
                     "doc": "The parameters to provide to update the storage task resource.",
                     "type": {
-                      "$ref": "248"
+                      "$ref": "249"
                     },
                     "location": "Body",
                     "isApiVersion": false,
@@ -5415,7 +5422,7 @@
                         "nameInResponse": "Azure-AsyncOperation",
                         "doc": "A link to the status monitor",
                         "type": {
-                          "$id": "422",
+                          "$id": "423",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5427,7 +5434,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "423",
+                          "$id": "424",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5439,7 +5446,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "424",
+                          "$id": "425",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -5469,12 +5476,12 @@
               },
               "parameters": [
                 {
-                  "$id": "425",
+                  "$id": "426",
                   "name": "resourceGroupName",
                   "nameInRequest": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "426",
+                    "$id": "427",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5491,12 +5498,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "427",
+                  "$id": "428",
                   "name": "storageTaskName",
                   "nameInRequest": "storageTaskName",
                   "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                   "type": {
-                    "$id": "428",
+                    "$id": "429",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5513,12 +5520,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "429",
+                  "$id": "430",
                   "name": "parameters",
                   "nameInRequest": "properties",
                   "doc": "The parameters to provide to update the storage task resource.",
                   "type": {
-                    "$ref": "248"
+                    "$ref": "249"
                   },
                   "location": "Body",
                   "isApiVersion": false,
@@ -5531,7 +5538,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "430",
+                  "$id": "431",
                   "name": "contentType",
                   "nameInRequest": "contentType",
                   "doc": "Body parameter's content type. Known values are application/json",
@@ -5549,7 +5556,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "431",
+                  "$id": "432",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -5588,7 +5595,7 @@
               }
             },
             {
-              "$id": "432",
+              "$id": "433",
               "kind": "lro",
               "name": "delete",
               "accessibility": "public",
@@ -5597,19 +5604,19 @@
               ],
               "doc": "Delete the storage task resource.",
               "operation": {
-                "$id": "433",
+                "$id": "434",
                 "name": "delete",
                 "resourceName": "StorageTask",
                 "doc": "Delete the storage task resource.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "434",
+                    "$id": "435",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "435",
+                      "$id": "436",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5624,7 +5631,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "436",
+                        "$id": "437",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5635,17 +5642,17 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "437",
+                    "$id": "438",
                     "name": "subscriptionId",
                     "nameInRequest": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "438",
+                      "$id": "439",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "439",
+                        "$id": "440",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5664,12 +5671,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "440",
+                    "$id": "441",
                     "name": "resourceGroupName",
                     "nameInRequest": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "441",
+                      "$id": "442",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5686,12 +5693,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "442",
+                    "$id": "443",
                     "name": "storageTaskName",
                     "nameInRequest": "storageTaskName",
                     "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                     "type": {
-                      "$id": "443",
+                      "$id": "444",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5708,7 +5715,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "444",
+                    "$id": "445",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -5736,7 +5743,7 @@
                         "nameInResponse": "Azure-AsyncOperation",
                         "doc": "A link to the status monitor",
                         "type": {
-                          "$id": "445",
+                          "$id": "446",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5748,7 +5755,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "446",
+                          "$id": "447",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5760,7 +5767,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "447",
+                          "$id": "448",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -5800,12 +5807,12 @@
               },
               "parameters": [
                 {
-                  "$id": "448",
+                  "$id": "449",
                   "name": "resourceGroupName",
                   "nameInRequest": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "449",
+                    "$id": "450",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5822,12 +5829,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "450",
+                  "$id": "451",
                   "name": "storageTaskName",
                   "nameInRequest": "storageTaskName",
                   "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                   "type": {
-                    "$id": "451",
+                    "$id": "452",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5844,7 +5851,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "452",
+                  "$id": "453",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -5876,7 +5883,7 @@
               }
             },
             {
-              "$id": "453",
+              "$id": "454",
               "kind": "paging",
               "name": "listByResourceGroup",
               "accessibility": "public",
@@ -5885,19 +5892,19 @@
               ],
               "doc": "Lists all the storage tasks available under the given resource group.",
               "operation": {
-                "$id": "454",
+                "$id": "455",
                 "name": "listByResourceGroup",
                 "resourceName": "StorageTask",
                 "doc": "Lists all the storage tasks available under the given resource group.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "455",
+                    "$id": "456",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "456",
+                      "$id": "457",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5912,7 +5919,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "457",
+                        "$id": "458",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5923,17 +5930,17 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "458",
+                    "$id": "459",
                     "name": "subscriptionId",
                     "nameInRequest": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "459",
+                      "$id": "460",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "460",
+                        "$id": "461",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5952,12 +5959,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "461",
+                    "$id": "462",
                     "name": "resourceGroupName",
                     "nameInRequest": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "462",
+                      "$id": "463",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -5974,7 +5981,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "463",
+                    "$id": "464",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -5997,7 +6004,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "264"
+                      "$ref": "265"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6022,12 +6029,12 @@
               },
               "parameters": [
                 {
-                  "$id": "464",
+                  "$id": "465",
                   "name": "resourceGroupName",
                   "nameInRequest": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "465",
+                    "$id": "466",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6044,7 +6051,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "466",
+                  "$id": "467",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -6063,7 +6070,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "266"
+                  "$ref": "267"
                 },
                 "resultSegments": [
                   "value"
@@ -6086,7 +6093,7 @@
               }
             },
             {
-              "$id": "467",
+              "$id": "468",
               "kind": "paging",
               "name": "listBySubscription",
               "accessibility": "public",
@@ -6095,19 +6102,19 @@
               ],
               "doc": "Lists all the storage tasks available under the subscription.",
               "operation": {
-                "$id": "468",
+                "$id": "469",
                 "name": "listBySubscription",
                 "resourceName": "StorageTask",
                 "doc": "Lists all the storage tasks available under the subscription.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "469",
+                    "$id": "470",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "470",
+                      "$id": "471",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6122,7 +6129,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "471",
+                        "$id": "472",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6133,17 +6140,17 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "472",
+                    "$id": "473",
                     "name": "subscriptionId",
                     "nameInRequest": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "473",
+                      "$id": "474",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "474",
+                        "$id": "475",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6162,7 +6169,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "475",
+                    "$id": "476",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -6185,7 +6192,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "264"
+                      "$ref": "265"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6210,7 +6217,7 @@
               },
               "parameters": [
                 {
-                  "$id": "476",
+                  "$id": "477",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -6229,7 +6236,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "266"
+                  "$ref": "267"
                 },
                 "resultSegments": [
                   "value"
@@ -6252,7 +6259,7 @@
               }
             },
             {
-              "$id": "477",
+              "$id": "478",
               "kind": "basic",
               "name": "PreviewActions",
               "accessibility": "public",
@@ -6261,19 +6268,19 @@
               ],
               "doc": "Runs the input conditions against input object metadata properties and designates matched objects in response.",
               "operation": {
-                "$id": "478",
+                "$id": "479",
                 "name": "PreviewActions",
                 "resourceName": "StorageTasksOperationGroup",
                 "doc": "Runs the input conditions against input object metadata properties and designates matched objects in response.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "479",
+                    "$id": "480",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "480",
+                      "$id": "481",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6288,7 +6295,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "481",
+                        "$id": "482",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6299,17 +6306,17 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "482",
+                    "$id": "483",
                     "name": "subscriptionId",
                     "nameInRequest": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "483",
+                      "$id": "484",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "484",
+                        "$id": "485",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6328,16 +6335,16 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "485",
+                    "$id": "486",
                     "name": "location",
                     "nameInRequest": "location",
                     "type": {
-                      "$id": "486",
+                      "$id": "487",
                       "kind": "string",
                       "name": "azureLocation",
                       "crossLanguageDefinitionId": "Azure.Core.azureLocation",
                       "baseType": {
-                        "$id": "487",
+                        "$id": "488",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6356,7 +6363,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "488",
+                    "$id": "489",
                     "name": "contentType",
                     "nameInRequest": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
@@ -6374,7 +6381,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "489",
+                    "$id": "490",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -6391,12 +6398,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "490",
+                    "$id": "491",
                     "name": "parameters",
                     "nameInRequest": "parameters",
                     "doc": "The parameters to preview action condition.",
                     "type": {
-                      "$ref": "270"
+                      "$ref": "271"
                     },
                     "location": "Body",
                     "isApiVersion": false,
@@ -6415,7 +6422,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "270"
+                      "$ref": "271"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6438,16 +6445,16 @@
               },
               "parameters": [
                 {
-                  "$id": "491",
+                  "$id": "492",
                   "name": "location",
                   "nameInRequest": "location",
                   "type": {
-                    "$id": "492",
+                    "$id": "493",
                     "kind": "string",
                     "name": "azureLocation",
                     "crossLanguageDefinitionId": "Azure.Core.azureLocation",
                     "baseType": {
-                      "$id": "493",
+                      "$id": "494",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6466,12 +6473,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "494",
+                  "$id": "495",
                   "name": "parameters",
                   "nameInRequest": "body",
                   "doc": "The parameters to preview action condition.",
                   "type": {
-                    "$ref": "270"
+                    "$ref": "271"
                   },
                   "location": "Body",
                   "isApiVersion": false,
@@ -6484,7 +6491,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "495",
+                  "$id": "496",
                   "name": "contentType",
                   "nameInRequest": "contentType",
                   "doc": "Body parameter's content type. Known values are application/json",
@@ -6502,7 +6509,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "496",
+                  "$id": "497",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -6521,7 +6528,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "270"
+                  "$ref": "271"
                 }
               },
               "isOverride": false,
@@ -6532,12 +6539,12 @@
           ],
           "parameters": [
             {
-              "$id": "497",
+              "$id": "498",
               "name": "endpoint",
               "nameInRequest": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "498",
+                "$id": "499",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -6552,7 +6559,7 @@
               "kind": "Client",
               "defaultValue": {
                 "type": {
-                  "$id": "499",
+                  "$id": "500",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6573,17 +6580,17 @@
             "2023-01-01"
           ],
           "parent": {
-            "$ref": "347"
+            "$ref": "348"
           }
         },
         {
-          "$id": "500",
+          "$id": "501",
           "kind": "client",
           "name": "StorageTasksReport",
           "namespace": "Azure.ResourceManager.StorageActions",
           "methods": [
             {
-              "$id": "501",
+              "$id": "502",
               "kind": "paging",
               "name": "GetStorageTasksReports",
               "accessibility": "public",
@@ -6592,19 +6599,19 @@
               ],
               "doc": "Fetch the storage tasks run report summary for each assignment.",
               "operation": {
-                "$id": "502",
+                "$id": "503",
                 "name": "GetStorageTasksReports",
                 "resourceName": "StorageTasks",
                 "doc": "Fetch the storage tasks run report summary for each assignment.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "503",
+                    "$id": "504",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "504",
+                      "$id": "505",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6619,7 +6626,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "505",
+                        "$id": "506",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6630,17 +6637,17 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "506",
+                    "$id": "507",
                     "name": "subscriptionId",
                     "nameInRequest": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "507",
+                      "$id": "508",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "508",
+                        "$id": "509",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6659,12 +6666,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "509",
+                    "$id": "510",
                     "name": "resourceGroupName",
                     "nameInRequest": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "510",
+                      "$id": "511",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6681,12 +6688,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "511",
+                    "$id": "512",
                     "name": "storageTaskName",
                     "nameInRequest": "storageTaskName",
                     "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                     "type": {
-                      "$id": "512",
+                      "$id": "513",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6703,12 +6710,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "513",
+                    "$id": "514",
                     "name": "$maxpagesize",
                     "nameInRequest": "$maxpagesize",
                     "doc": "Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response.",
                     "type": {
-                      "$id": "514",
+                      "$id": "515",
                       "kind": "int32",
                       "name": "int32",
                       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -6725,12 +6732,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "515",
+                    "$id": "516",
                     "name": "$filter",
                     "nameInRequest": "$filter",
                     "doc": "Optional. When specified, it can be used to query using reporting properties.",
                     "type": {
-                      "$id": "516",
+                      "$id": "517",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6747,7 +6754,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "517",
+                    "$id": "518",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -6770,7 +6777,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "301"
+                      "$ref": "302"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6795,12 +6802,12 @@
               },
               "parameters": [
                 {
-                  "$id": "518",
+                  "$id": "519",
                   "name": "resourceGroupName",
                   "nameInRequest": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "519",
+                    "$id": "520",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6817,12 +6824,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "520",
+                  "$id": "521",
                   "name": "storageTaskName",
                   "nameInRequest": "storageTaskName",
                   "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                   "type": {
-                    "$id": "521",
+                    "$id": "522",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6839,12 +6846,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "522",
+                  "$id": "523",
                   "name": "$maxpagesize",
                   "nameInRequest": "$maxpagesize",
                   "doc": "Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response.",
                   "type": {
-                    "$id": "523",
+                    "$id": "524",
                     "kind": "int32",
                     "name": "int32",
                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -6861,12 +6868,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "524",
+                  "$id": "525",
                   "name": "$filter",
                   "nameInRequest": "$filter",
                   "doc": "Optional. When specified, it can be used to query using reporting properties.",
                   "type": {
-                    "$id": "525",
+                    "$id": "526",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6883,7 +6890,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "526",
+                  "$id": "527",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -6902,7 +6909,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "303"
+                  "$ref": "304"
                 },
                 "resultSegments": [
                   "value"
@@ -6927,12 +6934,12 @@
           ],
           "parameters": [
             {
-              "$id": "527",
+              "$id": "528",
               "name": "endpoint",
               "nameInRequest": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "528",
+                "$id": "529",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -6947,7 +6954,7 @@
               "kind": "Client",
               "defaultValue": {
                 "type": {
-                  "$id": "529",
+                  "$id": "530",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -6963,17 +6970,17 @@
             "2023-01-01"
           ],
           "parent": {
-            "$ref": "347"
+            "$ref": "348"
           }
         },
         {
-          "$id": "530",
+          "$id": "531",
           "kind": "client",
           "name": "StorageTaskAssignment",
           "namespace": "Azure.ResourceManager.StorageActions",
           "methods": [
             {
-              "$id": "531",
+              "$id": "532",
               "kind": "paging",
               "name": "GetStorageTaskAssignments",
               "accessibility": "public",
@@ -6982,19 +6989,19 @@
               ],
               "doc": "Lists Resource IDs of the Storage Task Assignments associated with this Storage Task.",
               "operation": {
-                "$id": "532",
+                "$id": "533",
                 "name": "GetStorageTaskAssignments",
                 "resourceName": "StorageTasks",
                 "doc": "Lists Resource IDs of the Storage Task Assignments associated with this Storage Task.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "533",
+                    "$id": "534",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "534",
+                      "$id": "535",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7009,7 +7016,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "535",
+                        "$id": "536",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7020,17 +7027,17 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "536",
+                    "$id": "537",
                     "name": "subscriptionId",
                     "nameInRequest": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "537",
+                      "$id": "538",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "538",
+                        "$id": "539",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7049,12 +7056,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "539",
+                    "$id": "540",
                     "name": "resourceGroupName",
                     "nameInRequest": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "540",
+                      "$id": "541",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7071,12 +7078,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "541",
+                    "$id": "542",
                     "name": "storageTaskName",
                     "nameInRequest": "storageTaskName",
                     "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                     "type": {
-                      "$id": "542",
+                      "$id": "543",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7093,12 +7100,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "543",
+                    "$id": "544",
                     "name": "$maxpagesize",
                     "nameInRequest": "$maxpagesize",
                     "doc": "Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response.",
                     "type": {
-                      "$id": "544",
+                      "$id": "545",
                       "kind": "int32",
                       "name": "int32",
                       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -7115,7 +7122,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "545",
+                    "$id": "546",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -7138,7 +7145,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "340"
+                      "$ref": "341"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -7163,12 +7170,12 @@
               },
               "parameters": [
                 {
-                  "$id": "546",
+                  "$id": "547",
                   "name": "resourceGroupName",
                   "nameInRequest": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "547",
+                    "$id": "548",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7185,12 +7192,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "548",
+                  "$id": "549",
                   "name": "storageTaskName",
                   "nameInRequest": "storageTaskName",
                   "doc": "The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only.",
                   "type": {
-                    "$id": "549",
+                    "$id": "550",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7207,12 +7214,12 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "550",
+                  "$id": "551",
                   "name": "$maxpagesize",
                   "nameInRequest": "$maxpagesize",
                   "doc": "Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response.",
                   "type": {
-                    "$id": "551",
+                    "$id": "552",
                     "kind": "int32",
                     "name": "int32",
                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -7229,7 +7236,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "552",
+                  "$id": "553",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -7248,11 +7255,11 @@
               ],
               "response": {
                 "type": {
-                  "$id": "553",
+                  "$id": "554",
                   "kind": "array",
                   "name": "ArrayStorageTaskAssignment",
                   "valueType": {
-                    "$id": "554",
+                    "$id": "555",
                     "kind": "model",
                     "name": "StorageTaskAssignment",
                     "namespace": "Azure.ResourceManager.StorageActions",
@@ -7262,18 +7269,18 @@
                     "decorators": [],
                     "properties": [
                       {
-                        "$id": "555",
+                        "$id": "556",
                         "kind": "property",
                         "name": "id",
                         "serializedName": "id",
                         "doc": "Resource ID of the Storage Task Assignment.",
                         "type": {
-                          "$id": "556",
+                          "$id": "557",
                           "kind": "string",
                           "name": "armResourceIdentifier",
                           "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                           "baseType": {
-                            "$id": "557",
+                            "$id": "558",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7317,12 +7324,12 @@
           ],
           "parameters": [
             {
-              "$id": "558",
+              "$id": "559",
               "name": "endpoint",
               "nameInRequest": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "559",
+                "$id": "560",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -7337,7 +7344,7 @@
               "kind": "Client",
               "defaultValue": {
                 "type": {
-                  "$id": "560",
+                  "$id": "561",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -7353,7 +7360,7 @@
             "2023-01-01"
           ],
           "parent": {
-            "$ref": "347"
+            "$ref": "348"
           }
         }
       ]
