@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Reservations
       safeName: AzureResourceManagerReservations
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Reservations
+      ExpectedWarningsFilepath: None
