@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(ResourceNotificationsResourceDeletedDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
-            writer.WriteObjectValue(Resource, options);
+            writer.WriteStringValue(Resource);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    resource = ResourceIdentifier.DeserializeResourceIdentifier(prop.Value, options);
+                    resource = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
