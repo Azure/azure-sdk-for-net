@@ -18,7 +18,7 @@ using Azure.ResourceManager.StorageActions.Models;
 namespace Azure.ResourceManager.StorageActions.Mocking
 {
     /// <summary></summary>
-    internal partial class MockableStorageActionsSubscriptionResource : ArmResource
+    public partial class MockableStorageActionsSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _storageTasksClientDiagnostics;
         private StorageTasks _storageTasksRestClient;
@@ -39,6 +39,28 @@ namespace Azure.ResourceManager.StorageActions.Mocking
 
         private StorageTasks StorageTasksRestClient => _storageTasksRestClient ??= new StorageTasks(StorageTasksClientDiagnostics, Pipeline, Endpoint, "2023-01-01");
 
+        /// <summary> Lists all the storage tasks available under the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<StorageTaskResource> GetStorageTasksAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetStorageTasksAsyncCollectionResultOfT(StorageTasksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new StorageTaskResource(Client, data));
+        }
+
+        /// <summary> Lists all the storage tasks available under the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<StorageTaskResource> GetStorageTasks(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetStorageTasksCollectionResultOfT(StorageTasksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new StorageTaskResource(Client, data));
+        }
+
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
         /// <param name="parameters"> The parameters to preview action condition. </param>
@@ -48,7 +70,7 @@ namespace Azure.ResourceManager.StorageActions.Mocking
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using DiagnosticScope scope = StorageTasksClientDiagnostics.CreateScope("MockableStorageActionsSubscriptionResource.PreviewActionsAsync");
+            using DiagnosticScope scope = StorageTasksClientDiagnostics.CreateScope("MockableStorageActionsSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {

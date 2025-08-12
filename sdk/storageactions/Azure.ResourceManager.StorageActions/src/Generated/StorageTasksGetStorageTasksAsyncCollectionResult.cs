@@ -15,28 +15,28 @@ using Azure.ResourceManager.StorageActions.Models;
 
 namespace Azure.ResourceManager.StorageActions
 {
-    internal partial class StorageTasksGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<StorageTaskData>
+    internal partial class StorageTasksGetStorageTasksAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly StorageTasks _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of StorageTasksGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of StorageTasksGetStorageTasksAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The StorageTasks client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public StorageTasksGetBySubscriptionAsyncCollectionResultOfT(StorageTasks client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public StorageTasksGetStorageTasksAsyncCollectionResult(StorageTasks client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of StorageTasksGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of StorageTasksGetStorageTasksAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of StorageTasksGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<StorageTaskData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of StorageTasksGetStorageTasksAsyncCollectionResult as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
@@ -47,8 +47,13 @@ namespace Azure.ResourceManager.StorageActions
                     yield break;
                 }
                 StorageTasksListResult responseWithType = StorageTasksListResult.FromResponse(response);
+                List<BinaryData> items = new List<BinaryData>();
+                foreach (var item in responseWithType.Value)
+                {
+                    items.Add(BinaryData.FromObjectAsJson(item));
+                }
                 nextPage = responseWithType.NextLink;
-                yield return Page<StorageTaskData>.FromValues(responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }
@@ -58,8 +63,8 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTasks.GetBySubscription");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetStorageTasksRequest(nextLink, _subscriptionId, _context) : _client.CreateGetStorageTasksRequest(_subscriptionId, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTasks.GetStorageTasks");
             scope.Start();
             try
             {

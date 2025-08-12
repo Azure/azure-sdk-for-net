@@ -12,6 +12,8 @@ namespace Azure.ResourceManager.StorageActions
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource>> GetStorageTaskAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string storageTaskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StorageActions.StorageTaskResource GetStorageTaskResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.StorageActions.StorageTaskCollection GetStorageTasks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.StorageActions.StorageTaskResource> GetStorageTasks(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.StorageActions.StorageTaskResource> GetStorageTasksAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction> PreviewActions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction>> PreviewActionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -83,6 +85,21 @@ namespace Azure.ResourceManager.StorageActions.Mocking
     {
         protected MockableStorageActionsArmClient() { }
         public virtual Azure.ResourceManager.StorageActions.StorageTaskResource GetStorageTaskResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableStorageActionsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStorageActionsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource> GetStorageTask(string storageTaskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource>> GetStorageTaskAsync(string storageTaskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.StorageActions.StorageTaskCollection GetStorageTasks() { throw null; }
+    }
+    public partial class MockableStorageActionsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStorageActionsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.StorageActions.StorageTaskResource> GetStorageTasks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageActions.StorageTaskResource> GetStorageTasksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction> PreviewActions(Azure.Core.AzureLocation location, Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction>> PreviewActionsAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.StorageActions.Models

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StorageTaskResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.GetAsync");
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Get");
             scope.Start();
             try
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.UpdateAsync");
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Update");
             scope.Start();
             try
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.DeleteAsync");
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskResource.Delete");
             scope.Start();
             try
             {

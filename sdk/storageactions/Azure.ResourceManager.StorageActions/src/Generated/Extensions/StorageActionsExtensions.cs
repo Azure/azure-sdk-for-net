@@ -93,6 +93,30 @@ namespace Azure.ResourceManager.StorageActions
             return GetMockableStorageActionsResourceGroupResource(resourceGroupResource).GetStorageTask(storageTaskName, cancellationToken);
         }
 
+        /// <summary> Lists all the storage tasks available under the subscription. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static AsyncPageable<StorageTaskResource> GetStorageTasksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageActionsSubscriptionResource(subscriptionResource).GetStorageTasksAsync(cancellationToken);
+        }
+
+        /// <summary> Lists all the storage tasks available under the subscription. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Pageable<StorageTaskResource> GetStorageTasks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageActionsSubscriptionResource(subscriptionResource).GetStorageTasks(cancellationToken);
+        }
+
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>

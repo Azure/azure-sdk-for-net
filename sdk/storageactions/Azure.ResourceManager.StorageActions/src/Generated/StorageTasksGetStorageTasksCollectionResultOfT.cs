@@ -14,27 +14,27 @@ using Azure.ResourceManager.StorageActions.Models;
 
 namespace Azure.ResourceManager.StorageActions
 {
-    internal partial class StorageTasksGetBySubscriptionCollectionResultOfT : Pageable<StorageTaskData>
+    internal partial class StorageTasksGetStorageTasksCollectionResultOfT : Pageable<StorageTaskData>
     {
         private readonly StorageTasks _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of StorageTasksGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of StorageTasksGetStorageTasksCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The StorageTasks client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public StorageTasksGetBySubscriptionCollectionResultOfT(StorageTasks client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public StorageTasksGetStorageTasksCollectionResultOfT(StorageTasks client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of StorageTasksGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of StorageTasksGetStorageTasksCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of StorageTasksGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of StorageTasksGetStorageTasksCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<StorageTaskData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTasks.GetBySubscription");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetStorageTasksRequest(nextLink, _subscriptionId, _context) : _client.CreateGetStorageTasksRequest(_subscriptionId, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTasks.GetStorageTasks");
             scope.Start();
             try
             {

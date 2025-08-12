@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageActions
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
 
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.GetAsync");
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.Get");
             scope.Start();
             try
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
 
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.ExistsAsync");
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.Exists");
             scope.Start();
             try
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
 
-            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.GetIfExistsAsync");
+            using DiagnosticScope scope = _storageTasksClientDiagnostics.CreateScope("StorageTaskCollection.GetIfExists");
             scope.Start();
             try
             {
