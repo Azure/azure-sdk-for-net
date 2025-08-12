@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.EnergyServices
       safeName: AzureResourceManagerEnergyServices
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.EnergyServices
+      ExpectedWarningsFilepath: None

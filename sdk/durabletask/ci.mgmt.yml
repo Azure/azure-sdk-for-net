@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DurableTask
       safeName: AzureResourceManagerDurableTask
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.DurableTask
+      ExpectedWarningsFilepath: None

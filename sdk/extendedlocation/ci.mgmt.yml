@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ExtendedLocations
       safeName: AzureResourceManagerExtendedLocations
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.ExtendedLocations
+      ExpectedWarningsFilepath: None

@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Chaos
       safeName: AzureResourceManagerChaos
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Chaos
+      ExpectedWarningsFilepath: None

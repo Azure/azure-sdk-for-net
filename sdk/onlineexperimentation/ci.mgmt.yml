@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.OnlineExperimentation
       safeName: AzureResourceManagerOnlineExperimentation
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.OnlineExperimentation
+      ExpectedWarningsFilepath: None

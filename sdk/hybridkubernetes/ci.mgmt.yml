@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Kubernetes
       safeName: AzureResourceManagerKubernetes
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Kubernetes
+      ExpectedWarningsFilepath: None

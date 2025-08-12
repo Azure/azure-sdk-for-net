@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.HealthBot
       safeName: AzureResourceManagerHealthBot
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.HealthBot
+      ExpectedWarningsFilepath: None

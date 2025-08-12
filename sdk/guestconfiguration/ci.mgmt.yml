@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.GuestConfiguration
       safeName: AzureResourceManagerGuestConfiguration
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.GuestConfiguration
+      ExpectedWarningsFilepath: None

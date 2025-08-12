@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AppComplianceAutomation
       safeName: AzureResourceManagerAppComplianceAutomation
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.AppComplianceAutomation
+      ExpectedWarningsFilepath: None

@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.HybridConnectivity
       safeName: AzureResourceHybridConnectivity
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.HybridConnectivity
+      ExpectedWarningsFilepath: None

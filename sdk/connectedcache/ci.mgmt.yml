@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ConnectedCache
       safeName: AzureResourceManagerConnectedCache
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.ConnectedCache
+      ExpectedWarningsFilepath: None

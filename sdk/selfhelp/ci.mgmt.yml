@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SelfHelp
       safeName: AzureResourceManagerSelfHelp
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.SelfHelp
+      ExpectedWarningsFilepath: None

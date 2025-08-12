@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.InformaticaDataManagement
       safeName: AzureResourceManagerInformaticaDataManagement
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.InformaticaDataManagement
+      ExpectedWarningsFilepath: None

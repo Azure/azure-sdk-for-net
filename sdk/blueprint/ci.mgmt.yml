@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Blueprint
       safeName: AzureResourceManagerBlueprint
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Blueprint
+      ExpectedWarningsFilepath: None

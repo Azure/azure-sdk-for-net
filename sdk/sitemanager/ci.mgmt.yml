@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SiteManager
       safeName: AzureResourceManagerSiteManager
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.SiteManager
+      ExpectedWarningsFilepath: None

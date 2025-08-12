@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ComputeSchedule
       safeName: AzureResourceManagerComputeSchedule
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.ComputeSchedule
+      ExpectedWarningsFilepath: None

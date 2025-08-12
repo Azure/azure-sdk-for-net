@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AgriculturePlatform
       safeName: AzureResourceManagerAgriculturePlatform
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.AgriculturePlatform
+      ExpectedWarningsFilepath: None

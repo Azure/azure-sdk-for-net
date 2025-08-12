@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.CarbonOptimization
       safeName: AzureResourceManagerCarbonOptimization
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.CarbonOptimization
+      ExpectedWarningsFilepath: None

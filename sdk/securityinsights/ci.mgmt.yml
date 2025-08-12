@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SecurityInsights
       safeName: AzureResourceManagerSecurityInsights
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.SecurityInsights
+      ExpectedWarningsFilepath: None

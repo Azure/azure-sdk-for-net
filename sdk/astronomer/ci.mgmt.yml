@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Astro
       safeName: AzureResourceManagerAstro
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Astro
+      ExpectedWarningsFilepath: None

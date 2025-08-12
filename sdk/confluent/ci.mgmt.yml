@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Confluent
       safeName: AzureResourceManagerAvs
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Confluent
+      ExpectedWarningsFilepath: None

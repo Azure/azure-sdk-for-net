@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Dell.Storage
       safeName: AzureResourceManagerDellStorage
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Dell.Storage
+      ExpectedWarningsFilepath: None

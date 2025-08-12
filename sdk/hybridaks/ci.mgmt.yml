@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.HybridContainerService
       safeName: AzureResourceManagerHybridContainerService
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.HybridContainerService
+      ExpectedWarningsFilepath: None

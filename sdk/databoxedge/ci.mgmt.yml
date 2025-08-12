@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DataBoxEdge
       safeName: AzureResourceManagerDataBoxEdge
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.DataBoxEdge
+      ExpectedWarningsFilepath: None

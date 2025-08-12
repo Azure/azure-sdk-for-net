@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.LambdaTestHyperExecute
       safeName: AzureResourceManagerLambdaTestHyperExecute
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.LambdaTestHyperExecute
+      ExpectedWarningsFilepath: None

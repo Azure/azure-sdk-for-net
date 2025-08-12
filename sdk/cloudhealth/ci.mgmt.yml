@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.CloudHealth
       safeName: AzureResourceManagerCloudHealth
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.CloudHealth
+      ExpectedWarningsFilepath: None

@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ScVmm
       safeName: AzureResourceManagerScVmm
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.ScVmm
+      ExpectedWarningsFilepath: None

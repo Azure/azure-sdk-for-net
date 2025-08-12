@@ -20,3 +20,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PaloAltoNetworks.Ngfw
       safeName: AzureResourceManagerPaloAltoNetworksNgfw
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.PaloAltoNetworks.Ngfw
+      ExpectedWarningsFilepath: None

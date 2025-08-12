@@ -23,3 +23,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Dns
       safeName: AzureResourceManagerDns
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Dns
+      ExpectedWarningsFilepath: None

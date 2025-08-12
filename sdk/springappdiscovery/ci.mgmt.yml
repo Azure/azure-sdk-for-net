@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SpringAppDiscovery
       safeName: AzureResourceManagerSpringAppDiscovery
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.SpringAppDiscovery
+      ExpectedWarningsFilepath: None
