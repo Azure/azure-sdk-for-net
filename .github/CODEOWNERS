@@ -485,7 +485,7 @@
 # ServiceOwners:                                                   @Kishp01 @shankarsama @rajeshka
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/                                                     @axisc @sjkwak @hmlam @jsquire 
+/sdk/eventhub/                                                     @axisc @sjkwak @hmlam @jsquire
 
 # PRLabel: %Event Hubs %Functions
 /sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @axisc @sjkwak @hmlam @jsquire
