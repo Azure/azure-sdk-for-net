@@ -11,243 +11,35 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Versioning.Added.V2;
 
 namespace Versioning.Added
 {
-    /// <summary> Test for the `@added` decorator. </summary>
     public partial class AddedClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _version;
-        private InterfaceV2 _cachedInterfaceV2;
+        protected AddedClient() => throw null;
 
-        /// <summary> Initializes a new instance of AddedClient for mocking. </summary>
-        protected AddedClient()
-        {
-        }
+        public AddedClient(Uri endpoint) : this(endpoint, new AddedClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of AddedClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AddedClient(Uri endpoint) : this(endpoint, new AddedClientOptions())
-        {
-        }
+        public AddedClient(Uri endpoint, AddedClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of AddedClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AddedClient(Uri endpoint, AddedClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new AddedClientOptions();
+        public virtual Response V1(string headerV2, RequestContent content, RequestContext context = null) => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            _version = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual Task<Response> V1Async(string headerV2, RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Response<ModelV1> V1(string headerV2, ModelV1 body, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Task<Response<ModelV1>> V1Async(string headerV2, ModelV1 body, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] V1
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="headerV2"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="headerV2"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="headerV2"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response V1(string headerV2, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AddedClient.V1");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(headerV2, nameof(headerV2));
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Response V2(RequestContent content, RequestContext context = null) => throw null;
 
-                using HttpMessage message = CreateV1Request(headerV2, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> V2Async(RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] V1
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="headerV2"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="headerV2"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="headerV2"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> V1Async(string headerV2, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AddedClient.V1");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(headerV2, nameof(headerV2));
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Response<ModelV2> V2(ModelV2 body, CancellationToken cancellationToken = default) => throw null;
 
-                using HttpMessage message = CreateV1Request(headerV2, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response<ModelV2>> V2Async(ModelV2 body, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> V1. </summary>
-        /// <param name="headerV2"></param>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="headerV2"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="headerV2"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ModelV1> V1(string headerV2, ModelV1 body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(headerV2, nameof(headerV2));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = V1(headerV2, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((ModelV1)result, result);
-        }
-
-        /// <summary> V1. </summary>
-        /// <param name="headerV2"></param>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="headerV2"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="headerV2"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ModelV1>> V1Async(string headerV2, ModelV1 body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(headerV2, nameof(headerV2));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = await V1Async(headerV2, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((ModelV1)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] V2
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response V2(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AddedClient.V2");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateV2Request(content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] V2
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> V2Async(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AddedClient.V2");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateV2Request(content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> V2. </summary>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ModelV2> V2(ModelV2 body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = V2(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((ModelV2)result, result);
-        }
-
-        /// <summary> V2. </summary>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ModelV2>> V2Async(ModelV2 body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = await V2Async(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((ModelV2)result, result);
-        }
-
-        /// <summary> Initializes a new instance of InterfaceV2. </summary>
-        public virtual InterfaceV2 GetInterfaceV2Client()
-        {
-            return Volatile.Read(ref _cachedInterfaceV2) ?? Interlocked.CompareExchange(ref _cachedInterfaceV2, new InterfaceV2(ClientDiagnostics, Pipeline, _endpoint, _version), null) ?? _cachedInterfaceV2;
-        }
+        public virtual InterfaceV2 GetInterfaceV2Client() => throw null;
     }
 }

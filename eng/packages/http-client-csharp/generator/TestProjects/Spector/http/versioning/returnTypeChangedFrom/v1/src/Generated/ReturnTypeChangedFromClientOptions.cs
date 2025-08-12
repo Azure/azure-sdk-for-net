@@ -5,31 +5,16 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 
 namespace Versioning.ReturnTypeChangedFrom
 {
-    /// <summary> Client options for <see cref="ReturnTypeChangedFromClient"/>. </summary>
     public partial class ReturnTypeChangedFromClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
-        /// <summary> Initializes a new instance of ReturnTypeChangedFromClientOptions. </summary>
-        /// <param name="version"> The service version. </param>
-        public ReturnTypeChangedFromClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V1 => "v1",
-                _ => throw new NotSupportedException()
-            };
-        }
+        public ReturnTypeChangedFromClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
-        /// <summary> Gets the Version. </summary>
-        internal string Version { get; }
-
-        /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> The version v1. </summary>

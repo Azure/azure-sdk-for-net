@@ -5,45 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Versioning.TypeChangedFrom.V1;
-
 namespace Versioning.TypeChangedFrom
 {
-    /// <summary> The TestModel. </summary>
     public partial class TestModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public TestModel(string prop, int changedProp) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="TestModel"/>. </summary>
-        /// <param name="prop"></param>
-        /// <param name="changedProp"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prop"/> is null. </exception>
-        public TestModel(string prop, int changedProp)
+        public string Prop
         {
-            Argument.AssertNotNull(prop, nameof(prop));
-
-            Prop = prop;
-            ChangedProp = changedProp;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestModel"/>. </summary>
-        /// <param name="prop"></param>
-        /// <param name="changedProp"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestModel(string prop, int changedProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public int ChangedProp
         {
-            Prop = prop;
-            ChangedProp = changedProp;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Gets or sets the Prop. </summary>
-        public string Prop { get; set; }
-
-        /// <summary> Gets or sets the ChangedProp. </summary>
-        public int ChangedProp { get; set; }
     }
 }

@@ -6,102 +6,35 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using Versioning.Removed.V2Preview;
 
 namespace Versioning.Removed
 {
-    /// <summary> The ModelV2. </summary>
     public partial class ModelV2
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public ModelV2(string prop, string removedProp, EnumV2 enumProp, BinaryData unionProp) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="ModelV2"/>. </summary>
-        /// <param name="prop"></param>
-        /// <param name="removedProp"></param>
-        /// <param name="enumProp"></param>
-        /// <param name="unionProp"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prop"/>, <paramref name="removedProp"/> or <paramref name="unionProp"/> is null. </exception>
-        public ModelV2(string prop, string removedProp, EnumV2 enumProp, BinaryData unionProp)
+        public string Prop
         {
-            Argument.AssertNotNull(prop, nameof(prop));
-            Argument.AssertNotNull(removedProp, nameof(removedProp));
-            Argument.AssertNotNull(unionProp, nameof(unionProp));
-
-            Prop = prop;
-            RemovedProp = removedProp;
-            EnumProp = enumProp;
-            UnionProp = unionProp;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelV2"/>. </summary>
-        /// <param name="prop"></param>
-        /// <param name="removedProp"></param>
-        /// <param name="enumProp"></param>
-        /// <param name="unionProp"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelV2(string prop, string removedProp, EnumV2 enumProp, BinaryData unionProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public string RemovedProp
         {
-            Prop = prop;
-            RemovedProp = removedProp;
-            EnumProp = enumProp;
-            UnionProp = unionProp;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Gets or sets the Prop. </summary>
-        public string Prop { get; set; }
+        public EnumV2 EnumProp
+        {
+            get => throw null;
+            set => throw null;
+        }
 
-        /// <summary> Gets or sets the RemovedProp. </summary>
-        public string RemovedProp { get; set; }
-
-        /// <summary> Gets or sets the EnumProp. </summary>
-        public EnumV2 EnumProp { get; set; }
-
-        /// <summary>
-        /// Gets or sets the UnionProp.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="float"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="int"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData UnionProp { get; set; }
+        public BinaryData UnionProp
+        {
+            get => throw null;
+            set => throw null;
+        }
     }
 }

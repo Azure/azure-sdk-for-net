@@ -5,46 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Versioning.TypeChangedFrom.V2;
-
 namespace Versioning.TypeChangedFrom
 {
-    /// <summary> The TestModel. </summary>
     public partial class TestModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public TestModel(string prop, string changedProp) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="TestModel"/>. </summary>
-        /// <param name="prop"></param>
-        /// <param name="changedProp"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prop"/> or <paramref name="changedProp"/> is null. </exception>
-        public TestModel(string prop, string changedProp)
+        public string Prop
         {
-            Argument.AssertNotNull(prop, nameof(prop));
-            Argument.AssertNotNull(changedProp, nameof(changedProp));
-
-            Prop = prop;
-            ChangedProp = changedProp;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestModel"/>. </summary>
-        /// <param name="prop"></param>
-        /// <param name="changedProp"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestModel(string prop, string changedProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public string ChangedProp
         {
-            Prop = prop;
-            ChangedProp = changedProp;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Gets or sets the Prop. </summary>
-        public string Prop { get; set; }
-
-        /// <summary> Gets or sets the ChangedProp. </summary>
-        public string ChangedProp { get; set; }
     }
 }

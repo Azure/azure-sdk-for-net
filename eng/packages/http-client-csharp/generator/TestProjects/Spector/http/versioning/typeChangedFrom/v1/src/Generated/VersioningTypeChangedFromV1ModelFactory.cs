@@ -9,16 +9,8 @@ using Versioning.TypeChangedFrom;
 
 namespace Versioning.TypeChangedFrom.V1
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class VersioningTypeChangedFromV1ModelFactory
     {
-        /// <summary> The TestModel. </summary>
-        /// <param name="prop"></param>
-        /// <param name="changedProp"></param>
-        /// <returns> A new <see cref="TypeChangedFrom.TestModel"/> instance for mocking. </returns>
-        public static TestModel TestModel(string prop = default, int changedProp = default)
-        {
-            return new TestModel(prop, changedProp, additionalBinaryDataProperties: null);
-        }
+        public static TestModel TestModel(string prop = default, int changedProp = default) => throw null;
     }
 }

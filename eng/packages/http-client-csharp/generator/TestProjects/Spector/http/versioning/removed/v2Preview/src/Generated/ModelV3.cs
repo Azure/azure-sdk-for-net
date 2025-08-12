@@ -5,38 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Versioning.Removed.V2Preview;
-
 namespace Versioning.Removed
 {
-    /// <summary> The ModelV3. </summary>
     public partial class ModelV3
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public ModelV3(string id) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="ModelV3"/>. </summary>
-        /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ModelV3(string id)
+        public string Id
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            Id = id;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="ModelV3"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelV3(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Id = id;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; set; }
     }
 }

@@ -5,33 +5,16 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 
 namespace Versioning.Removed
 {
-    /// <summary> Client options for <see cref="RemovedClient"/>. </summary>
     public partial class RemovedClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2;
 
-        /// <summary> Initializes a new instance of RemovedClientOptions. </summary>
-        /// <param name="version"> The service version. </param>
-        public RemovedClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V1 => "v1",
-                ServiceVersion.V2preview => "v2preview",
-                ServiceVersion.V2 => "v2",
-                _ => throw new NotSupportedException()
-            };
-        }
+        public RemovedClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
-        /// <summary> Gets the Version. </summary>
-        internal string Version { get; }
-
-        /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> The version v1. </summary>

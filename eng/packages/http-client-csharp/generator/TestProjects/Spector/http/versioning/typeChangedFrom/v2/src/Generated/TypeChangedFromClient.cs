@@ -11,148 +11,25 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Versioning.TypeChangedFrom.V2;
 
 namespace Versioning.TypeChangedFrom
 {
-    /// <summary> Test for the `@typeChangedFrom` decorator. </summary>
     public partial class TypeChangedFromClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _version;
+        protected TypeChangedFromClient() => throw null;
 
-        /// <summary> Initializes a new instance of TypeChangedFromClient for mocking. </summary>
-        protected TypeChangedFromClient()
-        {
-        }
+        public TypeChangedFromClient(Uri endpoint) : this(endpoint, new TypeChangedFromClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of TypeChangedFromClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TypeChangedFromClient(Uri endpoint) : this(endpoint, new TypeChangedFromClientOptions())
-        {
-        }
+        public TypeChangedFromClient(Uri endpoint, TypeChangedFromClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of TypeChangedFromClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public TypeChangedFromClient(Uri endpoint, TypeChangedFromClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new TypeChangedFromClientOptions();
+        public virtual Response Test(string @param, RequestContent content, RequestContext context = null) => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            _version = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual Task<Response> TestAsync(string @param, RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Response<TestModel> Test(string @param, TestModel body, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary>
-        /// [Protocol Method] Test
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="param"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="param"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Test(string @param, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeChangedFromClient.Test");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(@param, nameof(@param));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateTestRequest(@param, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Test
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="param"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="param"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TestAsync(string @param, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeChangedFromClient.Test");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(@param, nameof(@param));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateTestRequest(@param, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Test. </summary>
-        /// <param name="param"></param>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="param"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TestModel> Test(string @param, TestModel body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@param, nameof(@param));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = Test(@param, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((TestModel)result, result);
-        }
-
-        /// <summary> Test. </summary>
-        /// <param name="param"></param>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="param"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TestModel>> TestAsync(string @param, TestModel body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@param, nameof(@param));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = await TestAsync(@param, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((TestModel)result, result);
-        }
+        public virtual Task<Response<TestModel>> TestAsync(string @param, TestModel body, CancellationToken cancellationToken = default) => throw null;
     }
 }

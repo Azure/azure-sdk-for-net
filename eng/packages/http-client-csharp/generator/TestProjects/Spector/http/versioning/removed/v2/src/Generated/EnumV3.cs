@@ -7,7 +7,6 @@
 
 namespace Versioning.Removed
 {
-    /// <summary></summary>
     public enum EnumV3
     {
         /// <summary> EnumMemberV1. </summary>

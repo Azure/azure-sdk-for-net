@@ -9,34 +9,17 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 using Versioning.Removed;
-using Versioning.Removed.V1;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class VersioningRemovedV1ClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="RemovedClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public static IAzureClientBuilder<RemovedClient, RemovedClientOptions> AddRemovedClient<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-            return builder.RegisterClientFactory<RemovedClient, RemovedClientOptions>(options => new RemovedClient(endpoint, options));
-        }
-
-        /// <summary> Registers a <see cref="RemovedClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<RemovedClient, RemovedClientOptions> AddRemovedClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<RemovedClient, RemovedClientOptions>(configuration);
-        }
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

@@ -10,27 +10,10 @@ using Versioning.Added;
 
 namespace Versioning.Added.V2
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class VersioningAddedV2ModelFactory
     {
-        /// <summary> The ModelV1. </summary>
-        /// <param name="prop"></param>
-        /// <param name="enumProp"></param>
-        /// <param name="unionProp"></param>
-        /// <returns> A new <see cref="Added.ModelV1"/> instance for mocking. </returns>
-        public static ModelV1 ModelV1(string prop = default, EnumV1 enumProp = default, BinaryData unionProp = default)
-        {
-            return new ModelV1(prop, enumProp, unionProp, additionalBinaryDataProperties: null);
-        }
+        public static ModelV1 ModelV1(string prop = default, EnumV1 enumProp = default, BinaryData unionProp = default) => throw null;
 
-        /// <summary> The ModelV2. </summary>
-        /// <param name="prop"></param>
-        /// <param name="enumProp"></param>
-        /// <param name="unionProp"></param>
-        /// <returns> A new <see cref="Added.ModelV2"/> instance for mocking. </returns>
-        public static ModelV2 ModelV2(string prop = default, EnumV2 enumProp = default, BinaryData unionProp = default)
-        {
-            return new ModelV2(prop, enumProp, unionProp, additionalBinaryDataProperties: null);
-        }
+        public static ModelV2 ModelV2(string prop = default, EnumV2 enumProp = default, BinaryData unionProp = default) => throw null;
     }
 }

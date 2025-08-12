@@ -10,17 +10,8 @@ using Versioning.RenamedFrom;
 
 namespace Versioning.RenamedFrom.V2
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class VersioningRenamedFromV2ModelFactory
     {
-        /// <summary> The NewModel. </summary>
-        /// <param name="newProp"></param>
-        /// <param name="enumProp"></param>
-        /// <param name="unionProp"></param>
-        /// <returns> A new <see cref="RenamedFrom.NewModel"/> instance for mocking. </returns>
-        public static NewModel NewModel(string newProp = default, NewEnum enumProp = default, BinaryData unionProp = default)
-        {
-            return new NewModel(newProp, enumProp, unionProp, additionalBinaryDataProperties: null);
-        }
+        public static NewModel NewModel(string newProp = default, NewEnum enumProp = default, BinaryData unionProp = default) => throw null;
     }
 }

@@ -10,36 +10,12 @@ using Versioning.Removed;
 
 namespace Versioning.Removed.V2Preview
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class VersioningRemovedV2PreviewModelFactory
     {
-        /// <summary> The ModelV1. </summary>
-        /// <param name="prop"></param>
-        /// <param name="enumProp"></param>
-        /// <param name="unionProp"></param>
-        /// <returns> A new <see cref="Removed.ModelV1"/> instance for mocking. </returns>
-        public static ModelV1 ModelV1(string prop = default, EnumV1 enumProp = default, BinaryData unionProp = default)
-        {
-            return new ModelV1(prop, enumProp, unionProp, additionalBinaryDataProperties: null);
-        }
+        public static ModelV1 ModelV1(string prop = default, EnumV1 enumProp = default, BinaryData unionProp = default) => throw null;
 
-        /// <summary> The ModelV2. </summary>
-        /// <param name="prop"></param>
-        /// <param name="removedProp"></param>
-        /// <param name="enumProp"></param>
-        /// <param name="unionProp"></param>
-        /// <returns> A new <see cref="Removed.ModelV2"/> instance for mocking. </returns>
-        public static ModelV2 ModelV2(string prop = default, string removedProp = default, EnumV2 enumProp = default, BinaryData unionProp = default)
-        {
-            return new ModelV2(prop, removedProp, enumProp, unionProp, additionalBinaryDataProperties: null);
-        }
+        public static ModelV2 ModelV2(string prop = default, string removedProp = default, EnumV2 enumProp = default, BinaryData unionProp = default) => throw null;
 
-        /// <summary> The ModelV3. </summary>
-        /// <param name="id"></param>
-        /// <returns> A new <see cref="Removed.ModelV3"/> instance for mocking. </returns>
-        public static ModelV3 ModelV3(string id = default)
-        {
-            return new ModelV3(id, additionalBinaryDataProperties: null);
-        }
+        public static ModelV3 ModelV3(string id = default) => throw null;
     }
 }

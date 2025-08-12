@@ -9,16 +9,8 @@ using Versioning.MadeOptional;
 
 namespace Versioning.MadeOptional.V2
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class VersioningMadeOptionalV2ModelFactory
     {
-        /// <summary> The TestModel. </summary>
-        /// <param name="prop"></param>
-        /// <param name="changedProp"></param>
-        /// <returns> A new <see cref="MadeOptional.TestModel"/> instance for mocking. </returns>
-        public static TestModel TestModel(string prop = default, string changedProp = default)
-        {
-            return new TestModel(prop, changedProp, additionalBinaryDataProperties: null);
-        }
+        public static TestModel TestModel(string prop = default, string changedProp = default) => throw null;
     }
 }
