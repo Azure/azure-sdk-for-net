@@ -809,7 +809,7 @@
 /sdk/servicebus/                                                   @skarri-microsoft @EldertGrootenboer @jsquire 
 
 # PRLabel: %Service Bus %Functions
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @skarri-microsoft @EldertGrootenboer @jsquire 
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @skarri-microsoft @EldertGrootenboer @jsquire
 
 # ServiceLabel: %Service Bus
 # AzureSdkOwners:                                                  @jsquire
