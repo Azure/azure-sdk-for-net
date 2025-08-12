@@ -16,10 +16,7 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary>
-    /// A class extending <see cref="ResourceGroupResource"/> to provide extended functionality.
-    /// This class contains additional operations for working with MgmtTypeSpec resources that can be performed in the <see cref="ResourceGroupResource"/>.
-    /// </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecResourceGroupResource for mocking. </summary>

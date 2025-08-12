@@ -11,10 +11,7 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary>
-    /// A class extending <see cref="ArmClient"/> to provide extended functionality.
-    /// This class contains additional operations for working with MgmtTypeSpec resources that can be performed in the <see cref="ArmClient"/>.
-    /// </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMgmtTypeSpecArmClient : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecArmClient for mocking. </summary>

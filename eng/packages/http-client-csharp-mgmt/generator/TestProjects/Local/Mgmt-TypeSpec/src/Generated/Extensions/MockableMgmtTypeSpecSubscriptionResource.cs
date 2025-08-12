@@ -18,10 +18,7 @@ using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary>
-    /// A class extending <see cref="SubscriptionResource"/> to provide extended functionality.
-    /// This class contains additional operations for working with MgmtTypeSpec resources that can be performed in the <see cref="SubscriptionResource"/>.
-    /// </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _zoosClientDiagnostics;
