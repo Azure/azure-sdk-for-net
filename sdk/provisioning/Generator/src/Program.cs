@@ -29,7 +29,7 @@ List<Specification> specs =
     //new KeyVaultSpecification(),
     //new KubernetesSpecification(),
     //new KubernetesConfigurationSpecification(),
-    new NetworkSpecification(), // TODO: Resolve bicep serialization issue
+    new NetworkSpecification(),
     //new OperationalInsightsSpecification(),
     //new PostgreSqlSpecification(),
     //new RedisSpecification(),

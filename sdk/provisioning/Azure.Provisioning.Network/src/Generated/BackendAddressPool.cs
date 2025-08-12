@@ -31,15 +31,75 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Parameters supplied to the create or update load balancer backend
-    /// address pool operation.
+    /// Amount of seconds Load Balancer waits for before sending RESET to
+    /// client and backend address.
     /// </summary>
-    public BackendAddressPoolData Data 
+    public BicepValue<int> DrainPeriodInSeconds 
     {
-        get { Initialize(); return _data!; }
-        set { Initialize(); AssignOrReplace(ref _data, value); }
+        get { Initialize(); return _drainPeriodInSeconds!; }
+        set { Initialize(); _drainPeriodInSeconds!.Assign(value); }
     }
-    private BackendAddressPoolData? _data;
+    private BicepValue<int>? _drainPeriodInSeconds;
+
+    /// <summary>
+    /// Resource ID.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+        set { Initialize(); _id!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
+    /// An array of backend addresses.
+    /// </summary>
+    public BicepList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses 
+    {
+        get { Initialize(); return _loadBalancerBackendAddresses!; }
+        set { Initialize(); _loadBalancerBackendAddresses!.Assign(value); }
+    }
+    private BicepList<LoadBalancerBackendAddress>? _loadBalancerBackendAddresses;
+
+    /// <summary>
+    /// The location of the backend address pool.
+    /// </summary>
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
+
+    /// <summary>
+    /// Backend address synchronous mode for the backend pool.
+    /// </summary>
+    public BicepValue<BackendAddressSyncMode> SyncMode 
+    {
+        get { Initialize(); return _syncMode!; }
+        set { Initialize(); _syncMode!.Assign(value); }
+    }
+    private BicepValue<BackendAddressSyncMode>? _syncMode;
+
+    /// <summary>
+    /// An array of gateway load balancer tunnel interfaces.
+    /// </summary>
+    public BicepList<GatewayLoadBalancerTunnelInterface> TunnelInterfaces 
+    {
+        get { Initialize(); return _tunnelInterfaces!; }
+        set { Initialize(); _tunnelInterfaces!.Assign(value); }
+    }
+    private BicepList<GatewayLoadBalancerTunnelInterface>? _tunnelInterfaces;
+
+    /// <summary>
+    /// Gets or sets Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> VirtualNetworkId 
+    {
+        get { Initialize(); return _virtualNetworkId!; }
+        set { Initialize(); _virtualNetworkId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _virtualNetworkId;
 
     /// <summary>
     /// An array of references to IP addresses defined in network interfaces.
@@ -51,16 +111,6 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepList<NetworkInterfaceIPConfigurationData>? _backendIPConfigurations;
 
     /// <summary>
-    /// Amount of seconds Load Balancer waits for before sending RESET to
-    /// client and backend address.
-    /// </summary>
-    public BicepValue<int> DrainPeriodInSeconds 
-    {
-        get { Initialize(); return _drainPeriodInSeconds!; }
-    }
-    private BicepValue<int>? _drainPeriodInSeconds;
-
-    /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
     /// </summary>
     public BicepValue<ETag> ETag 
@@ -68,15 +118,6 @@ public partial class BackendAddressPool : ProvisionableResource
         get { Initialize(); return _eTag!; }
     }
     private BicepValue<ETag>? _eTag;
-
-    /// <summary>
-    /// Resource ID.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> Id 
-    {
-        get { Initialize(); return _id!; }
-    }
-    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// An array of references to inbound NAT rules that use this backend
@@ -89,15 +130,6 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepList<WritableSubResource>? _inboundNatRules;
 
     /// <summary>
-    /// An array of backend addresses.
-    /// </summary>
-    public BicepList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses 
-    {
-        get { Initialize(); return _loadBalancerBackendAddresses!; }
-    }
-    private BicepList<LoadBalancerBackendAddress>? _loadBalancerBackendAddresses;
-
-    /// <summary>
     /// An array of references to load balancing rules that use this backend
     /// address pool.
     /// </summary>
@@ -106,15 +138,6 @@ public partial class BackendAddressPool : ProvisionableResource
         get { Initialize(); return _loadBalancingRules!; }
     }
     private BicepList<WritableSubResource>? _loadBalancingRules;
-
-    /// <summary>
-    /// The location of the backend address pool.
-    /// </summary>
-    public BicepValue<AzureLocation> Location 
-    {
-        get { Initialize(); return _location!; }
-    }
-    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets or sets Id.
@@ -145,33 +168,6 @@ public partial class BackendAddressPool : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// Backend address synchronous mode for the backend pool.
-    /// </summary>
-    public BicepValue<BackendAddressSyncMode> SyncMode 
-    {
-        get { Initialize(); return _syncMode!; }
-    }
-    private BicepValue<BackendAddressSyncMode>? _syncMode;
-
-    /// <summary>
-    /// An array of gateway load balancer tunnel interfaces.
-    /// </summary>
-    public BicepList<GatewayLoadBalancerTunnelInterface> TunnelInterfaces 
-    {
-        get { Initialize(); return _tunnelInterfaces!; }
-    }
-    private BicepList<GatewayLoadBalancerTunnelInterface>? _tunnelInterfaces;
-
-    /// <summary>
-    /// Gets or sets Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> VirtualNetworkId 
-    {
-        get { Initialize(); return _virtualNetworkId!; }
-    }
-    private BicepValue<ResourceIdentifier>? _virtualNetworkId;
-
-    /// <summary>
     /// Creates a new BackendAddressPool.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -193,21 +189,20 @@ public partial class BackendAddressPool : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _data = DefineModelProperty<BackendAddressPoolData>("Data", ["Data"]);
+        _drainPeriodInSeconds = DefineProperty<int>("DrainPeriodInSeconds", ["properties", "drainPeriodInSeconds"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _loadBalancerBackendAddresses = DefineListProperty<LoadBalancerBackendAddress>("LoadBalancerBackendAddresses", ["properties", "loadBalancerBackendAddresses"]);
+        _location = DefineProperty<AzureLocation>("Location", ["properties", "location"]);
+        _syncMode = DefineProperty<BackendAddressSyncMode>("SyncMode", ["properties", "syncMode"]);
+        _tunnelInterfaces = DefineListProperty<GatewayLoadBalancerTunnelInterface>("TunnelInterfaces", ["properties", "tunnelInterfaces"]);
+        _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["properties", "virtualNetwork", "id"]);
         _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfigurationData>("BackendIPConfigurations", ["properties", "backendIPConfigurations"], isOutput: true);
-        _drainPeriodInSeconds = DefineProperty<int>("DrainPeriodInSeconds", ["properties", "drainPeriodInSeconds"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _inboundNatRules = DefineListProperty<WritableSubResource>("InboundNatRules", ["properties", "inboundNatRules"], isOutput: true);
-        _loadBalancerBackendAddresses = DefineListProperty<LoadBalancerBackendAddress>("LoadBalancerBackendAddresses", ["properties", "loadBalancerBackendAddresses"], isOutput: true);
         _loadBalancingRules = DefineListProperty<WritableSubResource>("LoadBalancingRules", ["properties", "loadBalancingRules"], isOutput: true);
-        _location = DefineProperty<AzureLocation>("Location", ["properties", "location"], isOutput: true);
         _outboundRuleId = DefineProperty<ResourceIdentifier>("OutboundRuleId", ["properties", "outboundRule", "id"], isOutput: true);
         _outboundRules = DefineListProperty<WritableSubResource>("OutboundRules", ["properties", "outboundRules"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _syncMode = DefineProperty<BackendAddressSyncMode>("SyncMode", ["properties", "syncMode"], isOutput: true);
-        _tunnelInterfaces = DefineListProperty<GatewayLoadBalancerTunnelInterface>("TunnelInterfaces", ["properties", "tunnelInterfaces"], isOutput: true);
-        _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["properties", "virtualNetwork", "id"], isOutput: true);
     }
 
     /// <summary>
