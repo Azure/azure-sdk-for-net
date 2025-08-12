@@ -32,22 +32,13 @@ public partial class VirtualNetwork : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Parameters supplied to the create or update virtual network operation.
-    /// </summary>
-    public VirtualNetworkData Data 
-    {
-        get { Initialize(); return _data!; }
-        set { Initialize(); AssignOrReplace(ref _data, value); }
-    }
-    private VirtualNetworkData? _data;
-
-    /// <summary>
     /// A list of address blocks reserved for this virtual network in CIDR
     /// notation.
     /// </summary>
     public BicepList<string> AddressPrefixes 
     {
         get { Initialize(); return _addressPrefixes!; }
+        set { Initialize(); _addressPrefixes!.Assign(value); }
     }
     private BicepList<string>? _addressPrefixes;
 
@@ -58,6 +49,7 @@ public partial class VirtualNetwork : ProvisionableResource
     public VirtualNetworkAddressSpace AddressSpace 
     {
         get { Initialize(); return _addressSpace!; }
+        set { Initialize(); AssignOrReplace(ref _addressSpace, value); }
     }
     private VirtualNetworkAddressSpace? _addressSpace;
 
@@ -68,6 +60,7 @@ public partial class VirtualNetwork : ProvisionableResource
     public VirtualNetworkBgpCommunities BgpCommunities 
     {
         get { Initialize(); return _bgpCommunities!; }
+        set { Initialize(); AssignOrReplace(ref _bgpCommunities, value); }
     }
     private VirtualNetworkBgpCommunities? _bgpCommunities;
 
@@ -77,17 +70,9 @@ public partial class VirtualNetwork : ProvisionableResource
     public BicepValue<ResourceIdentifier> DdosProtectionPlanId 
     {
         get { Initialize(); return _ddosProtectionPlanId!; }
+        set { Initialize(); _ddosProtectionPlanId!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _ddosProtectionPlanId;
-
-    /// <summary>
-    /// Gets or sets Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> DefaultPublicNatGatewayId 
-    {
-        get { Initialize(); return _defaultPublicNatGatewayId!; }
-    }
-    private BicepValue<ResourceIdentifier>? _defaultPublicNatGatewayId;
 
     /// <summary>
     /// The list of DNS servers IP addresses.
@@ -95,6 +80,7 @@ public partial class VirtualNetwork : ProvisionableResource
     public BicepList<string> DhcpOptionsDnsServers 
     {
         get { Initialize(); return _dhcpOptionsDnsServers!; }
+        set { Initialize(); _dhcpOptionsDnsServers!.Assign(value); }
     }
     private BicepList<string>? _dhcpOptionsDnsServers;
 
@@ -106,6 +92,7 @@ public partial class VirtualNetwork : ProvisionableResource
     public BicepValue<bool> EnableDdosProtection 
     {
         get { Initialize(); return _enableDdosProtection!; }
+        set { Initialize(); _enableDdosProtection!.Assign(value); }
     }
     private BicepValue<bool>? _enableDdosProtection;
 
@@ -116,6 +103,7 @@ public partial class VirtualNetwork : ProvisionableResource
     public BicepValue<bool> EnableVmProtection 
     {
         get { Initialize(); return _enableVmProtection!; }
+        set { Initialize(); _enableVmProtection!.Assign(value); }
     }
     private BicepValue<bool>? _enableVmProtection;
 
@@ -126,8 +114,108 @@ public partial class VirtualNetwork : ProvisionableResource
     public VirtualNetworkEncryption Encryption 
     {
         get { Initialize(); return _encryption!; }
+        set { Initialize(); AssignOrReplace(ref _encryption, value); }
     }
     private VirtualNetworkEncryption? _encryption;
+
+    /// <summary>
+    /// The extended location of the virtual network.
+    /// </summary>
+    public ExtendedAzureLocation ExtendedLocation 
+    {
+        get { Initialize(); return _extendedLocation!; }
+        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
+    }
+    private ExtendedAzureLocation? _extendedLocation;
+
+    /// <summary>
+    /// The FlowTimeout value (in minutes) for the Virtual Network.
+    /// </summary>
+    public BicepValue<int> FlowTimeoutInMinutes 
+    {
+        get { Initialize(); return _flowTimeoutInMinutes!; }
+        set { Initialize(); _flowTimeoutInMinutes!.Assign(value); }
+    }
+    private BicepValue<int>? _flowTimeoutInMinutes;
+
+    /// <summary>
+    /// Resource ID.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+        set { Initialize(); _id!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
+    /// Array of IpAllocation which reference this VNET.
+    /// </summary>
+    public BicepList<WritableSubResource> IPAllocations 
+    {
+        get { Initialize(); return _iPAllocations!; }
+        set { Initialize(); _iPAllocations!.Assign(value); }
+    }
+    private BicepList<WritableSubResource>? _iPAllocations;
+
+    /// <summary>
+    /// Resource location.
+    /// </summary>
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
+
+    /// <summary>
+    /// Private Endpoint VNet Policies.
+    /// </summary>
+    public BicepValue<PrivateEndpointVnetPolicy> PrivateEndpointVnetPolicy 
+    {
+        get { Initialize(); return _privateEndpointVnetPolicy!; }
+        set { Initialize(); _privateEndpointVnetPolicy!.Assign(value); }
+    }
+    private BicepValue<PrivateEndpointVnetPolicy>? _privateEndpointVnetPolicy;
+
+    /// <summary>
+    /// A list of subnets in a Virtual Network.
+    /// </summary>
+    public BicepList<SubnetData> Subnets 
+    {
+        get { Initialize(); return _subnets!; }
+        set { Initialize(); _subnets!.Assign(value); }
+    }
+    private BicepList<SubnetData>? _subnets;
+
+    /// <summary>
+    /// Resource tags.
+    /// </summary>
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
+
+    /// <summary>
+    /// A list of peerings in a Virtual Network.
+    /// </summary>
+    public BicepList<VirtualNetworkPeeringData> VirtualNetworkPeerings 
+    {
+        get { Initialize(); return _virtualNetworkPeerings!; }
+        set { Initialize(); _virtualNetworkPeerings!.Assign(value); }
+    }
+    private BicepList<VirtualNetworkPeeringData>? _virtualNetworkPeerings;
+
+    /// <summary>
+    /// Gets or sets Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> DefaultPublicNatGatewayId 
+    {
+        get { Initialize(); return _defaultPublicNatGatewayId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _defaultPublicNatGatewayId;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -139,15 +227,6 @@ public partial class VirtualNetwork : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// The extended location of the virtual network.
-    /// </summary>
-    public ExtendedAzureLocation ExtendedLocation 
-    {
-        get { Initialize(); return _extendedLocation!; }
-    }
-    private ExtendedAzureLocation? _extendedLocation;
-
-    /// <summary>
     /// A collection of references to flow log resources.
     /// </summary>
     public BicepList<FlowLogData> FlowLogs 
@@ -155,51 +234,6 @@ public partial class VirtualNetwork : ProvisionableResource
         get { Initialize(); return _flowLogs!; }
     }
     private BicepList<FlowLogData>? _flowLogs;
-
-    /// <summary>
-    /// The FlowTimeout value (in minutes) for the Virtual Network.
-    /// </summary>
-    public BicepValue<int> FlowTimeoutInMinutes 
-    {
-        get { Initialize(); return _flowTimeoutInMinutes!; }
-    }
-    private BicepValue<int>? _flowTimeoutInMinutes;
-
-    /// <summary>
-    /// Resource ID.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> Id 
-    {
-        get { Initialize(); return _id!; }
-    }
-    private BicepValue<ResourceIdentifier>? _id;
-
-    /// <summary>
-    /// Array of IpAllocation which reference this VNET.
-    /// </summary>
-    public BicepList<WritableSubResource> IPAllocations 
-    {
-        get { Initialize(); return _iPAllocations!; }
-    }
-    private BicepList<WritableSubResource>? _iPAllocations;
-
-    /// <summary>
-    /// Resource location.
-    /// </summary>
-    public BicepValue<AzureLocation> Location 
-    {
-        get { Initialize(); return _location!; }
-    }
-    private BicepValue<AzureLocation>? _location;
-
-    /// <summary>
-    /// Private Endpoint VNet Policies.
-    /// </summary>
-    public BicepValue<PrivateEndpointVnetPolicy> PrivateEndpointVnetPolicy 
-    {
-        get { Initialize(); return _privateEndpointVnetPolicy!; }
-    }
-    private BicepValue<PrivateEndpointVnetPolicy>? _privateEndpointVnetPolicy;
 
     /// <summary>
     /// The provisioning state of the virtual network resource.
@@ -218,33 +252,6 @@ public partial class VirtualNetwork : ProvisionableResource
         get { Initialize(); return _resourceGuid!; }
     }
     private BicepValue<Guid>? _resourceGuid;
-
-    /// <summary>
-    /// A list of subnets in a Virtual Network.
-    /// </summary>
-    public BicepList<SubnetData> Subnets 
-    {
-        get { Initialize(); return _subnets!; }
-    }
-    private BicepList<SubnetData>? _subnets;
-
-    /// <summary>
-    /// Resource tags.
-    /// </summary>
-    public BicepDictionary<string> Tags 
-    {
-        get { Initialize(); return _tags!; }
-    }
-    private BicepDictionary<string>? _tags;
-
-    /// <summary>
-    /// A list of peerings in a Virtual Network.
-    /// </summary>
-    public BicepList<VirtualNetworkPeeringData> VirtualNetworkPeerings 
-    {
-        get { Initialize(); return _virtualNetworkPeerings!; }
-    }
-    private BicepList<VirtualNetworkPeeringData>? _virtualNetworkPeerings;
 
     /// <summary>
     /// Creates a new VirtualNetwork.
@@ -268,29 +275,28 @@ public partial class VirtualNetwork : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _data = DefineModelProperty<VirtualNetworkData>("Data", ["Data"]);
-        _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["AddressPrefixes"], isOutput: true);
-        _addressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("AddressSpace", ["properties", "addressSpace"], isOutput: true);
-        _bgpCommunities = DefineModelProperty<VirtualNetworkBgpCommunities>("BgpCommunities", ["properties", "bgpCommunities"], isOutput: true);
-        _ddosProtectionPlanId = DefineProperty<ResourceIdentifier>("DdosProtectionPlanId", ["properties", "ddosProtectionPlan", "id"], isOutput: true);
+        _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["AddressPrefixes"]);
+        _addressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("AddressSpace", ["properties", "addressSpace"]);
+        _bgpCommunities = DefineModelProperty<VirtualNetworkBgpCommunities>("BgpCommunities", ["properties", "bgpCommunities"]);
+        _ddosProtectionPlanId = DefineProperty<ResourceIdentifier>("DdosProtectionPlanId", ["properties", "ddosProtectionPlan", "id"]);
+        _dhcpOptionsDnsServers = DefineListProperty<string>("DhcpOptionsDnsServers", ["properties", "dhcpOptions", "dnsServers"]);
+        _enableDdosProtection = DefineProperty<bool>("EnableDdosProtection", ["properties", "enableDdosProtection"]);
+        _enableVmProtection = DefineProperty<bool>("EnableVmProtection", ["properties", "enableVmProtection"]);
+        _encryption = DefineModelProperty<VirtualNetworkEncryption>("Encryption", ["properties", "encryption"]);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _flowTimeoutInMinutes = DefineProperty<int>("FlowTimeoutInMinutes", ["properties", "flowTimeoutInMinutes"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["properties", "ipAllocations"]);
+        _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _privateEndpointVnetPolicy = DefineProperty<PrivateEndpointVnetPolicy>("PrivateEndpointVnetPolicy", ["properties", "privateEndpointVNetPolicies"]);
+        _subnets = DefineListProperty<SubnetData>("Subnets", ["properties", "subnets"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _virtualNetworkPeerings = DefineListProperty<VirtualNetworkPeeringData>("VirtualNetworkPeerings", ["properties", "virtualNetworkPeerings"]);
         _defaultPublicNatGatewayId = DefineProperty<ResourceIdentifier>("DefaultPublicNatGatewayId", ["properties", "defaultPublicNatGateway", "id"], isOutput: true);
-        _dhcpOptionsDnsServers = DefineListProperty<string>("DhcpOptionsDnsServers", ["properties", "dhcpOptions", "dnsServers"], isOutput: true);
-        _enableDdosProtection = DefineProperty<bool>("EnableDdosProtection", ["properties", "enableDdosProtection"], isOutput: true);
-        _enableVmProtection = DefineProperty<bool>("EnableVmProtection", ["properties", "enableVmProtection"], isOutput: true);
-        _encryption = DefineModelProperty<VirtualNetworkEncryption>("Encryption", ["properties", "encryption"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"], isOutput: true);
         _flowLogs = DefineListProperty<FlowLogData>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
-        _flowTimeoutInMinutes = DefineProperty<int>("FlowTimeoutInMinutes", ["properties", "flowTimeoutInMinutes"], isOutput: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["properties", "ipAllocations"], isOutput: true);
-        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
-        _privateEndpointVnetPolicy = DefineProperty<PrivateEndpointVnetPolicy>("PrivateEndpointVnetPolicy", ["properties", "privateEndpointVNetPolicies"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
-        _subnets = DefineListProperty<SubnetData>("Subnets", ["properties", "subnets"], isOutput: true);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"], isOutput: true);
-        _virtualNetworkPeerings = DefineListProperty<VirtualNetworkPeeringData>("VirtualNetworkPeerings", ["properties", "virtualNetworkPeerings"], isOutput: true);
     }
 
     /// <summary>

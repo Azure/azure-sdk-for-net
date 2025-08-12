@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -72,10 +73,23 @@ public static class ReflectionExtensions
         return true;
     }
 
+    public static Type? GetDataTypeFromResource(Type resourceType)
+    {
+        if (!typeof(ArmResource).IsAssignableFrom(resourceType))
+        {
+            return null;
+        }
+
+        return resourceType.GetProperty("Data")?.PropertyType;
+    }
+
     public static bool IsResourceData(this Type type) =>
         typeof(ResourceData).IsAssignableFrom(type) ||
-        typeof(ResourceWithWritableName).IsAssignableFrom(type) || // hack for Sql
-        typeof(NetworkResourceData).IsAssignableFrom(type); // hack for Network
+        // hack for Sql
+        typeof(ResourceWithWritableName).IsAssignableFrom(type) ||
+        // hack for Network
+        typeof(NetworkResourceData).IsAssignableFrom(type) ||
+        typeof(NetworkTrackedResourceData).IsAssignableFrom(type);
 
     public static bool IsModelType(this Type type, List<Type>? visited = default) =>
         type.IsClass &&

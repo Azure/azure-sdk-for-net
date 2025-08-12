@@ -3,10 +3,8 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Sql.Models;
 using Generator.Model;
 using System;
 using System.ClientModel.Primitives;

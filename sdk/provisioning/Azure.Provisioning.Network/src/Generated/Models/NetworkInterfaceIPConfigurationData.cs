@@ -63,12 +63,12 @@ public partial class NetworkInterfaceIPConfigurationData : ProvisionableConstruc
     /// <summary>
     /// The reference to LoadBalancerBackendAddressPool resource.
     /// </summary>
-    public BicepList<BackendAddressPoolData> LoadBalancerBackendAddressPools 
+    public BicepList<BackendAddressPool> LoadBalancerBackendAddressPools 
     {
         get { Initialize(); return _loadBalancerBackendAddressPools!; }
         set { Initialize(); _loadBalancerBackendAddressPools!.Assign(value); }
     }
-    private BicepList<BackendAddressPoolData>? _loadBalancerBackendAddressPools;
+    private BicepList<BackendAddressPool>? _loadBalancerBackendAddressPools;
 
     /// <summary>
     /// A list of references of LoadBalancerInboundNatRules.
@@ -230,7 +230,7 @@ public partial class NetworkInterfaceIPConfigurationData : ProvisionableConstruc
         _gatewayLoadBalancerId = DefineProperty<ResourceIdentifier>("GatewayLoadBalancerId", ["properties", "gatewayLoadBalancer", "id"]);
         _virtualNetworkTaps = DefineListProperty<VirtualNetworkTapData>("VirtualNetworkTaps", ["properties", "virtualNetworkTaps"]);
         _applicationGatewayBackendAddressPools = DefineListProperty<ApplicationGatewayBackendAddressPool>("ApplicationGatewayBackendAddressPools", ["properties", "applicationGatewayBackendAddressPools"]);
-        _loadBalancerBackendAddressPools = DefineListProperty<BackendAddressPoolData>("LoadBalancerBackendAddressPools", ["properties", "loadBalancerBackendAddressPools"]);
+        _loadBalancerBackendAddressPools = DefineListProperty<BackendAddressPool>("LoadBalancerBackendAddressPools", ["properties", "loadBalancerBackendAddressPools"]);
         _loadBalancerInboundNatRules = DefineListProperty<InboundNatRuleData>("LoadBalancerInboundNatRules", ["properties", "loadBalancerInboundNatRules"]);
         _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
         _privateIPAddressPrefixLength = DefineProperty<int>("PrivateIPAddressPrefixLength", ["properties", "privateIPAddressPrefixLength"]);
