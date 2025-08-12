@@ -18,5 +18,8 @@ namespace Azure.ResourceManager.BotService.Models
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
+
+        /// <summary> The private link resource Private link DNS zone name. </summary>
+        public IList<string> RequiredZoneNames { get; }
     }
 }
