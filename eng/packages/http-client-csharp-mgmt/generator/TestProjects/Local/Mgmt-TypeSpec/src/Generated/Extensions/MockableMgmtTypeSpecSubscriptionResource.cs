@@ -48,7 +48,7 @@ namespace MgmtTypeSpec.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActionsAsync");
+            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {

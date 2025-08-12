@@ -98,7 +98,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ZooResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.GetAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.Get");
             scope.Start();
             try
             {
@@ -155,7 +155,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.DeleteAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.Delete");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.UpdateAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.Update");
             scope.Start();
             try
             {
@@ -326,7 +326,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Models.ZooRecommendation>> RecommendAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _zooRecommendationClientDiagnostics.CreateScope("ZooResource.RecommendAsync");
+            using DiagnosticScope scope = _zooRecommendationClientDiagnostics.CreateScope("ZooResource.Recommend");
             scope.Start();
             try
             {

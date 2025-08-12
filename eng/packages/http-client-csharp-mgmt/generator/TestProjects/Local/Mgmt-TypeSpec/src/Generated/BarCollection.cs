@@ -63,7 +63,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -144,7 +144,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.GetAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.Get");
             scope.Start();
             try
             {
@@ -232,7 +232,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.ExistsAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +290,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.GetIfExistsAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.GetIfExists");
             scope.Start();
             try
             {
