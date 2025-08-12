@@ -8,7 +8,7 @@ namespace Azure.AI.OpenAI.Embeddings;
 
 internal partial class AzureEmbeddingClient : EmbeddingClient
 {
-    internal override PipelineMessage CreateCreateEmbeddingRequest(BinaryContent content, RequestOptions options)
+    internal override PipelineMessage CreateGenerateEmbeddingsRequest(BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("POST")
             .WithPath("embeddings")

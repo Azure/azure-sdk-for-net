@@ -22,13 +22,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly TypeProvider _enclosingType;
         private readonly RequestPathPattern _contextualPath;
         private readonly RestClientInfo _restClientInfo;
-        private readonly InputServiceMethod _method;
+        private readonly InputPagingServiceMethod _method;
         private readonly MethodProvider _convenienceMethod;
         private readonly bool _isAsync;
         private readonly CSharpType _itemType;
         private readonly CSharpType _actualItemType;
         private ResourceClientProvider? _itemResourceClient;
-        private readonly ResourceOperationKind _methodKind;
+        private readonly string _methodName;
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
 
@@ -36,25 +36,23 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
             RestClientInfo restClientInfo,
-            InputServiceMethod method,
-            MethodProvider convenienceMethod,
+            InputPagingServiceMethod method,
             bool isAsync,
-            CSharpType itemType,
-            ResourceOperationKind methodKind)
+            string? methodName = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
             _restClientInfo = restClientInfo;
             _method = method;
-            _convenienceMethod = convenienceMethod;
+            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
             _isAsync = isAsync;
-            _itemType = itemType;
+            _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
             InitializeTypeInfo(
-                itemType,
+                _itemType,
                 ref _actualItemType!,
                 ref _itemResourceClient
             );
-            _methodKind = methodKind;
+            _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
         }
@@ -85,12 +83,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var returnType = _isAsync
                 ? new CSharpType(typeof(AsyncPageable<>), _actualItemType)
                 : new CSharpType(typeof(Pageable<>), _actualItemType);
-            var methodName = _methodKind == ResourceOperationKind.List
-                ? (_isAsync ? "GetAllAsync" : "GetAll")
-                : _convenienceMethod.Signature.Name;
 
             return new MethodSignature(
-                methodName,
+                _methodName,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
@@ -114,7 +109,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var arguments = new List<ValueExpression>
             {
-                _restClientInfo.RestClientField,
+                _restClientInfo.RestClient,
             };
             arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
 

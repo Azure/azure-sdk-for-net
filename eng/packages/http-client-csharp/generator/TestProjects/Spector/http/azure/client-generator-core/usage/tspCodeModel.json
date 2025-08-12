@@ -92,7 +92,7 @@
       "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.InputModel",
       "usage": "Input,Output,Json",
-      "doc": "Usage override to roundtrip.",
+      "doc": "Usage additive to roundtrip.",
       "decorators": [],
       "properties": [
         {
@@ -117,7 +117,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -128,7 +129,7 @@
       "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.OutputModel",
       "usage": "Input,Output,Json",
-      "doc": "Usage override to roundtrip.",
+      "doc": "Usage additive to roundtrip.",
       "decorators": [],
       "properties": [
         {
@@ -153,7 +154,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -202,7 +204,8 @@
                   "json": {
                     "name": "name"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -216,7 +219,8 @@
             "json": {
               "name": "result"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -230,7 +234,7 @@
       "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.OrphanModel",
       "access": "public",
-      "usage": "Input",
+      "usage": "Input,Json",
       "doc": "Not used anywhere, but access is override to public so still need to be generated and exported with serialization.",
       "decorators": [],
       "properties": [
@@ -252,7 +256,12 @@
           "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.OrphanModel.name",
-          "serializationOptions": {}
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "25",
@@ -276,7 +285,8 @@
             "json": {
               "name": "desc"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -337,12 +347,12 @@
               "name": "inputToInputOutput",
               "accessibility": "public",
               "apiVersions": [],
-              "doc": "Expected body parameter: \n```json\n{\n  \"name\": \"Madge\"\n}\n```",
+              "doc": "Expected body parameter:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
               "operation": {
                 "$id": "33",
                 "name": "inputToInputOutput",
                 "resourceName": "ModelInOperation",
-                "doc": "Expected body parameter: \n```json\n{\n  \"name\": \"Madge\"\n}\n```",
+                "doc": "Expected body parameter:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -423,14 +433,14 @@
                 {
                   "$id": "37",
                   "name": "contentType",
-                  "nameInRequest": "contentType",
+                  "nameInRequest": "Content-Type",
                   "doc": "Body parameter's content type. Known values are application/json",
                   "type": {
                     "$ref": "1"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -451,12 +461,12 @@
               "name": "outputToInputOutput",
               "accessibility": "public",
               "apiVersions": [],
-              "doc": "Expected response body: \n```json\n{\n  \"name\": \"Madge\"\n}\n```",
+              "doc": "Expected response body:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
               "operation": {
                 "$id": "39",
                 "name": "outputToInputOutput",
                 "resourceName": "ModelInOperation",
-                "doc": "Expected response body: \n```json\n{\n  \"name\": \"Madge\"\n}\n```",
+                "doc": "Expected response body:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -505,7 +515,7 @@
                 {
                   "$id": "41",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "3"
                   },
@@ -536,12 +546,12 @@
               "name": "modelInReadOnlyProperty",
               "accessibility": "public",
               "apiVersions": [],
-              "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter: \n```json\n{\n}\n```\n\nExpected response body: \n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
+              "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter:\n```json\n{\n}\n```\n\nExpected response body:\n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
               "operation": {
                 "$id": "43",
                 "name": "modelInReadOnlyProperty",
                 "resourceName": "ModelInOperation",
-                "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter: \n```json\n{\n}\n```\n\nExpected response body: \n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
+                "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter:\n```json\n{\n}\n```\n\nExpected response body:\n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -645,14 +655,14 @@
                 {
                   "$id": "48",
                   "name": "contentType",
-                  "nameInRequest": "contentType",
+                  "nameInRequest": "Content-Type",
                   "doc": "Body parameter's content type. Known values are application/json",
                   "type": {
                     "$ref": "5"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -663,7 +673,7 @@
                 {
                   "$id": "49",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "7"
                   },
@@ -694,12 +704,12 @@
               "name": "orphanModelSerializable",
               "accessibility": "public",
               "apiVersions": [],
-              "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter: \n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
+              "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter:\n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
               "operation": {
                 "$id": "51",
                 "name": "orphanModelSerializable",
                 "resourceName": "ModelInOperation",
-                "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter: \n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
+                "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter:\n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -788,14 +798,14 @@
                 {
                   "$id": "57",
                   "name": "contentType",
-                  "nameInRequest": "contentType",
+                  "nameInRequest": "Content-Type",
                   "doc": "Body parameter's content type. Known values are application/json",
                   "type": {
                     "$ref": "9"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,

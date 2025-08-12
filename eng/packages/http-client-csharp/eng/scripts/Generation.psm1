@@ -27,7 +27,8 @@ function Get-TspCommand {
         [string]$specFile,
         [string]$generationDir,
         [bool]$generateStub = $false,
-        [string]$apiVersion = $null
+        [string]$apiVersion = $null,
+        [string]$libraryNameOverride = $null
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp"
@@ -44,6 +45,10 @@ function Get-TspCommand {
 
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp.api-version=$apiVersion"
+    }
+
+    if ($libraryNameOverride) {
+        $command += " --option @azure-typespec/http-client-csharp.package-name=$libraryNameOverride"
     }
 
     $command += " --option @azure-typespec/http-client-csharp.new-project=true"
@@ -189,16 +194,19 @@ function Generate-Versioning {
     ## get the last two directories of the output directory and add V1/V2 to disambiguate the namespaces
     $namespaceRoot = $(($outputFolders[-2..-1] | `
                            ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1) }) -join ".")
+    $v1LibraryNameOverride = $namespaceRoot + ".V1"
+    $v2LibraryNameOverride = $namespaceRoot + ".V2"
 
-    Invoke (Get-TspCommand $specFilePath $v1Dir -generateStub $generateStub -apiVersion "v1")
-    Invoke (Get-TspCommand $specFilePath $v2Dir -generateStub $generateStub -apiVersion "v2")
+    Invoke (Get-TspCommand $specFilePath $v1Dir -generateStub $generateStub -apiVersion "v1" -libraryNameOverride $v1LibraryNameOverride)
+    Invoke (Get-TspCommand $specFilePath $v2Dir -generateStub $generateStub -apiVersion "v2" -libraryNameOverride $v2LibraryNameOverride)
 
     if ($outputFolders.Contains("removed")) {
         $v2PreviewDir = $(Join-Path $outputDir "v2Preview")
         if ($createOutputDirIfNotExist -and -not (Test-Path $v2PreviewDir)) {
             New-Item -ItemType Directory -Path $v2PreviewDir | Out-Null
         }
-        Invoke (Get-TspCommand $specFilePath $v2PreviewDir -generateStub $generateStub -apiVersion "v2preview")
+        $v2PreviewLibraryNameOverride = $namespaceRoot + ".V2Preview"
+        Invoke (Get-TspCommand $specFilePath $v2PreviewDir -generateStub $generateStub -apiVersion "v2preview" -libraryNameOverride $v2PreviewLibraryNameOverride)
     }
 
     # exit if the generation failed

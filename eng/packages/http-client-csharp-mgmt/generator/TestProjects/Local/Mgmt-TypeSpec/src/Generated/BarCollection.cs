@@ -19,7 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="BarResource"/> and their operations.
+    /// Each <see cref="BarResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of the parent resource.
+    /// </summary>
     public partial class BarCollection : ArmCollection, IEnumerable<BarResource>, IAsyncEnumerable<BarResource>
     {
         private readonly ClientDiagnostics _barsClientDiagnostics;
@@ -37,7 +41,7 @@ namespace MgmtTypeSpec
         {
             TryGetApiVersion(BarResource.ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", BarResource.ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion);
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -63,7 +67,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -144,7 +148,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.GetAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.Get");
             scope.Start();
             try
             {
@@ -232,7 +236,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.ExistsAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +294,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.GetIfExistsAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.GetIfExists");
             scope.Start();
             try
             {

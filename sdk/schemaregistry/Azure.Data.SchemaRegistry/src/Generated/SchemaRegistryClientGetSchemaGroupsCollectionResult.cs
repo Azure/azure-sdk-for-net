@@ -35,23 +35,25 @@ namespace Azure.Data.SchemaRegistry
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                SchemaGroups responseWithType = (SchemaGroups)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in responseWithType.Value)
+                foreach (var item in ((SchemaGroups)response).Value)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = responseWithType.NextLink;
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                nextPage = ((SchemaGroups)response).NextLink;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>

@@ -49,19 +49,25 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         internal ContainerServiceFleetUpdateStageStatus()
         {
             Groups = new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>();
+            BeforeGates = new ChangeTrackingList<UpdateRunGateStatus>();
+            AfterGates = new ChangeTrackingList<UpdateRunGateStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStageStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateStage. </param>
         /// <param name="name"> The name of the UpdateStage. </param>
         /// <param name="groups"> The list of groups to be updated as part of this UpdateStage. </param>
+        /// <param name="beforeGates"> The list of Gates that will run before this UpdateStage. </param>
+        /// <param name="afterGates"> The list of Gates that will run after this UpdateStage. </param>
         /// <param name="afterStageWaitStatus"> The status of the wait period configured on the UpdateStage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, ContainerServiceFleetWaitStatus afterStageWaitStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, IReadOnlyList<UpdateRunGateStatus> beforeGates, IReadOnlyList<UpdateRunGateStatus> afterGates, ContainerServiceFleetWaitStatus afterStageWaitStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Name = name;
             Groups = groups;
+            BeforeGates = beforeGates;
+            AfterGates = afterGates;
             AfterStageWaitStatus = afterStageWaitStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -72,6 +78,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public string Name { get; }
         /// <summary> The list of groups to be updated as part of this UpdateStage. </summary>
         public IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> Groups { get; }
+        /// <summary> The list of Gates that will run before this UpdateStage. </summary>
+        public IReadOnlyList<UpdateRunGateStatus> BeforeGates { get; }
+        /// <summary> The list of Gates that will run after this UpdateStage. </summary>
+        public IReadOnlyList<UpdateRunGateStatus> AfterGates { get; }
         /// <summary> The status of the wait period configured on the UpdateStage. </summary>
         public ContainerServiceFleetWaitStatus AfterStageWaitStatus { get; }
     }
