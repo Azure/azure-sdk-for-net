@@ -93,7 +93,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -211,7 +210,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add(matchConditions);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -351,7 +349,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add(matchConditions);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -419,7 +416,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -530,7 +526,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add(matchConditions);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -610,7 +605,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -766,7 +760,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

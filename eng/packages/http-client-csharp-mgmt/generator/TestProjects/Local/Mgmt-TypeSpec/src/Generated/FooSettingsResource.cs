@@ -17,7 +17,7 @@ using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> A class representing a FooSettings along with the instance operations that can be performed on it. If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FooSettingsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method. Otherwise you can get one from its parent resource (TODO: add parent resource information). </summary>
     public partial class FooSettingsResource : ArmResource
     {
         private readonly ClientDiagnostics _fooSettingsOperationsClientDiagnostics;
@@ -90,7 +90,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FooSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.GetAsync");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.Get");
             scope.Start();
             try
             {
@@ -151,7 +151,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -222,7 +222,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.UpdateAsync");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.Update");
             scope.Start();
             try
             {
@@ -283,7 +283,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.DeleteAsync");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.Delete");
             scope.Start();
             try
             {

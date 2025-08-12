@@ -16,7 +16,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.TypeSpec.Generator.Providers;
+using Azure.Core;
 
 namespace Azure.Generator
 {
@@ -86,6 +86,19 @@ namespace Azure.Generator
             return base.CreateCSharpTypeCore(inputType);
         }
 
+        /// <inheritdoc/>
+        protected override Type? CreateFrameworkType(string fullyQualifiedTypeName)
+        {
+            return fullyQualifiedTypeName switch
+            {
+                "Azure.Core.ResourceIdentifier" => typeof(ResourceIdentifier),
+                "Azure.Core.AzureLocation" => typeof(AzureLocation),
+                "Azure.ResponseError" => typeof(ResponseError),
+                "Azure.ETag" => typeof(ETag),
+                _ => base.CreateFrameworkType(fullyQualifiedTypeName)
+            };
+        }
+
         private CSharpType? CreateKnownPrimitiveType(InputPrimitiveType inputType)
         {
             InputPrimitiveType? primitiveType = inputType;
@@ -104,7 +117,7 @@ namespace Azure.Generator
 
         /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override ValueExpression DeserializeJsonValue(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             var expression = DeserializeJsonValueCore(valueType, element, format);
@@ -112,7 +125,7 @@ namespace Azure.Generator
         }
 
         private ValueExpression? DeserializeJsonValueCore(
-            CSharpType valueType,
+            Type valueType,
             ScopedApi<JsonElement> element,
             SerializationFormat format)
         {
@@ -122,7 +135,7 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        public override MethodBodyStatement SerializeJsonValue(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
         {
             var statement = SerializeValueTypeCore(serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
             return statement ?? base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);

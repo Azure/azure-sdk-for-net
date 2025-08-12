@@ -18,7 +18,7 @@ using Azure.ResourceManager.Resources;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> A class representing a Bar along with the instance operations that can be performed on it. If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BarResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method. Otherwise you can get one from its parent resource (TODO: add parent resource information). </summary>
     public partial class BarResource : ArmResource
     {
         private readonly ClientDiagnostics _barsClientDiagnostics;
@@ -93,7 +93,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BarResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.GetAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Get");
             scope.Start();
             try
             {
@@ -150,7 +150,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.DeleteAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Delete");
             scope.Start();
             try
             {
@@ -212,7 +212,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.UpdateAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Update");
             scope.Start();
             try
             {

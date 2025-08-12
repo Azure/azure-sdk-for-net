@@ -199,6 +199,30 @@ namespace MgmtTypeSpec
             return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZoo(zooName, cancellationToken);
         }
 
+        /// <summary> List Zoo resources by subscription ID. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static AsyncPageable<ZooResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken);
+        }
+
+        /// <summary> List Zoo resources by subscription ID. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Pageable<ZooResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
+        }
+
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>

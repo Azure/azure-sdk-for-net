@@ -20,6 +20,8 @@ namespace MgmtTypeSpec.Mocking
     /// <summary></summary>
     public partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _zoosClientDiagnostics;
+        private Zoos _zoosRestClient;
         private ClientDiagnostics _fooTasksClientDiagnostics;
         private FooTasks _fooTasksRestClient;
 
@@ -35,9 +37,35 @@ namespace MgmtTypeSpec.Mocking
         {
         }
 
+        private ClientDiagnostics ZoosClientDiagnostics => _zoosClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
         private ClientDiagnostics FooTasksClientDiagnostics => _fooTasksClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private FooTasks FooTasksRestClient => _fooTasksRestClient ??= new FooTasks(FooTasksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        /// <summary> List Zoo resources by subscription ID. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ZooResource> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionAsyncCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ZooResource(Client, data));
+        }
+
+        /// <summary> List Zoo resources by subscription ID. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ZooResource> GetBySubscription(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ZooResource(Client, data));
+        }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
@@ -48,7 +76,7 @@ namespace MgmtTypeSpec.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActionsAsync");
+            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {

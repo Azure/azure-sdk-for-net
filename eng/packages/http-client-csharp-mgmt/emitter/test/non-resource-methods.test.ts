@@ -51,30 +51,41 @@ model ValidationResponse {
 `,
       runner
     );
-    
+
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
+
     // Check that the first client has non-resource method decorators
     const firstClient = root.clients[0];
     ok(firstClient, "First client should exist");
     ok(firstClient.decorators, "Client should have decorators");
-    
+
     const nonResourceMethodDecorator = firstClient.decorators.find(
-      d => d.name === nonResourceMethodMetadata
+      (d) => d.name === nonResourceMethodMetadata
     );
-    
+
     ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-    ok(nonResourceMethodDecorator.arguments.nonResourceMethods, "Should have non-resource methods array");
-    
-    const nonResourceMethods = nonResourceMethodDecorator.arguments.nonResourceMethods;
-    strictEqual(nonResourceMethods.length, 1, "Should have exactly one non-resource method");
-    
+    ok(
+      nonResourceMethodDecorator.arguments.nonResourceMethods,
+      "Should have non-resource methods array"
+    );
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "Should have exactly one non-resource method"
+    );
+
     const method = nonResourceMethods[0];
     // The path should be generated from the ARM template
-    strictEqual(method.operationPath, "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/validateConfiguration");
+    strictEqual(
+      method.operationPath,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/validateConfiguration"
+    );
     strictEqual(method.operationScope, ResourceScope.Subscription);
     ok(method.methodId, "Method should have an ID");
   });
@@ -128,38 +139,50 @@ model GlobalSettings {
 `,
       runner
     );
-    
+
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
+
     const firstClient = root.clients[0];
     ok(firstClient, "First client should exist");
-    
+
     const nonResourceMethodDecorator = firstClient.decorators?.find(
-      d => d.name === nonResourceMethodMetadata
+      (d) => d.name === nonResourceMethodMetadata
     );
-    
+
     ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-    
-    const nonResourceMethods = nonResourceMethodDecorator.arguments.nonResourceMethods;
-    strictEqual(nonResourceMethods.length, 2, "Should have exactly two non-resource methods");
-    
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    strictEqual(
+      nonResourceMethods.length,
+      2,
+      "Should have exactly two non-resource methods"
+    );
+
     // All tenant-scope methods should have Tenant scope
     nonResourceMethods.forEach((method: any) => {
-      strictEqual(method.operationScope, ResourceScope.Tenant, 
-        `Method ${method.operationPath} should have Tenant scope`);
+      strictEqual(
+        method.operationScope,
+        ResourceScope.Tenant,
+        `Method ${method.operationPath} should have Tenant scope`
+      );
     });
-    
+
     // Verify specific paths
-    const tenantInfoMethod = nonResourceMethods.find((m: any) => 
-      m.operationPath === "/providers/Microsoft.ContosoProviderHub/getTenantInfo"
+    const tenantInfoMethod = nonResourceMethods.find(
+      (m: any) =>
+        m.operationPath ===
+        "/providers/Microsoft.ContosoProviderHub/getTenantInfo"
     );
     ok(tenantInfoMethod, "Should find tenantInfo method");
-    
-    const globalSettingsMethod = nonResourceMethods.find((m: any) => 
-      m.operationPath === "/providers/Microsoft.ContosoProviderHub/updateGlobalSettings"
+
+    const globalSettingsMethod = nonResourceMethods.find(
+      (m: any) =>
+        m.operationPath ===
+        "/providers/Microsoft.ContosoProviderHub/updateGlobalSettings"
     );
     ok(globalSettingsMethod, "Should find globalSettings method");
   });
@@ -197,24 +220,28 @@ interface Employees {
 `,
       runner
     );
-    
+
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
+
     const firstClient = root.clients[0];
-    
+
     // Check if there are any non-resource method decorators
     const nonResourceMethodDecorator = firstClient.decorators?.find(
-      d => d.name === nonResourceMethodMetadata
+      (d) => d.name === nonResourceMethodMetadata
     );
-    
+
     // Should not have non-resource method decorator since all methods are standard ARM operations
     if (nonResourceMethodDecorator) {
-      const nonResourceMethods = nonResourceMethodDecorator.arguments.nonResourceMethods;
-      strictEqual(nonResourceMethods.length, 0, 
-        "Should have no non-resource methods for standard ARM operations");
+      const nonResourceMethods =
+        nonResourceMethodDecorator.arguments.nonResourceMethods;
+      strictEqual(
+        nonResourceMethods.length,
+        0,
+        "Should have no non-resource methods for standard ARM operations"
+      );
     }
   });
 
@@ -300,33 +327,42 @@ model MigrationResponse {
 `,
       runner
     );
-    
+
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
+
     const firstClient = root.clients[0];
     ok(firstClient, "First client should exist");
-    
+
     const nonResourceMethodDecorator = firstClient.decorators?.find(
-      d => d.name === nonResourceMethodMetadata
+      (d) => d.name === nonResourceMethodMetadata
     );
-    
+
     ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-    
-    const nonResourceMethods = nonResourceMethodDecorator.arguments.nonResourceMethods;
-    strictEqual(nonResourceMethods.length, 2, "Should have exactly two non-resource methods");
-    
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    strictEqual(
+      nonResourceMethods.length,
+      2,
+      "Should have exactly two non-resource methods"
+    );
+
     // Check that we have the expected non-resource methods
-    const bulkImportMethod = nonResourceMethods.find((m: any) => 
-      m.operationPath === "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/bulkImportEmployees"
+    const bulkImportMethod = nonResourceMethods.find(
+      (m: any) =>
+        m.operationPath ===
+        "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/bulkImportEmployees"
     );
     ok(bulkImportMethod, "Should find bulk import method");
     strictEqual(bulkImportMethod.operationScope, ResourceScope.Subscription);
-    
-    const migrateMethod = nonResourceMethods.find((m: any) => 
-      m.operationPath === "/providers/Microsoft.ContosoProviderHub/migrateEmployees"
+
+    const migrateMethod = nonResourceMethods.find(
+      (m: any) =>
+        m.operationPath ===
+        "/providers/Microsoft.ContosoProviderHub/migrateEmployees"
     );
     ok(migrateMethod, "Should find migrate method");
     strictEqual(migrateMethod.operationScope, ResourceScope.Tenant);
@@ -370,27 +406,35 @@ model WorkspaceValidationResponse {
 `,
       runner
     );
-    
+
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
+
     const firstClient = root.clients[0];
     ok(firstClient, "First client should exist");
-    
+
     const nonResourceMethodDecorator = firstClient.decorators?.find(
-      d => d.name === nonResourceMethodMetadata
+      (d) => d.name === nonResourceMethodMetadata
     );
-    
+
     ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-    
-    const nonResourceMethods = nonResourceMethodDecorator.arguments.nonResourceMethods;
-    strictEqual(nonResourceMethods.length, 1, "Should have exactly one non-resource method");
-    
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "Should have exactly one non-resource method"
+    );
+
     const method = nonResourceMethods[0];
     // The path should be generated from the ARM template with nested segments
-    strictEqual(method.operationPath, "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/workspaces/{workspaceName}/validateWorkspace");
+    strictEqual(
+      method.operationPath,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/workspaces/{workspaceName}/validateWorkspace"
+    );
     strictEqual(method.operationScope, ResourceScope.Subscription);
     ok(method.methodId, "Method should have an ID");
   });
@@ -443,26 +487,34 @@ model SearchResult {
 `,
       runner
     );
-    
+
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
+
     const firstClient = root.clients[0];
     ok(firstClient, "First client should exist");
-    
+
     const nonResourceMethodDecorator = firstClient.decorators?.find(
-      d => d.name === nonResourceMethodMetadata
+      (d) => d.name === nonResourceMethodMetadata
     );
-    
+
     ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-    
-    const nonResourceMethods = nonResourceMethodDecorator.arguments.nonResourceMethods;
-    strictEqual(nonResourceMethods.length, 1, "Should have exactly one non-resource method");
-    
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "Should have exactly one non-resource method"
+    );
+
     const method = nonResourceMethods[0];
-    strictEqual(method.operationPath, "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/search/{action}/searchResources");
+    strictEqual(
+      method.operationPath,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/search/{action}/searchResources"
+    );
     strictEqual(method.operationScope, ResourceScope.Subscription);
   });
 
@@ -498,26 +550,34 @@ model FooPreviewAction {
 `,
       runner
     );
-    
+
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
+
     const firstClient = root.clients[0];
     ok(firstClient, "First client should exist");
-    
+
     const nonResourceMethodDecorator = firstClient.decorators?.find(
-      d => d.name === nonResourceMethodMetadata
+      (d) => d.name === nonResourceMethodMetadata
     );
-    
+
     ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-    
-    const nonResourceMethods = nonResourceMethodDecorator.arguments.nonResourceMethods;
-    strictEqual(nonResourceMethods.length, 1, "Should have exactly one non-resource method");
-    
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "Should have exactly one non-resource method"
+    );
+
     const method = nonResourceMethods[0];
-    strictEqual(method.operationPath, "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/previewActions");
+    strictEqual(
+      method.operationPath,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/previewActions"
+    );
     strictEqual(method.operationScope, ResourceScope.Subscription);
   });
 });
