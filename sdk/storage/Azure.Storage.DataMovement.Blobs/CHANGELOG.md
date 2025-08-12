@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 - Resolved memory leak issue with `CancellationTokenSource` in `TransferOperation` that could occur when the transfer was created.
-- 
+
 ### Other Changes
 
 ## 12.2.1 (2025-08-06)

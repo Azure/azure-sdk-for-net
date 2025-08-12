@@ -525,16 +525,20 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20)))
+            {
+                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            }
 
             // Assert
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
-            using CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token);
-
+            using (CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
+            {
+                Assert.ThrowsAsync<ArgumentException>(async () =>
+                    await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token));
+            }
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Check if Job Plan File exists in checkpointer path.
@@ -904,9 +908,11 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
+            // Act - Pause again and expect exception to be thrown.
             using (CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
             {
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token);
+                Assert.ThrowsAsync<ArgumentException>(async () =>
+                    await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token));
             }
 
             await testEventsRaised.AssertPausedCheck();

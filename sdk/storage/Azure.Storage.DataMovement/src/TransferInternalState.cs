@@ -53,6 +53,7 @@ namespace Azure.Storage.DataMovement
 
         public void Dispose()
         {
+            // Dispose of the CancellationTokenSource to release resources if not already disposed.
             CancellationTokenSource?.Dispose();
             CompletionSource?.TrySetCanceled();
             GC.SuppressFinalize(this);
