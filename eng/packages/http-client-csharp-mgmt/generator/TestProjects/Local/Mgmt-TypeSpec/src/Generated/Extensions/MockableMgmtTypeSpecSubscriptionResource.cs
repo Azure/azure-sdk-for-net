@@ -18,7 +18,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec.Mocking
 {
     /// <summary></summary>
-    internal partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
+    public partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _zoosClientDiagnostics;
         private Zoos _zoosRestClient;

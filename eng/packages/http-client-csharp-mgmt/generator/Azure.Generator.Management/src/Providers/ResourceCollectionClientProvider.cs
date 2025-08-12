@@ -10,6 +10,7 @@ using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -108,6 +109,9 @@ namespace Azure.Generator.Management.Providers
         protected override TypeProvider[] BuildSerializationProviders() => [];
 
         protected override string BuildName() => $"{ResourceName}Collection";
+
+        // TODO: Add support for getting parent resource from a resource collection
+        protected override FormattableString BuildDescription() => $"A class representing a collection of {_resource.Type:C} and their operations. Each {_resource.Type:C} in the collection will belong to the same instance of a parent resource (TODO: add parent resource information). To get a {Type:C} instance call the Get{ResourceName.Pluralize()} method from an instance of the parent resource.";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 

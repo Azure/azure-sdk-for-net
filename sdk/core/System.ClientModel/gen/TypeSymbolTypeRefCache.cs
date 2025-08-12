@@ -38,7 +38,8 @@ namespace System.ClientModel.SourceGeneration
                     symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
                     isContext ? null : GetContextType(symbol.ContainingAssembly, symbolToKindCache),
                     itemType,
-                    obsoleteLevel: itemType is not null ? itemType.ObsoleteLevel : GetObsoleteLevel(symbol));
+                    obsoleteLevel: itemType is not null ? itemType.ObsoleteLevel : GetObsoleteLevel(symbol),
+                    experimentalDiagnosticId: itemType is not null ? itemType.ExperimentalDiagnosticId : GetExperimentalDiagnosticId(symbol));
             }
             else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
             {
@@ -54,12 +55,46 @@ namespace System.ClientModel.SourceGeneration
                     isContext ? null : GetContextType(assembly, symbolToKindCache),
                     elementType,
                     arrayTypeSymbol.Rank,
-                    obsoleteLevel: elementType.ObsoleteLevel);
+                    obsoleteLevel: elementType.ObsoleteLevel,
+                    experimentalDiagnosticId: elementType.ExperimentalDiagnosticId);
             }
             else
             {
                 throw new NotSupportedException($"Unexpected type {symbol.GetType()}");
             }
+        }
+
+        private static string? GetExperimentalDiagnosticId(ITypeSymbol symbol)
+        {
+            foreach (var attribute in symbol.GetAttributes())
+            {
+                if (attribute.AttributeClass is
+                    {
+                        Name: "ExperimentalAttribute",
+                        ContainingType: null,
+                        ContainingNamespace:
+                        {
+                            Name: "CodeAnalysis",
+                            ContainingNamespace:
+                            {
+                                Name: "Diagnostics",
+                                ContainingNamespace:
+                                {
+                                    Name: "System",
+                                    ContainingNamespace.IsGlobalNamespace: true
+                                }
+                            }
+                        }
+                    })
+                {
+                    if (attribute.ConstructorArguments.Length > 0 &&
+                        attribute.ConstructorArguments[0].Value is string diagnosticId)
+                    {
+                        return diagnosticId;
+                    }
+                }
+            }
+            return null;
         }
 
         private IAssemblySymbol GetArrayAssembly(IArrayTypeSymbol arrayTypeSymbol)
