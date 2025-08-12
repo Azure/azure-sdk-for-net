@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
@@ -253,8 +255,16 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+        Console.WriteLine("[GetLedgerEntryAsync] Starting request. txn={0} collection={1}", transactionId, collectionId);
+                return await _failoverService.ExecuteWithFailoverAsync(
+                    _ledgerEndpoint,
+                    async (endpoint) =>
+                    {
+                        using HttpMessage message = CreateGetLedgerEntryRequest(endpoint, transactionId, collectionId, context);
+            return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    },
+                    nameof(GetLedgerEntryAsync),
+                    context?.CancellationToken ?? default).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -289,8 +299,16 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
+        var resp = _failoverService.ExecuteWithFailover(
+                    _ledgerEndpoint,
+                    (endpoint) =>
+                    {
+                        using HttpMessage message = CreateGetLedgerEntryRequest(endpoint, transactionId, collectionId, context);
+            return _pipeline.ProcessMessage(message, context);
+                    },
+                    nameof(GetLedgerEntry),
+                    context?.CancellationToken ?? default);
+                return resp;
             }
             catch (Exception e)
             {
@@ -2176,6 +2194,26 @@ namespace Azure.Security.ConfidentialLedger
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/transactions/", false);
+            uri.AppendPath(transactionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (collectionId != null)
+            {
+                uri.AppendQuery("collectionId", collectionId, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        // Overload used for failover calls against alternate ledger endpoints.
+        internal HttpMessage CreateGetLedgerEntryRequest(Uri endpoint, string transactionId, string collectionId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);

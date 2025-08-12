@@ -1,5 +1,10 @@
 # Release History
 
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+- Added support for routing to failover ledgers.
+
 ## 1.4.1-beta.3 (Unreleased)
 
 ### Features Added
