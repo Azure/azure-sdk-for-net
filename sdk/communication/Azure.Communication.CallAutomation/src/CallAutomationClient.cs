@@ -739,6 +739,7 @@ namespace Azure.Communication.CallAutomation
             request.EnableLoopbackAudio = options.EnableLoopbackAudio;
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
+            request.DtmfOptions = options.DtmfOptions == null ? null : new DtmfConfigurationOptionsInternal(options.DtmfOptions.EnableDtmfBroadcastInGroupCalls);
 
             return request;
         }

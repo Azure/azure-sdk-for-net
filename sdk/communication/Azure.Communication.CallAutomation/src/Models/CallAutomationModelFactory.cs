@@ -238,6 +238,15 @@ namespace Azure.Communication.CallAutomation
             return new CreateCallResult(callConnection, callConnectionProperties);
         }
 
+        /// <summary> Initializes a new instance of ConnectCallResult. </summary>
+        /// <param name="callConnection">The instance of callConnection.</param>
+        /// <param name="callConnectionProperties">The properties of the call.</param>
+        /// <returns> A new <see cref="CallAutomation.ConnectCallResult"/> instance for mocking. </returns>
+        public static ConnectCallResult ConnectCallResult(CallConnection callConnection = default, CallConnectionProperties callConnectionProperties = default)
+        {
+            return new ConnectCallResult(callConnectionProperties, callConnection);
+        }
+
         /// <summary> Initializes a new instance of RemoveParticipantResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.RemoveParticipantResult"/> instance for mocking. </returns>
