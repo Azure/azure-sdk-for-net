@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- `BrokerCredential` is now included in the chain when `AZURE_TOKEN_CREDENTIALS` is set to `dev` and the `Azure.Identity.Broker` package is present.
+- `BrokerCredential` is now included in the chain when `AZURE_TOKEN_CREDENTIALS` is set to `dev` and the `Azure.Identity.Broker` package is installed.
 
 ### Other Changes
 
