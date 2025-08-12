@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AlertsManagement
       safeName: AzureResourceManagerAlertsManagement
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.AlertsManagement
+      ExpectedWarningsFilepath: None

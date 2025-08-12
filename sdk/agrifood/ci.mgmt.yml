@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AgFoodPlatform
       safeName: AzureResourceManagerAgFoodPlatform
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.AgFoodPlatform
+      ExpectedWarningsFilepath: None

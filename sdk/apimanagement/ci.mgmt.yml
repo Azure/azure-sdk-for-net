@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ApiManagement
       safeName: AzureResourceManagerApiManagement
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.ApiManagement
+      ExpectedWarningsFilepath: None

@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.BotService
       safeName: AzureResourceManagerBotService
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.BotService
+      ExpectedWarningsFilepath: None
