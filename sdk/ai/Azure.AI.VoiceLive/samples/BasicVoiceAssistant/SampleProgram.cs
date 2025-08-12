@@ -178,7 +178,7 @@ namespace Azure.AI.VoiceLive.Samples
                 if (useTokenCredential)
                 {
                     var tokenCredential = new DefaultAzureCredential();
-                    client = new VoiceLiveClient(new Uri(endpoint), new Azure.AzureKeyCredential(Environment.GetEnvironmentVariable("AZURE_VOICELIVE_API_KEY") ?? "dummy"), new VoiceLiveClientOptions());
+                    client = new VoiceLiveClient(new Uri(endpoint), tokenCredential, new VoiceLiveClientOptions());
                     logger.LogInformation("Using Azure token credential");
                 }
                 else

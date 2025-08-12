@@ -544,10 +544,12 @@ public class CustomerServiceBot : IDisposable
             var result = await _functions.ExecuteFunctionAsync(functionName, arguments, cancellationToken).ConfigureAwait(false);
 
             // Create function call output item using the model factory
-            var outputItem = new ConversationItemWithReference();
-            outputItem.Type = ConversationItemWithReferenceType.FunctionCallOutput;
-            outputItem.CallId = callId;
-            outputItem.Output = JsonSerializer.Serialize(result);
+            var outputItem = new ConversationItemWithReference()
+            {
+                Type = ConversationItemWithReferenceType.FunctionCallOutput,
+                CallId = callId,
+                Output = JsonSerializer.Serialize(result)
+            };
 
             // Add the result to the conversation
             await _session!.AddItemAsync(outputItem, cancellationToken).ConfigureAwait(false);

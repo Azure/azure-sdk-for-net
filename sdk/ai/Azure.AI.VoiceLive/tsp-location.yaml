@@ -3,3 +3,4 @@ commit: fbf83df305bfa7597dcc2f248e9f0e49efb5cd05
 repo: rhurey/azure-rest-api-specs
 additionalDirectories: 
 - specification/ai/data-plane/VoiceLive
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
