@@ -24,6 +24,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private ResourceProviderData_Builder? _resourceProviderData_Builder;
         private UnknownBaseModel_Builder? _unknownBaseModel_Builder;
         private ModelY_Builder? _modelY_Builder;
+        private ExperimentalModel_Builder? _experimentalModel_Builder;
         private ListOfAset_Builder? _listOfAset_Builder;
         private DictionaryOfAset_Builder? _dictionaryOfAset_Builder;
 
@@ -39,6 +40,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 Type t when t == typeof(ResourceProviderData) => _resourceProviderData_Builder ??= new(),
                 Type t when t == typeof(UnknownBaseModel) => _unknownBaseModel_Builder ??= new(),
                 Type t when t == typeof(ModelY) => _modelY_Builder ??= new(),
+                #pragma warning disable TEST001
+                Type t when t == typeof(ExperimentalModel) => _experimentalModel_Builder ??= new ExperimentalModel_Builder(),
+                #pragma warning restore TEST001
                 Type t when t == typeof(ListOfAset) => _listOfAset_Builder ??= new(),
                 Type t when t == typeof(DictionaryOfAset) => _dictionaryOfAset_Builder ??= new(),
                 _ => null
@@ -115,5 +119,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             protected override object CreateInstance() => new AvailabilitySetData();
         }
+
+#pragma warning disable TEST001
+        private class ExperimentalModel_Builder : ModelReaderWriterTypeBuilder
+        {
+            protected override Type BuilderType => typeof(ExperimentalModel);
+
+            protected override object CreateInstance() => new ExperimentalModel();
+        }
+#pragma warning restore TEST001
     }
 }

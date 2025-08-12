@@ -16,6 +16,7 @@
     <PackageReference Include="System.Linq.Async" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
     <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" VersionOverride ="4.12.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +46,7 @@
     <Compile Include="..\ModelReaderWriterTests\MrwTestBase.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\RoundTripStrategy.cs" LinkBase="SharedTests" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\BaseModel.cs" LinkBase="Shared\Models" />
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelX.cs" LinkBase="Shared\Models" />
@@ -64,5 +65,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
 </Project>

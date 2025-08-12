@@ -1,14 +1,9 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.7.1 (2025-08-12)
 
 ### Other Changes
+- Updated internal serialization paths to use an AOT-friendly approach.  The package now fully supports AOT and is trimmable.
 
 ## 1.7.0 (2025-06-26)
 
