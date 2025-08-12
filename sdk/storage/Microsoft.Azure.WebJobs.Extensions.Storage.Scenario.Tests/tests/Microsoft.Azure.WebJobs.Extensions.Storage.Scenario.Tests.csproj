@@ -4,10 +4,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" VersionOverride="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.0"/>
-    <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" VersionOverride="3.0.34" />
-		<PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
+    <PackageReference Include="Microsoft.AspNetCore"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing"/>
+    <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +19,7 @@
     <Compile Include="$(AzureStorageWebjobsExtensionSharedTestSources)\**\*.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" LinkBase="Shared" />
-		<Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\TestComponentFactory.cs" LinkBase="Shared"/>
+    <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\TestComponentFactory.cs" LinkBase="Shared"/>
     <None Include="$(AzureStorageSharedTestSources)\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 

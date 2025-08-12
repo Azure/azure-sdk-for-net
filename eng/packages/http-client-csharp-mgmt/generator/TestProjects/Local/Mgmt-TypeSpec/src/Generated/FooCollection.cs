@@ -19,7 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace MgmtTypeSpec
 {
-    /// <summary> A class representing a collection of <see cref="FooResource"/> and their operations. Each <see cref="FooResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information). To get a <see cref="FooCollection"/> instance call the GetFoos method from an instance of the parent resource. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="FooResource"/> and their operations.
+    /// Each <see cref="FooResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="FooCollection"/> instance call the GetFoos method from an instance of the parent resource.
+    /// </summary>
     public partial class FooCollection : ArmCollection, IEnumerable<FooResource>, IAsyncEnumerable<FooResource>
     {
         private readonly ClientDiagnostics _foosClientDiagnostics;
@@ -63,7 +67,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -144,7 +148,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.GetAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.Get");
             scope.Start();
             try
             {
@@ -232,7 +236,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.ExistsAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +294,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.GetIfExistsAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.GetIfExists");
             scope.Start();
             try
             {

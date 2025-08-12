@@ -18,9 +18,11 @@ using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary></summary>
-    internal partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
+    public partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _zoosClientDiagnostics;
+        private Zoos _zoosRestClient;
         private ClientDiagnostics _fooTasksClientDiagnostics;
         private FooTasks _fooTasksRestClient;
 
@@ -36,121 +38,34 @@ namespace MgmtTypeSpec.Mocking
         {
         }
 
+        private ClientDiagnostics ZoosClientDiagnostics => _zoosClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
         private ClientDiagnostics FooTasksClientDiagnostics => _fooTasksClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private FooTasks FooTasksRestClient => _fooTasksRestClient ??= new FooTasks(FooTasksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        /// <summary> Gets a collection of Foos in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
-        public virtual FooCollection GetFoos()
-        {
-            return GetCachedClient(client => new FooCollection(client, Id));
-        }
-
-        /// <summary> Get a Foo. </summary>
-        /// <param name="fooName"> The name of the Foo. </param>
+        /// <summary> List Zoo resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ZooResource> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
-
-            return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionAsyncCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ZooResource(Client, data));
         }
 
-        /// <summary> Get a Foo. </summary>
-        /// <param name="fooName"> The name of the Foo. </param>
+        /// <summary> List Zoo resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
+        public virtual Pageable<ZooResource> GetBySubscription(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
-
-            return GetFoos().Get(fooName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        public virtual FooSettingsResource GetFooSettings()
-        {
-            return new FooSettingsResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
-        }
-
-        /// <summary> Gets a collection of Bars in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of Bars and their operations over a BarResource. </returns>
-        public virtual BarCollection GetBars()
-        {
-            return GetCachedClient(client => new BarCollection(client, Id));
-        }
-
-        /// <summary> Get a Bar. </summary>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BarResource>> GetBarAsync(string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
-
-            return await GetBars().GetAsync(barName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a Bar. </summary>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BarResource> GetBar(string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
-
-            return GetBars().Get(barName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
-        public virtual BarSettingsResource GetBarSettingsResource()
-        {
-            return new BarSettingsResource(Client, (ResourceIdentifier)null);
-        }
-
-        /// <summary> Gets a collection of Zoos in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of Zoos and their operations over a ZooResource. </returns>
-        public virtual ZooCollection GetZoos()
-        {
-            return GetCachedClient(client => new ZooCollection(client, Id));
-        }
-
-        /// <summary> Get a Zoo. </summary>
-        /// <param name="zooName"> The name of the Zoo. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ZooResource>> GetZooAsync(string zooName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
-
-            return await GetZoos().GetAsync(zooName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a Zoo. </summary>
-        /// <param name="zooName"> The name of the Zoo. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ZooResource> GetZoo(string zooName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
-
-            return GetZoos().Get(zooName, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ZooResource(Client, data));
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
@@ -162,7 +77,7 @@ namespace MgmtTypeSpec.Mocking
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActionsAsync");
+            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {

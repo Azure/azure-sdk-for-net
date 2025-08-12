@@ -93,7 +93,7 @@ namespace Azure.Generator.Management.Providers
                 validation: ParameterValidationType.AssertNotNull);
             IReadOnlyList<ParameterProvider> parameters = [
                 extensionParameter,
-                ..target.Parameters
+                ..target.Parameters.Select(DuplicateParameter)
                 ];
             var modifiers = (target.Modifiers & ~MethodSignatureModifiers.Virtual) | MethodSignatureModifiers.Static | MethodSignatureModifiers.Extension;
             var methodSignature = new MethodSignature(
@@ -105,12 +105,29 @@ namespace Azure.Generator.Management.Providers
                 parameters,
                 Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
+            IReadOnlyList<ValueExpression> arguments = [.. parameters.Skip(1).Select(p => (ValueExpression)p)];
             var body = new MethodBodyStatement[]
             {
-                Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target))
+                Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target.Name, arguments, async: target.Modifiers.HasFlag(MethodSignatureModifiers.Async)))
             };
 
             return new MethodProvider(methodSignature, body, this);
+
+            static ParameterProvider DuplicateParameter(ParameterProvider original)
+            {
+                return new ParameterProvider(
+                    original.Name,
+                    original.Description,
+                    original.Type,
+                    defaultValue: original.DefaultValue,
+                    isRef: original.IsRef,
+                    isOut: original.IsOut,
+                    isParams: original.IsParams,
+                    attributes: original.Attributes,
+                    initializationValue: original.InitializationValue,
+                    location: original.Location,
+                    validation: null);
+            }
         }
 
         private string GetArmCoreTypeVariableName(CSharpType armCoreType)
