@@ -16,14 +16,14 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioClear"/>. </summary>
         public ClientEventInputAudioClear()
         {
-            Type = ClientEventType.InputAudioClear;
+            Type = "input_audio.clear";
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioClear"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClientEventInputAudioClear(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventInputAudioClear(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, eventId, serializedAdditionalRawData)
         {
         }
     }

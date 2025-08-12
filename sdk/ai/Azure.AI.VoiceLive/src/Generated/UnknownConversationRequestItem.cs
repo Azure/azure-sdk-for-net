@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConversationRequestItem(ItemType type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, id, serializedAdditionalRawData)
+        internal UnknownConversationRequestItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, id, serializedAdditionalRawData)
         {
         }
 

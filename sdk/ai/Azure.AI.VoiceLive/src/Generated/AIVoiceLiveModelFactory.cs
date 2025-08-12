@@ -20,7 +20,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventSessionUpdate"/> instance for mocking. </returns>
         public static ClientEventSessionUpdate ClientEventSessionUpdate(string eventId = null, RequestSession session = null)
         {
-            return new ClientEventSessionUpdate(ClientEventType.SessionUpdate, eventId, serializedAdditionalRawData: null, session);
+            return new ClientEventSessionUpdate("session.update", eventId, serializedAdditionalRawData: null, session);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.InputAudio"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioBufferAppend"/> instance for mocking. </returns>
         public static ClientEventInputAudioBufferAppend ClientEventInputAudioBufferAppend(string eventId = null, string audio = null)
         {
-            return new ClientEventInputAudioBufferAppend(ClientEventType.InputAudioBufferAppend, eventId, serializedAdditionalRawData: null, audio);
+            return new ClientEventInputAudioBufferAppend("input_audio_buffer.append", eventId, serializedAdditionalRawData: null, audio);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventInputAudioTurnStart"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnStart"/> instance for mocking. </returns>
         public static ClientEventInputAudioTurnStart ClientEventInputAudioTurnStart(string eventId = null, string turnId = null)
         {
-            return new ClientEventInputAudioTurnStart(ClientEventType.InputAudioTurnStart, eventId, serializedAdditionalRawData: null, turnId);
+            return new ClientEventInputAudioTurnStart("input_audio.turn.start", eventId, serializedAdditionalRawData: null, turnId);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventInputAudioTurnAppend"/>. </summary>
@@ -78,7 +78,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnAppend"/> instance for mocking. </returns>
         public static ClientEventInputAudioTurnAppend ClientEventInputAudioTurnAppend(string eventId = null, string turnId = null, string audio = null)
         {
-            return new ClientEventInputAudioTurnAppend(ClientEventType.InputAudioTurnAppend, eventId, serializedAdditionalRawData: null, turnId, audio);
+            return new ClientEventInputAudioTurnAppend("input_audio.turn.append", eventId, serializedAdditionalRawData: null, turnId, audio);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventInputAudioTurnEnd"/>. </summary>
@@ -87,7 +87,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnEnd"/> instance for mocking. </returns>
         public static ClientEventInputAudioTurnEnd ClientEventInputAudioTurnEnd(string eventId = null, string turnId = null)
         {
-            return new ClientEventInputAudioTurnEnd(ClientEventType.InputAudioTurnEnd, eventId, serializedAdditionalRawData: null, turnId);
+            return new ClientEventInputAudioTurnEnd("input_audio.turn.end", eventId, serializedAdditionalRawData: null, turnId);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventInputAudioTurnCancel"/>. </summary>
@@ -96,7 +96,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnCancel"/> instance for mocking. </returns>
         public static ClientEventInputAudioTurnCancel ClientEventInputAudioTurnCancel(string eventId = null, string turnId = null)
         {
-            return new ClientEventInputAudioTurnCancel(ClientEventType.InputAudioTurnCancel, eventId, serializedAdditionalRawData: null, turnId);
+            return new ClientEventInputAudioTurnCancel("input_audio.turn.cancel", eventId, serializedAdditionalRawData: null, turnId);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventConversationItemRetrieve"/>. </summary>
@@ -105,7 +105,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemRetrieve"/> instance for mocking. </returns>
         public static ClientEventConversationItemRetrieve ClientEventConversationItemRetrieve(string eventId = null, string itemId = null)
         {
-            return new ClientEventConversationItemRetrieve(ClientEventType.ConversationItemRetrieve, eventId, serializedAdditionalRawData: null, itemId);
+            return new ClientEventConversationItemRetrieve("conversation.item.retrieve", eventId, serializedAdditionalRawData: null, itemId);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventConversationItemTruncate"/>. </summary>
@@ -124,7 +124,7 @@ namespace Azure.AI.VoiceLive
         public static ClientEventConversationItemTruncate ClientEventConversationItemTruncate(string eventId = null, string itemId = null, int contentIndex = default, int audioEndMs = default)
         {
             return new ClientEventConversationItemTruncate(
-                ClientEventType.ConversationItemTruncate,
+                "conversation.item.truncate",
                 eventId,
                 serializedAdditionalRawData: null,
                 itemId,
@@ -138,7 +138,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemDelete"/> instance for mocking. </returns>
         public static ClientEventConversationItemDelete ClientEventConversationItemDelete(string eventId = null, string itemId = null)
         {
-            return new ClientEventConversationItemDelete(ClientEventType.ConversationItemDelete, eventId, serializedAdditionalRawData: null, itemId);
+            return new ClientEventConversationItemDelete("conversation.item.delete", eventId, serializedAdditionalRawData: null, itemId);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ResponseTextContentPart"/>. </summary>
@@ -167,7 +167,7 @@ namespace Azure.AI.VoiceLive
         public static RequestFunctionCallItem RequestFunctionCallItem(string id = null, string name = null, string callId = null, string arguments = null, ItemStatus? status = null)
         {
             return new RequestFunctionCallItem(
-                ItemType.FunctionCall,
+                "function_call",
                 id,
                 serializedAdditionalRawData: null,
                 name,
@@ -183,7 +183,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.RequestFunctionCallOutputItem"/> instance for mocking. </returns>
         public static RequestFunctionCallOutputItem RequestFunctionCallOutputItem(string id = null, string callId = null, string output = null)
         {
-            return new RequestFunctionCallOutputItem(ItemType.FunctionCallOutput, id, serializedAdditionalRawData: null, callId, output);
+            return new RequestFunctionCallOutputItem("function_call_output", id, serializedAdditionalRawData: null, callId, output);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ClientEventSessionAvatarConnect"/>. </summary>
@@ -192,7 +192,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventSessionAvatarConnect"/> instance for mocking. </returns>
         public static ClientEventSessionAvatarConnect ClientEventSessionAvatarConnect(string eventId = null, string clientSdp = null)
         {
-            return new ClientEventSessionAvatarConnect(ClientEventType.SessionAvatarConnect, eventId, serializedAdditionalRawData: null, clientSdp);
+            return new ClientEventSessionAvatarConnect("session.avatar.connect", eventId, serializedAdditionalRawData: null, clientSdp);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventSessionAvatarConnecting"/>. </summary>
@@ -608,7 +608,7 @@ namespace Azure.AI.VoiceLive
         /// inclusive of tool calls, that was used in this response.
         /// </param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveResponse"/> instance for mocking. </returns>
-        public static VoiceLiveResponse VoiceLiveResponse(string id = null, VoiceLiveResponseObject? @object = null, ResponseStatus? status = null, ResponseStatusDetails statusDetails = null, IEnumerable<ConversationResponseItem> output = null, ResponseUsage usage = null, string conversationId = null, BinaryData voice = null, IEnumerable<ResponseModality> modalities = null, ResponseOutputAudioFormat? outputAudioFormat = null, float? temperature = null, BinaryData maxOutputTokens = null)
+        public static VoiceLiveResponse VoiceLiveResponse(string id = null, VoiceLiveResponseObject? @object = null, ItemStatus? status = null, ResponseStatusDetails statusDetails = null, IEnumerable<ConversationResponseItem> output = null, ResponseUsage usage = null, string conversationId = null, BinaryData voice = null, IEnumerable<ResponseModality> modalities = null, ResponseOutputAudioFormat? outputAudioFormat = null, float? temperature = null, BinaryData maxOutputTokens = null)
         {
             output ??= new List<ConversationResponseItem>();
             modalities ??= new List<ResponseModality>();
@@ -668,7 +668,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ConversationResponseItem"/> instance for mocking. </returns>
         public static ConversationResponseItem ConversationResponseItem(ConversationResponseItemObject? @object = null, string type = null, string id = null)
         {
-            return new UnknownConversationResponseItem(@object, type == null ? null : new ItemType?(type), id, serializedAdditionalRawData: null);
+            return new UnknownConversationResponseItem(@object, type, id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ResponseMessageItem"/>. </summary>
@@ -687,7 +687,7 @@ namespace Azure.AI.VoiceLive
 
             return new ResponseMessageItem(
                 @object,
-                VoiceLive.ItemType.Message,
+                "message",
                 id,
                 serializedAdditionalRawData: null,
                 role,
@@ -707,7 +707,7 @@ namespace Azure.AI.VoiceLive
         {
             return new ResponseFunctionCallItem(
                 @object,
-                VoiceLive.ItemType.FunctionCall,
+                "function_call",
                 id,
                 serializedAdditionalRawData: null,
                 name,
@@ -726,7 +726,7 @@ namespace Azure.AI.VoiceLive
         {
             return new ResponseFunctionCallOutputItem(
                 @object,
-                VoiceLive.ItemType.FunctionCallOutput,
+                "function_call_output",
                 id,
                 serializedAdditionalRawData: null,
                 callId,

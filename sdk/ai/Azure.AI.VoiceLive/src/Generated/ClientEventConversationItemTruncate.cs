@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 
-            Type = ClientEventType.ConversationItemTruncate;
+            Type = "conversation.item.truncate";
             ItemId = itemId;
             ContentIndex = contentIndex;
             AudioEndMs = audioEndMs;
@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive
         /// the audio_end_ms is greater than the actual audio duration, the server
         /// will respond with an error.
         /// </param>
-        internal ClientEventConversationItemTruncate(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, int audioEndMs) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventConversationItemTruncate(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, int audioEndMs) : base(type, eventId, serializedAdditionalRawData)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;

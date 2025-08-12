@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(arguments, nameof(arguments));
 
-            Type = VoiceLive.ItemType.FunctionCall;
+            Type = "function_call";
             Name = name;
             CallId = callId;
             Arguments = arguments;
@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        internal ResponseFunctionCallItem(ConversationResponseItemObject? @object, ItemType? type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string callId, string arguments, ItemStatus status) : base(@object, type, id, serializedAdditionalRawData)
+        internal ResponseFunctionCallItem(ConversationResponseItemObject? @object, string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string callId, string arguments, ItemStatus status) : base(@object, type, id, serializedAdditionalRawData)
         {
             Name = name;
             CallId = callId;

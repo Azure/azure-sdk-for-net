@@ -88,7 +88,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="arguments"> The arguments of the function call (for `function_call` items). </param>
         /// <param name="output"> The output of the function call (for `function_call_output` items). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationItemWithReference(string id, ConversationItemWithReferenceType? type, ConversationItemWithReferenceObject? @object, ConversationItemWithReferenceStatus? status, ConversationItemWithReferenceRole? role, IList<ConversationItemWithReferenceContent> content, string callId, string name, string arguments, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationItemWithReference(string id, ConversationItemWithReferenceType? type, ConversationItemWithReferenceObject? @object, ConversationItemWithReferenceStatus? status, MessageRole? role, IList<ConversationItemWithReferenceContent> content, string callId, string name, string arguments, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Type = type;
@@ -126,7 +126,7 @@ namespace Azure.AI.VoiceLive
         /// The role of the message sender (`user`, `assistant`, `system`), only
         /// applicable for `message` items.
         /// </summary>
-        public ConversationItemWithReferenceRole? Role { get; set; }
+        public MessageRole? Role { get; set; }
         /// <summary>
         /// The content of the message, applicable for `message` items.
         /// - Message items of role `system` support only `input_text` content

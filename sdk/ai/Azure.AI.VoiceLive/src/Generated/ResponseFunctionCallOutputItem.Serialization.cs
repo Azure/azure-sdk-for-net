@@ -64,7 +64,7 @@ namespace Azure.AI.VoiceLive
             string callId = default;
             string output = default;
             ConversationResponseItemObject? @object = default;
-            ItemType? type = default;
+            string type = default;
             string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,11 +91,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ItemType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))

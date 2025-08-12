@@ -523,7 +523,7 @@ public class CustomerServiceBot : IDisposable
         }
         else if (outputItemAdded.Item is ConversationItemWithReference messageItem &&
             messageItem.Type == ConversationItemWithReferenceType.Message &&
-            messageItem.Role == ConversationItemWithReferenceRole.Assistant)
+            messageItem.Role == MessageRole.Assistant)
         {
             // Keep track of the items that are from the assistant, so we know how to display the conversation.
             _assistantMessageItems.Add(messageItem.Id);

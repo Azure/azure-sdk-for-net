@@ -34,7 +34,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(audio, nameof(audio));
 
-            Type = ClientEventType.InputAudioBufferAppend;
+            Type = "input_audio_buffer.append";
             Audio = audio;
         }
 
@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
         /// Base64-encoded audio. This must be in the format specified by the
         /// `input_audio_format` field in the session configuration.
         /// </param>
-        internal ClientEventInputAudioBufferAppend(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string audio) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventInputAudioBufferAppend(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string audio) : base(type, eventId, serializedAdditionalRawData)
         {
             Audio = audio;
         }

@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 
-            Type = ClientEventType.ConversationItemDelete;
+            Type = "conversation.item.delete";
             ItemId = itemId;
         }
 
@@ -34,7 +34,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item to delete. </param>
-        internal ClientEventConversationItemDelete(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventConversationItemDelete(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId) : base(type, eventId, serializedAdditionalRawData)
         {
             ItemId = itemId;
         }

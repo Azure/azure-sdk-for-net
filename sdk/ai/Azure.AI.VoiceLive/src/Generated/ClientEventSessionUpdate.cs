@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(session, nameof(session));
 
-            Type = ClientEventType.SessionUpdate;
+            Type = "session.update";
             Session = session;
         }
 
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="session"></param>
-        internal ClientEventSessionUpdate(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSession session) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventSessionUpdate(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSession session) : base(type, eventId, serializedAdditionalRawData)
         {
             Session = session;
         }

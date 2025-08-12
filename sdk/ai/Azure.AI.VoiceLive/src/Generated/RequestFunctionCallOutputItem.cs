@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(output, nameof(output));
 
-            Type = ItemType.FunctionCallOutput;
+            Type = "function_call_output";
             CallId = callId;
             Output = output;
         }
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"></param>
         /// <param name="output"></param>
-        internal RequestFunctionCallOutputItem(ItemType type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string callId, string output) : base(type, id, serializedAdditionalRawData)
+        internal RequestFunctionCallOutputItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string callId, string output) : base(type, id, serializedAdditionalRawData)
         {
             CallId = callId;
             Output = output;

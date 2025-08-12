@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(clientSdp, nameof(clientSdp));
 
-            Type = ClientEventType.SessionAvatarConnect;
+            Type = "session.avatar.connect";
             ClientSdp = clientSdp;
         }
 
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientSdp"> The client's SDP offer. </param>
-        internal ClientEventSessionAvatarConnect(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientSdp) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventSessionAvatarConnect(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientSdp) : base(type, eventId, serializedAdditionalRawData)
         {
             ClientSdp = clientSdp;
         }

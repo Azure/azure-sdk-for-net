@@ -57,7 +57,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ClientEventType type = default;
+            string type = default;
             string eventId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -65,7 +65,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ClientEventType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("event_id"u8))

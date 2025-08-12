@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"></param>
         /// <param name="status"></param>
-        internal RequestMessageItem(ItemType type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, ItemStatus? status) : base(type, id, serializedAdditionalRawData)
+        internal RequestMessageItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, ItemStatus? status) : base(type, id, serializedAdditionalRawData)
         {
             Role = role;
             Status = status;

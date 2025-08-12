@@ -99,7 +99,7 @@ namespace Azure.AI.VoiceLive.Tests
             {
                 Id = id,
                 Type = ConversationItemWithReferenceType.Message,
-                Role = ConversationItemWithReferenceRole.User
+                Role = MessageRole.User
             };
             item.Content.Add(new ConversationItemWithReferenceContent
             {

@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCreate"/>. </summary>
         public ClientEventResponseCreate()
         {
-            Type = ClientEventType.ResponseCreate;
+            Type = "response.create";
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCreate"/>. </summary>
@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"></param>
         /// <param name="additionalInstructions"> additional instructions (system prompt) appended to the default instructions of the session. Only affects this response only. </param>
-        internal ClientEventResponseCreate(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, ResponseCreateParams response, string additionalInstructions) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventResponseCreate(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, ResponseCreateParams response, string additionalInstructions) : base(type, eventId, serializedAdditionalRawData)
         {
             Response = response;
             AdditionalInstructions = additionalInstructions;

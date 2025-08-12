@@ -93,7 +93,7 @@ namespace Azure.AI.VoiceLive
         /// inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveResponse(string id, VoiceLiveResponseObject? @object, ResponseStatus? status, ResponseStatusDetails statusDetails, IReadOnlyList<ConversationResponseItem> output, ResponseUsage usage, string conversationId, BinaryData voice, IReadOnlyList<ResponseModality> modalities, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VoiceLiveResponse(string id, VoiceLiveResponseObject? @object, ItemStatus? status, ResponseStatusDetails statusDetails, IReadOnlyList<ConversationResponseItem> output, ResponseUsage usage, string conversationId, BinaryData voice, IReadOnlyList<ResponseModality> modalities, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Object = @object;
@@ -118,7 +118,7 @@ namespace Azure.AI.VoiceLive
         /// The final status of the response (`completed`, `cancelled`, `failed`, or
         /// `incomplete`).
         /// </summary>
-        public ResponseStatus? Status { get; }
+        public ItemStatus? Status { get; }
         /// <summary> Additional details about the status. </summary>
         public ResponseStatusDetails StatusDetails { get; }
         /// <summary>

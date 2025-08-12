@@ -20,7 +20,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(turnId, nameof(turnId));
 
-            Type = ClientEventType.InputAudioTurnStart;
+            Type = "input_audio.turn.start";
             TurnId = turnId;
         }
 
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="turnId"> Unique identifier for the input audio turn. </param>
-        internal ClientEventInputAudioTurnStart(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string turnId) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventInputAudioTurnStart(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string turnId) : base(type, eventId, serializedAdditionalRawData)
         {
             TurnId = turnId;
         }

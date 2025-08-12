@@ -26,7 +26,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Type = VoiceLive.ItemType.Message;
+            Type = "message";
             Role = role;
             Content = content.ToList();
             Status = status;
@@ -43,7 +43,7 @@ namespace Azure.AI.VoiceLive
         /// The available derived classes include <see cref="ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="ResponseTextContentPart"/>.
         /// </param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(ConversationResponseItemObject? @object, ItemType? type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, IReadOnlyList<ContentPart> content, ItemStatus status) : base(@object, type, id, serializedAdditionalRawData)
+        internal ResponseMessageItem(ConversationResponseItemObject? @object, string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, IReadOnlyList<ContentPart> content, ItemStatus status) : base(@object, type, id, serializedAdditionalRawData)
         {
             Role = role;
             Content = content;

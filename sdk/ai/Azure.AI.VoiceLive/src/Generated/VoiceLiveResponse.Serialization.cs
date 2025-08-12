@@ -47,7 +47,7 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(StatusDetails))
             {
@@ -157,7 +157,7 @@ namespace Azure.AI.VoiceLive
             }
             string id = default;
             VoiceLiveResponseObject? @object = default;
-            ResponseStatus? status = default;
+            ItemStatus? status = default;
             ResponseStatusDetails statusDetails = default;
             IReadOnlyList<ConversationResponseItem> output = default;
             ResponseUsage usage = default;
@@ -191,7 +191,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    status = property.Value.GetString().ToResponseStatus();
+                    status = new ItemStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status_details"u8))

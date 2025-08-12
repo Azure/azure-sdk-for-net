@@ -42,7 +42,7 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Type);
             }
             if (Optional.IsDefined(Id))
             {

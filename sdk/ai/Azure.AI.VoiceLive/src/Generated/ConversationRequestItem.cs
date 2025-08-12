@@ -58,7 +58,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationRequestItem(ItemType type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationRequestItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Id = id;
@@ -66,7 +66,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Gets or sets the type. </summary>
-        internal ItemType Type { get; set; }
+        internal string Type { get; set; }
         /// <summary> Gets or sets the id. </summary>
         public string Id { get; set; }
     }

@@ -58,7 +58,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClientEvent(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClientEvent(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             EventId = eventId;
@@ -66,7 +66,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> The type of event. </summary>
-        internal ClientEventType Type { get; set; }
+        internal string Type { get; set; }
         /// <summary> Gets or sets the event id. </summary>
         public string EventId { get; set; }
     }

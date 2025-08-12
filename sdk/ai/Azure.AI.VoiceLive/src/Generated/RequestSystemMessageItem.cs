@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="status"></param>
         /// <param name="content"></param>
-        internal RequestSystemMessageItem(ItemType type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, ItemStatus? status, IList<RequestTextContentPart> content) : base(type, id, serializedAdditionalRawData, role, status)
+        internal RequestSystemMessageItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, ItemStatus? status, IList<RequestTextContentPart> content) : base(type, id, serializedAdditionalRawData, role, status)
         {
             Content = content;
         }

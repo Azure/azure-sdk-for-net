@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(turnId, nameof(turnId));
             Argument.AssertNotNull(audio, nameof(audio));
 
-            Type = ClientEventType.InputAudioTurnAppend;
+            Type = "input_audio.turn.append";
             TurnId = turnId;
             Audio = audio;
         }
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="turnId"> The ID of the turn this audio is part of. </param>
         /// <param name="audio"> Base64-encoded audio chunk. </param>
-        internal ClientEventInputAudioTurnAppend(ClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string turnId, string audio) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventInputAudioTurnAppend(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string turnId, string audio) : base(type, eventId, serializedAdditionalRawData)
         {
             TurnId = turnId;
             Audio = audio;
