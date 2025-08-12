@@ -2,24 +2,25 @@
 
 ## Summary
 
-- Total libraries: 404
+- Total libraries: 407
 - Management Plane (Swagger): 170
-- Management Plane (TSP-Old): 45
+- Management Plane (TSP-Old): 48
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
-- Data Plane (Swagger): 114
-- Data Plane (TSP-Old): 29
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 6
-- No generator: 40
+- Data Plane (Swagger): 115
+- Data Plane (TSP-Old): 28
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 7
+- No generator: 39
 
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 6
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 7
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | appconfiguration | Azure.Data.AppConfiguration | sdk/appconfiguration/Azure.Data.AppConfiguration |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces |
+| eventgrid | Azure.Messaging.EventGrid.SystemEvents | sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents |
 | healthdataaiservices | Azure.Health.Deidentification | sdk/healthdataaiservices/Azure.Health.Deidentification |
 | keyvault | Azure.Security.KeyVault.Administration | sdk/keyvault/Azure.Security.KeyVault.Administration |
 | openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
@@ -28,7 +29,7 @@ TypeSpec with @azure-typespec/http-client-csharp generator is detected by the pr
 
 ## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 29
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 28
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -49,7 +50,6 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | devcenter | Azure.Developer.DevCenter | sdk/devcenter/Azure.Developer.DevCenter |
 | documentintelligence | Azure.AI.DocumentIntelligence | sdk/documentintelligence/Azure.AI.DocumentIntelligence |
 | easm | Azure.Analytics.Defender.Easm | sdk/easm/Azure.Analytics.Defender.Easm |
-| eventgrid | Azure.Messaging.EventGrid.SystemEvents | sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents |
 | face | Azure.AI.Vision.Face | sdk/face/Azure.AI.Vision.Face |
 | healthinsights | Azure.Health.Insights.CancerProfiling | sdk/healthinsights/Azure.Health.Insights.CancerProfiling |
 | healthinsights | Azure.Health.Insights.ClinicalMatching | sdk/healthinsights/Azure.Health.Insights.ClinicalMatching |
@@ -65,7 +65,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 ## Data Plane Libraries using Swagger
 
-Total: 114
+Total: 115
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -114,6 +114,7 @@ Total: 114
 | eventgrid | Azure.Messaging.EventGrid | sdk/eventgrid/Azure.Messaging.EventGrid |
 | formrecognizer | Azure.AI.FormRecognizer | sdk/formrecognizer/Azure.AI.FormRecognizer |
 | iot | Azure.IoT.Hub.Service | sdk/iot/Azure.IoT.Hub.Service |
+| loadtestservice | Azure.Developer.Playwright | sdk/loadtestservice/Azure.Developer.Playwright |
 | maps | Azure.Maps.Common | sdk/maps/Azure.Maps.Common |
 | maps | Azure.Maps.Geolocation | sdk/maps/Azure.Maps.Geolocation |
 | maps | Azure.Maps.Rendering | sdk/maps/Azure.Maps.Rendering |
@@ -187,7 +188,7 @@ Total: 114
 
 ## Management Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 45
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 48
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -208,6 +209,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry |
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | sdk/devopsinfrastructure/Azure.ResourceManager.DevOpsInfrastructure |
 | durabletask | Azure.ResourceManager.DurableTask | sdk/durabletask/Azure.ResourceManager.DurableTask |
+| elasticsan | Azure.ResourceManager.ElasticSan | sdk/elasticsan/Azure.ResourceManager.ElasticSan |
 | fabric | Azure.ResourceManager.Fabric | sdk/fabric/Azure.ResourceManager.Fabric |
 | grafana | Azure.ResourceManager.Grafana | sdk/grafana/Azure.ResourceManager.Grafana |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules |
@@ -223,6 +225,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | oracle | Azure.ResourceManager.OracleDatabase | sdk/oracle/Azure.ResourceManager.OracleDatabase |
 | pineconevectordb | Azure.ResourceManager.PineconeVectorDB | sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | sdk/planetarycomputer/Azure.ResourceManager.PlanetaryComputer |
+| playwright | Azure.ResourceManager.Playwright | sdk/playwright/Azure.ResourceManager.Playwright |
 | playwrighttesting | Azure.ResourceManager.PlaywrightTesting | sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock |
@@ -233,6 +236,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | sitemanager | Azure.ResourceManager.SiteManager | sdk/sitemanager/Azure.ResourceManager.SiteManager |
 | standbypool | Azure.ResourceManager.StandbyPool | sdk/standbypool/Azure.ResourceManager.StandbyPool |
 | storageactions | Azure.ResourceManager.StorageActions | sdk/storageactions/Azure.ResourceManager.StorageActions |
+| storagediscovery | Azure.ResourceManager.StorageDiscovery | sdk/storagediscovery/Azure.ResourceManager.StorageDiscovery |
 | terraform | Azure.ResourceManager.Terraform | sdk/terraform/Azure.ResourceManager.Terraform |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance |
@@ -306,7 +310,6 @@ Total: 170
 | edgeorder | Azure.ResourceManager.EdgeOrder | sdk/edgeorder/Azure.ResourceManager.EdgeOrder |
 | edgezones | Azure.ResourceManager.EdgeZones | sdk/edgezones/Azure.ResourceManager.EdgeZones |
 | elastic | Azure.ResourceManager.Elastic | sdk/elastic/Azure.ResourceManager.Elastic |
-| elasticsan | Azure.ResourceManager.ElasticSan | sdk/elasticsan/Azure.ResourceManager.ElasticSan |
 | eventgrid | Azure.ResourceManager.EventGrid | sdk/eventgrid/Azure.ResourceManager.EventGrid |
 | eventhub | Azure.ResourceManager.EventHubs | sdk/eventhub/Azure.ResourceManager.EventHubs |
 | extendedlocation | Azure.ResourceManager.ExtendedLocations | sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations |
@@ -385,6 +388,7 @@ Total: 170
 | resourcemanager | Azure.ResourceManager | sdk/resourcemanager/Azure.ResourceManager |
 | resourcemover | Azure.ResourceManager.ResourceMover | sdk/resourcemover/Azure.ResourceManager.ResourceMover |
 | resources | Azure.ResourceManager.Resources | sdk/resources/Azure.ResourceManager.Resources |
+| resources | Azure.ResourceManager.Resources.DeploymentStacks | sdk/resources/Azure.ResourceManager.Resources.DeploymentStacks |
 | search | Azure.ResourceManager.Search | sdk/search/Azure.ResourceManager.Search |
 | securitycenter | Azure.ResourceManager.SecurityCenter | sdk/securitycenter/Azure.ResourceManager.SecurityCenter |
 | securitydevops | Azure.ResourceManager.SecurityDevOps | sdk/securitydevops/Azure.ResourceManager.SecurityDevOps |
@@ -418,7 +422,7 @@ Total: 170
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 40
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 39
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -446,7 +450,6 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 | keyvault | Azure.Security.KeyVault.Keys | sdk/keyvault/Azure.Security.KeyVault.Keys |
 | keyvault | Azure.Security.KeyVault.Secrets | sdk/keyvault/Azure.Security.KeyVault.Secrets |
 | keyvault | Azure.Security.KeyVault.Shared | sdk/keyvault/Azure.Security.KeyVault.Shared |
-| loadtestservice | Azure.Developer.Playwright | sdk/loadtestservice/Azure.Developer.Playwright |
 | loadtestservice | Azure.Developer.Playwright.MSTest | sdk/loadtestservice/Azure.Developer.Playwright.MSTest |
 | loadtestservice | Azure.Developer.Playwright.NUnit | sdk/loadtestservice/Azure.Developer.Playwright.NUnit |
 | modelsrepository | Azure.IoT.ModelsRepository | sdk/modelsrepository/Azure.IoT.ModelsRepository |
