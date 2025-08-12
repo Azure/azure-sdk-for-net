@@ -11,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -34,6 +35,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         protected BaseTagMethodProvider(
             ResourceClientProvider resource,
+            RequestPathPattern contextualPath,
             MethodProvider updateMethodProvider,
             RestClientInfo restClientInfo,
             bool isAsync,
@@ -42,7 +44,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         {
             _resource = resource;
             _updateMethodProvider = updateMethodProvider;
-            _contextualPath = resource.ContextualPath;
+            _contextualPath = contextualPath;
             _enclosingType = resource;
             _restClient = restClientInfo.RestClientProvider;
             _isAsync = isAsync;
@@ -92,7 +94,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             ResourceClientProvider resourceClientProvider,
             bool isAsync,
             ParameterProvider cancellationTokenParam,
-            out VariableExpression responseVariable)
+            out ScopedApi<Response> responseVariable)
         {
             var statements = new List<MethodBodyStatement>
             {
@@ -101,12 +103,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             InputServiceMethod? getServiceMethod = null;
 
-            foreach (var (kind, method) in resourceClientProvider.ResourceServiceMethods)
+            foreach (var resourceMethod in resourceClientProvider.ResourceServiceMethods)
             {
-                var operation = method.Operation;
-                if (kind == ResourceOperationKind.Get)
+                if (resourceMethod.Kind == ResourceOperationKind.Get)
                 {
-                    getServiceMethod = method;
+                    getServiceMethod = resourceMethod.InputMethod;
                     break;
                 }
             }
@@ -128,28 +129,28 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         protected static List<MethodBodyStatement> CreatePrimaryPathResponseStatements(
             ResourceClientProvider resource,
-            VariableExpression responseVar)
+            ScopedApi<Response> responseVar)
         {
             return
             [
                 // return Response.FromValue(new ResourceType(Client, response.Value), response.GetRawResponse());
-                Return(Static(typeof(Response)).Invoke("FromValue", [
+                Return(ResponseSnippets.FromValue(
                     New.Instance(resource.Type, [
                         This.As<ArmResource>().Client(),
-                        responseVar.Property("Value")
+                        responseVar.Value()
                     ]),
-                    responseVar.Invoke("GetRawResponse")
-                ]))
+                    responseVar.GetRawResponse()
+                ))
             ];
         }
 
-        protected static MethodBodyStatement CreateSecondaryPathResponseStatement(VariableExpression resultVariable)
+        protected static MethodBodyStatement CreateSecondaryPathResponseStatement(ScopedApi<Response> resultVariable)
         {
             // return Response.FromValue(result.Value, result.GetRawResponse());
-            return Return(Static(typeof(Response)).Invoke("FromValue", [
+            return Return(ResponseSnippets.FromValue(
                 resultVariable.Property("Value"),
                 resultVariable.Invoke("GetRawResponse")
-            ]));
+            ));
         }
 
         protected static MethodBodyStatement GetResourceDataStatements(
@@ -247,7 +248,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, out resultVar));
             }
 
-            statements.Add(CreateSecondaryPathResponseStatement(resultVar));
+            statements.Add(CreateSecondaryPathResponseStatement(resultVar.As<Response>()));
             return statements;
         }
 
