@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using MgmtTypeSpec;
 using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary></summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _zoosClientDiagnostics;

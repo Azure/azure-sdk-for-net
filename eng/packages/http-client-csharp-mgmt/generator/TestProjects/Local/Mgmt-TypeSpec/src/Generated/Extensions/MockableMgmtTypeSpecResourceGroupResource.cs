@@ -16,7 +16,7 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary></summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecResourceGroupResource for mocking. </summary>
