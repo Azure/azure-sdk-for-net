@@ -260,11 +260,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             product.Start();
 
             List<string> expectedNames = new List<string>();
-            expectedNames.Add(CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems, lastModified: now));
+            expectedNames.Add(CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems, createdOn: now));
 
             RunExecuterWithExpectedBlobs(expectedNames, product, executor);
 
-            expectedNames.Add(CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems, lastModified: now));
+            expectedNames.Add(CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems, createdOn: now));
 
             // We should see the new item. We'll see 2 blobs, but only process 1 (due to receipt).
             RunExecuterWithExpectedBlobs(expectedNames, product, executor, 1);
@@ -455,21 +455,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
         }
 
-        private string CreateBlobAndUploadToContainer(Mock<BlobContainerClient> containerMock, List<BlobItem> blobItems, string blobContent = "test", DateTimeOffset lastModified = default)
+        private string CreateBlobAndUploadToContainer(Mock<BlobContainerClient> containerMock, List<BlobItem> blobItems, string blobContent = "test", DateTimeOffset createdOn = default)
         {
             string blobName = Path.GetRandomFileName().Replace(".", "");
             Mock<BlobBaseClient> item = new Mock<BlobBaseClient>();
 
-            if (lastModified == default)
+            if (createdOn == default)
             {
-                lastModified = DateTimeOffset.UtcNow;
+                createdOn = DateTimeOffset.UtcNow;
             }
-            var blobProperties = BlobsModelFactory.BlobProperties(lastModified: lastModified);
+            var blobProperties = BlobsModelFactory.BlobProperties(createdOn: createdOn);
 
             item.Setup(x => x.GetPropertiesAsync(null, It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(blobProperties, null));
             item.Setup(x => x.Name).Returns(blobName);
 
-            BlobItemProperties blobItemProperties = BlobsModelFactory.BlobItemProperties(true, lastModified: lastModified);
+            BlobItemProperties blobItemProperties = BlobsModelFactory.BlobItemProperties(true, createdOn: createdOn);
             BlobItem blobItem = BlobsModelFactory.BlobItem(
                 name: blobName,
                 properties: blobItemProperties
