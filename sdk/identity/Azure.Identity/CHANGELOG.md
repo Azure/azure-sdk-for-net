@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- `BrokerCredential` is now included in the chain when `AZURE_TOKEN_CREDENTIALS` is set to `dev` and the `Azure.Identity.Broker` package is present.
+
 ### Other Changes
 
 ## 1.15.0 (2025-08-11)
