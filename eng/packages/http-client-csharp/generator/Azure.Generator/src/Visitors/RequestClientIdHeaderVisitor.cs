@@ -26,13 +26,13 @@ namespace Azure.Generator.Visitors
             ScmMethodProviderCollection? methods)
         {
             var clientRequestIdParameter =
-                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == ClientRequestIdParameterName);
+                serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == ClientRequestIdParameterName);
 
             if (clientRequestIdParameter != null)
             {
                 // Update the service method to remove the client-request-id parameter from the request parameters
-                serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p => p.NameInRequest != ClientRequestIdParameterName)]);
-                serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p => p.NameInRequest != ClientRequestIdParameterName)]);
+                serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p => p.SerializedName != ClientRequestIdParameterName)]);
+                serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p => p.SerializedName != ClientRequestIdParameterName)]);
 
                 // Create a new method collection with the updated service method
                 methods = new ScmMethodProviderCollection(serviceMethod, client);
@@ -66,7 +66,7 @@ namespace Azure.Generator.Visitors
                 {
                     // Set the client-request-id header
                     newStatements.Add(requestVariable.As<Request>().SetHeaderValue(
-                        clientRequestIdParameter.NameInRequest,
+                        clientRequestIdParameter.SerializedName,
                         requestVariable.Property(nameof(Request.ClientRequestId))));
                 }
 
