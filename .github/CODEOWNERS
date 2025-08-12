@@ -492,7 +492,7 @@
 
 # ServiceLabel: %Event Hubs
 # AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @axisc @sjkwak @hmlam @jsquire
+# ServiceOwners:                                                   @axisc @sjkwak @hmlam
 
 # PRLabel: %Extension - WCF
 /sdk/extension-wcf/                                                @mconnew
