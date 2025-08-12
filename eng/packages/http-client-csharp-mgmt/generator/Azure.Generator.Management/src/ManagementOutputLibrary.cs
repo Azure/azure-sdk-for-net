@@ -75,20 +75,17 @@ namespace Azure.Generator.Management
 
             var resourceMetadatas = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas;
             var resourceMethodCategories = new Dictionary<ResourceMetadata, ResourceMethodCategory>(resourceMetadatas.Count);
-            // categorize the resource methods
-            foreach (var resourceMetadata in resourceMetadatas)
-            {
-                var categorizedMehtods = resourceMetadata.CategorizeMethods();
-                resourceMethodCategories.Add(resourceMetadata, categorizedMehtods);
-            }
 
             // build resource methods per resource metadata
             var resourceDict = new Dictionary<ResourceMetadata, ResourceClientProvider>(resourceMetadatas.Count);
             var collections = new List<ResourceCollectionClientProvider>(resourceMetadatas.Count);
             foreach (var resourceMetadata in resourceMetadatas)
             {
-                var resourceMethods = resourceMethodCategories[resourceMetadata];
-                var resource = ResourceClientProvider.Create(resourceMetadata, resourceMethods.MethodsInResource, resourceMethods.MethodsInCollection);
+                // categorize the resource methods
+                var categorizedMethods = resourceMetadata.CategorizeMethods();
+                // stores it because later in extensions we need it again
+                resourceMethodCategories.Add(resourceMetadata, categorizedMethods);
+                var resource = ResourceClientProvider.Create(resourceMetadata, categorizedMethods.MethodsInResource, categorizedMethods.MethodsInCollection);
                 resourceDict.Add(resourceMetadata, resource);
                 if (resource.ResourceCollection is not null)
                 {
