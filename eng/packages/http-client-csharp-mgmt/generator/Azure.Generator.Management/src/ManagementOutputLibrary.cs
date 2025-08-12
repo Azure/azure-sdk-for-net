@@ -65,18 +65,28 @@ namespace Azure.Generator.Management
             ref IReadOnlyList<MockableResourceProvider>? _mockableClients,
             ref ExtensionProvider? _extensionProvider)
         {
-            if (_resourceClients is not null || _collectionClients is not null || _mockableClients is not null)
+            if (_resourceClients is not null ||
+                _collectionClients is not null ||
+                _mockableClients is not null ||
+                _extensionProvider is not null)
             {
                 return; // already initialized
             }
 
-            var metadatas = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas;
-            var resources = new List<ResourceClientProvider>(metadatas.Count);
-            var collections = new List<ResourceCollectionClientProvider>(metadatas.Count);
-            foreach (var resourceMetadata in metadatas)
+            var resourceMetadatas = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas;
+            var resourceMethodCategories = new Dictionary<ResourceMetadata, ResourceMethodCategory>(resourceMetadatas.Count);
+
+            // build resource methods per resource metadata
+            var resourceDict = new Dictionary<ResourceMetadata, ResourceClientProvider>(resourceMetadatas.Count);
+            var collections = new List<ResourceCollectionClientProvider>(resourceMetadatas.Count);
+            foreach (var resourceMetadata in resourceMetadatas)
             {
-                var resource = ResourceClientProvider.Create(resourceMetadata);
-                resources.Add(resource);
+                // categorize the resource methods
+                var categorizedMethods = resourceMetadata.CategorizeMethods();
+                // stores it because later in extensions we need it again
+                resourceMethodCategories.Add(resourceMetadata, categorizedMethods);
+                var resource = ResourceClientProvider.Create(resourceMetadata, categorizedMethods.MethodsInResource, categorizedMethods.MethodsInCollection);
+                resourceDict.Add(resourceMetadata, resource);
                 if (resource.ResourceCollection is not null)
                 {
                     collections.Add(resource.ResourceCollection);
@@ -84,22 +94,25 @@ namespace Azure.Generator.Management
             }
 
             // resources and collections are now initialized
-            _resourceClients = resources;
+            _resourceClients = [.. resourceDict.Values];
             _collectionClients = collections;
 
             // build mockable resources
-            var resourcesAndMethodsPerScope = BuildResourcesAndNonResourceMethods(resources, ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = new MockableArmClientProvider(resources);
+            var resourcesAndMethodsPerScope = BuildResourcesAndNonResourceMethods(
+                resourceDict,
+                resourceMethodCategories.Values.SelectMany(c => c.MethodsInExtension),
+                ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
+            var mockableArmClientResource = new MockableArmClientProvider(_resourceClients);
             var mockableResources = new List<MockableResourceProvider>(resourcesAndMethodsPerScope.Count)
             {
                 // add the arm client mockable resource
                 mockableArmClientResource
             };
-            foreach (var (scope, (resourcesInScope, nonResourceMethods)) in resourcesAndMethodsPerScope)
+            foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
                 if (resourcesInScope.Count > 0 || nonResourceMethods.Count > 0)
                 {
-                    var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, nonResourceMethods);
+                    var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, resourceMethods, nonResourceMethods);
                     mockableResources.Add(mockableExtension);
                 }
             }
@@ -108,25 +121,30 @@ namespace Azure.Generator.Management
             _extensionProvider = new ExtensionProvider(mockableResources);
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
-                IReadOnlyList<ResourceClientProvider> resources,
-                IReadOnlyList<NonResourceMethod> nonResourceMethods)
+                IReadOnlyDictionary<ResourceMetadata, ResourceClientProvider> resourceDict,
+                IEnumerable<ResourceMethod> resourceMethods,
+                IEnumerable<NonResourceMethod> nonResourceMethods)
             {
                 // walk through all resources to figure out their scopes
                 var resourcesAndMethodsPerScope = new Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope>
                 {
-                    [ResourceScope.ResourceGroup] = new([], []),
-                    [ResourceScope.Subscription] = new([], []),
-                    [ResourceScope.Tenant] = new([], []),
-                    [ResourceScope.ManagementGroup] = new([], []),
+                    [ResourceScope.ResourceGroup] = new([], [], []),
+                    [ResourceScope.Subscription] = new([], [], []),
+                    [ResourceScope.Tenant] = new([], [], []),
+                    [ResourceScope.ManagementGroup] = new([], [], []),
                 };
-                foreach (var resource in resources)
+                foreach (var (metadata, resourceClient) in resourceDict)
                 {
-                    if (resource.ParentResourceIdPattern is null)
+                    if (metadata.ParentResourceId is null)
                     {
-                        resourcesAndMethodsPerScope[resource.ResourceScope].ResourceClients.Add(resource);
+                        resourcesAndMethodsPerScope[metadata.ResourceScope].ResourceClients.Add(resourceClient);
                     }
                 }
-                foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
+                foreach (var resourceMethod in resourceMethods)
+                {
+                    resourcesAndMethodsPerScope[resourceMethod.OperationScope].ResourceMethods.Add(resourceMethod);
+                }
+                foreach (var nonResourceMethod in nonResourceMethods)
                 {
                     resourcesAndMethodsPerScope[nonResourceMethod.OperationScope].NonResourceMethods.Add(nonResourceMethod);
                 }
@@ -186,7 +204,23 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
+            // we need to add the clients (including resources, collections, mockable resources and extension static class)
+            // to the types to keep
+            // otherwise, they will be trimmed off or internalized by the post processor
+            foreach (var resource in ResourceProviders)
+            {
+                ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
+            }
+            foreach (var collection in ResourceCollectionProviders)
+            {
+                ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
+            }
+            foreach (var mockableResource in MockableResourceProviders)
+            {
+                ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
+            }
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
+
             return [
                 .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 ArmOperation,
@@ -213,6 +247,7 @@ namespace Azure.Generator.Management
 
         private record ResourcesAndNonResourceMethodsInScope(
             List<ResourceClientProvider> ResourceClients,
+            List<ResourceMethod> ResourceMethods,
             List<NonResourceMethod> NonResourceMethods);
     }
 }
