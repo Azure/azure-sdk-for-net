@@ -1,6 +1,6 @@
 # Microsoft Azure Hci.Vm management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Stack HCI is a hyperconverged infrastructure solution from Microsoft that enables you to run virtualized workloads on-premises with cloud integration. The Azure Stack HCI VM service allows you to manage virtual machines (VMs) on your Azure Stack HCI clusters, providing capabilities such as VM lifecycle management, resource allocation, monitoring, and integration with Azure services for hybrid scenarios.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
