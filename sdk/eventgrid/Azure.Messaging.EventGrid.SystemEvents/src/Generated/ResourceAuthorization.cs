@@ -13,70 +13,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The details of the authorization for the resource. </summary>
     public partial class ResourceAuthorization
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/>. </summary>
-        /// <param name="evidence"> The evidence for the authorization. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evidence"/> is null. </exception>
-        internal ResourceAuthorization(IReadOnlyDictionary<string, string> evidence)
+        internal ResourceAuthorization()
         {
-            Argument.AssertNotNull(evidence, nameof(evidence));
-
-            Evidence = evidence;
+            Evidence = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/>. </summary>
         /// <param name="scope"> The scope of the authorization. </param>
         /// <param name="action"> The action being requested. </param>
         /// <param name="evidence"> The evidence for the authorization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceAuthorization(string scope, string action, IReadOnlyDictionary<string, string> evidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceAuthorization(string scope, string action, IReadOnlyDictionary<string, string> evidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Action = action;
             Evidence = evidence;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/> for deserialization. </summary>
-        internal ResourceAuthorization()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The scope of the authorization. </summary>
         public string Scope { get; }
+
         /// <summary> The action being requested. </summary>
         public string Action { get; }
+
         /// <summary> The evidence for the authorization. </summary>
         public IReadOnlyDictionary<string, string> Evidence { get; }
     }

@@ -14,41 +14,62 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct DataBoxStageName : IEquatable<DataBoxStageName>
     {
         private readonly string _value;
+        /// <summary> Copy has started. </summary>
+        private const string CopyStartedValue = "CopyStarted";
+        /// <summary> Copy has completed. </summary>
+        private const string CopyCompletedValue = "CopyCompleted";
+        /// <summary> Order has been completed. </summary>
+        private const string OrderCompletedValue = "OrderCompleted";
 
         /// <summary> Initializes a new instance of <see cref="DataBoxStageName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataBoxStageName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CopyStartedValue = "CopyStarted";
-        private const string CopyCompletedValue = "CopyCompleted";
-        private const string OrderCompletedValue = "OrderCompleted";
+            _value = value;
+        }
 
         /// <summary> Copy has started. </summary>
         public static DataBoxStageName CopyStarted { get; } = new DataBoxStageName(CopyStartedValue);
+
         /// <summary> Copy has completed. </summary>
         public static DataBoxStageName CopyCompleted { get; } = new DataBoxStageName(CopyCompletedValue);
+
         /// <summary> Order has been completed. </summary>
         public static DataBoxStageName OrderCompleted { get; } = new DataBoxStageName(OrderCompletedValue);
+
         /// <summary> Determines if two <see cref="DataBoxStageName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxStageName left, DataBoxStageName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxStageName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxStageName left, DataBoxStageName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxStageName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxStageName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxStageName(string value) => new DataBoxStageName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxStageName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxStageName?(string value) => value == null ? null : new DataBoxStageName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxStageName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxStageName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
