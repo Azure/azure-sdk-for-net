@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BotServiceNameAvailabilityResult>> CheckBotServiceNameAvailabilityAsync(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BotServiceNameAvailabilityResult> CheckBotServiceNameAvailability(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)

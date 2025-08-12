@@ -50,15 +50,8 @@ namespace Azure.ResourceManager.BotService
             }
             if (Optional.IsDefined(Kind))
             {
-                if (Kind != null)
-                {
-                    writer.WritePropertyName("kind"u8);
-                    writer.WriteStringValue(Kind.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("kind");
-                }
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(ETag))
             {
@@ -134,7 +127,6 @@ namespace Azure.ResourceManager.BotService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kind = null;
                         continue;
                     }
                     kind = new BotServiceKind(property.Value.GetString());

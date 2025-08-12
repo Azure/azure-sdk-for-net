@@ -9,7 +9,7 @@ csharp: true
 library-name: BotService
 namespace: Azure.ResourceManager.BotService
 # default tag is now a stable version
-require: https://github.com/Azure/azure-rest-api-specs/blob/8468620c009664ed91a3148c04cf77b6c8eb7b6f/specification/botservice/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/897f19441a4cc240eba138296f31e50841a6b57f/specification/botservice/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -108,11 +108,108 @@ rename-mapping:
 directive:
   - remove-operation: OperationResults_Get # remove this because this is a LRO related operations, we should not expose it.
   - from: botservice.json
-    where: $.paths..parameters[?(@.name=='channelName')]
+    where: $.parameters
     transform: >
       $ = {
-            "$ref": "#/parameters/channelNameParameter"
+            "channelNameParameter": {
+              "name": "channelName",
+              "x-ms-parameter-location": "method",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "enum": [
+                "AlexaChannel",
+                "FacebookChannel",
+                "EmailChannel",
+                "KikChannel",
+                "TelegramChannel",
+                "SlackChannel",
+                "MsTeamsChannel",
+                "SkypeChannel",
+                "WebChatChannel",
+                "DirectLineChannel",
+                "SmsChannel",
+                "LineChannel",
+                "DirectLineSpeechChannel",
+                "OutlookChannel",
+                "Omnichannel",
+                "TelephonyChannel",
+                "AcsChatChannel",
+                "SearchAssistant",
+                "M365Extensions"
+              ],
+              "x-ms-enum": {
+                "name": "channelName",
+                "modelAsString": false,
+                "values": [
+                  {
+                    "value": "AlexaChannel"
+                  },
+                  {
+                    "value": "FacebookChannel"
+                  },
+                  {
+                    "value": "EmailChannel"
+                  },
+                  {
+                    "value": "KikChannel"
+                  },
+                  {
+                    "value": "TelegramChannel"
+                  },
+                  {
+                    "value": "SlackChannel"
+                  },
+                  {
+                    "value": "MsTeamsChannel"
+                  },
+                  {
+                    "value": "SkypeChannel"
+                  },
+                  {
+                    "value": "WebChatChannel"
+                  },
+                  {
+                    "value": "DirectLineChannel"
+                  },
+                  {
+                    "value": "SmsChannel"
+                  },
+                  {
+                    "value": "LineChannel"
+                  },
+                  {
+                    "value": "DirectLineSpeechChannel"
+                  },
+                  {
+                    "value": "OutlookChannel"
+                  },
+                  {
+                    "value": "Omnichannel"
+                  },
+                  {
+                    "value": "TelephonyChannel"
+                  },
+                  {
+                    "value": "AcsChatChannel"
+                  },
+                  {
+                    "value": "SearchAssistant"
+                  },
+                  {
+                    "value": "M365Extensions"
+                  }
+                ]
+              },
+              "description": "The name of the Channel resource."
+            }
           };
+  - from: botservice.json
+    where: $.paths..parameters[?(@.name=='channelName' && (!@['x-ms-enum'] || @['x-ms-enum'].name!='RegenerateKeysChannelName'))]
+    transform: >
+        $ = {
+            "$ref": "#/parameters/channelNameParameter"
+            };
   - from: botservice.json
     where: $.definitions
     transform: >
@@ -121,5 +218,9 @@ directive:
     where: $.parameters
     transform: >
       $.channelNameParameter['x-ms-enum']['modelAsString'] = true;
+  - from: botservice.json
+    where: $.definitions
+    transform: >
+      $.PrivateLinkResourceProperties['properties']['requiredZoneNames']['readOnly'] = false;
 
 ```

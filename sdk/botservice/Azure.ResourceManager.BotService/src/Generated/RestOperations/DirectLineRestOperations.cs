@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.BotService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-15";
+            _apiVersion = apiVersion ?? "2023-09-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary> Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the Bot resource group in the user subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
         /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
         /// <param name="content"> The parameters to provide for the created bot. </param>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary> Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the Bot resource group in the user subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
         /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
         /// <param name="content"> The parameters to provide for the created bot. </param>

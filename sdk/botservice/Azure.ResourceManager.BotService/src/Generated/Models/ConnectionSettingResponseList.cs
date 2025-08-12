@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.BotService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionSettingResponseList"/>. </summary>
-        internal ConnectionSettingResponseList()
+        /// <param name="value"> The ConnectionSetting items on this page. </param>
+        internal ConnectionSettingResponseList(IEnumerable<BotConnectionSettingData> value)
         {
-            Value = new ChangeTrackingList<BotConnectionSettingData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionSettingResponseList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of bot service connection setting resources. </param>
-        /// <param name="value"> Gets the list of bot service connection settings and their properties. </param>
+        /// <param name="value"> The ConnectionSetting items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionSettingResponseList(string nextLink, IReadOnlyList<BotConnectionSettingData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionSettingResponseList(IReadOnlyList<BotConnectionSettingData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of bot service connection setting resources. </summary>
-        public string NextLink { get; }
-        /// <summary> Gets the list of bot service connection settings and their properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionSettingResponseList"/> for deserialization. </summary>
+        internal ConnectionSettingResponseList()
+        {
+        }
+
+        /// <summary> The ConnectionSetting items on this page. </summary>
         public IReadOnlyList<BotConnectionSettingData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

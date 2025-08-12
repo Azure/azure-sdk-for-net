@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.BotService.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Enabled. </summary>
         public static BotServicePublicNetworkAccess Enabled { get; } = new BotServicePublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static BotServicePublicNetworkAccess Disabled { get; } = new BotServicePublicNetworkAccess(DisabledValue);
+        /// <summary> SecuredByPerimeter. </summary>
+        public static BotServicePublicNetworkAccess SecuredByPerimeter { get; } = new BotServicePublicNetworkAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="BotServicePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(BotServicePublicNetworkAccess left, BotServicePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotServicePublicNetworkAccess"/> values are not the same. </summary>

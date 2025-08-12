@@ -34,12 +34,7 @@ namespace Azure.ResourceManager.BotService.Models
                 throw new FormatException($"The model {nameof(BotResponseList)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -48,6 +43,11 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,23 +86,14 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            string nextLink = default;
             IReadOnlyList<BotData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<BotData> array = new List<BotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -111,13 +102,22 @@ namespace Azure.ResourceManager.BotService.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BotResponseList(nextLink, value ?? new ChangeTrackingList<BotData>(), serializedAdditionalRawData);
+            return new BotResponseList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotResponseList>.Write(ModelReaderWriterOptions options)
