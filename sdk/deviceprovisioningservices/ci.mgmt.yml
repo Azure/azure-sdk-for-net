@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DeviceProvisioningServices
       safeName: AzureResourceManagerDeviceProvisioningServices
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.DeviceProvisioningServices
+      ExpectedWarningsFilepath: None

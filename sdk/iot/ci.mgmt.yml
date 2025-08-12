@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.IotFirmwareDefense
       safeName: AzureResourceManagerIotFirmwareDefense
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.IotFirmwareDefense
+      ExpectedWarningsFilepath: None

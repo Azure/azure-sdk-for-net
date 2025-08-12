@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Quantum
       safeName: AzureResourceManagerQuantum
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Quantum
+      ExpectedWarningsFilepath: None

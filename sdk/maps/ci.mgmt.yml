@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Maps
       safeName: AzureResourceManagerMaps
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Maps
+      ExpectedWarningsFilepath: None

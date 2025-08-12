@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Peering
       safeName: AzureResourceManagerPeering
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Peering
+      ExpectedWarningsFilepath: None

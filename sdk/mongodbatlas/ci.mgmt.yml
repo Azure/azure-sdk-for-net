@@ -24,3 +24,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.MongoDBAtlas
       safeName: AzureResourceManagerMongoDBAtlas
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.MongoDBAtlas
+      ExpectedWarningsFilepath: None

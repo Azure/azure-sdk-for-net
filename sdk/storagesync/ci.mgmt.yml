@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.StorageSync
       safeName: AzureResourceManagerStorageSync
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.StorageSync
+      ExpectedWarningsFilepath: None

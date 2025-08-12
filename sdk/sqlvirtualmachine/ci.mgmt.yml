@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SqlVirtualMachine
       safeName: AzureResourceManagerSqlVirtualMachine
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.SqlVirtualMachine
+      ExpectedWarningsFilepath: None

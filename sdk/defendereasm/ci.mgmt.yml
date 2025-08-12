@@ -21,3 +21,7 @@ extends:
     Artifacts:
       - name: Azure.ResourceManager.DefenderEasm
         safeName: AzureResourceManagerDefenderEasm
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.DefenderEasm
+      ExpectedWarningsFilepath: None

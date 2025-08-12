@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Marketplace
       safeName: AzureResourceManagerMarketplace
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Marketplace
+      ExpectedWarningsFilepath: None

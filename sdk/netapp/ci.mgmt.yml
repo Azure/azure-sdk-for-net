@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.NetApp
       safeName: AzureResourceManagerNetApp
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.NetApp
+      ExpectedWarningsFilepath: None

@@ -23,3 +23,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Monitor
       safeName: AzureResourceManagerMonitor
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Monitor
+      ExpectedWarningsFilepath: None

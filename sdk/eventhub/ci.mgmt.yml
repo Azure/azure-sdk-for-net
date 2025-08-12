@@ -22,4 +22,8 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.EventHubs
       safeName: AzureResourceManagerEventHubs
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.EventHubs
+      ExpectedWarningsFilepath: None
 

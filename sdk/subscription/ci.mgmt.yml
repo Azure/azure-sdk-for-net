@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Subscription
       safeName: AzureResourceManagerSubscription
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Subscription
+      ExpectedWarningsFilepath: None

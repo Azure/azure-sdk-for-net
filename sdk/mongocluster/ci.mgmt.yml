@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.MongoCluster
       safeName: AzureResourceManagerMongoCluster
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.MongoCluster
+      ExpectedWarningsFilepath: None

@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Logic
       safeName: AzureResourceManagerLogic
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Logic
+      ExpectedWarningsFilepath: None

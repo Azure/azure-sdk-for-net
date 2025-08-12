@@ -20,3 +20,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.WebPubSub
       safeName: AzureResourceManagerWebPubSub
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.WebPubSub
+      ExpectedWarningsFilepath: None

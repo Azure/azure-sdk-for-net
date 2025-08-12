@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.WorkloadsSapVirtualInstance
       safeName: AzureResourceManagerWorkloadsSapVirtualInstance
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.WorkloadsSapVirtualInstance
+      ExpectedWarningsFilepath: None

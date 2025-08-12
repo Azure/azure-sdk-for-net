@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ServiceBus
       safeName: AzureResourceManagerServiceBus
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.ServiceBus
+      ExpectedWarningsFilepath: None

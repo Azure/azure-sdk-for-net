@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.NetworkFunction
       safeName: AzureResourceManagerNetworkFunction
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.NetworkFunction
+      ExpectedWarningsFilepath: None

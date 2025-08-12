@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Nginx
       safeName: AzureResourceManagerNginx
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Nginx
+      ExpectedWarningsFilepath: None

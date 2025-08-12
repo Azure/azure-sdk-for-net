@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.RecoveryServicesSiteRecovery
       safeName: AzureResourceManagerRecoveryServicesSiteRecovery
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.RecoveryServicesSiteRecovery
+      ExpectedWarningsFilepath: None

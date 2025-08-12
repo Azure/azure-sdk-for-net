@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.StorageMover
       safeName: AzureResourceManagerStorageMover
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.StorageMover
+      ExpectedWarningsFilepath: None

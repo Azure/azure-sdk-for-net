@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.VoiceServices
       safeName: AzureResourceManagerVoiceServices
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.VoiceServices
+      ExpectedWarningsFilepath: None

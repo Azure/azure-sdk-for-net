@@ -21,4 +21,8 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DigitalTwins
       safeName: AzureResourceManagerDigitalTwins
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.DigitalTwins
+      ExpectedWarningsFilepath: None
 

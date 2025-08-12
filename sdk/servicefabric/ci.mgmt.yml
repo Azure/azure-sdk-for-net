@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ServiceFabric
       safeName: AzureResourceManagerServiceFabric
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.ServiceFabric
+      ExpectedWarningsFilepath: None
