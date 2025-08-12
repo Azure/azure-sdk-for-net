@@ -360,6 +360,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 TranscriptionOptions = _transcriptionConfiguration,
                 MediaStreamingOptions = _mediaStreamingConfiguration,
                 SourceCallerIdNumber = callerIdNumber,
+                DtmfOptions = new DtmfConfigurationOptions() { EnableDtmfBroadcastInGroupCalls = true}
             };
 
             var response = await callAutomationClient.CreateGroupCallAsync(options).ConfigureAwait(false);

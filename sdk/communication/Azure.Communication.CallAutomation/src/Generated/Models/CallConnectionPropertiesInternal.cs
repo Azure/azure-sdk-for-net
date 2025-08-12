@@ -34,7 +34,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="correlationId"> The correlation ID. </param>
         /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
         /// <param name="mediaStreamingSubscription"> The state of media streaming subscription for the call. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, MediaStreamingSubscriptionInternal mediaStreamingSubscription)
+        /// <param name="dtmfConfigurationOptions"> The state of DTMF configuration for the call. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, MediaStreamingSubscriptionInternal mediaStreamingSubscription, DtmfConfigurationOptionsInternal dtmfConfigurationOptions)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -48,6 +49,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = correlationId;
             AnsweredBy = answeredBy;
             MediaStreamingSubscription = mediaStreamingSubscription;
+            DtmfConfigurationOptions = dtmfConfigurationOptions;
         }
 
         /// <summary> The call connection id. </summary>
@@ -77,5 +79,7 @@ namespace Azure.Communication.CallAutomation
         public CommunicationUserIdentifierModel AnsweredBy { get; }
         /// <summary> The state of media streaming subscription for the call. </summary>
         public MediaStreamingSubscriptionInternal MediaStreamingSubscription { get; }
+        /// <summary> The state of DTMF configuration for the call. </summary>
+        public DtmfConfigurationOptionsInternal DtmfConfigurationOptions { get; }
     }
 }

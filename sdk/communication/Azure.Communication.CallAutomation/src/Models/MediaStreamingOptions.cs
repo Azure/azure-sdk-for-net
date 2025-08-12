@@ -33,5 +33,7 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableBidirectional { get; set; }
         /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
         public AudioFormat? AudioFormat { get; set; }
+        /// <summary> A value that indicates whether to stream the DTMF tones. </summary>
+        public bool? EnableDtmfTones { get; set; }
     }
 }

@@ -36,7 +36,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="startMediaStreaming"> Determines if the media streaming should be started immediately after call is answered or not. </param>
         /// <param name="enableBidirectional"> A value indicating whether bidirectional streaming is enabled. </param>
         /// <param name="audioFormat"> Specifies the audio format used for encoding, including sample rate and channel type. </param>
-        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming, bool? enableBidirectional, AudioFormat? audioFormat)
+        /// <param name="enableDtmfTones"> A value that indicates whether to stream the DTMF tones. </param>
+        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming, bool? enableBidirectional, AudioFormat? audioFormat, bool? enableDtmfTones)
         {
             TransportUrl = transportUrl;
             TransportType = transportType;
@@ -45,6 +46,7 @@ namespace Azure.Communication.CallAutomation
             StartMediaStreaming = startMediaStreaming;
             EnableBidirectional = enableBidirectional;
             AudioFormat = audioFormat;
+            EnableDtmfTones = enableDtmfTones;
         }
 
         /// <summary> Transport URL for media streaming. </summary>
@@ -61,5 +63,7 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableBidirectional { get; set; }
         /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
         public AudioFormat? AudioFormat { get; set; }
+        /// <summary> A value that indicates whether to stream the DTMF tones. </summary>
+        public bool? EnableDtmfTones { get; set; }
     }
 }
