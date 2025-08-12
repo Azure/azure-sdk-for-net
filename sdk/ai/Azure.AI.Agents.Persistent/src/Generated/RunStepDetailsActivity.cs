@@ -62,7 +62,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of <see cref="RunStepDetailsActivity"/>. </summary>
-        /// <param name="type"> The activity type, which is always mcp_list_tools. </param>
+        /// <param name="type"> The activity type, which is always 'mcp_list_tools'. </param>
         /// <param name="id"> The activity ID. </param>
         /// <param name="serverLabel"> Server label. </param>
         /// <param name="tools"> The supported function list. </param>
@@ -81,7 +81,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> The activity type, which is always mcp_list_tools. </summary>
+        /// <summary> The activity type, which is always 'mcp_list_tools'. </summary>
         public RunStepDetailsActivityType Type { get; } = RunStepDetailsActivityType.McpListTools;
 
         /// <summary> The activity ID. </summary>

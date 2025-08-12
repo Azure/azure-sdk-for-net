@@ -15,7 +15,7 @@ namespace Azure.AI.Agents.Persistent
     public partial class RunStepActivityDetails : RunStepDetails
     {
         /// <summary> Initializes a new instance of <see cref="RunStepActivityDetails"/>. </summary>
-        /// <param name="activities"> A list of tool call details for this run step. </param>
+        /// <param name="activities"> A list of activities for this run step. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activities"/> is null. </exception>
         internal RunStepActivityDetails(IEnumerable<RunStepDetailsActivity> activities)
         {
@@ -28,7 +28,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="RunStepActivityDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="activities"> A list of tool call details for this run step. </param>
+        /// <param name="activities"> A list of activities for this run step. </param>
         internal RunStepActivityDetails(RunStepType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<RunStepDetailsActivity> activities) : base(type, serializedAdditionalRawData)
         {
             Activities = activities;
@@ -39,7 +39,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> A list of tool call details for this run step. </summary>
+        /// <summary> A list of activities for this run step. </summary>
         public IReadOnlyList<RunStepDetailsActivity> Activities { get; }
     }
 }

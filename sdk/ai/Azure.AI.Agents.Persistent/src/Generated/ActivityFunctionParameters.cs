@@ -63,7 +63,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The parameter type, it is always object. </param>
         /// <param name="properties"> The dictionary of function arguments. </param>
         /// <param name="required"> The list of the required parameters. </param>
-        /// <param name="additionalProperties"> If true the function have additional parameters. </param>
+        /// <param name="additionalProperties"> If true the function has additional parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ActivityFunctionParameters(ActivityFunctionParametersType type, IReadOnlyDictionary<string, FunctionArgument> properties, IReadOnlyList<string> required, bool? additionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,7 +86,7 @@ namespace Azure.AI.Agents.Persistent
         public IReadOnlyDictionary<string, FunctionArgument> Properties { get; }
         /// <summary> The list of the required parameters. </summary>
         public IReadOnlyList<string> Required { get; }
-        /// <summary> If true the function have additional parameters. </summary>
+        /// <summary> If true the function has additional parameters. </summary>
         public bool? AdditionalProperties { get; }
     }
 }

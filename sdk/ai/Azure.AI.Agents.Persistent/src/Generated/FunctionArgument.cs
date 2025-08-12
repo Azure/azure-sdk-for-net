@@ -46,7 +46,7 @@ namespace Azure.AI.Agents.Persistent
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FunctionArgument"/>. </summary>
-        /// <param name="type"> The type of an argument. </param>
+        /// <param name="type"> The type of an argument, for example 'string' or 'number'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         internal FunctionArgument(string type)
         {
@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionArgument"/>. </summary>
-        /// <param name="type"> The type of an argument. </param>
+        /// <param name="type"> The type of an argument, for example 'string' or 'number'. </param>
         /// <param name="description"> The argument description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionArgument(string type, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -71,7 +71,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> The type of an argument. </summary>
+        /// <summary> The type of an argument, for example 'string' or 'number'. </summary>
         public string Type { get; }
         /// <summary> The argument description. </summary>
         public string Description { get; }

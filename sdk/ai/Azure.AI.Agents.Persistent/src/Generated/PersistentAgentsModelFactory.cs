@@ -517,7 +517,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepActivityDetails"/>. </summary>
-        /// <param name="activities"> A list of tool call details for this run step. </param>
+        /// <param name="activities"> A list of activities for this run step. </param>
         /// <returns> A new <see cref="Persistent.RunStepActivityDetails"/> instance for mocking. </returns>
         public static RunStepActivityDetails RunStepActivityDetails(IEnumerable<RunStepDetailsActivity> activities = null)
         {
@@ -527,7 +527,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDetailsActivity"/>. </summary>
-        /// <param name="type"> The activity type, which is always mcp_list_tools. </param>
+        /// <param name="type"> The activity type, which is always 'mcp_list_tools'. </param>
         /// <param name="id"> The activity ID. </param>
         /// <param name="serverLabel"> Server label. </param>
         /// <param name="tools"> The supported function list. </param>
@@ -552,7 +552,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The parameter type, it is always object. </param>
         /// <param name="properties"> The dictionary of function arguments. </param>
         /// <param name="required"> The list of the required parameters. </param>
-        /// <param name="additionalProperties"> If true the function have additional parameters. </param>
+        /// <param name="additionalProperties"> If true the function has additional parameters. </param>
         /// <returns> A new <see cref="Persistent.ActivityFunctionParameters"/> instance for mocking. </returns>
         public static ActivityFunctionParameters ActivityFunctionParameters(ActivityFunctionParametersType type = default, IReadOnlyDictionary<string, FunctionArgument> properties = null, IEnumerable<string> required = null, bool? additionalProperties = null)
         {
@@ -563,7 +563,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.FunctionArgument"/>. </summary>
-        /// <param name="type"> The type of an argument. </param>
+        /// <param name="type"> The type of an argument, for example 'string' or 'number'. </param>
         /// <param name="description"> The argument description. </param>
         /// <returns> A new <see cref="Persistent.FunctionArgument"/> instance for mocking. </returns>
         public static FunctionArgument FunctionArgument(string type = null, string description = null)
