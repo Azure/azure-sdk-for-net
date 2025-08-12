@@ -118,6 +118,7 @@ known_content_issues:
   - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/System.ClientModel/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/core/Microsoft.ClientModel.TestFramework/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404', 'Missing section: Azure .+ client library for .NET']
   - ['sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventhub/Azure.Messaging.EventHubs.Shared/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
