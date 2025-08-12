@@ -38,12 +38,7 @@ namespace Azure.AI.VoiceLive
 
                 string base64Audio = Convert.ToBase64String(audio);
                 ClientEventInputAudioBufferAppend appendCommand = new(base64Audio);
-                var request = appendCommand.ToRequestContent();
-                var ms = new MemoryStream();
-                await request.WriteToAsync(ms, cancellationToken).ConfigureAwait(false);
-                ms.Seek(0, SeekOrigin.Begin);
-                var bd = await BinaryData.FromStreamAsync(ms).ConfigureAwait(false);
-                await SendCommandAsync(bd, cancellationToken).ConfigureAwait(false);
+                await SendCommandAsync(appendCommand, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -81,8 +76,7 @@ namespace Azure.AI.VoiceLive
 
                 string base64Audio = Convert.ToBase64String(audio.ToArray());
                 ClientEventInputAudioBufferAppend appendCommand = new(base64Audio);
-                BinaryData requestData = BinaryData.FromObjectAsJson(appendCommand);
-                await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+                await SendCommandAsync(appendCommand, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -107,8 +101,7 @@ namespace Azure.AI.VoiceLive
         {
             ThrowIfDisposed();
             ClientEventInputAudioBufferClear clearCommand = new();
-            BinaryData requestData = BinaryData.FromObjectAsJson(clearCommand);
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(clearCommand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -129,8 +122,7 @@ namespace Azure.AI.VoiceLive
         {
             ThrowIfDisposed();
             ClientEventInputAudioBufferCommit commitCommand = new();
-            BinaryData requestData = BinaryData.FromObjectAsJson(commitCommand);
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(commitCommand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -339,8 +331,7 @@ namespace Azure.AI.VoiceLive
 
             RequestSession requestSession = sessionOptions.ToRequestSession();
             ClientEventSessionUpdate updateCommand = new(requestSession);
-            var requestData = updateCommand.ToRequestContent();
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(updateCommand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -449,8 +440,7 @@ namespace Azure.AI.VoiceLive
                 PreviousItemId = previousItemId
             };
 
-            BinaryData requestData = itemCreate.ToBinaryData();
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(itemCreate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -479,8 +469,7 @@ namespace Azure.AI.VoiceLive
             ThrowIfDisposed();
 
             ClientEventConversationItemRetrieve retrieveCommand = new(itemId);
-            BinaryData requestData = BinaryData.FromObjectAsJson(retrieveCommand);
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(retrieveCommand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -509,8 +498,7 @@ namespace Azure.AI.VoiceLive
             ThrowIfDisposed();
 
             ClientEventConversationItemDelete deleteCommand = new(itemId);
-            BinaryData requestData = BinaryData.FromObjectAsJson(deleteCommand);
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(deleteCommand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -539,16 +527,9 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             ThrowIfDisposed();
 
-            // Create a simple JSON payload since the constructor might not be available
-            var truncateData = new
-            {
-                type = "conversation.item.truncate",
-                item_id = itemId,
-                content_index = contentIndex
-            };
+            var truncateEvent = new ClientEventConversationItemTruncate(itemId, contentIndex, 0);
 
-            BinaryData requestData = BinaryData.FromObjectAsJson(truncateData);
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(truncateEvent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -596,19 +577,12 @@ namespace Azure.AI.VoiceLive
         {
             ThrowIfDisposed();
 
-            // Create a simple JSON payload since ClientEventResponseCreate might not be easily constructible
-            var responseData = new
+            var responseEvent = new ClientEventResponseCreate()
             {
-                type = "response.create"
+                AdditionalInstructions = responseOptions?.Instructions
             };
 
-            if (responseOptions != null)
-            {
-                // We could extend this to include the response options if needed
-            }
-
-            BinaryData requestData = BinaryData.FromObjectAsJson(responseData);
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(responseEvent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -633,14 +607,12 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(additionalInstructions, nameof(additionalInstructions));
             ThrowIfDisposed();
 
-            var responseData = new
+            var response = new ClientEventResponseCreate()
             {
-                type = "response.create",
-                additional_instructions = additionalInstructions
+                AdditionalInstructions = additionalInstructions,
             };
 
-            BinaryData requestData = BinaryData.FromObjectAsJson(responseData);
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(response, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -664,8 +636,7 @@ namespace Azure.AI.VoiceLive
             ThrowIfDisposed();
 
             ClientEventResponseCancel cancelCommand = new();
-            BinaryData requestData = BinaryData.FromObjectAsJson(cancelCommand);
-            await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+            await SendCommandAsync(cancelCommand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

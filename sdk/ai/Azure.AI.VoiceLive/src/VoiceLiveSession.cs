@@ -101,8 +101,7 @@ namespace Azure.AI.VoiceLive
                     BinaryData audioData = BinaryData.FromBytes(audioMemory);
                     string base64Audio = Convert.ToBase64String(audioData.ToArray());
                     ClientEventInputAudioBufferAppend appendCommand = new(base64Audio);
-                    BinaryData requestData = BinaryData.FromObjectAsJson(appendCommand);
-                    await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+                    await SendCommandAsync(appendCommand, cancellationToken).ConfigureAwait(false);
                 }
             }
             finally
@@ -184,7 +183,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(command, nameof(command));
             ThrowIfDisposed();
 
-            BinaryData data = BinaryData.FromObjectAsJson(command);
+            BinaryData data = command.ToBinaryData();
             await SendCommandAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
