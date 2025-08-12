@@ -289,18 +289,13 @@ namespace Azure.Containers.ContainerRegistry
                 _restClient);
         }
 
-        /// <summary>
-        /// Exchanges an Azure Active Directory access token for an Azure Container Registry refresh token.
-        /// </summary>
-        /// <param name="service">The name of the registry service.</param>
-        /// <param name="tenant">The tenant ID (optional).</param>
-        /// <param name="refreshToken">The refresh token (optional).</param>
-        /// <param name="accessToken">The AAD access token (optional).</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains the ACR refresh token response.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="service"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="service"/> is empty.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
+        /// <summary> Exchange AAD tokens for an ACR refresh Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="tenant"> AAD tenant associated to the AAD credentials. </param>
+        /// <param name="refreshToken"> AAD refresh token. </param>
+        /// <param name="accessToken"> AAD access token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
         public virtual async Task<Response<AcrRefreshToken>> ExchangeAadAccessTokenForAcrRefreshTokenAsync(
             string service,
             string tenant = null,
@@ -323,18 +318,13 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary>
-        /// Exchanges an Azure Active Directory access token for an Azure Container Registry refresh token.
-        /// </summary>
-        /// <param name="service">The name of the registry service.</param>
-        /// <param name="tenant">The tenant ID (optional).</param>
-        /// <param name="refreshToken">The refresh token (optional).</param>
-        /// <param name="accessToken">The AAD access token (optional).</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>The ACR refresh token response.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="service"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="service"/> is empty.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
+        /// <summary> Exchange AAD tokens for an ACR refresh Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="tenant"> AAD tenant associated to the AAD credentials. </param>
+        /// <param name="refreshToken"> AAD refresh token. </param>
+        /// <param name="accessToken"> AAD access token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
         public virtual Response<AcrRefreshToken> ExchangeAadAccessTokenForAcrRefreshToken(
             string service,
             string tenant = null,
@@ -357,17 +347,12 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary>
-        /// Exchanges an Azure Container Registry refresh token for an Azure Container Registry access token.
-        /// </summary>
-        /// <param name="service">The name of the registry service.</param>
-        /// <param name="scope">The scope for the access token.</param>
-        /// <param name="refreshToken">The ACR refresh token.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains the ACR access token response.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is empty.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
+        /// <summary> Exchange ACR Refresh token for an ACR Access Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
+        /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="refreshToken"/> is null. </exception>
         public virtual async Task<Response<AcrAccessToken>> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(
             string service,
             string scope,
@@ -391,17 +376,12 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary>
-        /// Exchanges an Azure Container Registry refresh token for an Azure Container Registry access token.
-        /// </summary>
-        /// <param name="service">The name of the registry service.</param>
-        /// <param name="scope">The scope for the access token.</param>
-        /// <param name="refreshToken">The ACR refresh token.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>The ACR access token response.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is empty.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
+        /// <summary> Exchange ACR Refresh token for an ACR Access Token. </summary>
+        /// <param name="service"> Indicates the name of your Azure container registry. </param>
+        /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
+        /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="refreshToken"/> is null. </exception>
         public virtual Response<AcrAccessToken> ExchangeAcrRefreshTokenForAcrAccessToken(
             string service,
             string scope,
