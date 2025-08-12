@@ -17,7 +17,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Mocking
 {
     /// <summary></summary>
-    public partial class MockableStorageActionsResourceGroupResource : ArmResource
+    internal partial class MockableStorageActionsResourceGroupResource : ArmResource
     {
         /// <summary> Initializes a new instance of MockableStorageActionsResourceGroupResource for mocking. </summary>
         protected MockableStorageActionsResourceGroupResource()

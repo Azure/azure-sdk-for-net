@@ -18,7 +18,7 @@ using Azure.ResourceManager.StorageActions.Models;
 namespace Azure.ResourceManager.StorageActions.Mocking
 {
     /// <summary></summary>
-    public partial class MockableStorageActionsSubscriptionResource : ArmResource
+    internal partial class MockableStorageActionsSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _storageTasksClientDiagnostics;
         private StorageTasks _storageTasksRestClient;

@@ -1675,43 +1675,65 @@
             "methods": [
               {
                 "$id": "145",
-                "id": "Microsoft.StorageActions.StorageTasks.get",
-                "kind": "Get"
+                "methodId": "Microsoft.StorageActions.StorageTasks.get",
+                "kind": "Get",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}"
               },
               {
                 "$id": "146",
-                "id": "Microsoft.StorageActions.StorageTasks.create",
-                "kind": "Create"
+                "methodId": "Microsoft.StorageActions.StorageTasks.create",
+                "kind": "Create",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}"
               },
               {
                 "$id": "147",
-                "id": "Microsoft.StorageActions.StorageTasks.update",
-                "kind": "Update"
+                "methodId": "Microsoft.StorageActions.StorageTasks.update",
+                "kind": "Update",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}"
               },
               {
                 "$id": "148",
-                "id": "Microsoft.StorageActions.StorageTasks.delete",
-                "kind": "Delete"
+                "methodId": "Microsoft.StorageActions.StorageTasks.delete",
+                "kind": "Delete",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}"
               },
               {
                 "$id": "149",
-                "id": "Microsoft.StorageActions.StorageTasks.listByResourceGroup",
-                "kind": "List"
+                "methodId": "Microsoft.StorageActions.StorageTasks.listByResourceGroup",
+                "kind": "List",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks",
+                "operationScope": "ResourceGroup"
               },
               {
                 "$id": "150",
-                "id": "Microsoft.StorageActions.StorageTasks.listBySubscription",
-                "kind": "List"
+                "methodId": "Microsoft.StorageActions.StorageTasks.listBySubscription",
+                "kind": "List",
+                "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/storageTasks",
+                "operationScope": "Subscription"
               },
               {
                 "$id": "151",
-                "id": "Microsoft.StorageActions.StorageTasks.list",
-                "kind": "Action"
+                "methodId": "Microsoft.StorageActions.StorageTasks.list",
+                "kind": "Action",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/reports",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}"
               },
               {
                 "$id": "152",
-                "id": "Microsoft.StorageActions.StorageTasks.storageTaskAssignmentList",
-                "kind": "Action"
+                "methodId": "Microsoft.StorageActions.StorageTasks.storageTaskAssignmentList",
+                "kind": "Action",
+                "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/storageTaskAssignments",
+                "operationScope": "ResourceGroup",
+                "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}"
               }
             ],
             "resourceScope": "ResourceGroup",

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageActions
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("identity"u8);
-            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(ModelSerializationExtensions.WireOptions);
+            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
         }

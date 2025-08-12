@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.StorageActions
 {
-    /// <summary></summary>
+    /// <summary> A class representing a collection of <see cref="StorageTaskResource"/> and their operations. Each <see cref="StorageTaskResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information). To get a <see cref="StorageTaskCollection"/> instance call the GetStorageTasks method from an instance of the parent resource. </summary>
     public partial class StorageTaskCollection : ArmCollection, IEnumerable<StorageTaskResource>, IAsyncEnumerable<StorageTaskResource>
     {
         private readonly ClientDiagnostics _storageTasksClientDiagnostics;

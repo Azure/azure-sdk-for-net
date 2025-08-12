@@ -84,19 +84,6 @@ namespace Azure.ResourceManager.StorageActions.Mocking
         protected MockableStorageActionsArmClient() { }
         public virtual Azure.ResourceManager.StorageActions.StorageTaskResource GetStorageTaskResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class MockableStorageActionsResourceGroupResource : Azure.ResourceManager.ArmResource
-    {
-        protected MockableStorageActionsResourceGroupResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource> GetStorageTask(string storageTaskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource>> GetStorageTaskAsync(string storageTaskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.StorageActions.StorageTaskCollection GetStorageTasks() { throw null; }
-    }
-    public partial class MockableStorageActionsSubscriptionResource : Azure.ResourceManager.ArmResource
-    {
-        protected MockableStorageActionsSubscriptionResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction> PreviewActions(Azure.Core.AzureLocation location, Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction>> PreviewActionsAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.StorageActions.Models
 {
