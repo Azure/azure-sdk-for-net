@@ -82,11 +82,11 @@ public partial class NetworkSecurityGroupData : ProvisionableConstruct
     /// <summary>
     /// A collection of references to flow log resources.
     /// </summary>
-    public BicepList<FlowLogData> FlowLogs 
+    public BicepList<FlowLog> FlowLogs 
     {
         get { Initialize(); return _flowLogs!; }
     }
-    private BicepList<FlowLogData>? _flowLogs;
+    private BicepList<FlowLog>? _flowLogs;
 
     /// <summary>
     /// The resource GUID property of the network security group resource.
@@ -173,7 +173,7 @@ public partial class NetworkSecurityGroupData : ProvisionableConstruct
         _defaultSecurityRules = DefineListProperty<SecurityRuleData>("DefaultSecurityRules", ["properties", "defaultSecurityRules"], isOutput: true);
         _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
         _subnets = DefineListProperty<SubnetData>("Subnets", ["properties", "subnets"], isOutput: true);
-        _flowLogs = DefineListProperty<FlowLogData>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
+        _flowLogs = DefineListProperty<FlowLog>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);

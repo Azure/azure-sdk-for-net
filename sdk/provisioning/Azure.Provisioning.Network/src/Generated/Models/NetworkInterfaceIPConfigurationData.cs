@@ -157,12 +157,12 @@ public partial class NetworkInterfaceIPConfigurationData : ProvisionableConstruc
     /// <summary>
     /// Application security groups in which the IP configuration is included.
     /// </summary>
-    public BicepList<ApplicationSecurityGroupData> ApplicationSecurityGroups 
+    public BicepList<ApplicationSecurityGroup> ApplicationSecurityGroups 
     {
         get { Initialize(); return _applicationSecurityGroups!; }
         set { Initialize(); _applicationSecurityGroups!.Assign(value); }
     }
-    private BicepList<ApplicationSecurityGroupData>? _applicationSecurityGroups;
+    private BicepList<ApplicationSecurityGroup>? _applicationSecurityGroups;
 
     /// <summary>
     /// The provisioning state of the network interface IP configuration.
@@ -239,7 +239,7 @@ public partial class NetworkInterfaceIPConfigurationData : ProvisionableConstruc
         _subnet = DefineModelProperty<SubnetData>("Subnet", ["properties", "subnet"]);
         _primary = DefineProperty<bool>("Primary", ["properties", "primary"]);
         _publicIPAddress = DefineModelProperty<PublicIPAddressData>("PublicIPAddress", ["properties", "publicIPAddress"]);
-        _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("ApplicationSecurityGroups", ["properties", "applicationSecurityGroups"]);
+        _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroup>("ApplicationSecurityGroups", ["properties", "applicationSecurityGroups"]);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _privateLinkConnectionProperties = DefineModelProperty<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>("PrivateLinkConnectionProperties", ["properties", "privateLinkConnectionProperties"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
