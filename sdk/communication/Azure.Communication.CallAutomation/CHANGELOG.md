@@ -23,6 +23,7 @@
 - Added a backup identifier of the Cognitive Service resource for the call
 - Added Incomingcall event to support incoming call notification for Teams multipersona users
 - Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
+- DTMF broadcast functionality is now supported in the Create Call, Answer Call, and Create Group Call APIs.
 
 ### Breaking Changes
 
