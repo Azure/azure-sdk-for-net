@@ -8,7 +8,7 @@
     - Added Gates support.
     - Added FleetMember labels support.
     - Added TargetKubernetesVersion support.
-- Make `Azure.ResourceManager.Cdn` AOT-compatible.
+- Make `Azure.ResourceManager.ContainerServiceFleet` AOT-compatible.
 
 ## 1.1.0 (2025-04-22)
 
