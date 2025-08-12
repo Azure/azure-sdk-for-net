@@ -20,17 +20,17 @@ namespace Azure.AI.Projects
 {
     public partial class DatasetsOperations
     {
-        private readonly TokenCredential _tokenCredential;
+        private readonly AuthenticationTokenProvider _tokenProvider;
 
-        /// <summary> Initializes a new instance of Datasets with TokenCredential. </summary>
+        /// <summary> Initializes a new instance of Datasets with TokenProvider. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"> API version. </param>
-        /// <param name="tokenCredential"> Token credential for authentication. </param>
-        internal DatasetsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion, TokenCredential tokenCredential)
+        /// <param name="tokenProvider"> Token Provider for authentication. </param>
+        internal DatasetsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
             : this(pipeline, endpoint, apiVersion)
         {
-            _tokenCredential = tokenCredential;
+            _tokenProvider = tokenProvider;
         }
 
         /// <summary>
@@ -80,10 +80,17 @@ namespace Azure.AI.Projects
             BlobContainerClient containerClient;
             if (isSasEmpty)
             {
-                containerClient = new BlobContainerClient(
-                    blobContainerUri: pendingUploadResult.BlobReference.BlobUri,
-                    credential: _tokenCredential,
-                    options: null);
+                if (_tokenProvider is TokenCredential tokenCredential)
+                {
+                    containerClient = new BlobContainerClient(
+                        blobContainerUri: pendingUploadResult.BlobReference.BlobUri,
+                        credential: tokenCredential,
+                        options: null);
+                }
+                else
+                {
+                    throw new InvalidOperationException("SAS URI is empty and no TokenCredential is provided for authentication.");
+                }
             }
             else
             {
