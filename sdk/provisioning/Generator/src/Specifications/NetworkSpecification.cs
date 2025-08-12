@@ -21,7 +21,7 @@ public class NetworkSpecification() :
         // Naming requirements
         //AddNameRequirements<ApplicationGatewayResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<ApplicationSecurityGroupResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<AzureFirewallResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);        
+        //AddNameRequirements<AzureFirewallResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<BastionHostResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<VirtualNetworkGatewayConnectionResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<ExpressRouteCircuitResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
