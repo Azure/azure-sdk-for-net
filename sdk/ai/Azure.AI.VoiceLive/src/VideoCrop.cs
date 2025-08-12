@@ -6,6 +6,8 @@
 using System;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Linq;
 
 namespace Azure.AI.VoiceLive
 {
@@ -16,7 +18,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="topLeftInternal"> Top-left corner of the crop region. </param>
         /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topLeftInternal"/> or <paramref name="bottomRightInternal"/> is null. </exception>
-        internal VideoCrop(Point2D topLeftInternal, Point2D bottomRightInternal)
+        internal VideoCrop(IList<int> topLeftInternal, IList<int> bottomRightInternal)
         {
             Argument.AssertNotNull(topLeftInternal, nameof(topLeftInternal));
             Argument.AssertNotNull(bottomRightInternal, nameof(bottomRightInternal));
@@ -39,28 +41,45 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Top-left corner of the crop region. </summary>
-        internal Point2D TopLeftInternal
+        internal IList<int> TopLeftInternal
         {
             get
             {
-                return new Point2D(TopLeft.X, TopLeft.Y);
+                return new List<int>(new int[] { TopLeft.X, TopLeft.Y });
             }
             set
             {
-                TopLeft = new Point(value.X, value.Y);
+                TopLeft = ToPoint(value);
             }
         }
 
+        private static Point ToPoint(IList<int> list)
+        {
+            if (null == list)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+
+            var listAsArray = list.ToArray();
+
+            if (listAsArray.Length != 2)
+            {
+                throw new ArgumentException($"List had {listAsArray.Length} elements, which was not 2");
+            }
+
+            return new Point(listAsArray[0], listAsArray[1]);
+        }
+
         /// <summary> Bottom-right corner of the crop region. </summary>
-        internal Point2D BottomRightInternal
+        internal IList<int> BottomRightInternal
         {
             get
             {
-                return new Point2D(BottomRight.X, BottomRight.Y);
+                return new List<int>(new int[] { BottomRight.X, BottomRight.Y });
             }
             set
             {
-                BottomRight = new Point(value.X, value.Y);
+                BottomRight = ToPoint(value);
             }
         }
 

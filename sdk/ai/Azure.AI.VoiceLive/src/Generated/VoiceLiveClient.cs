@@ -91,7 +91,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="event"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="event"/> is null. </exception>
-        internal virtual async Task<Response<ServerEventResponseAudioDone>> ForceModelsAsync(string accept, BinaryData @event, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ServerEventResponseFunctionCallArgumentsDone>> ForceModelsAsync(string accept, BinaryData @event, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(@event, nameof(@event));
@@ -99,7 +99,7 @@ namespace Azure.AI.VoiceLive
             ForceModelsRequest forceModelsRequest = new ForceModelsRequest(@event, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ForceModelsAsync(accept, forceModelsRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
+            return Response.FromValue(ServerEventResponseFunctionCallArgumentsDone.FromResponse(response), response);
         }
 
         /// <summary> Force models. </summary>
@@ -107,7 +107,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="event"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="event"/> is null. </exception>
-        internal virtual Response<ServerEventResponseAudioDone> ForceModels(string accept, BinaryData @event, CancellationToken cancellationToken = default)
+        internal virtual Response<ServerEventResponseFunctionCallArgumentsDone> ForceModels(string accept, BinaryData @event, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(@event, nameof(@event));
@@ -115,7 +115,7 @@ namespace Azure.AI.VoiceLive
             ForceModelsRequest forceModelsRequest = new ForceModelsRequest(@event, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ForceModels(accept, forceModelsRequest.ToRequestContent(), context);
-            return Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
+            return Response.FromValue(ServerEventResponseFunctionCallArgumentsDone.FromResponse(response), response);
         }
 
         /// <summary>

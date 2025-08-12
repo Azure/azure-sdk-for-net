@@ -35,9 +35,19 @@ namespace Azure.AI.VoiceLive
             }
 
             writer.WritePropertyName("top_left"u8);
-            writer.WriteObjectValue<Point2D>(TopLeftInternal, options);
+            writer.WriteStartArray();
+            foreach (var item in TopLeftInternal)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
             writer.WritePropertyName("bottom_right"u8);
-            writer.WriteObjectValue<Point2D>(BottomRightInternal, options);
+            writer.WriteStartArray();
+            foreach (var item in BottomRightInternal)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,20 +85,30 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            Point2D topLeft = default;
-            Point2D bottomRight = default;
+            IList<int> topLeft = default;
+            IList<int> bottomRight = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("top_left"u8))
                 {
-                    topLeft = Point2D.DeserializePoint2D(property.Value, options);
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    topLeft = array;
                     continue;
                 }
                 if (property.NameEquals("bottom_right"u8))
                 {
-                    bottomRight = Point2D.DeserializePoint2D(property.Value, options);
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    bottomRight = array;
                     continue;
                 }
                 if (options.Format != "W")

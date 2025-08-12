@@ -957,6 +957,50 @@ namespace Azure.AI.VoiceLive
                 contentIndex);
         }
 
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDelta"/>. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"> The ID of the response. </param>
+        /// <param name="itemId"> The ID of the function call item. </param>
+        /// <param name="outputIndex"> The index of the output item in the response. </param>
+        /// <param name="callId"> The ID of the function call. </param>
+        /// <param name="delta"> The arguments delta as a JSON string. </param>
+        /// <returns> A new <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDelta"/> instance for mocking. </returns>
+        public static ServerEventResponseFunctionCallArgumentsDelta ServerEventResponseFunctionCallArgumentsDelta(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string delta = null)
+        {
+            return new ServerEventResponseFunctionCallArgumentsDelta(
+                ServerEventType.ResponseFunctionCallArgumentsDelta,
+                eventId,
+                serializedAdditionalRawData: null,
+                responseId,
+                itemId,
+                outputIndex,
+                callId,
+                delta);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDone"/>. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"> The ID of the response. </param>
+        /// <param name="itemId"> The ID of the function call item. </param>
+        /// <param name="outputIndex"> The index of the output item in the response. </param>
+        /// <param name="callId"> The ID of the function call. </param>
+        /// <param name="arguments"> The final arguments as a JSON string. </param>
+        /// <param name="name"> The name of the function call. </param>
+        /// <returns> A new <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDone"/> instance for mocking. </returns>
+        public static ServerEventResponseFunctionCallArgumentsDone ServerEventResponseFunctionCallArgumentsDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string arguments = null, string name = null)
+        {
+            return new ServerEventResponseFunctionCallArgumentsDone(
+                ServerEventType.ResponseFunctionCallArgumentsDone,
+                eventId,
+                serializedAdditionalRawData: null,
+                responseId,
+                itemId,
+                outputIndex,
+                callId,
+                arguments,
+                name);
+        }
+
         /// <summary> Initializes a new instance of <see cref="VoiceLive.ResponseAnimationBlendshapeDeltaEvent"/>. </summary>
         /// <param name="eventId"></param>
         /// <param name="responseId"></param>
@@ -1117,50 +1161,6 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 outputIndex,
                 contentIndex);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDelta"/>. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response. </param>
-        /// <param name="itemId"> The ID of the function call item. </param>
-        /// <param name="outputIndex"> The index of the output item in the response. </param>
-        /// <param name="callId"> The ID of the function call. </param>
-        /// <param name="delta"> The arguments delta as a JSON string. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDelta"/> instance for mocking. </returns>
-        public static ServerEventResponseFunctionCallArgumentsDelta ServerEventResponseFunctionCallArgumentsDelta(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string delta = null)
-        {
-            return new ServerEventResponseFunctionCallArgumentsDelta(
-                ServerEventType.ResponseFunctionCallArgumentsDelta,
-                eventId,
-                serializedAdditionalRawData: null,
-                responseId,
-                itemId,
-                outputIndex,
-                callId,
-                delta);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDone"/>. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response. </param>
-        /// <param name="itemId"> The ID of the function call item. </param>
-        /// <param name="outputIndex"> The index of the output item in the response. </param>
-        /// <param name="callId"> The ID of the function call. </param>
-        /// <param name="arguments"> The final arguments as a JSON string. </param>
-        /// <param name="name"> The name of the function call. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventResponseFunctionCallArgumentsDone"/> instance for mocking. </returns>
-        public static ServerEventResponseFunctionCallArgumentsDone ServerEventResponseFunctionCallArgumentsDone(string eventId = null, string responseId = null, string itemId = null, int outputIndex = default, string callId = null, string arguments = null, string name = null)
-        {
-            return new ServerEventResponseFunctionCallArgumentsDone(
-                ServerEventType.ResponseFunctionCallArgumentsDone,
-                eventId,
-                serializedAdditionalRawData: null,
-                responseId,
-                itemId,
-                outputIndex,
-                callId,
-                arguments,
-                name);
         }
     }
 }

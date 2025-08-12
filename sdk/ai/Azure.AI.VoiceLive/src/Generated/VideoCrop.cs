@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Defines a video crop rectangle. </summary>
+    /// <summary> Defines a video crop rectangle using top-left and bottom-right coordinates. </summary>
     public partial class VideoCrop
     {
         /// <summary>
@@ -46,10 +47,23 @@ namespace Azure.AI.VoiceLive
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VideoCrop"/>. </summary>
-        /// <param name="topLeftInternal"> Top-left corner of the crop region. </param>
-        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. </param>
+        /// <param name="topLeftInternal"> Top-left corner of the crop region. Array of [x, y], must be non-negative integers. </param>
+        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. Array of [x, y], must be non-negative integers. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topLeftInternal"/> or <paramref name="bottomRightInternal"/> is null. </exception>
+        public VideoCrop(IEnumerable<int> topLeftInternal, IEnumerable<int> bottomRightInternal)
+        {
+            Argument.AssertNotNull(topLeftInternal, nameof(topLeftInternal));
+            Argument.AssertNotNull(bottomRightInternal, nameof(bottomRightInternal));
+
+            TopLeftInternal = topLeftInternal.ToList();
+            BottomRightInternal = bottomRightInternal.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VideoCrop"/>. </summary>
+        /// <param name="topLeftInternal"> Top-left corner of the crop region. Array of [x, y], must be non-negative integers. </param>
+        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. Array of [x, y], must be non-negative integers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VideoCrop(Point2D topLeftInternal, Point2D bottomRightInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VideoCrop(IList<int> topLeftInternal, IList<int> bottomRightInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TopLeftInternal = topLeftInternal;
             BottomRightInternal = bottomRightInternal;
