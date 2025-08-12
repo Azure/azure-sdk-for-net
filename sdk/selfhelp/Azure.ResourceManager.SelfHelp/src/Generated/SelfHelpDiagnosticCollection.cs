@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class SelfHelpDiagnosticCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _selfHelpDiagnosticDiagnosticsClientDiagnostics;
-        private readonly DiagnosticsRestOperations _selfHelpDiagnosticDiagnosticsRestClient;
+        private readonly ClientDiagnostics _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics;
+        private readonly DiagnosticResourcesRestOperations _selfHelpDiagnosticDiagnosticResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SelfHelpDiagnosticCollection"/> class for mocking. </summary>
         protected SelfHelpDiagnosticCollection()
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SelfHelpDiagnosticCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _selfHelpDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpDiagnosticResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SelfHelpDiagnosticResource.ResourceType, out string selfHelpDiagnosticDiagnosticsApiVersion);
-            _selfHelpDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpDiagnosticDiagnosticsApiVersion);
+            _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpDiagnosticResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SelfHelpDiagnosticResource.ResourceType, out string selfHelpDiagnosticDiagnosticResourcesApiVersion);
+            _selfHelpDiagnosticDiagnosticResourcesRestClient = new DiagnosticResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpDiagnosticDiagnosticResourcesApiVersion);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Create</description>
+        /// <description>DiagnosticResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.SelfHelp
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
+            using var scope = _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticDiagnosticsRestClient.CreateAsync(Id, diagnosticsResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticsRestClient.CreateCreateRequest(Id, diagnosticsResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _selfHelpDiagnosticDiagnosticResourcesRestClient.CreateAsync(Id, diagnosticsResourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticResourcesRestClient.CreateCreateRequest(Id, diagnosticsResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Create</description>
+        /// <description>DiagnosticResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.SelfHelp
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
+            using var scope = _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticDiagnosticsRestClient.Create(Id, diagnosticsResourceName, data, cancellationToken);
-                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticsClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticsRestClient.CreateCreateRequest(Id, diagnosticsResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _selfHelpDiagnosticDiagnosticResourcesRestClient.Create(Id, diagnosticsResourceName, data, cancellationToken);
+                var operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(new SelfHelpDiagnosticOperationSource(Client), _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics, Pipeline, _selfHelpDiagnosticDiagnosticResourcesRestClient.CreateCreateRequest(Id, diagnosticsResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
+            using var scope = _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticDiagnosticsRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpDiagnosticDiagnosticResourcesRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
+            using var scope = _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticDiagnosticsRestClient.Get(Id, diagnosticsResourceName, cancellationToken);
+                var response = _selfHelpDiagnosticDiagnosticResourcesRestClient.Get(Id, diagnosticsResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
+            using var scope = _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticDiagnosticsRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpDiagnosticDiagnosticResourcesRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
+            using var scope = _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticDiagnosticsRestClient.Get(Id, diagnosticsResourceName, cancellationToken: cancellationToken);
+                var response = _selfHelpDiagnosticDiagnosticResourcesRestClient.Get(Id, diagnosticsResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
+            using var scope = _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _selfHelpDiagnosticDiagnosticsRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpDiagnosticDiagnosticResourcesRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<SelfHelpDiagnosticResource>(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -386,11 +386,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
-            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
+            using var scope = _selfHelpDiagnosticDiagnosticResourcesClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _selfHelpDiagnosticDiagnosticsRestClient.Get(Id, diagnosticsResourceName, cancellationToken: cancellationToken);
+                var response = _selfHelpDiagnosticDiagnosticResourcesRestClient.Get(Id, diagnosticsResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<SelfHelpDiagnosticResource>(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
