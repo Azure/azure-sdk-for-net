@@ -22,6 +22,7 @@ namespace Azure.Security.ConfidentialLedger
         private readonly HttpPipeline _pipeline;
         private readonly Uri _ledgerEndpoint;
         private readonly string _apiVersion;
+        private readonly ConfidentialLedgerFailoverService _failoverService;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
