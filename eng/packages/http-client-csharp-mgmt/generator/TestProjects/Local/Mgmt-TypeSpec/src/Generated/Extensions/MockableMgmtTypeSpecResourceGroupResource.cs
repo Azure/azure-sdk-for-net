@@ -16,8 +16,8 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary></summary>
-    internal partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    public partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecResourceGroupResource for mocking. </summary>
         protected MockableMgmtTypeSpecResourceGroupResource()
@@ -69,46 +69,6 @@ namespace MgmtTypeSpec.Mocking
         public virtual FooSettingsResource GetFooSettings()
         {
             return new FooSettingsResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
-        }
-
-        /// <summary> Gets a collection of Bars in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Bars and their operations over a BarResource. </returns>
-        public virtual BarCollection GetBars()
-        {
-            return GetCachedClient(client => new BarCollection(client, Id));
-        }
-
-        /// <summary> Get a Bar. </summary>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BarResource>> GetBarAsync(string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
-
-            return await GetBars().GetAsync(barName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a Bar. </summary>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BarResource> GetBar(string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
-
-            return GetBars().Get(barName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
-        public virtual BarSettingsResource GetBarSettingsResource()
-        {
-            return new BarSettingsResource(Client, (ResourceIdentifier)null);
         }
 
         /// <summary> Gets a collection of Zoos in the <see cref="ResourceGroupResource"/>. </summary>
