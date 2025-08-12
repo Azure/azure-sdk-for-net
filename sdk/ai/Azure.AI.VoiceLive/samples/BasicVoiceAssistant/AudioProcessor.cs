@@ -103,16 +103,8 @@ public class AudioProcessor : IDisposable
 
             _waveIn.DataAvailable += OnAudioDataAvailable;
             _waveIn.RecordingStopped += OnRecordingStopped;
-            /*
-            _logger.LogInformation($"There are {WaveIn.DeviceCount} devices available.");
-            for (int i = 0; i < WaveIn.DeviceCount; i++)
-            {
-                var deviceInfo = WaveIn.GetCapabilities(i);
 
-                _logger.LogInformation($"{i}: {deviceInfo.ProductName}");
-            }
-            */
-            _waveIn.DeviceNumber = 1;
+            _waveIn.DeviceNumber = 0;
 
             _waveIn.StartRecording();
 

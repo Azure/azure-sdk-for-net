@@ -898,6 +898,12 @@
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners:                                                   @giakas
 
+# PRLabel: %VoiceLive
+/sdk/ai/Azure.AI.VoiceLive/                                       @rhurey @xitzhang
+
+# ServiceLabel: %VoiceLive
+# ServiceOwners:                                                   @rhurey @xitzhang
+
 # ServiceLabel: %Web Apps
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp
 
