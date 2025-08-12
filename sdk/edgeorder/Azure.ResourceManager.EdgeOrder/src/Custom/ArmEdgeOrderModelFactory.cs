@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
+    // TODO: workaround for issue https://github.com/Azure/autorest.csharp/issues/5385.  Remove after the issue is fixed.
     public static partial class ArmEdgeOrderModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemDetails"/>. </summary>

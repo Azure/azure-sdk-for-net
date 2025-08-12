@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
+    // TODO: workaround for issue https://github.com/Azure/autorest.csharp/issues/5385.  Remove after the issue is fixed.
     [CodeGenSerialization(nameof(DisplayName), new string[] { "properties", "displayName" })]
     [CodeGenSerialization(nameof(Description), new string[] { "properties", "description" })]
     [CodeGenSerialization(nameof(ImageInformation), new string[] { "properties", "imageInformation" })]
