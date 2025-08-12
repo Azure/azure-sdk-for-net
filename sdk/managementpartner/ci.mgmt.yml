@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ManagementPartner
       safeName: AzureResourceManagerManagementPartner
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.ManagementPartner
+      ExpectedWarningsFilepath: None
