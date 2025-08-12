@@ -346,7 +346,7 @@ public abstract class TestEnvironment
     /// Resets the credential provider to ensure proper authentication context for the recording mode.
     /// </summary>
     /// <param name="recording">The test recording to associate with this environment.</param>
-    public void SetRecording(TestRecording recording)
+    public virtual void SetRecording(TestRecording recording)
     {
         _credential = null;
         _recording = recording;
@@ -449,7 +449,7 @@ public abstract class TestEnvironment
     {
         get
         {
-            string? switchString = TestContext.Parameters["DisableBootstrapping"] ?? Environment.GetEnvironmentVariable("AZURE_DISABLE_BOOTSTRAPPING");
+            string? switchString = TestContext.Parameters["DisableBootstrapping"] ?? Environment.GetEnvironmentVariable("CLIENTMODEL_DISABLE_BOOTSTRAPPING");
 
             bool.TryParse(switchString, out bool disableBootstrapping);
 

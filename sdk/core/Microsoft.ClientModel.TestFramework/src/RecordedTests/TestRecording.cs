@@ -176,7 +176,7 @@ public class TestRecording : IAsyncDisposable
     /// <param name="currentTransport">The existing transport to wrap or use directly in live mode.</param>
     /// <returns>A transport configured for the current recording mode.</returns>
     /// <exception cref="InvalidOperationException">Thrown when attempting to instrument already instrumented options.</exception>
-    public PipelineTransport? CreateTransport(PipelineTransport? currentTransport)
+    public virtual PipelineTransport? CreateTransport(PipelineTransport? currentTransport)
     {
         if (Mode != RecordedTestMode.Live)
         {
@@ -201,7 +201,7 @@ public class TestRecording : IAsyncDisposable
     /// Generates a deterministic unique identifier as a string.
     /// </summary>
     /// <returns>A string representation of a random integer.</returns>
-    public string GenerateId()
+    public virtual string GenerateId()
     {
         return Random.Next().ToString();
     }
@@ -213,7 +213,7 @@ public class TestRecording : IAsyncDisposable
     /// <param name="maxLength">Optional maximum length of the complete identifier (prefix + generated part).</param>
     /// <param name="useOnlyLowercase">If true, uses only lowercase letters and numbers.</param>
     /// <returns>An alphanumeric identifier string with the specified prefix.</returns>
-    public string GenerateAlphaNumericId(string prefix, int? maxLength = null, bool useOnlyLowercase = false)
+    public virtual string GenerateAlphaNumericId(string prefix, int? maxLength = null, bool useOnlyLowercase = false)
     {
         var stringChars = new char[8];
 
@@ -246,7 +246,7 @@ public class TestRecording : IAsyncDisposable
     /// <param name="prefix">The prefix to prepend to the generated identifier.</param>
     /// <param name="maxLength">The maximum length of the complete identifier.</param>
     /// <returns>An identifier string that won't exceed the specified maximum length.</returns>
-    public string GenerateId(string prefix, int maxLength)
+    public virtual string GenerateId(string prefix, int maxLength)
     {
         var id = $"{prefix}{Random.Next()}";
         return id.Length > maxLength ? id.Substring(0, maxLength) : id;
@@ -258,7 +258,7 @@ public class TestRecording : IAsyncDisposable
     /// <param name="prefix">The prefix to prepend to the generated asset name.</param>
     /// <param name="callerMethodName">The name of the calling method (automatically populated).</param>
     /// <returns>A deterministic asset name suitable for test resources.</returns>
-    public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
+    public virtual string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
     {
         return prefix + Random.Next(9999);
     }
@@ -272,7 +272,7 @@ public class TestRecording : IAsyncDisposable
     /// <returns>The variable value (defaultValue in record/live modes, recorded value in playback mode).</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown for invalid recording modes.</exception>
     /// <exception cref="TestRecordingMismatchException">Thrown when variables are missing in playback mode.</exception>
-    public string? GetVariable(string variableName, string defaultValue, Func<string, string>? sanitizer = default)
+    public virtual string? GetVariable(string variableName, string defaultValue, Func<string, string>? sanitizer = default)
     {
         switch (Mode)
         {
@@ -307,7 +307,7 @@ public class TestRecording : IAsyncDisposable
     /// <param name="variableName">The name of the variable to set.</param>
     /// <param name="value">The value to record.</param>
     /// <param name="sanitizer">Optional function to sanitize the value before recording.</param>
-    public void SetVariable(string variableName, string? value, Func<string, string>? sanitizer = default)
+    public virtual void SetVariable(string variableName, string? value, Func<string, string>? sanitizer = default)
     {
         value ??= string.Empty;
         switch (Mode)
@@ -325,7 +325,7 @@ public class TestRecording : IAsyncDisposable
     /// Useful for setup calls that shouldn't be part of the test recording.
     /// </summary>
     /// <returns>A disposable scope that disables recording.</returns>
-    public DisableRecordingScope DisableRecording()
+    public virtual DisableRecordingScope DisableRecording()
     {
         return new DisableRecordingScope(this, EntryRecordModel.DoNotRecord);
     }
@@ -335,7 +335,7 @@ public class TestRecording : IAsyncDisposable
     /// Useful for requests with sensitive data in the body that should be excluded from recordings.
     /// </summary>
     /// <returns>A disposable scope that disables request body recording.</returns>
-    public DisableRecordingScope DisableRequestBodyRecording()
+    public virtual DisableRecordingScope DisableRequestBodyRecording()
     {
         return new DisableRecordingScope(this, EntryRecordModel.RecordWithoutRequestBody);
     }

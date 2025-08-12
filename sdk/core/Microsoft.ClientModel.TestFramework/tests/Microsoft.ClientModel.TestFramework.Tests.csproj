@@ -17,8 +17,4 @@
 		<PackageReference Include="NUnit" />
 		<PackageReference Include="Moq" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="RecordedTests\TestProxy\" />
-  </ItemGroup>
 </Project>
