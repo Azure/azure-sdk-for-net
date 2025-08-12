@@ -1,13 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using _Specs_.Azure.ClientGenerator.Core.Access;
-using Azure;
 using NUnit.Framework;
-using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
-using _Specs_.Azure.ClientGenerator.Core.Access._PublicOperation;
 using _Specs_.Azure.ClientGenerator.Core.ClientLocation;
 
 namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientLocation
