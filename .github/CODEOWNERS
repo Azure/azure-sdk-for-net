@@ -787,7 +787,7 @@
 # ServiceOwners:                                                   @derek1ee
 
 # PRLabel: %Schema Registry
-/sdk/schemaregistry/                                               @axisc @sjkwak @hmlam @jsquire
+/sdk/schemaregistry/                                               @axisc @sjkwak @hmlam
 
 # ServiceLabel: %Schema Registry
 # ServiceOwners:                                                   @axisc @sjkwak @hmlam
