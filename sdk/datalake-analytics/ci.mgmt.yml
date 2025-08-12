@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DataLakeAnalytics
       safeName: AzureResourceManagerDataLakeAnalytics
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.DataLakeAnalytics
-      ExpectedWarningsFilepath: None

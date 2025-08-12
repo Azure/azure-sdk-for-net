@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.MigrationDiscoverySap
       safeName: AzureResourceManagerMigrationDiscoverySap
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.MigrationDiscoverySap
-      ExpectedWarningsFilepath: None

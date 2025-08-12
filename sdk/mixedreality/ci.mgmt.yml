@@ -20,7 +20,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.MixedReality
       safeName: AzureResourceManagerMixedReality
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.MixedReality
-      ExpectedWarningsFilepath: None

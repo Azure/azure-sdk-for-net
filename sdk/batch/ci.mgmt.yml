@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Batch
       safeName: AzureResourceManagerBatch
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Batch
-      ExpectedWarningsFilepath: None

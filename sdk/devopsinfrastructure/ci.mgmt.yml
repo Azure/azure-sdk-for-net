@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DevOpsInfrastructure
       safeName: AzureResourceManagerDevOpsInfrastructure
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.DevOpsInfrastructure
-      ExpectedWarningsFilepath: None

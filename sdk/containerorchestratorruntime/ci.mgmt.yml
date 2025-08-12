@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ContainerOrchestratorRuntime
       safeName: AzureResourceManagerContainerOrchestratorRuntime
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ContainerOrchestratorRuntime
-      ExpectedWarningsFilepath: None

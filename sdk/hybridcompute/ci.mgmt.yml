@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.HybridCompute
       safeName: AzureResourceManagerHybridCompute
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.HybridCompute
-      ExpectedWarningsFilepath: None

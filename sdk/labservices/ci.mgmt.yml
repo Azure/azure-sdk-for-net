@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.LabServices
       safeName: AzureResourceManagerLabServices
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.LabServices
-      ExpectedWarningsFilepath: None

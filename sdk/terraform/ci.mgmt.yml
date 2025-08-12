@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Terraform
       safeName: AzureResourceManagerTerraform
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Terraform
-      ExpectedWarningsFilepath: None

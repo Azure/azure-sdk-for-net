@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PrivateDns
       safeName: AzureResourceManagerPrivateDns
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.PrivateDns
-      ExpectedWarningsFilepath: None

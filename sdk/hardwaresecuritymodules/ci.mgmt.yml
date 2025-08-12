@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.HardwareSecurityModules
       safeName: AzureResourceManagerHardwareSecurityModules
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.HardwareSecurityModules
-      ExpectedWarningsFilepath: None

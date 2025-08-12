@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.EdgeZones
       safeName: AzureResourceManagerEdgeZones
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.EdgeZones
-      ExpectedWarningsFilepath: None

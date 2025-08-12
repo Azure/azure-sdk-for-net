@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.MachineLearningCompute
       safeName: AzureResourceManagerMachineLearningCompute
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.MachineLearningCompute
-      ExpectedWarningsFilepath: None

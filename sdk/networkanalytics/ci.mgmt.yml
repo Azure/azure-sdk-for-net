@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.NetworkAnalytics
       safeName: AzureResourceManagerNetworkAnalytics
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.NetworkAnalytics
-      ExpectedWarningsFilepath: None

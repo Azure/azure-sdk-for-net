@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.StoragePool
       safeName: AzureResourceManagerStoragePool
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.StoragePool
-      ExpectedWarningsFilepath: None

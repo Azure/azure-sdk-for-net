@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.HealthcareApis
       safeName: AzureResourceManagerHealthcareApis
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.HealthcareApis
-      ExpectedWarningsFilepath: None

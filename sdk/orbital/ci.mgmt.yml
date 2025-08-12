@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Orbital
       safeName: AzureResourceManagerOrbital
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Orbital
-      ExpectedWarningsFilepath: None

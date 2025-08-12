@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PowerBIDedicated
       safeName: AzureResourceManagerPowerBIDedicated
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.PowerBIDedicated
-      ExpectedWarningsFilepath: None

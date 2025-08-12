@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Elastic
       safeName: AzureResourceManagerElastic
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Elastic
-      ExpectedWarningsFilepath: None

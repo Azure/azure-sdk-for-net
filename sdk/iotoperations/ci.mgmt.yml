@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.IotOperations
       safeName: AzureResourceManagerIotOperations
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.IotOperations
-      ExpectedWarningsFilepath: None

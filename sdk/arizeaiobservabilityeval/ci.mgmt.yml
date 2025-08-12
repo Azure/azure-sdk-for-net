@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ArizeAIObservabilityEval
       safeName: AzureResourceManagerArizeAIObservabilityEval
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ArizeAIObservabilityEval
-      ExpectedWarningsFilepath: None

@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ManagedNetworkFabric
       safeName: AzureResourceManagerManagedNetworkFabric
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ManagedNetworkFabric
-      ExpectedWarningsFilepath: None

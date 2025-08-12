@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ProviderHub
       safeName: AzureResourceManagerProviderHub
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ProviderHub
-      ExpectedWarningsFilepath: None

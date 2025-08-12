@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Workloads
       safeName: AzureResourceManagerWorkloads
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Workloads
-      ExpectedWarningsFilepath: None

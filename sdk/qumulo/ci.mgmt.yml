@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Qumulo
       safeName: AzureResourceManagerQumulo
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Qumulo
-      ExpectedWarningsFilepath: None

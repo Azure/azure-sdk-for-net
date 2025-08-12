@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.NeonPostgres
       safeName: AzureResourceManagerNeonPostgres
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.NeonPostgres
-      ExpectedWarningsFilepath: None

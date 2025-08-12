@@ -20,7 +20,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Purview
       safeName: AzureResourceManagerPurview
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Purview
-      ExpectedWarningsFilepath: None

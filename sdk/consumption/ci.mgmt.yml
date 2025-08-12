@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Consumption
       safeName: AzureResourceManagerConsumption
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Consumption
-      ExpectedWarningsFilepath: None

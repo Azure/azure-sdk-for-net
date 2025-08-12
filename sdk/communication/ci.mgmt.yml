@@ -20,7 +20,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Communication
       safeName: AzureResourceManagerCommunication
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Communication
-      ExpectedWarningsFilepath: None

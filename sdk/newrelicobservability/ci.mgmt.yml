@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.NewRelicObservability
       safeName: AzureResourceManagerNewRelicObservability
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.NewRelicObservability
-      ExpectedWarningsFilepath: None

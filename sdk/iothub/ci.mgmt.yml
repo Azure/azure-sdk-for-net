@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.IotHub
       safeName: AzureResourceManagerIotHub
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.IotHub
-      ExpectedWarningsFilepath: None

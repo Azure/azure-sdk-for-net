@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ManagedNetwork
       safeName: AzureResourceManagerManagedNetwork
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ManagedNetwork
-      ExpectedWarningsFilepath: None

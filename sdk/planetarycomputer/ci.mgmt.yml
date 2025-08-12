@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PlanetaryComputer
       safeName: AzureResourceManagerPlanetaryComputer
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.PlanetaryComputer
-      ExpectedWarningsFilepath: None

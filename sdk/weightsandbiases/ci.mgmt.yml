@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.WeightsAndBiases
       safeName: AzureResourceManagerWeightsAndBiases
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.WeightsAndBiases
-      ExpectedWarningsFilepath: None

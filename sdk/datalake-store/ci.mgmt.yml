@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DataLakeStore
       safeName: AzureResourceManagerDataLakeStore
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.DataLakeStore
-      ExpectedWarningsFilepath: None

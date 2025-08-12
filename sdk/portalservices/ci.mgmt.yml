@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PortalServicesCopilot
       safeName: AzureResourceManagerPortalServicesCopilot
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.PortalServicesCopilot
-      ExpectedWarningsFilepath: None

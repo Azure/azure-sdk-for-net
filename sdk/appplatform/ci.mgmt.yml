@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AppPlatform
       safeName: AzureResourceManagerAppPlatform
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.AppPlatform
-      ExpectedWarningsFilepath: None

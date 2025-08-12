@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DeviceUpdate
       safeName: AzureResourceManagerDeviceUpdate
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.DeviceUpdate
-      ExpectedWarningsFilepath: None

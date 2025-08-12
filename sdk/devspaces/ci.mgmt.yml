@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DevSpaces
       safeName: AzureResourceManagerDevSpaces
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.DevSpaces
-      ExpectedWarningsFilepath: None

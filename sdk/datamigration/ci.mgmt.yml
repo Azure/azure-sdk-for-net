@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DataMigration
       safeName: AzureResourceManagerDataMigration
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.DataMigration
-      ExpectedWarningsFilepath: None

@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ServiceFabricManagedClusters
       safeName: AzureResourceManagerServiceFabricManagedClusters
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ServiceFabricManagedClusters
-      ExpectedWarningsFilepath: None

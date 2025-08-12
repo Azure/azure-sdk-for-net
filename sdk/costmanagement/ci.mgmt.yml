@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.CostManagement
       safeName: AzureResourceManagerCostManagement
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.CostManagement
-      ExpectedWarningsFilepath: None

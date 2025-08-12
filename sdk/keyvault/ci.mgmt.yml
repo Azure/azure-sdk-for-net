@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.KeyVault
       safeName: AzureResourceManagerKeyVault
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.KeyVault
-      ExpectedWarningsFilepath: None

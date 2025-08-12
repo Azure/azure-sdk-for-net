@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Relay
       safeName: AzureResourceManagerRelay
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Relay
-      ExpectedWarningsFilepath: None

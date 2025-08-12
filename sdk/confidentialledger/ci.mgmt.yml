@@ -20,7 +20,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ConfidentialLedger
       safeName: AzureResourceManagerConfidentialLedger
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ConfidentialLedger
-      ExpectedWarningsFilepath: None

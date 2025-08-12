@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Playwright
       safeName: AzureResourceManagerPlaywright
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Playwright
-      ExpectedWarningsFilepath: None

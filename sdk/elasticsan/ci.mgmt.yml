@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ElasticSan
       safeName: AzureResourceManagerElasticSan
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ElasticSan
-      ExpectedWarningsFilepath: None

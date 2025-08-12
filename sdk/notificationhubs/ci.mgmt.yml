@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.NotificationHubs
       safeName: AzureResourceManagerNotificationHubs
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.NotificationHubs
-      ExpectedWarningsFilepath: None

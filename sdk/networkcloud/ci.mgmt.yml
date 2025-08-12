@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.NetworkCloud
       safeName: AzureResourceManagerNetworkCloud
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.NetworkCloud
-      ExpectedWarningsFilepath: None

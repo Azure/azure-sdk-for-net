@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.TrafficManager
       safeName: AzureResourceManagerTrafficManager
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.TrafficManager
-      ExpectedWarningsFilepath: None

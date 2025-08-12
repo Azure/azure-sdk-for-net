@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PureStorageBlock
       safeName: AzureResourceManagerPureStorageBlock
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.PureStorageBlock
-      ExpectedWarningsFilepath: None

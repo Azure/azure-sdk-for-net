@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ConnectedVMwarevSphere
       safeName: AzureResourceManagerConnectedVMwarevSphere
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ConnectedVMwarevSphere
-      ExpectedWarningsFilepath: None

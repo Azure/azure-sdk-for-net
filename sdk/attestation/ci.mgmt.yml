@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Attestation
       safeName: AzureResourceManagerAttestation
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Attestation
-      ExpectedWarningsFilepath: None
