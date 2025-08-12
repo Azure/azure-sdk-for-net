@@ -38,6 +38,17 @@ namespace Microsoft.ClientModel.TestFramework
         bool NUnit.Framework.Interfaces.IPreFilter.IsMatch(System.Type type) { throw null; }
         bool NUnit.Framework.Interfaces.IPreFilter.IsMatch(System.Type type, System.Reflection.MethodInfo method) { throw null; }
     }
+    public abstract partial class DisposableConfig : System.IDisposable
+    {
+        protected readonly System.Collections.Generic.Dictionary<string, string> OriginalValues;
+        public DisposableConfig(System.Collections.Generic.Dictionary<string, string> values, System.Threading.SemaphoreSlim sem) { }
+        public DisposableConfig(string name, string value, System.Threading.SemaphoreSlim sem) { }
+        internal abstract void Cleanup();
+        public void Dispose() { }
+        internal abstract void InitValues();
+        internal abstract void SetValue(string name, string value);
+        internal abstract void SetValues(System.Collections.Generic.Dictionary<string, string> values);
+    }
     public enum EntryRecordModel
     {
         Record = 0,
@@ -134,22 +145,21 @@ namespace Microsoft.ClientModel.TestFramework
         public const string SanitizeValue = "Sanitized";
         protected RecordedTestBase(bool isAsync, Microsoft.ClientModel.TestFramework.RecordedTestMode? mode = default(Microsoft.ClientModel.TestFramework.RecordedTestMode?)) : base (default(bool)) { }
         public virtual string? AssetsJsonPath { get { throw null; } }
-        public System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer> BodyKeySanitizers { get { throw null; } }
-        public System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer> BodyRegexSanitizers { get { throw null; } }
+        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer> BodyKeySanitizers { get { throw null; } }
+        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer> BodyRegexSanitizers { get { throw null; } }
         public bool CompareBodies { get { throw null; } set { } }
-        public System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer> HeaderRegexSanitizers { get { throw null; } }
-        public System.Collections.Generic.List<string> JsonPathSanitizers { get { throw null; } }
+        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer> HeaderRegexSanitizers { get { throw null; } }
+        public virtual System.Collections.Generic.List<string> JsonPathSanitizers { get { throw null; } }
         public Microsoft.ClientModel.TestFramework.RecordedTestMode Mode { get { throw null; } set { } }
-        public Microsoft.ClientModel.TestFramework.TestRecording? Recording { get { throw null; } }
-        public System.Collections.Generic.List<string> SanitizedHeaders { get { throw null; } }
-        public System.Collections.Generic.List<string> SanitizedQueryParameters { get { throw null; } }
-        public System.Collections.Generic.List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get { throw null; } }
-        public System.Collections.Generic.List<string> SanitizersToRemove { get { throw null; } }
+        public virtual Microsoft.ClientModel.TestFramework.TestRecording? Recording { get { throw null; } }
+        public virtual System.Collections.Generic.List<string> SanitizedHeaders { get { throw null; } }
+        public virtual System.Collections.Generic.List<string> SanitizedQueryParameters { get { throw null; } }
+        public virtual System.Collections.Generic.List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get { throw null; } }
+        public virtual System.Collections.Generic.List<string> SanitizersToRemove { get { throw null; } }
         public bool SaveDebugRecordingsOnFailure { get { throw null; } set { } }
         protected Microsoft.ClientModel.TestFramework.TestRetryHelper TestRetryHelper { get { throw null; } }
         protected override System.DateTime TestStartTime { get { throw null; } }
-        public System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer> UriRegexSanitizers { get { throw null; } }
-        public bool UseDefaultGuidFormatForClientRequestId { get { throw null; } set { } }
+        public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer> UriRegexSanitizers { get { throw null; } }
         protected bool UseLocalDebugProxy { get { throw null; } set { } }
         protected bool ValidateClientInstrumentation { get { throw null; } set { } }
         protected internal override object CreateProxyFromClient(System.Type clientType, object client, System.Collections.Generic.IEnumerable<Castle.DynamicProxy.IInterceptor>? preInterceptors) { throw null; }
@@ -265,8 +275,13 @@ namespace Microsoft.ClientModel.TestFramework
         public static string GetSourcePath(System.Reflection.Assembly assembly) { throw null; }
         protected string GetVariable(string name) { throw null; }
         public abstract System.Collections.Generic.Dictionary<string, string> ParseEnvironmentFile();
-        public void SetRecording(Microsoft.ClientModel.TestFramework.TestRecording recording) { }
+        public virtual void SetRecording(Microsoft.ClientModel.TestFramework.TestRecording recording) { }
         public abstract System.Threading.Tasks.Task WaitForEnvironmentAsync();
+    }
+    public partial class TestEnvVar : Microsoft.ClientModel.TestFramework.DisposableConfig
+    {
+        public TestEnvVar(System.Collections.Generic.Dictionary<string, string> values) : base (default(string), default(string), default(System.Threading.SemaphoreSlim)) { }
+        public TestEnvVar(string name, string value) : base (default(string), default(string), default(System.Threading.SemaphoreSlim)) { }
     }
     public partial class TestFrameworkClient
     {
@@ -286,7 +301,7 @@ namespace Microsoft.ClientModel.TestFramework
         public const string IpAddress = "127.0.0.1";
         public int? ProxyPortHttp { get { throw null; } }
         public int? ProxyPortHttps { get { throw null; } }
-        public System.Threading.Tasks.Task CheckProxyOutputAsync() { throw null; }
+        public virtual System.Threading.Tasks.Task CheckProxyOutputAsync() { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxyProcess Start(bool debugMode = false) { throw null; }
     }
     public partial class TestRandom : System.Random
@@ -305,18 +320,18 @@ namespace Microsoft.ClientModel.TestFramework
         public string? RecordingId { get { throw null; } }
         public System.DateTimeOffset UtcNow { get { throw null; } }
         public System.Collections.Generic.SortedDictionary<string, string> Variables { get { throw null; } }
-        public static System.Threading.Tasks.Task<Microsoft.ClientModel.TestFramework.TestRecording> CreateAsync(Microsoft.ClientModel.TestFramework.RecordedTestMode mode, string sessionFile, Microsoft.ClientModel.TestFramework.TestProxyProcess proxy, Microsoft.ClientModel.TestFramework.RecordedTestBase recordedTestBase, System.Threading.CancellationToken? cancellationToken = default(System.Threading.CancellationToken?)) { throw null; }
-        public System.ClientModel.Primitives.PipelineTransport? CreateTransport(System.ClientModel.Primitives.PipelineTransport? currentTransport) { throw null; }
-        public Microsoft.ClientModel.TestFramework.TestRecording.DisableRecordingScope DisableRecording() { throw null; }
-        public Microsoft.ClientModel.TestFramework.TestRecording.DisableRecordingScope DisableRequestBodyRecording() { throw null; }
+        public static System.Threading.Tasks.Task<Microsoft.ClientModel.TestFramework.TestRecording> CreateAsync(Microsoft.ClientModel.TestFramework.RecordedTestMode mode, string sessionFile, Microsoft.ClientModel.TestFramework.TestProxyProcess? proxy, Microsoft.ClientModel.TestFramework.RecordedTestBase recordedTestBase, System.Threading.CancellationToken? cancellationToken = default(System.Threading.CancellationToken?)) { throw null; }
+        public virtual System.ClientModel.Primitives.PipelineTransport? CreateTransport(System.ClientModel.Primitives.PipelineTransport? currentTransport) { throw null; }
+        public virtual Microsoft.ClientModel.TestFramework.TestRecording.DisableRecordingScope DisableRecording() { throw null; }
+        public virtual Microsoft.ClientModel.TestFramework.TestRecording.DisableRecordingScope DisableRequestBodyRecording() { throw null; }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
         public System.Threading.Tasks.ValueTask DisposeAsync(bool save) { throw null; }
-        public string GenerateAlphaNumericId(string prefix, int? maxLength = default(int?), bool useOnlyLowercase = false) { throw null; }
-        public string GenerateAssetName(string prefix, [System.Runtime.CompilerServices.CallerMemberNameAttribute] string callerMethodName = "testframework_failed") { throw null; }
-        public string GenerateId() { throw null; }
-        public string GenerateId(string prefix, int maxLength) { throw null; }
-        public string? GetVariable(string variableName, string defaultValue, System.Func<string, string>? sanitizer = null) { throw null; }
-        public void SetVariable(string variableName, string? value, System.Func<string, string>? sanitizer = null) { }
+        public virtual string GenerateAlphaNumericId(string prefix, int? maxLength = default(int?), bool useOnlyLowercase = false) { throw null; }
+        public virtual string GenerateAssetName(string prefix, [System.Runtime.CompilerServices.CallerMemberNameAttribute] string callerMethodName = "testframework_failed") { throw null; }
+        public virtual string GenerateId() { throw null; }
+        public virtual string GenerateId(string prefix, int maxLength) { throw null; }
+        public virtual string? GetVariable(string variableName, string defaultValue, System.Func<string, string>? sanitizer = null) { throw null; }
+        public virtual void SetVariable(string variableName, string? value, System.Func<string, string>? sanitizer = null) { }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct DisableRecordingScope : System.IDisposable
         {

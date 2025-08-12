@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft.ClientModel.TestFramework client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation Microsoft.ClientModel.TestFramework</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-preview.1</Version>
     <PackageTags>Microsoft.ClientModel.TestFramework</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
