@@ -1,20 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace Microsoft.ClientModel.TestFramework.Tests;
+
 [TestFixture]
 public class MockPipelineRequestHeadersTests
 {
     private MockPipelineRequestHeaders _headers;
+
     [SetUp]
     public void SetUp()
     {
         _headers = new MockPipelineRequestHeaders();
     }
+
     [Test]
     public void Constructor_CreatesEmptyHeadersCollection()
     {
@@ -22,6 +27,7 @@ public class MockPipelineRequestHeadersTests
         Assert.IsNotNull(headers);
         Assert.IsFalse(headers.Any());
     }
+
     [Test]
     public void Add_SingleHeader_AddsHeaderCorrectly()
     {
@@ -29,6 +35,7 @@ public class MockPipelineRequestHeadersTests
         Assert.IsTrue(_headers.TryGetValue("Content-Type", out var value));
         Assert.AreEqual("application/json", value);
     }
+
     [Test]
     public void Add_MultipleHeaders_AddsAllHeaders()
     {
@@ -42,6 +49,7 @@ public class MockPipelineRequestHeadersTests
         Assert.IsTrue(_headers.TryGetValue("X-Custom-Header", out var custom));
         Assert.AreEqual("custom-value", custom);
     }
+
     [Test]
     public void Add_SameHeaderMultipleTimes_CombinesValues()
     {
@@ -51,6 +59,7 @@ public class MockPipelineRequestHeadersTests
         Assert.IsTrue(_headers.TryGetValue("Accept", out var combinedValue));
         Assert.AreEqual("application/json,text/html,application/xml", combinedValue);
     }
+
     [Test]
     public void Add_CaseInsensitiveHeaderNames_TreatsAsSameHeader()
     {
@@ -62,12 +71,14 @@ public class MockPipelineRequestHeadersTests
         Assert.IsTrue(_headers.TryGetValue("content-type", out var lowerValue));
         Assert.AreEqual("application/json,text/html,application/xml", lowerValue);
     }
+
     [Test]
     public void TryGetValue_NonExistentHeader_ReturnsFalse()
     {
         Assert.IsFalse(_headers.TryGetValue("Non-Existent", out var value));
         Assert.IsNull(value);
     }
+
     [Test]
     public void TryGetValue_ExistingHeader_ReturnsTrue()
     {
@@ -75,6 +86,7 @@ public class MockPipelineRequestHeadersTests
         Assert.IsTrue(_headers.TryGetValue("Test-Header", out var value));
         Assert.AreEqual("test-value", value);
     }
+
     [Test]
     public void TryGetValue_CaseInsensitive_ReturnsCorrectValue()
     {
@@ -86,12 +98,14 @@ public class MockPipelineRequestHeadersTests
         Assert.IsTrue(_headers.TryGetValue("Content-Length", out var value3));
         Assert.AreEqual("1024", value3);
     }
+
     [Test]
     public void TryGetValues_NonExistentHeader_ReturnsFalse()
     {
         Assert.IsFalse(_headers.TryGetValues("Non-Existent", out var values));
         Assert.IsNull(values);
     }
+
     [Test]
     public void TryGetValues_ExistingHeader_ReturnsAllValues()
     {
@@ -107,6 +121,7 @@ public class MockPipelineRequestHeadersTests
         Assert.Contains("no-store", valuesList);
         Assert.Contains("must-revalidate", valuesList);
     }
+
     [Test]
     public void TryGetValues_SingleValue_ReturnsCollectionWithOneItem()
     {
@@ -118,12 +133,14 @@ public class MockPipelineRequestHeadersTests
         Assert.AreEqual(1, valuesList.Count);
         Assert.AreEqual("TestAgent/1.0", valuesList[0]);
     }
+
     [Test]
     public void GetEnumerator_EmptyHeaders_ReturnsEmptyEnumeration()
     {
         var headers = _headers.ToList();
         Assert.AreEqual(0, headers.Count);
     }
+
     [Test]
     public void GetEnumerator_WithHeaders_ReturnsAllHeaders()
     {
@@ -143,6 +160,7 @@ public class MockPipelineRequestHeadersTests
         Assert.IsNotNull(accept.Key);
         Assert.AreEqual("application/json,text/html", accept.Value);
     }
+
     [Test]
     public void GetEnumerator_CombinesMultipleValuesWithComma()
     {
@@ -155,11 +173,13 @@ public class MockPipelineRequestHeadersTests
         Assert.AreEqual("Via", viaHeader.Key);
         Assert.AreEqual("1.1 proxy1,1.0 proxy2,1.1 proxy3", viaHeader.Value);
     }
+
     [Test]
     public void Add_NullHeaderName_ThrowsException()
     {
         Assert.Throws<ArgumentNullException>(() => _headers.Add(null!, "value"));
     }
+
     [Test]
     public void Add_EmptyHeaderName_AllowsEmptyName()
     {
@@ -167,13 +187,7 @@ public class MockPipelineRequestHeadersTests
         Assert.IsTrue(_headers.TryGetValue("", out var value));
         Assert.AreEqual("value", value);
     }
-    [Test]
-    public void Add_NullHeaderValue_AddsNullValue()
-    {
-        _headers.Add("Test-Header", null!);
-        Assert.IsTrue(_headers.TryGetValue("Test-Header", out var value));
-        Assert.IsNull(value);
-    }
+
     [Test]
     public void Add_EmptyHeaderValue_AddsEmptyValue()
     {

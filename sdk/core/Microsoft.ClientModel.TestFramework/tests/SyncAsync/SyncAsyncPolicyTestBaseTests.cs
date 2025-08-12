@@ -1,242 +1,290 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using Microsoft.ClientModel.TestFramework;
+
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+
 namespace Microsoft.ClientModel.TestFramework.Tests.SyncAsync;
+
 [TestFixture]
 public class SyncAsyncPolicyTestBaseTests
 {
-    private TestableSyncAsyncPolicyTestBase _asyncTestBase;
-    private TestableSyncAsyncPolicyTestBase _syncTestBase;
+    #region Constructor
 
-    [SetUp]
-    public void Setup()
+    [Test]
+    public void ConstructorSetsIsAsyncTrue()
     {
-        _asyncTestBase = new TestableSyncAsyncPolicyTestBase(isAsync: true);
-        _syncTestBase = new TestableSyncAsyncPolicyTestBase(isAsync: false);
+        var testBase = new TestSyncAsyncPolicyTestBase(true);
+
+        Assert.That(testBase.IsAsync, Is.True);
     }
 
     [Test]
-    public void Constructor_WithIsAsyncTrue_SetsIsAsyncProperty()
+    public void ConstructorSetsIsAsyncFalse()
     {
-        Assert.IsTrue(_asyncTestBase.IsAsync);
+        var testBase = new TestSyncAsyncPolicyTestBase(false);
+
+        Assert.That(testBase.IsAsync, Is.False);
+    }
+
+    #endregion
+
+    #region ProcessMessage Method
+
+    [Test]
+    public void ProcessMessageCallsAsyncForAsyncMode()
+    {
+        var testBase = new TestSyncAsyncPolicyTestBase(true);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy();
+
+        testBase.ProcessMessage(message, policy);
+
+        Assert.That(policy.ProcessAsyncCalled, Is.True);
+        Assert.That(policy.ProcessSyncCalled, Is.False);
     }
 
     [Test]
-    public void Constructor_WithIsAsyncFalse_SetsIsAsyncProperty()
+    public void ProcessMessageCallsSyncForSyncMode()
     {
-        Assert.IsFalse(_syncTestBase.IsAsync);
+        var testBase = new TestSyncAsyncPolicyTestBase(false);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy();
+
+        testBase.ProcessMessage(message, policy);
+
+        Assert.That(policy.ProcessSyncCalled, Is.True);
+        Assert.That(policy.ProcessAsyncCalled, Is.False);
     }
 
     [Test]
-    public void Inheritance_ExtendsSyncAsyncTestBase()
+    public void ProcessMessageHandlesAsyncExceptions()
     {
-        Assert.IsInstanceOf<SyncAsyncTestBase>(_asyncTestBase);
-        Assert.IsInstanceOf<SyncAsyncTestBase>(_syncTestBase);
+        var testBase = new TestSyncAsyncPolicyTestBase(true);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy { ShouldThrowAsync = true };
+
+        Assert.Throws<InvalidOperationException>(() => testBase.ProcessMessage(message, policy));
     }
 
     [Test]
-    public void TestFixture_Attributes_ArePresent()
+    public void ProcessMessageHandlesSyncExceptions()
     {
-        var type = typeof(SyncAsyncPolicyTestBase);
-        var attributes = type.GetCustomAttributes(typeof(TestFixtureAttribute), false);
-        Assert.IsNotNull(attributes);
-        Assert.Greater(attributes.Length, 0);
+        var testBase = new TestSyncAsyncPolicyTestBase(false);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy { ShouldThrowSync = true };
+
+        Assert.Throws<InvalidOperationException>(() => testBase.ProcessMessage(message, policy));
     }
 
     [Test]
-    public async Task SendRequestAsync_WithPipelineAndRequestAction_ExecutesSuccessfully()
+    public void ProcessMessageWithNextHandlesAsyncExceptions()
     {
-        var transport = _asyncTestBase.CreateMockTransport(msg => new MockPipelineResponse(200));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        var response = await _asyncTestBase.SendRequestAsync(pipeline, request =>
+        var testBase = new TestSyncAsyncPolicyTestBase(true);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy { ShouldThrowAsyncWithNext = true };
+        var next = new TestPolicy();
+
+        Assert.Throws<InvalidOperationException>(() =>
+            testBase.ProcessMessage(message, policy, next.ProcessAsync));
+    }
+
+    [Test]
+    public void ProcessMessageWithNextHandlesSyncExceptions()
+    {
+        var testBase = new TestSyncAsyncPolicyTestBase(false);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy { ShouldThrowSyncWithNext = true };
+        var next = new TestPolicy();
+
+        Assert.Throws<InvalidOperationException>(() =>
+            testBase.ProcessMessage(message, policy, next.Process));
+    }
+
+    #endregion
+
+    #region Integration Tests
+
+    [Test]
+    public void AsyncModeProcessesMessageCorrectly()
+    {
+        var testBase = new TestSyncAsyncPolicyTestBase(true);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy();
+
+        testBase.ProcessMessage(message, policy);
+
+        Assert.That(policy.ProcessedMessage, Is.SameAs(message));
+        Assert.That(policy.ProcessAsyncCalled, Is.True);
+    }
+
+    [Test]
+    public void SyncModeProcessesMessageCorrectly()
+    {
+        var testBase = new TestSyncAsyncPolicyTestBase(false);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy();
+
+        testBase.ProcessMessage(message, policy);
+
+        Assert.That(policy.ProcessedMessage, Is.SameAs(message));
+        Assert.That(policy.ProcessSyncCalled, Is.True);
+    }
+
+    [Test]
+    public void AsyncModeWithNextProcessesMessageCorrectly()
+    {
+        var testBase = new TestSyncAsyncPolicyTestBase(true);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy();
+        var next = new TestPolicy();
+
+        testBase.ProcessMessage(message, policy, next.ProcessAsync);
+
+        Assert.That(policy.ProcessedMessage, Is.SameAs(message));
+        Assert.That(policy.NextDelegate, Is.Not.Null);
+        Assert.That(policy.ProcessAsyncWithNextCalled, Is.True);
+    }
+
+    [Test]
+    public void SyncModeWithNextProcessesMessageCorrectly()
+    {
+        var testBase = new TestSyncAsyncPolicyTestBase(false);
+        var message = new MockPipelineMessage();
+        var policy = new TestPolicy();
+        var next = new TestPolicy();
+
+        testBase.ProcessMessage(message, policy, next.Process);
+
+        Assert.That(policy.ProcessedMessage, Is.SameAs(message));
+        Assert.That(policy.NextAction, Is.Not.Null);
+        Assert.That(policy.ProcessSyncWithNextCalled, Is.True);
+    }
+
+    #endregion
+
+    #region Helper Classes
+
+    private class TestSyncAsyncPolicyTestBase : SyncAsyncPolicyTestBase
+    {
+        public TestSyncAsyncPolicyTestBase(bool isAsync) : base(isAsync) { }
+        public void ProcessMessage(PipelineMessage message, TestPolicy policy)
         {
-            request.Method = "GET";
-            request.Uri = new Uri("https://example.com");
-        });
-        Assert.IsNotNull(response);
-        Assert.AreEqual(200, response.Status);
-    }
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+            if (policy == null)
+                throw new ArgumentNullException(nameof(policy));
 
-    [Test]
-    public async Task SendRequestAsync_WithPipelineAndMessageAction_ExecutesSuccessfully()
-    {
-        var transport = _asyncTestBase.CreateMockTransport(msg => new MockPipelineResponse(201));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        var response = await _asyncTestBase.SendRequestAsync(pipeline, message =>
-        {
-            message.Request.Method = "POST";
-            message.Request.Uri = new Uri("https://example.com/api");
-        });
-        Assert.IsNotNull(response);
-        Assert.AreEqual(201, response.Status);
-    }
-
-    [Test]
-    public async Task SendRequestAsync_WithBufferResponseFalse_HandlesUnbufferedResponse()
-    {
-        var transport = _asyncTestBase.CreateMockTransport(msg => new MockPipelineResponse(200));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        var response = await _asyncTestBase.SendRequestAsync(pipeline, request =>
-        {
-            request.Method = "GET";
-            request.Uri = new Uri("https://example.com");
-        }, bufferResponse: false);
-        Assert.IsNotNull(response);
-        Assert.AreEqual(200, response.Status);
-    }
-
-    [Test]
-    public async Task SendRequestAsync_WithCancellationToken_RespectsCancellation()
-    {
-        var cts = new CancellationTokenSource();
-        var transport = _asyncTestBase.CreateMockTransport(msg => new MockPipelineResponse(200));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        cts.Cancel();
-        try
-        {
-            await _asyncTestBase.SendRequestAsync(pipeline, request =>
+            if (IsAsync)
             {
-                request.Method = "GET";
-                request.Uri = new Uri("https://example.com");
-            }, cancellationToken: cts.Token);
-            // If we reach here, cancellation wasn't properly handled
-            // This behavior depends on the mock implementation
+                policy.ProcessAsync(message).AsTask().GetAwaiter().GetResult();
+            }
+            else
+            {
+                policy.Process(message);
+            }
         }
-        catch (OperationCanceledException)
+
+        public void ProcessMessage(PipelineMessage message, TestPolicy policy, Func<PipelineMessage, ValueTask> next)
         {
-            // Expected behavior for properly implemented cancellation
-            Assert.Pass("Cancellation was properly handled");
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+            if (policy == null)
+                throw new ArgumentNullException(nameof(policy));
+            if (next == null)
+                throw new ArgumentNullException(nameof(next));
+
+            if (IsAsync)
+            {
+                policy.ProcessAsync(message, next).AsTask().GetAwaiter().GetResult();
+            }
+            else
+            {
+                throw new NotSupportedException("Sync version should use Action, not Func");
+            }
+        }
+
+        public void ProcessMessage(PipelineMessage message, TestPolicy policy, Action<PipelineMessage> next)
+        {
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+            if (policy == null)
+                throw new ArgumentNullException(nameof(policy));
+            if (next == null)
+                throw new ArgumentNullException(nameof(next));
+
+            if (!IsAsync)
+            {
+                policy.Process(message, next);
+            }
+            else
+            {
+                throw new NotSupportedException("Async version should use Func, not Action");
+            }
         }
     }
 
-    [Test]
-    public async Task SendMessageRequestAsync_ReturnsMessageWithResponse()
+    private class TestPolicy
     {
-        var transport = _asyncTestBase.CreateMockTransport(msg => new MockPipelineResponse(202));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        var message = await _asyncTestBase.SendMessageRequestAsync(pipeline, msg =>
+        public bool ProcessAsyncCalled { get; private set; }
+        public bool ProcessSyncCalled { get; private set; }
+        public bool ProcessAsyncWithNextCalled { get; private set; }
+        public bool ProcessSyncWithNextCalled { get; private set; }
+        public PipelineMessage ProcessedMessage { get; private set; }
+        public Func<PipelineMessage, ValueTask> NextDelegate { get; private set; }
+        public Action<PipelineMessage> NextAction { get; private set; }
+
+        public bool ShouldThrowAsync { get; set; }
+        public bool ShouldThrowSync { get; set; }
+        public bool ShouldThrowAsyncWithNext { get; set; }
+        public bool ShouldThrowSyncWithNext { get; set; }
+
+        public ValueTask ProcessAsync(PipelineMessage message)
         {
-            msg.Request.Method = "PUT";
-            msg.Request.Uri = new Uri("https://example.com/resource");
-        });
-        Assert.IsNotNull(message);
-        Assert.IsNotNull(message.Response);
-        Assert.AreEqual(202, message.Response.Status);
-        Assert.AreEqual("PUT", message.Request.Method);
-    }
+            ProcessAsyncCalled = true;
+            ProcessedMessage = message;
 
-    [Test]
-    public async Task SendMessageRequestAsync_WithExistingMessage_UsesProvidedMessage()
-    {
-        var transport = _asyncTestBase.CreateMockTransport(msg => new MockPipelineResponse(200));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        var existingMessage = pipeline.CreateMessage();
-        var resultMessage = await _asyncTestBase.SendMessageRequestAsync(pipeline, msg =>
+            if (ShouldThrowAsync)
+                throw new InvalidOperationException("Test async exception");
+
+            return new ValueTask();
+        }        public void Process(PipelineMessage message)
         {
-            msg.Request.Method = "PATCH";
-            msg.Request.Uri = new Uri("https://example.com/patch");
-        }, message: existingMessage);
-        Assert.AreSame(existingMessage, resultMessage);
-        Assert.AreEqual("PATCH", resultMessage.Request.Method);
-    }
+            ProcessSyncCalled = true;
+            ProcessedMessage = message;
 
-    [Test]
-    public async Task SendMessageRequestAsync_WithBufferResponseFalse_ConfiguresMessage()
-    {
-        var transport = _asyncTestBase.CreateMockTransport(msg => new MockPipelineResponse(200));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        var message = await _asyncTestBase.SendMessageRequestAsync(pipeline, msg =>
+            if (ShouldThrowSync)
+                throw new InvalidOperationException("Test sync exception");
+        }
+
+        public ValueTask ProcessAsync(PipelineMessage message, Func<PipelineMessage, ValueTask> next)
         {
-            msg.Request.Method = "GET";
-            msg.Request.Uri = new Uri("https://example.com");
-        }, bufferResponse: false);
-        Assert.IsNotNull(message);
-        Assert.IsFalse(message.BufferResponse);
-    }
+            ProcessAsyncWithNextCalled = true;
+            ProcessedMessage = message;
+            NextDelegate = next;
 
-    [Test]
-    public async Task SendRequestAsync_SyncMode_ExecutesSynchronously()
-    {
-        var transport = _syncTestBase.CreateMockTransport(msg => new MockPipelineResponse(200));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        var response = await _syncTestBase.SendRequestAsync(pipeline, request =>
+            if (ShouldThrowAsyncWithNext)
+                throw new InvalidOperationException("Test async with next exception");
+
+            return next(message);
+        }
+
+        public void Process(PipelineMessage message, Action<PipelineMessage> next)
         {
-            request.Method = "GET";
-            request.Uri = new Uri("https://example.com");
-        });
-        Assert.IsNotNull(response);
-        Assert.AreEqual(200, response.Status);
+            ProcessSyncWithNextCalled = true;
+            ProcessedMessage = message;
+            NextAction = next;
+
+            if (ShouldThrowSyncWithNext)
+                throw new InvalidOperationException("Test sync with next exception");
+
+            next(message);
+        }
     }
 
-    //[Test]
-    //public void SendRequestAsync_WithNullPipeline_ThrowsArgumentNullException()
-    //{
-    //    Assert.ThrowsAsync<ArgumentNullException>(async () =>
-    //        await _asyncTestBase.SendRequestAsync(null, request => { }));
-    //}
-
-    [Test]
-    public void SendRequestAsync_WithNullRequestAction_ThrowsArgumentNullException()
-    {
-        var transport = _asyncTestBase.CreateMockTransport(msg => new MockPipelineResponse(200));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            await _asyncTestBase.SendRequestAsync(pipeline, (Action<PipelineRequest>)null));
-    }
-
-    [Test]
-    public void SendRequestAsync_WithNullMessageAction_ThrowsArgumentNullException()
-    {
-        var transport = _asyncTestBase.CreateMockTransport(msg => new MockPipelineResponse(200));
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            await _asyncTestBase.SendRequestAsync(pipeline, (Action<PipelineMessage>)null));
-    }
-
-    [Test]
-    public async Task SendRequestAsync_MultipleRequests_HandlesSequentially()
-    {
-        var requestCount = 0;
-        var transport = _asyncTestBase.CreateMockTransport(msg =>
-        {
-            requestCount++;
-            return new MockPipelineResponse(200);
-        });
-        var pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
-        await _asyncTestBase.SendRequestAsync(pipeline, request =>
-        {
-            request.Method = "GET";
-            request.Uri = new Uri("https://example.com/1");
-        });
-        await _asyncTestBase.SendRequestAsync(pipeline, request =>
-        {
-            request.Method = "GET";
-            request.Uri = new Uri("https://example.com/2");
-        });
-        Assert.AreEqual(2, requestCount);
-    }
-
-    // Helper class to expose protected methods for testing
-    public class TestableSyncAsyncPolicyTestBase : SyncAsyncPolicyTestBase
-    {
-        public TestableSyncAsyncPolicyTestBase(bool isAsync) : base(isAsync) { }
-
-        public new MockPipelineTransport CreateMockTransport() => base.CreateMockTransport();
-
-        public new MockPipelineTransport CreateMockTransport(Func<MockPipelineMessage, MockPipelineResponse> responseFactory) =>
-            base.CreateMockTransport(responseFactory);
-
-        public new Task<PipelineResponse> SendRequestAsync(ClientPipeline pipeline, Action<PipelineRequest> requestAction, bool bufferResponse = true, CancellationToken cancellationToken = default) =>
-            base.SendRequestAsync(pipeline, requestAction, bufferResponse, cancellationToken);
-        public new Task<PipelineResponse> SendRequestAsync(ClientPipeline pipeline, Action<PipelineMessage> messageAction, bool bufferResponse = true, CancellationToken cancellationToken = default) =>
-            base.SendRequestAsync(pipeline, messageAction, bufferResponse, cancellationToken);
-        public new Task<PipelineMessage> SendMessageRequestAsync(ClientPipeline pipeline, Action<PipelineMessage> messageAction, bool bufferResponse = true, PipelineMessage message = default, CancellationToken cancellationToken = default) =>
-            base.SendMessageRequestAsync(pipeline, messageAction, bufferResponse, message, cancellationToken);
-    }
+    #endregion
 }

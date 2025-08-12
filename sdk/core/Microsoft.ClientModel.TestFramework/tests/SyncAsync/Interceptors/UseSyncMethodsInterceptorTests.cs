@@ -1,201 +1,372 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using Castle.DynamicProxy;
-using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System;
 using System.ClientModel;
 using System.Reflection;
 using System.Threading.Tasks;
+
 namespace Microsoft.ClientModel.TestFramework.Tests.SyncAsync.Interceptors;
+
 [TestFixture]
 public class UseSyncMethodsInterceptorTests
 {
+    #region Constructor
+
     [Test]
-    public void Constructor_WithForceSyncTrue_CreatesValidInstance()
+    public void ConstructorWithForceSyncTrue()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: true);
-        Assert.IsNotNull(interceptor);
+        var interceptor = new UseSyncMethodsInterceptor(true);
+
+        Assert.That(interceptor, Is.Not.Null);
     }
+
     [Test]
-    public void Constructor_WithForceSyncFalse_CreatesValidInstance()
+    public void ConstructorWithForceSyncFalse()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: false);
-        Assert.IsNotNull(interceptor);
+        var interceptor = new UseSyncMethodsInterceptor(false);
+
+        Assert.That(interceptor, Is.Not.Null);
     }
+
+    #endregion
+
+    #region Intercept Method - Non-Async Methods
+
     [Test]
-    public void Intercept_WithNonAsyncMethod_ProceedsDirectly()
+    public void InterceptThrowsOnNonAsyncMethodWithAsyncAlternative()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: true);
-        var mockInvocation = CreateMockInvocation("GetValue", typeof(string));
-        Assert.DoesNotThrow(() => ((IInterceptor)interceptor).Intercept(mockInvocation));
-        Assert.IsTrue(mockInvocation.Proceeded);
+        var interceptor = new UseSyncMethodsInterceptor(true);
+        var invocation = CreateMockInvocation("GetData", typeof(TestClient), typeof(string));
+
+        var ex = Assert.Throws<InvalidOperationException>(() => interceptor.Intercept(invocation));
+        Assert.That(ex.Message, Contains.Substring("Async method call expected"));
     }
+
     [Test]
-    public void Intercept_WithForceSyncFalse_ProceedsDirectly()
+    public void InterceptProceedsForNonAsyncMethodWithoutAsyncAlternative()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: false);
-        var mockInvocation = CreateMockInvocation("GetValueAsync", typeof(Task<string>));
-        Assert.DoesNotThrow(() => ((IInterceptor)interceptor).Intercept(mockInvocation));
-        Assert.IsTrue(mockInvocation.Proceeded);
+        var interceptor = new UseSyncMethodsInterceptor(true);
+        var invocation = CreateMockInvocation("SyncOnlyMethod", typeof(TestClient), typeof(string));
+
+        interceptor.Intercept(invocation);
+
+        Assert.That(invocation.Proceeded, Is.True);
     }
+
+    #endregion
+
+    #region Intercept Method - Async Methods with ForceSync False
+
     [Test]
-    public void Intercept_WithAsyncMethodAndForceSync_FindsSyncMethod()
+    public void InterceptProceedsWhenForceSyncIsFalse()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: true);
-        var mockClient = new MockClientWithSyncAsync();
-        var mockInvocation = CreateMockInvocationForClient(mockClient, "GetValueAsync", typeof(Task<string>));
-        Assert.DoesNotThrow(() => ((IInterceptor)interceptor).Intercept(mockInvocation));
+        var interceptor = new UseSyncMethodsInterceptor(false);
+        var invocation = CreateMockInvocation("GetDataAsync", typeof(TestClient), typeof(Task<string>));
+
+        interceptor.Intercept(invocation);
+
+        Assert.That(invocation.Proceeded, Is.True);
     }
+
+    #endregion
+
+    #region Intercept Method - Async Methods with ForceSync True
+
     [Test]
-    public void Intercept_WithAsyncMethodWithoutSyncCounterpart_ThrowsException()
+    public void InterceptThrowsWhenSyncMethodNotFound()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: true);
-        var mockClient = new MockClientWithAsyncOnly();
-        var mockInvocation = CreateMockInvocationForClient(mockClient, "GetDataAsync", typeof(Task<string>));
-        var ex = Assert.Throws<InvalidOperationException>(() => ((IInterceptor)interceptor).Intercept(mockInvocation));
-        Assert.That(ex.Message, Contains.Substring("Unable to find a method with name GetData"));
+        var interceptor = new UseSyncMethodsInterceptor(true);
+        var invocation = CreateMockInvocation("NonExistentMethodAsync", typeof(TestClient), typeof(Task<string>));
+
+        var ex = Assert.Throws<InvalidOperationException>(() => interceptor.Intercept(invocation));
+        Assert.That(ex.Message, Contains.Substring("Unable to find a method"));
     }
+
     [Test]
-    public void Intercept_WithProxiedClient_GetsOriginalTarget()
+    public void InterceptCallsSyncMethodForAsyncCall()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: true);
-        var originalClient = new MockClientWithSyncAsync();
-        var proxiedClient = new MockProxiedClient(originalClient);
-        var mockInvocation = CreateMockInvocationForClient(proxiedClient, "GetValueAsync", typeof(Task<string>));
-        Assert.DoesNotThrow(() => ((IInterceptor)interceptor).Intercept(mockInvocation));
+        var interceptor = new UseSyncMethodsInterceptor(true);
+        var testClient = new TestClient();
+        var invocation = CreateMockInvocationWithTarget("GetDataAsync", testClient, typeof(Task<string>));
+
+        interceptor.Intercept(invocation);
+
+        Assert.That(testClient.GetDataCalled, Is.True);
+        Assert.That(invocation.ReturnValue, Is.InstanceOf<Task<string>>());
     }
+
     [Test]
-    public void Intercept_WithGenericAsyncMethod_HandlesGenericParameters()
+    public void InterceptHandlesCollectionResults()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: true);
-        var mockClient = new MockClientWithGenericMethods();
-        var mockInvocation = CreateMockInvocationForClient(mockClient, "GetAsync", typeof(Task<string>), new[] { typeof(string) });
-        Assert.DoesNotThrow(() => ((IInterceptor)interceptor).Intercept(mockInvocation));
+        var interceptor = new UseSyncMethodsInterceptor(true);
+        var testClient = new TestClient();
+        var invocation = CreateMockInvocationWithTarget("GetCollectionAsync", testClient, typeof(Task<AsyncCollectionResult<string>>));
+
+        interceptor.Intercept(invocation);
+
+        Assert.That(testClient.GetCollectionCalled, Is.True);
+        Assert.That(invocation.ReturnValue, Is.InstanceOf<UseSyncMethodsInterceptor.SyncPageableWrapper<string>>());
     }
+
     [Test]
-    public void AsyncSuffix_HasCorrectValue()
+    public void InterceptHandlesValueTaskReturn()
     {
-        // Test that the AsyncSuffix constant is properly defined
-        var interceptorType = GetUseSyncMethodsInterceptorType();
-        var asyncSuffixField = interceptorType.GetField("AsyncSuffix", BindingFlags.NonPublic | BindingFlags.Static);
-        Assert.IsNotNull(asyncSuffixField);
-        Assert.AreEqual("Async", asyncSuffixField.GetValue(null));
+        var interceptor = new UseSyncMethodsInterceptor(true);
+        var testClient = new TestClient();
+        var invocation = CreateMockInvocationWithTarget("GetValueTaskDataAsync", testClient, typeof(ValueTask<string>));
+
+        interceptor.Intercept(invocation);
+
+        Assert.That(testClient.GetValueTaskDataCalled, Is.True);
+        Assert.That(invocation.ReturnValue, Is.InstanceOf<ValueTask<string>>());
     }
+
+    #endregion
+
+    #region Exception Handling
+
     [Test]
-    public void Interceptor_ImplementsIInterceptor()
+    public void InterceptHandlesExceptionsInSyncMethod()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: true);
-        Assert.IsInstanceOf<IInterceptor>(interceptor);
+        var interceptor = new UseSyncMethodsInterceptor(true);
+        var testClient = new TestClient();
+        var invocation = CreateMockInvocationWithTarget("ThrowExceptionAsync", testClient, typeof(Task<string>));
+
+        interceptor.Intercept(invocation);
+
+        Assert.That(invocation.ReturnValue, Is.InstanceOf<Task<string>>());
+        var task = (Task<string>)invocation.ReturnValue;
+        Assert.That(task.IsFaulted, Is.True);
     }
+
     [Test]
-    public void Intercept_HandlesVoidReturnType()
+    public void InterceptHandlesExceptionsInCollectionMethod()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: true);
-        var mockClient = new MockClientWithVoidMethods();
-        var mockInvocation = CreateMockInvocationForClient(mockClient, "DoWorkAsync", typeof(Task));
-        Assert.DoesNotThrow(() => ((IInterceptor)interceptor).Intercept(mockInvocation));
+        var interceptor = new UseSyncMethodsInterceptor(true);
+        var testClient = new TestClient();
+        var invocation = CreateMockInvocationWithTarget("ThrowCollectionExceptionAsync", testClient, typeof(Task<AsyncCollectionResult<string>>));
+
+        Assert.Throws<InvalidOperationException>(() => interceptor.Intercept(invocation));
     }
+
+    #endregion
+
+    #region SyncPageableWrapper Tests
+
     [Test]
-    public void Intercept_HandlesCollectionResults()
+    public void SyncPageableWrapperConstructorThrowsOnNullEnumerable()
     {
-        var interceptor = CreateUseSyncMethodsInterceptor(forceSync: true);
-        var mockClient = new MockClientWithCollections();
-        var mockInvocation = CreateMockInvocationForClient(mockClient, "GetItemsAsync", typeof(Task<CollectionResult<string>>));
-        Assert.DoesNotThrow(() => ((IInterceptor)interceptor).Intercept(mockInvocation));
+        Assert.Throws<ArgumentNullException>(() =>
+            new UseSyncMethodsInterceptor.SyncPageableWrapper<string>(null));
     }
-    // Helper methods
-    private object CreateUseSyncMethodsInterceptor(bool forceSync)
+
+    [Test]
+    public void SyncPageableWrapperGetValuesFromPageReturnsItems()
     {
-        var type = GetUseSyncMethodsInterceptorType();
-        return Activator.CreateInstance(type, forceSync);
+        var collectionResult = new TestCollectionResult<string>();
+        var wrapper = new UseSyncMethodsInterceptor.SyncPageableWrapper<string>(collectionResult);
+        var page = ClientResult.FromOptionalValue(new string[] { "item1", "item2" }, new MockPipelineResponse(200));
+
+        var method = typeof(UseSyncMethodsInterceptor.SyncPageableWrapper<string>)
+            .GetMethod("GetValuesFromPageAsync", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        Assert.That(method, Is.Not.Null);
     }
-    private Type GetUseSyncMethodsInterceptorType()
+
+    [Test]
+    public void SyncPageableWrapperGetRawPagesReturnsPages()
     {
-        // UseSyncMethodsInterceptor is internal, so we need to get it via reflection
-        var assembly = typeof(ClientTestBase).Assembly;
-        return assembly.GetType("Microsoft.ClientModel.TestFramework.UseSyncMethodsInterceptor");
+        var collectionResult = new TestCollectionResult<string>();
+        var wrapper = new UseSyncMethodsInterceptor.SyncPageableWrapper<string>(collectionResult);
+
+        var method = typeof(UseSyncMethodsInterceptor.SyncPageableWrapper<string>)
+            .GetMethod("GetRawPagesAsync", BindingFlags.Public | BindingFlags.Instance);
+
+        Assert.That(method, Is.Not.Null);
     }
-    private MockInvocation CreateMockInvocation(string methodName, Type returnType, Type[] genericArguments = null)
+
+    #endregion
+
+    #region Helper Classes and Methods
+
+    private MockInvocation CreateMockInvocation(string methodName, Type targetType, Type returnType)
     {
-        return new MockInvocation(methodName, returnType, genericArguments);
+        return new MockInvocation(methodName, targetType, returnType, null, Array.Empty<object>());
     }
-    private MockInvocation CreateMockInvocationForClient(object client, string methodName, Type returnType, Type[] genericArguments = null)
+
+    private MockInvocation CreateMockInvocationWithTarget(string methodName, object target, Type returnType)
     {
-        var invocation = new MockInvocation(methodName, returnType, genericArguments);
-        invocation.InvocationTarget = client;
-        return invocation;
+        return new MockInvocation(methodName, target.GetType(), returnType, target, Array.Empty<object>());
     }
-    // Helper classes for testing
-    public class MockInvocation : IInvocation
+
+    public class TestClient
     {
-        public bool Proceeded { get; private set; }
-        public object InvocationTarget { get; set; }
-        public MethodInfo Method { get; }
-        public object[] Arguments { get; set; } = Array.Empty<object>();
-        public Type[] GenericArguments { get; set; } = Array.Empty<Type>();
+        public bool GetDataCalled { get; private set; }
+        public bool GetCollectionCalled { get; private set; }
+        public bool GetValueTaskDataCalled { get; private set; }
+
+        public string GetData()
+        {
+            GetDataCalled = true;
+            return "test data";
+        }
+
+        public Task<string> GetDataAsync() => Task.FromResult(GetData());
+
+        public CollectionResult<string> GetCollection()
+        {
+            GetCollectionCalled = true;
+            return new TestCollectionResult<string>();
+        }
+
+        public Task<AsyncCollectionResult<string>> GetCollectionAsync() =>
+            Task.FromResult<AsyncCollectionResult<string>>(new TestAsyncCollectionResult<string>());
+
+        public string GetValueTaskData()
+        {
+            GetValueTaskDataCalled = true;
+            return "value task data";
+        }
+
+        public ValueTask<string> GetValueTaskAsync() => new ValueTask<string>(GetValueTaskData());
+
+        public ValueTask<string> GetValueTaskDataAsync() => new ValueTask<string>(GetValueTaskData());
+
+        public string ThrowException() => throw new InvalidOperationException("Test exception");
+
+        public Task<string> ThrowExceptionAsync() => Task.FromResult(ThrowException());
+
+        public CollectionResult<string> ThrowCollectionException() =>
+            throw new InvalidOperationException("Collection exception");
+
+        public Task<AsyncCollectionResult<string>> ThrowCollectionExceptionAsync() =>
+            Task.FromResult<AsyncCollectionResult<string>>(null);
+
+        public string SyncOnlyMethod() => "sync only";
+    }
+
+    private class TestCollectionResult<T> : CollectionResult<T>
+    {
+        protected override System.Collections.Generic.IEnumerable<T> GetValuesFromPage(ClientResult page) =>
+            Array.Empty<T>();
+
+        public override System.Collections.Generic.IEnumerable<ClientResult> GetRawPages() =>
+            Array.Empty<ClientResult>();
+
+        public override ContinuationToken GetContinuationToken(ClientResult page) => null;
+    }
+
+    private class TestAsyncCollectionResult<T> : AsyncCollectionResult<T>
+    {
+        protected override System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(ClientResult page)
+        {
+            return EmptyAsyncEnumerable<T>();
+        }
+
+        public override System.Collections.Generic.IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        {
+            return EmptyAsyncEnumerable<ClientResult>();
+        }
+
+        public override ContinuationToken GetContinuationToken(ClientResult page) => null;
+
+        private static async System.Collections.Generic.IAsyncEnumerable<TItem> EmptyAsyncEnumerable<TItem>()
+        {
+            await Task.CompletedTask;
+            yield break;
+        }
+    }
+
+    private class MockInvocation : IInvocation
+    {
+        private readonly string _methodName;
+        private readonly Type _targetType;
+        private readonly Type _returnType;
+        private readonly object _target;
+
+        public MockInvocation(string methodName, Type targetType, Type returnType, object target, object[] arguments)
+        {
+            _methodName = methodName;
+            _targetType = targetType;
+            _returnType = returnType;
+            _target = target;
+            Arguments = arguments;
+        }
+
+        public object[] Arguments { get; set; }
+        public Type[] GenericArguments => Array.Empty<Type>();
+        public object InvocationTarget => _target is IProxiedClient proxied ? proxied.Original : _target;
+        public MethodInfo Method => new MockMethodInfo(_methodName, _returnType);
+        public MethodInfo MethodInvocationTarget => Method;
+        public object Proxy => throw new NotImplementedException();
         public object ReturnValue { get; set; }
-        public Type TargetType { get; set; }
-        public object Proxy { get; set; }
-        public MethodInfo MethodInvocationTarget => throw new NotImplementedException();
-        public MockInvocation(string methodName, Type returnType, Type[] genericArguments = null)
+        public Type TargetType => _targetType;
+        public bool Proceeded { get; private set; }
+
+        public IInvocation GetConcreteMethod() => throw new NotImplementedException();
+        public IInvocationProceedInfo GetConcreteMethodInvocationTarget() => throw new NotImplementedException();
+
+        public void Proceed()
         {
-            var method = typeof(MockClient).GetMethod(methodName) ??
-                        CreateMockMethodInfo(methodName, returnType);
-            Method = method;
-            GenericArguments = genericArguments ?? Array.Empty<Type>();
+            Proceeded = true;
         }
-        public void Proceed() => Proceeded = true;
-        public void SetArgumentValue(int index, object value) => Arguments[index] = value;
-        public object GetArgumentValue(int index) => Arguments[index];
-        public MethodInfo GetConcreteMethod() => Method;
-        public MethodInfo GetConcreteMethodInvocationTarget() => Method;
-        private MethodInfo CreateMockMethodInfo(string methodName, Type returnType)
-        {
-            // Create a mock MethodInfo for testing
-            return typeof(MockClient).GetMethod("GetValue") ?? throw new InvalidOperationException("Mock method not found");
-        }
+
+        public void SetArgumentValue(int index, object value) => throw new NotImplementedException();
+
         public IInvocationProceedInfo CaptureProceedInfo()
         {
             throw new NotImplementedException();
         }
-    }
-    public class MockClient
-    {
-        public virtual string GetValue() => "mock";
-        public virtual Task<string> GetValueAsync() => Task.FromResult("mock");
-    }
-    public class MockClientWithSyncAsync
-    {
-        public virtual string GetValue() => "sync";
-        public virtual Task<string> GetValueAsync() => Task.FromResult("async");
-    }
-    public class MockClientWithAsyncOnly
-    {
-        public virtual Task<string> GetDataAsync() => Task.FromResult("data");
-        // No sync counterpart
-    }
-    public class MockClientWithGenericMethods
-    {
-        public virtual T Get<T>() => default(T);
-        public virtual Task<T> GetAsync<T>() => Task.FromResult(default(T));
-    }
-    public class MockClientWithVoidMethods
-    {
-        public virtual void DoWork() { }
-        public virtual Task DoWorkAsync() => Task.CompletedTask;
-    }
-    public class MockClientWithCollections
-    {
-        public virtual CollectionResult<T> GetItems<T>() => null;
-        public virtual Task<CollectionResult<T>> GetItemsAsync<T>() => Task.FromResult<CollectionResult<T>>(null);
-    }
-    public class MockProxiedClient : IProxiedClient
-    {
-        public object Original { get; }
-        public MockProxiedClient(object original)
+
+        public object GetArgumentValue(int index)
         {
-            Original = original;
+            throw new NotImplementedException();
+        }
+
+        MethodInfo IInvocation.GetConcreteMethod()
+        {
+            throw new NotImplementedException();
+        }
+
+        MethodInfo IInvocation.GetConcreteMethodInvocationTarget()
+        {
+            throw new NotImplementedException();
         }
     }
+
+    private class MockMethodInfo : MethodInfo
+    {
+        private readonly string _name;
+        private readonly Type _returnType;
+
+        public MockMethodInfo(string name, Type returnType)
+        {
+            _name = name;
+            _returnType = returnType;
+        }
+
+        public override string Name => _name;
+        public override Type ReturnType => _returnType;
+        public override Type DeclaringType => typeof(TestClient);
+        public override Type ReflectedType => typeof(TestClient);
+        public override MethodAttributes Attributes => MethodAttributes.Public;
+        public override RuntimeMethodHandle MethodHandle => throw new NotImplementedException();
+
+        public override MethodInfo GetBaseDefinition() => throw new NotImplementedException();
+        public override object[] GetCustomAttributes(bool inherit) => Array.Empty<object>();
+        public override object[] GetCustomAttributes(Type attributeType, bool inherit) => Array.Empty<object>();
+        public override MethodImplAttributes GetMethodImplementationFlags() => throw new NotImplementedException();
+        public override ParameterInfo[] GetParameters() => Array.Empty<ParameterInfo>();
+        public override object Invoke(object obj, BindingFlags invokeAttr, Binder binder, object[] parameters, System.Globalization.CultureInfo culture) => throw new NotImplementedException();
+        public override bool IsDefined(Type attributeType, bool inherit) => false;
+        public override ParameterInfo ReturnParameter => throw new NotImplementedException();
+
+        public override ICustomAttributeProvider ReturnTypeCustomAttributes => throw new NotImplementedException();
+    }
+
+    #endregion
 }

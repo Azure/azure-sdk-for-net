@@ -76,7 +76,7 @@ internal static class AsyncMethodWrapper
                             var runtimeValue = runtimeResponseObject!.GetType()?.GetProperty("Value", BindingFlags.Public | BindingFlags.Instance)?.GetValue(runtimeResponseObject);
 
                             //reconstruct
-                            var signatureFromValueMethod = typeof(ClientResult).GetMethod("FromValue", BindingFlags.Static | BindingFlags.Public)?.MakeGenericMethod(signatureGenericType);
+                            var signatureFromValueMethod = typeof(ClientResult).GetMethod("FromOptionalValue", BindingFlags.Static | BindingFlags.Public)?.MakeGenericMethod(signatureGenericType);
                             var convertedResponseObject = signatureFromValueMethod?.Invoke(null, new object[] { runtimeValue!, runtimeRawResponse! });
                             return (T)convertedResponseObject!;
                         }
@@ -124,7 +124,7 @@ internal static class AsyncMethodWrapper
             ValueTask<T> Await()
             {
                 invocation.Proceed();
-                return default;
+                return new ValueTask<T>((T)invocation.ReturnValue!);
             }
 
             invocation.ReturnValue = wrap(invocation, Await).EnsureCompleted();

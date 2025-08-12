@@ -19,7 +19,6 @@ public class MockPipelineTransport : PipelineTransport
     private readonly object _syncObj = new object();
 
     private readonly Func<MockPipelineMessage, MockPipelineResponse>? _responseFactory;
-    private readonly AsyncGate<MockPipelineRequest, MockPipelineResponse>? _requestGate;
 
     /// <summary>
     /// Whether this transport expects a synchronous pipeline.
@@ -46,7 +45,7 @@ public class MockPipelineTransport : PipelineTransport
     /// </summary>
     public MockPipelineTransport()
     {
-        _requestGate = new AsyncGate<MockPipelineRequest, MockPipelineResponse>();
+        _responseFactory = _ => new MockPipelineResponse(200);
     }
 
     /// <summary>
@@ -77,7 +76,7 @@ public class MockPipelineTransport : PipelineTransport
             throw new InvalidOperationException("MockPipelineTransport does not support synchronous processing when ExpectSyncPipeline is set to false.");
         }
 
-        ProcessCoreInternal(message).EnsureCompleted();
+        ProcessSyncOrAsync(message, async: false).EnsureCompleted();
     }
 
     /// <inheritdoc/>
@@ -88,10 +87,10 @@ public class MockPipelineTransport : PipelineTransport
             throw new InvalidOperationException("MockPipelineTransport does not support asynchronous processing when ExpectSyncPipeline is set to true.");
         }
 
-        await ProcessCoreInternal(message).ConfigureAwait(false);
+        await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
     }
 
-    private async Task ProcessCoreInternal(PipelineMessage message)
+    private ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
     {
         OnSendingRequest?.Invoke((MockPipelineMessage)message);
 
@@ -110,17 +109,13 @@ public class MockPipelineTransport : PipelineTransport
             Requests.Add(mockRequest);
         }
 
-        if (_requestGate is not null)
-        {
-            mockMessage.SetResponse(await _requestGate.WaitForRelease(mockRequest).ConfigureAwait(false));
-        }
-        else if (_responseFactory is not null)
+        if (_responseFactory is not null)
         {
             mockMessage.SetResponse(_responseFactory(mockMessage));
         }
         else
         {
-            Debug.Fail("MockPipelineTransport must have a response factory or request gate set."); // TODO
+            Debug.Fail("MockPipelineTransport must have a response factory set.");
         }
 
         if (mockMessage.Response?.ContentStream != null && ExpectSyncPipeline != null)
@@ -130,9 +125,23 @@ public class MockPipelineTransport : PipelineTransport
 
         if (_addDelay)
         {
-            await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
+            if (async)
+            {
+                return ProcessWithDelayAsync(mockMessage);
+            }
+            else
+            {
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(4));
+            }
         }
 
         OnReceivedResponse?.Invoke((MockPipelineMessage)message);
+        return default;
+    }
+
+    private async ValueTask ProcessWithDelayAsync(MockPipelineMessage mockMessage)
+    {
+        await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
+        OnReceivedResponse?.Invoke(mockMessage);
     }
 }

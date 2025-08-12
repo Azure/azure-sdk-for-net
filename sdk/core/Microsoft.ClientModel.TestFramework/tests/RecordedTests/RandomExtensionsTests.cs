@@ -79,8 +79,9 @@ public class RandomExtensionsTests
     [Test]
     public void NewGuid_DifferentRandomInstances_ProduceDifferentResults()
     {
-        var random1 = new Random();
-        var random2 = new Random();
+        // Use different seeds to ensure different Random instances on all .NET versions
+        var random1 = new Random(12345);
+        var random2 = new Random(54321);
         var allSame = true;
         for (int i = 0; i < 10; i++)
         {
@@ -92,7 +93,7 @@ public class RandomExtensionsTests
                 break;
             }
         }
-        Assert.That(allSame, Is.False, "Different Random instances should produce different GUID sequences");
+        Assert.That(allSame, Is.False, "Random instances with different seeds should produce different GUID sequences");
     }
 
     [Test]

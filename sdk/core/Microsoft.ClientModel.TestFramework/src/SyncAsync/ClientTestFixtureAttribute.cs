@@ -68,6 +68,9 @@ public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPre
     /// </returns>
     public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
     {
+        if (typeInfo == null)
+            throw new ArgumentNullException(nameof(typeInfo));
+
         bool includeSync = !typeInfo.GetCustomAttributes<AsyncOnlyAttribute>(true).Any();
         bool includeAsync = !typeInfo.GetCustomAttributes<SyncOnlyAttribute>(true).Any();
 

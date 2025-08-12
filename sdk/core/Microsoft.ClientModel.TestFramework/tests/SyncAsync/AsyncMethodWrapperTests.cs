@@ -1,161 +1,248 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using Castle.DynamicProxy;
-using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System;
+using System.ClientModel;
 using System.Reflection;
 using System.Threading.Tasks;
+
 namespace Microsoft.ClientModel.TestFramework.Tests.SyncAsync;
+
 [TestFixture]
 public class AsyncMethodWrapperTests
 {
+    #region WrapAsyncResult Method
+
     [Test]
-    public void AsyncMethodWrapper_IsInternal()
+    public void WrapAsyncResultHandlesNonGenericReturnType()
     {
-        var type = typeof(AsyncMethodWrapper);
-        Assert.IsTrue(type.IsNotPublic); // Internal types are not public
-        Assert.IsTrue(type.IsSealed || type.IsAbstract); // Should be static class
-    }
-    [Test]
-    public void AsyncMethodWrapper_IsStaticClass()
-    {
-        var type = typeof(AsyncMethodWrapper);
-        Assert.IsTrue(type.IsAbstract && type.IsSealed); // Static classes are abstract and sealed
-    }
-    [Test]
-    public void WrapAsyncResult_Method_Exists()
-    {
-        var type = typeof(AsyncMethodWrapper);
-        var method = type.GetMethod("WrapAsyncResult", BindingFlags.NonPublic | BindingFlags.Static);
-        Assert.IsNotNull(method);
-        Assert.IsTrue(method.IsStatic);
-    }
-    [Test]
-    public void WrapAsyncResultCore_Method_Exists()
-    {
-        var type = typeof(AsyncMethodWrapper);
-        var method = type.GetMethod("WrapAsyncResultCore", BindingFlags.NonPublic | BindingFlags.Static);
-        Assert.IsNotNull(method);
-        Assert.IsTrue(method.IsStatic);
-        Assert.IsTrue(method.IsGenericMethod);
-    }
-    [Test]
-    public void WrapAsyncResult_HasCorrectParameters()
-    {
-        var type = typeof(AsyncMethodWrapper);
-        var method = type.GetMethod("WrapAsyncResult", BindingFlags.NonPublic | BindingFlags.Static);
-        var parameters = method.GetParameters();
-        Assert.AreEqual(3, parameters.Length);
-        Assert.AreEqual(typeof(IInvocation), parameters[0].ParameterType);
-        Assert.AreEqual(typeof(object), parameters[1].ParameterType);
-        Assert.AreEqual(typeof(MethodInfo), parameters[2].ParameterType);
-    }
-    [Test]
-    public void WrapAsyncResultCore_HasCorrectParameters()
-    {
-        var type = typeof(AsyncMethodWrapper);
-        var method = type.GetMethod("WrapAsyncResultCore", BindingFlags.NonPublic | BindingFlags.Static);
-        var parameters = method.GetParameters();
-        Assert.AreEqual(3, parameters.Length);
-        Assert.AreEqual(typeof(IInvocation), parameters[0].ParameterType);
-        Assert.AreEqual(typeof(Type), parameters[1].ParameterType);
-        // Third parameter is a generic delegate type
-    }
-    [Test]
-    public void AsyncMethodWrapper_HandlesTaskTypes()
-    {
-        // Test that the wrapper can handle different Task types
-        var taskType = typeof(Task);
-        var taskOfTType = typeof(Task<>);
-        var valueTaskType = typeof(ValueTask);
-        var valueTaskOfTType = typeof(ValueTask<>);
-        Assert.IsTrue(taskType.IsClass);
-        Assert.IsTrue(taskOfTType.IsGenericTypeDefinition);
-        Assert.IsTrue(valueTaskType.IsValueType);
-        Assert.IsTrue(valueTaskOfTType.IsGenericTypeDefinition);
-    }
-    [Test]
-    public void AsyncMethodWrapper_CanAccessPrivateMembers()
-    {
-        var type = typeof(AsyncMethodWrapper);
-        var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Static);
-        // Should have internal fields for reflection caching
-        Assert.IsNotNull(fields);
-        // Look for the WrapAsyncResultCoreMethod field
-        var coreMethodField = type.GetField("WrapAsyncResultCoreMethod", BindingFlags.NonPublic | BindingFlags.Static);
-        Assert.IsNotNull(coreMethodField);
-        Assert.AreEqual(typeof(MethodInfo), coreMethodField.FieldType);
-    }
-    [Test]
-    public void AsyncMethodWrapper_SupportsGenericTypeDefinitions()
-    {
-        // Test that the wrapper correctly identifies generic type definitions
-        var taskOfString = typeof(Task<string>);
-        var taskDefinition = typeof(Task<>);
-        Assert.IsTrue(taskOfString.IsGenericType);
-        Assert.IsTrue(taskDefinition.IsGenericTypeDefinition);
-        Assert.AreEqual(taskDefinition, taskOfString.GetGenericTypeDefinition());
-        Assert.AreEqual(typeof(string), taskOfString.GetGenericArguments()[0]);
-    }
-    [Test]
-    public void AsyncMethodWrapper_HandlesClientResultTypes()
-    {
-        // Test that the wrapper can work with ClientResult<T> types
-        var clientResultType = typeof(System.ClientModel.ClientResult<>);
-        Assert.IsTrue(clientResultType.IsGenericTypeDefinition);
-        Assert.AreEqual(1, clientResultType.GetGenericArguments().Length);
-    }
-    [Test]
-    public void AsyncCallInterceptor_DelegateType_Exists()
-    {
-        // Test that AsyncCallInterceptor<T> delegate type can be constructed
-        var delegateType = typeof(AsyncCallInterceptor<>);
-        var stringDelegateType = delegateType.MakeGenericType(typeof(string));
-        Assert.IsTrue(delegateType.IsGenericTypeDefinition);
-        Assert.IsTrue(stringDelegateType.IsGenericType);
-        Assert.IsFalse(stringDelegateType.IsGenericTypeDefinition);
-    }
-    [Test]
-    public void AsyncMethodWrapper_ReflectionOperations_AreValid()
-    {
-        var type = typeof(AsyncMethodWrapper);
-        // Test that all required reflection operations succeed
+        var target = new TestTarget();
+        var interceptorMethod = typeof(TestTarget).GetMethod(nameof(TestTarget.TestInterceptor));
+        var invocation = CreateMockInvocation(typeof(Task), "TestMethod");
+
         Assert.DoesNotThrow(() =>
-        {
-            var method = type.GetMethod("WrapAsyncResultCore", BindingFlags.NonPublic | BindingFlags.Static);
-            var genericMethod = method.MakeGenericMethod(typeof(string));
-            Assert.IsNotNull(genericMethod);
-        });
+            AsyncMethodWrapper.WrapAsyncResult(invocation, target, interceptorMethod));
     }
-    // This test validates that the wrapper can handle method invocation patterns
+
     [Test]
-    public void AsyncMethodWrapper_MethodInvocation_Pattern()
+    public void WrapAsyncResultHandlesGenericReturnType()
     {
-        // Test the pattern used for method invocation in WrapAsyncResult
-        var type = typeof(AsyncMethodWrapper);
-        var coreMethod = type.GetMethod("WrapAsyncResultCore", BindingFlags.NonPublic | BindingFlags.Static);
+        var target = new TestTarget();
+        var interceptorMethod = typeof(TestTarget).GetMethod(nameof(TestTarget.TestInterceptor));
+        var invocation = CreateMockInvocation(typeof(Task<string>), "TestMethod");
+
         Assert.DoesNotThrow(() =>
-        {
-            var genericMethod = coreMethod.MakeGenericMethod(typeof(object));
-            Assert.IsNotNull(genericMethod);
-            // Test delegate creation pattern
-            var interceptorType = typeof(AsyncCallInterceptor<>).MakeGenericType(typeof(object));
-            Assert.IsNotNull(interceptorType);
-        });
+            AsyncMethodWrapper.WrapAsyncResult(invocation, target, interceptorMethod));
     }
+
+    #endregion
+
+    #region WrapAsyncResultCore Method - Task<T>
+
     [Test]
-    public void AsyncMethodWrapper_SupportsValueTaskConversions()
+    public void WrapAsyncResultCoreHandlesTaskOfT()
     {
-        // Test ValueTask to Task conversion patterns that the wrapper uses
-        var valueTask = new ValueTask(Task.CompletedTask);
-        var task = valueTask.AsTask();
-        Assert.IsNotNull(task);
-        Assert.IsTrue(task.IsCompleted);
-        var valueTaskOfInt = new ValueTask<int>(42);
-        var taskOfInt = valueTaskOfInt.AsTask();
-        Assert.IsNotNull(taskOfInt);
-        Assert.IsTrue(taskOfInt.IsCompleted);
-        Assert.AreEqual(42, taskOfInt.Result);
+        var interceptor = new TestInterceptor();
+        var invocation = CreateMockInvocation(typeof(Task<string>), "TestMethod");
+        invocation.SetReturnValue(Task.FromResult("test"));
+
+        AsyncMethodWrapper.WrapAsyncResultCore<string>(invocation, typeof(Task<>), interceptor.Intercept);
+
+        Assert.That(invocation.ReturnValue, Is.InstanceOf<Task<string>>());
     }
+
+    [Test]
+    public void WrapAsyncResultCoreHandlesTaskOfTWithClientResult()
+    {
+        var interceptor = new TestInterceptor();
+        var invocation = CreateMockInvocation(typeof(Task<ClientResult<string>>), "TestMethod");
+        var mockResponse = new MockPipelineResponse(200);
+        var clientResult = ClientResult.FromOptionalValue("test", mockResponse);
+        invocation.SetReturnValue(Task.FromResult(clientResult));
+
+        AsyncMethodWrapper.WrapAsyncResultCore<ClientResult<string>>(invocation, typeof(Task<>), interceptor.Intercept);
+
+        Assert.That(invocation.ReturnValue, Is.InstanceOf<Task<ClientResult<string>>>());
+    }
+
+    #endregion
+
+    #region WrapAsyncResultCore Method - Task
+
+    [Test]
+    public void WrapAsyncResultCoreHandlesTask()
+    {
+        var interceptor = new TestInterceptor();
+        var invocation = CreateMockInvocation(typeof(Task), "TestMethod");
+        invocation.SetReturnValue(Task.CompletedTask);
+
+        AsyncMethodWrapper.WrapAsyncResultCore<object>(invocation, typeof(Task), interceptor.Intercept);
+
+        Assert.That(invocation.ReturnValue, Is.InstanceOf<Task>());
+    }
+
+    #endregion
+
+    #region WrapAsyncResultCore Method - ValueTask<T>
+
+    [Test]
+    public void WrapAsyncResultCoreHandlesValueTaskOfT()
+    {
+        var interceptor = new TestInterceptor();
+        var invocation = CreateMockInvocation(typeof(ValueTask<string>), "TestMethod");
+        invocation.SetReturnValue(new ValueTask<string>("test"));
+
+        AsyncMethodWrapper.WrapAsyncResultCore<string>(invocation, typeof(ValueTask<>), interceptor.Intercept);
+
+        Assert.That(invocation.ReturnValue, Is.InstanceOf<ValueTask<string>>());
+    }
+
+    #endregion
+
+    #region WrapAsyncResultCore Method - ValueTask
+
+    [Test]
+    public void WrapAsyncResultCoreHandlesValueTask()
+    {
+        var interceptor = new TestInterceptor();
+        var invocation = CreateMockInvocation(typeof(ValueTask), "TestMethod");
+
+        invocation.SetReturnValue(new ValueTask());
+
+        AsyncMethodWrapper.WrapAsyncResultCore<object>(invocation, typeof(ValueTask), interceptor.Intercept);
+
+        Assert.That(invocation.ReturnValue, Is.InstanceOf<ValueTask>());
+    }
+
+    #endregion
+
+    #region WrapAsyncResultCore Method - Other Types
+
+    [Test]
+    public void WrapAsyncResultCoreHandlesOtherTypes()
+    {
+        var interceptor = new TestInterceptor();
+        var invocation = CreateMockInvocation(typeof(string), "TestMethod");
+        invocation.SetReturnValue("test");
+
+        AsyncMethodWrapper.WrapAsyncResultCore<string>(invocation, typeof(string), interceptor.Intercept);
+
+        Assert.That(invocation.ReturnValue, Is.EqualTo("test"));
+    }
+
+    #endregion
+
+    #region Helper Classes and Methods
+
+    private MockInvocation CreateMockInvocation(Type returnType, string methodName)
+    {
+        return new MockInvocation(returnType, methodName);
+    }
+
+    private class TestTarget
+    {
+        public ValueTask<T> TestInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
+        {
+            return innerTask();
+        }
+    }
+
+    private class TestInterceptor
+    {
+        public ValueTask<T> Intercept<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
+        {
+            return innerTask();
+        }
+    }
+
+    private class MockInvocation : IInvocation
+    {
+        private readonly Type _returnType;
+        private readonly string _methodName;
+
+        public MockInvocation(Type returnType, string methodName)
+        {
+            _returnType = returnType;
+            _methodName = methodName;
+            Arguments = Array.Empty<object>();
+        }
+
+        public object[] Arguments { get; set; }
+        public Type[] GenericArguments => _returnType.IsGenericType ? _returnType.GetGenericArguments() : Array.Empty<Type>();
+        public object InvocationTarget => throw new NotImplementedException();
+        public MethodInfo Method => new MockMethodInfo(_methodName, _returnType);
+        public MethodInfo MethodInvocationTarget => throw new NotImplementedException();
+        public object Proxy => throw new NotImplementedException();
+        public object ReturnValue { get; private set; }
+        public Type TargetType => throw new NotImplementedException();
+        public bool Proceeded { get; private set; }
+        object IInvocation.ReturnValue { get => ReturnValue; set => ReturnValue = value; }
+
+        public void SetReturnValue(object value) => ReturnValue = value;
+
+        public IInvocation GetConcreteMethod() => throw new NotImplementedException();
+        public IInvocationProceedInfo GetConcreteMethodInvocationTarget() => throw new NotImplementedException();
+
+        public void Proceed()
+        {
+            Proceeded = true;
+        }
+
+        public void SetArgumentValue(int index, object value) => throw new NotImplementedException();
+
+        public object GetArgumentValue(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        MethodInfo IInvocation.GetConcreteMethod()
+        {
+            throw new NotImplementedException();
+        }
+
+        MethodInfo IInvocation.GetConcreteMethodInvocationTarget()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IInvocationProceedInfo CaptureProceedInfo()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    private class MockMethodInfo : MethodInfo
+    {
+        private readonly string _name;
+        private readonly Type _returnType;
+
+        public MockMethodInfo(string name, Type returnType)
+        {
+            _name = name;
+            _returnType = returnType;
+        }
+
+        public override string Name => _name;
+        public override Type ReturnType => _returnType;
+        public override Type DeclaringType => typeof(object);
+        public override Type ReflectedType => typeof(object);
+        public override MethodAttributes Attributes => throw new NotImplementedException();
+        public override RuntimeMethodHandle MethodHandle => throw new NotImplementedException();
+
+        public override MethodInfo GetBaseDefinition() => throw new NotImplementedException();
+        public override object[] GetCustomAttributes(bool inherit) => Array.Empty<object>();
+        public override object[] GetCustomAttributes(Type attributeType, bool inherit) => Array.Empty<object>();
+        public override MethodImplAttributes GetMethodImplementationFlags() => throw new NotImplementedException();
+        public override ParameterInfo[] GetParameters() => Array.Empty<ParameterInfo>();
+        public override object Invoke(object obj, BindingFlags invokeAttr, Binder binder, object[] parameters, System.Globalization.CultureInfo culture) => throw new NotImplementedException();
+        public override bool IsDefined(Type attributeType, bool inherit) => false;
+        public override ParameterInfo ReturnParameter => throw new NotImplementedException();
+
+        public override ICustomAttributeProvider ReturnTypeCustomAttributes => throw new NotImplementedException();
+    }
+
+    #endregion
 }

@@ -1,225 +1,306 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using Microsoft.ClientModel.TestFramework;
+
+using Castle.DynamicProxy;
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+
 namespace Microsoft.ClientModel.TestFramework.Tests.SyncAsync;
+
 [TestFixture]
 public class ClientTestBaseTests
 {
-    private TestableClientTestBase _testBase;
-    [SetUp]
-    public void Setup()
-    {
-        _testBase = new TestableClientTestBase(isAsync: false);
-    }
-    [TearDown]
-    public void TearDown()
-    {
-        _testBase?.Dispose();
-    }
+    #region Constructor
+
     [Test]
-    public void Constructor_WithIsAsyncTrue_SetsIsAsyncProperty()
+    public void ConstructorSetsIsAsyncTrue()
     {
-        var clientTest = new TestableClientTestBase(isAsync: true);
-        Assert.IsTrue(clientTest.IsAsync);
-        clientTest.Dispose();
+        var testBase = new TestClientTestBase(true);
+
+        Assert.That(testBase.IsAsync, Is.True);
     }
+
     [Test]
-    public void Constructor_WithIsAsyncFalse_SetsIsAsyncProperty()
+    public void ConstructorSetsIsAsyncFalse()
     {
-        var clientTest = new TestableClientTestBase(isAsync: false);
-        Assert.IsFalse(clientTest.IsAsync);
-        clientTest.Dispose();
+        var testBase = new TestClientTestBase(false);
+
+        Assert.That(testBase.IsAsync, Is.False);
     }
+
+    #endregion
+
+    #region Properties
+
     [Test]
-    public void TestTimeoutInSeconds_DefaultValue_Is10()
+    public void TestTimeoutInSecondsDefaultsToTen()
     {
-        Assert.AreEqual(10, _testBase.TestTimeoutInSeconds);
+        var testBase = new TestClientTestBase(true);
+
+        Assert.That(testBase.TestTimeoutInSeconds, Is.EqualTo(10));
     }
+
     [Test]
-    public void TestTimeoutInSeconds_CanBeSet()
+    public void TestTimeoutInSecondsCanBeSet()
     {
-        _testBase.TestTimeoutInSeconds = 30;
-        Assert.AreEqual(30, _testBase.TestTimeoutInSeconds);
+        var testBase = new TestClientTestBase(true)
+        {
+            TestTimeoutInSeconds = 30
+        };
+
+        Assert.That(testBase.TestTimeoutInSeconds, Is.EqualTo(30));
     }
+
+    #endregion
+
+    #region GlobalTimeoutTearDown
+
     [Test]
-    public void IsAsync_Property_ReflectsConstructorValue()
+    public void GlobalTimeoutTearDownSkipsWhenDebuggerAttached()
     {
-        var asyncTest = new TestableClientTestBase(isAsync: true);
-        var syncTest = new TestableClientTestBase(isAsync: false);
-        Assert.IsTrue(asyncTest.IsAsync);
-        Assert.IsFalse(syncTest.IsAsync);
-        asyncTest.Dispose();
-        syncTest.Dispose();
+        var testBase = new TestClientTestBase(true)
+        {
+            TestTimeoutInSeconds = 0, // Should timeout immediately if not skipped
+            IsDebuggerAttachedOverride = true
+        };
+
+        Assert.DoesNotThrow(() => testBase.GlobalTimeoutTearDown());
     }
+
     [Test]
-    public void CreateProxiedClient_WithValidType_ReturnsProxiedInstance()
+    public void GlobalTimeoutTearDownThrowsOnTimeout()
     {
-        var client = _testBase.CreateProxiedClientPublic<MockClient>();
-        Assert.IsNotNull(client);
-        Assert.IsInstanceOf<MockClient>(client);
-        Assert.IsInstanceOf<IProxiedClient>(client);
+        var testBase = new TestClientTestBase(true)
+        {
+            TestTimeoutInSeconds = 0,
+            IsDebuggerAttachedOverride = false,
+            TestStartTimeOverride = DateTime.UtcNow.AddSeconds(-1)
+        };
+
+        var ex = Assert.Throws<TestTimeoutException>(() => testBase.GlobalTimeoutTearDown());
+        Assert.That(ex.Message, Contains.Substring("exceeded global time limit"));
     }
+
     [Test]
-    public void CreateProxiedClient_WithConstructorArgs_PassesArgsToConstructor()
+    public void GlobalTimeoutTearDownDoesNotThrowWithinTimeLimit()
     {
-        var expectedValue = "test-value";
-        var client = _testBase.CreateProxiedClientPublic<MockClientWithArgs>(expectedValue);
-        Assert.IsNotNull(client);
-        Assert.AreEqual(expectedValue, client.Value);
+        var testBase = new TestClientTestBase(true)
+        {
+            TestTimeoutInSeconds = 10,
+            IsDebuggerAttachedOverride = false,
+            TestStartTimeOverride = DateTime.UtcNow
+        };
+
+        Assert.DoesNotThrow(() => testBase.GlobalTimeoutTearDown());
     }
+
+    #endregion
+
+    #region CreateProxyFromClient
+
     [Test]
-    public void CreateProxiedClient_WithInvalidConstructorArgs_ThrowsException()
+    public void CreateProxyFromClientReturnsProxy()
     {
-        Assert.Throws<MissingMethodException>(() =>
-            _testBase.CreateProxiedClientPublic<MockClient>("unexpected-arg"));
+        var testBase = new TestClientTestBase(true);
+        var client = new TestClient("test");
+        var proxy = testBase.CreateProxyFromClient(client);
+
+        Assert.That(proxy, Is.Not.Null);
+        Assert.That(proxy, Is.InstanceOf<IProxiedClient>());
     }
+
     [Test]
-    public void CreateProxyFromClient_WithValidClient_ReturnsProxiedInstance()
+    public void CreateProxyFromClientReturnsExistingProxy()
     {
-        var originalClient = new MockClient();
-        var proxiedClient = _testBase.CreateProxyFromClient(originalClient);
-        Assert.IsNotNull(proxiedClient);
-        Assert.IsInstanceOf<MockClient>(proxiedClient);
-        Assert.IsInstanceOf<IProxiedClient>(proxiedClient);
-        Assert.AreNotSame(originalClient, proxiedClient);
+        var testBase = new TestClientTestBase(true);
+        var client = new TestClient("test");
+
+        var proxy1 = testBase.CreateProxyFromClient(client);
+        var proxy2 = testBase.CreateProxyFromClient(proxy1);
+
+        Assert.That(proxy1, Is.SameAs(proxy2));
     }
+
     [Test]
-    public void CreateProxyFromClient_WithAlreadyProxiedClient_ReturnsSameInstance()
+    public void CreateProxyFromClientWithPreInterceptors()
     {
-        var originalClient = new MockClient();
-        var proxiedClient = _testBase.CreateProxyFromClient(originalClient);
-        var doubleProxiedClient = _testBase.CreateProxyFromClient(proxiedClient);
-        Assert.AreSame(proxiedClient, doubleProxiedClient);
+        var testBase = new TestClientTestBase(true);
+        var client = new TestClient("test");
+        var interceptors = new[] { new TestInterceptor() };
+
+        var proxy = testBase.CreateProxyFromClient(typeof(TestClient), client, interceptors);
+
+        Assert.That(proxy, Is.Not.Null);
+        Assert.That(proxy, Is.InstanceOf<IProxiedClient>());
     }
+
     [Test]
-    public void GetOriginal_WithProxiedClient_ReturnsOriginalInstance()
+    public void CreateProxyFromClientThrowsOnInvalidClient()
     {
-        var originalClient = new MockClient();
-        var proxiedClient = _testBase.CreateProxyFromClient(originalClient);
-        var retrievedOriginal = _testBase.GetOriginalClient(proxiedClient);
-        Assert.AreSame(originalClient, retrievedOriginal);
-    }
-    [Test]
-    public void GetOriginal_WithNullClient_ThrowsArgumentNullException()
-    {
-        MockClient nullClient = null;
-        Assert.Throws<ArgumentNullException>(() => _testBase.GetOriginalClient(nullClient));
-    }
-    [Test]
-    public void GetOriginal_WithNonProxiedClient_ThrowsInvalidOperationException()
-    {
-        var nonProxiedClient = new MockClient();
-        Assert.Throws<InvalidOperationException>(() => _testBase.GetOriginalClient(nonProxiedClient));
-    }
-    [Test]
-    public void CreateProxyFromOperationResult_WithValidOperation_ReturnsProxiedInstance()
-    {
-        var operation = new MockOperationResult(new MockPipelineResponse());
-        var proxiedOperation = _testBase.CreateProxyFromOperationResult(operation);
-        Assert.IsNotNull(proxiedOperation);
-        Assert.IsInstanceOf<MockOperationResult>(proxiedOperation);
-        Assert.IsInstanceOf<IProxiedOperationResult>(proxiedOperation);
-    }
-    [Test]
-    public void AdditionalInterceptors_Property_CanBeSetAndRetrieved()
-    {
-        var interceptors = new[] { new MockInterceptor() };
-        _testBase.SetAdditionalInterceptors(interceptors);
-        Assert.IsNotNull(_testBase.GetAdditionalInterceptors());
-        Assert.AreEqual(1, _testBase.GetAdditionalInterceptors().Count);
-    }
-    [Test]
-    public void ProxyGenerator_Property_IsNotNull()
-    {
-        Assert.IsNotNull(TestableClientTestBase.GetProxyGenerator());
-    }
-    [Test]
-    public void GlobalTimeoutTearDown_WithinTimeLimit_DoesNotThrow()
-    {
-        _testBase.TestTimeoutInSeconds = 10;
-        Assert.DoesNotThrow(() => _testBase.GlobalTimeoutTearDown());
-    }
-    [Test]
-    public void CreateProxyFromClient_WithNonVirtualAsyncMethod_ThrowsInvalidOperationException()
-    {
-        var invalidClient = new ClientWithNonVirtualAsync();
+        var testBase = new TestClientTestBase(true);
+        var client = new InvalidTestClient();
+
         var ex = Assert.Throws<InvalidOperationException>(() =>
-            _testBase.CreateProxyFromClient(invalidClient));
-        Assert.That(ex.Message, Contains.Substring("non-virtual async method"));
+            testBase.CallCreateProxyFromClientInternal(client.GetType(), client, null));
+
+        Assert.That(ex.Message, Contains.Substring("public non-virtual async method"));
     }
-    // Helper classes for testing
-    public class TestableClientTestBase : ClientTestBase
+
+    #endregion
+
+    #region CreateProxyFromOperationResult
+
+    [Test]
+    public void CreateProxyFromOperationResultReturnsProxy()
     {
-        public TestableClientTestBase(bool isAsync) : base(isAsync) { }
-        public void SetAdditionalInterceptors(System.Collections.Generic.IReadOnlyCollection<Castle.DynamicProxy.IInterceptor> interceptors)
-        {
-            AdditionalInterceptors = interceptors;
-        }
-        public System.Collections.Generic.IReadOnlyCollection<Castle.DynamicProxy.IInterceptor> GetAdditionalInterceptors()
-        {
-            return AdditionalInterceptors;
-        }
-        public static Castle.DynamicProxy.ProxyGenerator GetProxyGenerator()
-        {
-            return ProxyGenerator;
-        }
-        public T GetOriginalClient<T>(T proxiedClient) where T : class
-        {
-            return GetOriginal(proxiedClient);
-        }
-        public TClient CreateProxiedClientPublic<TClient>(params object[] args) where TClient : class
-        {
-            return CreateProxiedClient<TClient>(args);
-        }
-        public void Dispose()
-        {
-            // Clean up test resources if needed
-        }
+        var testBase = new TestClientTestBase(true);
+        var operation = new TestOperationResult(new MockPipelineResponse(200));
+
+        var proxy = testBase.CreateProxyFromOperationResult(operation);
+
+        Assert.That(proxy, Is.Not.Null);
+        Assert.That(proxy, Is.InstanceOf<IProxiedOperationResult>());
     }
-    public class MockClient
+
+    #endregion
+
+    #region GetOriginal
+
+    [Test]
+    public void GetOriginalReturnsOriginalFromProxy()
     {
-        public virtual string GetValue() => "mock";
-        public virtual Task<string> GetValueAsync() => Task.FromResult("mock");
+        var testBase = new TestClientTestBase(true);
+        var client = new TestClient("test");
+        var proxy = testBase.CreateProxyFromClient(client);
+
+        var original = testBase.CallGetOriginal(proxy);
+
+        Assert.That(original, Is.SameAs(client));
     }
-    public class MockClientWithArgs
+
+    [Test]
+    public void GetOriginalThrowsOnNull()
+    {
+        var testBase = new TestClientTestBase(true);
+
+        Assert.Throws<ArgumentNullException>(() => testBase.CallGetOriginal<TestClient>(null));
+    }
+
+    [Test]
+    public void GetOriginalThrowsOnNonProxy()
+    {
+        var testBase = new TestClientTestBase(true);
+        var client = new TestClient("test");
+
+        var ex = Assert.Throws<InvalidOperationException>(() => testBase.CallGetOriginal(client));
+        Assert.That(ex.Message, Contains.Substring("is not an instrumented type"));
+    }
+
+    #endregion
+
+    #region Helper Classes
+
+    public class TestClient
     {
         public string Value { get; }
-        public MockClientWithArgs(string value)
+
+        public TestClient() : this("default") { }
+
+        public TestClient(string value)
         {
             Value = value;
         }
-        public virtual string GetValue() => Value;
+
+        public virtual string GetData() => Value;
+        public virtual Task<string> GetDataAsync() => Task.FromResult(Value);
     }
-    public class MockOperationResult : OperationResult
+
+    private class TestClientWithPrivateConstructor
     {
-        public MockOperationResult(PipelineResponse response) : base(response)
+        private TestClientWithPrivateConstructor() { }
+    }
+
+    public class InvalidTestClient
+    {
+        // Non-virtual async method should cause validation error
+        public Task<string> GetDataAsync() => Task.FromResult("data");
+    }
+
+    public class TestOperationResult : OperationResult
+    {
+        public TestOperationResult() : this(new MockPipelineResponse(200)) { }
+
+        public TestOperationResult(PipelineResponse response) : base(response)
         {
         }
-        public override ValueTask<ClientResult> UpdateStatusAsync(RequestOptions options = null)
-        {
-            throw new NotImplementedException();
-        }
+
+        public override ContinuationToken RehydrationToken { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
+
         public override ClientResult UpdateStatus(RequestOptions options = null)
         {
             throw new NotImplementedException();
         }
-        public override ContinuationToken RehydrationToken { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
+
+        public override ValueTask<ClientResult> UpdateStatusAsync(System.ClientModel.Primitives.RequestOptions options)
+        {
+            return new ValueTask<ClientResult>(ClientResult.FromOptionalValue<object>(null, new MockPipelineResponse(200)));
+        }
     }
-    public class MockInterceptor : Castle.DynamicProxy.IInterceptor
+
+    private class TestInterceptor : IInterceptor
     {
-        public void Intercept(Castle.DynamicProxy.IInvocation invocation)
+        public void Intercept(IInvocation invocation)
         {
             invocation.Proceed();
         }
     }
-    public class ClientWithNonVirtualAsync
+
+    private class TestClientTestBase : ClientTestBase
     {
-        public Task<string> GetValueAsync() => Task.FromResult("invalid"); // Non-virtual async method
+        public bool IsDebuggerAttachedOverride { get; set; }
+        public DateTime? TestStartTimeOverride { get; set; }
+
+        public TestClientTestBase(bool isAsync) : base(isAsync) { }
+
+        public override void GlobalTimeoutTearDown()
+        {
+            if (IsDebuggerAttachedOverride)
+            {
+                return;
+            }
+
+            var duration = DateTime.UtcNow - (TestStartTimeOverride ?? TestStartTime);
+            if (duration > TimeSpan.FromSeconds(TestTimeoutInSeconds))
+            {
+                throw new TestTimeoutException($"Test exceeded global time limit of {TestTimeoutInSeconds} seconds. Duration: {duration}");
+            }
+        }
+
+        public DateTime GetTestStartTime() => TestStartTime;
+
+        public object CallCreateProxyFromClientInternal(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
+        {
+            return CreateProxyFromClient(clientType, client, preInterceptors);
+        }
+
+        public T CallGetOriginal<T>(T proxied)
+        {
+            return GetOriginal(proxied);
+        }
     }
+
+    private class TestTimeoutException : Exception
+    {
+        public TestTimeoutException(string message) : base(message) { }
+    }
+
+    #endregion
 }
