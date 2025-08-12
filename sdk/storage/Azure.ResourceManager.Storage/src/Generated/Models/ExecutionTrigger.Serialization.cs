@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(TriggerType.ToSerialString());
+            writer.WriteStringValue(TriggerType.ToString());
             writer.WritePropertyName("parameters"u8);
             writer.WriteObjectValue(Parameters, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToExecutionTriggerType();
+                    type = new ExecutionTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage.Models
             else
             {
                 builder.Append("  type: ");
-                builder.AppendLine($"'{TriggerType.ToSerialString()}'");
+                builder.AppendLine($"'{TriggerType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);

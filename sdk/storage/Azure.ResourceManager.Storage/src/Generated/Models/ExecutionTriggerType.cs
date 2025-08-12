@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The trigger type of the storage task assignment execution. </summary>
-    public enum ExecutionTriggerType
+    public readonly partial struct ExecutionTriggerType : IEquatable<ExecutionTriggerType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ExecutionTriggerType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExecutionTriggerType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string RunOnceValue = "RunOnce";
+        private const string OnScheduleValue = "OnSchedule";
+
         /// <summary> RunOnce. </summary>
-        RunOnce,
+        public static ExecutionTriggerType RunOnce { get; } = new ExecutionTriggerType(RunOnceValue);
         /// <summary> OnSchedule. </summary>
-        OnSchedule
+        public static ExecutionTriggerType OnSchedule { get; } = new ExecutionTriggerType(OnScheduleValue);
+        /// <summary> Determines if two <see cref="ExecutionTriggerType"/> values are the same. </summary>
+        public static bool operator ==(ExecutionTriggerType left, ExecutionTriggerType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ExecutionTriggerType"/> values are not the same. </summary>
+        public static bool operator !=(ExecutionTriggerType left, ExecutionTriggerType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExecutionTriggerType"/>. </summary>
+        public static implicit operator ExecutionTriggerType(string value) => new ExecutionTriggerType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ExecutionTriggerType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ExecutionTriggerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

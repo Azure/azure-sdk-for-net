@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(TriggerType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TriggerType.Value.ToSerialString());
+                writer.WriteStringValue(TriggerType.Value.ToString());
             }
             if (Optional.IsDefined(Parameters))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    type = property.Value.GetString().ToExecutionTriggerType();
+                    type = new ExecutionTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
