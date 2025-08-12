@@ -52,10 +52,29 @@ namespace Azure.Communication.CallAutomation
         /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="message"> Detail message that describes the current result. </param>
+        /// <param name="sipDetails">
+        /// Sip response from SBC. This can be helpful to troubleshoot PSTN call if this result was unexpected.
+        /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
+        /// Do not solely rely on this information for troubleshooting, as it may not always be available.
+        /// </param>
+        /// <param name="q850Details">
+        /// Q850 cause from SBC. This can be helpful to troubleshoot call issues if this result was unexpected.
+        /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
+        /// Do not solely rely on this information for troubleshooting, as it may not always be available.
+        /// </param>
         /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
-        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null, SipDiagnosticInfo sipDetails = null, SipDiagnosticInfo q850Details = null)
         {
-            return new ResultInformation(code, subCode, message);
+            return new ResultInformation(code, subCode, message, sipDetails, q850Details);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SipDiagnosticInfo"/>. </summary>
+        /// <param name="code"> Represents the diagnostic code returned by the SIP service, used for identifying specific issues or statuses. </param>
+        /// <param name="message"> Message associated with the code for diagnosing. </param>
+        /// <returns> A new <see cref="CallAutomation.SipDiagnosticInfo"/> instance for mocking. </returns>
+        public static SipDiagnosticInfo SipDiagnosticInfo(int? code = null, string message = null)
+        {
+            return new SipDiagnosticInfo(code, message);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.RecordingStateChanged"/>. </summary>
@@ -183,10 +202,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdate"/>. </summary>
         /// <param name="transcriptionStatus"></param>
         /// <param name="transcriptionStatusDetails"></param>
+        /// <param name="transcriptionMessage"> Optional message providing additional context about the transcription update. </param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionUpdate"/> instance for mocking. </returns>
-        public static TranscriptionUpdate TranscriptionUpdate(TranscriptionStatus? transcriptionStatus = null, TranscriptionStatusDetails? transcriptionStatusDetails = null)
+        public static TranscriptionUpdate TranscriptionUpdate(TranscriptionStatus? transcriptionStatus = null, TranscriptionStatusDetails? transcriptionStatusDetails = null, string transcriptionMessage = null)
         {
-            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails);
+            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails, transcriptionMessage);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStopped"/>. </summary>

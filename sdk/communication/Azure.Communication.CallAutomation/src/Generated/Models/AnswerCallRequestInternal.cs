@@ -35,7 +35,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
         /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, bool? enableLoopbackAudio)
+        /// <param name="dtmfOptions"> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
@@ -46,6 +47,7 @@ namespace Azure.Communication.CallAutomation
             TranscriptionConfiguration = transcriptionConfiguration;
             MediaStreamingConfiguration = mediaStreamingConfiguration;
             EnableLoopbackAudio = enableLoopbackAudio;
+            DtmfOptions = dtmfOptions;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -66,5 +68,7 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
         /// <summary> Enables loopback audio functionality for the call. </summary>
         public bool? EnableLoopbackAudio { get; set; }
+        /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
+        public DtmfConfigurationOptionsInternal DtmfOptions { get; set; }
     }
 }

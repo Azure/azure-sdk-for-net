@@ -755,6 +755,7 @@ namespace Azure.Communication.CallAutomation
                 SourceDisplayName = options?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
                 TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
+                DtmfOptions = options.DtmfOptions == null ? null : new DtmfConfigurationOptionsInternal(options.DtmfOptions.EnableDtmfBroadcastInGroupCalls)
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
@@ -827,8 +828,13 @@ namespace Azure.Communication.CallAutomation
             return configuration == default
                 ? default
                 : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport,
-                configuration.MediaStreamingContent, configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming,
-                configuration.EnableBidirectional, configuration.AudioFormat);
+                configuration.MediaStreamingContent, configuration.MediaStreamingAudioChannel)
+                {
+                   StartMediaStreaming = configuration.StartMediaStreaming,
+                   EnableBidirectional = configuration.EnableBidirectional,
+                   AudioFormat = configuration.AudioFormat,
+                   EnableDtmfTones = configuration.EnableDtmfTones
+                };
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>
