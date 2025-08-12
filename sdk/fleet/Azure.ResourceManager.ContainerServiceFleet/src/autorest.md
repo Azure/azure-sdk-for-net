@@ -35,10 +35,17 @@ rename-mapping:
   GenerateResponse: AutoUpgradeProfileGenerateResult
   FleetMemberStatus: ContainerServiceFleetMemberStatus
   FleetStatus: ContainerServiceFleetStatus
+  Timing: ContainerServiceFleetGateTiming 
 
 prepend-rp-prefix:
   - AgentProfile
   - APIServerAccessProfile
+  - Gate
+  - GateConfiguration
+  - GateProvisioningState
+  - GateState
+  - GateTarget
+  - GateType
   - ManagedClusterUpdate
   - ManagedClusterUpgradeSpec
   - ManagedClusterUpgradeType

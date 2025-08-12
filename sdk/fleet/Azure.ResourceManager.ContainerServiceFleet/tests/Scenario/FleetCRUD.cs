@@ -113,23 +113,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             ContainerServiceFleetUpdateRunCollection updateRunCollection = fleetResource.GetContainerServiceFleetUpdateRuns();
             string updateRunName = "run1";
             // Stage before/after gates
-            var stageBeforeGate = new GateConfiguration(GateType.Approval)
+            var stageBeforeGate = new ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType.Approval)
             {
                 DisplayName = "stage before gate"
             };
 
-            var stageAfterGate = new GateConfiguration(GateType.Approval)
+            var stageAfterGate = new ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType.Approval)
             {
                 DisplayName = "stage after gate"
             };
 
             // Group before/after gates
-            var groupBeforeGate = new GateConfiguration(GateType.Approval)
+            var groupBeforeGate = new ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType.Approval)
             {
                 DisplayName = "group before gate"
             };
 
-            var groupAfterGate = new GateConfiguration(GateType.Approval)
+            var groupAfterGate = new ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType.Approval)
             {
                 DisplayName = "group after gate"
             };
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             // Test Gates
             // List Gates
             fleetResource = armClient.GetContainerServiceFleetResource(fleetResourceId);
-            GateCollection gates = fleetResource.GetGates();
+            ContainerServiceFleetGateCollection gates = fleetResource.GetContainerServiceFleetGates();
             Console.WriteLine($"Listing all gates in fleet '{fleetName}'...");
-            List<GateResource> gateList = new List<GateResource>();
-            await foreach (GateResource gate in gates.GetAllAsync())
+            List<ContainerServiceFleetGateResource> gateList = new List<ContainerServiceFleetGateResource>();
+            await foreach (ContainerServiceFleetGateResource gate in gates.GetAllAsync())
             {
                 gateList.Add(gate);
                 Console.WriteLine($"- Gate Name: {gate.Data.Name}");
@@ -194,17 +194,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             Debug.Assert(gateList.Count > 0, "No gates were found in the fleet");
             var gateName = gateList[0].Data.Name;
             // Get Gates
-            GateResource getGate = await gates.GetAsync(gateName);
+            ContainerServiceFleetGateResource getGate = await gates.GetAsync(gateName);
             Debug.Assert(getGate != null, $"Gate '{gateName}' was not found.");
             // Patch Gate
-            GatePatch patch = new GatePatch
+            ContainerServiceFleetGatePatch patch = new ContainerServiceFleetGatePatch
             {
-                GatePatchState = GateState.Completed
+                GatePatchState = ContainerServiceFleetGateState.Completed
             };
-            ArmOperation<GateResource> updateOperation = await getGate.UpdateAsync(WaitUntil.Completed, patch);
-            GateResource updatedGate = updateOperation.Value;
+            ArmOperation<ContainerServiceFleetGateResource> updateOperation = await getGate.UpdateAsync(WaitUntil.Completed, patch);
+            ContainerServiceFleetGateResource updatedGate = updateOperation.Value;
             Debug.Assert(
-                updatedGate.Data.State == GateState.Completed,
+                updatedGate.Data.State == ContainerServiceFleetGateState.Completed,
                 $"Gate '{updatedGate.Data.Name}' did not reach the expected state. Actual: {updatedGate.Data.State}"
             );
 

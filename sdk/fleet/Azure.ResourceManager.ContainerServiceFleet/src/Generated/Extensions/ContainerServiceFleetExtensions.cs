@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GateResource.CreateResourceIdentifier" /> to create a <see cref="GateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerServiceFleetGateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceFleetGateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetGateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetGateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetGateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GateResource"/> object. </returns>
-        public static GateResource GetGateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceFleetGateResource"/> object. </returns>
+        public static ContainerServiceFleetGateResource GetContainerServiceFleetGateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerServiceFleetArmClient(client).GetGateResource(id);
+            return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetGateResource(id);
         }
 
         /// <summary>

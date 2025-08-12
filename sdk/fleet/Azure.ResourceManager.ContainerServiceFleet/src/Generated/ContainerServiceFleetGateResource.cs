@@ -16,14 +16,14 @@ using Azure.ResourceManager.ContainerServiceFleet.Models;
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
     /// <summary>
-    /// A Class representing a Gate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GateResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetGateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource"/> using the GetGate method.
+    /// A Class representing a ContainerServiceFleetGate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceFleetGateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerServiceFleetGateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource"/> using the GetContainerServiceFleetGate method.
     /// </summary>
-    public partial class GateResource : ArmResource
+    public partial class ContainerServiceFleetGateResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="GateResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ContainerServiceFleetGateResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="fleetName"> The fleetName. </param>
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _gateClientDiagnostics;
-        private readonly GatesRestOperations _gateRestClient;
-        private readonly GateData _data;
+        private readonly ClientDiagnostics _containerServiceFleetGateGatesClientDiagnostics;
+        private readonly GatesRestOperations _containerServiceFleetGateGatesRestClient;
+        private readonly ContainerServiceFleetGateData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets/gates";
 
-        /// <summary> Initializes a new instance of the <see cref="GateResource"/> class for mocking. </summary>
-        protected GateResource()
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetGateResource"/> class for mocking. </summary>
+        protected ContainerServiceFleetGateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetGateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GateResource(ArmClient client, GateData data) : this(client, data.Id)
+        internal ContainerServiceFleetGateResource(ArmClient client, ContainerServiceFleetGateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetGateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerServiceFleetGateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _gateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string gateApiVersion);
-            _gateRestClient = new GatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, gateApiVersion);
+            _containerServiceFleetGateGatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerServiceFleetGateGatesApiVersion);
+            _containerServiceFleetGateGatesRestClient = new GatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetGateGatesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual GateData Data
+        public virtual ContainerServiceFleetGateData Data
         {
             get
             {
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GateResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceFleetGateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _gateClientDiagnostics.CreateScope("GateResource.Get");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateResource.Get");
             scope.Start();
             try
             {
-                var response = await _gateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerServiceFleetGateGatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,21 +146,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GateResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceFleetGateResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _gateClientDiagnostics.CreateScope("GateResource.Get");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateResource.Get");
             scope.Start();
             try
             {
-                var response = _gateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerServiceFleetGateGatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,16 +196,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<GateResource>> UpdateAsync(WaitUntil waitUntil, GatePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerServiceFleetGateResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceFleetGatePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _gateClientDiagnostics.CreateScope("GateResource.Update");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateResource.Update");
             scope.Start();
             try
             {
-                var response = await _gateRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceFleetArmOperation<GateResource>(new GateOperationSource(Client), _gateClientDiagnostics, Pipeline, _gateRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _containerServiceFleetGateGatesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetGateResource>(new ContainerServiceFleetGateOperationSource(Client), _containerServiceFleetGateGatesClientDiagnostics, Pipeline, _containerServiceFleetGateGatesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,16 +244,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<GateResource> Update(WaitUntil waitUntil, GatePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerServiceFleetGateResource> Update(WaitUntil waitUntil, ContainerServiceFleetGatePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _gateClientDiagnostics.CreateScope("GateResource.Update");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateResource.Update");
             scope.Start();
             try
             {
-                var response = _gateRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new ContainerServiceFleetArmOperation<GateResource>(new GateOperationSource(Client), _gateClientDiagnostics, Pipeline, _gateRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _containerServiceFleetGateGatesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetGateResource>(new ContainerServiceFleetGateOperationSource(Client), _containerServiceFleetGateGatesClientDiagnostics, Pipeline, _containerServiceFleetGateGatesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

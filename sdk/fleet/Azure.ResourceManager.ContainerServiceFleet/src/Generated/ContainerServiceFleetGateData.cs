@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
     /// <summary>
-    /// A class representing the Gate data model.
+    /// A class representing the ContainerServiceFleetGate data model.
     /// A Gate controls the progression during a staged rollout, e.g. in an Update Run.
     /// </summary>
-    public partial class GateData : ResourceData
+    public partial class ContainerServiceFleetGateData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GateData"/>. </summary>
-        public GateData()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateData"/>. </summary>
+        public ContainerServiceFleetGateData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="target"> The target that the Gate is controlling, e.g. an Update Run. </param>
         /// <param name="state"> The state of the Gate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, GateProvisioningState? provisioningState, string displayName, GateType? gateType, GateTarget target, GateState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerServiceFleetGateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ContainerServiceFleetGateProvisioningState? provisioningState, string displayName, ContainerServiceFleetGateType? gateType, ContainerServiceFleetGateTarget target, ContainerServiceFleetGateState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ProvisioningState = provisioningState;
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         public ETag? ETag { get; }
         /// <summary> The provisioning state of the Gate resource. </summary>
-        public GateProvisioningState? ProvisioningState { get; }
+        public ContainerServiceFleetGateProvisioningState? ProvisioningState { get; }
         /// <summary> The human-readable display name of the Gate. </summary>
         public string DisplayName { get; set; }
         /// <summary> The type of the Gate determines how it is completed. </summary>
-        public GateType? GateType { get; set; }
+        public ContainerServiceFleetGateType? GateType { get; set; }
         /// <summary> The target that the Gate is controlling, e.g. an Update Run. </summary>
-        public GateTarget Target { get; set; }
+        public ContainerServiceFleetGateTarget Target { get; set; }
         /// <summary> The state of the Gate. </summary>
-        public GateState? State { get; set; }
+        public ContainerServiceFleetGateState? State { get; set; }
     }
 }

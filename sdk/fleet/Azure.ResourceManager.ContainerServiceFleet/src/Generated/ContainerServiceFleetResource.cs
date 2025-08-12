@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return GetAutoUpgradeProfiles().Get(autoUpgradeProfileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GateResources in the ContainerServiceFleet. </summary>
-        /// <returns> An object representing collection of GateResources and their operations over a GateResource. </returns>
-        public virtual GateCollection GetGates()
+        /// <summary> Gets a collection of ContainerServiceFleetGateResources in the ContainerServiceFleet. </summary>
+        /// <returns> An object representing collection of ContainerServiceFleetGateResources and their operations over a ContainerServiceFleetGateResource. </returns>
+        public virtual ContainerServiceFleetGateCollection GetContainerServiceFleetGates()
         {
-            return GetCachedClient(client => new GateCollection(client, Id));
+            return GetCachedClient(client => new ContainerServiceFleetGateCollection(client, Id));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GateResource>> GetGateAsync(string gateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceFleetGateResource>> GetContainerServiceFleetGateAsync(string gateName, CancellationToken cancellationToken = default)
         {
-            return await GetGates().GetAsync(gateName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerServiceFleetGates().GetAsync(gateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GateResource> GetGate(string gateName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceFleetGateResource> GetContainerServiceFleetGate(string gateName, CancellationToken cancellationToken = default)
         {
-            return GetGates().Get(gateName, cancellationToken);
+            return GetContainerServiceFleetGates().Get(gateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerServiceFleetMemberResources in the ContainerServiceFleet. </summary>

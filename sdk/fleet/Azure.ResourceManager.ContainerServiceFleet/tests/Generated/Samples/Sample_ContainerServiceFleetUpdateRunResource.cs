@@ -162,21 +162,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 {
 Groups = {new ContainerServiceFleetUpdateGroup("group-a")
 {
-BeforeGates = {new GateConfiguration(GateType.Approval)
+BeforeGates = {new ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType.Approval)
 {
 DisplayName = "gate before group-a",
 }},
-AfterGates = {new GateConfiguration(GateType.Approval)
+AfterGates = {new ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType.Approval)
 {
 DisplayName = "gate after group-a",
 }},
 }},
 AfterStageWaitInSeconds = 3600,
-BeforeGates = {new GateConfiguration(GateType.Approval)
+BeforeGates = {new ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType.Approval)
 {
 DisplayName = "gate before stage1",
 }},
-AfterGates = {new GateConfiguration(GateType.Approval)
+AfterGates = {new ContainerServiceFleetGateConfiguration(ContainerServiceFleetGateType.Approval)
 {
 DisplayName = "gate after stage1",
 }},

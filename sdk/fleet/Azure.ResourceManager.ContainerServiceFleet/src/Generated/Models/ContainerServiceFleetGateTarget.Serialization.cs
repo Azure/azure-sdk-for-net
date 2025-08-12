@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    public partial class GateTarget : IUtf8JsonSerializable, IJsonModel<GateTarget>
+    public partial class ContainerServiceFleetGateTarget : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetGateTarget>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GateTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetGateTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GateTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceFleetGateTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GateTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetGateTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GateTarget)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetGateTarget)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("id"u8);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
         }
 
-        GateTarget IJsonModel<GateTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerServiceFleetGateTarget IJsonModel<ContainerServiceFleetGateTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GateTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetGateTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GateTarget)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetGateTarget)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGateTarget(document.RootElement, options);
+            return DeserializeContainerServiceFleetGateTarget(document.RootElement, options);
         }
 
-        internal static GateTarget DeserializeGateTarget(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerServiceFleetGateTarget DeserializeContainerServiceFleetGateTarget(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GateTarget(id, updateRunProperties, serializedAdditionalRawData);
+            return new ContainerServiceFleetGateTarget(id, updateRunProperties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GateTarget>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerServiceFleetGateTarget>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GateTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetGateTarget>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GateTarget)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetGateTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GateTarget IPersistableModel<GateTarget>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerServiceFleetGateTarget IPersistableModel<ContainerServiceFleetGateTarget>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GateTarget>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetGateTarget>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGateTarget(document.RootElement, options);
+                        return DeserializeContainerServiceFleetGateTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GateTarget)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetGateTarget)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GateTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceFleetGateTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

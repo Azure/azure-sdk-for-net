@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="GateListResult"/>. </summary>
         /// <param name="value"> The Gate items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GateListResult(IEnumerable<GateData> value)
+        internal GateListResult(IEnumerable<ContainerServiceFleetGateData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="value"> The Gate items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GateListResult(IReadOnlyList<GateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GateListResult(IReadOnlyList<ContainerServiceFleetGateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The Gate items on this page. </summary>
-        public IReadOnlyList<GateData> Value { get; }
+        public IReadOnlyList<ContainerServiceFleetGateData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

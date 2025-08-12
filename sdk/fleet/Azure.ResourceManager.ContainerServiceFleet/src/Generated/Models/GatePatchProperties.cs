@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="GatePatchProperties"/>. </summary>
         /// <param name="state"> The state of the Gate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GatePatchProperties(GateState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GatePatchProperties(ContainerServiceFleetGateState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the Gate. </summary>
-        public GateState? State { get; set; }
+        public ContainerServiceFleetGateState? State { get; set; }
     }
 }

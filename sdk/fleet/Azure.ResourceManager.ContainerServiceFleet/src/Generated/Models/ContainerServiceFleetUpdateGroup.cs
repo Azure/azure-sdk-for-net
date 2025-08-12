@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            BeforeGates = new ChangeTrackingList<GateConfiguration>();
-            AfterGates = new ChangeTrackingList<GateConfiguration>();
+            BeforeGates = new ChangeTrackingList<ContainerServiceFleetGateConfiguration>();
+            AfterGates = new ChangeTrackingList<ContainerServiceFleetGateConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="beforeGates"> A list of Gates that will be created before this Group is executed. </param>
         /// <param name="afterGates"> A list of Gates that will be created after this Group is executed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateGroup(string name, IList<GateConfiguration> beforeGates, IList<GateConfiguration> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetUpdateGroup(string name, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             BeforeGates = beforeGates;
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         public string Name { get; set; }
         /// <summary> A list of Gates that will be created before this Group is executed. </summary>
-        public IList<GateConfiguration> BeforeGates { get; }
+        public IList<ContainerServiceFleetGateConfiguration> BeforeGates { get; }
         /// <summary> A list of Gates that will be created after this Group is executed. </summary>
-        public IList<GateConfiguration> AfterGates { get; }
+        public IList<ContainerServiceFleetGateConfiguration> AfterGates { get; }
     }
 }

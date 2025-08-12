@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> GateConfiguration is used to define where Gates should be placed within the Update Run. </summary>
-    public partial class GateConfiguration
+    /// <summary> The target that the Gate is controlling, e.g. an Update Run. Exactly one of the properties objects will be set. </summary>
+    public partial class ContainerServiceFleetGateTarget
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +46,35 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GateConfiguration"/>. </summary>
-        /// <param name="gateType"> The type of the Gate determines how it is completed. </param>
-        public GateConfiguration(GateType gateType)
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateTarget"/>. </summary>
+        /// <param name="id"> The resource id that the Gate is controlling the rollout of. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public ContainerServiceFleetGateTarget(ResourceIdentifier id)
         {
-            GateType = gateType;
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GateConfiguration"/>. </summary>
-        /// <param name="displayName"> The human-readable display name of the Gate. </param>
-        /// <param name="gateType"> The type of the Gate determines how it is completed. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateTarget"/>. </summary>
+        /// <param name="id"> The resource id that the Gate is controlling the rollout of. </param>
+        /// <param name="updateRunProperties"> The properties of the Update Run that the Gate is targeting. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GateConfiguration(string displayName, GateType gateType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetGateTarget(ResourceIdentifier id, UpdateRunGateTargetProperties updateRunProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DisplayName = displayName;
-            GateType = gateType;
+            Id = id;
+            UpdateRunProperties = updateRunProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GateConfiguration"/> for deserialization. </summary>
-        internal GateConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateTarget"/> for deserialization. </summary>
+        internal ContainerServiceFleetGateTarget()
         {
         }
 
-        /// <summary> The human-readable display name of the Gate. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> The type of the Gate determines how it is completed. </summary>
-        public GateType GateType { get; set; }
+        /// <summary> The resource id that the Gate is controlling the rollout of. </summary>
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> The properties of the Update Run that the Gate is targeting. </summary>
+        public UpdateRunGateTargetProperties UpdateRunProperties { get; set; }
     }
 }

@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
             Name = name;
             Groups = new ChangeTrackingList<ContainerServiceFleetUpdateGroup>();
-            BeforeGates = new ChangeTrackingList<GateConfiguration>();
-            AfterGates = new ChangeTrackingList<GateConfiguration>();
+            BeforeGates = new ChangeTrackingList<ContainerServiceFleetGateConfiguration>();
+            AfterGates = new ChangeTrackingList<ContainerServiceFleetGateConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStage"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="beforeGates"> A list of Gates that will be created before this Stage is executed. </param>
         /// <param name="afterGates"> A list of Gates that will be created after this Stage is executed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds, IList<GateConfiguration> beforeGates, IList<GateConfiguration> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds, IList<ContainerServiceFleetGateConfiguration> beforeGates, IList<ContainerServiceFleetGateConfiguration> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Groups = groups;
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </summary>
         public int? AfterStageWaitInSeconds { get; set; }
         /// <summary> A list of Gates that will be created before this Stage is executed. </summary>
-        public IList<GateConfiguration> BeforeGates { get; }
+        public IList<ContainerServiceFleetGateConfiguration> BeforeGates { get; }
         /// <summary> A list of Gates that will be created after this Stage is executed. </summary>
-        public IList<GateConfiguration> AfterGates { get; }
+        public IList<ContainerServiceFleetGateConfiguration> AfterGates { get; }
     }
 }

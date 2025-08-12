@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             string name = default;
             string stage = default;
             string group = default;
-            Timing timing = default;
+            ContainerServiceFleetGateTiming timing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (property.NameEquals("timing"u8))
                 {
-                    timing = new Timing(property.Value.GetString());
+                    timing = new ContainerServiceFleetGateTiming(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

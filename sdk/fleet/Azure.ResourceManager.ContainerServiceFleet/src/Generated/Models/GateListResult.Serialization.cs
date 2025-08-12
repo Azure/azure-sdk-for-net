@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            IReadOnlyList<GateData> value = default;
+            IReadOnlyList<ContainerServiceFleetGateData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<GateData> array = new List<GateData>();
+                    List<ContainerServiceFleetGateData> array = new List<ContainerServiceFleetGateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GateData.DeserializeGateData(item, options));
+                        array.Add(ContainerServiceFleetGateData.DeserializeContainerServiceFleetGateData(item, options));
                     }
                     value = array;
                     continue;

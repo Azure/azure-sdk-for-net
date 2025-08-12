@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 {
-    public partial class Sample_GateCollection
+    public partial class Sample_ContainerServiceFleetGateCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ResourceIdentifier containerServiceFleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
-            // get the collection of this GateResource
-            GateCollection collection = containerServiceFleet.GetGates();
+            // get the collection of this ContainerServiceFleetGateResource
+            ContainerServiceFleetGateCollection collection = containerServiceFleet.GetContainerServiceFleetGates();
 
             // invoke the operation
             string gateName = "12345678-910a-bcde-f000-000000000000";
-            GateResource result = await collection.GetAsync(gateName);
+            ContainerServiceFleetGateResource result = await collection.GetAsync(gateName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GateData resourceData = result.Data;
+            ContainerServiceFleetGateData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ResourceIdentifier containerServiceFleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
-            // get the collection of this GateResource
-            GateCollection collection = containerServiceFleet.GetGates();
+            // get the collection of this ContainerServiceFleetGateResource
+            ContainerServiceFleetGateCollection collection = containerServiceFleet.GetContainerServiceFleetGates();
 
             // invoke the operation and iterate over the result
-            await foreach (GateResource item in collection.GetAllAsync())
+            await foreach (ContainerServiceFleetGateResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                GateData resourceData = item.Data;
+                ContainerServiceFleetGateData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ResourceIdentifier containerServiceFleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
-            // get the collection of this GateResource
-            GateCollection collection = containerServiceFleet.GetGates();
+            // get the collection of this ContainerServiceFleetGateResource
+            ContainerServiceFleetGateCollection collection = containerServiceFleet.GetContainerServiceFleetGates();
 
             // invoke the operation
             string gateName = "12345678-910a-bcde-f000-000000000000";
@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ResourceIdentifier containerServiceFleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
-            // get the collection of this GateResource
-            GateCollection collection = containerServiceFleet.GetGates();
+            // get the collection of this ContainerServiceFleetGateResource
+            ContainerServiceFleetGateCollection collection = containerServiceFleet.GetContainerServiceFleetGates();
 
             // invoke the operation
             string gateName = "12345678-910a-bcde-f000-000000000000";
-            NullableResponse<GateResource> response = await collection.GetIfExistsAsync(gateName);
-            GateResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ContainerServiceFleetGateResource> response = await collection.GetIfExistsAsync(gateName);
+            ContainerServiceFleetGateResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                GateData resourceData = result.Data;
+                ContainerServiceFleetGateData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

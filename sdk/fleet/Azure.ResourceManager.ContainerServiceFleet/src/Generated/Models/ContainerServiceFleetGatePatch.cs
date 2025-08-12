@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Patch a Gate resource. </summary>
-    public partial class GatePatch
+    public partial class ContainerServiceFleetGatePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GatePatch"/>. </summary>
-        public GatePatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGatePatch"/>. </summary>
+        public ContainerServiceFleetGatePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GatePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGatePatch"/>. </summary>
         /// <param name="properties"> Properties of a Gate that can be patched. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GatePatch(GatePatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetGatePatch(GatePatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Properties of a Gate that can be patched. </summary>
         internal GatePatchProperties Properties { get; set; }
         /// <summary> The state of the Gate. </summary>
-        public GateState? GatePatchState
+        public ContainerServiceFleetGateState? GatePatchState
         {
             get => Properties is null ? default : Properties.State;
             set

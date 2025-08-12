@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="UpdateRunGateTargetProperties"/>. </summary>
         /// <param name="name"> The name of the Update Run. </param>
         /// <param name="timing"> Whether the Gate is placed before or after the update itself. </param>
-        public UpdateRunGateTargetProperties(string name, Timing timing)
+        public UpdateRunGateTargetProperties(string name, ContainerServiceFleetGateTiming timing)
         {
             Name = name;
             Timing = timing;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="group"> The Update Group of the Update Run. </param>
         /// <param name="timing"> Whether the Gate is placed before or after the update itself. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateRunGateTargetProperties(string name, string stage, string group, Timing timing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdateRunGateTargetProperties(string name, string stage, string group, ContainerServiceFleetGateTiming timing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Stage = stage;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> The Update Group of the Update Run. </summary>
         public string Group { get; }
         /// <summary> Whether the Gate is placed before or after the update itself. </summary>
-        public Timing Timing { get; set; }
+        public ContainerServiceFleetGateTiming Timing { get; set; }
     }
 }

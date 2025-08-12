@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GateResource"/> and their operations.
-    /// Each <see cref="GateResource"/> in the collection will belong to the same instance of <see cref="ContainerServiceFleetResource"/>.
-    /// To get a <see cref="GateCollection"/> instance call the GetGates method from an instance of <see cref="ContainerServiceFleetResource"/>.
+    /// A class representing a collection of <see cref="ContainerServiceFleetGateResource"/> and their operations.
+    /// Each <see cref="ContainerServiceFleetGateResource"/> in the collection will belong to the same instance of <see cref="ContainerServiceFleetResource"/>.
+    /// To get a <see cref="ContainerServiceFleetGateCollection"/> instance call the GetContainerServiceFleetGates method from an instance of <see cref="ContainerServiceFleetResource"/>.
     /// </summary>
-    public partial class GateCollection : ArmCollection, IEnumerable<GateResource>, IAsyncEnumerable<GateResource>
+    public partial class ContainerServiceFleetGateCollection : ArmCollection, IEnumerable<ContainerServiceFleetGateResource>, IAsyncEnumerable<ContainerServiceFleetGateResource>
     {
-        private readonly ClientDiagnostics _gateClientDiagnostics;
-        private readonly GatesRestOperations _gateRestClient;
+        private readonly ClientDiagnostics _containerServiceFleetGateGatesClientDiagnostics;
+        private readonly GatesRestOperations _containerServiceFleetGateGatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="GateCollection"/> class for mocking. </summary>
-        protected GateCollection()
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetGateCollection"/> class for mocking. </summary>
+        protected ContainerServiceFleetGateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetGateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal GateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerServiceFleetGateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _gateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", GateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GateResource.ResourceType, out string gateApiVersion);
-            _gateRestClient = new GatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, gateApiVersion);
+            _containerServiceFleetGateGatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetGateResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ContainerServiceFleetGateResource.ResourceType, out string containerServiceFleetGateGatesApiVersion);
+            _containerServiceFleetGateGatesRestClient = new GatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetGateGatesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
-        public virtual async Task<Response<GateResource>> GetAsync(string gateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceFleetGateResource>> GetAsync(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using var scope = _gateClientDiagnostics.CreateScope("GateCollection.Get");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _gateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken).ConfigureAwait(false);
+                var response = await _containerServiceFleetGateGatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
-        public virtual Response<GateResource> Get(string gateName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceFleetGateResource> Get(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using var scope = _gateClientDiagnostics.CreateScope("GateCollection.Get");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Get");
             scope.Start();
             try
             {
-                var response = _gateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken);
+                var response = _containerServiceFleetGateGatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GateResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerServiceFleetGateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceFleetGateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _gateRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gateRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GateResource(Client, GateData.DeserializeGateData(e)), _gateClientDiagnostics, Pipeline, "GateCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetGateGatesRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetGateGatesRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetGateResource(Client, ContainerServiceFleetGateData.DeserializeContainerServiceFleetGateData(e)), _containerServiceFleetGateGatesClientDiagnostics, Pipeline, "ContainerServiceFleetGateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GateResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceFleetGateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServiceFleetGateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _gateRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gateRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GateResource(Client, GateData.DeserializeGateData(e)), _gateClientDiagnostics, Pipeline, "GateCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetGateGatesRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetGateGatesRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetGateResource(Client, ContainerServiceFleetGateData.DeserializeContainerServiceFleetGateData(e)), _containerServiceFleetGateGatesClientDiagnostics, Pipeline, "ContainerServiceFleetGateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using var scope = _gateClientDiagnostics.CreateScope("GateCollection.Exists");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _gateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _containerServiceFleetGateGatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using var scope = _gateClientDiagnostics.CreateScope("GateCollection.Exists");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _gateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken);
+                var response = _containerServiceFleetGateGatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,18 +312,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
-        public virtual async Task<NullableResponse<GateResource>> GetIfExistsAsync(string gateName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ContainerServiceFleetGateResource>> GetIfExistsAsync(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using var scope = _gateClientDiagnostics.CreateScope("GateCollection.GetIfExists");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _gateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _containerServiceFleetGateGatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<GateResource>(response.GetRawResponse());
-                return Response.FromValue(new GateResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ContainerServiceFleetGateResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GateResource"/></description>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,18 +357,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
-        public virtual NullableResponse<GateResource> GetIfExists(string gateName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ContainerServiceFleetGateResource> GetIfExists(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using var scope = _gateClientDiagnostics.CreateScope("GateCollection.GetIfExists");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _gateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken);
+                var response = _containerServiceFleetGateGatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<GateResource>(response.GetRawResponse());
-                return Response.FromValue(new GateResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ContainerServiceFleetGateResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        IEnumerator<GateResource> IEnumerable<GateResource>.GetEnumerator()
+        IEnumerator<ContainerServiceFleetGateResource> IEnumerable<ContainerServiceFleetGateResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<GateResource> IAsyncEnumerable<GateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ContainerServiceFleetGateResource> IAsyncEnumerable<ContainerServiceFleetGateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             string name = default;
             IList<ContainerServiceFleetUpdateGroup> groups = default;
             int? afterStageWaitInSeconds = default;
-            IList<GateConfiguration> beforeGates = default;
-            IList<GateConfiguration> afterGates = default;
+            IList<ContainerServiceFleetGateConfiguration> beforeGates = default;
+            IList<ContainerServiceFleetGateConfiguration> afterGates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<GateConfiguration> array = new List<GateConfiguration>();
+                    List<ContainerServiceFleetGateConfiguration> array = new List<ContainerServiceFleetGateConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GateConfiguration.DeserializeGateConfiguration(item, options));
+                        array.Add(ContainerServiceFleetGateConfiguration.DeserializeContainerServiceFleetGateConfiguration(item, options));
                     }
                     beforeGates = array;
                     continue;
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<GateConfiguration> array = new List<GateConfiguration>();
+                    List<ContainerServiceFleetGateConfiguration> array = new List<ContainerServiceFleetGateConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GateConfiguration.DeserializeGateConfiguration(item, options));
+                        array.Add(ContainerServiceFleetGateConfiguration.DeserializeContainerServiceFleetGateConfiguration(item, options));
                     }
                     afterGates = array;
                     continue;
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 name,
                 groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroup>(),
                 afterStageWaitInSeconds,
-                beforeGates ?? new ChangeTrackingList<GateConfiguration>(),
-                afterGates ?? new ChangeTrackingList<GateConfiguration>(),
+                beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),
+                afterGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),
                 serializedAdditionalRawData);
         }
 

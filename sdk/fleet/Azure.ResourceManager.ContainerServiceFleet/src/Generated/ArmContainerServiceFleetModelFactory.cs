@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new AutoUpgradeProfileGenerateResult(id, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.GateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetGateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="gateType"> The type of the Gate determines how it is completed. </param>
         /// <param name="target"> The target that the Gate is controlling, e.g. an Update Run. </param>
         /// <param name="state"> The state of the Gate. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.GateData"/> instance for mocking. </returns>
-        public static GateData GateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, GateProvisioningState? provisioningState = null, string displayName = null, GateType? gateType = null, GateTarget target = null, GateState? state = null)
+        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetGateData"/> instance for mocking. </returns>
+        public static ContainerServiceFleetGateData ContainerServiceFleetGateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, ContainerServiceFleetGateProvisioningState? provisioningState = null, string displayName = null, ContainerServiceFleetGateType? gateType = null, ContainerServiceFleetGateTarget target = null, ContainerServiceFleetGateState? state = null)
         {
-            return new GateData(
+            return new ContainerServiceFleetGateData(
                 id,
                 name,
                 resourceType,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="group"> The Update Group of the Update Run. </param>
         /// <param name="timing"> Whether the Gate is placed before or after the update itself. </param>
         /// <returns> A new <see cref="Models.UpdateRunGateTargetProperties"/> instance for mocking. </returns>
-        public static UpdateRunGateTargetProperties UpdateRunGateTargetProperties(string name = null, string stage = null, string group = null, Timing timing = default)
+        public static UpdateRunGateTargetProperties UpdateRunGateTargetProperties(string name = null, string stage = null, string group = null, ContainerServiceFleetGateTiming timing = default)
         {
             return new UpdateRunGateTargetProperties(name, stage, group, timing, serializedAdditionalRawData: null);
         }
