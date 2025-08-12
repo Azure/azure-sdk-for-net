@@ -16,7 +16,7 @@ namespace Azure.Generator.Management.Utilities
         public static ConstructorProvider BuildMockingConstructor(TypeProvider enclosingType)
         {
             return new ConstructorProvider(
-                new ConstructorSignature(enclosingType.Type, $"Initializes a new instance of the <see cref=\"{enclosingType.Name}\"/> class for mocking.", MethodSignatureModifiers.Protected, []),
+                new ConstructorSignature(enclosingType.Type, $"Initializes a new instance of the {enclosingType.Type:C} class for mocking.", MethodSignatureModifiers.Protected, []),
                 new MethodBodyStatement[] { MethodBodyStatement.Empty },
                 enclosingType);
         }
