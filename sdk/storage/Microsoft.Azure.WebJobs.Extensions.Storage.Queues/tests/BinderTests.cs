@@ -9,7 +9,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
-namespace v
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class BinderTests
     {
