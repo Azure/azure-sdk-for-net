@@ -511,7 +511,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
             var targetCallConnection = CreateMockCallConnection(202, MoveParticipantsPayload, targetCallId);
 
-            var response = await targetCallConnection.MoveParticipantsAsync(fromCallId, new[] { participantToMove }).ConfigureAwait(false);
+            var response = await targetCallConnection.MoveParticipantsAsync(new[] { participantToMove }, fromCallId).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyMoveParticipantsResult(response);
         }
@@ -526,7 +526,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
             var targetCallConnection = CreateMockCallConnection(202, MoveParticipantsPayload, targetCallId);
 
-            var response = targetCallConnection.MoveParticipants(fromCallId, new[] { participantToMove });
+            var response = targetCallConnection.MoveParticipants(new[] { participantToMove }, fromCallId);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyMoveParticipantsResult(response);
         }
@@ -576,7 +576,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var targetCallConnection = CreateMockCallConnection(404, null, targetCallId);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
-                await targetCallConnection.MoveParticipantsAsync(fromCallId, new[] { participantToMove }).ConfigureAwait(false));
+                await targetCallConnection.MoveParticipantsAsync(new[] { participantToMove }, fromCallId).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -592,7 +592,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var targetCallConnection = CreateMockCallConnection(404, null, targetCallId);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() =>
-                targetCallConnection.MoveParticipants(fromCallId, new[] { participantToMove }));
+                targetCallConnection.MoveParticipants(new[] { participantToMove }, fromCallId));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -645,7 +645,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var targetCallConnection = CreateMockCallConnection(202, MoveParticipantsPayload, targetCallId);
 
             ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () =>
-                await targetCallConnection.MoveParticipantsAsync(fromCallId, null).ConfigureAwait(false));
+                await targetCallConnection.MoveParticipantsAsync(null, fromCallId).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.True(ex?.Message.Contains("Value cannot be null."));
         }
@@ -660,7 +660,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var participant = new CommunicationUserIdentifier("userId");
 
             ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () =>
-                await targetCallConnection.MoveParticipantsAsync(null, new[] { participant }).ConfigureAwait(false));
+                await targetCallConnection.MoveParticipantsAsync(new[] { participant }, null).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.True(ex?.Message.Contains("Value cannot be null."));
         }
