@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupList"/>. </summary>
-        internal ElasticSanVolumeGroupList()
+        /// <param name="value"> The VolumeGroup items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ElasticSanVolumeGroupList(IEnumerable<ElasticSanVolumeGroupData> value)
         {
-            Value = new ChangeTrackingList<ElasticSanVolumeGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupList"/>. </summary>
-        /// <param name="value"> An array of Volume Groups objects. </param>
-        /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
+        /// <param name="value"> The VolumeGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumeGroupList(IReadOnlyList<ElasticSanVolumeGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanVolumeGroupList(IReadOnlyList<ElasticSanVolumeGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of Volume Groups objects. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupList"/> for deserialization. </summary>
+        internal ElasticSanVolumeGroupList()
+        {
+        }
+
+        /// <summary> The VolumeGroup items on this page. </summary>
         public IReadOnlyList<ElasticSanVolumeGroupData> Value { get; }
-        /// <summary> URI to fetch the next section of the paginated response. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

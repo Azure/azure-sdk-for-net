@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         private const string StoppedValue = "Stopped";
         private const string SkippedValue = "Skipped";
         private const string FailedValue = "Failed";
+        private const string PendingValue = "Pending";
         private const string CompletedValue = "Completed";
 
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has not been started. </summary>
@@ -42,6 +43,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static ContainerServiceFleetUpdateState Skipped { get; } = new ContainerServiceFleetUpdateState(SkippedValue);
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has failed. </summary>
         public static ContainerServiceFleetUpdateState Failed { get; } = new ContainerServiceFleetUpdateState(FailedValue);
+        /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that is pending. </summary>
+        public static ContainerServiceFleetUpdateState Pending { get; } = new ContainerServiceFleetUpdateState(PendingValue);
         /// <summary> The state of an UpdateRun/UpdateStage/UpdateGroup/MemberUpdate that has completed. </summary>
         public static ContainerServiceFleetUpdateState Completed { get; } = new ContainerServiceFleetUpdateState(CompletedValue);
         /// <summary> Determines if two <see cref="ContainerServiceFleetUpdateState"/> values are the same. </summary>

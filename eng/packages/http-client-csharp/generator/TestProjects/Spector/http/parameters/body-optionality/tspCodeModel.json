@@ -100,7 +100,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -203,14 +204,14 @@
             {
               "$id": "18",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "1"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -319,14 +320,14 @@
             {
               "$id": "25",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "3"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -474,14 +475,14 @@
                 {
                   "$id": "35",
                   "name": "contentType",
-                  "nameInRequest": "contentType",
+                  "nameInRequest": "Content-Type",
                   "doc": "Body parameter's content type. Known values are application/json",
                   "type": {
                     "$ref": "5"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": false,
@@ -586,14 +587,14 @@
                 {
                   "$id": "41",
                   "name": "contentType",
-                  "nameInRequest": "contentType",
+                  "nameInRequest": "Content-Type",
                   "doc": "Body parameter's content type. Known values are application/json",
                   "type": {
                     "$ref": "7"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": false,

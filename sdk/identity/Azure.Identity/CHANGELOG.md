@@ -1,8 +1,6 @@
 # Release History
 
-## 1.15.0-beta.2 (Unreleased)
-
-### Features Added
+## 1.15.0 (2025-08-11)
 
 ### Breaking Changes
 
@@ -17,7 +15,10 @@
 
 ### Bugs Fixed
 
+- Tenant ID comparisons in credential options are now case-insensitive. This affects `AdditionallyAllowedTenants` values which will now be matched against tenant IDs without case sensitivity, making the authentication more resilient to case differences in tenant IDs returned from WWW-Authenticate challenges ([#51693](https://github.com/Azure/azure-sdk-for-net/issues/51693)).
+
 ### Other Changes
+- `BrokerAuthenticationCredential` has been renamed as `BrokerCredential`.
 
 - Added the `EditorBrowsable(Never)` attribute to property `VisualStudioCodeTenantId` as `TenantId` is preferred. The `VisualStudioCodeTenantId` property exists only to provide backwards compatibility.
 

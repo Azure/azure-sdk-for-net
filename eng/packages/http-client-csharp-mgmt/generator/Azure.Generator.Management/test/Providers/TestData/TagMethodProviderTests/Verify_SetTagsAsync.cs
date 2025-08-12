@@ -22,8 +22,9 @@ try
     else
     {
         global::Samples.Models.ResponseTypeData current = (await this.GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-        current.Tags.ReplaceWith(tags);
-        global::Azure.ResourceManager.ArmOperation<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(global::Azure.WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+        global::System.Threading.CancellationToken patch = new global::System.Threading.CancellationToken();
+        patch.Tags.ReplaceWith(tags);
+        global::Azure.ResourceManager.ArmOperation<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(global::Azure.WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }

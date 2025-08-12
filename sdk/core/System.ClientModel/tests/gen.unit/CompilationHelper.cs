@@ -70,7 +70,6 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                 }
             }
 
-            parseOptions ??= s_defaultParseOptions;
             SyntaxTree[] syntaxTrees =
             [
                 CSharpSyntaxTree.ParseText(source, parseOptions),

@@ -224,17 +224,24 @@
       "properties": [
         {
           "$id": "28",
-          "kind": "header",
+          "kind": "property",
           "name": "contentType",
-          "serializedName": "content-type",
+          "serializedName": "contentType",
           "type": {
             "$ref": "1"
           },
           "optional": false,
           "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson.contentType",
-          "correspondingMethodParams": []
+          "serializationOptions": {
+            "json": {
+              "name": "contentType"
+            }
+          },
+          "isHttpMetadata": true
         },
         {
           "$id": "29",
@@ -259,7 +266,8 @@
             "json": {
               "name": "content"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -384,7 +392,7 @@
                 {
                   "$id": "40",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "7"
                   },
@@ -479,7 +487,7 @@
                 {
                   "$id": "45",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "13"
                   },
@@ -620,7 +628,7 @@
                 {
                   "$id": "54",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "19"
                   },
@@ -711,7 +719,7 @@
                 {
                   "$id": "58",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "25"
                   },

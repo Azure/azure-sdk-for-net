@@ -8,7 +8,7 @@ namespace Azure.AI.OpenAI.Images;
 
 internal partial class AzureImageClient : ImageClient
 {
-    internal override PipelineMessage CreateCreateImageRequest(BinaryContent content, RequestOptions options)
+    internal override PipelineMessage CreateGenerateImagesRequest(BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("POST")
             .WithPath("images", "generations")
@@ -17,7 +17,7 @@ internal partial class AzureImageClient : ImageClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateCreateImageEditRequest(BinaryContent content, string contentType, RequestOptions options)
+    internal override PipelineMessage CreateGenerateImageEditsRequest(BinaryContent content, string contentType, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("POST")
             .WithPath("images", "edits")
@@ -26,7 +26,7 @@ internal partial class AzureImageClient : ImageClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateCreateImageVariationRequest(BinaryContent content, string contentType, RequestOptions options)
+    internal override PipelineMessage CreateGenerateImageVariationsRequest(BinaryContent content, string contentType, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithMethod("POST")
             .WithPath("images", "variations")

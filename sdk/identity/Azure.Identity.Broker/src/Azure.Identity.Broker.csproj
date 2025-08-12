@@ -13,7 +13,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" VersionOverride="1.15.0-beta.1" />
+    <!--Change this back to a package reference when the package is available with the new BrokerCredential name.-->
+    <!--<PackageReference Include="Azure.Identity" VersionOverride="1.15.0-beta.1" />-->
+    <ProjectReference Include="..\..\Azure.Identity\src\Azure.Identity.csproj"/>
     <PackageReference Include="Microsoft.Identity.Client.Broker" />
   </ItemGroup>
 </Project>

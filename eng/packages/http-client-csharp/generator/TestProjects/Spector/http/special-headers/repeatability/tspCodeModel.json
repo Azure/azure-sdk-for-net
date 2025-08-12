@@ -42,7 +42,7 @@
           "decorators": []
         }
       ],
-      "namespace": "",
+      "namespace": "SpecialHeaders.Repeatability",
       "isFixed": true,
       "isFlags": false,
       "usage": "Output",

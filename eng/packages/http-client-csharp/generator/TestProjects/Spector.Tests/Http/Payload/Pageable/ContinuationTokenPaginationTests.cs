@@ -36,6 +36,26 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
         });
 
         [SpectorTest]
+        public Task RequestHeaderNestedResponseBodyConvenienceMethod() => Test(async (host) =>
+        {
+            var client = new PageableClient(host, null);
+            var result = client.GetServerDrivenPaginationClient()
+                .GetServerDrivenPaginationContinuationTokenClient()
+                .RequestHeaderNestedResponseBodyAsync(foo: "foo", bar: "bar");
+            await ValidateConvenience(result, false, isNested: true);
+        });
+
+        [SpectorTest]
+        public Task RequestHeaderNestedResponseBodyProtocolMethod() => Test(async (host) =>
+        {
+            var client = new PageableClient(host, null);
+            var result = client.GetServerDrivenPaginationClient()
+                .GetServerDrivenPaginationContinuationTokenClient()
+                .RequestHeaderNestedResponseBodyAsync(token: null, foo: "foo", bar: "bar", context: null);
+            await ValidateProtocol(result, false, isNested: true);
+        });
+
+        [SpectorTest]
         public Task RequestHeaderResponseHeaderConvenienceMethod() => Test(async (host) =>
         {
             var client = new PageableClient(host, null);
@@ -73,6 +93,26 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
                 .GetServerDrivenPaginationContinuationTokenClient()
                 .RequestQueryResponseBodyAsync(null, foo: "foo", bar: "bar", context: null);
             await ValidateProtocol(result, false);
+        });
+
+        [SpectorTest]
+        public Task RequestQueryNestedResponseBodyConvenienceMethod() => Test(async (host) =>
+        {
+            var client = new PageableClient(host, null);
+            var result = client.GetServerDrivenPaginationClient()
+                .GetServerDrivenPaginationContinuationTokenClient()
+                .RequestQueryNestedResponseBodyAsync(foo: "foo", bar: "bar");
+            await ValidateConvenience(result, false, isNested: true);
+        });
+
+        [SpectorTest]
+        public Task RequestQueryNestedResponseBodyProtocolMethod() => Test(async (host) =>
+        {
+            var client = new PageableClient(host, null);
+            var result = client.GetServerDrivenPaginationClient()
+                .GetServerDrivenPaginationContinuationTokenClient()
+                .RequestQueryNestedResponseBodyAsync(null, foo: "foo", bar: "bar", context: null);
+            await ValidateProtocol(result, false, isNested: true);
         });
 
         [SpectorTest]
@@ -150,7 +190,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
             return Task.CompletedTask;
         });
 
-        private static async Task ValidateProtocol(AsyncPageable<BinaryData> result, bool tokenInHeader)
+        private static async Task ValidateProtocol(AsyncPageable<BinaryData> result, bool tokenInHeader, bool isNested = false)
         {
             int count = 0;
             var expectedPets = new Dictionary<string, string>()
@@ -164,7 +204,10 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
             {
                 Assert.IsNotNull(page);
                 var pageResult = JsonNode.Parse(page.GetRawResponse().Content.ToString())!;
-                foreach (var pet in (pageResult["pets"] as JsonArray)!)
+                var items = isNested
+                    ? pageResult["nestedItems"]!["pets"] as JsonArray
+                    : pageResult["pets"] as JsonArray;
+                foreach (var pet in items!)
                 {
                     Assert.IsNotNull(pet);
                     Assert.IsNotNull(pet);
@@ -174,7 +217,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
             }
         }
 
-        private static async Task ValidateConvenience(AsyncPageable<Pet> result, bool tokenInHeader)
+        private static async Task ValidateConvenience(AsyncPageable<Pet> result, bool tokenInHeader, bool isNested = false)
         {
             int count = 0;
             var expectedPets = new Dictionary<string, string>()
@@ -197,8 +240,10 @@ namespace TestProjects.Spector.Tests.Http.Payload.Pageable
                 Assert.IsNotNull(page);
                 var response = page.GetRawResponse();
                 var pageResult = JsonNode.Parse(response.Content.ToString())!;
-
-                foreach (var pet in (pageResult["pets"] as JsonArray)!)
+                var items = isNested
+                    ? pageResult["nestedItems"]!["pets"] as JsonArray
+                    : pageResult["pets"] as JsonArray;
+                foreach (var pet in items!)
                 {
                     Assert.IsNotNull(pet);
                     Assert.IsNotNull(pet);

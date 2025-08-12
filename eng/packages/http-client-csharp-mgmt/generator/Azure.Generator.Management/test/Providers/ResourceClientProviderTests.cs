@@ -5,7 +5,6 @@ using Azure.Core;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
-using Azure.Generator.Tests.Common;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;

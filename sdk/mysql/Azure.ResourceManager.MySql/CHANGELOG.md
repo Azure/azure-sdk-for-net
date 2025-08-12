@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.2 (2025-08-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.MySql` AOT-compatible
 
 ## 1.1.1 (2025-03-11)
 

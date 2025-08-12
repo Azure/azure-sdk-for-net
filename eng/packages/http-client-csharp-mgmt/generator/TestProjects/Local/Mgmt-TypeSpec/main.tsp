@@ -1,11 +1,13 @@
-
 import "@azure-tools/typespec-azure-resource-manager";
+import "@azure-tools/typespec-client-generator-core";
 import "./PrivateEndpointConnection.tsp";
 import "./foo.tsp";
 import "./bar.tsp";
 import "./zoo.tsp";
+import "./routes.tsp";
 
 using TypeSpec.Versioning;
+using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
 
 @armProviderNamespace

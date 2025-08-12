@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RulesCreate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Rules_Create.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Rules_Create.json
             // this example is just showing the usage of "FrontDoorRules_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this FrontDoorRuleSetResource created on azure
             // for more information of creating FrontDoorRuleSetResource, please refer to the document of FrontDoorRuleSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string ruleSetName = "ruleSet1";
@@ -69,7 +69,7 @@ Value = "MSFT",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RulesGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Rules_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Rules_Get.json
             // this example is just showing the usage of "FrontDoorRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ Value = "MSFT",
 
             // this example assumes you already have this FrontDoorRuleSetResource created on azure
             // for more information of creating FrontDoorRuleSetResource, please refer to the document of FrontDoorRuleSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string ruleSetName = "ruleSet1";
@@ -104,7 +104,7 @@ Value = "MSFT",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RulesListByRuleSet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Rules_ListByRuleSet.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Rules_ListByRuleSet.json
             // this example is just showing the usage of "FrontDoorRules_ListByRuleSet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ Value = "MSFT",
 
             // this example assumes you already have this FrontDoorRuleSetResource created on azure
             // for more information of creating FrontDoorRuleSetResource, please refer to the document of FrontDoorRuleSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string ruleSetName = "ruleSet1";
@@ -141,7 +141,7 @@ Value = "MSFT",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RulesGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Rules_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Rules_Get.json
             // this example is just showing the usage of "FrontDoorRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +151,7 @@ Value = "MSFT",
 
             // this example assumes you already have this FrontDoorRuleSetResource created on azure
             // for more information of creating FrontDoorRuleSetResource, please refer to the document of FrontDoorRuleSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string ruleSetName = "ruleSet1";
@@ -172,7 +172,7 @@ Value = "MSFT",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RulesGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Rules_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/Rules_Get.json
             // this example is just showing the usage of "FrontDoorRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +182,7 @@ Value = "MSFT",
 
             // this example assumes you already have this FrontDoorRuleSetResource created on azure
             // for more information of creating FrontDoorRuleSetResource, please refer to the document of FrontDoorRuleSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string ruleSetName = "ruleSet1";

@@ -102,7 +102,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             BingGrounding,
             OpenAPI,
             DeepResearch,
-            AzureAISearch
+            AzureAISearch,
+            ConnectedAgent
         }
 
         public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
@@ -110,7 +111,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.BingGrounding, typeof(RunStepDeltaBingGroundingToolCall) },
             {ToolTypes.OpenAPI, typeof(RunStepDeltaOpenAPIToolCall)},
             {ToolTypes.DeepResearch, typeof(RunStepDeltaDeepResearchToolCall)},
-            {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)}
+            {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)},
+            {ToolTypes.ConnectedAgent, typeof(RunStepDeltaConnectedAgentToolCall)}
         };
 
         public Dictionary<ToolTypes, string> ToolPrompts = new()
@@ -121,7 +123,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "including what is currently known about orcas' cognitive capabilities, " +
                 "communication systems and problem-solving reflected in recent publications in top their scientific " +
                 "journals like Science, Nature and PNAS."},
-            {ToolTypes.AzureAISearch, "What is the temperature rating of the cozynights sleeping bag?"}
+            {ToolTypes.AzureAISearch, "What is the temperature rating of the cozynights sleeping bag?"},
+            {ToolTypes.ConnectedAgent, "What is the Microsoft stock price?"}
         };
         #endregion
 
@@ -238,7 +241,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgent agent = await GetAgent(client, AGENT_NAME);
             AsyncPageable<PersistentAgentThread> pgThreads = client.Threads.GetThreadsAsync(limit: 2);
             // This test may take a long time if the number of threads is big.
-            // The code below may e used to clean up the threads.
+            //The code below may e used to clean up the threads.
             //pgThreads = client.Threads.GetThreadsAsync(limit: 100);
             //List<PersistentAgentThread> del = await pgThreads.ToListAsync();
             //foreach (PersistentAgentThread thr in del)
@@ -248,6 +251,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             //}
             //pgThreads = client.Threads.GetThreadsAsync(limit: 100);
             //Assert.AreEqual(0, (await pgThreads.ToListAsync()).Count);
+            //Assert.Fail("Please comment out the cleanup code.");
             // End of cleanup code.
             int cntBefore = (await pgThreads.ToListAsync()).Count;
             PersistentAgentThread thr1 = await client.Threads.CreateThreadAsync();
@@ -643,21 +647,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                 client: client,
                 agentName: "weather-bot",
                 instruction: "Your job is to get the weather for a given location. " +
-                              "Always return 50F Cloudy when asked about weather in Seattle"
+                             "Always return 50F Cloudy when asked about weather in Seattle"
             );
 
             // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
-            PersistentAgent stockPriceAgent = await GetAgent(
-                client: client,
-                agentName: "stock-price-bot",
-                instruction: "Your job is to get the stock price of a company. If asked for the Microsoft stock price, always return $350.");
-            ConnectedAgentToolDefinition stockPriceConnectedAgentTool = new(
-                new ConnectedAgentDetails(
-                    id: stockPriceAgent.Id,
-                    name: "stock_price_bot",
-                    description: "Gets the stock price of a company"
-                )
-            );
+            ConnectedAgentToolDefinition stockPriceConnectedAgentTool = (ConnectedAgentToolDefinition) await GetToolDefinition(ToolTypes.ConnectedAgent);
 
             ConnectedAgentToolDefinition weatherConnectedAgentTool = new(
                 new ConnectedAgentDetails(
@@ -700,7 +694,27 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.AreEqual(steps[0].Id, ids[1]);
             Assert.AreEqual(steps[1].Id, ids[2]);
 
-            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
+            // Check that we have steps of the correct types
+            bool foundWeatherBot = false;
+            bool foundStockBot = false;
+            await foreach (RunStep step in client.Runs.GetRunStepsAsync(run, order: ListSortOrder.Ascending))
+            {
+                if (step.StepDetails is RunStepToolCallDetails toolDetails)
+                {
+                    foreach (RunStepToolCall toolCall in toolDetails.ToolCalls)
+                    {
+                        if (toolCall is RunStepConnectedAgentToolCall connectedAgentToolCall)
+                        {
+                            foundWeatherBot |= string.Equals(weatherConnectedAgentTool.ConnectedAgent.Name, connectedAgentToolCall.ConnectedAgent.Name);
+                            foundStockBot |= string.Equals(stockPriceConnectedAgentTool.ConnectedAgent.Name, connectedAgentToolCall.ConnectedAgent.Name);
+                        }
+                    }
+                }
+            }
+            Assert.True(foundWeatherBot, "The weather bot step was not found.");
+            Assert.True(foundStockBot, "The stock bot step was not found.");
+
+            List <PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
                 threadId: run.ThreadId,
                 runId: run.Id,
                 order: ListSortOrder.Ascending
@@ -1920,7 +1934,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             PersistentAgentsClient client = GetClient();
             string instruction = "You are a helpful Agent that assists in researching scientific topics.";
-            PersistentAgent agent = await GetAgent(client: client, instruction:instruction, model: "gpt-4o", tools: [GetToolDefinition(ToolTypes.DeepResearch)]);
+            PersistentAgent agent = await GetAgent(client: client, instruction:instruction, model: "gpt-4o", tools: [await GetToolDefinition(ToolTypes.DeepResearch)]);
             PersistentAgentThreadCreationOptions threadOp = new();
             threadOp.Messages.Add(new ThreadMessageOptions(
                 role: MessageRole.User,
@@ -2116,6 +2130,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.BingGrounding)]
         [TestCase(ToolTypes.OpenAPI)]
         [TestCase(ToolTypes.DeepResearch)]
+        [TestCase(ToolTypes.ConnectedAgent)]
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
@@ -2125,7 +2140,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (toolToTest == ToolTypes.DeepResearch && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive("DeepResearch is not fully supported by TestFramework");
             ToolResources toolRes = GetToolResources(toolToTest);
-            ToolDefinition toolDef = GetToolDefinition(toolToTest);
+            ToolDefinition toolDef = await GetToolDefinition(toolToTest);
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(
                 client: client,
@@ -2230,7 +2245,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsTrue(resp.Value);
         }
 
-        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName = AGENT_NAME, string instruction = "You are helpful agent.", string model="gpt-4", IEnumerable<ToolDefinition> tools=null, ToolResources toolResources=null)
+        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName = AGENT_NAME, string instruction = "You are helpful agent.", string model="gpt-4o", IEnumerable<ToolDefinition> tools=null, ToolResources toolResources=null)
         {
             return await client.Administration.CreateAgentAsync(
                 model: model,
@@ -2330,7 +2345,10 @@ namespace Azure.AI.Agents.Persistent.Tests
                 _ => null
             };
 
-        private ToolDefinition GetToolDefinition(ToolTypes toolType)
+        private async Task<PersistentAgent> GetSubAgent() => await GetAgent(
+                GetClient(), agentName: "stock-price-bot", model: "gpt-4o", instruction: "Your job is to get the stock price of a company. If asked for the Microsoft stock price, always return $350.");
+
+        private async Task<ToolDefinition> GetToolDefinition(ToolTypes toolType)
             => toolType switch
                 {
                     ToolTypes.BingGrounding => new BingGroundingToolDefinition(
@@ -2354,6 +2372,13 @@ namespace Azure.AI.Agents.Persistent.Tests
                         )
                     ),
                     ToolTypes.AzureAISearch => new AzureAISearchToolDefinition(),
+                    ToolTypes.ConnectedAgent => new ConnectedAgentToolDefinition(
+                        new ConnectedAgentDetails(
+                            id: (await GetSubAgent()).Id,
+                            name: "stock_price_bot",
+                            description: "Gets the stock price of a company"
+                        )
+                    ),
                     _ => null
                 };
 
@@ -2423,7 +2448,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Pageable<PersistentAgent> agents = client.Administration.GetAgents();
             foreach (PersistentAgent agent in agents)
             {
-               if (agent.Name != null && agent.Name.StartsWith(AGENT_NAME))
+               if (agent.Name != null && (agent.Name.StartsWith(AGENT_NAME) || string.Equals(agent.Name, "stock-price-bot") || string.Equals(agent.Name, "weather-bot")))
                     client.Administration.DeleteAgent(agent.Id);
             }
         }

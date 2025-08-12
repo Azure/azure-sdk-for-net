@@ -51,7 +51,7 @@ namespace MgmtTypeSpec.Models
                     writer.WriteNullValue();
                     continue;
                 }
-                ((IJsonModel<SubResource>)item).Write(ModelSerializationExtensions.WireOptions);
+                ((IJsonModel<SubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

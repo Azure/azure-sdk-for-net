@@ -44,8 +44,8 @@ interface Bars {
 
 @singleton("current")
 @parentResource(Bar)
-model BarSettings is ProxyResource<BarSettingsProperties> {
-  ...ResourceNameParameter<BarSettings, SegmentName = "settings">;
+model BarSettingsResource is ProxyResource<BarSettingsProperties> {
+  ...ResourceNameParameter<BarSettingsResource, SegmentName = "settings">;
 
   stringArray?: string[];
 }
@@ -58,7 +58,7 @@ model BarSettingsProperties {
 
 @armResourceOperations
 interface BarSettingsOperations {
-  createOrUpdate is ArmResourceCreateOrUpdateAsync<BarSettings>;
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<BarSettingsResource>;
   
-  get is ArmResourceRead<BarSettings>;
+  get is ArmResourceRead<BarSettingsResource>;
 }

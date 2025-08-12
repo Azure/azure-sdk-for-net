@@ -1,15 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -26,36 +23,98 @@ namespace Azure.Generator.Management.Utilities
             var clientInfos = new Dictionary<InputClient, RestClientInfo>();
 
             // Create rest client providers and fields for each unique InputClient
-            foreach (var inputClient in resourceMetadata.MethodToClientMap.Values.Distinct())
+            foreach (var resourceMethod in resourceMetadata.Methods)
             {
+                var inputClient = resourceMethod.InputClient;
+                if (clientInfos.ContainsKey(inputClient))
+                {
+                    continue; // Skip if the client is already processed
+                }
+
                 var restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
                 var restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, restClientProvider.Type, ResourceHelpers.GetRestClientFieldName(restClientProvider.Name), clientProvider);
 
-                var clientDiagnosticsFieldName = ResourceHelpers.GetClientDiagnosticFieldName(restClientProvider.Name);
+                var clientDiagnosticsFieldName = ResourceHelpers.GetClientDiagnosticsFieldName(restClientProvider.Name);
                 var clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), clientDiagnosticsFieldName, clientProvider);
 
-                clientInfos[inputClient] = new RestClientInfo(restClientProvider, restClientField, clientDiagnosticsField);
+                clientInfos.Add(inputClient, new RestClientInfo(restClientProvider, restClientField, clientDiagnosticsField));
             }
 
             return clientInfos;
         }
 
-        /// <summary>
-        /// Gets the RestClientInfo for a specific service method based on the method-to-client mapping.
-        /// </summary>
-        /// <param name="resourceMetadata">The resource metadata containing the method to client mapping.</param>
-        /// <param name="serviceMethod">The service method to get the rest client info for.</param>
-        /// <param name="clientInfos">The dictionary mapping InputClient to RestClientInfo.</param>
-        /// <returns>The RestClientInfo for the specified service method.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when no client mapping is found for the service method.</exception>
-        internal static RestClientInfo GetRestClientForServiceMethod(this ResourceMetadata resourceMetadata, InputServiceMethod serviceMethod, Dictionary<InputClient, RestClientInfo> clientInfos)
+        public static ResourceMethodCategory CategorizeMethods(this ResourceMetadata resourceMetadata)
         {
-            if (!resourceMetadata.MethodToClientMap.TryGetValue(serviceMethod.CrossLanguageDefinitionId, out var inputClient))
+            var methodsInResource = new List<ResourceMethod>();
+            var methodsInCollection = new List<ResourceMethod>();
+            var methodsInExtension = new List<ResourceMethod>();
+            foreach (var method in resourceMetadata.Methods)
             {
-                throw new InvalidOperationException($"No client mapping found for resource method {serviceMethod.Name}");
+                var isSingleton = resourceMetadata.SingletonResourceName is not null;
+                switch (method.Kind)
+                {
+                    case ResourceOperationKind.Create:
+                        // create method will go to the collection, or to resource when it is singleton
+                        if (isSingleton)
+                        {
+                            methodsInResource.Add(method);
+                        }
+                        else
+                        {
+                            methodsInCollection.Add(method);
+                        }
+                        break;
+                    case ResourceOperationKind.Get:
+                        // both resource and collection should have get method
+                        methodsInResource.Add(method);
+                        methodsInCollection.Add(method);
+                        break;
+                    case ResourceOperationKind.Update:
+                    case ResourceOperationKind.Delete:
+                        // only resource has get
+                        methodsInResource.Add(method);
+                        break;
+                    case ResourceOperationKind.Action:
+                        // actions should all go to the resource
+                        methodsInResource.Add(method);
+                        break;
+                    case ResourceOperationKind.List:
+                        // list methods might go to the collection or the extension
+                        // when the resource has a parent
+                        if (resourceMetadata.ParentResourceId is not null)
+                        {
+                            if (method.ResourceScope == resourceMetadata.ParentResourceId)
+                            {
+                                methodsInCollection.Add(method);
+                            }
+                            else
+                            {
+                                methodsInExtension.Add(method);
+                            }
+                        }
+                        else
+                        {
+                            if (method.OperationScope == resourceMetadata.ResourceScope)
+                            {
+                                // if the operation scope is the resource scope, it is a collection method
+                                methodsInCollection.Add(method);
+                            }
+                            else
+                            {
+                                // otherwise, it is an extension method
+                                methodsInExtension.Add(method);
+                            }
+                        }
+                        break;
+                    default:
+                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                            "general-warning",
+                            $"Unknown resource operation kind '{method.Kind}' for method '{method.OperationPath}' in resource '{resourceMetadata.ResourceIdPattern}'.");
+                        break;
+                }
             }
 
-            return clientInfos[inputClient];
+            return new(methodsInResource, methodsInCollection, methodsInExtension);
         }
     }
 }

@@ -710,7 +710,8 @@
             "json": {
               "name": "requiredProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "88",
@@ -728,7 +729,7 @@
               "crossLanguageDefinitionId": "TypeSpec.string",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -740,7 +741,8 @@
             "json": {
               "name": "nullableProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -777,7 +779,8 @@
             "json": {
               "name": "requiredProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "94",
@@ -796,7 +799,7 @@
               "crossLanguageDefinitionId": "TypeSpec.bytes",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -808,7 +811,8 @@
             "json": {
               "name": "nullableProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -845,7 +849,8 @@
             "json": {
               "name": "requiredProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "100",
@@ -871,7 +876,7 @@
               "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -883,7 +888,8 @@
             "json": {
               "name": "nullableProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -920,7 +926,8 @@
             "json": {
               "name": "requiredProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "107",
@@ -946,7 +953,7 @@
               "crossLanguageDefinitionId": "TypeSpec.duration",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -958,7 +965,8 @@
             "json": {
               "name": "nullableProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -995,7 +1003,8 @@
             "json": {
               "name": "requiredProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "114",
@@ -1021,7 +1030,7 @@
               "crossLanguageDefinitionId": "TypeSpec.Array",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -1033,7 +1042,8 @@
             "json": {
               "name": "nullableProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1070,7 +1080,8 @@
             "json": {
               "name": "requiredProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "121",
@@ -1118,14 +1129,15 @@
                       "json": {
                         "name": "property"
                       }
-                    }
+                    },
+                    "isHttpMetadata": false
                   }
                 ]
               },
               "crossLanguageDefinitionId": "TypeSpec.Array",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -1137,7 +1149,8 @@
             "json": {
               "name": "nullableProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1177,7 +1190,8 @@
             "json": {
               "name": "requiredProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "130",
@@ -1202,7 +1216,7 @@
               "crossLanguageDefinitionId": "TypeSpec.Array",
               "decorators": []
             },
-            "namespace": ""
+            "namespace": "Type.Property.Nullable"
           },
           "optional": false,
           "readOnly": false,
@@ -1214,7 +1228,8 @@
             "json": {
               "name": "nullableProperty"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -1329,7 +1344,7 @@
                 {
                   "$id": "142",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "1"
                   },
@@ -1414,7 +1429,7 @@
                 {
                   "$id": "146",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "3"
                   },
@@ -1521,7 +1536,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -1635,7 +1650,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -1773,7 +1788,7 @@
                 {
                   "$id": "166",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "13"
                   },
@@ -1858,7 +1873,7 @@
                 {
                   "$id": "170",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "15"
                   },
@@ -1965,7 +1980,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -2079,7 +2094,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -2217,7 +2232,7 @@
                 {
                   "$id": "190",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "25"
                   },
@@ -2302,7 +2317,7 @@
                 {
                   "$id": "194",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "27"
                   },
@@ -2409,7 +2424,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -2523,7 +2538,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -2661,7 +2676,7 @@
                 {
                   "$id": "214",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "37"
                   },
@@ -2746,7 +2761,7 @@
                 {
                   "$id": "218",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "39"
                   },
@@ -2853,7 +2868,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -2967,7 +2982,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -3105,7 +3120,7 @@
                 {
                   "$id": "238",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "49"
                   },
@@ -3190,7 +3205,7 @@
                 {
                   "$id": "242",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "51"
                   },
@@ -3297,7 +3312,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -3411,7 +3426,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -3549,7 +3564,7 @@
                 {
                   "$id": "262",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "61"
                   },
@@ -3634,7 +3649,7 @@
                 {
                   "$id": "266",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "63"
                   },
@@ -3741,7 +3756,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -3855,7 +3870,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -3993,7 +4008,7 @@
                 {
                   "$id": "286",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "73"
                   },
@@ -4078,7 +4093,7 @@
                 {
                   "$id": "290",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "75"
                   },
@@ -4185,7 +4200,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,
@@ -4299,7 +4314,7 @@
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
+                  "isContentType": true,
                   "isEndpoint": false,
                   "explode": false,
                   "isRequired": true,

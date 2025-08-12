@@ -1,0 +1,2 @@
+# SearchResults<T> can safely be made abstract because it has no public constructors
+CannotMakeTypeAbstract : Type 'Azure.Search.Documents.Models.SearchResults<T>' is abstract in the implementation but is not abstract in the contract.

@@ -257,7 +257,8 @@
                     "json": {
                       "name": "id"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "28",
@@ -282,7 +283,8 @@
                     "json": {
                       "name": "name"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "30",
@@ -327,7 +329,8 @@
                             "json": {
                               "name": "id"
                             }
-                          }
+                          },
+                          "isHttpMetadata": false
                         },
                         {
                           "$id": "35",
@@ -352,7 +355,8 @@
                             "json": {
                               "name": "userId"
                             }
-                          }
+                          },
+                          "isHttpMetadata": false
                         },
                         {
                           "$id": "37",
@@ -377,7 +381,8 @@
                             "json": {
                               "name": "detail"
                             }
-                          }
+                          },
+                          "isHttpMetadata": false
                         }
                       ]
                     },
@@ -394,7 +399,8 @@
                     "json": {
                       "name": "orders"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "39",
@@ -426,7 +432,8 @@
                     "json": {
                       "name": "etag"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -443,7 +450,8 @@
             "json": {
               "name": "value"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "42",
@@ -475,7 +483,8 @@
             "json": {
               "name": "nextLink"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -534,7 +543,8 @@
                   "json": {
                     "name": "code"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "50",
@@ -559,7 +569,8 @@
                   "json": {
                     "name": "message"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "52",
@@ -584,7 +595,8 @@
                   "json": {
                     "name": "target"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "54",
@@ -612,7 +624,8 @@
                   "json": {
                     "name": "details"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "56",
@@ -627,7 +640,7 @@
                   "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception",
-                  "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#handling-errors.",
+                  "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
                   "decorators": [],
                   "properties": [
                     {
@@ -653,7 +666,8 @@
                         "json": {
                           "name": "code"
                         }
-                      }
+                      },
+                      "isHttpMetadata": false
                     },
                     {
                       "$id": "60",
@@ -674,7 +688,8 @@
                         "json": {
                           "name": "innererror"
                         }
-                      }
+                      },
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -688,7 +703,8 @@
                   "json": {
                     "name": "innererror"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -702,13 +718,14 @@
             "json": {
               "name": "error"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "61",
-          "kind": "header",
+          "kind": "property",
           "name": "errorCode",
-          "serializedName": "x-ms-error-code",
+          "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
             "$id": "62",
@@ -719,9 +736,16 @@
           },
           "optional": true,
           "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.errorCode",
-          "correspondingMethodParams": []
+          "serializationOptions": {
+            "json": {
+              "name": "errorCode"
+            }
+          },
+          "isHttpMetadata": true
         }
       ]
     },
@@ -764,7 +788,8 @@
             "json": {
               "name": "inputName"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -796,7 +821,8 @@
             "json": {
               "name": "items"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "68",
@@ -821,7 +847,8 @@
             "json": {
               "name": "nextLink"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -852,7 +879,8 @@
             "json": {
               "name": "values"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "72",
@@ -883,7 +911,8 @@
             "json": {
               "name": "nextLink"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -940,7 +969,8 @@
                     "json": {
                       "name": "id"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -957,7 +987,8 @@
             "json": {
               "name": "value"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "81",
@@ -989,7 +1020,8 @@
             "json": {
               "name": "nextLink"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1049,7 +1081,8 @@
                     "json": {
                       "name": "name"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -1066,7 +1099,8 @@
             "json": {
               "name": "value"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "90",
@@ -1098,7 +1132,8 @@
             "json": {
               "name": "nextLink"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1207,7 +1242,7 @@
             {
               "$id": "100",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "8"
               },
@@ -1432,14 +1467,14 @@
             {
               "$id": "112",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "10"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -1450,7 +1485,7 @@
             {
               "$id": "113",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "12"
               },
@@ -1582,7 +1617,7 @@
             {
               "$id": "120",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "14"
               },
@@ -1767,7 +1802,7 @@
             {
               "$id": "132",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "16"
               },
@@ -1949,7 +1984,7 @@
                 {
                   "$id": "143",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "18"
                   },
@@ -2081,7 +2116,7 @@
                 {
                   "$id": "150",
                   "name": "accept",
-                  "nameInRequest": "accept",
+                  "nameInRequest": "Accept",
                   "type": {
                     "$ref": "20"
                   },

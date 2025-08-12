@@ -102,7 +102,7 @@ namespace Azure.Generator.Management
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [ModelSerializationExtensionsSnippets.Wire]).Terminate();
+                return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [utf8JsonWriter, mrwOptionsParameter]).Terminate();
             }
 
             if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))

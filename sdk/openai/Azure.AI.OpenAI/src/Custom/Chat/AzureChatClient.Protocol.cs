@@ -8,7 +8,7 @@ namespace Azure.AI.OpenAI.Chat;
 
 internal partial class AzureChatClient : ChatClient
 {
-    internal override PipelineMessage CreateCreateChatCompletionRequest(BinaryContent content, RequestOptions options)
+    internal override PipelineMessage CreateCompleteChatRequest(BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, _deploymentName)
             .WithPath("chat", "completions")
             .WithMethod("POST")

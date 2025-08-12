@@ -32,10 +32,12 @@ interface Zoos {
 
   list is ArmResourceListByParent<Zoo>;
 
+  listBySubscription is ArmListBySubscription<Zoo>;
+
   @get
   @action("recommend")
   recommend is ArmResourceActionSync<
-    Zoo, 
+    Zoo,
     void,
     ArmResponse<ZooRecommendation>>;
 

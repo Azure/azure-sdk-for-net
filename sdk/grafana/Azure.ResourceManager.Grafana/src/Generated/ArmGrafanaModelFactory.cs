@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The Sku of the grafana resource. </param>
         /// <param name="properties"> Properties specific to the grafana resource. </param>
+        /// <param name="skuName"> The Sku of the grafana resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Grafana.ManagedGrafanaData"/> instance for mocking. </returns>
-        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string skuName = null, ManagedGrafanaProperties properties = null, ManagedServiceIdentity identity = null)
+        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedGrafanaProperties properties = null, string skuName = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Grafana.Models
                 systemData,
                 tags,
                 location,
-                skuName != null ? new ManagedGrafanaSku(skuName, serializedAdditionalRawData: null) : null,
                 properties,
+                skuName != null ? new ManagedGrafanaSku(skuName, serializedAdditionalRawData: null) : null,
                 identity,
                 serializedAdditionalRawData: null);
         }

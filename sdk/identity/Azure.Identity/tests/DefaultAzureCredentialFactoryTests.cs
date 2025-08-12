@@ -427,7 +427,7 @@ namespace Azure.Identity.Tests
             yield return new object[] { Constants.WorkloadIdentityCredential };
             yield return new object[] { Constants.ManagedIdentityCredential };
             yield return new object[] { Constants.InteractiveBrowserCredential };
-            yield return new object[] { Constants.BrokerAuthenticationCredential };
+            yield return new object[] { Constants.BrokerCredential };
             yield return new object[] { null };
         }
 
@@ -444,11 +444,11 @@ namespace Azure.Identity.Tests
             }))
             {
                 var factory = new DefaultAzureCredentialFactory(null);
-                if (credSelection == Constants.BrokerAuthenticationCredential)
+                if (credSelection == Constants.BrokerCredential)
                 {
-                    // BrokerAuthenticationCredential is not supported without the Azure.Identity.Broker package.
+                    // BrokerCredential is not supported without the Azure.Identity.Broker package.
                     var ex = Assert.Throws<CredentialUnavailableException>(() => factory.CreateCredentialChain());
-                    Assert.AreEqual("BrokerAuthenticationCredential is not available without a reference to Azure.Identity.Broker.", ex.Message);
+                    Assert.AreEqual("BrokerCredential is not available without a reference to Azure.Identity.Broker.", ex.Message);
                     return;
                 }
                 var chain = factory.CreateCredentialChain();

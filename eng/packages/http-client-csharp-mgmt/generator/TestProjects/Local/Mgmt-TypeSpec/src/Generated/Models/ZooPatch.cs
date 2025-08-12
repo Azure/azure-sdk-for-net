@@ -41,7 +41,7 @@ namespace MgmtTypeSpec.Models
         internal ZooUpdateProperties Properties { get; set; }
 
         /// <summary> something. </summary>
-        public string PropertiesSomething
+        public string ZooUpdateSomething
         {
             get
             {

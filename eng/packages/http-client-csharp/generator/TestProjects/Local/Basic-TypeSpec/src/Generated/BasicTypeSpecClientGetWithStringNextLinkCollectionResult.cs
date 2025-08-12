@@ -34,23 +34,26 @@ namespace BasicTypeSpec
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ListWithStringNextLinkResponse responseWithType = (ListWithStringNextLinkResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in responseWithType.Things)
+                foreach (var item in ((ListWithStringNextLinkResponse)response).Things)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = responseWithType.Next != null ? new Uri(responseWithType.Next) : null;
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                string nextPageString = ((ListWithStringNextLinkResponse)response).Next;
+                if (nextPageString == null)
+                {
+                    yield break;
+                }
+                nextPage = new Uri(nextPageString);
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>

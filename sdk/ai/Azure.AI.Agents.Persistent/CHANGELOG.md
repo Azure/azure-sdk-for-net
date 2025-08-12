@@ -11,6 +11,8 @@
 ### Bugs Fixed
 
 - Fixed the deserialization issue, when agent service returns the customized lists of trusted and requiring authentication MCP tools.
+- Added classes for deserialization of `RunStepDeltaAzureAISearchToolCall`, `RunStepDeltaOpenAPIToolCall` and `RunStepDeltaDeepResearchToolCall`, required to get the real time updates when Azure AI Search, OpenAPI or Deep Research tools are being used during streaming scenarios.
+- Added `RunStepConnectedAgentToolCall` and `RunStepDeltaConnectedAgentToolCall` for deserializing Connected Agent tool updates in non-streaming and streaming scenarios.
 
 ### Other Changes
 

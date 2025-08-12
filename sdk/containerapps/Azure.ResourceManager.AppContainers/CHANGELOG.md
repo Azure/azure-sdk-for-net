@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.4.1 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.AppContainers` AOT-compatible
+
 ## 1.4.0 (2025-05-22)
 
 ### Features Added

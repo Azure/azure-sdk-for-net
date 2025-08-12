@@ -126,7 +126,6 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.SetValue("Content-Type", contentType);
-            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -145,7 +144,6 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.SetValue("Content-Type", contentType);
-            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
