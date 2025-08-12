@@ -97,12 +97,12 @@ public partial class SecurityRuleData : ProvisionableConstruct
     /// <summary>
     /// The application security group specified as source.
     /// </summary>
-    public BicepList<ApplicationSecurityGroupData> SourceApplicationSecurityGroups 
+    public BicepList<ApplicationSecurityGroup> SourceApplicationSecurityGroups 
     {
         get { Initialize(); return _sourceApplicationSecurityGroups!; }
         set { Initialize(); _sourceApplicationSecurityGroups!.Assign(value); }
     }
-    private BicepList<ApplicationSecurityGroupData>? _sourceApplicationSecurityGroups;
+    private BicepList<ApplicationSecurityGroup>? _sourceApplicationSecurityGroups;
 
     /// <summary>
     /// The destination address prefix. CIDR or destination IP range. Asterisk
@@ -130,12 +130,12 @@ public partial class SecurityRuleData : ProvisionableConstruct
     /// <summary>
     /// The application security group specified as destination.
     /// </summary>
-    public BicepList<ApplicationSecurityGroupData> DestinationApplicationSecurityGroups 
+    public BicepList<ApplicationSecurityGroup> DestinationApplicationSecurityGroups 
     {
         get { Initialize(); return _destinationApplicationSecurityGroups!; }
         set { Initialize(); _destinationApplicationSecurityGroups!.Assign(value); }
     }
-    private BicepList<ApplicationSecurityGroupData>? _destinationApplicationSecurityGroups;
+    private BicepList<ApplicationSecurityGroup>? _destinationApplicationSecurityGroups;
 
     /// <summary>
     /// The source port ranges.
@@ -249,10 +249,10 @@ public partial class SecurityRuleData : ProvisionableConstruct
         _destinationPortRange = DefineProperty<string>("DestinationPortRange", ["properties", "destinationPortRange"]);
         _sourceAddressPrefix = DefineProperty<string>("SourceAddressPrefix", ["properties", "sourceAddressPrefix"]);
         _sourceAddressPrefixes = DefineListProperty<string>("SourceAddressPrefixes", ["properties", "sourceAddressPrefixes"]);
-        _sourceApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("SourceApplicationSecurityGroups", ["properties", "sourceApplicationSecurityGroups"]);
+        _sourceApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroup>("SourceApplicationSecurityGroups", ["properties", "sourceApplicationSecurityGroups"]);
         _destinationAddressPrefix = DefineProperty<string>("DestinationAddressPrefix", ["properties", "destinationAddressPrefix"]);
         _destinationAddressPrefixes = DefineListProperty<string>("DestinationAddressPrefixes", ["properties", "destinationAddressPrefixes"]);
-        _destinationApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("DestinationApplicationSecurityGroups", ["properties", "destinationApplicationSecurityGroups"]);
+        _destinationApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroup>("DestinationApplicationSecurityGroups", ["properties", "destinationApplicationSecurityGroups"]);
         _sourcePortRanges = DefineListProperty<string>("SourcePortRanges", ["properties", "sourcePortRanges"]);
         _destinationPortRanges = DefineListProperty<string>("DestinationPortRanges", ["properties", "destinationPortRanges"]);
         _access = DefineProperty<SecurityRuleAccess>("Access", ["properties", "access"]);

@@ -66,7 +66,14 @@ public class NetworkSpecification() :
         typeof(VirtualNetworkResource),
         typeof(BackendAddressPoolCollection),
         typeof(BackendAddressPoolResource),
-        // TODO -- add a new mechanism in the generator to reuse resource model when a resource data is find as a property
+        typeof(ApplicationSecurityGroupCollection),
+        typeof(ApplicationSecurityGroupResource),
+        typeof(NetworkInterfaceIPConfigurationCollection), // these are not working, why?
+        typeof(NetworkInterfaceIPConfigurationResource),
+        typeof(NetworkWatcherCollection),
+        typeof(NetworkWatcherResource),
+        typeof(FlowLogCollection),
+        typeof(FlowLogResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

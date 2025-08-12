@@ -105,12 +105,12 @@ public partial class PrivateEndpointData : ProvisionableConstruct
     /// Application security groups in which the private endpoint IP
     /// configuration is included.
     /// </summary>
-    public BicepList<ApplicationSecurityGroupData> ApplicationSecurityGroups 
+    public BicepList<ApplicationSecurityGroup> ApplicationSecurityGroups 
     {
         get { Initialize(); return _applicationSecurityGroups!; }
         set { Initialize(); _applicationSecurityGroups!.Assign(value); }
     }
-    private BicepList<ApplicationSecurityGroupData>? _applicationSecurityGroups;
+    private BicepList<ApplicationSecurityGroup>? _applicationSecurityGroups;
 
     /// <summary>
     /// A list of IP configurations of the private endpoint. This will be used
@@ -203,7 +203,7 @@ public partial class PrivateEndpointData : ProvisionableConstruct
         _privateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("PrivateLinkServiceConnections", ["properties", "privateLinkServiceConnections"]);
         _manualPrivateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("ManualPrivateLinkServiceConnections", ["properties", "manualPrivateLinkServiceConnections"]);
         _customDnsConfigs = DefineListProperty<CustomDnsConfigProperties>("CustomDnsConfigs", ["properties", "customDnsConfigs"]);
-        _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("ApplicationSecurityGroups", ["properties", "applicationSecurityGroups"]);
+        _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroup>("ApplicationSecurityGroups", ["properties", "applicationSecurityGroups"]);
         _iPConfigurations = DefineListProperty<PrivateEndpointIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
         _customNetworkInterfaceName = DefineProperty<string>("CustomNetworkInterfaceName", ["properties", "customNetworkInterfaceName"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
