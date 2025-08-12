@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Implemented `IJsonModel` and `IPersistableModel` deserialization methods for events.
+
 ### Bug Fixes
 
 ### Other Changes
