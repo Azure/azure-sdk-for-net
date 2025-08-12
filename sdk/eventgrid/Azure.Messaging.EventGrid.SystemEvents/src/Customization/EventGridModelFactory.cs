@@ -25,6 +25,8 @@ namespace Azure.Messaging.EventGrid
     [CodeGenSuppress("ResourceActionSuccessEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
     [CodeGenSuppress("ResourceActionFailureEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
     [CodeGenSuppress("ResourceActionCancelEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(JsonElement), typeof(JsonElement), typeof(string), typeof(JsonElement))]
+    [CodeGenSuppress("StorageDirectoryDeletedEventData", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(object))]
+    [CodeGenSuppress("ResourceHttpRequest", typeof(string), typeof(string), typeof(string), typeof(string))]
     public static partial class EventGridModelFactory
     {
         /// <summary> Initializes new instance of MediaJobError class. </summary>
