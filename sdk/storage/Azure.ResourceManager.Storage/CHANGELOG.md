@@ -1,5 +1,21 @@
 # Release History
 
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.4.4 (2025-07-28)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Storage` AOT-compatible
+
 ## 1.4.3 (2025-06-24)
 
 ### Features Added

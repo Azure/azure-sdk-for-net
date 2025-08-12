@@ -6,17 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ChatCompletionSkill : IUtf8JsonSerializable
+    public partial class ChatCompletionSkill : IUtf8JsonSerializable, IJsonModel<ChatCompletionSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ChatCompletionSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
@@ -25,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(CommonModelParameters))
             {
                 writer.WritePropertyName("commonModelParameters"u8);
-                writer.WriteObjectValue(CommonModelParameters);
+                writer.WriteObjectValue(CommonModelParameters, options);
             }
             if (Optional.IsCollectionDefined(ExtraParameters))
             {
@@ -41,7 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
                             writer.WriteNullValue();
                             continue;
                         }
-                        writer.WriteObjectValue<object>(item.Value);
+                        writer.WriteObjectValue<object>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -58,129 +76,26 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("responseFormat"u8);
-                writer.WriteObjectValue(ResponseFormat);
+                writer.WriteObjectValue(ResponseFormat, options);
             }
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri);
-            if (Optional.IsCollectionDefined(HttpHeaders))
-            {
-                if (HttpHeaders != null)
-                {
-                    writer.WritePropertyName("httpHeaders"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in HttpHeaders)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("httpHeaders");
-                }
-            }
-            if (Optional.IsDefined(HttpMethod))
-            {
-                writer.WritePropertyName("httpMethod"u8);
-                writer.WriteStringValue(HttpMethod);
-            }
-            if (Optional.IsDefined(Timeout))
-            {
-                if (Timeout != null)
-                {
-                    writer.WritePropertyName("timeout"u8);
-                    writer.WriteStringValue(Timeout.Value, "P");
-                }
-                else
-                {
-                    writer.WriteNull("timeout");
-                }
-            }
-            if (Optional.IsDefined(BatchSize))
-            {
-                if (BatchSize != null)
-                {
-                    writer.WritePropertyName("batchSize"u8);
-                    writer.WriteNumberValue(BatchSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("batchSize");
-                }
-            }
-            if (Optional.IsDefined(DegreeOfParallelism))
-            {
-                if (DegreeOfParallelism != null)
-                {
-                    writer.WritePropertyName("degreeOfParallelism"u8);
-                    writer.WriteNumberValue(DegreeOfParallelism.Value);
-                }
-                else
-                {
-                    writer.WriteNull("degreeOfParallelism");
-                }
-            }
-            if (Optional.IsDefined(AuthResourceId))
-            {
-                if (AuthResourceId != null)
-                {
-                    writer.WritePropertyName("authResourceId"u8);
-                    writer.WriteStringValue(AuthResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("authResourceId");
-                }
-            }
-            if (Optional.IsDefined(AuthIdentity))
-            {
-                if (AuthIdentity != null)
-                {
-                    writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthIdentity);
-                }
-                else
-                {
-                    writer.WriteNull("authIdentity");
-                }
-            }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(Context))
-            {
-                writer.WritePropertyName("context"u8);
-                writer.WriteStringValue(Context);
-            }
-            writer.WritePropertyName("inputs"u8);
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
-            {
-                writer.WriteObjectValue<InputFieldMappingEntry>(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("outputs"u8);
-            writer.WriteStartArray();
-            foreach (var item in Outputs)
-            {
-                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
         }
 
-        internal static ChatCompletionSkill DeserializeChatCompletionSkill(JsonElement element)
+        ChatCompletionSkill IJsonModel<ChatCompletionSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatCompletionSkill(document.RootElement, options);
+        }
+
+        internal static ChatCompletionSkill DeserializeChatCompletionSkill(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -204,6 +119,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiKey"u8))
@@ -217,7 +134,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    commonModelParameters = CommonModelParameters.DeserializeCommonModelParameters(property.Value);
+                    commonModelParameters = CommonModelParameters.DeserializeCommonModelParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extraParameters"u8))
@@ -257,7 +174,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    responseFormat = ChatCompletionResponseFormat.DeserializeChatCompletionResponseFormat(property.Value);
+                    responseFormat = ChatCompletionResponseFormat.DeserializeChatCompletionResponseFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("uri"u8))
@@ -332,7 +249,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         authIdentity = null;
                         continue;
                     }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -360,7 +277,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
@@ -370,12 +287,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ChatCompletionSkill(
                 odataType,
                 name,
@@ -383,6 +305,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
+                serializedAdditionalRawData,
                 uri,
                 httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 httpMethod,
@@ -398,6 +321,37 @@ namespace Azure.Search.Documents.Indexes.Models
                 responseFormat);
         }
 
+        BinaryData IPersistableModel<ChatCompletionSkill>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ChatCompletionSkill IPersistableModel<ChatCompletionSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeChatCompletionSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ChatCompletionSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ChatCompletionSkill FromResponse(Response response)
@@ -410,7 +364,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

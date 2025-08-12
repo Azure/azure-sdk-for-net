@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
+            if (Optional.IsDefined(SupportedSecurityOption))
+            {
+                writer.WritePropertyName("supportedSecurityOption"u8);
+                writer.WriteStringValue(SupportedSecurityOption.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
             string diskControllerTypes = default;
             bool? acceleratedNetwork = default;
             ArchitectureType? architecture = default;
+            SupportedSecurityOption? supportedSecurityOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,13 +122,22 @@ namespace Azure.ResourceManager.Compute.Models
                     architecture = new ArchitectureType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("supportedSecurityOption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedSecurityOption = new SupportedSecurityOption(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SupportedCapabilities(diskControllerTypes, acceleratedNetwork, architecture, serializedAdditionalRawData);
+            return new SupportedCapabilities(diskControllerTypes, acceleratedNetwork, architecture, supportedSecurityOption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedCapabilities>.Write(ModelReaderWriterOptions options)

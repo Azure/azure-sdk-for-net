@@ -129,6 +129,11 @@ param (
 
 $wellKnownTMETenants = @('70a036f6-8e4d-4615-bad6-149c02e7720d')
 
+# People keep passing this legacy parameter. Throw an error to save them future keystrokes
+if ($NewTestResourcesRemainingArguments -like '*UserAuth*') {
+    throw "The -UserAuth parameter is deprecated and is now the default behavior"
+}
+
 if (!$ServicePrincipalAuth) {
     # Clear secrets if not using Service Principal auth. This prevents secrets
     # from being passed to pre- and post-scripts.
@@ -353,15 +358,12 @@ try {
     # Make sure the provisioner OID is set so we can pass it through to the deployment.
     if (!$ProvisionerApplicationId -and !$ProvisionerApplicationOid) {
         if ($context.Account.Type -eq 'User') {
-            # Support corp tenant and TME tenant user id lookups
-            $user = Get-AzADUser -Mail $context.Account.Id
-            if ($null -eq $user -or !$user.Id) {
-                $user = Get-AzADUser -UserPrincipalName $context.Account.Id
-            }
-            if ($null -eq $user -or !$user.Id) {
+            # HomeAccountId format is '<object id>.<tenant id>'
+            $userAccountId = (Get-AzContext).Account.ExtendedProperties.HomeAccountId.Split('.')[0]
+            if ($null -eq $userAccountId) {
                 throw "Failed to find entra object ID for the current user"
             }
-            $ProvisionerApplicationOid = $user.Id
+            $ProvisionerApplicationOid = $userAccountId
         } elseif ($context.Account.Type -eq 'ServicePrincipal') {
             $sp = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
             $ProvisionerApplicationOid = $sp.Id
@@ -431,17 +433,14 @@ try {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when -ServicePrincipalAutth is not set."
         }
 
-        # Support corp tenant and TME tenant user id lookups
-        $userAccount = (Get-AzADUser -Mail (Get-AzContext).Account.Id)
-        if ($null -eq $userAccount -or !$userAccount.Id) {
-            $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
-        }
-        if ($null -eq $userAccount -or !$userAccount.Id) {
+        $userAccountName = (Get-AzContext).Account.Id
+        # HomeAccountId format is '<object id>.<tenant id>'
+        $userAccountId = (Get-AzContext).Account.ExtendedProperties.HomeAccountId.Split('.')[0]
+        if ($null -eq $userAccountId) {
             throw "Failed to find entra object ID for the current user"
         }
-        $TestApplicationOid = $userAccount.Id
+        $TestApplicationOid = $userAccountId
         $TestApplicationId = $testApplicationOid
-        $userAccountName = $userAccount.UserPrincipalName
         Log "User authentication with user '$userAccountName' ('$TestApplicationId') will be used."
     }
     # If user has specified -ServicePrincipalAuth

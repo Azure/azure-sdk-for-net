@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>. </summary>
         internal MigrateSqlServerSqlDBTaskOutputMigrationLevel()
         {
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "MigrationLevelOutput";
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSqlServerSqlDBTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, long? durationInSeconds, MigrationStatus? status, string statusMessage, string message, string databases, string databaseSummary, MigrationValidationResult migrationValidationResult, MigrationReportResult migrationReportResult, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, long? durationInSeconds, DataMigrationStatus? status, string statusMessage, string message, string databases, string databaseSummary, MigrationValidationResult migrationValidationResult, MigrationReportResult migrationReportResult, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Duration of task execution in seconds. </summary>
         public long? DurationInSeconds { get; }
         /// <summary> Current status of migration. </summary>
-        public MigrationStatus? Status { get; }
+        public DataMigrationStatus? Status { get; }
         /// <summary> Migration status message. </summary>
         public string StatusMessage { get; }
         /// <summary> Migration progress message. </summary>
@@ -88,6 +88,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Target server brand version. </summary>
         public string TargetServerBrandVersion { get; }
         /// <summary> Migration exceptions and warnings. </summary>
-        public IReadOnlyList<ReportableException> ExceptionsAndWarnings { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
     }
 }

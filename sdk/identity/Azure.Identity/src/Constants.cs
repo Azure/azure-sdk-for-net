@@ -52,6 +52,7 @@ namespace Azure.Identity
         public const string WorkloadIdentityCredential = "workloadidentitycredential";
         public const string ManagedIdentityCredential = "managedidentitycredential";
         public const string InteractiveBrowserCredential = "interactivebrowsercredential";
-        public const string BrokerAuthenticationCredential = "brokerauthenticationcredential";
+        public const string BrokerCredential = "brokercredential";
+        public const string MacBrokerRedirectUri = "msauth.com.msauth.unsignedapp://auth";
     }
 }

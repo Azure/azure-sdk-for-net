@@ -1,12 +1,23 @@
 # Release History
 
-## 1.47.0-beta.1 (Unreleased)
+## 1.47.2 (2025-08-11)
 
 ### Features Added
 
-### Breaking Changes
+- Adopt System.ClientModel 1.6.0
 
-### Bugs Fixed
+## 1.47.1 (2025-07-15)
+
+### Features Added
+
+- Adopt System.ClientModel 1.5.1
+
+## 1.47.0 (2025-07-09)
+
+### Features Added
+
+- Added `RequestContent.Create<T>(T model, ModelReaderWriterOptions? options = null)` overload that accepts `IPersistableModel<T>` types for improved performance and API consistency with `BinaryContent`.
+- Adopt System.ClientModel 1.5.0
 
 ### Other Changes
 

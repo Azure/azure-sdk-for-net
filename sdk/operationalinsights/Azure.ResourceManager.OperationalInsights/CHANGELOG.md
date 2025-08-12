@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.3.1 (2025-07-28)
+
+### Features Added
+
+- Make `Azure.ResourceManager.OperationalInsights` AOT-compatible
+
 ## 1.3.0 (2025-04-24)
 
 ### Features Added

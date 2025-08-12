@@ -57,7 +57,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string dataUri = default;
+            Uri dataUri = default;
             DatasetType type = "Unknown";
             bool? isReference = default;
             string connectionName = default;
@@ -72,7 +72,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("dataUri"u8))
                 {
-                    dataUri = property.Value.GetString();
+                    dataUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

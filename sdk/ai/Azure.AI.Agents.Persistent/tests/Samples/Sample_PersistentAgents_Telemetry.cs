@@ -40,6 +40,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
         {
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+            // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "Math Tutor",
@@ -98,6 +99,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
                 }
             }
 
+            // NOTE: Comment out these two lines if you plan to reuse the agent later.
             await client.Threads.DeleteThreadAsync(threadId: thread.Id);
             await client.Administration.DeleteAgentAsync(agentId: agent.Id);
         }
@@ -132,6 +134,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
         {
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+            // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
             PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "Math Tutor",
@@ -189,6 +192,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
                 }
             }
 
+            // NOTE: Comment out these two lines if you plan to reuse the agent later.
             client.Threads.DeleteThread(threadId: thread.Id);
             client.Administration.DeleteAgent(agentId: agent.Id);
         }
@@ -214,6 +218,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
         {
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+            // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "Math Tutor",
@@ -272,6 +277,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
                 }
             }
 
+            // NOTE: Comment out these two lines if you plan to reuse the agent later.
             await client.Threads.DeleteThreadAsync(threadId: thread.Id);
             await client.Administration.DeleteAgentAsync(agentId: agent.Id);
         }
@@ -299,6 +305,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
         {
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+            // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
             PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "Math Tutor",
@@ -355,7 +362,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
                     Console.WriteLine();
                 }
             }
-
+            // NOTE: Comment out these two lines if you plan to reuse the agent later.
             client.Threads.DeleteThread(threadId: thread.Id);
             client.Administration.DeleteAgent(agentId: agent.Id);
         }

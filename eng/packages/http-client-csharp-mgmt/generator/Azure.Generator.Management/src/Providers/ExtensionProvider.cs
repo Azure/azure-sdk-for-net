@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,8 @@ namespace Azure.Generator.Management.Providers
         protected override string BuildName() => $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}Extensions";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Extensions", $"{Name}.cs");
+
+        protected override FormattableString BuildDescription() => $"A class to add extension methods to {ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace}.";
 
         protected override MethodProvider[] BuildMethods()
         {
@@ -64,7 +67,7 @@ namespace Azure.Generator.Management.Providers
             var methodSignature = new MethodSignature(
                 $"Get{mockableResource.Name}",
                 null,
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                MethodSignatureModifiers.Private | MethodSignatureModifiers.Static,
                 mockableResource.Type,
                 null,
                 [parameter]);
@@ -99,7 +102,8 @@ namespace Azure.Generator.Management.Providers
                 modifiers,
                 target.ReturnType,
                 target.ReturnDescription,
-                parameters);
+                parameters,
+                Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
             var body = new MethodBodyStatement[]
             {

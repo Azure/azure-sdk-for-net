@@ -117,7 +117,7 @@ namespace Azure.Generator
             SerializationFormat format)
         {
             return KnownAzureTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression) ?
-                deserializationExpression(new CSharpType(valueType), element, format) :
+                deserializationExpression(valueType, element, format) :
                 null;
         }
 
@@ -128,7 +128,7 @@ namespace Azure.Generator
             return statement ?? base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
         }
 
-        private MethodBodyStatement? SerializeValueTypeCore(SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
+        private MethodBodyStatement? SerializeValueTypeCore(SerializationFormat serializationFormat, ValueExpression value, CSharpType valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
         {
             return KnownAzureTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression) ?
                 serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :

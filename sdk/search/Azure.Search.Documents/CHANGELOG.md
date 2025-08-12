@@ -1,14 +1,11 @@
 # Release History
 
-## 11.7.0-beta.6 (Unreleased)
+## 11.7.0-beta.6 (2025-08-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Enable the new model serialization using System.ClientModel, refer to this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added new AOT-compatible overloads for `Search<T>` and `SearchAsync<T>` that take `JsonTypeInfo<T>`.
 
 ## 11.6.1 (2025-06-17)
 

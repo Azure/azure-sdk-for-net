@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ElasticSan
 
         private readonly ClientDiagnostics _elasticSanVolumeVolumesClientDiagnostics;
         private readonly VolumesRestOperations _elasticSanVolumeVolumesRestClient;
-        private readonly ClientDiagnostics _defaultClientDiagnostics;
-        private readonly ElasticSanManagementRestOperations _defaultRestClient;
+        private readonly ClientDiagnostics _elasticSanClientClientDiagnostics;
+        private readonly ElasticSanRestOperations _elasticSanClientRestClient;
         private readonly ElasticSanVolumeData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.ElasticSan
             _elasticSanVolumeVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string elasticSanVolumeVolumesApiVersion);
             _elasticSanVolumeVolumesRestClient = new VolumesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanVolumeVolumesApiVersion);
-            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _defaultRestClient = new ElasticSanManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _elasticSanClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _elasticSanClientRestClient = new ElasticSanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volumes_Get</description>
+        /// <description>Volume_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volumes_Get</description>
+        /// <description>Volume_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volumes_Delete</description>
+        /// <description>Volume_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volumes_Delete</description>
+        /// <description>Volume_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volumes_Update</description>
+        /// <description>Volume_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volumes_Update</description>
+        /// <description>Volume_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RestoreVolume</description>
+        /// <description>ElasticSan_RestoreVolume</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -377,12 +377,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<ElasticSanVolumeResource>> RestoreVolumeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _defaultClientDiagnostics.CreateScope("ElasticSanVolumeResource.RestoreVolume");
+            using var scope = _elasticSanClientClientDiagnostics.CreateScope("ElasticSanVolumeResource.RestoreVolume");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.RestoreVolumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(new ElasticSanVolumeOperationSource(Client), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticSanClientRestClient.RestoreVolumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(new ElasticSanVolumeOperationSource(Client), _elasticSanClientClientDiagnostics, Pipeline, _elasticSanClientRestClient.CreateRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RestoreVolume</description>
+        /// <description>ElasticSan_RestoreVolume</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -415,12 +415,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<ElasticSanVolumeResource> RestoreVolume(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _defaultClientDiagnostics.CreateScope("ElasticSanVolumeResource.RestoreVolume");
+            using var scope = _elasticSanClientClientDiagnostics.CreateScope("ElasticSanVolumeResource.RestoreVolume");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.RestoreVolume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(new ElasticSanVolumeOperationSource(Client), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticSanClientRestClient.RestoreVolume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(new ElasticSanVolumeOperationSource(Client), _elasticSanClientClientDiagnostics, Pipeline, _elasticSanClientRestClient.CreateRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
