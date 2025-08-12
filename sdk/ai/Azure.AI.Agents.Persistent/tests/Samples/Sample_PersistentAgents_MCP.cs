@@ -31,13 +31,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
         var mcpServerLabel = "github";
 #endif
-        // Enable experimantal headers (needed only to list activity steps).
-        PersistentAgentsAdministrationClientOptions options = new();
-        CustomHeadersPolicy experimentalFeaturesHeader = new();
-        experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
-        options.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
-        //
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options: options);
+        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
 
         #region Snippet:AgentsMCP_CreateMCPTool
@@ -144,13 +138,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
         var mcpServerLabel = "github";
 #endif
-        // Enable experimantal headers (needed only to list activity steps).
-        PersistentAgentsAdministrationClientOptions options = new();
-        CustomHeadersPolicy experimentalFeaturesHeader = new();
-        experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
-        options.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
-        //
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options: options);
+        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
 
         // Create MCP tool definition
         MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
@@ -255,7 +243,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
                             foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
                             {
                                 Console.WriteLine($"\t{arg.Key}");
-                                Console.WriteLine($"\t\t Type: {arg.Value.Type}");
+                                Console.WriteLine($"\t\tType: {arg.Value.Type}");
                                 if (!string.IsNullOrEmpty(arg.Value.Description))
                                     Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
                             }

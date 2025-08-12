@@ -34,6 +34,8 @@ namespace Azure.AI.Agents.Persistent
                 throw new FormatException($"The model {nameof(RunStepDetailsActivity)} does not support writing '{format}' format.");
             }
 
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("server_label"u8);
@@ -83,6 +85,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
+            RunStepDetailsActivityType type = default;
             string id = default;
             string serverLabel = default;
             IReadOnlyDictionary<string, ActivityFunctionDefinition> tools = default;
@@ -90,6 +93,11 @@ namespace Azure.AI.Agents.Persistent
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("type"u8))
+                {
+                    type = new RunStepDetailsActivityType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -116,7 +124,7 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunStepDetailsActivity(id, serverLabel, tools, serializedAdditionalRawData);
+            return new RunStepDetailsActivity(type, id, serverLabel, tools, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunStepDetailsActivity>.Write(ModelReaderWriterOptions options)

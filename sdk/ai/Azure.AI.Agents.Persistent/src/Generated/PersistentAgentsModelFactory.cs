@@ -523,19 +523,20 @@ namespace Azure.AI.Agents.Persistent
         {
             activities ??= new List<RunStepDetailsActivity>();
 
-            return new RunStepActivityDetails(RunStepType.Activity, serializedAdditionalRawData: null, activities?.ToList());
+            return new RunStepActivityDetails(RunStepType.Activities, serializedAdditionalRawData: null, activities?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDetailsActivity"/>. </summary>
+        /// <param name="type"> The activity type, which is always mcp_list_tools. </param>
         /// <param name="id"> The activity ID. </param>
         /// <param name="serverLabel"> Server label. </param>
         /// <param name="tools"> The supported function list. </param>
         /// <returns> A new <see cref="Persistent.RunStepDetailsActivity"/> instance for mocking. </returns>
-        public static RunStepDetailsActivity RunStepDetailsActivity(string id = null, string serverLabel = null, IReadOnlyDictionary<string, ActivityFunctionDefinition> tools = null)
+        public static RunStepDetailsActivity RunStepDetailsActivity(RunStepDetailsActivityType type = default, string id = null, string serverLabel = null, IReadOnlyDictionary<string, ActivityFunctionDefinition> tools = null)
         {
             tools ??= new Dictionary<string, ActivityFunctionDefinition>();
 
-            return new RunStepDetailsActivity(id, serverLabel, tools, serializedAdditionalRawData: null);
+            return new RunStepDetailsActivity(type, id, serverLabel, tools, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.ActivityFunctionDefinition"/>. </summary>
@@ -551,13 +552,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The parameter type, it is always object. </param>
         /// <param name="properties"> The dictionary of function arguments. </param>
         /// <param name="required"> The list of the required parameters. </param>
+        /// <param name="additionalProperties"> If true the function have additional parameters. </param>
         /// <returns> A new <see cref="Persistent.ActivityFunctionParameters"/> instance for mocking. </returns>
-        public static ActivityFunctionParameters ActivityFunctionParameters(ActivityFunctionParametersType type = default, IReadOnlyDictionary<string, FunctionArgument> properties = null, IEnumerable<string> required = null)
+        public static ActivityFunctionParameters ActivityFunctionParameters(ActivityFunctionParametersType type = default, IReadOnlyDictionary<string, FunctionArgument> properties = null, IEnumerable<string> required = null, bool? additionalProperties = null)
         {
             properties ??= new Dictionary<string, FunctionArgument>();
             required ??= new List<string>();
 
-            return new ActivityFunctionParameters(type, properties, required?.ToList(), serializedAdditionalRawData: null);
+            return new ActivityFunctionParameters(type, properties, required?.ToList(), additionalProperties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.FunctionArgument"/>. </summary>

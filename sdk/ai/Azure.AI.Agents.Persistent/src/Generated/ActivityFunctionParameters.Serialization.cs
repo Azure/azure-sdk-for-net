@@ -51,6 +51,11 @@ namespace Azure.AI.Agents.Persistent
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(AdditionalProperties))
+            {
+                writer.WritePropertyName("additionalProperties"u8);
+                writer.WriteBooleanValue(AdditionalProperties.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,6 +96,7 @@ namespace Azure.AI.Agents.Persistent
             ActivityFunctionParametersType type = default;
             IReadOnlyDictionary<string, FunctionArgument> properties = default;
             IReadOnlyList<string> required = default;
+            bool? additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,13 +126,22 @@ namespace Azure.AI.Agents.Persistent
                     required = array;
                     continue;
                 }
+                if (property.NameEquals("additionalProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalProperties = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ActivityFunctionParameters(type, properties, required, serializedAdditionalRawData);
+            return new ActivityFunctionParameters(type, properties, required, additionalProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActivityFunctionParameters>.Write(ModelReaderWriterOptions options)

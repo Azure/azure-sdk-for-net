@@ -1,20 +1,14 @@
 # Sample for use of an agent with Model Context Protocol (MCP) tools in Azure.AI.Agents.Persistent.
 
 To enable your Agent to use Model Context Protocol (MCP) tools, you use `MCPToolDefinition` along with server configuration and tool resources.
-1. First we need to create an agent client and read the environment variables, which will be used in the next steps. In this example we will enable the experimental feature of MCP activity listing by adding headers `x-ms-enable-preview true` and `x-ms-oai-assistants-testenv true`, it is not required for using mcp tool.
+1. First we need to create an agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:AgentsMCP_CreateProject
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
 var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
-// Enable experimantal headers (needed only to list activity steps).
-PersistentAgentsAdministrationClientOptions options = new();
-CustomHeadersPolicy experimentalFeaturesHeader = new();
-experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
-options.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
-//
-PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options: options);
+PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
 2. We will create the MCP tool definition and configure allowed tools.
@@ -173,7 +167,7 @@ private static void PrintActivitySteps(IReadOnlyList<RunStep> runSteps)
                         foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
                         {
                             Console.WriteLine($"\t{arg.Key}");
-                            Console.WriteLine($"\t\t Type: {arg.Value.Type}");
+                            Console.WriteLine($"\t\tType: {arg.Value.Type}");
                             if (!string.IsNullOrEmpty(arg.Value.Description))
                                 Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
                         }

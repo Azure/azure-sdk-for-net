@@ -62,12 +62,14 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of <see cref="RunStepDetailsActivity"/>. </summary>
+        /// <param name="type"> The activity type, which is always mcp_list_tools. </param>
         /// <param name="id"> The activity ID. </param>
         /// <param name="serverLabel"> Server label. </param>
         /// <param name="tools"> The supported function list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDetailsActivity(string id, string serverLabel, IReadOnlyDictionary<string, ActivityFunctionDefinition> tools, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunStepDetailsActivity(RunStepDetailsActivityType type, string id, string serverLabel, IReadOnlyDictionary<string, ActivityFunctionDefinition> tools, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Type = type;
             Id = id;
             ServerLabel = serverLabel;
             Tools = tools;
@@ -78,6 +80,9 @@ namespace Azure.AI.Agents.Persistent
         internal RunStepDetailsActivity()
         {
         }
+
+        /// <summary> The activity type, which is always mcp_list_tools. </summary>
+        public RunStepDetailsActivityType Type { get; } = RunStepDetailsActivityType.McpListTools;
 
         /// <summary> The activity ID. </summary>
         public string Id { get; }

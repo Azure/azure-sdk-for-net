@@ -2050,8 +2050,10 @@ namespace Azure.AI.Agents.Persistent.Tests
                 if (step.StepDetails is RunStepToolCallDetails details)
                 {
                     foreach (RunStepToolCall call in details.ToolCalls)
+                    {
                         if (call is RunStepMcpToolCall)
                             isRunStepMCPPresent = true;
+                    }
                 }
             }
             Assert.IsTrue(isRunStepMCPPresent, "No MCP tool call step is present.");

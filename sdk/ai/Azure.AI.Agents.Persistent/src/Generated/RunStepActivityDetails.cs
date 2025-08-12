@@ -21,7 +21,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(activities, nameof(activities));
 
-            Type = RunStepType.Activity;
+            Type = RunStepType.Activities;
             Activities = activities.ToList();
         }
 

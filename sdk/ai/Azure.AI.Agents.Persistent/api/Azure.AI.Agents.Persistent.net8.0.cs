@@ -1,5 +1,48 @@
 namespace Azure.AI.Agents.Persistent
 {
+    public partial class ActivityFunctionDefinition : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ActivityFunctionDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ActivityFunctionDefinition>
+    {
+        internal ActivityFunctionDefinition() { }
+        public string Description { get { throw null; } }
+        public Azure.AI.Agents.Persistent.ActivityFunctionParameters Parameters { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.ActivityFunctionDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ActivityFunctionDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ActivityFunctionDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.ActivityFunctionDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ActivityFunctionDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ActivityFunctionDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ActivityFunctionDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ActivityFunctionParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ActivityFunctionParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ActivityFunctionParameters>
+    {
+        internal ActivityFunctionParameters() { }
+        public bool? AdditionalProperties { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Agents.Persistent.FunctionArgument> Properties { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Required { get { throw null; } }
+        public Azure.AI.Agents.Persistent.ActivityFunctionParametersType Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.ActivityFunctionParameters System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ActivityFunctionParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ActivityFunctionParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.ActivityFunctionParameters System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ActivityFunctionParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ActivityFunctionParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ActivityFunctionParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ActivityFunctionParametersType : System.IEquatable<Azure.AI.Agents.Persistent.ActivityFunctionParametersType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ActivityFunctionParametersType(string value) { throw null; }
+        public static Azure.AI.Agents.Persistent.ActivityFunctionParametersType Object { get { throw null; } }
+        public bool Equals(Azure.AI.Agents.Persistent.ActivityFunctionParametersType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Agents.Persistent.ActivityFunctionParametersType left, Azure.AI.Agents.Persistent.ActivityFunctionParametersType right) { throw null; }
+        public static implicit operator Azure.AI.Agents.Persistent.ActivityFunctionParametersType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Agents.Persistent.ActivityFunctionParametersType left, Azure.AI.Agents.Persistent.ActivityFunctionParametersType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AISearchIndexResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.AISearchIndexResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.AISearchIndexResource>
     {
         public AISearchIndexResource() { }
@@ -506,6 +549,18 @@ namespace Azure.AI.Agents.Persistent
         public static implicit operator Azure.AI.Agents.Persistent.FileState (string value) { throw null; }
         public static bool operator !=(Azure.AI.Agents.Persistent.FileState left, Azure.AI.Agents.Persistent.FileState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class FunctionArgument : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.FunctionArgument>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.FunctionArgument>
+    {
+        internal FunctionArgument() { }
+        public string Description { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.FunctionArgument System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.FunctionArgument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.FunctionArgument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.FunctionArgument System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.FunctionArgument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.FunctionArgument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.FunctionArgument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FunctionToolDefinition : Azure.AI.Agents.Persistent.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.FunctionToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.FunctionToolDefinition>
     {
@@ -1374,11 +1429,14 @@ namespace Azure.AI.Agents.Persistent
     }
     public static partial class PersistentAgentsModelFactory
     {
+        public static Azure.AI.Agents.Persistent.ActivityFunctionDefinition ActivityFunctionDefinition(string description = null, Azure.AI.Agents.Persistent.ActivityFunctionParameters parameters = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.ActivityFunctionParameters ActivityFunctionParameters(Azure.AI.Agents.Persistent.ActivityFunctionParametersType type = default(Azure.AI.Agents.Persistent.ActivityFunctionParametersType), System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Agents.Persistent.FunctionArgument> properties = null, System.Collections.Generic.IEnumerable<string> required = null, bool? additionalProperties = default(bool?)) { throw null; }
         public static Azure.AI.Agents.Persistent.AISearchIndexResource AISearchIndexResource(string indexConnectionId = null, string indexName = null, Azure.AI.Agents.Persistent.AzureAISearchQueryType? queryType = default(Azure.AI.Agents.Persistent.AzureAISearchQueryType?), int? topK = default(int?), string filter = null, string indexAssetId = null) { throw null; }
         public static Azure.AI.Agents.Persistent.AzureFunctionBinding AzureFunctionBinding(Azure.AI.Agents.Persistent.AzureFunctionBindingType type = default(Azure.AI.Agents.Persistent.AzureFunctionBindingType), Azure.AI.Agents.Persistent.AzureFunctionStorageQueue storageQueue = null) { throw null; }
         public static Azure.AI.Agents.Persistent.BrowserAutomationToolCallDetails BrowserAutomationToolCallDetails(string input = null, string output = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep> steps = null) { throw null; }
         public static Azure.AI.Agents.Persistent.BrowserAutomationToolCallStep BrowserAutomationToolCallStep(string lastStepResult = null, string currentState = null, string nextStep = null) { throw null; }
         public static Azure.AI.Agents.Persistent.FileSearchToolCallContent FileSearchToolCallContent(Azure.AI.Agents.Persistent.FileSearchToolCallContentType type = default(Azure.AI.Agents.Persistent.FileSearchToolCallContentType), string text = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.FunctionArgument FunctionArgument(string type = null, string description = null) { throw null; }
         public static Azure.AI.Agents.Persistent.IncompleteRunDetails IncompleteRunDetails(Azure.AI.Agents.Persistent.IncompleteDetailsReason reason = default(Azure.AI.Agents.Persistent.IncompleteDetailsReason)) { throw null; }
         public static Azure.AI.Agents.Persistent.MessageDelta MessageDelta(Azure.AI.Agents.Persistent.MessageRole role = default(Azure.AI.Agents.Persistent.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.MessageDeltaContent> content = null) { throw null; }
         public static Azure.AI.Agents.Persistent.MessageDeltaChunk MessageDeltaChunk(string id = null, Azure.AI.Agents.Persistent.MessageDeltaChunkObject @object = default(Azure.AI.Agents.Persistent.MessageDeltaChunkObject), Azure.AI.Agents.Persistent.MessageDelta delta = null) { throw null; }
@@ -1418,6 +1476,7 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.RunCompletionUsage RunCompletionUsage(long completionTokens = (long)0, long promptTokens = (long)0, long totalTokens = (long)0) { throw null; }
         public static Azure.AI.Agents.Persistent.RunError RunError(string code = null, string message = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStep RunStep(string id = null, Azure.AI.Agents.Persistent.RunStepType type = default(Azure.AI.Agents.Persistent.RunStepType), string agentId = null, string threadId = null, string runId = null, Azure.AI.Agents.Persistent.RunStepStatus status = default(Azure.AI.Agents.Persistent.RunStepStatus), Azure.AI.Agents.Persistent.RunStepDetails stepDetails = null, Azure.AI.Agents.Persistent.RunStepError lastError = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? expiredAt = default(System.DateTimeOffset?), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cancelledAt = default(System.DateTimeOffset?), System.DateTimeOffset? failedAt = default(System.DateTimeOffset?), Azure.AI.Agents.Persistent.RunStepCompletionUsage usage = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepActivityDetails RunStepActivityDetails(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunStepDetailsActivity> activities = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall RunStepAzureAISearchToolCall(string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> azureAISearch = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepBingCustomSearchToolCall RunStepBingCustomSearchToolCall(string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> bingCustomSearch = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepBingGroundingToolCall RunStepBingGroundingToolCall(string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> bingGrounding = null) { throw null; }
@@ -1454,6 +1513,7 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall RunStepDeltaOpenAPIToolCall(int index = 0, string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> openAPI = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaToolCall RunStepDeltaToolCall(int index = 0, string id = null, string type = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject RunStepDeltaToolCallObject(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunStepDeltaToolCall> toolCalls = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDetailsActivity RunStepDetailsActivity(Azure.AI.Agents.Persistent.RunStepDetailsActivityType type = default(Azure.AI.Agents.Persistent.RunStepDetailsActivityType), string id = null, string serverLabel = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Agents.Persistent.ActivityFunctionDefinition> tools = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepError RunStepError(Azure.AI.Agents.Persistent.RunStepErrorCode code = default(Azure.AI.Agents.Persistent.RunStepErrorCode), string message = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepFileSearchToolCall RunStepFileSearchToolCall(string id = null, Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults fileSearch = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResult RunStepFileSearchToolCallResult(string fileId = null, string fileName = null, float score = 0f, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.FileSearchToolCallContent> content = null) { throw null; }
@@ -1871,6 +1931,17 @@ namespace Azure.AI.Agents.Persistent
         Azure.AI.Agents.Persistent.RunStep System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStep>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStep>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStep>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RunStepActivityDetails : Azure.AI.Agents.Persistent.RunStepDetails, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepActivityDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepActivityDetails>
+    {
+        internal RunStepActivityDetails() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Agents.Persistent.RunStepDetailsActivity> Activities { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepActivityDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepActivityDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepActivityDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepActivityDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepActivityDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepActivityDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepActivityDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RunStepAzureAISearchToolCall : Azure.AI.Agents.Persistent.RunStepToolCall, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepAzureAISearchToolCall>
     {
@@ -2331,6 +2402,37 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RunStepDetailsActivity : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDetailsActivity>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDetailsActivity>
+    {
+        internal RunStepDetailsActivity() { }
+        public string Id { get { throw null; } }
+        public string ServerLabel { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Agents.Persistent.ActivityFunctionDefinition> Tools { get { throw null; } }
+        public Azure.AI.Agents.Persistent.RunStepDetailsActivityType Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDetailsActivity System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDetailsActivity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDetailsActivity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDetailsActivity System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDetailsActivity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDetailsActivity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDetailsActivity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RunStepDetailsActivityType : System.IEquatable<Azure.AI.Agents.Persistent.RunStepDetailsActivityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RunStepDetailsActivityType(string value) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDetailsActivityType McpListTools { get { throw null; } }
+        public bool Equals(Azure.AI.Agents.Persistent.RunStepDetailsActivityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Agents.Persistent.RunStepDetailsActivityType left, Azure.AI.Agents.Persistent.RunStepDetailsActivityType right) { throw null; }
+        public static implicit operator Azure.AI.Agents.Persistent.RunStepDetailsActivityType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Agents.Persistent.RunStepDetailsActivityType left, Azure.AI.Agents.Persistent.RunStepDetailsActivityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RunStepDetailsUpdate : Azure.AI.Agents.Persistent.StreamingUpdate
     {
         internal RunStepDetailsUpdate() { }
@@ -2565,6 +2667,7 @@ namespace Azure.AI.Agents.Persistent
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RunStepType(string value) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepType Activities { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStepType MessageCreation { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStepType ToolCalls { get { throw null; } }
         public bool Equals(Azure.AI.Agents.Persistent.RunStepType other) { throw null; }

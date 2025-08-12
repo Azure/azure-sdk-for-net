@@ -35,7 +35,7 @@ namespace Azure.AI.Agents.Persistent
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("tool_calls"u8);
+            writer.WritePropertyName("activities"u8);
             writer.WriteStartArray();
             foreach (var item in Activities)
             {
@@ -64,20 +64,20 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            IReadOnlyList<RunStepDetailsActivity> toolCalls = default;
+            IReadOnlyList<RunStepDetailsActivity> activities = default;
             RunStepType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tool_calls"u8))
+                if (property.NameEquals("activities"u8))
                 {
                     List<RunStepDetailsActivity> array = new List<RunStepDetailsActivity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(RunStepDetailsActivity.DeserializeRunStepDetailsActivity(item, options));
                     }
-                    toolCalls = array;
+                    activities = array;
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -91,7 +91,7 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunStepActivityDetails(type, serializedAdditionalRawData, toolCalls);
+            return new RunStepActivityDetails(type, serializedAdditionalRawData, activities);
         }
 
         BinaryData IPersistableModel<RunStepActivityDetails>.Write(ModelReaderWriterOptions options)
