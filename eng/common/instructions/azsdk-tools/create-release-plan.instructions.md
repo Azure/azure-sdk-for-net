@@ -38,7 +38,7 @@ If any details are missing, prompt the user accordingly:
 - Refer [sdk details in release plan](sdk-details-in-release-plan.instructions.md) to identify languages configured in the TypeSpec project and add them to the release plan
 
 ## Step 5: Update SDK Details in Release Plan
-- Run [sdk details in release plan](sdk-details-in-release-plan.instructions.md) to add languages and package names to the release plan
+- Refer [sdk details in release plan](sdk-details-in-release-plan.instructions.md) to add languages and package names to the release plan
 - If the TypeSpec project is for a management plane, run [verify namespace approval](verify-namespace-approval.instructions.md) if this is first release of SDK.
 
 ## Step 6: Link SDK Pull Requests (if applicable)
