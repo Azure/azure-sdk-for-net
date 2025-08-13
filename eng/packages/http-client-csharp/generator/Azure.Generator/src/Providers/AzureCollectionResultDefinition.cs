@@ -137,7 +137,7 @@ namespace Azure.Generator.Providers
             }
 
             // Extract next page
-            whileStatement.Add(AssignAndCheckNextPageVariable(responseVariable.ToApi<ClientResponseApi>(), nextPageVariable));
+            whileStatement.Add(AssignAndCheckNextPageVariable(responseVariable.ToApi<ClientResponseApi>(), resultVariable, nextPageVariable));
 
             statements.Add(whileStatement);
             return [.. statements];

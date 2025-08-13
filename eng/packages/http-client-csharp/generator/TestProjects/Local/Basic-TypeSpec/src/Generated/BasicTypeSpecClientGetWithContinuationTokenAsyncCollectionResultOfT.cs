@@ -47,7 +47,7 @@ namespace BasicTypeSpec
                 }
                 ListWithContinuationTokenResponse result = (ListWithContinuationTokenResponse)response;
                 yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage, response);
-                nextPage = ((ListWithContinuationTokenResponse)response).NextToken;
+                nextPage = result.NextToken;
                 if (nextPage == null)
                 {
                     yield break;
