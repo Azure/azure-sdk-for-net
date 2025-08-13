@@ -144,6 +144,37 @@ namespace Azure.Security.ConfidentialLedger
             throw lastException ?? new RequestFailedException("All endpoints failed");
         }
 
+        // Overloads with collectionId gating: if collectionId is null/empty, skip failover entirely.
+        public Task<T> ExecuteWithFailoverAsync<T>(
+            Uri primaryEndpoint,
+            Func<Uri, Task<T>> operationAsync,
+            string operationName,
+            string collectionIdGate,
+            CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrEmpty(collectionIdGate))
+            {
+                Console.WriteLine($"[Failover] collectionId not provided; skipping failover for {operationName} and using primary endpoint {primaryEndpoint}");
+                return operationAsync(primaryEndpoint);
+            }
+            return ExecuteWithFailoverAsync(primaryEndpoint, operationAsync, operationName, cancellationToken);
+        }
+
+        public T ExecuteWithFailover<T>(
+            Uri primaryEndpoint,
+            Func<Uri, T> operationSync,
+            string operationName,
+            string collectionIdGate,
+            CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrEmpty(collectionIdGate))
+            {
+                Console.WriteLine($"[Failover] collectionId not provided; skipping failover for {operationName} and using primary endpoint {primaryEndpoint}");
+                return operationSync(primaryEndpoint);
+            }
+            return ExecuteWithFailover(primaryEndpoint, operationSync, operationName, cancellationToken);
+        }
+
         private async Task<List<Uri>> GetFailoverEndpointsAsync(
             Uri primaryEndpoint,
             CancellationToken cancellationToken = default)
@@ -156,7 +187,7 @@ namespace Azure.Security.ConfidentialLedger
 
                 Uri failoverUrl = new UriBuilder(primaryEndpoint)
                 {
-                    Host = "localhost", // update when failover endpoint logic is merged in 
+                    Host = "localhost",
                     Path = $"/failover/{ledgerId}"
                 }.Uri;
 
@@ -167,12 +198,59 @@ namespace Azure.Security.ConfidentialLedger
                 {
                     Console.WriteLine("[Failover] Metadata request succeeded.");
                     using JsonDocument jsonDoc = JsonDocument.Parse(response.Content);
+                    if (jsonDoc.RootElement.TryGetProperty("ledgerId", out JsonElement primaryLedgerIdElem) && primaryLedgerIdElem.ValueKind == JsonValueKind.String)
+                    {
+                        Console.WriteLine($"[Failover] Metadata primary ledgerId: {primaryLedgerIdElem.GetString()}");
+                    }
+
                     if (jsonDoc.RootElement.TryGetProperty("failoverLedgers", out JsonElement failoverArray))
                     {
                         int count = 0;
                         foreach (JsonElement failoverLedger in failoverArray.EnumerateArray())
                         {
-                            string failoverLedgerId = failoverLedger.GetString();
+                            string failoverLedgerId = null;
+                            string access = null;
+                            try
+                            {
+                                switch (failoverLedger.ValueKind)
+                                {
+                                    case JsonValueKind.String:
+                                        failoverLedgerId = failoverLedger.GetString();
+                                        break;
+                                    case JsonValueKind.Object:
+                                        // Expected shape: { "name": "ledgerName", ... }
+                                        if (failoverLedger.TryGetProperty("name", out JsonElement nameProp) && nameProp.ValueKind == JsonValueKind.String)
+                                        {
+                                            failoverLedgerId = nameProp.GetString();
+                                        }
+                                        else
+                                        {
+                                            // Fall back: look for any string property that could represent the id
+                                            foreach (JsonProperty prop in failoverLedger.EnumerateObject())
+                                            {
+                                                if (prop.Value.ValueKind == JsonValueKind.String &&
+                                                    string.Equals(prop.Name, "id", StringComparison.OrdinalIgnoreCase))
+                                                {
+                                                    failoverLedgerId = prop.Value.GetString();
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (failoverLedger.TryGetProperty("access", out JsonElement accessProp) && accessProp.ValueKind == JsonValueKind.String)
+                                        {
+                                            access = accessProp.GetString();
+                                        }
+                                        break;
+                                    default:
+                                        Console.WriteLine($"[Failover] Unexpected element kind {failoverLedger.ValueKind} in failoverLedgers array; skipping.");
+                                        break;
+                                }
+                            }
+                            catch (Exception exElem)
+                            {
+                                Console.WriteLine($"[Failover] Suppressed exception parsing failover ledger element: {exElem.Message}");
+                            }
+
                             if (!string.IsNullOrEmpty(failoverLedgerId))
                             {
                                 Uri endpoint = new UriBuilder(primaryEndpoint)
@@ -180,7 +258,12 @@ namespace Azure.Security.ConfidentialLedger
                                     Host = $"{failoverLedgerId}.confidential-ledger.azure.com"
                                 }.Uri;
                                 failoverEndpoints.Add(endpoint);
+                                Console.WriteLine($"[Failover] Added failover endpoint {endpoint} (access={access ?? "unknown"})");
                                 count++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("[Failover] Could not extract ledger id from element; skipping.");
                             }
                         }
                         Console.WriteLine($"[Failover] Parsed {count} failover ledger id(s).");
@@ -227,20 +310,70 @@ namespace Azure.Security.ConfidentialLedger
                 {
                     Console.WriteLine("[Failover] Metadata request succeeded.");
                     using JsonDocument jsonDoc = JsonDocument.Parse(response.Content);
+                    if (jsonDoc.RootElement.TryGetProperty("ledgerId", out JsonElement primaryLedgerIdElem) && primaryLedgerIdElem.ValueKind == JsonValueKind.String)
+                    {
+                        Console.WriteLine($"[Failover] Metadata primary ledgerId: {primaryLedgerIdElem.GetString()}");
+                    }
+
                     if (jsonDoc.RootElement.TryGetProperty("failoverLedgers", out JsonElement failoverArray))
                     {
                         int count = 0;
                         foreach (JsonElement failoverLedger in failoverArray.EnumerateArray())
                         {
-                            string failoverLedgerId = failoverLedger.GetString();
+                            string failoverLedgerId = null;
+                            string access = null;
+                            try
+                            {
+                                switch (failoverLedger.ValueKind)
+                                {
+                                    case JsonValueKind.String:
+                                        failoverLedgerId = failoverLedger.GetString();
+                                        break;
+                                    case JsonValueKind.Object:
+                                        if (failoverLedger.TryGetProperty("name", out JsonElement nameProp) && nameProp.ValueKind == JsonValueKind.String)
+                                        {
+                                            failoverLedgerId = nameProp.GetString();
+                                        }
+                                        else
+                                        {
+                                            foreach (JsonProperty prop in failoverLedger.EnumerateObject())
+                                            {
+                                                if (prop.Value.ValueKind == JsonValueKind.String &&
+                                                    string.Equals(prop.Name, "id", StringComparison.OrdinalIgnoreCase))
+                                                {
+                                                    failoverLedgerId = prop.Value.GetString();
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (failoverLedger.TryGetProperty("access", out JsonElement accessProp) && accessProp.ValueKind == JsonValueKind.String)
+                                        {
+                                            access = accessProp.GetString();
+                                        }
+                                        break;
+                                    default:
+                                        Console.WriteLine($"[Failover] Unexpected element kind {failoverLedger.ValueKind} in failoverLedgers array; skipping.");
+                                        break;
+                                }
+                            }
+                            catch (Exception exElem)
+                            {
+                                Console.WriteLine($"[Failover] Suppressed exception parsing failover ledger element: {exElem.Message}");
+                            }
+
                             if (!string.IsNullOrEmpty(failoverLedgerId))
                             {
                                 Uri endpoint = new UriBuilder(primaryEndpoint)
                                 {
-                                    Host = $"{failoverLedgerId}.confidentialledger.azure.com"
+                                    Host = $"{failoverLedgerId}.confidential-ledger.azure.com"
                                 }.Uri;
                                 failoverEndpoints.Add(endpoint);
+                                Console.WriteLine($"[Failover] Added failover endpoint {endpoint} (access={access ?? "unknown"})");
                                 count++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("[Failover] Could not extract ledger id from element; skipping.");
                             }
                         }
                         Console.WriteLine($"[Failover] Parsed {count} failover ledger id(s).");
@@ -289,6 +422,69 @@ namespace Azure.Security.ConfidentialLedger
                    ex.Status == 429 ||
                    ex.Status == 503 ||
                    ex.Status == 504;
+        }
+
+        // Execute an operation only against discovered failover endpoints (skips primary). Used for specialized fallback flows.
+        public async Task<T> ExecuteOnFailoversOnlyAsync<T>(
+            Uri primaryEndpoint,
+            Func<Uri, Task<T>> operationAsync,
+            string operationName,
+            CancellationToken cancellationToken = default)
+        {
+            Console.WriteLine($"[Failover] Discovering failover endpoints for {operationName} (failovers-only mode)...");
+            List<Uri> endpoints = await GetFailoverEndpointsAsync(primaryEndpoint, cancellationToken).ConfigureAwait(false);
+            Console.WriteLine($"[Failover] Found {endpoints.Count} failover endpoint(s) for {operationName}.");
+            Exception last = null;
+            foreach (var ep in endpoints)
+            {
+                Console.WriteLine($"[Failover] (FailoversOnly) Attempting {operationName} on {ep}");
+                try
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    return await operationAsync(ep).ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when (IsRetriableFailure(ex))
+                {
+                    Console.WriteLine($"[Failover] (FailoversOnly) Endpoint {ep} failed (Status {ex.Status}, Code {ex.ErrorCode}). Trying next.");
+                    last = ex;
+                }
+                catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+                {
+                    throw;
+                }
+            }
+            throw last ?? new RequestFailedException("All failover endpoints failed in failovers-only mode");
+        }
+
+        public T ExecuteOnFailoversOnly<T>(
+            Uri primaryEndpoint,
+            Func<Uri, T> operationSync,
+            string operationName,
+            CancellationToken cancellationToken = default)
+        {
+            Console.WriteLine($"[Failover] Discovering failover endpoints for {operationName} (failovers-only mode)...");
+            List<Uri> endpoints = GetFailoverEndpoints(primaryEndpoint, cancellationToken);
+            Console.WriteLine($"[Failover] Found {endpoints.Count} failover endpoint(s) for {operationName}.");
+            Exception last = null;
+            foreach (var ep in endpoints)
+            {
+                Console.WriteLine($"[Failover] (FailoversOnly) Attempting {operationName} on {ep}");
+                try
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    return operationSync(ep);
+                }
+                catch (RequestFailedException ex) when (IsRetriableFailure(ex))
+                {
+                    Console.WriteLine($"[Failover] (FailoversOnly) Endpoint {ep} failed (Status {ex.Status}, Code {ex.ErrorCode}). Trying next.");
+                    last = ex;
+                }
+                catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+                {
+                    throw;
+                }
+            }
+            throw last ?? new RequestFailedException("All failover endpoints failed in failovers-only mode");
         }
     }
 }
