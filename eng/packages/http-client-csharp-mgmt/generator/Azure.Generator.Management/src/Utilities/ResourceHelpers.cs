@@ -6,6 +6,7 @@ using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -58,6 +59,12 @@ namespace Azure.Generator.Management.Utilities
                 ResourceOperationKind.List => isAsync ? "GetAllAsync" : "GetAll",
                 _ => null
             };
+        }
+
+        public static string GetDiagnosticScope(TypeProvider enclosingType, string methodName, bool isAsync)
+        {
+            var rawMethodName = isAsync && methodName.EndsWith("Async") ? methodName[..^5] : methodName; // trim "Async" if the method is async method
+            return $"{enclosingType.Type.Name}.{rawMethodName}";
         }
 
         /// <summary>
