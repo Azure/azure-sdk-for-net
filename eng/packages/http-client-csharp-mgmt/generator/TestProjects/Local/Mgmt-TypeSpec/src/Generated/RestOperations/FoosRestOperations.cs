@@ -96,7 +96,6 @@ namespace MgmtTypeSpec
             uri.AppendPath(fooName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 

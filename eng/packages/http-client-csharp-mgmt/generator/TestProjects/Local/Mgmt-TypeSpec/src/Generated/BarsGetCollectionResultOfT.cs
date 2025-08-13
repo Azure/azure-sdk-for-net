@@ -49,18 +49,20 @@ namespace MgmtTypeSpec
         public override IEnumerable<Page<BarData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                BarListResult responseWithType = BarListResult.FromResponse(response);
-                nextPage = responseWithType.NextLink;
-                yield return Page<BarData>.FromValues((IReadOnlyList<BarData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BarData>.FromValues((IReadOnlyList<BarData>)((BarListResult)response).Value, nextPage?.AbsoluteUri, response);
+                nextPage = ((BarListResult)response).NextLink;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>

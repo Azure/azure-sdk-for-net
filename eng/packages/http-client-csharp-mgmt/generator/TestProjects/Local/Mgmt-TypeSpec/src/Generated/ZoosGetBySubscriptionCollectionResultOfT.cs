@@ -38,18 +38,20 @@ namespace MgmtTypeSpec
         public override IEnumerable<Page<ZooData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ZooListResult responseWithType = ZooListResult.FromResponse(response);
-                nextPage = responseWithType.NextLink;
-                yield return Page<ZooData>.FromValues((IReadOnlyList<ZooData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ZooData>.FromValues((IReadOnlyList<ZooData>)((ZooListResult)response).Value, nextPage?.AbsoluteUri, response);
+                nextPage = ((ZooListResult)response).NextLink;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
