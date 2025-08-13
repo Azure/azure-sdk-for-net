@@ -65,14 +65,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "unknown";
+            ItemType @type = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

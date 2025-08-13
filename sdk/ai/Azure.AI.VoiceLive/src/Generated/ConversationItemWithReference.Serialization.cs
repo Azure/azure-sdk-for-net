@@ -56,7 +56,7 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
-                writer.WriteStringValue(Role.Value.ToString());
+                writer.WriteStringValue(Role.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Content))
             {
@@ -134,7 +134,7 @@ namespace Azure.AI.VoiceLive
             ConversationItemWithReferenceType? @type = default;
             string @object = default;
             ConversationItemWithReferenceStatus? status = default;
-            MessageRole? role = default;
+            ConversationItemWithReferenceRole? role = default;
             IList<ConversationItemWithReferenceContent> content = default;
             string callId = default;
             string name = default;
@@ -177,7 +177,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    role = new MessageRole(prop.Value.GetString());
+                    role = prop.Value.GetString().ToConversationItemWithReferenceRole();
                     continue;
                 }
                 if (prop.NameEquals("content"u8))

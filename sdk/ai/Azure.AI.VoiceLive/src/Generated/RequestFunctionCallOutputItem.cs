@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="output"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        public RequestFunctionCallOutputItem(string callId, string output) : base("function_call_output")
+        public RequestFunctionCallOutputItem(string callId, string output) : base(ItemType.FunctionCallOutput)
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(output, nameof(output));
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"></param>
         /// <param name="output"></param>
-        internal RequestFunctionCallOutputItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string output) : base(@type, id, additionalBinaryDataProperties)
+        internal RequestFunctionCallOutputItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string output) : base(@type, id, additionalBinaryDataProperties)
         {
             CallId = callId;
             Output = output;

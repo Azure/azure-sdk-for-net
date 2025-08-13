@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive
         /// inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveResponse(string id, string @object, ItemStatus? status, ResponseStatusDetails statusDetails, IList<ConversationResponseItem> output, ResponseUsage usage, string conversationId, BinaryData voice, IList<ResponseModality> modalities, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveResponse(string id, string @object, ResponseStatus? status, ResponseStatusDetails statusDetails, IList<ConversationResponseItem> output, ResponseUsage usage, string conversationId, BinaryData voice, IList<ResponseModality> modalities, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -88,7 +88,7 @@ namespace Azure.AI.VoiceLive
         /// The final status of the response (`completed`, `cancelled`, `failed`, or
         /// `incomplete`).
         /// </summary>
-        public ItemStatus? Status { get; }
+        public ResponseStatus? Status { get; }
 
         /// <summary> Additional details about the status. </summary>
         public ResponseStatusDetails StatusDetails { get; }

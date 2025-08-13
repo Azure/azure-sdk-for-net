@@ -19,7 +19,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionAvatarConnect"/>. </summary>
         /// <param name="clientSdp"> The client's SDP offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientSdp"/> is null. </exception>
-        public ClientEventSessionAvatarConnect(string clientSdp) : base("session.avatar.connect")
+        public ClientEventSessionAvatarConnect(string clientSdp) : base(ClientEventType.SessionAvatarConnect)
         {
             Argument.AssertNotNull(clientSdp, nameof(clientSdp));
 
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientSdp"> The client's SDP offer. </param>
-        internal ClientEventSessionAvatarConnect(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string clientSdp) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventSessionAvatarConnect(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string clientSdp) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ClientSdp = clientSdp;
         }

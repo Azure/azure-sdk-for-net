@@ -85,17 +85,17 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "user";
+            ItemType @type = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string role = "user";
+            MessageRole role = default;
             ItemStatus? status = default;
             IList<BinaryData> content = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -105,7 +105,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("role"u8))
                 {
-                    role = prop.Value.GetString();
+                    role = new MessageRole(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

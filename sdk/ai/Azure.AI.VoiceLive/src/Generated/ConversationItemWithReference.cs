@@ -59,7 +59,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="arguments"> The arguments of the function call (for `function_call` items). </param>
         /// <param name="output"> The output of the function call (for `function_call_output` items). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationItemWithReference(string id, ConversationItemWithReferenceType? @type, string @object, ConversationItemWithReferenceStatus? status, MessageRole? role, IList<ConversationItemWithReferenceContent> content, string callId, string name, string arguments, string output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationItemWithReference(string id, ConversationItemWithReferenceType? @type, string @object, ConversationItemWithReferenceStatus? status, ConversationItemWithReferenceRole? role, IList<ConversationItemWithReferenceContent> content, string callId, string name, string arguments, string output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
@@ -101,7 +101,7 @@ namespace Azure.AI.VoiceLive
         /// The role of the message sender (`user`, `assistant`, `system`), only
         /// applicable for `message` items.
         /// </summary>
-        public MessageRole? Role { get; set; }
+        public ConversationItemWithReferenceRole? Role { get; set; }
 
         /// <summary>
         /// The content of the message, applicable for `message` items.

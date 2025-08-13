@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
     public partial class ClientEventResponseCreate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCreate"/>. </summary>
-        public ClientEventResponseCreate() : base("response.create")
+        public ClientEventResponseCreate() : base(ClientEventType.ResponseCreate)
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"></param>
         /// <param name="additionalInstructions"> additional instructions (system prompt) appended to the default instructions of the session. Only affects this response only. </param>
-        internal ClientEventResponseCreate(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseCreateParams response, string additionalInstructions) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventResponseCreate(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseCreateParams response, string additionalInstructions) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Response = response;
             AdditionalInstructions = additionalInstructions;

@@ -71,7 +71,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "session.avatar.connect";
+            ClientEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string clientSdp = default;
@@ -79,7 +79,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ClientEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))
