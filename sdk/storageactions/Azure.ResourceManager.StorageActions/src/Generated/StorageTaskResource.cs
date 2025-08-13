@@ -20,7 +20,11 @@ using Azure.ResourceManager.StorageActions.Models;
 
 namespace Azure.ResourceManager.StorageActions
 {
-    /// <summary> A class representing a StorageTask along with the instance operations that can be performed on it. If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageTaskResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method. Otherwise you can get one from its parent resource (TODO: add parent resource information). </summary>
+    /// <summary>
+    /// A class representing a StorageTask along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageTaskResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource (TODO: add parent resource information).
+    /// </summary>
     public partial class StorageTaskResource : ArmResource
     {
         private readonly ClientDiagnostics _storageTasksClientDiagnostics;

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageActions
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTaskCollection.GetByResourceGroup");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTaskCollection.GetAll");
             scope.Start();
             try
             {

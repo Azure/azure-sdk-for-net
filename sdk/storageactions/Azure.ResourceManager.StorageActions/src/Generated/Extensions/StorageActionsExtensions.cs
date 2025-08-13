@@ -67,13 +67,11 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageTaskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageTaskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<StorageTaskResource>> GetStorageTaskAsync(this ResourceGroupResource resourceGroupResource, string storageTaskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
 
             return await GetMockableStorageActionsResourceGroupResource(resourceGroupResource).GetStorageTaskAsync(storageTaskName, cancellationToken).ConfigureAwait(false);
         }
@@ -82,13 +80,11 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageTaskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageTaskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<StorageTaskResource> GetStorageTask(this ResourceGroupResource resourceGroupResource, string storageTaskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
 
             return GetMockableStorageActionsResourceGroupResource(resourceGroupResource).GetStorageTask(storageTaskName, cancellationToken);
         }
@@ -122,12 +118,11 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="location"></param>
         /// <param name="parameters"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<StorageTaskPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            Argument.AssertNotNull(parameters, nameof(parameters));
 
             return await GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, parameters, cancellationToken).ConfigureAwait(false);
         }
@@ -137,12 +132,11 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="location"></param>
         /// <param name="parameters"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<StorageTaskPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            Argument.AssertNotNull(parameters, nameof(parameters));
 
             return GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActions(location, parameters, cancellationToken);
         }
