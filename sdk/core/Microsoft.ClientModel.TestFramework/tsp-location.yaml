@@ -1,4 +1,0 @@
-repo: Azure/azure-sdk-tools
-commit: 082405b64131984e402462e0218b5761aea1ae23
-directory: tools/test-proxy/typespec
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
