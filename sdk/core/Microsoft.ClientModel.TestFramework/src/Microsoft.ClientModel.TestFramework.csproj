@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Test framework for clients built on System.ClientModel</Description>
-    <AssemblyTitle>SDK Code Generation Microsoft.ClientModel.TestFramework</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Microsoft.ClientModel.TestFramework</PackageTags>
     <RequiredTargetFrameworks>net462;net8.0;net9.0</RequiredTargetFrameworks>
@@ -9,9 +8,9 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <NoWarn>AZC0015;AZC0007</NoWarn>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<IsTestProject>false</IsTestProject>
     <IsTestSupportProject>true</IsTestSupportProject>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
