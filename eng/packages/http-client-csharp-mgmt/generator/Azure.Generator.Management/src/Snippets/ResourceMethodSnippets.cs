@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -38,7 +37,7 @@ namespace Azure.Generator.Management.Snippets
         public static List<MethodBodyStatement> CreateDiagnosticScopeStatements(
             TypeProvider enclosingType,
             ValueExpression clientDiagnostics,
-            string operationName,
+            string scopeName,
             out VariableExpression scopeVariable)
         {
             var statements = new List<MethodBodyStatement>();
@@ -47,7 +46,7 @@ namespace Azure.Generator.Management.Snippets
             var scopeDeclaration = UsingDeclare(
                 "scope",
                 typeof(DiagnosticScope),
-                clientDiagnostics.Invoke("CreateScope", [Literal($"{enclosingType.Name}.{operationName}")]),
+                clientDiagnostics.Invoke("CreateScope", [Literal($"{enclosingType.Name}.{scopeName}")]),
                 out scopeVariable);
             statements.Add(scopeDeclaration);
 

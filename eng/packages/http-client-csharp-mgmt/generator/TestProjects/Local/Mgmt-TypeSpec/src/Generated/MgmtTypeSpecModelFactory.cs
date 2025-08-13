@@ -63,13 +63,13 @@ namespace MgmtTypeSpec.Models
                 properties);
         }
 
-        /// <summary> The FooSettingsProperties. </summary>
         /// <param name="accessControlEnabled"></param>
         /// <param name="provisioningState"></param>
+        /// <param name="metaDatas"> Gets the MetaDatas. </param>
         /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
-        public static FooSettingsProperties FooSettingsProperties(bool accessControlEnabled = default, ResourceProvisioningState? provisioningState = default)
+        public static FooSettingsProperties FooSettingsProperties(bool? accessControlEnabled = default, ResourceProvisioningState? provisioningState = default, IList<string> metaDatas = default)
         {
-            return new FooSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
+            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -102,12 +102,12 @@ namespace MgmtTypeSpec.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isEnabled"> enabled. </param>
         /// <param name="stringArray"></param>
-        /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsData"/> instance for mocking. </returns>
-        public static BarSettingsData BarSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default)
+        /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
-            return new BarSettingsData(
+            return new BarSettingsResourceData(
                 id,
                 name,
                 resourceType,
@@ -150,6 +150,15 @@ namespace MgmtTypeSpec.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FooPreviewAction. </summary>
+        /// <param name="action"> The action to be performed. </param>
+        /// <param name="result"></param>
+        /// <returns> A new <see cref="Models.FooPreviewAction"/> instance for mocking. </returns>
+        public static FooPreviewAction FooPreviewAction(string action = default, string result = default)
+        {
+            return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>

@@ -10,15 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteCancel event. This is raised when a resource delete operation is canceled. </summary>
     [JsonConverter(typeof(ResourceDeleteCancelEventDataConverter))]
-    public partial class ResourceDeleteCancelEventData : IUtf8JsonSerializable, IJsonModel<ResourceDeleteCancelEventData>
+    public partial class ResourceDeleteCancelEventData : IJsonModel<ResourceDeleteCancelEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceDeleteCancelEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ResourceDeleteCancelEventData"/> for deserialization. </summary>
+        internal ResourceDeleteCancelEventData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceDeleteCancelEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceDeleteCancelEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceDeleteCancelEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceDeleteCancelEventData)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
@@ -73,8 +77,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("authorization"u8);
             AuthorizationJson.WriteTo(writer);
-            writer.WritePropertyName("claims"u8);
-            ClaimsJson.WriteTo(writer);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("claims"u8);
+                ClaimsJson.WriteTo(writer);
+            }
             if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
@@ -82,15 +89,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("httpRequest"u8);
             HttpRequestJson.WriteTo(writer);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,22 +106,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        ResourceDeleteCancelEventData IJsonModel<ResourceDeleteCancelEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceDeleteCancelEventData IJsonModel<ResourceDeleteCancelEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceDeleteCancelEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceDeleteCancelEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceDeleteCancelEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceDeleteCancelEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceDeleteCancelEventData(document.RootElement, options);
         }
 
-        internal static ResourceDeleteCancelEventData DeserializeResourceDeleteCancelEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResourceDeleteCancelEventData DeserializeResourceDeleteCancelEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -126,75 +138,73 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string resourceUri = default;
             string operationName = default;
             string status = default;
-            JsonElement authorization = default;
-            JsonElement claims = default;
+            JsonElement authorizationJson = default;
+            JsonElement claimsJson = default;
             string correlationId = default;
-            JsonElement httpRequest = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            JsonElement httpRequestJson = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"u8))
+                if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = property.Value.GetString();
+                    tenantId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"u8))
+                if (prop.NameEquals("resourceGroup"u8))
                 {
-                    resourceGroup = property.Value.GetString();
+                    resourceGroup = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceProvider"u8))
+                if (prop.NameEquals("resourceProvider"u8))
                 {
-                    resourceProvider = property.Value.GetString();
+                    resourceProvider = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceUri"u8))
+                if (prop.NameEquals("resourceUri"u8))
                 {
-                    resourceUri = property.Value.GetString();
+                    resourceUri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationName"u8))
+                if (prop.NameEquals("operationName"u8))
                 {
-                    operationName = property.Value.GetString();
+                    operationName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authorization"u8))
+                if (prop.NameEquals("authorization"u8))
                 {
-                    authorization = property.Value.Clone();
+                    authorizationJson = prop.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("claims"u8))
+                if (prop.NameEquals("claims"u8))
                 {
-                    claims = property.Value.Clone();
+                    claimsJson = prop.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("correlationId"u8))
+                if (prop.NameEquals("correlationId"u8))
                 {
-                    correlationId = property.Value.GetString();
+                    correlationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpRequest"u8))
+                if (prop.NameEquals("httpRequest"u8))
                 {
-                    httpRequest = property.Value.Clone();
+                    httpRequestJson = prop.Value.Clone();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceDeleteCancelEventData(
                 tenantId,
                 subscriptionId,
@@ -203,17 +213,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 resourceUri,
                 operationName,
                 status,
-                authorization,
-                claims,
+                authorizationJson,
+                claimsJson,
                 correlationId,
-                httpRequest,
-                serializedAdditionalRawData);
+                httpRequestJson,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ResourceDeleteCancelEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceDeleteCancelEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceDeleteCancelEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceDeleteCancelEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -223,15 +236,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        ResourceDeleteCancelEventData IPersistableModel<ResourceDeleteCancelEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceDeleteCancelEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceDeleteCancelEventData IPersistableModel<ResourceDeleteCancelEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceDeleteCancelEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceDeleteCancelEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceDeleteCancelEventData(document.RootElement, options);
                     }
                 default:
@@ -239,35 +257,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceDeleteCancelEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ResourceDeleteCancelEventData FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeResourceDeleteCancelEventData(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         internal partial class ResourceDeleteCancelEventDataConverter : JsonConverter<ResourceDeleteCancelEventData>
         {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, ResourceDeleteCancelEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<ResourceDeleteCancelEventData>>(model, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
             public override ResourceDeleteCancelEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeResourceDeleteCancelEventData(document.RootElement);
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeResourceDeleteCancelEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
             }
         }
     }

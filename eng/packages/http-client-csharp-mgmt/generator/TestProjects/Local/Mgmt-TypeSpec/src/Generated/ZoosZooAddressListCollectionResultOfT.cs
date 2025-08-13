@@ -73,7 +73,7 @@ namespace MgmtTypeSpec
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextZooAddressListRequest(nextLink, _subscriptionId, _resourceGroupName, _zooName, _maxpagesize, _context) : _client.CreateZooAddressListRequest(_subscriptionId, _resourceGroupName, _zooName, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Zoos.ZooAddressList");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ZooResource.ZooAddressList");
             scope.Start();
             try
             {

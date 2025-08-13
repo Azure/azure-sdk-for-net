@@ -28,7 +28,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly CSharpType _itemType;
         private readonly CSharpType _actualItemType;
         private ResourceClientProvider? _itemResourceClient;
-        private readonly ResourceOperationKind _methodKind;
+        private readonly string _methodName;
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
 
@@ -38,7 +38,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             RestClientInfo restClientInfo,
             InputPagingServiceMethod method,
             bool isAsync,
-            ResourceOperationKind methodKind)
+            string? methodName = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
@@ -52,7 +52,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ref _actualItemType!,
                 ref _itemResourceClient
             );
-            _methodKind = methodKind;
+            _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
         }
@@ -83,12 +83,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var returnType = _isAsync
                 ? new CSharpType(typeof(AsyncPageable<>), _actualItemType)
                 : new CSharpType(typeof(Pageable<>), _actualItemType);
-            var methodName = _methodKind == ResourceOperationKind.List
-                ? (_isAsync ? "GetAllAsync" : "GetAll")
-                : _convenienceMethod.Signature.Name;
 
             return new MethodSignature(
-                methodName,
+                _methodName,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
@@ -105,14 +102,18 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             var statements = new List<MethodBodyStatement>();
 
-            var collectionResultOfT = ((ScmMethodProvider)_convenienceMethod).CollectionDefinition!.Type;
+            var collectionResult = ((ScmMethodProvider)_convenienceMethod).CollectionDefinition!;
+            var diagnosticScope = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
+            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult, diagnosticScope);
+
+            var collectionResultOfT = collectionResult.Type;
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
 
             var requestMethod = _restClientInfo.RestClientProvider.GetRequestMethodByOperation(_method.Operation);
 
             var arguments = new List<ValueExpression>
             {
-                _restClientInfo.RestClientField,
+                _restClientInfo.RestClient,
             };
             arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
 

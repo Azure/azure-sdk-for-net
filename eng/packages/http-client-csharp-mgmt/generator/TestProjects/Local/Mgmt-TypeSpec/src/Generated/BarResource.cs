@@ -18,7 +18,11 @@ using Azure.ResourceManager.Resources;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary>
+    /// A class representing a Bar along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BarResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource (TODO: add parent resource information).
+    /// </summary>
     public partial class BarResource : ArmResource
     {
         private readonly ClientDiagnostics _barsClientDiagnostics;
@@ -48,7 +52,7 @@ namespace MgmtTypeSpec
         {
             TryGetApiVersion(ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion);
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -91,6 +95,34 @@ namespace MgmtTypeSpec
 
         /// <summary> Get a Bar. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<BarResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a Bar. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BarResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Get");
@@ -117,11 +149,12 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a Bar. </summary>
+        /// <summary> Delete a Bar. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BarResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.GetAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Delete");
             scope.Start();
             try
             {
@@ -129,14 +162,14 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _barsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_barsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -174,12 +207,16 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Delete a Bar. </summary>
+        /// <summary> Update a Bar. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<BarResource>> UpdateAsync(WaitUntil waitUntil, BarData data, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.DeleteAsync");
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Update");
             scope.Start();
             try
             {
@@ -187,12 +224,18 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _barsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _barsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_barsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MgmtTypeSpecArmOperation<BarResource> operation = new MgmtTypeSpecArmOperation<BarResource>(
+                    new BarOperationSource(Client),
+                    _barsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -232,45 +275,6 @@ namespace MgmtTypeSpec
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update a Bar. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BarResource>> UpdateAsync(WaitUntil waitUntil, BarData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.UpdateAsync");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _barsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<BarResource> operation = new MgmtTypeSpecArmOperation<BarResource>(
-                    new BarOperationSource(Client),
-                    _barsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -533,9 +537,9 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Gets an object representing a BarSettings along with the instance operations that can be performed on it in the Bar. </summary>
+        /// <summary> Gets an object representing a BarSettingsResource along with the instance operations that can be performed on it in the Bar. </summary>
         /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
-        public virtual BarSettingsResource GetBarSettings()
+        public virtual BarSettingsResource GetBarSettingsResource()
         {
             return new BarSettingsResource(Client, Id.AppendChildResource("settings", "current"));
         }

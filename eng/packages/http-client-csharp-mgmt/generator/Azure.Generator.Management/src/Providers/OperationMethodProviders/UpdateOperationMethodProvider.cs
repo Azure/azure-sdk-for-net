@@ -8,9 +8,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class UpdateOperationMethodProvider(
         ResourceClientProvider resource,
+        RequestPathPattern contextualPath,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
-        bool isAsync) : ResourceOperationMethodProvider(resource, resource.ContextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update")
+        bool isAsync) : ResourceOperationMethodProvider(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update")
     {
     }
 }

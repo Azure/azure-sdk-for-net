@@ -1,4 +1,4 @@
-﻿using global::Azure.Core.Pipeline.DiagnosticScope scope = _testClientClientDiagnostics.CreateScope("ResponseTypeResource.GetAsync");
+﻿using global::Azure.Core.Pipeline.DiagnosticScope scope = _testClientClientDiagnostics.CreateScope("ResponseTypeResource.Get");
 scope.Start();
 try
 {
